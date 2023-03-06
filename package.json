@@ -5,6 +5,7 @@
   "description": "Allow users to add tags to links.",
   "author": "Pipecraft",
   "scripts": {
+    "prettier": "prettier --write .",
     "dev": "plasmo dev",
     "build": "plasmo build",
     "package": "plasmo package"

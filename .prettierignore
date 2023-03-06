@@ -1,0 +1,6 @@
+node_modules/**
+LICENSE
+.plasmo/**
+build/**
+pnpm-lock.yaml
+tsconfig.json
