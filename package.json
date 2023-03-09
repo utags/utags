@@ -1,28 +1,46 @@
 {
   "name": "utags",
-  "displayName": "Utags",
-  "version": "0.0.1",
+  "displayName": "UTags - Add usertags to links",
+  "displayName:zh-CN": "小鱼标签 (UTags) - 为链接添加用户标签",
+  "version": "0.0.3",
   "description": "Allow users to add tags to links.",
+  "description:zh-CN": "此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。",
   "author": "Pipecraft",
+  "license": "MIT",
   "scripts": {
-    "prettier": "prettier --write .",
-    "dev": "plasmo dev",
-    "build": "plasmo build",
-    "package": "plasmo package"
+    "p": "prettier --write .",
+    "lint": "run-s lint:*",
+    "lint:code": "prettier --write . && xo --fix",
+    "lint:type": "tsc --noemit",
+    "dev": "run-p dev:*",
+    "dev:chrome": "plasmo dev",
+    "dev:userscript": "node src/userscript/watch.mjs",
+    "build": "run-s build:*",
+    "build:chrome": "plasmo build",
+    "build:firefox": "plasmo build --target=firefox-mv2",
+    "build:userscript": "node src/userscript/build.mjs && pnpm run p",
+    "package": "run-s package:*",
+    "package:chrome": "plasmo package",
+    "package:firefox": "plasmo package --target=firefox-mv2"
   },
   "dependencies": {
+    "@plasmohq/storage": "^1.2.2",
     "plasmo": "0.66.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@plasmohq/prettier-plugin-sort-imports": "3.6.3",
     "@types/chrome": "0.0.219",
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "esbuild": "^0.17.11",
+    "fs-extra": "^11.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.8.4",
     "typescript": "4.9.5",
-    "@plasmohq/prettier-plugin-sort-imports": "3.6.3"
+    "xo": "^0.53.1"
   },
   "manifest": {
     "host_permissions": [
@@ -30,6 +48,40 @@
     ],
     "permissions": [
       "tabs"
+    ]
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "globals": [
+      "document",
+      "GM_getValue",
+      "GM_setValue",
+      "GM_addValueChangeListener"
+    ],
+    "rules": {
+      "import/extensions": 0,
+      "import/order": 0,
+      "@typescript-eslint/no-unsafe-call": 0,
+      "@typescript-eslint/no-unsafe-assignment": 0,
+      "@typescript-eslint/no-unsafe-return": 0,
+      "@typescript-eslint/no-useless-empty-export": 0,
+      "@typescript-eslint/naming-convention": 0,
+      "n/prefer-global/process": 0,
+      "unicorn/no-empty-file": 0,
+      "camelcase": 0,
+      "new-cap": 0,
+      "no-global-assign": 0,
+      "capitalized-comments": 0
+    },
+    "overrides": [
+      {
+        "files": "test/*.js",
+        "envs": [
+          "node",
+          "mocha"
+        ]
+      }
     ]
   }
 }
