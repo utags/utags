@@ -2,7 +2,7 @@
 // @name         UTags - Add usertags to links
 // @name:zh-CN   小鱼标签 (UTags) - 为链接添加用户标签
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  Allow users to add tags to links.
 // @description:zh-cn 此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @author       Pipecraft
@@ -17,27 +17,7 @@
 ;(function () {
   ;("use strict")
 
-  document.GM_getValue = GM_getValue
-  document.GM_setValue = GM_setValue
-  document.GM_addValueChangeListener = GM_addValueChangeListener
-
-  // import React from "react";
-  // import ReactDOM from "react-dom";
-  // import App from "./app";
-
-  const app = document.createElement("div")
-  app.id = "app-utags-65076"
-  // document.body.appendChild(app)
-  // ReactDOM.render(<App />, app)
-
-  const STORAGE = {
-    getValue: document.GM_getValue,
-    setValue: document.GM_setValue,
-    addValueChangeListener: document.GM_addValueChangeListener
-  }
-
   const uniq = (arr) => [...new Set(arr)]
-  const patterns = [/v2ex.com\/member\/(\w+)($|\?)/]
 
   const v2ex = {
     matchedNodes: function () {
@@ -54,7 +34,9 @@
       const elements = document.querySelectorAll(patterns.join(","))
 
       function getCanonicalUrl(url) {
-        return url.replace(/[?#].*/, "")
+        return url
+          .replace(/[?#].*/, "")
+          .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
       }
       const nodes = [...elements].map((element) => {
         const key = getCanonicalUrl(element.href)
@@ -87,46 +69,16 @@
     return url
   }
 
-  // Migration data from "v2ex user tag" plugin
-  // https://greasyfork.org/en/scripts/437891-v2ex-user-tag
-  function migrationFromV2exUserTag() {
-    const TAG_JSON_STR_STORE_KEY = "plugin.user_tag.tag_json_str.v0.1"
-    const data = window.localStorage.getItem(TAG_JSON_STR_STORE_KEY)
-    if (data && confirm("[UTags] 发现 v2ex user tag 插件的数据，要导入吗？")) {
-      try {
-        const jsonObj = JSON.parse(data)
-        const tagMap = getTagMap()
-        for (let key in jsonObj) {
-          if (jsonObj.hasOwnProperty(key)) {
-            const oldTags = jsonObj[key].split(/\s*[,，]\s*/)
-            const newkey = "https://www.v2ex.com/member/" + key
-            const tags = tagMap[newkey]
-              ? tagMap[newkey].concat(oldTags)
-              : oldTags
-            tagMap[newkey] = uniq(tags.filter(Boolean))
-          }
-        }
-        STORAGE.setValue(STORE_KEY, JSON.stringify(tagMap))
-
-        window.localStorage.setItem(
-          TAG_JSON_STR_STORE_KEY + "__migrationed",
-          data
-        )
-        window.localStorage.removeItem(TAG_JSON_STR_STORE_KEY)
-        alert("[UTags] 数据导入成功，现在可以停用或删除 v2ex user tag 插件")
-      } catch (e) {
-        console.error(e)
-        alert("导入失败，请查看控制台里输出日志。")
-      }
-    }
+  const STORAGE = {
+    getValue: GM_getValue,
+    setValue: GM_setValue,
+    addValueChangeListener: GM_addValueChangeListener
   }
+  const STORAGE_KEY = "plugin.utags.tags.v1"
 
-  const STORE_KEY = "plugin.utags.tags.v1"
   function initStorage() {
-    migrationFromV2exUserTag()
-
     STORAGE.addValueChangeListener(
-      STORE_KEY,
+      STORAGE_KEY,
       function (key, oldValue, newValue, remote) {
         console.log("[UTags] The value of tags has chenged.")
         // console.log(
@@ -143,7 +95,7 @@
     )
   }
   function getTagMap() {
-    const tagJsonStr = STORAGE.getValue(STORE_KEY, "{}")
+    const tagJsonStr = STORAGE.getValue(STORAGE_KEY) || "{}"
     try {
       return JSON.parse(tagJsonStr)
     } catch (e) {
@@ -162,7 +114,7 @@
     if (tagMap[key].length === 0) {
       delete tagMap[key]
     }
-    STORAGE.setValue(STORE_KEY, JSON.stringify(tagMap))
+    STORAGE.setValue(STORAGE_KEY, JSON.stringify(tagMap))
   }
 
   function appendTagsToPage(element, key, tags) {
@@ -215,12 +167,18 @@
   }
 
   function displayTags() {
-    // Display tags for matched components on matched pages
-    const nodes = v2ex.matchedNodes()
-    nodes.forEach((node) => {
-      const tags = getTags(node.key)
-      appendTagsToPage(node.element, node.key, tags)
-    })
+    if (location.hostname === "utags.pipecraft.net") {
+      document.GM_getValue = GM_getValue
+      document.GM_setValue = GM_setValue
+      document.GM_addValueChangeListener = GM_addValueChangeListener
+    } else {
+      // Display tags for matched components on matched pages
+      const nodes = v2ex.matchedNodes()
+      nodes.forEach((node) => {
+        const tags = getTags(node.key)
+        appendTagsToPage(node.element, node.key, tags)
+      })
+    }
   }
 
   function main() {
