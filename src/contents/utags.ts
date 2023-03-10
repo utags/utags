@@ -1,25 +1,40 @@
 import styleText from "data-text:./style.scss"
 
-import { matchedSite } from "../sites/index"
-import { addTagsValueChangeListener, getTags, saveTags } from "../storage/index"
+import createTag from "../components/tag"
+import { getConditionNodes, getListNodes, matchedNodes } from "../sites/index"
+import {
+  addTagsValueChangeListener,
+  getTags,
+  getUrlMap,
+  mergeData,
+  migration,
+  saveTags
+} from "../storage/index"
+import { $, $$, createElement } from "../utils"
+
+const hostname = location.hostname
 
 const getStyle = () => {
-  const style = document.createElement("style")
+  const style = createElement("style")
   style.id = "utags_style"
   style.textContent = styleText
   document.head.append(style)
-  return style
+  // return style
 }
 
-function appendTagsToPage(element, key, tags: string[]) {
+function appendTagsToPage(
+  element,
+  key,
+  tags: string[],
+  meta: Record<string, unknown>
+) {
   if (element.nextSibling?.classList?.contains("utags_ul")) {
     element.nextSibling.remove()
   }
 
-  const ul = document.createElement("ul")
-  let li = document.createElement("li")
-  let a = document.createElement("a")
-  // a.textContent = "添加标签🏷️";
+  const ul = createElement("ul")
+  let li = createElement("li")
+  let a = createElement("a")
   a.textContent = "🏷️"
   a.setAttribute(
     "class",
@@ -35,20 +50,15 @@ function appendTagsToPage(element, key, tags: string[]) {
     )
     if (newTags !== null) {
       const newTagsArray = newTags.split(/\s*[,，]\s*/)
-      await saveTags(key, newTagsArray)
+      await saveTags(key, newTagsArray, meta)
     }
   })
   li.append(a)
   ul.append(li)
 
   for (const tag of tags) {
-    li = document.createElement("li")
-    a = document.createElement("a")
-    a.textContent = tag
-    a.dataset.utags_tag = tag
-    a.setAttribute("href", "https://utags.pipecraft.net/tags/#" + tag)
-    a.setAttribute("target", "_blank")
-    a.setAttribute("class", "utags_text_tag")
+    li = createElement("li")
+    a = createTag(tag)
     li.append(a)
     ul.append(li)
   }
@@ -58,45 +68,100 @@ function appendTagsToPage(element, key, tags: string[]) {
 }
 
 function displayTags() {
-  if (location.hostname === "utags.pipecraft.net") {
-    // document.GM_getValue = GM_getValue
-    // document.GM_setValue = GM_setValue
-    // document.GM_addValueChangeListener = GM_addValueChangeListener
-  } else {
-    const listNodes = site.getListNodes()
-    for (const node of listNodes) {
-      node.dataset.utags_list_node = ""
+  const listNodes = getListNodes(hostname)
+  for (const node of listNodes) {
+    node.dataset.utags_list_node = ""
+  }
+
+  const conditionNodes = getConditionNodes(hostname)
+  for (const node of conditionNodes) {
+    node.dataset.utags_condition_node = ""
+  }
+
+  // Display tags for matched components on matched pages
+  const nodes = matchedNodes(hostname)
+  nodes.map(async (node) => {
+    if (!node.utags || !node.utags.key) {
+      return
     }
 
-    const conditionNodes = site.getConditionNodes()
-    for (const node of conditionNodes) {
-      node.dataset.utags_condition_node = ""
-    }
+    const object = await getTags(node.utags.key)
+    const tags = object.tags || []
+    appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
+  })
+}
 
-    // Display tags for matched components on matched pages
-    const nodes = site.matchedNodes()
-    nodes.map(async (node) => {
-      const tags = await getTags(node.key)
-      appendTagsToPage(node.element, node.key, tags)
+async function outputData() {
+  if (
+    /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
+  ) {
+    const urlMap = await getUrlMap()
+
+    const textarea = createElement("textarea")
+    textarea.id = "utags_output"
+    textarea.setAttribute("style", "display:none")
+    textarea.value = JSON.stringify(urlMap)
+    document.body.append(textarea)
+
+    textarea.addEventListener("click", async () => {
+      if (textarea.dataset.utags_type === "export") {
+        const urlMap = await getUrlMap()
+        textarea.value = JSON.stringify(urlMap)
+        textarea.dataset.utags_type = "export_done"
+        // Triger change event
+        textarea.click()
+      } else if (textarea.dataset.utags_type === "import") {
+        const data = textarea.value
+        try {
+          const result = await mergeData(JSON.parse(data))
+          textarea.value = JSON.stringify(result)
+          textarea.dataset.utags_type = "import_done"
+          // Triger change event
+          textarea.click()
+        } catch (error) {
+          console.error(error)
+          textarea.value = JSON.stringify(error)
+          textarea.dataset.utags_type = "import_failed"
+          // Triger change event
+          textarea.click()
+        }
+      }
     })
   }
 }
 
-function initStorage() {
+async function initStorage() {
+  await migration()
   addTagsValueChangeListener(displayTags)
 }
 
-let site
-function main() {
-  site = matchedSite(location.hostname)
-  if (!site) {
-    return
-  }
+let countOfLinks = 0
+async function main() {
+  document.addEventListener("mouseover", (event) => {
+    if (event.target && event.target.tagName === "A") {
+      // TODO: delay display utags for event.target
+      // console.log(event.target, event.currentTarget)
+    }
+  })
+  // TODO: delay display utags in corner of page for current page
 
-  initStorage()
   getStyle()
+  setTimeout(outputData, 1)
+
+  await initStorage()
 
   displayTags()
+
+  countOfLinks = $$("a:not(.utags_text_tag)").length
+  setInterval(() => {
+    const count = $$("a:not(.utags_text_tag)").length
+    if (countOfLinks !== count) {
+      console.log(countOfLinks, count)
+      countOfLinks = count
+      displayTags()
+    }
+  }, 1000)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises, unicorn/prefer-top-level-await
 main()
