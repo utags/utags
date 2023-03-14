@@ -1,7 +1,9 @@
+import { $, $$ } from "../utils"
+
 const site = {
   getListNodes() {
     const patterns = [".box .cell"]
-    return document.querySelectorAll(patterns.join(","))
+    return $$(patterns.join(","))
   },
   getConditionNodes() {
     const patterns = [
@@ -10,7 +12,7 @@ const site = {
       '.box .cell .topic_info strong:first-of-type a[href*="/member/"]', // 帖子作者
       '#Main strong a.dark[href*="/member/"]' // 评论者
     ]
-    return document.querySelectorAll(patterns.join(","))
+    return $$(patterns.join(","))
   },
   matchedNodes() {
     const patterns = [
@@ -26,7 +28,7 @@ const site = {
       '.dock_area a[href*="/member/"]', // 个人主页回复列表作者
       '.dock_area a[href*="/t/"]' // 个人主页回复列表帖子标题
     ]
-    const elements = document.querySelectorAll(patterns.join(","))
+    const elements = $$(patterns.join(","))
 
     function getCanonicalUrl(url) {
       return url
@@ -36,24 +38,32 @@ const site = {
 
     const nodes = [...elements].map((element) => {
       const key = getCanonicalUrl(element.href)
-      return { element, key }
+      const title = element.textContent
+      const meta = { title }
+      element.utags = { key, meta }
+      return element
     })
 
     if (location.pathname.includes("/member/")) {
       // 个人主页
-      const profile = document.querySelector("h1")
+      const profile = $("h1")
       if (profile) {
         const key = "https://www.v2ex.com/member/" + profile.textContent
-        nodes.push({ element: profile, key })
+        const meta = { title: profile.textContent }
+        profile.utags = { key, meta }
+        nodes.push(profile)
       }
     }
 
     if (location.pathname.includes("/t/")) {
       // 帖子详细页
-      const header = document.querySelector(".topic_content")
+      const header = $(".topic_content")
       if (header) {
         const key = getCanonicalUrl("https://www.v2ex.com" + location.pathname)
-        nodes.push({ element: header, key })
+        const title = $("h1").textContent
+        const meta = { title }
+        header.utags = { key, meta }
+        nodes.push(header)
       }
     }
 
