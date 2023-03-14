@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## v0.1.0
+
+- 基于 [Plasmo](https://www.plasmo.com/) 重构代码，提供浏览器扩展版本
+
 ## v0.0.2
 
 - 支持 www.v2ex.com 网站的其他域名

@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## v0.1.0
+
+- Refactor code based on [Plasmo](https://www.plasmo.com/). Browser extensions are also available.
+
 ## v0.0.2
 
 - Various domain names of www.v2ex.com are supported

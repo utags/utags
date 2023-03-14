@@ -6,6 +6,7 @@
 // @version      {version}
 // @description  {description}
 // @description:zh-CN {description:zh-CN}
+// @icon         https://utags.pipecraft.net/favicon.png
 // @author       {author}
 // @license      {license}
 // @match        https://*/*
