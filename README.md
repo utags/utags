@@ -6,6 +6,8 @@ Allow users to add custom tags to links.
 
 此扩展/油猴脚本允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 
+**UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
+
 目前支持的网站
 
 - www.v2ex.com
@@ -15,8 +17,8 @@ Allow users to add custom tags to links.
 
 - 类 Chrome 浏览器: 即将上架 Chrome 商店
 - Edge 浏览器: 即将上架 Edge 商店
-- Firefox 浏览器: 即将上架 Firefox Addon 商店
-- 油猴脚本: [https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links)
+- Firefox 浏览器: 已上架 [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)，[点击这里](https://addons.mozilla.org/firefox/addon/utags/)安装。
+- 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
 - [手动安装浏览器扩展](manual-installation.md)
 
 ## 使用方法
@@ -29,6 +31,16 @@ Allow users to add custom tags to links.
 
 - 帖子标题，用户名都可以设置标签。
   ![screenshots](assets/screenshots-03.png)
+
+## 功能特点
+
+- 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
+- 不仅可以给用户打标签，还可以给帖子打标签
+- 在标签列表页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
+- 支持数据导出、导入
+- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
+- 除了 v2ex，以后还会支持更多的网站
 
 ### 彩蛋
 
@@ -52,6 +64,8 @@ Allow users to add custom tags to links.
 - 网页内所有链接显示添加标签按钮
 - 支持更多的网站：
   - Next: hacker news, lobsters, [DTO](https://dto.pipecraft.net/), P\*Hub
+- 支持自定义网站规则
+- 支持自定义标签样式
 - [列表页](https://utags.pipecraft.net/tags/)显示用户头像
 - 展示其他用户们的标签内容
 - 显示在哪个页面添加的标签
