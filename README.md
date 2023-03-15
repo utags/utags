@@ -47,8 +47,6 @@ Allow users to add custom tags to links.
 - 标签设置为 'sb'，该用户的帖子或评论都会半透明显示，可以方便跳过价值低的内容
 - 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
 
-> 暂时不支持 Firefox
-
 ## 更新记录
 
 ### v0.1.0
@@ -59,7 +57,6 @@ Allow users to add custom tags to links.
 
 ## Roadmap
 
-- 解决不支持 `:has` 的浏览器（比如 firefox）上面的问题
 - 扩展实现 popup, option 页面功能
 - 网页内所有链接显示添加标签按钮
 - 支持更多的网站：

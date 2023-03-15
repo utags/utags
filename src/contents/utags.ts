@@ -26,7 +26,7 @@ function appendTagsToPage(
   element,
   key,
   tags: string[],
-  meta: Record<string, unknown>
+  meta: Record<string, any>
 ) {
   if (element.nextSibling?.classList?.contains("utags_ul")) {
     element.nextSibling.remove()
@@ -67,12 +67,7 @@ function appendTagsToPage(
   element.after(ul)
 }
 
-function displayTags() {
-  const listNodes = getListNodes(hostname)
-  for (const node of listNodes) {
-    node.dataset.utags_list_node = ""
-  }
-
+async function displayTags() {
   const conditionNodes = getConditionNodes(hostname)
   for (const node of conditionNodes) {
     node.dataset.utags_condition_node = ""
@@ -80,15 +75,33 @@ function displayTags() {
 
   // Display tags for matched components on matched pages
   const nodes = matchedNodes(hostname)
-  nodes.map(async (node) => {
-    if (!node.utags || !node.utags.key) {
-      return
-    }
+  await Promise.all(
+    nodes.map(async (node) => {
+      if (!node.utags || !node.utags.key) {
+        return
+      }
 
-    const object = await getTags(node.utags.key)
-    const tags = object.tags || []
-    appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
-  })
+      const object = await getTags(node.utags.key)
+      const tags = object.tags || []
+      appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
+    })
+  )
+
+  const listNodes = getListNodes(hostname)
+  for (const node of listNodes) {
+    const tags = node.querySelectorAll(
+      "[data-utags_condition_node] + .utags_ul > li > .utags_text_tag[data-utags_tag]"
+    )
+    if (tags.length > 0) {
+      node.dataset.utags_list_node =
+        [...tags].reduce(
+          (accumulator, tag) => accumulator + "," + tag.textContent,
+          ""
+        ) + ","
+    } else {
+      node.dataset.utags_list_node = ""
+    }
+  }
 }
 
 async function outputData() {
@@ -118,6 +131,7 @@ async function outputData() {
           textarea.dataset.utags_type = "import_done"
           // Triger change event
           textarea.click()
+          // eslint-disable-next-line @typescript-eslint/no-implicit-any-catch
         } catch (error) {
           console.error(error)
           textarea.value = JSON.stringify(error)
@@ -150,15 +164,15 @@ async function main() {
 
   await initStorage()
 
-  displayTags()
+  await displayTags()
 
   countOfLinks = $$("a:not(.utags_text_tag)").length
-  setInterval(() => {
+  setInterval(async () => {
     const count = $$("a:not(.utags_text_tag)").length
     if (countOfLinks !== count) {
-      console.log(countOfLinks, count)
+      // console.log(countOfLinks, count)
       countOfLinks = count
-      displayTags()
+      await displayTags()
     }
   }, 1000)
 }
