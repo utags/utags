@@ -3,7 +3,7 @@
 // @name:zh-CN   小鱼标签 (UTags) - 为链接添加用户标签
 // @namespace    https://utags.pipecraft.net/
 // @homepage     https://utags.pipecraft.net/
-// @version      0.1.0
+// @version      0.1.2
 // @description  Allow users to add custom tags to links.
 // @description:zh-CN 此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon         https://utags.pipecraft.net/favicon.png
@@ -19,7 +19,7 @@
 ;(() => {
   "use strict"
   var style_default =
-    '#utags_layer {\n  height: 200px;\n  width: 200px;\n  background-color: red;\n}\n\n.utags_ul {\n  display: inline;\n  list-style-type: none;\n  margin: 0px;\n  margin-left: 2px;\n  padding: 0px;\n  position: relative;\n  /*vertical-align: text-bottom;*/\n  line-height: 10px;\n}\n\n.utags_ul > li {\n  display: inline-flex;\n  align-items: center;\n}\n\n.utags_text_tag {\n  border: 1px solid red;\n  color: red !important;\n  border-radius: 3px;\n  padding: 1px 3px;\n  margin: 0px 3px;\n  font-size: 10px;\n  line-height: 10px;\n  font-weight: normal;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.utags_captain_tag,\n.utags_captain_tag2 {\n  border: none;\n  text-indent: -9999px;\n  width: 12px;\n  height: 12px;\n  padding: 0;\n  display: block;\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);\n  background-size: contain;\n}\n\n.utags_captain_tag {\n  opacity: 1%;\n  position: absolute;\n  top: 0px;\n  left: -2px;\n  padding: 0;\n  margin: 0;\n  border: none;\n  width: 4px;\n  height: 4px;\n  font-size: 1px;\n  background-color: #fff;\n}\n\n.utags_captain_tag:hover,\n.utags_captain_tag2:hover {\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K);\n}\n\n*:hover + .utags_ul .utags_captain_tag,\n.utags_ul:hover .utags_captain_tag,\n:not(a) + .utags_ul .utags_captain_tag {\n  opacity: 100%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n/* Firefox does not support :has */\n/* vimium extension */\nhtml:has(#vimiumHintMarkerContainer) .utags_captain_tag {\n  opacity: 100%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n:not(a) + .utags_ul .utags_captain_tag {\n  position: relative;\n}\n\nli:has(> .utags_favicon) {\n  display: flex;\n  align-items: center;\n}\n.utags_favicon {\n  width: 16px;\n  height: 16px;\n  margin-right: 10px;\n}\n\n[data-utags_list_node]:has(\n    [data-utags_condition_node] + .utags_ul .utags_text_tag[data-utags_tag="sb"]\n  ) {\n  opacity: 10%;\n}\n\n[data-utags_list_node]:has(\n    [data-utags_condition_node]\n      + .utags_ul\n      .utags_text_tag[data-utags_tag="\u65B0\u7528\u6237"]\n  ) {\n  opacity: 50%;\n}\n\n[data-utags_list_node]:has(\n    [data-utags_condition_node]\n      + .utags_ul\n      .utags_text_tag[data-utags_tag="block"]\n  ) {\n  /*opacity: 2%;*/\n  display: none;\n}\n\n[data-utags_list_node]:hover {\n  opacity: 100% !important;\n}\n'
+    '#utags_layer {\n  height: 200px;\n  width: 200px;\n  background-color: red;\n}\n\n.utags_ul {\n  display: inline;\n  list-style-type: none;\n  margin: 0px;\n  margin-left: 2px;\n  padding: 0px;\n  position: relative;\n  /*vertical-align: text-bottom;*/\n  line-height: 10px;\n}\n\n.utags_ul > li {\n  display: inline-flex;\n  align-items: center;\n}\n\n.utags_text_tag {\n  border: 1px solid red;\n  color: red !important;\n  border-radius: 3px;\n  padding: 1px 3px;\n  margin: 0px 3px;\n  font-size: 10px;\n  line-height: 10px;\n  font-weight: normal;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.utags_captain_tag,\n.utags_captain_tag2 {\n  border: none;\n  text-indent: -9999px;\n  width: 12px;\n  height: 12px;\n  padding: 0;\n  display: block;\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);\n  background-size: contain;\n}\n\n.utags_captain_tag {\n  opacity: 1%;\n  position: absolute;\n  top: 0px;\n  left: -2px;\n  padding: 0;\n  margin: 0;\n  border: none;\n  width: 4px;\n  height: 4px;\n  font-size: 1px;\n  background-color: #fff;\n}\n\n.utags_captain_tag:hover,\n.utags_captain_tag2:hover {\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K);\n}\n\n*:hover + .utags_ul .utags_captain_tag,\n.utags_ul:hover .utags_captain_tag,\n:not(a) + .utags_ul .utags_captain_tag {\n  opacity: 100%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n/* Firefox does not support :has */\n/* vimium extension */\nhtml:has(#vimiumHintMarkerContainer) .utags_captain_tag {\n  opacity: 99%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n:not(a) + .utags_ul .utags_captain_tag {\n  position: relative;\n}\n\n[data-utags_list_node*=",sb,"] {\n  opacity: 10%;\n}\n\n[data-utags_list_node*=",\u65B0\u7528\u6237,"] {\n  opacity: 50%;\n}\n\n[data-utags_list_node*=",block,"] {\n  opacity: 5%;\n  display: none;\n}\n\n[data-utags_list_node]:hover {\n  opacity: 100% !important;\n}\n'
 
   // src/utils/index.ts
   var doc = document
@@ -27,7 +27,7 @@
   var $ = doc.querySelector.bind(doc)
   var $$ = doc.querySelectorAll.bind(doc)
   var createElement = doc.createElement.bind(doc)
-  var extensionVersion = "0.1.0"
+  var extensionVersion = "0.1.2"
   var databaseVersion = 2
   var isUrl = (text) => /^https?:\/\//.test(text)
 
@@ -171,7 +171,6 @@
       }
       set.add(element)
     }
-    console.log(set)
     return [...set]
   }
 
@@ -204,7 +203,6 @@
     return cachedUrlMap[key] || { tags: [] }
   }
   async function saveTags(key, tags, meta) {
-    console.log("saveTags 1", key, tags, meta)
     const urlMap = await getUrlMap()
     urlMap.meta = Object.assign({}, urlMap.meta, {
       extensionVersion,
@@ -222,7 +220,6 @@
         tags: newTags,
         meta: newMeta
       }
-      console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
     }
     await setValue(STORAGE_KEY, urlMap)
   }
@@ -380,7 +377,6 @@
       return
     }
     cachedUrlMap = await getUrlMap()
-    console.log(cachedUrlMap)
     const meta = cachedUrlMap.meta || {}
     if (meta.databaseVersion !== databaseVersion) {
       meta.databaseVersion = meta.databaseVersion || 1
@@ -451,24 +447,37 @@
     ul.setAttribute("class", "utags_ul")
     element.after(ul)
   }
-  function displayTags() {
-    const listNodes = getListNodes(hostname)
-    for (const node of listNodes) {
-      node.dataset.utags_list_node = ""
-    }
+  async function displayTags() {
     const conditionNodes = getConditionNodes(hostname)
     for (const node of conditionNodes) {
       node.dataset.utags_condition_node = ""
     }
     const nodes = matchedNodes(hostname)
-    nodes.map(async (node) => {
-      if (!node.utags || !node.utags.key) {
-        return
+    await Promise.all(
+      nodes.map(async (node) => {
+        if (!node.utags || !node.utags.key) {
+          return
+        }
+        const object = await getTags(node.utags.key)
+        const tags = object.tags || []
+        appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
+      })
+    )
+    const listNodes = getListNodes(hostname)
+    for (const node of listNodes) {
+      const tags = node.querySelectorAll(
+        "[data-utags_condition_node] + .utags_ul > li > .utags_text_tag[data-utags_tag]"
+      )
+      if (tags.length > 0) {
+        node.dataset.utags_list_node =
+          [...tags].reduce(
+            (accumulator, tag) => accumulator + "," + tag.textContent,
+            ""
+          ) + ","
+      } else {
+        node.dataset.utags_list_node = ""
       }
-      const object = await getTags(node.utags.key)
-      const tags = object.tags || []
-      appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
-    })
+    }
   }
   async function outputData() {
     if (
@@ -516,14 +525,13 @@
     getStyle()
     setTimeout(outputData, 1)
     await initStorage()
-    displayTags()
+    await displayTags()
     countOfLinks = $$("a:not(.utags_text_tag)").length
-    setInterval(() => {
+    setInterval(async () => {
       const count = $$("a:not(.utags_text_tag)").length
       if (countOfLinks !== count) {
-        console.log(countOfLinks, count)
         countOfLinks = count
-        displayTags()
+        await displayTags()
       }
     }, 1e3)
   }

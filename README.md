@@ -49,9 +49,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
-### v0.1.0
+### v0.1.2
 
-- 基于 [Plasmo](https://www.plasmo.com/) 重构代码，提供浏览器扩展版本
+- 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
 
 - [更多内容](release-notes/zh-CN.md)
 
