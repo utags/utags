@@ -13,6 +13,9 @@ const result = await esbuild.build({
   banner: {
     js: banner
   },
+  define: {
+    "process.env.PLASMO_TAG": '"production"'
+  },
   alias: {
     "data-text:./style.scss": "src/contents/style.scss",
     "~storage/chrome": "src/storage/userscript.js"
@@ -41,5 +44,6 @@ for (const out of result.outputFiles) {
   }
 
   text = text.replace("// src/contents/style.scss", "'use strict';")
+  text = text.replace(/^\s*\/\/ src\/.*$/gm, "")
   fs.writeFileSync(out.path, text)
 }

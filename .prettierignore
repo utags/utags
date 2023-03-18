@@ -3,6 +3,7 @@ LICENSE
 .plasmo/**
 build/chrome-mv3-dev/**
 build/chrome-mv3-prod/**
+build/firefox-mv2-dev/**
 build/firefox-mv2-prod/**
 build/userscript-dev/**
 pnpm-lock.yaml

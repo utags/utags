@@ -3,6 +3,9 @@ import * as esbuild from "esbuild"
 const ctx = await esbuild.context({
   entryPoints: ["src/contents/utags.ts"],
   bundle: true,
+  define: {
+    "process.env.PLASMO_TAG": '"dev"'
+  },
   alias: {
     "data-text:./style.scss": "src/contents/style.scss",
     "~storage/chrome": "src/storage/userscript.js"
@@ -10,6 +13,7 @@ const ctx = await esbuild.context({
   loader: {
     ".scss": "text"
   },
+  inject: ["src/userscript/hmr.ts"],
   target: ["chrome58", "firefox57", "safari11", "edge16"],
   outfile: "build/userscript-dev/userscript.js"
 })

@@ -14,6 +14,7 @@
     "lint:type": "tsc --noemit",
     "dev": "run-p dev:*",
     "dev:chrome": "plasmo dev",
+    "dev:firefox": "sleep 2 && plasmo dev --target=firefox-mv2",
     "dev:userscript": "node src/userscript/watch.mjs",
     "build": "run-s build:*",
     "build:chrome": "plasmo build",

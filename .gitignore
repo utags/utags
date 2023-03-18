@@ -38,3 +38,5 @@ keys.json
 # typescript
 .tsbuildinfo
 tsconfig.tsbuildinfo
+
+._*
