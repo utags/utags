@@ -6,3 +6,8 @@ export const createElement = doc.createElement.bind(doc)
 export const extensionVersion = "0.1.2"
 export const databaseVersion = 2
 export const isUrl = (text) => /^https?:\/\//.test(text)
+
+if (typeof Object.hasOwn !== "function") {
+  Object.hasOwn = (instance, prop) =>
+    Object.prototype.hasOwnProperty.call(instance, prop)
+}

@@ -1,6 +1,7 @@
 import { addValueChangeListener, getValue, setValue } from "~storage/chrome"
 
 import { databaseVersion, extensionVersion, isUrl, uniq } from "../utils"
+import { assertEquals, runTest } from "../utils/test-helper"
 
 const STORAGE_KEY = "extension.utags.urlmap"
 let cachedUrlMap
@@ -261,3 +262,74 @@ export async function migration() {
     }
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+process.env.PLASMO_TAG === "dev" &&
+  runTest("storage", async () => {
+    console.log("process.env.PLASMO_TAG", process.env.PLASMO_TAG)
+
+    const key = "test_" + Date.now()
+    let value = await getValue(key)
+    console.log("getValue newKey", value)
+    assertEquals(value, undefined)
+
+    await setValue(key, undefined)
+    value = await getValue(key)
+    console.log("setValue undefined", "getValue", value)
+    assertEquals(value, undefined)
+
+    await setValue(key, null)
+    value = await getValue(key)
+    console.log("setValue null", "getValue", value)
+    assertEquals(value, null)
+
+    await setValue(key, undefined)
+    value = await getValue(key)
+    console.log("setValue undefined", "getValue", value)
+    assertEquals(value, null)
+
+    await setValue(key, 123)
+    value = await getValue(key)
+    console.log("setValue 123", "getValue", value)
+    assertEquals(value, 123)
+
+    await setValue(key, undefined)
+    value = await getValue(key)
+    console.log("setValue undefined", "getValue", value)
+    assertEquals(value, 123)
+
+    await setValue(key, null)
+    value = await getValue(key)
+    console.log("setValue null", "getValue", value)
+    assertEquals(value, null)
+
+    await setValue(key, "abc")
+    value = await getValue(key)
+    console.log("setValue abc", "getValue", value)
+    assertEquals(value, "abc")
+
+    await setValue(key, undefined)
+    value = await getValue(key)
+    console.log("setValue undefined", "getValue", value)
+    assertEquals(value, "abc")
+
+    await setValue(key, null)
+    value = await getValue(key)
+    console.log("setValue null", "getValue", value)
+    assertEquals(value, null)
+
+    await setValue(key, [1, 2, 3])
+    value = await getValue(key)
+    console.log("setValue [1, 2, 3]", "getValue", value)
+    assertEquals(JSON.stringify(value), JSON.stringify([1, 2, 3]))
+
+    await setValue(key, undefined)
+    value = await getValue(key)
+    console.log("setValue undefined", "getValue", value)
+    assertEquals(JSON.stringify(value), JSON.stringify([1, 2, 3]))
+
+    await setValue(key, null)
+    value = await getValue(key)
+    console.log("setValue null", "getValue", value)
+    assertEquals(value, null)
+  })
