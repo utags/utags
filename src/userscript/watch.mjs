@@ -8,7 +8,7 @@ const ctx = await esbuild.context({
   },
   alias: {
     "data-text:./style.scss": "src/contents/style.scss",
-    "~storage/chrome": "src/storage/userscript.js"
+    "~storage/chrome": "src/storage/userscript.ts"
   },
   loader: {
     ".scss": "text"

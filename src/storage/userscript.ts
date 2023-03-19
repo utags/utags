@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-expressions
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 process.env.PLASMO_TAG === "dev" &&
   (() => {
     if (
@@ -12,10 +12,9 @@ process.env.PLASMO_TAG === "dev" &&
 
     if (typeof GM_getValue !== "function") {
       const listeners = {}
-      // eslint-disable-next-line no-undef
+
       GM_getValue = (key) => localStorage.getItem(key)
       GM_setValue = (key, value) => {
-        // eslint-disable-next-line no-undef
         localStorage.setItem(key, value)
         if (listeners[key]) {
           for (const func of listeners[key]) {
