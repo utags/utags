@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## v0.1.4
+
+- 支持给 www.v2ex.com 节点添加标签
+
 ## v0.1.3
 
 - 保证 Storage 行为在 Chrome extensions, Firefox extensions, Userscript 一致

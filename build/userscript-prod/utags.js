@@ -3,7 +3,7 @@
 // @name:zh-CN   小鱼标签 (UTags) - 为链接添加用户标签
 // @namespace    https://utags.pipecraft.net/
 // @homepage     https://utags.pipecraft.net/
-// @version      0.1.3
+// @version      0.1.4
 // @description  Allow users to add custom tags to links.
 // @description:zh-CN 此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon         https://utags.pipecraft.net/favicon.png
@@ -26,7 +26,7 @@
   var $ = doc.querySelector.bind(doc)
   var $$ = doc.querySelectorAll.bind(doc)
   var createElement = doc.createElement.bind(doc)
-  var extensionVersion = "0.1.3"
+  var extensionVersion = "0.1.4"
   var databaseVersion = 2
   var isUrl = (text) => /^https?:\/\//.test(text)
   if (typeof Object.hasOwn !== "function") {
@@ -57,6 +57,8 @@
         // 右边栏标题
         '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
         // 帖子作者
+        ".box .cell .topic_info .node",
+        // 帖子节点
         '#Main strong a.dark[href*="/member/"]'
         // 评论者
       ]
@@ -68,6 +70,8 @@
         // 帖子作者，最后回复者
         "a.topic-link",
         // 帖子标题
+        ".box .cell .topic_info .node",
+        // 帖子节点
         ".item_hot_topic_title a",
         // 右边栏标题
         '#Main strong a.dark[href*="/member/"]',
@@ -82,6 +86,8 @@
         // 回复内容中帖子链接
         '.header small a[href*="/member/"]',
         // 帖子详细页作者
+        '.header a[href*="/go/"]',
+        // 帖子详细页节点
         '.dock_area a[href*="/member/"]',
         // 个人主页回复列表作者
         '.dock_area a[href*="/t/"]'
@@ -116,6 +122,18 @@
             "https://www.v2ex.com" + location.pathname
           )
           const title = $("h1").textContent
+          const meta = { title }
+          header.utags = { key, meta }
+          nodes.push(header)
+        }
+      }
+      if (location.pathname.includes("/go/")) {
+        const header = $(".cell_ops.flex-one-row input")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = document.title.replace(/.*›\s*/, "").trim()
           const meta = { title }
           header.utags = { key, meta }
           nodes.push(header)
