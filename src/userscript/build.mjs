@@ -8,7 +8,7 @@ const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 const banner = fs.readFileSync("src/userscript/banner.js", "utf8")
 
 const result = await esbuild.build({
-  entryPoints: ["src/contents/utags.ts"],
+  entryPoints: ["src/contents/index.ts"],
   bundle: true,
   banner: {
     js: banner,

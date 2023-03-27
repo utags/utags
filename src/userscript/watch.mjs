@@ -1,7 +1,7 @@
 import * as esbuild from "esbuild"
 
 const ctx = await esbuild.context({
-  entryPoints: ["src/contents/utags.ts"],
+  entryPoints: ["src/contents/index.ts"],
   bundle: true,
   define: {
     "process.env.PLASMO_TARGET": '"userscript"',
@@ -14,9 +14,8 @@ const ctx = await esbuild.context({
   loader: {
     ".scss": "text",
   },
-  inject: ["src/userscript/hmr.ts"],
   target: ["chrome58", "firefox57", "safari11", "edge16"],
-  outfile: "build/userscript-dev/userscript.js",
+  outfile: "build/userscript-dev/index.js",
 })
 
 await ctx.watch()
@@ -48,14 +47,24 @@ console.log(`\nAdd this code to Tampermonkey
 
 (function () {
   "use strict";
+  if (!document.body) {
+    return;
+  }
 
   document.GM_getValue = GM_getValue;
   document.GM_setValue = GM_setValue;
   document.GM_addValueChangeListener = GM_addValueChangeListener;
 
-  var script = document.createElement("script");
-  script.src = "http://localhost:${port}/userscript.js";
-  document.body.appendChild(script);
+  const script = document.createElement("script");
+  script.src = "http://localhost:${port}/index.js";
+  document.body.append(script);
+
+  new EventSource("http://localhost:${port}/esbuild").addEventListener(
+    "change",
+    () => {
+      location.reload();
+    }
+  );
 })();
 // END
 `)
