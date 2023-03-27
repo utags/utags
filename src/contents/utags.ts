@@ -151,6 +151,15 @@ async function initStorage() {
 
 let countOfLinks = 0
 async function main() {
+  if ($("#utags_style")) {
+    // already running
+    console.log(
+      `[UTags] [${process.env.PLASMO_TARGET}] Skip this, since another instance is already running.`,
+      location.href
+    )
+    return
+  }
+
   document.addEventListener("mouseover", (event) => {
     if (event.target && event.target.tagName === "A") {
       // TODO: delay display utags for event.target

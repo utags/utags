@@ -266,7 +266,10 @@ export async function migration() {
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 process.env.PLASMO_TAG === "dev" &&
   runTest("storage", async () => {
-    console.log("process.env.PLASMO_TAG", process.env.PLASMO_TAG)
+    console.log(
+      `[UTags] [${process.env.PLASMO_TARGET}] [${process.env.PLASMO_TAG}] runs on`,
+      location.href
+    )
 
     const key = "test_" + Date.now()
     let value = await getValue(key)

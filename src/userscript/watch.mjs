@@ -4,6 +4,7 @@ const ctx = await esbuild.context({
   entryPoints: ["src/contents/utags.ts"],
   bundle: true,
   define: {
+    "process.env.PLASMO_TARGET": '"userscript"',
     "process.env.PLASMO_TAG": '"dev"'
   },
   alias: {

@@ -14,6 +14,7 @@ const result = await esbuild.build({
     js: banner
   },
   define: {
+    "process.env.PLASMO_TARGET": '"userscript"',
     "process.env.PLASMO_TAG": '"production"'
   },
   alias: {
