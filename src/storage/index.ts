@@ -32,7 +32,7 @@ export async function saveTags(
 
   urlMap.meta = Object.assign({}, urlMap.meta, {
     extensionVersion,
-    databaseVersion
+    databaseVersion,
   })
 
   const newTags = mergeTags(tags, [])
@@ -46,7 +46,7 @@ export async function saveTags(
     newMeta.created = newMeta.created || now
     urlMap[key] = {
       tags: newTags,
-      meta: newMeta
+      meta: newMeta,
     }
     // console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
   }

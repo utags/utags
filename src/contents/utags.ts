@@ -8,7 +8,7 @@ import {
   getUrlMap,
   mergeData,
   migration,
-  saveTags
+  saveTags,
 } from "../storage/index"
 import { $, $$, createElement } from "../utils"
 

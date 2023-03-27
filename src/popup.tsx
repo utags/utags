@@ -5,7 +5,7 @@ function IndexPopup() {
         display: "flex",
         flexDirection: "column",
         padding: 16,
-        width: "200px"
+        width: "200px",
       }}>
       <h1>小鱼标签 (UTags)</h1>
       <ul
@@ -13,7 +13,7 @@ function IndexPopup() {
           display: "flex",
           flexDirection: "column",
           listStyleType: "none",
-          padding: 16
+          padding: 16,
         }}>
         <li>
           <a href="https://utags.pipecraft.net/tags/" target="_blank">

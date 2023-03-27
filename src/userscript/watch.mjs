@@ -5,25 +5,25 @@ const ctx = await esbuild.context({
   bundle: true,
   define: {
     "process.env.PLASMO_TARGET": '"userscript"',
-    "process.env.PLASMO_TAG": '"dev"'
+    "process.env.PLASMO_TAG": '"dev"',
   },
   alias: {
     "data-text:./style.scss": "src/contents/style.scss",
-    "~storage/chrome": "src/storage/userscript.ts"
+    "~storage/chrome": "src/storage/userscript.ts",
   },
   loader: {
-    ".scss": "text"
+    ".scss": "text",
   },
   inject: ["src/userscript/hmr.ts"],
   target: ["chrome58", "firefox57", "safari11", "edge16"],
-  outfile: "build/userscript-dev/userscript.js"
+  outfile: "build/userscript-dev/userscript.js",
 })
 
 await ctx.watch()
 console.log("watching...")
 
 const { host, port } = await ctx.serve({
-  servedir: "build/userscript-dev"
+  servedir: "build/userscript-dev",
 })
 console.log(`Server is running at http://${host}:${port}/`)
 console.log("Hit CTRL-C to stop the server")

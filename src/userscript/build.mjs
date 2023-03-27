@@ -11,22 +11,22 @@ const result = await esbuild.build({
   entryPoints: ["src/contents/utags.ts"],
   bundle: true,
   banner: {
-    js: banner
+    js: banner,
   },
   define: {
     "process.env.PLASMO_TARGET": '"userscript"',
-    "process.env.PLASMO_TAG": '"production"'
+    "process.env.PLASMO_TAG": '"production"',
   },
   alias: {
     "data-text:./style.scss": "src/contents/style.scss",
-    "~storage/chrome": "src/storage/userscript.ts"
+    "~storage/chrome": "src/storage/userscript.ts",
   },
   loader: {
-    ".scss": "text"
+    ".scss": "text",
   },
   target: ["chrome58", "firefox57", "safari11", "edge16"],
   write: false,
-  outdir: "build/userscript-prod"
+  outdir: "build/userscript-prod",
 })
 
 for (const out of result.outputFiles) {
@@ -39,7 +39,7 @@ for (const out of result.outputFiles) {
     "author",
     "description",
     "description:zh-CN",
-    "license"
+    "license",
   ]) {
     text = text.replace("{" + key + "}", config[key])
   }

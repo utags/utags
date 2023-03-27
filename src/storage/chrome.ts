@@ -8,7 +8,7 @@ const setValue = async (key, value) => {
 
 const addValueChangeListener = (key, func) => {
   storage.watch({
-    [key]: func
+    [key]: func,
   })
 }
 

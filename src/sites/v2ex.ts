@@ -11,7 +11,7 @@ const site = {
       ".item_hot_topic_title a", // 右边栏标题
       '.box .cell .topic_info strong:first-of-type a[href*="/member/"]', // 帖子作者
       ".box .cell .topic_info .node", // 帖子节点
-      '#Main strong a.dark[href*="/member/"]' // 评论者
+      '#Main strong a.dark[href*="/member/"]', // 评论者
     ]
     return $$(patterns.join(","))
   },
@@ -36,7 +36,7 @@ const site = {
       '.header small a[href*="/member/"]', // 帖子详细页作者
       '.header a[href*="/go/"]', // 帖子详细页节点
       '.dock_area a[href*="/member/"]', // 个人主页回复列表作者
-      '.dock_area a[href*="/t/"]' // 个人主页回复列表帖子标题
+      '.dock_area a[href*="/t/"]', // 个人主页回复列表帖子标题
     ]
     const elements = $$(patterns.join(","))
 
@@ -52,7 +52,7 @@ const site = {
       // 分页
       "a.page_normal,a.page_current",
       // 回复数量
-      "a.count_livid"
+      "a.count_livid",
     ]
     const excludeElements = new Set($$(excludePatterns.join(",")))
 
@@ -114,7 +114,7 @@ const site = {
     }
 
     return nodes
-  }
+  },
 }
 
 export default site
