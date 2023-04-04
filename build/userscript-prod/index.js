@@ -70,7 +70,7 @@
         // 帖子作者
         ".box .cell .topic_info .node",
         // 帖子节点
-        '#Main strong a.dark[href*="/member/"]'
+        '#Main strong a.dark[href*="/member/"]',
         // 评论者
       ]
       return $$(patterns.join(","))
@@ -108,7 +108,7 @@
         // 帖子详细页节点
         '.dock_area a[href*="/member/"]',
         // 个人主页回复列表作者
-        '.dock_area a[href*="/t/"]'
+        '.dock_area a[href*="/t/"]',
         // 个人主页回复列表帖子标题
       ]
       const elements = $$(patterns.join(","))
@@ -124,7 +124,7 @@
         // 分页
         "a.page_normal,a.page_current",
         // 回复数量
-        "a.count_livid"
+        "a.count_livid",
       ]
       const excludeElements = new Set($$(excludePatterns.join(",")))
       function getCanonicalUrl2(url) {
@@ -179,7 +179,7 @@
         }
       }
       return nodes
-    }
+    },
   }
   var v2ex_default = site
 
@@ -258,7 +258,7 @@
     const urlMap = await getUrlMap()
     urlMap.meta = Object.assign({}, urlMap.meta, {
       extensionVersion,
-      databaseVersion
+      databaseVersion,
     })
     const newTags = mergeTags(tags, [])
     if (newTags.length === 0) {
@@ -270,7 +270,7 @@
       newMeta.created = newMeta.created || now
       urlMap[key] = {
         tags: newTags,
-        meta: newMeta
+        meta: newMeta,
       }
     }
     await setValue(STORAGE_KEY, urlMap)
@@ -407,7 +407,7 @@
         const newMata = Object.assign({}, orgMeta, meta, { created, updated })
         urlMap[key] = Object.assign({}, orgData, {
           tags: newTags,
-          meta: newMata
+          meta: newMata,
         })
         numberOfTags += Math.max(newTags.length - orgTags.length, 0)
         if (orgTags.length === 0) {
@@ -569,6 +569,13 @@
   }
   var countOfLinks = 0
   async function main() {
+    if ($("#utags_style")) {
+      console.log(
+        `[UTags] [${"userscript"}] Skip this, since another instance is already running.`,
+        location.href
+      )
+      return
+    }
     document.addEventListener("mouseover", (event) => {
       if (event.target && event.target.tagName === "A") {
       }
