@@ -29,9 +29,9 @@ export async function getTags(key: string) {
 export async function saveTags(
   key: string,
   tags: string[],
-  meta: Record<string, unknown>
+  meta: Record<string, any>
 ) {
-  console.log("saveTags 1", key, tags, meta)
+  // console.log("saveTags 1", key, tags, meta)
   const urlMap = await getUrlMap()
 
   urlMap.meta = Object.assign({}, urlMap.meta, {
@@ -52,7 +52,7 @@ export async function saveTags(
       tags: newTags,
       meta: newMeta,
     }
-    console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
+    // console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
   }
 
   await setValue(STORAGE_KEY, urlMap)
@@ -241,7 +241,7 @@ export async function migration() {
   }
 
   cachedUrlMap = await getUrlMap()
-  console.log(cachedUrlMap)
+  // console.log(cachedUrlMap)
   const meta = cachedUrlMap.meta || {}
 
   if (meta.databaseVersion !== databaseVersion) {

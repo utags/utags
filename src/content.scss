@@ -76,7 +76,7 @@
 /* Firefox does not support :has */
 /* vimium extension */
 html:has(#vimiumHintMarkerContainer) .utags_captain_tag {
-  opacity: 100%;
+  opacity: 99%;
   font-size: 10px;
   width: 12px;
   height: 12px;
@@ -86,36 +86,16 @@ html:has(#vimiumHintMarkerContainer) .utags_captain_tag {
   position: relative;
 }
 
-li:has(> .utags_favicon) {
-  display: flex;
-  align-items: center;
-}
-.utags_favicon {
-  width: 16px;
-  height: 16px;
-  margin-right: 10px;
-}
-
-[data-utags_list_node]:has(
-    [data-utags_condition_node] + .utags_ul .utags_text_tag[data-utags_tag="sb"]
-  ) {
+[data-utags_list_node*=",sb,"] {
   opacity: 10%;
 }
 
-[data-utags_list_node]:has(
-    [data-utags_condition_node]
-      + .utags_ul
-      .utags_text_tag[data-utags_tag="新用户"]
-  ) {
+[data-utags_list_node*=",新用户,"] {
   opacity: 50%;
 }
 
-[data-utags_list_node]:has(
-    [data-utags_condition_node]
-      + .utags_ul
-      .utags_text_tag[data-utags_tag="block"]
-  ) {
-  /*opacity: 2%;*/
+[data-utags_list_node*=",block,"] {
+  opacity: 5%;
   display: none;
 }
 
