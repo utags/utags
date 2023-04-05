@@ -21,6 +21,53 @@ Allow users to add custom tags to links.
 - 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
 - [手动安装浏览器扩展](manual-installation.md)
 
+## 使用方法
+
+- 鼠标移到帖子标题或用户名的上面，会显示标签图标。
+  ![screenshots](assets/screenshots-01.png)
+
+- 点击标签图标，输入标签，用逗号分开多个标签。
+  ![screenshots](assets/screenshots-02.png)
+
+- 帖子标题，用户名都可以设置标签。
+  ![screenshots](assets/screenshots-03.png)
+
+## 功能特点
+
+- 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
+- 不仅可以给用户打标签，还可以给帖子打标签
+- 在标签列表页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
+- 支持数据导出、导入
+- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
+- 除了 v2ex，以后还会支持更多的网站
+
+### 彩蛋
+
+- 标签设置为 'sb'，该用户的帖子或评论都会半透明显示，可以方便跳过价值低的内容
+- 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
+
+## 更新记录
+
+### v0.1.2
+
+- 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
+
+- [更多内容](release-notes/zh-CN.md)
+
+## Roadmap
+
+- 扩展实现 popup, option 页面功能
+- 网页内所有链接显示添加标签按钮
+- 支持更多的网站：
+  - Next: hacker news, lobsters, [DTO](https://dto.pipecraft.net/), P\*Hub
+- 支持自定义网站规则
+- 支持自定义标签样式
+- [列表页](https://utags.pipecraft.net/tags/)显示用户头像
+- 展示其他用户们的标签内容
+- 显示在哪个页面添加的标签
+- 多设备数据同步
+
 ## Development
 
 This extension/userscript built from [Browser Extension Starter and Userscript Starter](https://github.com/PipecraftNet/browser-extension-starter)
