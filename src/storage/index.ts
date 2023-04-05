@@ -5,7 +5,7 @@ import {
 } from "browser-extension-storage"
 import { isUrl, uniq } from "browser-extension-utils"
 
-const extensionVersion = "0.1.0"
+const extensionVersion = "0.1.2"
 const databaseVersion = 2
 const STORAGE_KEY = "extension.utags.urlmap"
 let cachedUrlMap
