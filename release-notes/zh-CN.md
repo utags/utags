@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## v0.1.2
+
+- 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
+
 ## v0.1.0
 
 - 基于 [Plasmo](https://www.plasmo.com/) 重构代码，提供浏览器扩展版本
