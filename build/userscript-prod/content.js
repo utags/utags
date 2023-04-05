@@ -3,7 +3,7 @@
 // @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签
 // @namespace            https://utags.pipecraft.net/
 // @homepage             https://utags.pipecraft.net/
-// @version              0.1.4
+// @version              0.1.5
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -15,18 +15,29 @@
 // @grant                GM_getValue
 // @grant                GM_addValueChangeListener
 // ==/UserScript==
+//
+//// Repository: https://github.com/utags/utags
+//// Usage and screenshots: https://github.com/utags/utags
+////
+//// Recent Updates
+//// - v0.1.5 2023.03.27
+////    - 添加更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
+////    - 修改 www.v2ex.com 匹配规则，支持更多页面，比如：提醒系统、账户余额等
+//// - v0.1.4 2023.03.20
+////    - 支持给 www.v2ex.com 节点添加标签
+////
 
 ;(() => {
   "use strict"
   var style_default =
-    '#utags_layer {\n  height: 200px;\n  width: 200px;\n  background-color: red;\n}\n\n.utags_ul {\n  display: inline;\n  list-style-type: none;\n  margin: 0px;\n  margin-left: 2px;\n  padding: 0px;\n  position: relative;\n  /*vertical-align: text-bottom;*/\n  line-height: 10px;\n}\n\n.utags_ul > li {\n  display: inline-flex;\n  align-items: center;\n}\n\n.utags_text_tag {\n  border: 1px solid red;\n  color: red !important;\n  border-radius: 3px;\n  padding: 1px 3px;\n  margin: 0px 3px;\n  font-size: 10px;\n  line-height: 10px;\n  font-weight: normal;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.utags_captain_tag,\n.utags_captain_tag2 {\n  border: none;\n  text-indent: -9999px;\n  width: 12px;\n  height: 12px;\n  padding: 0;\n  display: block;\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);\n  background-size: contain;\n}\n\n.utags_captain_tag {\n  opacity: 1%;\n  position: absolute;\n  top: 0px;\n  left: -2px;\n  padding: 0;\n  margin: 0;\n  border: none;\n  width: 4px;\n  height: 4px;\n  font-size: 1px;\n  background-color: #fff;\n}\n\n.utags_captain_tag:hover,\n.utags_captain_tag2:hover {\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K);\n}\n\n*:hover + .utags_ul .utags_captain_tag,\n.utags_ul:hover .utags_captain_tag,\n:not(a) + .utags_ul .utags_captain_tag {\n  opacity: 100%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n/* Firefox does not support :has */\n/* vimium extension */\nhtml:has(#vimiumHintMarkerContainer) .utags_captain_tag {\n  opacity: 99%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n:not(a) + .utags_ul .utags_captain_tag {\n  position: relative;\n}\n\n[data-utags_list_node*=",sb,"] {\n  opacity: 10%;\n}\n\n[data-utags_list_node*=",\u65B0\u7528\u6237,"] {\n  opacity: 50%;\n}\n\n[data-utags_list_node*=",block,"] {\n  opacity: 5%;\n  display: none;\n}\n\n[data-utags_list_node]:hover {\n  opacity: 100% !important;\n}\n'
+    '#utags_layer {  height: 200px;  width: 200px;  background-color: red;}.utags_ul {  display: inline;  list-style-type: none;  margin: 0px;  margin-left: 2px;  padding: 0px;  position: relative;  /*vertical-align: text-bottom;*/  line-height: 10px;}.utags_ul > li {  display: inline-flex;  align-items: center;}.utags_text_tag {  border: 1px solid red;  color: red !important;  border-radius: 3px;  padding: 1px 3px;  margin: 0px 3px;  font-size: 10px;  line-height: 10px;  font-weight: normal;  text-decoration: none;  cursor: pointer;}.utags_captain_tag,.utags_captain_tag2 {  border: none;  text-indent: -9999px;  width: 12px;  height: 12px;  padding: 0;  display: block;  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);  background-size: contain;}.utags_captain_tag {  opacity: 1%;  position: absolute;  top: 0px;  left: -2px;  padding: 0;  margin: 0;  border: none;  width: 4px;  height: 4px;  font-size: 1px;  background-color: #fff;}.utags_captain_tag:hover,.utags_captain_tag2:hover {  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K);}*:hover + .utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,:not(a) + .utags_ul .utags_captain_tag {  opacity: 100%;  font-size: 10px;  width: 12px;  height: 12px;}/* Firefox does not support :has *//* vimium extension */html:has(#vimiumHintMarkerContainer) .utags_captain_tag {  opacity: 99%;  font-size: 10px;  width: 12px;  height: 12px;}:not(a) + .utags_ul .utags_captain_tag {  position: relative;}[data-utags_list_node*=",\u6807\u9898\u515A,"],[data-utags_list_node*=",\u63A8\u5E7F,"],[data-utags_list_node*=",\u65E0\u804A,"],[data-utags_list_node*=",\u5FFD\u7565,"],[data-utags_list_node*=",sb,"] {  opacity: 10%;}[data-utags_list_node*=",\u5DF2\u9605,"],[data-utags_list_node*=",\u65B0\u7528\u6237,"] {  opacity: 50%;}[data-utags_list_node*=",hide,"],[data-utags_list_node*=",\u9690\u85CF,"],[data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],[data-utags_list_node*=",block,"] {  opacity: 5%;  display: none;}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"],[data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"] {  background-image: linear-gradient(to right, #ffffff, #fefce8) !important;  opacity: 100% !important;  display: block !important;}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"] {  background-image: linear-gradient(to right, #ffffff, #fef2f2) !important;}[data-utags_list_node]:hover {  opacity: 100% !important;}'
 
   var doc = document
   var uniq = (array) => [...new Set(array)]
   var $ = doc.querySelector.bind(doc)
   var $$ = doc.querySelectorAll.bind(doc)
   var createElement = doc.createElement.bind(doc)
-  var extensionVersion = "0.1.4"
+  var extensionVersion = "0.1.5"
   var databaseVersion = 2
   var isUrl = (text) => /^https?:\/\//.test(text)
   if (typeof Object.hasOwn !== "function") {
@@ -66,6 +77,13 @@
     },
     matchedNodes() {
       const patterns = [
+        // 所有页面帖子链接
+        'a[href*="/t/"]',
+        // 所有页面用户链接
+        'a[href*="/member/"]',
+        // 所有页面节点链接
+        'a[href*="/go/"]',
+        // TODO: 测试一段时间没问题时，下面都可以删掉
         '.topic_info a[href*="/member/"]',
         // 帖子作者，最后回复者
         "a.topic-link",
@@ -94,12 +112,33 @@
         // 个人主页回复列表帖子标题
       ]
       const elements = $$(patterns.join(","))
+      const excludePatterns = [
+        // 导航栏
+        ".site-nav a",
+        // 标签栏
+        ".cell_tabs a",
+        // 标签栏
+        ".tab-alt-container a",
+        // 标签栏
+        "#SecondaryTabs a",
+        // 分页
+        "a.page_normal,a.page_current",
+        // 回复数量
+        "a.count_livid",
+      ]
+      const excludeElements = new Set($$(excludePatterns.join(",")))
       function getCanonicalUrl2(url) {
         return url
           .replace(/[?#].*/, "")
           .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
       }
       const nodes = [...elements].map((element) => {
+        if (excludeElements.has(element)) {
+          return {}
+        }
+        if (element.querySelector("img")) {
+          return {}
+        }
         const key = getCanonicalUrl2(element.href)
         const title = element.textContent
         const meta = { title }
@@ -530,6 +569,13 @@
   }
   var countOfLinks = 0
   async function main() {
+    if ($("#utags_style")) {
+      console.log(
+        `[UTags] [${"userscript"}] Skip this, since another instance is already running.`,
+        location.href
+      )
+      return
+    }
     document.addEventListener("mouseover", (event) => {
       if (event.target && event.target.tagName === "A") {
       }
