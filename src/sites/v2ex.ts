@@ -17,6 +17,13 @@ const site = {
   },
   matchedNodes() {
     const patterns = [
+      // 所有页面帖子链接
+      'a[href*="/t/"]',
+      // 所有页面用户链接
+      'a[href*="/member/"]',
+      // 所有页面节点链接
+      'a[href*="/go/"]',
+      // TODO: 测试一段时间没问题时，下面都可以删掉
       '.topic_info a[href*="/member/"]', // 帖子作者，最后回复者
       "a.topic-link", // 帖子标题
       ".box .cell .topic_info .node", // 帖子节点
@@ -33,6 +40,22 @@ const site = {
     ]
     const elements = $$(patterns.join(","))
 
+    const excludePatterns = [
+      // 导航栏
+      ".site-nav a",
+      // 标签栏
+      ".cell_tabs a",
+      // 标签栏
+      ".tab-alt-container a",
+      // 标签栏
+      "#SecondaryTabs a",
+      // 分页
+      "a.page_normal,a.page_current",
+      // 回复数量
+      "a.count_livid",
+    ]
+    const excludeElements = new Set($$(excludePatterns.join(",")))
+
     function getCanonicalUrl(url) {
       return url
         .replace(/[?#].*/, "")
@@ -40,6 +63,14 @@ const site = {
     }
 
     const nodes = [...elements].map((element) => {
+      if (excludeElements.has(element)) {
+        return {}
+      }
+
+      if (element.querySelector("img")) {
+        return {}
+      }
+
       const key = getCanonicalUrl(element.href)
       const title = element.textContent
       const meta = { title }
