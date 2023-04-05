@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## v0.1.2
+
+- Solve the issue that the Firefox browser does not support the special functions of tags such as 'sb' and 'block'
+
 ## v0.1.0
 
 - Refactor code based on [Plasmo](https://www.plasmo.com/). Browser extensions are also available.
