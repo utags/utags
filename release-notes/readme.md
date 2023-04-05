@@ -2,6 +2,14 @@
 
 > English | [中文](zh-CN.md)
 
+## v0.1.4
+
+- Enable add tags to node links of www.v2ex.com
+
+## v0.1.3
+
+- Ensure storage behavior is consistent across Chrome extensions, Firefox extensions and Userscript.
+
 ## v0.1.2
 
 - Solve the issue that the Firefox browser does not support the special functions of tags such as 'sb' and 'block'
