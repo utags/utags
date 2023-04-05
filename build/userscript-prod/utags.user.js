@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.1.2
+// @version              0.1.4
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -111,6 +111,7 @@
         ".box .cell .topic-link",
         ".item_hot_topic_title a",
         '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
+        ".box .cell .topic_info .node",
         '#Main strong a.dark[href*="/member/"]',
       ]
       return $$(patterns.join(","))
@@ -119,6 +120,7 @@
       const patterns = [
         '.topic_info a[href*="/member/"]',
         "a.topic-link",
+        ".box .cell .topic_info .node",
         ".item_hot_topic_title a",
         '#Main strong a.dark[href*="/member/"]',
         '.topic_content a[href*="/member/"]',
@@ -126,6 +128,7 @@
         '.reply_content a[href*="/member/"]',
         '.reply_content a[href*="/t/"]',
         '.header small a[href*="/member/"]',
+        '.header a[href*="/go/"]',
         '.dock_area a[href*="/member/"]',
         '.dock_area a[href*="/t/"]',
       ]
@@ -158,6 +161,18 @@
             "https://www.v2ex.com" + location.pathname
           )
           const title = $("h1").textContent
+          const meta = { title }
+          header.utags = { key, meta }
+          nodes.push(header)
+        }
+      }
+      if (location.pathname.includes("/go/")) {
+        const header = $(".cell_ops.flex-one-row input")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = document.title.replace(/.*›\s*/, "").trim()
           const meta = { title }
           header.utags = { key, meta }
           nodes.push(header)
@@ -258,7 +273,7 @@
       GM_removeValueChangeListener(listenerId)
     }
   }
-  var extensionVersion = "0.1.2"
+  var extensionVersion = "0.1.4"
   var databaseVersion = 2
   var STORAGE_KEY = "extension.utags.urlmap"
   var cachedUrlMap
