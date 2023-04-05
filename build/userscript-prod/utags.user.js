@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.1.0
+// @version              0.1.2
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -91,7 +91,7 @@
       Object.prototype.hasOwnProperty.call(instance, prop)
   }
   var content_default =
-    "\uFEFF#utags_layer{height:200px;width:200px;background-color:red}.utags_ul{display:inline;list-style-type:none;margin:0px;margin-left:2px;padding:0px;position:relative;line-height:10px}.utags_ul>li{display:inline-flex;align-items:center}.utags_text_tag{border:1px solid red;color:red !important;border-radius:3px;padding:1px 3px;margin:0px 3px;font-size:10px;line-height:10px;font-weight:normal;text-decoration:none;cursor:pointer}.utags_captain_tag,.utags_captain_tag2{border:none;text-indent:-9999px;width:12px;height:12px;padding:0;display:block;background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);background-size:contain}.utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0;margin:0;border:none;width:4px;height:4px;font-size:1px;background-color:#fff}.utags_captain_tag:hover,.utags_captain_tag2:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K)}*:hover+.utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,:not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px;width:12px;height:12px}html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:100%;font-size:10px;width:12px;height:12px}:not(a)+.utags_ul .utags_captain_tag{position:relative}li:has(>.utags_favicon){display:flex;align-items:center}.utags_favicon{width:16px;height:16px;margin-right:10px}[data-utags_list_node]:has([data-utags_condition_node]+.utags_ul .utags_text_tag[data-utags_tag=sb]){opacity:10%}[data-utags_list_node]:has([data-utags_condition_node]+.utags_ul .utags_text_tag[data-utags_tag=\u65B0\u7528\u6237]){opacity:50%}[data-utags_list_node]:has([data-utags_condition_node]+.utags_ul .utags_text_tag[data-utags_tag=block]){display:none}[data-utags_list_node]:hover{opacity:100% !important}"
+    '\uFEFF#utags_layer{height:200px;width:200px;background-color:red}.utags_ul{display:inline;list-style-type:none;margin:0px;margin-left:2px;padding:0px;position:relative;line-height:10px}.utags_ul>li{display:inline-flex;align-items:center}.utags_text_tag{border:1px solid red;color:red !important;border-radius:3px;padding:1px 3px;margin:0px 3px;font-size:10px;line-height:10px;font-weight:normal;text-decoration:none;cursor:pointer}.utags_captain_tag,.utags_captain_tag2{border:none;text-indent:-9999px;width:12px;height:12px;padding:0;display:block;background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);background-size:contain}.utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0;margin:0;border:none;width:4px;height:4px;font-size:1px;background-color:#fff}.utags_captain_tag:hover,.utags_captain_tag2:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K)}*:hover+.utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,:not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px;width:12px;height:12px}html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:99%;font-size:10px;width:12px;height:12px}:not(a)+.utags_ul .utags_captain_tag{position:relative}[data-utags_list_node*=",sb,"]{opacity:10%}[data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}[data-utags_list_node*=",block,"]{opacity:5%;display:none}[data-utags_list_node]:hover{opacity:100% !important}'
   function createTag(tagName) {
     const a = createElement("a")
     a.textContent = tagName
@@ -212,7 +212,6 @@
       }
       set.add(element)
     }
-    console.log(set)
     return [...set]
   }
   var listeners = {}
@@ -259,7 +258,7 @@
       GM_removeValueChangeListener(listenerId)
     }
   }
-  var extensionVersion = "0.1.0"
+  var extensionVersion = "0.1.2"
   var databaseVersion = 2
   var STORAGE_KEY = "extension.utags.urlmap"
   var cachedUrlMap
@@ -276,7 +275,6 @@
     return cachedUrlMap[key] || { tags: [] }
   }
   async function saveTags(key, tags, meta) {
-    console.log("saveTags 1", key, tags, meta)
     const urlMap = await getUrlMap()
     urlMap.meta = Object.assign({}, urlMap.meta, {
       extensionVersion,
@@ -294,7 +292,6 @@
         tags: newTags,
         meta: newMeta,
       }
-      console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
     }
     await setValue(STORAGE_KEY, urlMap)
   }
@@ -450,7 +447,6 @@
       return
     }
     cachedUrlMap = await getUrlMap()
-    console.log(cachedUrlMap)
     const meta = cachedUrlMap.meta || {}
     if (meta.databaseVersion !== databaseVersion) {
       meta.databaseVersion = meta.databaseVersion || 1
@@ -519,24 +515,37 @@
     ul.setAttribute("class", "utags_ul")
     element.after(ul)
   }
-  function displayTags() {
-    const listNodes = getListNodes(hostname)
-    for (const node of listNodes) {
-      node.dataset.utags_list_node = ""
-    }
+  async function displayTags() {
     const conditionNodes = getConditionNodes(hostname)
     for (const node of conditionNodes) {
       node.dataset.utags_condition_node = ""
     }
     const nodes = matchedNodes(hostname)
-    nodes.map(async (node) => {
-      if (!node.utags || !node.utags.key) {
-        return
+    await Promise.all(
+      nodes.map(async (node) => {
+        if (!node.utags || !node.utags.key) {
+          return
+        }
+        const object = await getTags(node.utags.key)
+        const tags = object.tags || []
+        appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
+      })
+    )
+    const listNodes = getListNodes(hostname)
+    for (const node of listNodes) {
+      const tags = node.querySelectorAll(
+        "[data-utags_condition_node] + .utags_ul > li > .utags_text_tag[data-utags_tag]"
+      )
+      if (tags.length > 0) {
+        node.dataset.utags_list_node =
+          [...tags].reduce(
+            (accumulator, tag) => accumulator + "," + tag.textContent,
+            ""
+          ) + ","
+      } else {
+        node.dataset.utags_list_node = ""
       }
-      const object = await getTags(node.utags.key)
-      const tags = object.tags || []
-      appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
-    })
+    }
   }
   async function outputData() {
     if (
@@ -584,14 +593,13 @@
     getStyle()
     setTimeout(outputData, 1)
     await initStorage()
-    displayTags()
+    await displayTags()
     countOfLinks = $$("a:not(.utags_text_tag)").length
-    setInterval(() => {
+    setInterval(async () => {
       const count = $$("a:not(.utags_text_tag)").length
       if (countOfLinks !== count) {
-        console.log(countOfLinks, count)
         countOfLinks = count
-        displayTags()
+        await displayTags()
       }
     }, 1e3)
   }
