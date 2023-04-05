@@ -1,18 +1,18 @@
 {
-  "name": "my-extension",
-  "displayName": "My-Extension",
-  "displayName:zh-CN": "我的扩展",
+  "name": "utags",
+  "displayName": "🏷️ UTags - Add usertags to links",
+  "displayName:zh-CN": "🏷️ 小鱼标签 (UTags) - 为链接添加用户标签",
   "version": "0.1.0",
-  "description": "try to take over the world!",
-  "description:zh-CN": "让世界更美好！",
-  "author": "You",
-  "namespace": "https://github.com/utags/browser-extension-starter",
-  "icon": "https://www.tampermonkey.net/favicon.ico",
+  "description": "Allow users to add custom tags to links.",
+  "description:zh-CN": "此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。",
+  "author": "Pipecraft",
+  "namespace": "https://utags.pipecraft.net/",
+  "icon": "https://utags.pipecraft.net/favicon.png",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/utags/browser-extension-starter/issues"
+    "url": "https://github.com/utags/utags/issues"
   },
-  "homepage": "https://github.com/utags/browser-extension-starter#readme",
+  "homepage": "https://github.com/utags/utags#readme",
   "scripts": {
     "p": "prettier --write .",
     "lint": "run-s lint:*",
