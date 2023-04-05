@@ -86,17 +86,40 @@ html:has(#vimiumHintMarkerContainer) .utags_captain_tag {
   position: relative;
 }
 
+[data-utags_list_node*=",标题党,"],
+[data-utags_list_node*=",推广,"],
+[data-utags_list_node*=",无聊,"],
+[data-utags_list_node*=",忽略,"],
 [data-utags_list_node*=",sb,"] {
   opacity: 10%;
 }
 
+[data-utags_list_node*=",已阅,"],
 [data-utags_list_node*=",新用户,"] {
   opacity: 50%;
 }
 
+[data-utags_list_node*=",hide,"],
+[data-utags_list_node*=",隐藏,"],
+[data-utags_list_node*=",不再显示,"],
 [data-utags_list_node*=",block,"] {
   opacity: 5%;
   display: none;
+}
+
+[data-utags_list_node*=",热门,"],
+[data-utags_list_node*=",收藏,"],
+[data-utags_list_node*=",关注,"],
+[data-utags_list_node*=",稍后阅读,"] {
+  background-image: linear-gradient(to right, #ffffff, #fefce8) !important;
+  opacity: 100% !important;
+  display: block !important;
+}
+
+[data-utags_list_node*=",热门,"],
+[data-utags_list_node*=",收藏,"],
+[data-utags_list_node*=",关注,"] {
+  background-image: linear-gradient(to right, #ffffff, #fef2f2) !important;
 }
 
 [data-utags_list_node]:hover {
