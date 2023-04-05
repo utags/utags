@@ -1,4 +1,29 @@
-# Browser Extension Starter and Userscript Starter
+# UTags - Add usertags to links
+
+Allow users to add custom tags to links.
+
+## 小鱼标签 (UTags) - 为链接添加用户标签
+
+此扩展/油猴脚本允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
+
+**UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
+
+目前支持的网站
+
+- www.v2ex.com
+- 更多网站会陆续支持
+
+## 安装
+
+- 类 Chrome 浏览器: 即将上架 Chrome 商店
+- Edge 浏览器: 即将上架 Edge 商店
+- Firefox 浏览器: 已上架 [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)，[点击这里](https://addons.mozilla.org/firefox/addon/utags/)安装。
+- 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- [手动安装浏览器扩展](manual-installation.md)
+
+## Development
+
+This extension/userscript is built from [Browser Extension Starter and Userscript Starter](https://github.com/utags/browser-extension-starter)
 
 ## Features
 
