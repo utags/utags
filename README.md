@@ -49,6 +49,10 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+### v0.1.4
+
+- 支持给 www.v2ex.com 节点添加标签
+
 ### v0.1.2
 
 - 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题

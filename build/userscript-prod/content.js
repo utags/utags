@@ -3,7 +3,7 @@
 // @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签
 // @namespace            https://utags.pipecraft.net/
 // @homepage             https://utags.pipecraft.net/
-// @version              0.1.2
+// @version              0.1.4
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -21,17 +21,19 @@
   var style_default =
     '#utags_layer {\n  height: 200px;\n  width: 200px;\n  background-color: red;\n}\n\n.utags_ul {\n  display: inline;\n  list-style-type: none;\n  margin: 0px;\n  margin-left: 2px;\n  padding: 0px;\n  position: relative;\n  /*vertical-align: text-bottom;*/\n  line-height: 10px;\n}\n\n.utags_ul > li {\n  display: inline-flex;\n  align-items: center;\n}\n\n.utags_text_tag {\n  border: 1px solid red;\n  color: red !important;\n  border-radius: 3px;\n  padding: 1px 3px;\n  margin: 0px 3px;\n  font-size: 10px;\n  line-height: 10px;\n  font-weight: normal;\n  text-decoration: none;\n  cursor: pointer;\n}\n\n.utags_captain_tag,\n.utags_captain_tag2 {\n  border: none;\n  text-indent: -9999px;\n  width: 12px;\n  height: 12px;\n  padding: 0;\n  display: block;\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);\n  background-size: contain;\n}\n\n.utags_captain_tag {\n  opacity: 1%;\n  position: absolute;\n  top: 0px;\n  left: -2px;\n  padding: 0;\n  margin: 0;\n  border: none;\n  width: 4px;\n  height: 4px;\n  font-size: 1px;\n  background-color: #fff;\n}\n\n.utags_captain_tag:hover,\n.utags_captain_tag2:hover {\n  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K);\n}\n\n*:hover + .utags_ul .utags_captain_tag,\n.utags_ul:hover .utags_captain_tag,\n:not(a) + .utags_ul .utags_captain_tag {\n  opacity: 100%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n/* Firefox does not support :has */\n/* vimium extension */\nhtml:has(#vimiumHintMarkerContainer) .utags_captain_tag {\n  opacity: 99%;\n  font-size: 10px;\n  width: 12px;\n  height: 12px;\n}\n\n:not(a) + .utags_ul .utags_captain_tag {\n  position: relative;\n}\n\n[data-utags_list_node*=",sb,"] {\n  opacity: 10%;\n}\n\n[data-utags_list_node*=",\u65B0\u7528\u6237,"] {\n  opacity: 50%;\n}\n\n[data-utags_list_node*=",block,"] {\n  opacity: 5%;\n  display: none;\n}\n\n[data-utags_list_node]:hover {\n  opacity: 100% !important;\n}\n'
 
-  // src/utils/index.ts
   var doc = document
   var uniq = (array) => [...new Set(array)]
   var $ = doc.querySelector.bind(doc)
   var $$ = doc.querySelectorAll.bind(doc)
   var createElement = doc.createElement.bind(doc)
-  var extensionVersion = "0.1.2"
+  var extensionVersion = "0.1.4"
   var databaseVersion = 2
   var isUrl = (text) => /^https?:\/\//.test(text)
+  if (typeof Object.hasOwn !== "function") {
+    Object.hasOwn = (instance, prop) =>
+      Object.prototype.hasOwnProperty.call(instance, prop)
+  }
 
-  // src/components/tag.ts
   function createTag(tagName) {
     const a = createElement("a")
     a.textContent = tagName
@@ -42,7 +44,6 @@
     return a
   }
 
-  // src/sites/v2ex.ts
   var site = {
     getListNodes() {
       const patterns = [".box .cell"]
@@ -56,6 +57,8 @@
         // 右边栏标题
         '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
         // 帖子作者
+        ".box .cell .topic_info .node",
+        // 帖子节点
         '#Main strong a.dark[href*="/member/"]',
         // 评论者
       ]
@@ -67,6 +70,8 @@
         // 帖子作者，最后回复者
         "a.topic-link",
         // 帖子标题
+        ".box .cell .topic_info .node",
+        // 帖子节点
         ".item_hot_topic_title a",
         // 右边栏标题
         '#Main strong a.dark[href*="/member/"]',
@@ -81,6 +86,8 @@
         // 回复内容中帖子链接
         '.header small a[href*="/member/"]',
         // 帖子详细页作者
+        '.header a[href*="/go/"]',
+        // 帖子详细页节点
         '.dock_area a[href*="/member/"]',
         // 个人主页回复列表作者
         '.dock_area a[href*="/t/"]',
@@ -120,12 +127,23 @@
           nodes.push(header)
         }
       }
+      if (location.pathname.includes("/go/")) {
+        const header = $(".cell_ops.flex-one-row input")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = document.title.replace(/.*›\s*/, "").trim()
+          const meta = { title }
+          header.utags = { key, meta }
+          nodes.push(header)
+        }
+      }
       return nodes
     },
   }
   var v2ex_default = site
 
-  // src/sites/index.ts
   function matchedSite(hostname2) {
     if (/v2ex\.com|v2hot\./.test(hostname2)) {
       return v2ex_default
@@ -174,20 +192,15 @@
     return [...set]
   }
 
-  // src/storage/userscript.js
-  if (
-    typeof GM_getValue !== "function" &&
-    typeof document.GM_getValue === "function"
-  ) {
-    GM_getValue = document.GM_getValue
-    GM_setValue = document.GM_setValue
-    GM_addValueChangeListener = document.GM_addValueChangeListener
+  var getValue = (key) => {
+    const value = GM_getValue(key)
+    return value && value !== "undefined" ? JSON.parse(value) : void 0
   }
-  var getValue = (key) => JSON.parse(GM_getValue(key) || "{}")
-  var setValue = (key, value) => GM_setValue(key, JSON.stringify(value))
+  var setValue = (key, value) => {
+    if (value !== void 0) GM_setValue(key, JSON.stringify(value))
+  }
   var addValueChangeListener = GM_addValueChangeListener
 
-  // src/storage/index.ts
   var STORAGE_KEY = "extension.utags.urlmap"
   var cachedUrlMap
   async function getUrlMap() {
@@ -399,7 +412,6 @@
     }
   }
 
-  // src/contents/utags.ts
   var hostname = location.hostname
   var getStyle = () => {
     const style = createElement("style")
