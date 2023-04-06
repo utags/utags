@@ -56,7 +56,7 @@ const site = {
     ]
     const excludeElements = new Set($$(excludePatterns.join(",")))
 
-    function getCanonicalUrl(url) {
+    function getCanonicalUrl(url: string) {
       return url
         .replace(/[?#].*/, "")
         .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")

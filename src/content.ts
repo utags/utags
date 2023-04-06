@@ -23,8 +23,8 @@ const getStyle = () => {
 }
 
 function appendTagsToPage(
-  element,
-  key,
+  element: HTMLElement,
+  key: string,
   tags: string[],
   meta: Record<string, any>
 ) {
@@ -124,7 +124,7 @@ async function outputData() {
         // Triger change event
         textarea.click()
       } else if (textarea.dataset.utags_type === "import") {
-        const data = textarea.value
+        const data = textarea.value as string
         try {
           const result = await mergeData(JSON.parse(data))
           textarea.value = JSON.stringify(result)
@@ -151,6 +151,16 @@ async function initStorage() {
 
 let countOfLinks = 0
 async function main() {
+  if ($("#utags_style")) {
+    // already running
+    console.log(
+      // eslint-disable-next-line n/prefer-global/process
+      `[UTags] [${process.env.PLASMO_TARGET}-${process.env.PLASMO_TAG}] Skip this, since another instance is already running.`,
+      location.href
+    )
+    return
+  }
+
   document.addEventListener("mouseover", (event) => {
     if (event.target && event.target.tagName === "A") {
       // TODO: delay display utags for event.target
