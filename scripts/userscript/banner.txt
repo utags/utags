@@ -1,0 +1,16 @@
+// ==UserScript==
+// @name                 {displayName}
+// @name:zh-CN           {displayName:zh-CN}
+// @namespace            {namespace}
+// @homepage             {homepage}
+// @supportURL           {bugs.url}
+// @version              {version}
+// @description          {description}
+// @description:zh-CN    {description:zh-CN}
+// @icon                 {icon}
+// @author               {author}
+// @license              {license}
+// @match                https://*/*
+// @match                http://*/*
+// ==/UserScript==
+//
