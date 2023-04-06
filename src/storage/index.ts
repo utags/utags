@@ -5,20 +5,33 @@ import {
 } from "browser-extension-storage"
 import { isUrl, uniq } from "browser-extension-utils"
 
+type TagsAndMeta = {
+  tags: string[]
+  meta?: ItemMeta
+}
+
+type ItemMeta = Record<string, any>
+
+type UrlMapMeta = {
+  extensionVersion: string
+  databaseVersion: number
+}
+type UrlMap = Record<string, TagsAndMeta | UrlMapMeta>
+
 const extensionVersion = "0.1.5"
 const databaseVersion = 2
-const STORAGE_KEY = "extension.utags.urlmap"
-let cachedUrlMap
+const storageKey = "extension.utags.urlmap"
+let cachedUrlMap: UrlMap
 
-export async function getUrlMap() {
-  return (await getValue(STORAGE_KEY)) || {}
+export async function getUrlMap(): Promise<UrlMap> {
+  return ((await getValue(storageKey)) as UrlMap) || ({} as UrlMap)
 }
 
-async function getUrlMapVesion1() {
-  return getValue("plugin.utags.tags.v1")
+async function getUrlMapVesion1(): Promise<Record<string, unknown>> {
+  return getValue("plugin.utags.tags.v1") as Promise<Record<string, unknown>>
 }
 
-export async function getTags(key: string) {
+export async function getTags(key: string): Promise<Record<string, unknown>> {
   if (!cachedUrlMap) {
     cachedUrlMap = await getUrlMap()
   }
@@ -34,7 +47,7 @@ export async function saveTags(
   // console.log("saveTags 1", key, tags, meta)
   const urlMap = await getUrlMap()
 
-  urlMap.meta = Object.assign({}, urlMap.meta, {
+  urlMap.meta = Object.assign({}, urlMap.meta as Record<string, unknown>, {
     extensionVersion,
     databaseVersion,
   })
@@ -45,9 +58,11 @@ export async function saveTags(
     delete urlMap[key]
   } else {
     const now = Date.now()
-    const data = urlMap[key] || {}
-    const newMeta = Object.assign({}, data.meta, meta, { updated: now })
-    newMeta.created = newMeta.created || now
+    const data = (urlMap[key] as TagsAndMeta) || ({} as TagsAndMeta)
+    const newMeta = Object.assign({}, data.meta, meta, {
+      updated: now,
+    }) as ItemMeta
+    newMeta.created = (newMeta.created as number) || now
     urlMap[key] = {
       tags: newTags,
       meta: newMeta,
@@ -55,11 +70,11 @@ export async function saveTags(
     // console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
   }
 
-  await setValue(STORAGE_KEY, urlMap)
+  await setValue(storageKey, urlMap)
 }
 
 export function addTagsValueChangeListener(func) {
-  addValueChangeListener(STORAGE_KEY, func)
+  addValueChangeListener(storageKey, func)
 }
 
 addTagsValueChangeListener(async () => {
@@ -71,7 +86,7 @@ async function reload() {
   console.log("Current extionsion is outdated, need reload page")
   const urlMap = await getUrlMap()
   urlMap.meta = urlMap.meta || {}
-  await setValue(STORAGE_KEY, urlMap)
+  await setValue(storageKey, urlMap)
   location.reload()
 }
 
@@ -115,7 +130,7 @@ function isValidTags(tags) {
   return Array.isArray(tags)
 }
 
-function mergeTags(tags, tags2) {
+function mergeTags(tags: string[], tags2: string[]) {
   tags = tags || []
   tags2 = tags2 || []
   return uniq(
@@ -123,10 +138,10 @@ function mergeTags(tags, tags2) {
       .concat(tags2)
       .map((v) => (v ? String(v).trim() : v))
       .filter(Boolean)
-  )
+  ) as string[]
 }
 
-async function migrationData(urlMap) {
+async function migrationData(urlMap: Record<string, unknown>) {
   console.log("Before migration", JSON.stringify(urlMap))
   const meta = urlMap.meta || {}
 
@@ -174,7 +189,7 @@ async function migrationData(urlMap) {
   return urlMap
 }
 
-export async function mergeData(urlMapNew) {
+export async function mergeData(urlMapNew: Record<string, unknown>) {
   if (typeof urlMapNew !== "object") {
     throw new TypeError("Invalid data format")
   }
@@ -202,13 +217,13 @@ export async function mergeData(urlMapNew) {
       continue
     }
 
-    const tags = urlMapNew[key].tags || []
-    const meta = urlMapNew[key].meta || {}
+    const tags = (urlMapNew[key].tags as string[]) || []
+    const meta = (urlMapNew[key].meta as ItemMeta) || {}
     if (!isValidTags(tags)) {
       throw new Error("Invaid data format.")
     }
 
-    const orgData = urlMap[key] || { tags: [] }
+    const orgData: TagsAndMeta = (urlMap[key] as TagsAndMeta) || { tags: [] }
     const orgTags = orgData.tags || []
     const newTags = mergeTags(orgTags, tags)
     if (newTags.length > 0) {
@@ -227,7 +242,7 @@ export async function mergeData(urlMapNew) {
     }
   }
 
-  await setValue(STORAGE_KEY, urlMap)
+  await setValue(storageKey, urlMap)
   console.log(
     `数据已成功导入，新增 ${numberOfLinks} 条链接，新增 ${numberOfTags} 条标签。`
   )
@@ -242,7 +257,7 @@ export async function migration() {
 
   cachedUrlMap = await getUrlMap()
   // console.log(cachedUrlMap)
-  const meta = cachedUrlMap.meta || {}
+  const meta = (cachedUrlMap.meta as UrlMapMeta) || ({} as UrlMapMeta)
 
   if (meta.databaseVersion !== databaseVersion) {
     meta.databaseVersion = meta.databaseVersion || 1

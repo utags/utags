@@ -28,7 +28,7 @@ export function getConditionNodes(hostname: string) {
   return []
 }
 
-function getCanonicalUrl(url) {
+function getCanonicalUrl(url: string) {
   return url
 }
 
