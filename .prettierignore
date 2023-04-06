@@ -1,0 +1,11 @@
+node_modules/**
+LICENSE
+.plasmo/**
+build/chrome-*/**
+build/firefox-*/**
+build/bookmarklet-*/**
+build/*-dev/**
+*.min.js
+pnpm-lock.yaml
+tsconfig.json
+tsconfig.tsbuildinfo
