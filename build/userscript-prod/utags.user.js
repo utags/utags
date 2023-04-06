@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.1.5
+// @version              0.1.6
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -96,7 +96,10 @@
     const a = createElement("a")
     a.textContent = tagName
     a.dataset.utags_tag = tagName
-    a.setAttribute("href", "https://utags.pipecraft.net/tags/#" + tagName)
+    a.setAttribute(
+      "href",
+      "https://utags.pipecraft.net/tags/#" + encodeURIComponent(tagName)
+    )
     a.setAttribute("target", "_blank")
     a.setAttribute("class", "utags_text_tag")
     return a
@@ -291,12 +294,12 @@
       GM_removeValueChangeListener(listenerId)
     }
   }
-  var extensionVersion = "0.1.5"
+  var extensionVersion = "0.1.6"
   var databaseVersion = 2
-  var STORAGE_KEY = "extension.utags.urlmap"
+  var storageKey = "extension.utags.urlmap"
   var cachedUrlMap
   async function getUrlMap() {
-    return (await getValue(STORAGE_KEY)) || {}
+    return (await getValue(storageKey)) || {}
   }
   async function getUrlMapVesion1() {
     return getValue("plugin.utags.tags.v1")
@@ -319,17 +322,19 @@
     } else {
       const now = Date.now()
       const data = urlMap[key] || {}
-      const newMeta = Object.assign({}, data.meta, meta, { updated: now })
+      const newMeta = Object.assign({}, data.meta, meta, {
+        updated: now,
+      })
       newMeta.created = newMeta.created || now
       urlMap[key] = {
         tags: newTags,
         meta: newMeta,
       }
     }
-    await setValue(STORAGE_KEY, urlMap)
+    await setValue(storageKey, urlMap)
   }
   function addTagsValueChangeListener(func) {
-    addValueChangeListener(STORAGE_KEY, func)
+    addValueChangeListener(storageKey, func)
   }
   addTagsValueChangeListener(async () => {
     cachedUrlMap = null
@@ -339,7 +344,7 @@
     console.log("Current extionsion is outdated, need reload page")
     const urlMap = await getUrlMap()
     urlMap.meta = urlMap.meta || {}
-    await setValue(STORAGE_KEY, urlMap)
+    await setValue(storageKey, urlMap)
     location.reload()
   }
   async function checkVersion() {
@@ -468,7 +473,7 @@
         delete urlMap[key]
       }
     }
-    await setValue(STORAGE_KEY, urlMap)
+    await setValue(storageKey, urlMap)
     console.log(
       `\u6570\u636E\u5DF2\u6210\u529F\u5BFC\u5165\uFF0C\u65B0\u589E ${numberOfLinks} \u6761\u94FE\u63A5\uFF0C\u65B0\u589E ${numberOfTags} \u6761\u6807\u7B7E\u3002`
     )
@@ -619,6 +624,13 @@
   }
   var countOfLinks = 0
   async function main() {
+    if ($("#utags_style")) {
+      console.log(
+        `[UTags] [${"userscript"}-${"prod"}] Skip this, since another instance is already running.`,
+        location.href
+      )
+      return
+    }
     document.addEventListener("mouseover", (event) => {
       if (event.target && event.target.tagName === "A") {
       }
