@@ -18,6 +18,8 @@
 //// Usage and screenshots: https://github.com/utags/utags
 ////
 //// Recent Updates
+//// - v0.1.6 2023.04.06
+////    - Rebase on utags/browser-extension-starter@v2
 //// - v0.1.5 2023.03.27
 ////    - 添加更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
 ////    - 修改 www.v2ex.com 匹配规则，支持更多页面，比如：提醒系统、账户余额等

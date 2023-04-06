@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## v0.1.6
+
+- Rebase on utags/browser-extension-starter@v2
+
 ## v0.1.5
 
 - Add more special tags, such as 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
