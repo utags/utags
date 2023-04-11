@@ -1,3 +1,18 @@
+#myprefix_div {
+  color: black;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
+  -moz-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
+  box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22) !important;
+
+  div {
+    color: green;
+  }
+}
+
 #myprefix_test_link {
   --border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
   --border-width: 0.125em;

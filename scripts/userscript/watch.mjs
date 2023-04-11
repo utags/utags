@@ -24,7 +24,7 @@ const grants = [...matched]
   .map((v) => `// @grant${" ".repeat(8)}${v}`)
   .join("\n")
 
-const apiExports = [...matched].map((v) => `  document.${v} = ${v};`).join("\n")
+const apiExports = [...matched].map((v) => `    "${v}": ${v},`).join("\n")
 
 const code = `// ==UserScript==
 // @name         localhost:${port}
@@ -43,7 +43,9 @@ ${grants}
     return;
   }
 
+  document.GMFunctions = {
 ${apiExports}
+  }
 
   const script = document.createElement("script");
   script.src = "http://localhost:${port}/content.js";

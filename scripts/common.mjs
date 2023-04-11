@@ -1,4 +1,6 @@
 import * as esbuild from "esbuild"
+import fs from "node:fs"
+import sass from "sass"
 
 const EMOJI_LIST = [
   "⚽️",
@@ -24,23 +26,75 @@ export const logger = (target, emoji) => {
   }
 }
 
+const schemeImportPlugin = ({ compressCss }) => ({
+  name: "schemeImport",
+  setup(build) {
+    build.onResolve({ filter: /^[\w-]+:/ }, async (args) => {
+      const result = await build.resolve(args.path.split(":")[1], {
+        kind: "import-statement",
+        resolveDir: "./src",
+      })
+      if (result.errors.length > 0) {
+        return { errors: result.errors }
+      }
+
+      return { path: result.path, namespace: "schemeImport-ns" }
+    })
+    build.onLoad(
+      { filter: /\.(s[ac]ss|css)$/, namespace: "schemeImport-ns" },
+      async (args) => ({
+        contents: (
+          (await sass.compileAsync(args.path, {
+            style: compressCss ? "compressed" : "expanded",
+          })) || {
+            css: "",
+          }
+        ).css,
+        loader: "text",
+      })
+    )
+    build.onLoad(
+      { filter: /.*/, namespace: "schemeImport-ns" },
+      async (args) => ({
+        contents: await fs.promises.readFile(args.path),
+        loader: "text",
+      })
+    )
+  },
+})
+
 export const getBuildOptions = (target, tag, fileName = "content") => {
   return {
     entryPoints: [`src/${fileName}.ts`],
     bundle: true,
+    plugins: [schemeImportPlugin({ compressCss: tag === "prod" })],
     define: {
       "process.env.PLASMO_TARGET": `"${target}"`,
       "process.env.PLASMO_TAG": `"${tag}"`,
     },
-    alias: {
-      [`data-text:./${fileName}.scss`]: `src/${fileName}.scss`,
-    },
-    loader: {
-      ".scss": "text",
-    },
     target: ["chrome58", "firefox57", "safari11", "edge16"],
     outfile: `build/${target}-${tag}/${fileName}.js`,
   }
+}
+
+const waitUntilFileExists = async (path, timeout = 10_000) => {
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      reject(new Error("File does not exits. " + path))
+    }, timeout)
+
+    const check = () => {
+      if (fs.existsSync(path)) {
+        clearInterval(timeoutId)
+        resolve()
+        return
+      }
+
+      setTimeout(check, 100)
+    }
+
+    check()
+  })
 }
 
 export const runDevServer = async (buildOptions, target, tag) => {
@@ -49,6 +103,8 @@ export const runDevServer = async (buildOptions, target, tag) => {
 
   await ctx.watch()
   log("watching...")
+
+  await waitUntilFileExists(buildOptions.outfile)
 
   const { host, port } = await ctx.serve({
     servedir: `build/${target}-${tag}`,
