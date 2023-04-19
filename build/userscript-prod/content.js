@@ -65,7 +65,10 @@
       for (const name in attributes) {
         if (Object.hasOwn(attributes, name)) {
           const value = attributes[name]
-          if (name === "textContent") {
+          if (value === void 0) {
+            continue
+          }
+          if (/^(value|textContent|innerText|innerHTML)$/.test(name)) {
             element[name] = value
           } else if (name === "style") {
             setStyle(element, value, true)
