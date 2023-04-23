@@ -4,14 +4,16 @@ import fs from "node:fs"
 import { getBuildOptions } from "../common.mjs"
 
 const target = "module"
+const tag = "prod"
 
 // TODO: add name and version to output
-// const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
+const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 
 const buildOptions = {
   ...getBuildOptions(target, "prod"),
   minify: false,
   sourcemap: false,
+  outfile: `build/${target}-${tag}/${config.name}.js`,
 }
 buildOptions.alias = {
   ...buildOptions.alias,
@@ -20,17 +22,16 @@ buildOptions.alias = {
 
 await esbuild.build(buildOptions)
 
-let text = fs.readFileSync(`build/${target}-prod/content.js`, "utf8")
+let text = fs.readFileSync(buildOptions.outfile, "utf8")
 // Remove all commenets staret with '// '
 text = text.replace(/^\s*\/\/ [^=@].*$/gm, "")
-text = text.replace(/\\n/g, "")
 text = text.replace(/\n+/gm, "\n")
 
-fs.writeFileSync(`build/${target}-prod/content.js`, text)
+fs.writeFileSync(buildOptions.outfile, text)
 
 await esbuild.build({
   ...buildOptions,
   minify: true,
   sourcemap: true,
-  outfile: `build/${target}-prod/content.min.js`,
+  outfile: `build/${target}-${tag}/${config.name}.min.js`,
 })

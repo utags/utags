@@ -5,14 +5,16 @@ import fs from "node:fs"
 import { getBuildOptions } from "../common.mjs"
 
 const target = "bookmarklet"
+const tag = "prod"
 
 // TODO: add name and version to output
-// const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
+const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 
 const buildOptions = {
   ...getBuildOptions(target, "prod"),
   minify: true,
   sourcemap: false,
+  outfile: `build/${target}-${tag}/${config.name}.bookmarklet.link`,
 }
 buildOptions.alias = {
   ...buildOptions.alias,
@@ -21,7 +23,7 @@ buildOptions.alias = {
 
 await esbuild.build(buildOptions)
 
-const text = fs.readFileSync(`build/${target}-prod/content.js`, "utf8")
+const text = fs.readFileSync(buildOptions.outfile, "utf8")
 const options = {
   urlencode: true,
   iife: false,
@@ -29,4 +31,4 @@ const options = {
   transpile: true,
 }
 const bookmarklet = bookmarkleter(text, options)
-fs.writeFileSync(`build/${target}-prod/content.js`, bookmarklet)
+fs.writeFileSync(buildOptions.outfile, bookmarklet)

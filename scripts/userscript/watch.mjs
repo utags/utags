@@ -65,7 +65,8 @@ const html = `<html>
     <title>Install Extension - target: ${target}</title>
   </head>
   <body>
-    <p>Add this code to Tampermonkey</p>
+    <p><a href="index.user.js">Click this to install</a></p>
+    <p>Or add the code below to Tampermonkey</p>
     <textarea
       style="width: 100%; height: 80%; padding: 10px; box-sizing: border-box">
 ${code}</textarea>
@@ -77,3 +78,4 @@ ${code}</textarea>
 `
 
 fs.writeFileSync(`build/${target}-${tag}/index.html`, html)
+fs.writeFileSync(`build/${target}-${tag}/index.user.js`, code)

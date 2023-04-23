@@ -1,19 +1,26 @@
 import * as esbuild from "esbuild"
 import fs from "node:fs"
+import process from "node:process"
 
 import { getBuildOptions } from "../common.mjs"
 
 const target = "userscript"
+const tag = process.argv.includes("--staging") ? "staging" : "prod"
 
 const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 
-const banner = fs.readFileSync("scripts/userscript/banner.txt", "utf8")
+let banner = fs.readFileSync("scripts/userscript/banner.txt", "utf8")
+
+if (tag !== "prod") {
+  banner = banner.replace(/({displayName(:.+)?})/gm, `$1 - ${tag}`)
+}
 
 const buildOptions = {
-  ...getBuildOptions(target, "prod"),
+  ...getBuildOptions(target, tag),
   banner: {
     js: banner,
   },
+  outfile: `build/${target}-${tag}/${config.name}.user.js`,
 }
 buildOptions.alias = {
   ...buildOptions.alias,
@@ -23,7 +30,7 @@ buildOptions.alias = {
 
 await esbuild.build(buildOptions)
 
-let text = fs.readFileSync(`build/${target}-prod/content.js`, "utf8")
+let text = fs.readFileSync(buildOptions.outfile, "utf8")
 
 if (config.bugs && config.bugs.url) {
   text = text.replace("{bugs.url}", config.bugs.url)
@@ -53,7 +60,6 @@ text = text.replace("// ==/UserScript==", `${grants}\n// ==/UserScript==`)
 text = text.replace("{", '{\n  "use strict";')
 // Remove all commenets staret with '// '
 text = text.replace(/^\s*\/\/ [^=@].*$/gm, "")
-text = text.replace(/\\n/g, "")
 text = text.replace(/\n+/gm, "\n")
 
-fs.writeFileSync(`build/${target}-prod/content.js`, text)
+fs.writeFileSync(buildOptions.outfile, text)

@@ -5,6 +5,8 @@ import { getBuildOptions, runDevServer } from "../common.mjs"
 const target = "bookmarklet"
 const tag = "dev"
 
+const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
+
 const buildOptions = getBuildOptions(target, tag)
 buildOptions.alias = {
   ...buildOptions.alias,
@@ -26,11 +28,9 @@ const bookmarklet = `(function () {
   .replace(/\n/gm, "")
 
 let linkProd = ""
-if (fs.existsSync(`build/${target}-prod/content.js`)) {
-  const bookmarkletProd = fs.readFileSync(
-    `build/${target}-prod/content.js`,
-    "utf8"
-  )
+const fileProd = `build/${target}-prod/${config.name}.bookmarklet.link`
+if (fs.existsSync(fileProd)) {
+  const bookmarkletProd = fs.readFileSync(fileProd, "utf8")
   linkProd = `<br />  Production version: <a href="${bookmarkletProd}">Drag me</a> to the bookmark bar`
 }
 

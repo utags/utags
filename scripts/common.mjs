@@ -32,7 +32,7 @@ const schemeImportPlugin = ({ compressCss }) => ({
     build.onResolve({ filter: /^[\w-]+:/ }, async (args) => {
       const result = await build.resolve(args.path.split(":")[1], {
         kind: "import-statement",
-        resolveDir: "./src",
+        resolveDir: args.resolveDir,
       })
       if (result.errors.length > 0) {
         return { errors: result.errors }
@@ -67,7 +67,9 @@ export const getBuildOptions = (target, tag, fileName = "content") => {
   return {
     entryPoints: [`src/${fileName}.ts`],
     bundle: true,
-    plugins: [schemeImportPlugin({ compressCss: tag === "prod" })],
+    plugins: [
+      schemeImportPlugin({ compressCss: tag === "prod" || tag === "staging" }),
+    ],
     define: {
       "process.env.PLASMO_TARGET": `"${target}"`,
       "process.env.PLASMO_TAG": `"${tag}"`,
@@ -85,7 +87,7 @@ const waitUntilFileExists = async (path, timeout = 10_000) => {
 
     const check = () => {
       if (fs.existsSync(path)) {
-        clearInterval(timeoutId)
+        clearTimeout(timeoutId)
         resolve()
         return
       }
