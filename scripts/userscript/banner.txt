@@ -2,7 +2,7 @@
 // @name                 {displayName}
 // @name:zh-CN           {displayName:zh-CN}
 // @namespace            {namespace}
-// @homepage             {homepage}
+// @homepageURL          {homepage}
 // @supportURL           {bugs.url}
 // @version              {version}
 // @description          {description}

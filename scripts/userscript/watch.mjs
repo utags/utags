@@ -20,11 +20,17 @@ const matched = new Set()
 text.replace(/(GM[_.]\w+)/gm, (match) => {
   matched.add(match)
 })
+
 const grants = [...matched]
   .map((v) => `// @grant${" ".repeat(8)}${v}`)
   .join("\n")
 
-const apiExports = [...matched].map((v) => `    "${v}": ${v},`).join("\n")
+matched.add("GM")
+
+const apiExports = [...matched]
+  .filter((v) => !v.includes("GM."))
+  .map((v) => `    "${v}": ${v},`)
+  .join("\n")
 
 const code = `// ==UserScript==
 // @name         localhost:${port}

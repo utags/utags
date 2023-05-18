@@ -76,6 +76,7 @@
     "rules": {
       "import/extensions": 0,
       "import/order": 0,
+      "@typescript-eslint/prefer-nullish-coalescing": 0,
       "capitalized-comments": 0
     }
   }

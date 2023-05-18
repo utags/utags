@@ -23,7 +23,7 @@ function showVisitCount(visitCount: string) {
     })
 
   const div2 =
-    $$(div, "div")[0] ||
+    $$("div", div)[0] ||
     addElement(div, "div", {
       style:
         "display: block; background-color: yellow; margin-bottom: 10px; padding: 4px 12px; box-sizing: border-box;",
