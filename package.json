@@ -37,25 +37,26 @@
     "package:firefox": "plasmo package --target=firefox-mv2"
   },
   "dependencies": {
+    "browser-extension-settings": "^0.2.2",
     "browser-extension-storage": "^0.1.2",
-    "browser-extension-utils": "^0.1.2",
-    "plasmo": "^0.70.1",
+    "browser-extension-utils": "^0.1.9",
+    "plasmo": "^0.77.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "^3.6.4",
-    "@types/chrome": "^0.0.236",
-    "@types/node": "^20.2.0",
-    "@types/react": "^18.2.6",
-    "@types/react-dom": "^18.2.4",
+    "@types/chrome": "^0.0.240",
+    "@types/node": "^20.4.1",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "bookmarkleter": "^1.1.0",
-    "esbuild": "^0.17.19",
+    "esbuild": "^0.18.11",
     "http-server": "^14.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "sass": "^1.62.1",
-    "typescript": "^5.0.4",
+    "sass": "^1.63.6",
+    "typescript": "^5.1.6",
     "xo": "^0.54.2"
   },
   "manifest": {

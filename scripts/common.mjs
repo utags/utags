@@ -1,6 +1,6 @@
 import * as esbuild from "esbuild"
 import fs from "node:fs"
-import sass from "sass"
+import * as sass from "sass"
 
 const EMOJI_LIST = [
   "⚽️",
