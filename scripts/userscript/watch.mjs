@@ -29,7 +29,7 @@ matched.add("GM")
 
 const apiExports = [...matched]
   .filter((v) => !v.includes("GM."))
-  .map((v) => `    "${v}": ${v},`)
+  .map((v) => `    "${v}": typeof ${v} === "undefined" ? undefined : ${v},`)
   .join("\n")
 
 const code = `// ==UserScript==
