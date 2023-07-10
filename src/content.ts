@@ -1,4 +1,16 @@
-import { $, $$, createElement } from "browser-extension-utils"
+import {
+  getSettingsValue,
+  initSettings,
+  showSettings,
+} from "browser-extension-settings"
+import {
+  $,
+  $$,
+  addClass,
+  createElement,
+  registerMenuCommand,
+  removeClass,
+} from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
 
 import createTag from "./components/tag"
@@ -14,12 +26,37 @@ import {
 
 const hostname = location.hostname
 
+const settingsTable = {
+  showHidedItems: {
+    title: "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
+    defaultValue: false,
+  },
+  noOpacityEffect: {
+    title: "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
+    defaultValue: false,
+  },
+}
+
 const getStyle = () => {
   const style = createElement("style")
   style.id = "utags_style"
   style.textContent = styleText
   document.head.append(style)
   // return style
+}
+
+function onSettingsChange() {
+  if (getSettingsValue("showHidedItems")) {
+    addClass(document.documentElement, "utags_no_hide")
+  } else {
+    removeClass(document.documentElement, "utags_no_hide")
+  }
+
+  if (getSettingsValue("noOpacityEffect")) {
+    addClass(document.documentElement, "utags_no_opacity_effect")
+  } else {
+    removeClass(document.documentElement, "utags_no_opacity_effect")
+  }
 }
 
 function appendTagsToPage(
@@ -160,6 +197,26 @@ async function main() {
     return
   }
 
+  await initSettings({
+    id: "utags",
+    title: "🏷️ 小鱼标签 (UTags) - 为链接添加用户标签",
+    footer: `
+    <p>
+    <a href="https://github.com/utags/utags/issues" target="_blank">
+    Report and Issue...
+    </a></p>
+    <p>Made with ❤️ by
+    <a href="https://www.pipecraft.net/" target="_blank">
+      Pipecraft
+    </a></p>`,
+    settingsTable,
+    async onValueChange() {
+      onSettingsChange()
+    },
+  })
+
+  registerMenuCommand("⚙️ 设置", showSettings, "o")
+
   document.addEventListener("mouseover", (event) => {
     if (event.target && event.target.tagName === "A") {
       // TODO: delay display utags for event.target
@@ -172,6 +229,8 @@ async function main() {
   setTimeout(outputData, 1)
 
   await initStorage()
+
+  onSettingsChange()
 
   await displayTags()
 
