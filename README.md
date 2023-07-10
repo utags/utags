@@ -35,10 +35,10 @@ Allow users to add custom tags to links.
 ## 功能特点
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
-- 不仅可以给用户打标签，还可以给帖子打标签
-- 在标签列表页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 不仅可以给用户打标签，还可以给帖子和节点打标签
+- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持数据导出、导入
+- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
 - 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
 - 除了 v2ex，以后还会支持更多的网站
 
