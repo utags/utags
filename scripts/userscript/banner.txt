@@ -10,7 +10,8 @@
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}
-// @match                https://*/*
-// @match                http://*/*
+// @match                https://utags.pipecraft.net/*
+// @match                https://*.v2ex.com/*
+// @match                https://v2hot.pipecraft.net/*
 // ==/UserScript==
 //
