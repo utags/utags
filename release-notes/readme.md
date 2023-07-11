@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.2.0
+
+- Enable setting whether to show hidden items and whether to disable opacity effects
+
 ## 0.1.10
 
 - Compatible with script managers such as Violentmonkey, Greasemonkey(Firefox), Userscripts(Safari)

@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.2.0
+
+- 添加设置功能，可以设置是否显示被隐藏的内容，是否去除半透明效果
+
 ## 0.1.10
 
 - 兼容 Violentmonkey, Greasemonkey(Firefox), Userscripts(Safari) 等脚本管理器
