@@ -2,7 +2,7 @@
   "name": "utags",
   "displayName": "🏷️ UTags - Add usertags to links",
   "displayName:zh-CN": "🏷️ 小鱼标签 (UTags) - 为链接添加用户标签",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Allow users to add custom tags to links.",
   "description:zh-CN": "此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。",
   "author": "Pipecraft",
