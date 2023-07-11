@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.3.0
+
+- 修复楼中楼回复模式时，隐藏或半透明效果影响整个楼的问题
+
 ## 0.2.1
 
 - Add links to tags page and data import/export page in settings
