@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.2.1
+// @version              0.3.0
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -903,7 +903,7 @@
     }
     return [...set]
   }
-  var extensionVersion = "0.2.0"
+  var extensionVersion = "0.3.0"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1197,8 +1197,13 @@
     }
     ul.setAttribute("class", "utags_ul")
     element.after(ul)
+    element.dataset.utags = tags.join(",")
   }
   async function displayTags() {
+    const listNodes = getListNodes(hostname)
+    for (const node of listNodes) {
+      node.dataset.utags_list_node = ""
+    }
     const conditionNodes = getConditionNodes(hostname)
     for (const node of conditionNodes) {
       node.dataset.utags_condition_node = ""
@@ -1214,19 +1219,22 @@
         appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
       })
     )
-    const listNodes = getListNodes(hostname)
     for (const node of listNodes) {
-      const tags = node.querySelectorAll(
-        "[data-utags_condition_node] + .utags_ul > li > .utags_text_tag[data-utags_tag]"
-      )
-      if (tags.length > 0) {
+      const conditionNodes2 = $$("[data-utags_condition_node]", node)
+      const tagsArray = []
+      for (const node2 of conditionNodes2) {
+        if (node2.closest("[data-utags_list_node]") !== node) {
+          continue
+        }
+        if (node2.dataset.utags) {
+          tagsArray.push(node2.dataset.utags)
+        }
+      }
+      if (tagsArray.length === 1) {
+        node.dataset.utags_list_node = "," + tagsArray[0] + ","
+      } else if (tagsArray.length > 1) {
         node.dataset.utags_list_node =
-          [...tags].reduce(
-            (accumulator, tag) => accumulator + "," + tag.textContent,
-            ""
-          ) + ","
-      } else {
-        node.dataset.utags_list_node = ""
+          "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
       }
     }
   }
