@@ -10,6 +10,7 @@ import {
   createElement,
   registerMenuCommand,
   removeClass,
+  uniq,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
 
@@ -114,11 +115,20 @@ function appendTagsToPage(
 
   ul.setAttribute("class", "utags_ul")
   element.after(ul)
+  element.dataset.utags = tags.join(",")
 }
 
 async function displayTags() {
+  // console.error("displayTags")
+  const listNodes = getListNodes(hostname)
+  for (const node of listNodes) {
+    // Flag list nodes first
+    node.dataset.utags_list_node = ""
+  }
+
   const conditionNodes = getConditionNodes(hostname)
   for (const node of conditionNodes) {
+    // Flag condition nodes
     node.dataset.utags_condition_node = ""
   }
 
@@ -136,19 +146,25 @@ async function displayTags() {
     })
   )
 
-  const listNodes = getListNodes(hostname)
   for (const node of listNodes) {
-    const tags = node.querySelectorAll(
-      "[data-utags_condition_node] + .utags_ul > li > .utags_text_tag[data-utags_tag]"
-    )
-    if (tags.length > 0) {
+    const conditionNodes = $$("[data-utags_condition_node]", node)
+    const tagsArray: string[] = []
+    for (const node2 of conditionNodes) {
+      if (node2.closest("[data-utags_list_node]") !== node) {
+        // Nested list node
+        continue
+      }
+
+      if (node2.dataset.utags) {
+        tagsArray.push(node2.dataset.utags)
+      }
+    }
+
+    if (tagsArray.length === 1) {
+      node.dataset.utags_list_node = "," + tagsArray[0] + ","
+    } else if (tagsArray.length > 1) {
       node.dataset.utags_list_node =
-        [...tags].reduce(
-          (accumulator, tag) => accumulator + "," + tag.textContent,
-          ""
-        ) + ","
-    } else {
-      node.dataset.utags_list_node = ""
+        "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
     }
   }
 }
