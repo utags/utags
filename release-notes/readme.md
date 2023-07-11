@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.2.1
+
+- Add links to tags page and data import/export page in settings
+
 ## 0.2.0
 
 - Enable setting whether to show hidden items and whether to disable opacity effects
