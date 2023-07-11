@@ -35,6 +35,18 @@ const settingsTable = {
     title: "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
     defaultValue: false,
   },
+  openTagsPage: {
+    title: "标签列表",
+    type: "externalLink",
+    url: "https://utags.pipecraft.net/tags/",
+    group: 2,
+  },
+  openDataPage: {
+    title: "导出数据/导入数据",
+    type: "externalLink",
+    url: "https://utags.pipecraft.net/data/",
+    group: 2,
+  },
 }
 
 const getStyle = () => {
