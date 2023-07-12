@@ -53,6 +53,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.4.0
+  - Support mobile devices
 - 0.3.1
   - Improve accessibility, fix v2ex 超级增强 issues
 - 0.3.0

@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.4.0
+
+- Support mobile devices
+
 ## 0.3.1
 
 - Improve accessibility, fix v2ex 超级增强 issues
