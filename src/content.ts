@@ -7,9 +7,13 @@ import {
   $,
   $$,
   addClass,
+  addEventListener,
   createElement,
+  doc,
+  isTouchScreen,
   registerMenuCommand,
   removeClass,
+  runOnce,
   setStyle,
   uniq,
 } from "browser-extension-utils"
@@ -27,6 +31,8 @@ import {
 } from "./storage/index"
 
 const hostname = location.hostname
+
+const numberLimitOfShowAllUtagsInArea = 10
 
 const settingsTable = {
   showHidedItems: {
@@ -55,22 +61,51 @@ const getStyle = () => {
   const style = createElement("style")
   style.id = "utags_style"
   style.textContent = styleText
-  document.head.append(style)
+  doc.head.append(style)
   // return style
 }
 
 function onSettingsChange() {
   if (getSettingsValue("showHidedItems")) {
-    addClass(document.documentElement, "utags_no_hide")
+    addClass(doc.documentElement, "utags_no_hide")
   } else {
-    removeClass(document.documentElement, "utags_no_hide")
+    removeClass(doc.documentElement, "utags_no_hide")
   }
 
   if (getSettingsValue("noOpacityEffect")) {
-    addClass(document.documentElement, "utags_no_opacity_effect")
+    addClass(doc.documentElement, "utags_no_opacity_effect")
   } else {
-    removeClass(document.documentElement, "utags_no_opacity_effect")
+    removeClass(doc.documentElement, "utags_no_opacity_effect")
   }
+}
+
+function hideAllUtagsInArea(target: HTMLElement) {
+  const element = $(".utags_show_all")
+  if (!element) {
+    return
+  }
+
+  if (element === target || element.contains(target)) {
+    return
+  }
+
+  for (const element of $$(".utags_show_all")) {
+    removeClass(element, "utags_show_all")
+  }
+}
+
+function showAllUtagsInArea(element: HTMLElement | undefined) {
+  if (!element) {
+    return false
+  }
+
+  const utags = $$(".utags_ul", element)
+  if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
+    addClass(element, "utags_show_all")
+    return true
+  }
+
+  return false
 }
 
 function appendTagsToPage(
@@ -190,7 +225,7 @@ async function outputData() {
     textarea.id = "utags_output"
     textarea.setAttribute("style", "display:none")
     textarea.value = JSON.stringify(urlMap)
-    document.body.append(textarea)
+    doc.body.append(textarea)
 
     textarea.addEventListener("click", async () => {
       if (textarea.dataset.utags_type === "export") {
@@ -256,7 +291,7 @@ async function main() {
 
   registerMenuCommand("⚙️ 设置", showSettings, "o")
 
-  document.addEventListener("mouseover", (event) => {
+  doc.addEventListener("mouseover", (event) => {
     if (event.target && event.target.tagName === "A") {
       // TODO: delay display utags for event.target
       // console.log(event.target, event.currentTarget)
@@ -272,6 +307,37 @@ async function main() {
   onSettingsChange()
 
   await displayTags()
+
+  runOnce("main", () => {
+    const eventType = isTouchScreen() ? "touchstart" : "click"
+    addEventListener(
+      doc,
+      eventType,
+      (event: Event) => {
+        let target = event.target as HTMLElement
+        if (!target) {
+          return
+        }
+
+        hideAllUtagsInArea(target)
+
+        const targets: HTMLElement[] = []
+        // Add parent elements to candidates, up to 8
+        do {
+          targets.push(target)
+          target = target.parentElement!
+        } while (targets.length <= 8 && target)
+
+        // Start testing from the outermost parent element
+        while (targets.length > 0) {
+          if (showAllUtagsInArea(targets.pop())) {
+            return
+          }
+        }
+      },
+      true
+    )
+  })
 
   countOfLinks = $$("a:not(.utags_text_tag)").length
   setInterval(async () => {
