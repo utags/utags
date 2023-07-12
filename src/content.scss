@@ -72,6 +72,7 @@
 
 *:hover + .utags_ul .utags_captain_tag,
 .utags_ul:hover .utags_captain_tag,
+.utags_show_all .utags_captain_tag,
 :not(a) + .utags_ul .utags_captain_tag {
   opacity: 100%;
   font-size: 10px;
