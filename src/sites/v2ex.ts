@@ -24,19 +24,19 @@ const site = {
       // 所有页面节点链接
       'a[href*="/go/"]',
       // TODO: 测试一段时间没问题时，下面都可以删掉
-      '.topic_info a[href*="/member/"]', // 帖子作者，最后回复者
-      "a.topic-link", // 帖子标题
-      ".box .cell .topic_info .node", // 帖子节点
-      ".item_hot_topic_title a", // 右边栏标题
-      '#Main strong a.dark[href*="/member/"]', // 评论者
-      '.topic_content a[href*="/member/"]', // 帖子内容中 @用户
-      '.topic_content a[href*="/t/"]', // 帖子内容中帖子链接
-      '.reply_content a[href*="/member/"]', // 回复内容中 @用户
-      '.reply_content a[href*="/t/"]', // 回复内容中帖子链接
-      '.header small a[href*="/member/"]', // 帖子详细页作者
-      '.header a[href*="/go/"]', // 帖子详细页节点
-      '.dock_area a[href*="/member/"]', // 个人主页回复列表作者
-      '.dock_area a[href*="/t/"]', // 个人主页回复列表帖子标题
+      // '.topic_info a[href*="/member/"]', // 帖子作者，最后回复者
+      // "a.topic-link", // 帖子标题
+      // ".box .cell .topic_info .node", // 帖子节点
+      // ".item_hot_topic_title a", // 右边栏标题
+      // '#Main strong a.dark[href*="/member/"]', // 评论者
+      // '.topic_content a[href*="/member/"]', // 帖子内容中 @用户
+      // '.topic_content a[href*="/t/"]', // 帖子内容中帖子链接
+      // '.reply_content a[href*="/member/"]', // 回复内容中 @用户
+      // '.reply_content a[href*="/t/"]', // 回复内容中帖子链接
+      // '.header small a[href*="/member/"]', // 帖子详细页作者
+      // '.header a[href*="/go/"]', // 帖子详细页节点
+      // '.dock_area a[href*="/member/"]', // 个人主页回复列表作者
+      // '.dock_area a[href*="/t/"]', // 个人主页回复列表帖子标题
     ]
     const elements = $$(patterns.join(","))
 
@@ -53,6 +53,8 @@ const site = {
       "a.page_normal,a.page_current",
       // 回复数量
       "a.count_livid",
+      // v2ex 超级增强脚本添加的元素
+      ".post-item a.post-content",
     ]
     const excludeElements = new Set($$(excludePatterns.join(",")))
 
@@ -62,7 +64,7 @@ const site = {
         .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
     }
 
-    const nodes = [...elements].map((element) => {
+    const nodes = [...elements].map((element: HTMLAnchorElement) => {
       if (excludeElements.has(element)) {
         return {}
       }
