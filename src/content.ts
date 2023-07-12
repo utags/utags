@@ -10,6 +10,7 @@ import {
   createElement,
   registerMenuCommand,
   removeClass,
+  setStyle,
   uniq,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
@@ -116,6 +117,16 @@ function appendTagsToPage(
   ul.setAttribute("class", "utags_ul")
   element.after(ul)
   element.dataset.utags = tags.join(",")
+  /* Fix v2ex polish start */
+  // 为了防止阻塞渲染页面，延迟执行
+  setTimeout(() => {
+    const style = getComputedStyle(element)
+    const zIndex = style.zIndex
+    if (zIndex && zIndex !== "auto") {
+      setStyle(ul, { zIndex })
+    }
+  }, 1000)
+  /* Fix v2ex polish end */
 }
 
 async function displayTags() {
