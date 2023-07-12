@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.3.0
+// @version              0.3.1
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 https://utags.pipecraft.net/favicon.png
@@ -744,7 +744,7 @@
     handleShowSettingsUrl()
   }
   var content_default =
-    '\uFEFF#utags_layer{height:200px;width:200px;background-color:red}.utags_ul{display:inline;list-style-type:none;margin:0px;margin-left:2px;padding:0px;position:relative;line-height:10px}.utags_ul>li{display:inline-flex;align-items:center}.utags_text_tag{border:1px solid red;color:red !important;border-radius:3px;padding:1px 3px;margin:0px 3px;font-size:10px;line-height:10px;font-weight:normal;text-decoration:none;cursor:pointer}.utags_captain_tag,.utags_captain_tag2{border:none;text-indent:-9999px;width:12px;height:12px;padding:0;display:block;background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);background-size:contain}.utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0;margin:0;border:none;width:4px;height:4px;font-size:1px;background-color:#fff}.utags_captain_tag:hover,.utags_captain_tag2:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K)}*:hover+.utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,:not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px;width:12px;height:12px}html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:99%;font-size:10px;width:12px;height:12px}:not(a)+.utags_ul .utags_captain_tag{position:relative}[data-utags_list_node*=",\u6807\u9898\u515A,"],[data-utags_list_node*=",\u63A8\u5E7F,"],[data-utags_list_node*=",\u65E0\u804A,"],[data-utags_list_node*=",\u5FFD\u7565,"],[data-utags_list_node*=",sb,"]{opacity:10%}[data-utags_list_node*=",\u5DF2\u9605,"],[data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}[data-utags_list_node*=",hide,"],[data-utags_list_node*=",\u9690\u85CF,"],[data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],[data-utags_list_node*=",block,"]{opacity:5%;display:none}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"],[data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}[data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:block !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}'
+    '\uFEFF#utags_layer{height:200px;width:200px;background-color:red}.utags_ul{display:inline;list-style-type:none;margin:0px;margin-left:2px;padding:0px;position:relative;line-height:10px}.utags_ul>li{display:inline-flex;align-items:center}.utags_text_tag{border:1px solid red;color:red !important;border-radius:3px;padding:1px 3px;margin:0px 3px;font-size:10px;line-height:10px;font-weight:normal;text-decoration:none;cursor:pointer}.utags_captain_tag,.utags_captain_tag2{border:none;text-indent:-9999px;width:12px;height:12px;padding:0;display:block;background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);background-size:12px;background-repeat:no-repeat;background-position:0 0}.utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0;margin:0;border:none;width:4px;height:4px;font-size:1px;background-color:rgba(255,255,255,.7019607843);transition:all 0s .3s}.utags_captain_tag:hover,.utags_captain_tag2:hover{background-image:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJyZWQiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yIDRDMiAyLjg5NTQzIDIuODk1NDMgMiA0IDJIMTEuMTcxNkMxMS43MDIgMiAxMi4yMTA3IDIuMjEwNzEgMTIuNTg1OCAyLjU4NTc5TDIxLjU4NTggMTEuNTg1OEMyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMy42MzMyIDIxLjU4NTggMTQuNDE0MkwxNC40MTQyIDIxLjU4NThDMTMuNjMzMiAyMi4zNjY4IDEyLjM2NjggMjIuMzY2OCAxMS41ODU4IDIxLjU4NThMMi41ODU3OSAxMi41ODU4QzIuMjEwNzEgMTIuMjEwNyAyIDExLjcwMiAyIDExLjE3MTZWNFpNMjAuMTcxNiAxM0wxMS4xNzE2IDRINFYxMS4xNzE2TDEzIDIwLjE3MTZMMjAuMTcxNiAxM1oiIGZpbGw9InJlZCIvPgo8L3N2Zz4K)}*:hover+.utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,:not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px;width:17px;height:17px;transition:all 0s .1s}html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:99%;font-size:10px;width:12px;height:12px}:not(a)+.utags_ul .utags_captain_tag{position:relative}[data-utags_list_node*=",\u6807\u9898\u515A,"],[data-utags_list_node*=",\u63A8\u5E7F,"],[data-utags_list_node*=",\u65E0\u804A,"],[data-utags_list_node*=",\u5FFD\u7565,"],[data-utags_list_node*=",sb,"]{opacity:10%}[data-utags_list_node*=",\u5DF2\u9605,"],[data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}[data-utags_list_node*=",hide,"],[data-utags_list_node*=",\u9690\u85CF,"],[data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],[data-utags_list_node*=",block,"]{opacity:5%;display:none}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"],[data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}[data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:block !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}'
   function createTag(tagName) {
     const a = createElement("a")
     a.textContent = tagName
@@ -777,19 +777,6 @@
         'a[href*="/t/"]',
         'a[href*="/member/"]',
         'a[href*="/go/"]',
-        '.topic_info a[href*="/member/"]',
-        "a.topic-link",
-        ".box .cell .topic_info .node",
-        ".item_hot_topic_title a",
-        '#Main strong a.dark[href*="/member/"]',
-        '.topic_content a[href*="/member/"]',
-        '.topic_content a[href*="/t/"]',
-        '.reply_content a[href*="/member/"]',
-        '.reply_content a[href*="/t/"]',
-        '.header small a[href*="/member/"]',
-        '.header a[href*="/go/"]',
-        '.dock_area a[href*="/member/"]',
-        '.dock_area a[href*="/t/"]',
       ]
       const elements = $$(patterns.join(","))
       const excludePatterns = [
@@ -799,6 +786,7 @@
         "#SecondaryTabs a",
         "a.page_normal,a.page_current",
         "a.count_livid",
+        ".post-item a.post-content",
       ]
       const excludeElements = new Set($$(excludePatterns.join(",")))
       function getCanonicalUrl2(url) {
@@ -903,7 +891,7 @@
     }
     return [...set]
   }
-  var extensionVersion = "0.3.0"
+  var extensionVersion = "0.3.1"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
