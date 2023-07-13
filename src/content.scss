@@ -5,32 +5,39 @@
 }
 
 .utags_ul {
+  box-sizing: border-box;
   display: inline;
   list-style-type: none;
-  margin: 0px;
-  margin-left: 2px;
+  margin: 0 0 0 2px;
   padding: 0px;
-  position: relative;
-  /*vertical-align: text-bottom;*/
-  line-height: 10px;
+  vertical-align: text-bottom;
+  line-height: normal;
 }
 
 .utags_ul > li {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
+  height: 14px;
+}
+
+.utags_ul > li.notag {
+  position: relative;
 }
 
 .utags_text_tag {
+  box-sizing: border-box;
   border: 1px solid red;
   color: red !important;
   border-radius: 3px;
   padding: 1px 3px;
   margin: 0px 3px;
-  font-size: 10px;
-  line-height: 10px;
-  font-weight: normal;
-  text-decoration: none;
+  font-size: 10px !important;
+  line-height: 10px !important;
+  font-weight: normal !important;
+  text-decoration: none !important;
   cursor: pointer;
+  background-color: unset !important;
   /* Fix v2ex polish start */
   pointer-events: auto;
   /* Fix v2ex polish end */
@@ -38,14 +45,12 @@
 
 .utags_captain_tag,
 .utags_captain_tag2 {
-  border: none;
+  border: 1px solid #fff0;
   text-indent: -9999px;
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  display: block;
+  width: 14px;
+  height: 14px;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNSA5QzguMzI4NDMgOSA5IDguMzI4NDMgOSA3LjVDOSA2LjY3MTU3IDguMzI4NDMgNiA3LjUgNkM2LjY3MTU3IDYgNiA2LjY3MTU3IDYgNy41QzYgOC4zMjg0MyA2LjY3MTU3IDkgNy41IDlaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIgNEMyIDIuODk1NDMgMi44OTU0MyAyIDQgMkgxMS4xNzE2QzExLjcwMiAyIDEyLjIxMDcgMi4yMTA3MSAxMi41ODU4IDIuNTg1NzlMMjEuNTg1OCAxMS41ODU4QzIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDEzLjYzMzIgMjEuNTg1OCAxNC40MTQyTDE0LjQxNDIgMjEuNTg1OEMxMy42MzMyIDIyLjM2NjggMTIuMzY2OCAyMi4zNjY4IDExLjU4NTggMjEuNTg1OEwyLjU4NTc5IDEyLjU4NThDMi4yMTA3MSAxMi4yMTA3IDIgMTEuNzAyIDIgMTEuMTcxNlY0Wk0yMC4xNzE2IDEzTDExLjE3MTYgNEg0VjExLjE3MTZMMTMgMjAuMTcxNkwyMC4xNzE2IDEzWiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==);
-  background-size: 12px;
+  background-size: 13px;
   background-repeat: no-repeat;
   background-position: 0 0;
 }
@@ -61,7 +66,7 @@
   width: 4px;
   height: 4px;
   font-size: 1px;
-  background-color: #ffffffb3;
+  background-color: #ffffffb3 !important;
   transition: all 0s 0.3s;
 }
 
@@ -75,9 +80,10 @@
 .utags_show_all .utags_captain_tag,
 :not(a) + .utags_ul .utags_captain_tag {
   opacity: 100%;
-  font-size: 10px;
-  width: 17px;
-  height: 17px;
+  font-size: 10px !important;
+  width: 18px;
+  height: 18px;
+  background-position: 3px 3px;
   transition: all 0s 0.1s;
   /* Fix v2ex 超级增强 start */
   z-index: 100;
