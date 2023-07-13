@@ -53,6 +53,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.4.1
+  - Update tag icons and styles
 - 0.4.0
   - Support mobile devices
 - 0.3.1
