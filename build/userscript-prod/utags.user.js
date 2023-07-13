@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.4.1
+// @version              0.4.2
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -187,18 +187,6 @@
   if (typeof Object.hasOwn !== "function") {
     Object.hasOwn = (instance, prop) =>
       Object.prototype.hasOwnProperty.call(instance, prop)
-  }
-  var runOnceCache = {}
-  var runOnce = (key, func) => {
-    if (!key) {
-      return func()
-    }
-    if (Object.hasOwn(runOnceCache, key)) {
-      return runOnceCache[key]
-    }
-    const result = func()
-    runOnceCache[key] = result
-    return result
   }
   var parseInt10 = (number, defaultValue) => {
     if (typeof number === "number" && !Number.isNaN(number)) {
@@ -770,141 +758,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var site = {
-    getListNodes() {
-      const patterns = [".box .cell"]
-      return $$(patterns.join(","))
-    },
-    getConditionNodes() {
-      const patterns = [
-        ".box .cell .topic-link",
-        ".item_hot_topic_title a",
-        '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
-        ".box .cell .topic_info .node",
-        '#Main strong a.dark[href*="/member/"]',
-      ]
-      return $$(patterns.join(","))
-    },
-    matchedNodes() {
-      const patterns = [
-        'a[href*="/t/"]',
-        'a[href*="/member/"]',
-        'a[href*="/go/"]',
-      ]
-      const elements = $$(patterns.join(","))
-      const excludePatterns = [
-        ".site-nav a",
-        ".cell_tabs a",
-        ".tab-alt-container a",
-        "#SecondaryTabs a",
-        "a.page_normal,a.page_current",
-        "a.count_livid",
-        ".post-item a.post-content",
-      ]
-      const excludeElements = new Set($$(excludePatterns.join(",")))
-      function getCanonicalUrl2(url) {
-        return url
-          .replace(/[?#].*/, "")
-          .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
-      }
-      const nodes = [...elements].map((element) => {
-        if (excludeElements.has(element)) {
-          return {}
-        }
-        if (element.querySelector("img")) {
-          return {}
-        }
-        const key = getCanonicalUrl2(element.href)
-        const title = element.textContent
-        const meta = { title }
-        element.utags = { key, meta }
-        return element
-      })
-      if (location.pathname.includes("/member/")) {
-        const profile = $("h1")
-        if (profile) {
-          const key = "https://www.v2ex.com/member/" + profile.textContent
-          const meta = { title: profile.textContent }
-          profile.utags = { key, meta }
-          nodes.push(profile)
-        }
-      }
-      if (location.pathname.includes("/t/")) {
-        const header = $(".topic_content")
-        if (header) {
-          const key = getCanonicalUrl2(
-            "https://www.v2ex.com" + location.pathname
-          )
-          const title = $("h1").textContent
-          const meta = { title }
-          header.utags = { key, meta }
-          nodes.push(header)
-        }
-      }
-      if (location.pathname.includes("/go/")) {
-        const header = $(".cell_ops.flex-one-row input")
-        if (header) {
-          const key = getCanonicalUrl2(
-            "https://www.v2ex.com" + location.pathname
-          )
-          const title = document.title.replace(/.*›\s*/, "").trim()
-          const meta = { title }
-          header.utags = { key, meta }
-          nodes.push(header)
-        }
-      }
-      return nodes
-    },
-  }
-  var v2ex_default = site
-  function matchedSite(hostname2) {
-    if (/v2ex\.com|v2hot\./.test(hostname2)) {
-      return v2ex_default
-    }
-    return null
-  }
-  function getListNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    if (site2) {
-      return site2.getListNodes()
-    }
-    return []
-  }
-  function getConditionNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    if (site2) {
-      return site2.getConditionNodes()
-    }
-    return []
-  }
-  function getCanonicalUrl(url) {
-    return url
-  }
-  function matchedNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    const set = /* @__PURE__ */ new Set()
-    if (site2) {
-      const array2 = site2.matchedNodes()
-      for (const element of array2) {
-        set.add(element)
-      }
-    }
-    const array = $$("[data-utags_primary_link]")
-    for (const element of array) {
-      if (!element.utags) {
-        const key = getCanonicalUrl(element.href)
-        const title = element.textContent
-        const meta = {}
-        if (!isUrl(title)) {
-          meta.title = title
-        }
-        element.utags = { key, meta }
-      }
-      set.add(element)
-    }
-    return [...set]
-  }
-  var extensionVersion = "0.4.1"
+  var extensionVersion = "0.4.2"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1116,8 +970,240 @@
       }
     }
   }
-  var hostname = location.hostname
+  async function outputData() {
+    if (
+      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ) {
+      const urlMap = await getUrlMap()
+      const textarea = createElement("textarea")
+      textarea.id = "utags_output"
+      textarea.setAttribute("style", "display:none")
+      textarea.value = JSON.stringify(urlMap)
+      doc.body.append(textarea)
+      textarea.addEventListener("click", async () => {
+        if (textarea.dataset.utags_type === "export") {
+          const urlMap2 = await getUrlMap()
+          textarea.value = JSON.stringify(urlMap2)
+          textarea.dataset.utags_type = "export_done"
+          textarea.click()
+        } else if (textarea.dataset.utags_type === "import") {
+          const data = textarea.value
+          try {
+            const result = await mergeData(JSON.parse(data))
+            textarea.value = JSON.stringify(result)
+            textarea.dataset.utags_type = "import_done"
+            textarea.click()
+          } catch (error) {
+            console.error(error)
+            textarea.value = JSON.stringify(error)
+            textarea.dataset.utags_type = "import_failed"
+            textarea.click()
+          }
+        }
+      })
+    }
+  }
   var numberLimitOfShowAllUtagsInArea = 10
+  function hideAllUtagsInArea(target) {
+    const element = $(".utags_show_all")
+    if (!element) {
+      return
+    }
+    if (element === target || element.contains(target)) {
+      return
+    }
+    for (const element2 of $$(".utags_show_all")) {
+      removeClass(element2, "utags_show_all")
+    }
+  }
+  function showAllUtagsInArea(element) {
+    if (!element) {
+      return false
+    }
+    const utags = $$(".utags_ul", element)
+    if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
+      addClass(element, "utags_show_all")
+      return true
+    }
+    return false
+  }
+  function bindDocumentEvents() {
+    const eventType = isTouchScreen() ? "touchstart" : "click"
+    addEventListener(
+      doc,
+      eventType,
+      (event) => {
+        let target = event.target
+        if (!target) {
+          return
+        }
+        hideAllUtagsInArea(target)
+        const targets = []
+        do {
+          targets.push(target)
+          target = target.parentElement
+        } while (targets.length <= 8 && target)
+        while (targets.length > 0) {
+          if (showAllUtagsInArea(targets.pop())) {
+            return
+          }
+        }
+      },
+      true
+    )
+    addEventListener(
+      doc,
+      "keydown",
+      (event) => {
+        if (event.defaultPrevented) {
+          return
+        }
+        if (event.key === "Escape" && $(".utags_show_all")) {
+          hideAllUtagsInArea()
+          event.preventDefault()
+        }
+      },
+      true
+    )
+  }
+  var site = {
+    getListNodes() {
+      const patterns = [".box .cell"]
+      return $$(patterns.join(","))
+    },
+    getConditionNodes() {
+      const patterns = [
+        ".box .cell .topic-link",
+        ".item_hot_topic_title a",
+        '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
+        ".box .cell .topic_info .node",
+        '#Main strong a.dark[href*="/member/"]',
+      ]
+      return $$(patterns.join(","))
+    },
+    matchedNodes() {
+      const patterns = [
+        'a[href*="/t/"]',
+        'a[href*="/member/"]',
+        'a[href*="/go/"]',
+      ]
+      const elements = $$(patterns.join(","))
+      const excludePatterns = [
+        ".site-nav a",
+        ".cell_tabs a",
+        ".tab-alt-container a",
+        "#SecondaryTabs a",
+        "a.page_normal,a.page_current",
+        "a.count_livid",
+        ".post-item a.post-content",
+      ]
+      const excludeElements = new Set($$(excludePatterns.join(",")))
+      function getCanonicalUrl2(url) {
+        return url
+          .replace(/[?#].*/, "")
+          .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+      }
+      const nodes = [...elements].map((element) => {
+        if (excludeElements.has(element)) {
+          return {}
+        }
+        if (element.querySelector("img")) {
+          return {}
+        }
+        const key = getCanonicalUrl2(element.href)
+        const title = element.textContent
+        const meta = { title }
+        element.utags = { key, meta }
+        return element
+      })
+      if (location.pathname.includes("/member/")) {
+        const profile = $("h1")
+        if (profile) {
+          const username = profile.textContent
+          if (username) {
+            const key = `https://www.v2ex.com/member/${username}`
+            const meta = { title: username }
+            profile.utags = { key, meta }
+            nodes.push(profile)
+          }
+        }
+      }
+      if (location.pathname.includes("/t/")) {
+        const header = $(".topic_content")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = $("h1").textContent
+          const meta = { title }
+          header.utags = { key, meta }
+          nodes.push(header)
+        }
+      }
+      if (location.pathname.includes("/go/")) {
+        const header = $(".cell_ops.flex-one-row input")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = document.title.replace(/.*›\s*/, "").trim()
+          const meta = { title }
+          header.utags = { key, meta }
+          nodes.push(header)
+        }
+      }
+      return nodes
+    },
+  }
+  var v2ex_default = site
+  function matchedSite(hostname2) {
+    if (/v2ex\.com|v2hot\./.test(hostname2)) {
+      return v2ex_default
+    }
+    return null
+  }
+  function getListNodes(hostname2) {
+    const site2 = matchedSite(hostname2)
+    if (site2) {
+      return site2.getListNodes()
+    }
+    return []
+  }
+  function getConditionNodes(hostname2) {
+    const site2 = matchedSite(hostname2)
+    if (site2) {
+      return site2.getConditionNodes()
+    }
+    return []
+  }
+  function getCanonicalUrl(url) {
+    return url
+  }
+  function matchedNodes(hostname2) {
+    const site2 = matchedSite(hostname2)
+    const set = /* @__PURE__ */ new Set()
+    if (site2) {
+      const array2 = site2.matchedNodes()
+      for (const element of array2) {
+        set.add(element)
+      }
+    }
+    const array = $$("[data-utags_primary_link]")
+    for (const element of array) {
+      if (!element.utags) {
+        const key = getCanonicalUrl(element.href)
+        const title = element.textContent
+        const meta = {}
+        if (!isUrl(title)) {
+          meta.title = title
+        }
+        element.utags = { key, meta }
+      }
+      set.add(element)
+    }
+    return [...set]
+  }
+  var hostname = location.hostname
   var settingsTable2 = {
     showHidedItems: {
       title:
@@ -1142,11 +1228,9 @@
       group: 2,
     },
   }
-  var getStyle = () => {
-    const style = createElement("style")
+  var addUtagsStyle = () => {
+    const style = addStyle2(content_default)
     style.id = "utags_style"
-    style.textContent = content_default
-    doc.head.append(style)
   }
   function onSettingsChange() {
     if (getSettingsValue("showHidedItems")) {
@@ -1159,29 +1243,6 @@
     } else {
       removeClass(doc.documentElement, "utags_no_opacity_effect")
     }
-  }
-  function hideAllUtagsInArea(target) {
-    const element = $(".utags_show_all")
-    if (!element) {
-      return
-    }
-    if (element === target || element.contains(target)) {
-      return
-    }
-    for (const element2 of $$(".utags_show_all")) {
-      removeClass(element2, "utags_show_all")
-    }
-  }
-  function showAllUtagsInArea(element) {
-    if (!element) {
-      return false
-    }
-    const utags = $$(".utags_ul", element)
-    if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
-      addClass(element, "utags_show_all")
-      return true
-    }
-    return false
   }
   function appendTagsToPage(element, key, tags, meta) {
     var _a, _b
@@ -1273,39 +1334,6 @@
       }
     }
   }
-  async function outputData() {
-    if (
-      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
-    ) {
-      const urlMap = await getUrlMap()
-      const textarea = createElement("textarea")
-      textarea.id = "utags_output"
-      textarea.setAttribute("style", "display:none")
-      textarea.value = JSON.stringify(urlMap)
-      doc.body.append(textarea)
-      textarea.addEventListener("click", async () => {
-        if (textarea.dataset.utags_type === "export") {
-          const urlMap2 = await getUrlMap()
-          textarea.value = JSON.stringify(urlMap2)
-          textarea.dataset.utags_type = "export_done"
-          textarea.click()
-        } else if (textarea.dataset.utags_type === "import") {
-          const data = textarea.value
-          try {
-            const result = await mergeData(JSON.parse(data))
-            textarea.value = JSON.stringify(result)
-            textarea.dataset.utags_type = "import_done"
-            textarea.click()
-          } catch (error) {
-            console.error(error)
-            textarea.value = JSON.stringify(error)
-            textarea.dataset.utags_type = "import_failed"
-            textarea.click()
-          }
-        }
-      })
-    }
-  }
   async function initStorage() {
     await migration()
     addTagsValueChangeListener(displayTags)
@@ -1319,6 +1347,7 @@
       )
       return
     }
+    addUtagsStyle()
     await initSettings({
       id: "utags",
       title:
@@ -1338,40 +1367,11 @@
       },
     })
     registerMenuCommand("\u2699\uFE0F \u8BBE\u7F6E", showSettings, "o")
-    doc.addEventListener("mouseover", (event) => {
-      if (event.target && event.target.tagName === "A") {
-      }
-    })
-    getStyle()
-    setTimeout(outputData, 1)
     await initStorage()
+    setTimeout(outputData, 1)
     onSettingsChange()
     await displayTags()
-    runOnce("main", () => {
-      const eventType = isTouchScreen() ? "touchstart" : "click"
-      addEventListener(
-        doc,
-        eventType,
-        (event) => {
-          let target = event.target
-          if (!target) {
-            return
-          }
-          hideAllUtagsInArea(target)
-          const targets = []
-          do {
-            targets.push(target)
-            target = target.parentElement
-          } while (targets.length <= 8 && target)
-          while (targets.length > 0) {
-            if (showAllUtagsInArea(targets.pop())) {
-              return
-            }
-          }
-        },
-        true
-      )
-    })
+    bindDocumentEvents()
     countOfLinks = $$("a:not(.utags_text_tag)").length
     setInterval(async () => {
       const count = $$("a:not(.utags_text_tag)").length
