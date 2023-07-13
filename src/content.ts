@@ -7,32 +7,28 @@ import {
   $,
   $$,
   addClass,
-  addEventListener,
+  addStyle,
   createElement,
   doc,
-  isTouchScreen,
   registerMenuCommand,
   removeClass,
-  runOnce,
   setStyle,
   uniq,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
 
 import createTag from "./components/tag"
+import { outputData } from "./modules/export-import"
+import { bindDocumentEvents } from "./modules/global-events"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
   getTags,
-  getUrlMap,
-  mergeData,
   migration,
   saveTags,
 } from "./storage/index"
 
 const hostname = location.hostname
-
-const numberLimitOfShowAllUtagsInArea = 10
 
 const settingsTable = {
   showHidedItems: {
@@ -57,12 +53,9 @@ const settingsTable = {
   },
 }
 
-const getStyle = () => {
-  const style = createElement("style")
+const addUtagsStyle = () => {
+  const style = addStyle(styleText)
   style.id = "utags_style"
-  style.textContent = styleText
-  doc.head.append(style)
-  // return style
 }
 
 function onSettingsChange() {
@@ -77,35 +70,6 @@ function onSettingsChange() {
   } else {
     removeClass(doc.documentElement, "utags_no_opacity_effect")
   }
-}
-
-function hideAllUtagsInArea(target: HTMLElement) {
-  const element = $(".utags_show_all")
-  if (!element) {
-    return
-  }
-
-  if (element === target || element.contains(target)) {
-    return
-  }
-
-  for (const element of $$(".utags_show_all")) {
-    removeClass(element, "utags_show_all")
-  }
-}
-
-function showAllUtagsInArea(element: HTMLElement | undefined) {
-  if (!element) {
-    return false
-  }
-
-  const utags = $$(".utags_ul", element)
-  if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
-    addClass(element, "utags_show_all")
-    return true
-  }
-
-  return false
 }
 
 function appendTagsToPage(
@@ -219,45 +183,6 @@ async function displayTags() {
   }
 }
 
-async function outputData() {
-  if (
-    /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
-  ) {
-    const urlMap = await getUrlMap()
-
-    const textarea = createElement("textarea")
-    textarea.id = "utags_output"
-    textarea.setAttribute("style", "display:none")
-    textarea.value = JSON.stringify(urlMap)
-    doc.body.append(textarea)
-
-    textarea.addEventListener("click", async () => {
-      if (textarea.dataset.utags_type === "export") {
-        const urlMap = await getUrlMap()
-        textarea.value = JSON.stringify(urlMap)
-        textarea.dataset.utags_type = "export_done"
-        // Triger change event
-        textarea.click()
-      } else if (textarea.dataset.utags_type === "import") {
-        const data = textarea.value as string
-        try {
-          const result = await mergeData(JSON.parse(data))
-          textarea.value = JSON.stringify(result)
-          textarea.dataset.utags_type = "import_done"
-          // Triger change event
-          textarea.click()
-        } catch (error) {
-          console.error(error)
-          textarea.value = JSON.stringify(error)
-          textarea.dataset.utags_type = "import_failed"
-          // Triger change event
-          textarea.click()
-        }
-      }
-    })
-  }
-}
-
 async function initStorage() {
   await migration()
   addTagsValueChangeListener(displayTags)
@@ -268,12 +193,14 @@ async function main() {
   if ($("#utags_style")) {
     // already running
     console.log(
-      // eslint-disable-next-line n/prefer-global/process
+      // eslint-disable-next-line n/prefer-global/process, @typescript-eslint/restrict-template-expressions
       `[UTags] [${process.env.PLASMO_TARGET}-${process.env.PLASMO_TAG}] Skip this, since another instance is already running.`,
       location.href
     )
     return
   }
+
+  addUtagsStyle()
 
   await initSettings({
     id: "utags",
@@ -295,53 +222,15 @@ async function main() {
 
   registerMenuCommand("⚙️ 设置", showSettings, "o")
 
-  doc.addEventListener("mouseover", (event) => {
-    if (event.target && event.target.tagName === "A") {
-      // TODO: delay display utags for event.target
-      // console.log(event.target, event.currentTarget)
-    }
-  })
-  // TODO: delay display utags in corner of page for current page
-
-  getStyle()
-  setTimeout(outputData, 1)
-
   await initStorage()
+
+  setTimeout(outputData, 1)
 
   onSettingsChange()
 
   await displayTags()
 
-  runOnce("main", () => {
-    const eventType = isTouchScreen() ? "touchstart" : "click"
-    addEventListener(
-      doc,
-      eventType,
-      (event: Event) => {
-        let target = event.target as HTMLElement
-        if (!target) {
-          return
-        }
-
-        hideAllUtagsInArea(target)
-
-        const targets: HTMLElement[] = []
-        // Add parent elements to candidates, up to 8
-        do {
-          targets.push(target)
-          target = target.parentElement!
-        } while (targets.length <= 8 && target)
-
-        // Start testing from the outermost parent element
-        while (targets.length > 0) {
-          if (showAllUtagsInArea(targets.pop())) {
-            return
-          }
-        }
-      },
-      true
-    )
-  })
+  bindDocumentEvents()
 
   countOfLinks = $$("a:not(.utags_text_tag)").length
   setInterval(async () => {
