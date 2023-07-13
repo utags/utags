@@ -50,6 +50,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.4.1
+  - 更新标签图标与样式
 - 0.4.0
   - 支持触屏设备
 - 0.3.1
