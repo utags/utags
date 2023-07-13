@@ -84,10 +84,13 @@ const site = {
       // 个人主页
       const profile = $("h1")
       if (profile) {
-        const key = "https://www.v2ex.com/member/" + profile.textContent
-        const meta = { title: profile.textContent }
-        profile.utags = { key, meta }
-        nodes.push(profile)
+        const username = profile.textContent
+        if (username) {
+          const key = `https://www.v2ex.com/member/${username}`
+          const meta = { title: username }
+          profile.utags = { key, meta }
+          nodes.push(profile)
+        }
       }
     }
 

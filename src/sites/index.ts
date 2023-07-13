@@ -42,11 +42,11 @@ export function matchedNodes(hostname: string) {
     }
   }
 
-  const array = $$("[data-utags_primary_link]")
+  const array = $$("[data-utags_primary_link]") as HTMLAnchorElement[]
   for (const element of array) {
     if (!element.utags) {
       const key = getCanonicalUrl(element.href)
-      const title = element.textContent
+      const title = element.textContent!
       const meta = {}
       if (!isUrl(title)) {
         meta.title = title
