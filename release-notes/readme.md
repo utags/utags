@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.4.1
+
+- Update tag icons and styles
+
 ## 0.4.0
 
 - Support mobile devices
