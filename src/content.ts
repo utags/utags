@@ -120,6 +120,10 @@ function appendTagsToPage(
 
   const ul = createElement("ul")
   let li = createElement("li")
+  if (tags.length === 0) {
+    addClass(li, "notag")
+  }
+
   let a = createElement("a")
   a.textContent = "🏷️"
   a.setAttribute(
