@@ -23,15 +23,48 @@
 - 特殊标签有特殊效果，比如：sb, block, 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读等
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
+## 手机版截图
+
+- 主题列表
+
+![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
+
+![screenshots](https://i.imgur.com/byywcBy.jpeg)
+
+![screenshots](https://i.imgur.com/YdilUsi.jpeg)
+
+- 评论区
+
+![screenshots](https://i.imgur.com/smU24o8.jpeg)
+
+![screenshots](https://i.imgur.com/coLUFOj.jpeg)
+
+![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
+
+- 功能设置
+
+![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+
+- 视频版演示
+
+📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+
 ## 功能特点
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
-- 不仅可以给用户打标签，还可以给帖子和节点打标签
+- 不仅可以给用户打标签，还可以给帖子（主题）和节点打标签
 - 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
 - 支持[数据导出、导入](https://utags.pipecraft.net/data/)
 - 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
-- 除了 v2ex，以后还会支持更多的网站
+- 除了 V2EX，以后还会支持更多的网站
+- 与 V2EX Plus, V2EX Polish, V2EX 超级增强, [V2EX.REP](https://greasyfork.org/zh-CN/scripts/466589-v2ex-rep) 等插件兼容
+- 支持 V2EX 手机网页版
+- 兼容以下用户脚本管理器
+  - Tampermonkey (推荐)
+  - Violentmonkey
+  - Greasemonkey
+  - Userscripts (Safari)
 
 ### 彩蛋
 
