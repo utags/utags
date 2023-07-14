@@ -41,6 +41,7 @@ function showAllUtagsInArea(element: HTMLElement | undefined) {
 
 export function bindDocumentEvents() {
   const eventType = isTouchScreen() ? "touchstart" : "click"
+  let lastShownArea: HTMLElement | undefined
 
   addEventListener(
     doc,
@@ -62,7 +63,15 @@ export function bindDocumentEvents() {
 
       // Start testing from the outermost parent element
       while (targets.length > 0) {
-        if (showAllUtagsInArea(targets.pop())) {
+        const area = targets.pop()
+        if (showAllUtagsInArea(area)) {
+          if (lastShownArea === area) {
+            hideAllUtagsInArea()
+            lastShownArea = undefined
+            return
+          }
+
+          lastShownArea = area
           return
         }
       }
@@ -83,6 +92,7 @@ export function bindDocumentEvents() {
       if (event.key === "Escape" && $(".utags_show_all")) {
         // 按“ESC”键时要做的事。
         hideAllUtagsInArea()
+        lastShownArea = undefined
         // 取消默认动作，从而避免处理两次。
         event.preventDefault()
       }
