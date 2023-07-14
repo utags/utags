@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.4.5
+
+- Cancel the delay effect of showing the tag button when clicking on the blank area
+- When the same area is clicked continuously, hide the tag button
+
 ## 0.4.1
 
 - Update tag icons and styles
