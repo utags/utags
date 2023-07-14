@@ -86,6 +86,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.4.5
+  - Cancel the delay effect of showing the tag button when clicking on the blank area
+  - When the same area is clicked continuously, hide the tag button
 - 0.4.1
   - Update tag icons and styles
 - 0.4.0
