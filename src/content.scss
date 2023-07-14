@@ -90,6 +90,11 @@
   /* Fix v2ex 超级增强 end */
 }
 
+.utags_hide_all .utags_captain_tag,
+.utags_show_all .utags_captain_tag {
+  transition: unset;
+}
+
 /* Firefox does not support :has */
 /* vimium extension */
 html:has(#vimiumHintMarkerContainer) .utags_captain_tag {
