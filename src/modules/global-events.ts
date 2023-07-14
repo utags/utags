@@ -22,6 +22,11 @@ function hideAllUtagsInArea(target?: HTMLElement | undefined) {
 
   for (const element of $$(".utags_show_all")) {
     removeClass(element, "utags_show_all")
+    // Cancel delay effect
+    addClass(element, "utags_hide_all")
+    setTimeout(() => {
+      removeClass(element, "utags_hide_all")
+    })
   }
 }
 
