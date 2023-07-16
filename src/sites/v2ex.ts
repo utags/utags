@@ -40,6 +40,9 @@ const site = {
     'a[href*="/member/"]',
     // 所有页面节点链接
     'a[href*="/go/"]',
+    // 所有外部链接
+    'a[href^="https://"]:not([href*="v2ex.com"])',
+    'a[href^="http://"]:not([href*="v2ex.com"])',
   ],
   excludeSelectors: [
     // 导航栏
