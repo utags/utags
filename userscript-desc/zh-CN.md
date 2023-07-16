@@ -7,6 +7,7 @@
 目前支持的网站
 
 - www.v2ex.com
+- greasyfork.org and sleazyfork.org
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -86,6 +87,9 @@
 
 ## 更新记录
 
+- 0.5.0
+  - UTags 开始支持 greasyfork.org 与 sleazyfork.org 两个网站
+  - \[V2EX\] 允许给所有外部链接添加标签
 - 0.4.5
   - 取消点击空白区域时显示标签按钮的延迟效果
   - 连续点击区域相同时，隐藏标签按钮

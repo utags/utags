@@ -7,6 +7,7 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 目前支持的网站
 
 - www.v2ex.com
+- greasyfork.org and sleazyfork.org
 - 更多网站会陆续支持
 
 ## Usage
@@ -86,6 +87,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.5.0
+  - Apply utags to greasyfork.org and sleazyfork.org
+  - \[V2EX\] 允许给所有外部链接添加标签
 - 0.4.5
   - Cancel the delay effect of showing the tag button when clicking on the blank area
   - When the same area is clicked continuously, hide the tag button

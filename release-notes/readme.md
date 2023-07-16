@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.5.0
+
+- Apply utags to greasyfork.org and sleazyfork.org
+- \[V2EX\] 允许给所有外部链接添加标签
+
 ## 0.4.5
 
 - Cancel the delay effect of showing the tag button when clicking on the blank area
