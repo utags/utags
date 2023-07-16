@@ -4,15 +4,18 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.4.5
+// @version              0.5.0
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
 // @match                https://utags.pipecraft.net/*
+// @match                https://greasyfork.org/*
+// @match                https://sleazyfork.org/*
 // @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
+// @match                https://*.pipecraft.net/*
 // @grant                GM.getValue
 // @grant                GM.setValue
 // @grant                GM_addValueChangeListener
@@ -128,6 +131,8 @@
       element.removeEventListener(type, listener, options)
     }
   }
+  var getAttribute = (element, name) =>
+    element ? element.getAttribute(name) : null
   var setAttribute = (element, name, value) =>
     element ? element.setAttribute(name, value) : void 0
   var setAttributes = (element, attributes) => {
@@ -776,7 +781,7 @@
     })
     handleShowSettingsUrl()
   }
-  var content_default = `\uFEFF#utags_layer{height:200px;width:200px;background-color:red}.utags_ul{box-sizing:border-box;display:inline;list-style-type:none;margin:0 0 0 2px;padding:0px;vertical-align:text-bottom;line-height:normal}.utags_ul>li{box-sizing:border-box;display:inline-flex;align-items:center;height:14px}.utags_ul>li.notag{position:relative}.utags_text_tag{box-sizing:border-box;border:1px solid red;color:red !important;border-radius:3px;padding:1px 3px;margin:0px 3px;font-size:10px !important;line-height:10px !important;font-weight:normal !important;text-decoration:none !important;cursor:pointer;background-color:unset !important;pointer-events:auto}.utags_captain_tag,.utags_captain_tag2{border:1px solid rgba(255,255,255,0);text-indent:-9999px;width:14px;height:14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E");background-size:13px;background-repeat:no-repeat;background-position:0 0}.utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0;margin:0;border:none;width:4px;height:4px;font-size:1px;background-color:rgba(255,255,255,.7019607843) !important;transition:all 0s .3s}.utags_captain_tag:hover,.utags_captain_tag2:hover{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23256cf1' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E")}*:hover+.utags_ul .utags_captain_tag,.utags_ul:hover .utags_captain_tag,.utags_show_all .utags_captain_tag,:not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px !important;width:18px;height:18px;background-position:3px 3px;transition:all 0s .1s;z-index:90}.utags_hide_all .utags_captain_tag,.utags_show_all .utags_captain_tag{transition:unset}html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:99%;font-size:10px;width:12px;height:12px}:not(a)+.utags_ul .utags_captain_tag{position:relative}[data-utags_list_node*=",\u6807\u9898\u515A,"],[data-utags_list_node*=",\u63A8\u5E7F,"],[data-utags_list_node*=",\u65E0\u804A,"],[data-utags_list_node*=",\u5FFD\u7565,"],[data-utags_list_node*=",sb,"]{opacity:10%}[data-utags_list_node*=",\u5DF2\u9605,"],[data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}[data-utags_list_node*=",hide,"],[data-utags_list_node*=",\u9690\u85CF,"],[data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],[data-utags_list_node*=",block,"]{opacity:5%;display:none}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"],[data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}[data-utags_list_node*=",\u70ED\u95E8,"],[data-utags_list_node*=",\u6536\u85CF,"],[data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}[data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:block !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}`
+  var content_default = `\uFEFF:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) #utags_layer{height:200px;width:200px;background-color:red}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline !important;list-style-type:none !important;margin:0 0 0 2px !important;padding:0px !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;width:unset !important;height:14px !important;border:none !important;padding:0 !important;margin:0 !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul>li.notag{position:relative !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:1px solid red;color:red !important;border-radius:3px !important;padding:1px 3px !important;margin:0px 3px !important;font-size:10px !important;letter-spacing:0 !important;line-height:10px !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;min-width:unset !important;min-height:unset !important;cursor:pointer;background:unset !important;background-color:unset !important;pointer-events:auto}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{border:1px solid rgba(255,255,255,0);text-indent:-9999px;width:14px;height:14px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E") !important;background-size:13px !important;background-repeat:no-repeat !important;background-position:0 0 !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:0px;left:-2px;padding:0 !important;margin:0 !important;border:none !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:rgba(255,255,255,.7019607843) !important;transition:all 0s .3s}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23256cf1' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E") !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) :not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px !important;width:18px !important;height:18px !important;background-position:3px 3px !important;transition:all 0s .1s;z-index:90}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) html:has(#vimiumHintMarkerContainer) .utags_captain_tag{opacity:99%;font-size:10px;width:12px;height:12px}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) :not(a)+.utags_ul .utags_captain_tag{position:relative}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_no_hide [data-utags_list_node*=","]{display:block !important}:not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity) .utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}`
   function createTag(tagName) {
     const a = createElement("a")
     a.textContent = tagName
@@ -1103,62 +1108,126 @@
         }
         if (event.key === "Escape" && $(".utags_show_all")) {
           hideAllUtagsInArea()
+          lastShownArea = void 0
           event.preventDefault()
         }
       },
       true
     )
   }
+  var getCanonicalUrl = (url) => url
   var site = {
-    getListNodes() {
-      const patterns = [".box .cell"]
-      return $$(patterns.join(","))
-    },
-    getConditionNodes() {
-      const patterns = [
-        ".box .cell .topic-link",
-        ".item_hot_topic_title a",
-        '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
-        ".box .cell .topic_info .node",
-        '#Main strong a.dark[href*="/member/"]',
-      ]
-      return $$(patterns.join(","))
-    },
-    matchedNodes() {
-      const patterns = [
-        'a[href*="/t/"]',
-        'a[href*="/member/"]',
-        'a[href*="/go/"]',
-      ]
-      const elements = $$(patterns.join(","))
-      const excludePatterns = [
-        ".site-nav a",
-        ".cell_tabs a",
-        ".tab-alt-container a",
-        "#SecondaryTabs a",
-        "a.page_normal,a.page_current",
-        "a.count_livid",
-        ".post-item a.post-content",
-      ]
-      const excludeElements = new Set($$(excludePatterns.join(",")))
-      function getCanonicalUrl2(url) {
-        return url
-          .replace(/[?#].*/, "")
-          .replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+    matches: /.*/,
+    includeSelectors: ["a[href]:not(.utags_text_tag)"],
+    excludeSelectors: [".browser_extension_settings_container"],
+    getCanonicalUrl,
+  }
+  var default_default = site
+  function getScriptUrl(url) {
+    return getCanonicalUrl2(url.replace(/(scripts\/\d+)(.*)/, "$1"))
+  }
+  function getCanonicalUrl2(url) {
+    if (/(greasyfork|sleazyfork)\.org/.test(url)) {
+      console.log("before", url)
+      url = url.replace(
+        /((greasyfork|sleazyfork)\.org\/)(\w{2}(-\w{2})?)(\/|$)/,
+        "$1"
+      )
+      console.log("after", url)
+      if (url.includes("/scripts/")) {
+        return url.replace(/(scripts\/\d+)([^/]*)/, "$1")
       }
-      const nodes = [...elements].map((element) => {
-        if (excludeElements.has(element)) {
-          return {}
+      if (url.includes("/users/")) {
+        return url.replace(/(users\/\d+)(.*)/, "$1")
+      }
+    }
+    return url
+  }
+  var site2 = {
+    matches: /(greasyfork|sleazyfork)\.org/,
+    listNodesSelectors: [".script-list li", ".discussion-list-container"],
+    conditionNodesSelectors: [
+      ".script-list li .script-link",
+      ".script-list li .script-list-author a",
+      ".discussion-list-container .script-link",
+      ".discussion-list-container .discussion-title",
+      ".discussion-list-container .discussion-meta-item:nth-child(2) > a",
+    ],
+    includeSelectors: ["a[href]:not(.utags_text_tag)"],
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".sidebar",
+      ".pagination",
+      ".sign-out-link,.sign-in-link",
+      ".with-submenu",
+      "#script-links.tabs",
+      "#install-area",
+      ".history_versions .version-number",
+      'a[href*="show_all_versions"]',
+      'a[href*="/reports/new"]',
+      'a[href*="/conversations/new"]',
+      'a[href*="/discussions/mark_all_read"]',
+      'a[href*="/discussions/new"]',
+      "div.sidebarred-main-content > p:nth-child(3) > a",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      if (location.pathname.includes("/scripts/")) {
+        const element = $("#script-info header h2")
+        if (element) {
+          const title = element.textContent
+          if (title) {
+            const key = getScriptUrl(location.href)
+            const meta = { title }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
         }
-        if (element.querySelector("img")) {
-          return {}
+      } else if (location.pathname.includes("/users/")) {
+        const element = $("#about-user h2")
+        if (element) {
+          const title = element.textContent
+          if (title) {
+            const key = getCanonicalUrl2(location.href)
+            const meta = { title }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
         }
-        const key = getCanonicalUrl2(element.href)
-        const title = element.textContent
-        const meta = { title }
-        element.utags = { key, meta }
-        return element
-      })
+      }
+    },
+    getCanonicalUrl: getCanonicalUrl2,
+  }
+  var greasyfork_org_default = site2
+  function getCanonicalUrl3(url) {
+    return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+  }
+  var site3 = {
+    matches: /v2ex\.com|v2hot\./,
+    listNodesSelectors: [".box .cell"],
+    conditionNodesSelectors: [
+      ".box .cell .topic-link",
+      ".item_hot_topic_title a",
+      '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
+      ".box .cell .topic_info .node",
+      '#Main strong a.dark[href*="/member/"]',
+    ],
+    includeSelectors: [
+      'a[href*="/t/"]',
+      'a[href*="/member/"]',
+      'a[href*="/go/"]',
+      'a[href^="https://"]:not([href*="v2ex.com"])',
+      'a[href^="http://"]:not([href*="v2ex.com"])',
+    ],
+    excludeSelectors: [
+      ".site-nav a",
+      ".cell_tabs a",
+      ".tab-alt-container a",
+      "#SecondaryTabs a",
+      "a.page_normal,a.page_current",
+      "a.count_livid",
+      ".post-item a.post-content",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
       if (location.pathname.includes("/member/")) {
         const profile = $("h1")
         if (profile) {
@@ -1167,86 +1236,133 @@
             const key = `https://www.v2ex.com/member/${username}`
             const meta = { title: username }
             profile.utags = { key, meta }
-            nodes.push(profile)
+            matchedNodesSet.add(profile)
           }
         }
       }
       if (location.pathname.includes("/t/")) {
         const header = $(".topic_content")
         if (header) {
-          const key = getCanonicalUrl2(
+          const key = getCanonicalUrl3(
             "https://www.v2ex.com" + location.pathname
           )
           const title = $("h1").textContent
           const meta = { title }
           header.utags = { key, meta }
-          nodes.push(header)
+          matchedNodesSet.add(header)
         }
       }
       if (location.pathname.includes("/go/")) {
         const header = $(".cell_ops.flex-one-row input")
         if (header) {
-          const key = getCanonicalUrl2(
+          const key = getCanonicalUrl3(
             "https://www.v2ex.com" + location.pathname
           )
           const title = document.title.replace(/.*›\s*/, "").trim()
           const meta = { title }
           header.utags = { key, meta }
-          nodes.push(header)
+          matchedNodesSet.add(header)
         }
       }
-      return nodes
     },
+    getCanonicalUrl: getCanonicalUrl3,
   }
-  var v2ex_default = site
+  var v2ex_default = site3
+  var sites = [v2ex_default, greasyfork_org_default]
   function matchedSite(hostname2) {
-    if (/v2ex\.com|v2hot\./.test(hostname2)) {
-      return v2ex_default
-    }
-    return null
-  }
-  function getListNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    if (site2) {
-      return site2.getListNodes()
-    }
-    return []
-  }
-  function getConditionNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    if (site2) {
-      return site2.getConditionNodes()
-    }
-    return []
-  }
-  function getCanonicalUrl(url) {
-    return url
-  }
-  function matchedNodes(hostname2) {
-    const site2 = matchedSite(hostname2)
-    const set = /* @__PURE__ */ new Set()
-    if (site2) {
-      const array2 = site2.matchedNodes()
-      for (const element of array2) {
-        set.add(element)
+    for (const site5 of sites) {
+      if (site5.matches.test(hostname2)) {
+        return site5
       }
     }
-    const array = $$("[data-utags_primary_link]")
-    for (const element of array) {
-      if (!element.utags) {
-        const key = getCanonicalUrl(element.href)
-        const title = element.textContent
-        const meta = {}
-        if (!isUrl(title)) {
-          meta.title = title
-        }
-        element.utags = { key, meta }
-      }
-      set.add(element)
-    }
-    return [...set]
+    return default_default
   }
   var hostname = location.hostname
+  var site4 = matchedSite(hostname)
+  function getListNodes() {
+    if (typeof site4.getListNodes === "function") {
+      return site4.getListNodes()
+    }
+    if (site4.listNodesSelectors) {
+      return $$(site4.listNodesSelectors.join(","))
+    }
+    return []
+  }
+  function getConditionNodes() {
+    if (typeof site4.getConditionNodes === "function") {
+      return site4.getConditionNodes()
+    }
+    if (site4.conditionNodesSelectors) {
+      return $$(site4.conditionNodesSelectors.join(","))
+    }
+    return []
+  }
+  function getCanonicalUrl4(url) {
+    if (typeof site4.getCanonicalUrl === "function") {
+      return site4.getCanonicalUrl(url)
+    }
+    return url
+  }
+  var isValidUtagsElement = (element) => {
+    if ($("img,svg,audio,video", element)) {
+      return false
+    }
+    let href = getAttribute(element, "href")
+    if (!href) {
+      return false
+    }
+    href = href.trim()
+    if (href.length === 0 || href === "#") {
+      return false
+    }
+    const protocol = element.protocol
+    if (protocol !== "http:" && protocol !== "https:") {
+      return false
+    }
+    return true
+  }
+  var isExcluedUtagsElement = (element, excludeSelector) => {
+    return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
+  }
+  var addMatchedNodes = (matchedNodesSet) => {
+    const includeSelectors = site4.includeSelectors
+    if (!includeSelectors || includeSelectors.length === 0) {
+      return
+    }
+    const elements = $$(includeSelectors.join(","))
+    console.log("matchedNodes", elements)
+    if (elements.length === 0) {
+      return
+    }
+    const excludeSelectors = site4.excludeSelectors || []
+    const excludeSelector = excludeSelectors.join(",")
+    for (const element of elements) {
+      if (
+        !isValidUtagsElement(element) ||
+        isExcluedUtagsElement(element, excludeSelector)
+      ) {
+        element.utags = {}
+        continue
+      }
+      const key = getCanonicalUrl4(element.href)
+      const title = element.textContent.trim()
+      const meta = {}
+      if (title && !isUrl(title)) {
+        meta.title = title
+      }
+      element.utags = { key, meta }
+      matchedNodesSet.add(element)
+    }
+  }
+  function matchedNodes() {
+    const matchedNodesSet = /* @__PURE__ */ new Set()
+    addMatchedNodes(matchedNodesSet)
+    if (typeof site4.addExtraMatchedNodes === "function") {
+      site4.addExtraMatchedNodes(matchedNodesSet)
+    }
+    console.log([...matchedNodesSet])
+    return [...matchedNodesSet]
+  }
   var settingsTable2 = {
     showHidedItems: {
       title:
@@ -1339,15 +1455,15 @@
     }, 1e3)
   }
   async function displayTags() {
-    const listNodes = getListNodes(hostname)
+    const listNodes = getListNodes()
     for (const node of listNodes) {
       node.dataset.utags_list_node = ""
     }
-    const conditionNodes = getConditionNodes(hostname)
+    const conditionNodes = getConditionNodes()
     for (const node of conditionNodes) {
       node.dataset.utags_condition_node = ""
     }
-    const nodes = matchedNodes(hostname)
+    const nodes = matchedNodes()
     await Promise.all(
       nodes.map(async (node) => {
         if (!node.utags || !node.utags.key) {
