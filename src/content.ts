@@ -28,8 +28,6 @@ import {
   saveTags,
 } from "./storage/index"
 
-const hostname = location.hostname
-
 const settingsTable = {
   showHidedItems: {
     title: "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
@@ -134,20 +132,20 @@ function appendTagsToPage(
 
 async function displayTags() {
   // console.error("displayTags")
-  const listNodes = getListNodes(hostname)
+  const listNodes = getListNodes()
   for (const node of listNodes) {
     // Flag list nodes first
     node.dataset.utags_list_node = ""
   }
 
-  const conditionNodes = getConditionNodes(hostname)
+  const conditionNodes = getConditionNodes()
   for (const node of conditionNodes) {
     // Flag condition nodes
     node.dataset.utags_condition_node = ""
   }
 
   // Display tags for matched components on matched pages
-  const nodes = matchedNodes(hostname)
+  const nodes = matchedNodes()
   await Promise.all(
     nodes.map(async (node) => {
       if (!node.utags || !node.utags.key) {

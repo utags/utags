@@ -11,7 +11,10 @@
 // @author               {author}
 // @license              {license}
 // @match                https://utags.pipecraft.net/*
+// @match                https://greasyfork.org/*
+// @match                https://sleazyfork.org/*
 // @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
+// @match                https://*.pipecraft.net/*
 // ==/UserScript==
 //
