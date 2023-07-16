@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.5.0
+
+- UTags 开始支持 greasyfork.org 与 sleazyfork.org 两个网站
+- \[V2EX\] 允许给所有外部链接添加标签
+
 ## 0.4.5
 
 - 取消点击空白区域时显示标签按钮的延迟效果

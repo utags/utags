@@ -11,6 +11,7 @@ Allow users to add custom tags to links.
 目前支持的网站
 
 - www.v2ex.com
+- greasyfork.org and sleazyfork.org
 - 更多网站会陆续支持
 
 ## 安装
@@ -50,6 +51,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.5.0
+  - Apply utags to greasyfork.org and sleazyfork.org
+  - \[V2EX\] 允许给所有外部链接添加标签
 - 0.4.5
   - 取消点击空白区域时显示标签按钮的延迟效果
   - 连续点击区域相同时，隐藏标签按钮
