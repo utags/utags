@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.5.0
+// @version              0.5.1
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -794,7 +794,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.4.5"
+  var extensionVersion = "0.5.1"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1198,6 +1198,13 @@
     getCanonicalUrl: getCanonicalUrl2,
   }
   var greasyfork_org_default = site2
+  function cloneWithoutUtags(element) {
+    const newElement = element.cloneNode(true)
+    for (const utag of $$(".utags_ul", newElement)) {
+      utag.remove()
+    }
+    return newElement
+  }
   function getCanonicalUrl3(url) {
     return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
   }
@@ -1234,22 +1241,53 @@
           const username = profile.textContent
           if (username) {
             const key = `https://www.v2ex.com/member/${username}`
-            const meta = { title: username }
+            const meta = { title: username, type: "user" }
             profile.utags = { key, meta }
             matchedNodesSet.add(profile)
           }
         }
       }
       if (location.pathname.includes("/t/")) {
-        const header = $(".topic_content")
+        const header = $(".header h1")
         if (header) {
           const key = getCanonicalUrl3(
             "https://www.v2ex.com" + location.pathname
           )
           const title = $("h1").textContent
-          const meta = { title }
+          const meta = { title, type: "topic" }
           header.utags = { key, meta }
           matchedNodesSet.add(header)
+        }
+        const main2 = $("#Main") || $(".content")
+        const replyElements = $$('.box .cell[id^="r_"]', main2)
+        for (const reply of replyElements) {
+          const replyId = reply.id
+          const floorNoElement = $(".no", reply)
+          const replyContentElement = $(".reply_content", reply)
+          const agoElement = $(".ago,.fade.small", reply)
+          if (replyId && floorNoElement && replyContentElement && agoElement) {
+            let newAgoElement = $("a", agoElement)
+            if (!newAgoElement) {
+              newAgoElement = createElement("a", {
+                textContent: agoElement.textContent,
+                href: "#" + replyId,
+              })
+              agoElement.textContent = ""
+              agoElement.append(newAgoElement)
+            }
+            const floorNo = parseInt10(floorNoElement.textContent, 1)
+            const pageNo = Math.floor((floorNo - 1) / 100) + 1
+            const key =
+              getCanonicalUrl3("https://www.v2ex.com" + location.pathname) +
+              "?p=" +
+              String(pageNo) +
+              "#" +
+              replyId
+            const title = cloneWithoutUtags(replyContentElement).textContent
+            const meta = { title, type: "reply" }
+            newAgoElement.utags = { key, meta }
+            matchedNodesSet.add(newAgoElement)
+          }
         }
       }
       if (location.pathname.includes("/go/")) {
@@ -1259,7 +1297,7 @@
             "https://www.v2ex.com" + location.pathname
           )
           const title = document.title.replace(/.*›\s*/, "").trim()
-          const meta = { title }
+          const meta = { title, type: "node" }
           header.utags = { key, meta }
           matchedNodesSet.add(header)
         }
@@ -1330,7 +1368,6 @@
       return
     }
     const elements = $$(includeSelectors.join(","))
-    console.log("matchedNodes", elements)
     if (elements.length === 0) {
       return
     }
@@ -1360,7 +1397,6 @@
     if (typeof site4.addExtraMatchedNodes === "function") {
       site4.addExtraMatchedNodes(matchedNodesSet)
     }
-    console.log([...matchedNodesSet])
     return [...matchedNodesSet]
   }
   var settingsTable2 = {
