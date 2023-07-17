@@ -58,6 +58,10 @@
       /* Fix v2ex polish end */
     }
 
+    .utags_text_tag[data-utags_tag]::before {
+      content: attr(data-utags_tag);
+    }
+
     .utags_captain_tag,
     .utags_captain_tag2 {
       border: 1px solid #fff0;

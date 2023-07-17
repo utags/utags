@@ -87,7 +87,8 @@ function appendTagsToPage(
   }
 
   let a = createElement("a")
-  a.textContent = "🏷️"
+  // a.textContent = "🏷️"
+  a.dataset.utags_tag = "🏷️"
   a.setAttribute(
     "class",
     tags.length === 0
