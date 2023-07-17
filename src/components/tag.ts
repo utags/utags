@@ -2,7 +2,7 @@ import { createElement } from "browser-extension-utils"
 
 export default function createTag(tagName: string) {
   const a = createElement("a")
-  a.textContent = tagName
+  // a.textContent = tagName
   a.dataset.utags_tag = tagName
   a.setAttribute(
     "href",
