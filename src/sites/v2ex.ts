@@ -1,6 +1,6 @@
 import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
 
-import { cloneWithoutUtags } from "../utils"
+import defaultSite from "./default"
 
 function getCanonicalUrl(url: string) {
   return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
@@ -22,8 +22,12 @@ const site = {
     '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
     // 帖子节点
     ".box .cell .topic_info .node",
-    // 评论者
-    '#Main strong a.dark[href*="/member/"]',
+    // 回复者
+    '.box .cell strong a.dark[href*="/member/"]',
+    // 回复内容标签
+    ".box .cell .ago a",
+    // 回复内容标签(手机网页版)
+    ".box .cell .fade.small a",
   ],
   // getConditionNodes() {
   //   const patterns = [
@@ -47,6 +51,7 @@ const site = {
     'a[href^="http://"]:not([href*="v2ex.com"])',
   ],
   excludeSelectors: [
+    ...defaultSite.excludeSelectors,
     // 导航栏
     ".site-nav a",
     // 标签栏
