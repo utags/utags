@@ -1,4 +1,6 @@
-import { $ } from "browser-extension-utils"
+import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
+
+import { cloneWithoutUtags } from "../utils"
 
 function getCanonicalUrl(url: string) {
   return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
@@ -68,7 +70,7 @@ const site = {
         const username = profile.textContent
         if (username) {
           const key = `https://www.v2ex.com/member/${username}`
-          const meta = { title: username }
+          const meta = { title: username, type: "user" }
           profile.utags = { key, meta }
           matchedNodesSet.add(profile)
         }
@@ -77,13 +79,46 @@ const site = {
 
     if (location.pathname.includes("/t/")) {
       // 帖子详细页
-      const header = $(".topic_content")
+      const header = $(".header h1")
       if (header) {
         const key = getCanonicalUrl("https://www.v2ex.com" + location.pathname)
         const title = $("h1").textContent
-        const meta = { title }
+        const meta = { title, type: "topic" }
         header.utags = { key, meta }
         matchedNodesSet.add(header)
+      }
+
+      const main = $("#Main") || $(".content")
+      const replyElements = $$('.box .cell[id^="r_"]', main)
+      for (const reply of replyElements) {
+        const replyId = reply.id
+        const floorNoElement = $(".no", reply)
+        const replyContentElement = $(".reply_content", reply)
+        const agoElement = $(".ago,.fade.small", reply)
+        if (replyId && floorNoElement && replyContentElement && agoElement) {
+          let newAgoElement = $("a", agoElement)
+          if (!newAgoElement) {
+            newAgoElement = createElement("a", {
+              textContent: agoElement.textContent,
+              href: "#" + replyId,
+            })
+            agoElement.textContent = ""
+            agoElement.append(newAgoElement)
+          }
+
+          const floorNo = parseInt10(floorNoElement.textContent!, 1)
+          const pageNo = Math.floor((floorNo - 1) / 100) + 1
+          const key =
+            getCanonicalUrl("https://www.v2ex.com" + location.pathname) +
+            "?p=" +
+            String(pageNo) +
+            "#" +
+            replyId
+          const title = cloneWithoutUtags(replyContentElement).textContent
+          const meta = { title, type: "reply" }
+          newAgoElement.utags = { key, meta }
+          matchedNodesSet.add(newAgoElement)
+        }
       }
     }
 
@@ -93,7 +128,7 @@ const site = {
       if (header) {
         const key = getCanonicalUrl("https://www.v2ex.com" + location.pathname)
         const title = document.title.replace(/.*›\s*/, "").trim()
-        const meta = { title }
+        const meta = { title, type: "node" }
         header.utags = { key, meta }
         matchedNodesSet.add(header)
       }
