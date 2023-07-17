@@ -6,6 +6,15 @@ function getCanonicalUrl(url: string) {
   return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
 }
 
+export function cloneWithoutCitedReplies(element: HTMLElement) {
+  const newElement = element.cloneNode(true) as HTMLElement
+  for (const cell of $$(".cell", newElement)) {
+    cell.remove()
+  }
+
+  return newElement
+}
+
 const site = {
   matches: /v2ex\.com|v2hot\./,
   listNodesSelectors: [".box .cell"],
@@ -119,7 +128,8 @@ const site = {
             String(pageNo) +
             "#" +
             replyId
-          const title = cloneWithoutUtags(replyContentElement).textContent
+          const title =
+            cloneWithoutCitedReplies(replyContentElement).textContent
           const meta = { title, type: "reply" }
           newAgoElement.utags = { key, meta }
           matchedNodesSet.add(newAgoElement)
