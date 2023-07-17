@@ -101,8 +101,6 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
   }
 
   const elements = $$(includeSelectors.join(",")) as HTMLAnchorElement[]
-  console.log("matchedNodes", elements)
-
   if (elements.length === 0) {
     return
   }
@@ -142,6 +140,7 @@ export function matchedNodes() {
     site.addExtraMatchedNodes(matchedNodesSet)
   }
 
+  // 添加 data-utags_primary_link 属性强制允许使用 utags
   // const array = $$("[data-utags_primary_link]") as HTMLAnchorElement[]
   // for (const element of array) {
   //   if (!element.utags) {
@@ -158,6 +157,5 @@ export function matchedNodes() {
   //   matchedNodesSet.add(element)
   // }
 
-  console.log([...matchedNodesSet])
   return [...matchedNodesSet]
 }
