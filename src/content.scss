@@ -167,12 +167,12 @@
   [data-utags_list_node]:hover {
     opacity: 100% !important;
   }
+}
 
-  .utags_no_hide [data-utags_list_node*=","] {
-    display: block !important;
-  }
+.utags_no_hide [data-utags_list_node*=","] {
+  display: block !important;
+}
 
-  .utags_no_opacity_effect [data-utags_list_node*=","] {
-    opacity: 100% !important;
-  }
+.utags_no_opacity_effect [data-utags_list_node*=","] {
+  opacity: 100% !important;
 }
