@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.5.1
+
+- \[V2EX\] 调整主题页主题标签的显示位置
+- \[V2EX\] 允许给回复添加标签
+
 ## 0.5.0
 
 - UTags 开始支持 greasyfork.org 与 sleazyfork.org 两个网站

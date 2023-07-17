@@ -87,6 +87,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.5.1
+  - \[V2EX\] 调整主题页主题标签的显示位置
+  - \[V2EX\] 允许给回复添加标签
 - 0.5.0
   - Apply utags to greasyfork.org and sleazyfork.org
   - \[V2EX\] 允许给所有外部链接添加标签
