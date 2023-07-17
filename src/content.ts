@@ -95,7 +95,7 @@ function appendTagsToPage(
       ? "utags_text_tag utags_captain_tag"
       : "utags_text_tag utags_captain_tag2"
   )
-  a.addEventListener("click", async function () {
+  a.addEventListener("click", async function (event: Event) {
     // eslint-disable-next-line no-alert
     const newTags = prompt(
       "[UTags] 请输入标签，用逗号分开多个标签",
@@ -105,6 +105,10 @@ function appendTagsToPage(
       const newTagsArray = newTags.split(/\s*[,，]\s*/)
       await saveTags(key, newTagsArray, meta)
     }
+
+    event.preventDefault()
+    event.stopPropagation()
+    event.stopImmediatePropagation()
   })
   li.append(a)
   ul.append(li)
