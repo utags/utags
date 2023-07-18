@@ -87,6 +87,8 @@
 
 ## 更新记录
 
+- 0.6.0
+  - UTags 开始支持 hacker news (news.ycombinator.com)
 - 0.5.2
   - 优化性能
   - 防止复制 HTML 文本时，标签内容一起被复制
