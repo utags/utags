@@ -7,6 +7,7 @@ import {
   $,
   $$,
   addClass,
+  addEventListener,
   addStyle,
   createElement,
   doc,
@@ -102,30 +103,35 @@ function appendTagsToPage(
       ? "utags_text_tag utags_captain_tag"
       : "utags_text_tag utags_captain_tag2"
   )
-  a.addEventListener("click", async function (event: Event) {
-    event.preventDefault()
-    event.stopPropagation()
-    event.stopImmediatePropagation()
+  addEventListener(
+    a,
+    "click",
+    async function (event: Event) {
+      event.preventDefault()
+      event.stopPropagation()
+      event.stopImmediatePropagation()
 
-    setTimeout(async () => {
-      // eslint-disable-next-line no-alert
-      const newTags = prompt(
-        "[UTags] 请输入标签，用逗号分开多个标签",
-        tags.join(", ")
-      )
-      if (newTags !== null) {
-        if (start) {
-          start = Date.now()
-        }
+      setTimeout(async () => {
+        // eslint-disable-next-line no-alert
+        const newTags = prompt(
+          "[UTags] 请输入标签，用逗号分开多个标签",
+          tags.join(", ")
+        )
+        if (newTags !== null) {
+          if (start) {
+            start = Date.now()
+          }
 
-        const newTagsArray = newTags.split(/\s*[,，]\s*/)
-        await saveTags(key, newTagsArray, meta)
-        if (start) {
-          console.error("after saveTags", Date.now() - start)
+          const newTagsArray = newTags.split(/\s*[,，]\s*/)
+          await saveTags(key, newTagsArray, meta)
+          if (start) {
+            console.error("after saveTags", Date.now() - start)
+          }
         }
-      }
-    })
-  })
+      })
+    },
+    true
+  )
   li.append(a)
   ul.append(li)
 
