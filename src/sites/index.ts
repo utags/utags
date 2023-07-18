@@ -1,8 +1,8 @@
 import { $, $$, getAttribute, isUrl } from "browser-extension-utils"
 
 import defaultSite from "./default"
-import greasyforkOrg from "./greasyfork.org"
-import v2ex from "./v2ex"
+import v2ex from "./z001/001-v2ex"
+import greasyforkOrg from "./z001/002-greasyfork.org"
 
 type Site = {
   matches: RegExp
