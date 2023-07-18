@@ -8,12 +8,10 @@ function getScriptUrl(url: string) {
 
 function getCanonicalUrl(url: string) {
   if (/(greasyfork|sleazyfork)\.org/.test(url)) {
-    console.log("before", url)
     url = url.replace(
       /((greasyfork|sleazyfork)\.org\/)(\w{2}(-\w{2})?)(\/|$)/,
       "$1"
     )
-    console.log("after", url)
     if (url.includes("/scripts/")) {
       return url.replace(/(scripts\/\d+)([^/]*)/, "$1")
     }

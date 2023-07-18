@@ -31,11 +31,7 @@ async function getUrlMapVesion1(): Promise<Record<string, unknown>> {
   return getValue("plugin.utags.tags.v1") as Promise<Record<string, unknown>>
 }
 
-export async function getTags(key: string): Promise<Record<string, unknown>> {
-  if (!cachedUrlMap) {
-    cachedUrlMap = await getUrlMap()
-  }
-
+export function getTags(key: string): Record<string, unknown> {
   return cachedUrlMap[key] || { tags: [] }
 }
 
