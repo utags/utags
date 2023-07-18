@@ -1,6 +1,6 @@
 import { $ } from "browser-extension-utils"
 
-import defaultSite from "./default"
+import defaultSite from "../default"
 
 function getScriptUrl(url: string) {
   return getCanonicalUrl(url.replace(/(scripts\/\d+)(.*)/, "$1"))
