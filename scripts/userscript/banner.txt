@@ -15,6 +15,7 @@
 // @match                https://sleazyfork.org/*
 // @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
+// @match                https://news.ycombinator.com/*
 // @match                https://*.pipecraft.net/*
 // ==/UserScript==
 //
