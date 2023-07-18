@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.5.2
+// @version              0.6.0
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -15,6 +15,7 @@
 // @match                https://sleazyfork.org/*
 // @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
+// @match                https://news.ycombinator.com/*
 // @match                https://*.pipecraft.net/*
 // @grant                GM.getValue
 // @grant                GM.setValue
@@ -793,7 +794,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.5.2"
+  var extensionVersion = "0.6.0"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1114,15 +1115,129 @@
   var getCanonicalUrl = (url) => url
   var site = {
     matches: /.*/,
-    includeSelectors: ["a[href]:not(.utags_text_tag)"],
+    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
     excludeSelectors: [".browser_extension_settings_container"],
     getCanonicalUrl,
   }
   var default_default = site
-  function getScriptUrl(url) {
-    return getCanonicalUrl2(url.replace(/(scripts\/\d+)(.*)/, "$1"))
-  }
   function getCanonicalUrl2(url) {
+    return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+  }
+  function cloneWithoutCitedReplies(element) {
+    const newElement = element.cloneNode(true)
+    for (const cell of $$(".cell", newElement)) {
+      cell.remove()
+    }
+    return newElement
+  }
+  var site2 = {
+    matches: /v2ex\.com|v2hot\./,
+    listNodesSelectors: [".box .cell", ".my-box .comment"],
+    conditionNodesSelectors: [
+      ".box .cell .topic-link",
+      ".item_hot_topic_title a",
+      '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
+      ".box .cell .topic_info .node",
+      '.box .cell strong a.dark[href*="/member/"]',
+      ".box .cell .ago a",
+      ".box .cell .fade.small a",
+      ".comment .username",
+      ".comment .ago",
+    ],
+    matchedNodesSelectors: [
+      'a[href*="/t/"]',
+      'a[href*="/member/"]',
+      'a[href*="/go/"]',
+      'a[href^="https://"]:not([href*="v2ex.com"])',
+      'a[href^="http://"]:not([href*="v2ex.com"])',
+    ],
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".site-nav a",
+      ".cell_tabs a",
+      ".tab-alt-container a",
+      "#SecondaryTabs a",
+      "a.page_normal,a.page_current",
+      "a.count_livid",
+      ".post-item a.post-content",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      if (location.pathname.includes("/member/")) {
+        const profile = $("h1")
+        if (profile) {
+          const username = profile.textContent
+          if (username) {
+            const key = `https://www.v2ex.com/member/${username}`
+            const meta = { title: username, type: "user" }
+            profile.utags = { key, meta }
+            matchedNodesSet.add(profile)
+          }
+        }
+      }
+      if (location.pathname.includes("/t/")) {
+        const header = $(".header h1")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = $("h1").textContent
+          const meta = { title, type: "topic" }
+          header.utags = { key, meta }
+          matchedNodesSet.add(header)
+        }
+        const main2 = $("#Main") || $(".content")
+        const replyElements = $$('.box .cell[id^="r_"]', main2)
+        for (const reply of replyElements) {
+          const replyId = reply.id
+          const floorNoElement = $(".no", reply)
+          const replyContentElement = $(".reply_content", reply)
+          const agoElement = $(".ago,.fade.small", reply)
+          if (replyId && floorNoElement && replyContentElement && agoElement) {
+            let newAgoElement = $("a", agoElement)
+            if (!newAgoElement) {
+              newAgoElement = createElement("a", {
+                textContent: agoElement.textContent,
+                href: "#" + replyId,
+              })
+              agoElement.textContent = ""
+              agoElement.append(newAgoElement)
+            }
+            const floorNo = parseInt10(floorNoElement.textContent, 1)
+            const pageNo = Math.floor((floorNo - 1) / 100) + 1
+            const key =
+              getCanonicalUrl2("https://www.v2ex.com" + location.pathname) +
+              "?p=" +
+              String(pageNo) +
+              "#" +
+              replyId
+            const title =
+              cloneWithoutCitedReplies(replyContentElement).textContent
+            const meta = { title, type: "reply" }
+            newAgoElement.utags = { key, meta }
+            matchedNodesSet.add(newAgoElement)
+          }
+        }
+      }
+      if (location.pathname.includes("/go/")) {
+        const header = $(".cell_ops.flex-one-row input")
+        if (header) {
+          const key = getCanonicalUrl2(
+            "https://www.v2ex.com" + location.pathname
+          )
+          const title = document.title.replace(/.*›\s*/, "").trim()
+          const meta = { title, type: "node" }
+          header.utags = { key, meta }
+          matchedNodesSet.add(header)
+        }
+      }
+    },
+    getCanonicalUrl: getCanonicalUrl2,
+  }
+  var v2ex_default = site2
+  function getScriptUrl(url) {
+    return getCanonicalUrl3(url.replace(/(scripts\/\d+)(.*)/, "$1"))
+  }
+  function getCanonicalUrl3(url) {
     if (/(greasyfork|sleazyfork)\.org/.test(url)) {
       url = url.replace(
         /((greasyfork|sleazyfork)\.org\/)(\w{2}(-\w{2})?)(\/|$)/,
@@ -1137,7 +1252,7 @@
     }
     return url
   }
-  var site2 = {
+  var site3 = {
     matches: /(greasyfork|sleazyfork)\.org/,
     listNodesSelectors: [".script-list li", ".discussion-list-container"],
     conditionNodesSelectors: [
@@ -1147,7 +1262,7 @@
       ".discussion-list-container .discussion-title",
       ".discussion-list-container .discussion-meta-item:nth-child(2) > a",
     ],
-    includeSelectors: ["a[href]:not(.utags_text_tag)"],
+    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
     excludeSelectors: [
       ...default_default.excludeSelectors,
       ".sidebar",
@@ -1181,7 +1296,7 @@
         if (element) {
           const title = element.textContent
           if (title) {
-            const key = getCanonicalUrl2(location.href)
+            const key = getCanonicalUrl3(location.href)
             const meta = { title }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
@@ -1189,153 +1304,147 @@
         }
       }
     },
-    getCanonicalUrl: getCanonicalUrl2,
+    getCanonicalUrl: getCanonicalUrl3,
   }
-  var greasyfork_org_default = site2
-  function getCanonicalUrl3(url) {
-    return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
-  }
-  function cloneWithoutCitedReplies(element) {
+  var greasyfork_org_default = site3
+  function cloneComment(element) {
     const newElement = element.cloneNode(true)
-    for (const cell of $$(".cell", newElement)) {
-      cell.remove()
+    for (const node of $$(".reply", newElement)) {
+      node.remove()
     }
     return newElement
   }
-  var site3 = {
-    matches: /v2ex\.com|v2hot\./,
-    listNodesSelectors: [".box .cell"],
-    conditionNodesSelectors: [
-      ".box .cell .topic-link",
-      ".item_hot_topic_title a",
-      '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
-      ".box .cell .topic_info .node",
-      '.box .cell strong a.dark[href*="/member/"]',
-      ".box .cell .ago a",
-      ".box .cell .fade.small a",
-    ],
-    includeSelectors: [
-      'a[href*="/t/"]',
-      'a[href*="/member/"]',
-      'a[href*="/go/"]',
-      'a[href^="https://"]:not([href*="v2ex.com"])',
-      'a[href^="http://"]:not([href*="v2ex.com"])',
-    ],
+  var site4 = {
+    matches: /news\.ycombinator\.com/,
+    listNodesSelectors: [".script-list li", ".discussion-list-container"],
+    conditionNodesSelectors: [],
+    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
     excludeSelectors: [
       ...default_default.excludeSelectors,
-      ".site-nav a",
-      ".cell_tabs a",
-      ".tab-alt-container a",
-      "#SecondaryTabs a",
-      "a.page_normal,a.page_current",
-      "a.count_livid",
-      ".post-item a.post-content",
+      ".pagetop",
+      ".morelink",
+      ".hnpast",
+      ".clicky",
+      ".navs > a",
+      'a[href^="login"]',
+      'a[href^="logout"]',
+      'a[href^="forgot"]',
+      'a[href^="vote"]',
+      'a[href^="submit"]',
+      'a[href^="hide"]',
+      'a[href^="fave"]',
+      'a[href^="reply"]',
+      'a[href^="context"]',
+      'a[href^="newcomments"]',
+      'a[href^="#"]',
+      '.subline > a[href^="item"]',
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      if (location.pathname.includes("/member/")) {
-        const profile = $("h1")
-        if (profile) {
-          const username = profile.textContent
-          if (username) {
-            const key = `https://www.v2ex.com/member/${username}`
-            const meta = { title: username, type: "user" }
-            profile.utags = { key, meta }
-            matchedNodesSet.add(profile)
-          }
-        }
-      }
-      if (location.pathname.includes("/t/")) {
-        const header = $(".header h1")
-        if (header) {
-          const key = getCanonicalUrl3(
-            "https://www.v2ex.com" + location.pathname
-          )
-          const title = $("h1").textContent
-          const meta = { title, type: "topic" }
-          header.utags = { key, meta }
-          matchedNodesSet.add(header)
-        }
-        const main2 = $("#Main") || $(".content")
-        const replyElements = $$('.box .cell[id^="r_"]', main2)
-        for (const reply of replyElements) {
-          const replyId = reply.id
-          const floorNoElement = $(".no", reply)
-          const replyContentElement = $(".reply_content", reply)
-          const agoElement = $(".ago,.fade.small", reply)
-          if (replyId && floorNoElement && replyContentElement && agoElement) {
-            let newAgoElement = $("a", agoElement)
-            if (!newAgoElement) {
-              newAgoElement = createElement("a", {
-                textContent: agoElement.textContent,
-                href: "#" + replyId,
-              })
-              agoElement.textContent = ""
-              agoElement.append(newAgoElement)
+      if (location.pathname === "/item") {
+        const comments = $$(".comment-tree .comtr[id]")
+        for (const comment of comments) {
+          const commentText = $(".commtext", comment)
+          const target = $(".age a", comment)
+          if (commentText && target) {
+            const key = target.href
+            const title = cloneComment(commentText).textContent
+            if (key && title) {
+              const meta = { title, type: "comment" }
+              target.utags = { key, meta }
+              matchedNodesSet.add(target)
             }
-            const floorNo = parseInt10(floorNoElement.textContent, 1)
-            const pageNo = Math.floor((floorNo - 1) / 100) + 1
-            const key =
-              getCanonicalUrl3("https://www.v2ex.com" + location.pathname) +
-              "?p=" +
-              String(pageNo) +
-              "#" +
-              replyId
-            const title =
-              cloneWithoutCitedReplies(replyContentElement).textContent
-            const meta = { title, type: "reply" }
-            newAgoElement.utags = { key, meta }
-            matchedNodesSet.add(newAgoElement)
           }
         }
-      }
-      if (location.pathname.includes("/go/")) {
-        const header = $(".cell_ops.flex-one-row input")
-        if (header) {
-          const key = getCanonicalUrl3(
-            "https://www.v2ex.com" + location.pathname
-          )
-          const title = document.title.replace(/.*›\s*/, "").trim()
-          const meta = { title, type: "node" }
-          header.utags = { key, meta }
-          matchedNodesSet.add(header)
+        const fatitem = $(".fatitem")
+        if (fatitem) {
+          const titleElement = $(".titleline a", fatitem)
+          const commentText = titleElement || $(".commtext", fatitem)
+          const type = titleElement ? "topic" : "comment"
+          const target = $(".age a", fatitem)
+          if (commentText && target) {
+            const key = target.href
+            const title = cloneComment(commentText).textContent
+            if (key && title) {
+              const meta = { title, type }
+              target.utags = { key, meta }
+              matchedNodesSet.add(target)
+            }
+          }
+        }
+      } else if (location.pathname === "/newcomments") {
+        const comments = $$(".athing[id]")
+        for (const comment of comments) {
+          const commentText = $(".commtext", comment)
+          const target = $(".age a", comment)
+          if (commentText && target) {
+            const key = target.href
+            const title = cloneComment(commentText).textContent
+            if (key && title) {
+              const meta = { title, type: "comment" }
+              target.utags = { key, meta }
+              matchedNodesSet.add(target)
+            }
+          }
+        }
+      } else {
+        const topics = $$(".athing[id]")
+        for (const topic of topics) {
+          const titleElement = $(".titleline a", topic)
+          const subtext = topic.nextElementSibling
+          if (subtext) {
+            const target = $(".age a", subtext)
+            if (titleElement && target) {
+              const key = target.href
+              const title = titleElement.textContent
+              if (key && title) {
+                const meta = { title, type: "topic" }
+                target.utags = { key, meta }
+                matchedNodesSet.add(target)
+              }
+            }
+          }
         }
       }
     },
-    getCanonicalUrl: getCanonicalUrl3,
   }
-  var v2ex_default = site3
-  var sites = [v2ex_default, greasyfork_org_default]
+  var news_ycombinator_com_default = site4
+  var sites = [
+    v2ex_default,
+    greasyfork_org_default,
+    //
+    news_ycombinator_com_default,
+  ]
   function matchedSite(hostname2) {
-    for (const site5 of sites) {
-      if (site5.matches.test(hostname2)) {
-        return site5
+    for (const s of sites) {
+      if (s.matches.test(hostname2)) {
+        return s
       }
     }
     return default_default
   }
   var hostname = location.hostname
-  var site4 = matchedSite(hostname)
+  var currentSite = matchedSite(hostname)
   function getListNodes() {
-    if (typeof site4.getListNodes === "function") {
-      return site4.getListNodes()
+    if (typeof currentSite.getListNodes === "function") {
+      return currentSite.getListNodes()
     }
-    if (site4.listNodesSelectors) {
-      return $$(site4.listNodesSelectors.join(","))
+    if (currentSite.listNodesSelectors) {
+      return $$(currentSite.listNodesSelectors.join(",") || "none")
     }
     return []
   }
   function getConditionNodes() {
-    if (typeof site4.getConditionNodes === "function") {
-      return site4.getConditionNodes()
+    if (typeof currentSite.getConditionNodes === "function") {
+      return currentSite.getConditionNodes()
     }
-    if (site4.conditionNodesSelectors) {
-      return $$(site4.conditionNodesSelectors.join(","))
+    if (currentSite.conditionNodesSelectors) {
+      return $$(currentSite.conditionNodesSelectors.join(",") || "none")
     }
     return []
   }
   function getCanonicalUrl4(url) {
-    if (typeof site4.getCanonicalUrl === "function") {
-      return site4.getCanonicalUrl(url)
+    if (typeof currentSite.getCanonicalUrl === "function") {
+      return currentSite.getCanonicalUrl(url)
     }
     return url
   }
@@ -1361,15 +1470,15 @@
     return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
   }
   var addMatchedNodes = (matchedNodesSet) => {
-    const includeSelectors = site4.includeSelectors
-    if (!includeSelectors || includeSelectors.length === 0) {
+    const matchedNodesSelectors = currentSite.matchedNodesSelectors
+    if (!matchedNodesSelectors || matchedNodesSelectors.length === 0) {
       return
     }
-    const elements = $$(includeSelectors.join(","))
+    const elements = $$(matchedNodesSelectors.join(",") || "none")
     if (elements.length === 0) {
       return
     }
-    const excludeSelectors = site4.excludeSelectors || []
+    const excludeSelectors = currentSite.excludeSelectors || []
     const excludeSelector = excludeSelectors.join(",")
     for (const element of elements) {
       if (
@@ -1392,8 +1501,8 @@
   function matchedNodes() {
     const matchedNodesSet = /* @__PURE__ */ new Set()
     addMatchedNodes(matchedNodesSet)
-    if (typeof site4.addExtraMatchedNodes === "function") {
-      site4.addExtraMatchedNodes(matchedNodesSet)
+    if (typeof currentSite.addExtraMatchedNodes === "function") {
+      currentSite.addExtraMatchedNodes(matchedNodesSet)
     }
     return [...matchedNodesSet]
   }

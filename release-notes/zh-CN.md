@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.6.0
+
+- UTags 开始支持 hacker news (news.ycombinator.com)
+
 ## 0.5.2
 
 - 优化性能
