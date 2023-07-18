@@ -57,6 +57,10 @@ export function bindDocumentEvents() {
         return
       }
 
+      if (target.closest(".utags_ul")) {
+        return
+      }
+
       hideAllUtagsInArea(target)
 
       const targets: HTMLElement[] = []
