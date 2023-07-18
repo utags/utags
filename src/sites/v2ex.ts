@@ -17,7 +17,11 @@ export function cloneWithoutCitedReplies(element: HTMLElement) {
 
 const site = {
   matches: /v2ex\.com|v2hot\./,
-  listNodesSelectors: [".box .cell"],
+  listNodesSelectors: [
+    ".box .cell",
+    // v2ex 超级增强
+    ".my-box .comment",
+  ],
   // getListNodes() {
   //   const patterns = [".box .cell"]
   //   return $$(patterns.join(","))
@@ -37,6 +41,10 @@ const site = {
     ".box .cell .ago a",
     // 回复内容标签(手机网页版)
     ".box .cell .fade.small a",
+    // 回复者 (v2ex 超级增强)
+    ".comment .username",
+    // 回复内容标签 (v2ex 超级增强)
+    ".comment .ago",
   ],
   // getConditionNodes() {
   //   const patterns = [
@@ -135,6 +143,40 @@ const site = {
           matchedNodesSet.add(newAgoElement)
         }
       }
+
+      // v2ex 超级增强回复
+      // const replyElements2 = $$(".my-box .comment", main)
+      // for (const reply of replyElements2) {
+      //   const replyId = reply.id // 目前 v2ex 超级增强版本无法获得 ID
+      //   const floorNoString = reply.dataset.floor
+      //   const replyContentElement = $(".reply_content", reply)
+      //   const agoElement = $(".ago", reply)
+      //   if (replyId && floorNoString && replyContentElement && agoElement) {
+      //     let newAgoElement = $("a", agoElement)
+      //     if (!newAgoElement) {
+      //       newAgoElement = createElement("a", {
+      //         textContent: agoElement.textContent,
+      //         href: "#" + replyId,
+      //       })
+      //       agoElement.textContent = ""
+      //       agoElement.append(newAgoElement)
+      //     }
+
+      //     const floorNo = parseInt10(floorNoString, 1)
+      //     const pageNo = Math.floor((floorNo - 1) / 100) + 1
+      //     const key =
+      //       getCanonicalUrl("https://www.v2ex.com" + location.pathname) +
+      //       "?p=" +
+      //       String(pageNo) +
+      //       "#" +
+      //       replyId
+      //     const title =
+      //       cloneWithoutCitedReplies(replyContentElement).textContent
+      //     const meta = { title, type: "reply" }
+      //     newAgoElement.utags = { key, meta }
+      //     matchedNodesSet.add(newAgoElement)
+      //   }
+      // }
     }
 
     if (location.pathname.includes("/go/")) {
