@@ -70,6 +70,13 @@ function onSettingsChange() {
   }
 }
 
+// For debug, 0 disable, 1 enable
+let start = 0
+
+if (start) {
+  start = Date.now()
+}
+
 function appendTagsToPage(
   element: HTMLElement,
   key: string,
@@ -96,19 +103,28 @@ function appendTagsToPage(
       : "utags_text_tag utags_captain_tag2"
   )
   a.addEventListener("click", async function (event: Event) {
-    // eslint-disable-next-line no-alert
-    const newTags = prompt(
-      "[UTags] 请输入标签，用逗号分开多个标签",
-      tags.join(", ")
-    )
-    if (newTags !== null) {
-      const newTagsArray = newTags.split(/\s*[,，]\s*/)
-      await saveTags(key, newTagsArray, meta)
-    }
-
     event.preventDefault()
     event.stopPropagation()
     event.stopImmediatePropagation()
+
+    setTimeout(async () => {
+      // eslint-disable-next-line no-alert
+      const newTags = prompt(
+        "[UTags] 请输入标签，用逗号分开多个标签",
+        tags.join(", ")
+      )
+      if (newTags !== null) {
+        if (start) {
+          start = Date.now()
+        }
+
+        const newTagsArray = newTags.split(/\s*[,，]\s*/)
+        await saveTags(key, newTagsArray, meta)
+        if (start) {
+          console.error("after saveTags", Date.now() - start)
+        }
+      }
+    })
   })
   li.append(a)
   ul.append(li)
@@ -131,11 +147,15 @@ function appendTagsToPage(
     if (zIndex && zIndex !== "auto") {
       setStyle(ul, { zIndex })
     }
-  }, 1000)
+  }, 200)
   /* Fix v2ex polish end */
 }
 
 async function displayTags() {
+  if (start) {
+    console.error("start of displayTags", Date.now() - start)
+  }
+
   // console.error("displayTags")
   const listNodes = getListNodes()
   for (const node of listNodes) {
@@ -149,19 +169,36 @@ async function displayTags() {
     node.dataset.utags_condition_node = ""
   }
 
+  if (start) {
+    console.error("before matchedNodes", Date.now() - start)
+  }
+
   // Display tags for matched components on matched pages
   const nodes = matchedNodes()
-  await Promise.all(
-    nodes.map(async (node) => {
-      if (!node.utags || !node.utags.key) {
-        return
-      }
+  if (start) {
+    console.error("after matchedNodes", Date.now() - start, nodes.length)
+  }
 
-      const object = await getTags(node.utags.key)
-      const tags = object.tags || []
-      appendTagsToPage(node, node.utags.key, tags, node.utags.meta)
-    })
-  )
+  for (const node of nodes) {
+    const utags = node.utags
+    if (!utags) {
+      continue
+    }
+
+    const key = utags.key as string
+    if (!key) {
+      continue
+    }
+
+    const object = getTags(key)
+
+    const tags: string[] = (object.tags as string[]) || []
+    appendTagsToPage(node, key, tags, utags.meta)
+  }
+
+  if (start) {
+    console.error("after appendTagsToPage", Date.now() - start)
+  }
 
   for (const node of listNodes) {
     const conditionNodes = $$("[data-utags_condition_node]", node)
@@ -184,11 +221,17 @@ async function displayTags() {
         "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
     }
   }
+
+  if (start) {
+    console.error("end of displayTags", Date.now() - start)
+  }
 }
 
 async function initStorage() {
   await migration()
-  addTagsValueChangeListener(displayTags)
+  addTagsValueChangeListener(() => {
+    setTimeout(displayTags)
+  })
 }
 
 let countOfLinks = 0
