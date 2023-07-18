@@ -56,7 +56,7 @@ const site = {
   //   ]
   //   return $$(patterns.join(","))
   // },
-  includeSelectors: [
+  matchedNodesSelectors: [
     // 所有页面帖子链接
     'a[href*="/t/"]',
     // 所有页面用户链接
