@@ -51,6 +51,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.6.0
+  - Apply utags to hacker news (news.ycombinator.com)
 - 0.5.2
   - Improve performance
   - Prevent tag content from being copied together when copying HTML text

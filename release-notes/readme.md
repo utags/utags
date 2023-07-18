@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.6.0
+
+- Apply utags to hacker news (news.ycombinator.com)
+
 ## 0.5.2
 
 - Improve performance
