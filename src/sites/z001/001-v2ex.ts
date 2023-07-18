@@ -1,6 +1,6 @@
 import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
 
-import defaultSite from "./default"
+import defaultSite from "../default"
 
 function getCanonicalUrl(url: string) {
   return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
