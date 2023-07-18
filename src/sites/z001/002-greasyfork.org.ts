@@ -37,7 +37,7 @@ const site = {
     // Discussion author
     ".discussion-list-container .discussion-meta-item:nth-child(2) > a",
   ],
-  includeSelectors: ["a[href]:not(.utags_text_tag)"],
+  matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
   excludeSelectors: [
     ...defaultSite.excludeSelectors,
     ".sidebar",
