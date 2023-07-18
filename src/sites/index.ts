@@ -3,6 +3,7 @@ import { $, $$, getAttribute, isUrl } from "browser-extension-utils"
 import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"
+import hackerNews from "./z001/003-news.ycombinator.com"
 
 type Site = {
   matches: RegExp
@@ -10,18 +11,23 @@ type Site = {
   getListNodes?: () => HTMLElement[]
   conditionNodesSelectors?: string[]
   getConditionNodes?: () => HTMLElement[]
-  includeSelectors?: string[]
+  matchedNodesSelectors?: string[]
   excludeSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
   getCanonicalUrl?: (url: string) => string
 }
 
-const sites: Site[] = [v2ex, greasyforkOrg]
+const sites: Site[] = [
+  v2ex,
+  greasyforkOrg,
+  //
+  hackerNews,
+]
 
 function matchedSite(hostname: string) {
-  for (const site of sites) {
-    if (site.matches.test(hostname)) {
-      return site
+  for (const s of sites) {
+    if (s.matches.test(hostname)) {
+      return s
     }
   }
 
@@ -29,35 +35,35 @@ function matchedSite(hostname: string) {
 }
 
 const hostname = location.hostname
-const site: Site = matchedSite(hostname)
+const currentSite: Site = matchedSite(hostname)
 
 export function getListNodes() {
-  if (typeof site.getListNodes === "function") {
-    return site.getListNodes()
+  if (typeof currentSite.getListNodes === "function") {
+    return currentSite.getListNodes()
   }
 
-  if (site.listNodesSelectors) {
-    return $$(site.listNodesSelectors.join(","))
+  if (currentSite.listNodesSelectors) {
+    return $$(currentSite.listNodesSelectors.join(",") || "none")
   }
 
   return []
 }
 
 export function getConditionNodes() {
-  if (typeof site.getConditionNodes === "function") {
-    return site.getConditionNodes()
+  if (typeof currentSite.getConditionNodes === "function") {
+    return currentSite.getConditionNodes()
   }
 
-  if (site.conditionNodesSelectors) {
-    return $$(site.conditionNodesSelectors.join(","))
+  if (currentSite.conditionNodesSelectors) {
+    return $$(currentSite.conditionNodesSelectors.join(",") || "none")
   }
 
   return []
 }
 
 function getCanonicalUrl(url: string) {
-  if (typeof site.getCanonicalUrl === "function") {
-    return site.getCanonicalUrl(url)
+  if (typeof currentSite.getCanonicalUrl === "function") {
+    return currentSite.getCanonicalUrl(url)
   }
 
   return url
@@ -94,18 +100,20 @@ const isExcluedUtagsElement = (
 }
 
 const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
-  const includeSelectors = site.includeSelectors
+  const matchedNodesSelectors = currentSite.matchedNodesSelectors
 
-  if (!includeSelectors || includeSelectors.length === 0) {
+  if (!matchedNodesSelectors || matchedNodesSelectors.length === 0) {
     return
   }
 
-  const elements = $$(includeSelectors.join(",")) as HTMLAnchorElement[]
+  const elements = $$(
+    matchedNodesSelectors.join(",") || "none"
+  ) as HTMLAnchorElement[]
   if (elements.length === 0) {
     return
   }
 
-  const excludeSelectors = site.excludeSelectors || []
+  const excludeSelectors = currentSite.excludeSelectors || []
   const excludeSelector = excludeSelectors.join(",")
 
   for (const element of elements) {
@@ -136,8 +144,8 @@ export function matchedNodes() {
 
   addMatchedNodes(matchedNodesSet)
 
-  if (typeof site.addExtraMatchedNodes === "function") {
-    site.addExtraMatchedNodes(matchedNodesSet)
+  if (typeof currentSite.addExtraMatchedNodes === "function") {
+    currentSite.addExtraMatchedNodes(matchedNodesSet)
   }
 
   // 添加 data-utags_primary_link 属性强制允许使用 utags
