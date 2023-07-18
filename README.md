@@ -51,6 +51,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.5.2
+  - Improve performance
+  - Prevent tag content from being copied together when copying HTML text
 - 0.5.0
   - Apply utags to greasyfork.org and sleazyfork.org
   - \[V2EX\] 允许给所有外部链接添加标签

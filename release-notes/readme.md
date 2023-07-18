@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.5.2
+
+- Improve performance
+- Prevent tag content from being copied together when copying HTML text
+
 ## 0.5.1
 
 - \[V2EX\] 调整主题页主题标签的显示位置
