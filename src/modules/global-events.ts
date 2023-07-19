@@ -9,21 +9,26 @@ import {
 } from "browser-extension-utils"
 
 const numberLimitOfShowAllUtagsInArea = 10
+let lastShownArea: HTMLElement | undefined
 
-function hideAllUtagsInArea(target?: HTMLElement | undefined) {
+export function hideAllUtagsInArea(target?: HTMLElement | undefined) {
   const element = $(".utags_show_all")
   if (!element) {
     return
   }
 
-  if (element === target || element.contains(target)) {
+  if (element === target || element.contains(target as Node)) {
     return
   }
 
+  if (!target) {
+    lastShownArea = undefined
+  }
+
   for (const element of $$(".utags_show_all")) {
-    removeClass(element, "utags_show_all")
     // Cancel delay effect
     addClass(element, "utags_hide_all")
+    removeClass(element, "utags_show_all")
     setTimeout(() => {
       removeClass(element, "utags_hide_all")
     })
@@ -46,7 +51,6 @@ function showAllUtagsInArea(element: HTMLElement | undefined) {
 
 export function bindDocumentEvents() {
   const eventType = isTouchScreen() ? "touchstart" : "click"
-  let lastShownArea: HTMLElement | undefined
 
   addEventListener(
     doc,
@@ -76,7 +80,6 @@ export function bindDocumentEvents() {
         if (showAllUtagsInArea(area)) {
           if (lastShownArea === area) {
             hideAllUtagsInArea()
-            lastShownArea = undefined
             return
           }
 
@@ -84,6 +87,9 @@ export function bindDocumentEvents() {
           return
         }
       }
+
+      // Failed testing showAllUtagsInArea
+      lastShownArea = undefined
 
       // TODO: delay display utags in corner of page for current page
     },
@@ -101,7 +107,6 @@ export function bindDocumentEvents() {
       if (event.key === "Escape" && $(".utags_show_all")) {
         // 按“ESC”键时要做的事。
         hideAllUtagsInArea()
-        lastShownArea = undefined
         // 取消默认动作，从而避免处理两次。
         event.preventDefault()
       }

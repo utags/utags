@@ -11,6 +11,7 @@ import {
   addStyle,
   createElement,
   doc,
+  hasClass,
   registerMenuCommand,
   removeClass,
   setStyle,
@@ -20,7 +21,7 @@ import styleText from "data-text:./content.scss"
 
 import createTag from "./components/tag"
 import { outputData } from "./modules/export-import"
-import { bindDocumentEvents } from "./modules/global-events"
+import { bindDocumentEvents, hideAllUtagsInArea } from "./modules/global-events"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
@@ -288,14 +289,28 @@ async function main() {
   bindDocumentEvents()
 
   countOfLinks = $$("a:not(.utags_text_tag)").length
-  setInterval(async () => {
+
+  const observer = new MutationObserver(async (mutationsList) => {
+    // console.error("mutation", Date.now(), mutationsList)
     const count = $$("a:not(.utags_text_tag)").length
     if (countOfLinks !== count) {
       // console.log(countOfLinks, count)
       countOfLinks = count
       await displayTags()
     }
-  }, 1000)
+
+    if ($("#vimiumHintMarkerContainer")) {
+      addClass(doc.body, "utags_show_all")
+      addClass(doc.documentElement, "utags_vimium_hint")
+    } else if (hasClass(doc.documentElement, "utags_vimium_hint")) {
+      removeClass(doc.documentElement, "utags_vimium_hint")
+      hideAllUtagsInArea()
+    }
+  })
+  observer.observe(doc, {
+    childList: true,
+    subtree: true,
+  })
 }
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises, unicorn/prefer-top-level-await

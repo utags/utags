@@ -1,5 +1,6 @@
-:not(#utags_should_has_higher_specificity)
-  :not(#utags_should_has_higher_specificity) {
+:not(#utags_should_has_higher_specificity):not(
+    #utags_should_has_higher_specificity
+  ) {
   #utags_layer {
     height: 200px;
     width: 200px;
@@ -86,7 +87,6 @@
       left: -2px;
       padding: 0 !important;
       margin: 0 !important;
-      border: none !important;
       width: 4px !important;
       height: 4px !important;
       font-size: 1px !important;
@@ -163,22 +163,6 @@
   [data-utags_list_node]:hover {
     opacity: 100% !important;
   }
-}
-
-html:has(#vimiumHintMarkerContainer):not(#utags_should_has_higher_specificity)
-  :not(#utags_should_has_higher_specificity)
-  .utags_captain_tag {
-  /* Firefox does not support :has */
-  /* vimium extension */
-  opacity: 99% !important;
-  font-size: 10px !important;
-  width: 18px !important;
-  height: 18px !important;
-  background-position: 3px 3px !important;
-  transition: unset;
-  /* Fix v2ex 超级增强 start */
-  z-index: 90;
-  /* Fix v2ex 超级增强 end */
 }
 
 .utags_no_hide [data-utags_list_node*=","] {
