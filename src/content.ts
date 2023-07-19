@@ -96,15 +96,16 @@ function appendTagsToPage(
     addClass(li, "notag")
   }
 
-  let a = createElement("a")
-  // a.textContent = "🏷️"
-  a.dataset.utags_tag = "🏷️"
-  a.setAttribute(
-    "class",
-    tags.length === 0
-      ? "utags_text_tag utags_captain_tag"
-      : "utags_text_tag utags_captain_tag2"
-  )
+  const a = createElement("button", {
+    // href: "",
+    // tabindex: "0",
+    "data-utags_tag": "🏷️",
+    class:
+      tags.length === 0
+        ? "utags_text_tag utags_captain_tag"
+        : "utags_text_tag utags_captain_tag2",
+  })
+
   addEventListener(
     a,
     "click",
@@ -139,7 +140,7 @@ function appendTagsToPage(
 
   for (const tag of tags) {
     li = createElement("li")
-    a = createTag(tag)
+    const a = createTag(tag)
     li.append(a)
     ul.append(li)
   }
