@@ -21,7 +21,7 @@ type UrlMap = Record<string, TagsAndMeta | UrlMapMeta>
 const extensionVersion = "0.6.0"
 const databaseVersion = 2
 const storageKey = "extension.utags.urlmap"
-let cachedUrlMap: UrlMap
+let cachedUrlMap: UrlMap | undefined
 
 export async function getUrlMap(): Promise<UrlMap> {
   return ((await getValue(storageKey)) as UrlMap) || ({} as UrlMap)
@@ -31,8 +31,16 @@ async function getUrlMapVesion1(): Promise<Record<string, unknown>> {
   return getValue("plugin.utags.tags.v1") as Promise<Record<string, unknown>>
 }
 
+export async function getCachedUrlMap(): Promise<Record<string, unknown>> {
+  if (!cachedUrlMap) {
+    cachedUrlMap = await getUrlMap()
+  }
+
+  return cachedUrlMap
+}
+
 export function getTags(key: string): Record<string, unknown> {
-  return cachedUrlMap[key] || { tags: [] }
+  return (cachedUrlMap && cachedUrlMap[key]) || { tags: [] }
 }
 
 export async function saveTags(
@@ -74,7 +82,7 @@ export function addTagsValueChangeListener(func) {
 }
 
 addTagsValueChangeListener(async () => {
-  cachedUrlMap = null
+  cachedUrlMap = undefined
   await checkVersion()
 })
 

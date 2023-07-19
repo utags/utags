@@ -24,6 +24,7 @@ import { bindDocumentEvents } from "./modules/global-events"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
+  getCachedUrlMap,
   getTags,
   migration,
   saveTags,
@@ -184,6 +185,8 @@ async function displayTags() {
   if (start) {
     console.error("after matchedNodes", Date.now() - start, nodes.length)
   }
+
+  await getCachedUrlMap()
 
   for (const node of nodes) {
     const utags = node.utags
