@@ -44,7 +44,7 @@
       margin: 0px 3px !important;
       font-size: 10px !important;
       letter-spacing: 0 !important;
-      line-height: 10px !important;
+      line-height: 1 !important;
       font-weight: normal !important;
       text-decoration: none !important;
       text-align: center !important;
@@ -64,7 +64,6 @@
 
     .utags_captain_tag,
     .utags_captain_tag2 {
-      border: 1px solid #fff0;
       text-indent: -9999px;
       width: 14px;
       height: 14px;
@@ -72,6 +71,12 @@
       background-size: 13px !important;
       background-repeat: no-repeat !important;
       background-position: 0 0 !important;
+    }
+
+    .utags_captain_tag:not(#a):not(#b),
+    .utags_captain_tag2:not(#a):not(#b) {
+      /* Increase the specificity of border style */
+      border: 1px solid #fff0 !important;
     }
 
     .utags_captain_tag {
@@ -113,15 +118,6 @@
   .utags_hide_all .utags_captain_tag,
   .utags_show_all .utags_captain_tag {
     transition: unset;
-  }
-
-  html:has(#vimiumHintMarkerContainer) .utags_captain_tag {
-    /* Firefox does not support :has */
-    /* vimium extension */
-    opacity: 99%;
-    font-size: 10px;
-    width: 12px;
-    height: 12px;
   }
 
   :not(a) + .utags_ul .utags_captain_tag {
@@ -167,6 +163,22 @@
   [data-utags_list_node]:hover {
     opacity: 100% !important;
   }
+}
+
+html:has(#vimiumHintMarkerContainer):not(#utags_should_has_higher_specificity)
+  :not(#utags_should_has_higher_specificity)
+  .utags_captain_tag {
+  /* Firefox does not support :has */
+  /* vimium extension */
+  opacity: 99% !important;
+  font-size: 10px !important;
+  width: 18px !important;
+  height: 18px !important;
+  background-position: 3px 3px !important;
+  transition: unset;
+  /* Fix v2ex 超级增强 start */
+  z-index: 90;
+  /* Fix v2ex 超级增强 end */
 }
 
 .utags_no_hide [data-utags_list_node*=","] {
