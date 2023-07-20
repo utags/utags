@@ -2,6 +2,12 @@
 
 > [English](readme.md) | 中文
 
+## 0.6.3
+
+- UTags 开始支持 lobste.rs
+- 使用 TAB 键移动焦点到 UTags 标签上
+- 火狐浏览器支持 Vimium 扩展点击 'f' 键时显示 UTags 标签
+
 ## 0.6.0
 
 - UTags 开始支持 hacker news (news.ycombinator.com)
