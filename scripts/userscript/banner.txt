@@ -12,7 +12,10 @@
 // @license              {license}
 // @match                https://utags.pipecraft.net/*
 // @match                https://greasyfork.org/*
+// @match                https://www.journalduhacker.net/*
+// @match                https://lobste.rs/*
 // @match                https://sleazyfork.org/*
+// @match                https://tilde.news/*
 // @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://news.ycombinator.com/*
