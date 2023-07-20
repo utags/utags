@@ -10,6 +10,7 @@
 - [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
 - [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
 - [lobste.rs](https://lobste.rs/)
+- [github.com](https://github.com/)
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -89,6 +90,8 @@
 
 ## 更新记录
 
+- 0.6.4
+  - UTags 开始支持 github.com
 - 0.6.3
   - UTags 开始支持 lobste.rs
   - 使用 TAB 键移动焦点到 UTags 标签上
