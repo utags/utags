@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.6.4
+
+- UTags 开始支持 github.com
+
 ## 0.6.3
 
 - UTags 开始支持 lobste.rs

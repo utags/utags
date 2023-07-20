@@ -14,6 +14,7 @@ Allow users to add custom tags to links.
 - [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
 - [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
 - [lobste.rs](https://lobste.rs/)
+- [github.com](https://github.com/)
 - 更多网站会陆续支持
 
 ## 安装
@@ -53,6 +54,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.6.4
+  - Apply utags to github.com
 - 0.6.3
   - Apply utags to lobste.rs
   - Move focus on utags elements through the TAB key
