@@ -4,6 +4,7 @@ import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"
 import hackerNews from "./z001/003-news.ycombinator.com"
+import lobsters from "./z001/004-lobste.rs"
 
 type Site = {
   matches: RegExp
@@ -22,6 +23,7 @@ const sites: Site[] = [
   greasyforkOrg,
   //
   hackerNews,
+  lobsters,
 ]
 
 function matchedSite(hostname: string) {
