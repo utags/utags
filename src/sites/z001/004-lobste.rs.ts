@@ -14,11 +14,13 @@ const site = {
     ".description_present",
     ".morelink",
     ".user_tree",
+    ".dropdown_parent",
     'a[href^="/login"]',
     'a[href^="/logout"]',
     'a[href^="/u#"]',
     'a[href$="/save"]',
     'a[href$="/hide"]',
+    'a[href$="/suggest"]',
   ],
 }
 
