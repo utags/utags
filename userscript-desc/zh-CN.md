@@ -6,8 +6,10 @@
 
 目前支持的网站
 
-- www.v2ex.com
-- greasyfork.org and sleazyfork.org
+- [www.v2ex.com](https://www.v2ex.com/)
+- [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
+- [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
+- [lobste.rs](https://lobste.rs/)
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -87,6 +89,10 @@
 
 ## 更新记录
 
+- 0.6.3
+  - UTags 开始支持 lobste.rs
+  - 使用 TAB 键移动焦点到 UTags 标签上
+  - 火狐浏览器支持 Vimium 扩展点击 'f' 键时显示 UTags 标签
 - 0.6.0
   - UTags 开始支持 hacker news (news.ycombinator.com)
 - 0.5.2
