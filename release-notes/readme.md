@@ -2,6 +2,12 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.6.3
+
+- Apply utags to lobste.rs
+- Move focus on utags elements through the TAB key
+- Show utags with vimium hint marker on Firefox
+
 ## 0.6.0
 
 - Apply utags to hacker news (news.ycombinator.com)
