@@ -10,6 +10,7 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 - [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
 - [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
 - [lobste.rs](https://lobste.rs/)
+- [github.com](https://github.com/)
 - 更多网站会陆续支持
 
 ## Usage
@@ -89,6 +90,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.6.4
+  - Apply utags to github.com
 - 0.6.3
   - Apply utags to lobste.rs
   - Move focus on utags elements through the TAB key
