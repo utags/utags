@@ -5,6 +5,7 @@ import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"
 import hackerNews from "./z001/003-news.ycombinator.com"
 import lobsters from "./z001/004-lobste.rs"
+import github from "./z001/005-github.com"
 
 type Site = {
   matches: RegExp
@@ -13,12 +14,14 @@ type Site = {
   conditionNodesSelectors?: string[]
   getConditionNodes?: () => HTMLElement[]
   matchedNodesSelectors?: string[]
+  getMatchedNodes?: () => HTMLAnchorElement[]
   excludeSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
   getCanonicalUrl?: (url: string) => string
 }
 
 const sites: Site[] = [
+  github,
   v2ex,
   greasyforkOrg,
   //
@@ -102,15 +105,21 @@ const isExcluedUtagsElement = (
 }
 
 const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
-  const matchedNodesSelectors = currentSite.matchedNodesSelectors
+  let elements: HTMLAnchorElement[]
+  if (typeof currentSite.getMatchedNodes === "function") {
+    elements = currentSite.getMatchedNodes()
+  } else {
+    const matchedNodesSelectors = currentSite.matchedNodesSelectors
 
-  if (!matchedNodesSelectors || matchedNodesSelectors.length === 0) {
-    return
+    if (!matchedNodesSelectors || matchedNodesSelectors.length === 0) {
+      return
+    }
+
+    elements = $$(
+      matchedNodesSelectors.join(",") || "none"
+    ) as HTMLAnchorElement[]
   }
 
-  const elements = $$(
-    matchedNodesSelectors.join(",") || "none"
-  ) as HTMLAnchorElement[]
   if (elements.length === 0) {
     return
   }
