@@ -12,6 +12,7 @@
 - [lobste.rs](https://lobste.rs/)
 - [github.com](https://github.com/)
 - [www.reddit.com](https://www.reddit.com/)
+- [twitter.com](https://twitter.com/)
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -80,8 +81,6 @@
 ## Roadmap
 
 - 网页内所有链接显示添加标签按钮
-- 支持更多的网站：
-  - Next: hacker news, lobsters, [DTO](https://dto.pipecraft.net/), P\*Hub
 - 支持自定义网站规则
 - 支持自定义标签样式
 - 展示其他用户们的标签内容
@@ -91,6 +90,8 @@
 
 ## 更新记录
 
+- 0.6.7
+  - UTags 开始支持 twitter.com
 - 0.6.6
   - \[github\] 匹配 issues, PRs 和 commits 里的用户名
   - 防止标签值没有变化时，重新生成 utags 标签
