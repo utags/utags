@@ -99,6 +99,7 @@ function appendTagsToPage(
   const a = createElement("button", {
     // href: "",
     // tabindex: "0",
+    title: "Add tags",
     "data-utags_tag": "🏷️",
     class:
       tags.length === 0
