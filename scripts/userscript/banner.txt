@@ -10,16 +10,17 @@
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}
-// @match                https://utags.pipecraft.net/*
 // @match                https://github.com/*
+// @match                https://www.reddit.com/*
 // @match                https://greasyfork.org/*
-// @match                https://www.journalduhacker.net/*
 // @match                https://lobste.rs/*
+// @match                https://news.ycombinator.com/*
+// @match                https://*.v2ex.com/*
+// @match                https://www.journalduhacker.net/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
-// @match                https://*.v2ex.com/*
 // @match                https://v2hot.pipecraft.net/*
-// @match                https://news.ycombinator.com/*
+// @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
 // ==/UserScript==
 //
