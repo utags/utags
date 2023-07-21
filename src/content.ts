@@ -30,6 +30,7 @@ import {
   migration,
   saveTags,
 } from "./storage/index"
+import { type UserTag, type UserTagMeta } from "./types"
 
 const settingsTable = {
   showHidedItems: {
@@ -84,7 +85,7 @@ function appendTagsToPage(
   element: HTMLElement,
   key: string,
   tags: string[],
-  meta: Record<string, any>
+  meta: UserTagMeta | undefined
 ) {
   const utagsUl = element.nextSibling as HTMLElement
   if (hasClass(utagsUl, "utags_ul")) {
@@ -197,12 +198,12 @@ async function displayTags() {
   await getCachedUrlMap()
 
   for (const node of nodes) {
-    const utags = node.utags
+    const utags: UserTag = node.utags as UserTag
     if (!utags) {
       continue
     }
 
-    const key = utags.key as string
+    const key = utags.key
     if (!key) {
       continue
     }
