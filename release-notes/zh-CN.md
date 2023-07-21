@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.6.5
+
+- UTags 开始支持 reddit.com
+
 ## 0.6.4
 
 - UTags 开始支持 github.com
