@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.6.6
+
+- \[github\] 匹配 issues, PRs 和 commits 里的用户名
+- 防止标签值没有变化时，重新生成 utags 标签
+
 ## 0.6.5
 
 - UTags 开始支持 reddit.com
