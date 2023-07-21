@@ -1,5 +1,6 @@
 import { $, $$, getAttribute, isUrl } from "browser-extension-utils"
 
+import { type UserTag, type UserTagMeta } from "../types"
 import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"
@@ -140,14 +141,18 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
       continue
     }
 
-    const key = getCanonicalUrl(element.href)
+    const utags: UserTag = (element.utags as UserTag) || {}
+    const key = utags.key || getCanonicalUrl(element.href)
     const title = element.textContent!.trim()
-    const meta = {}
+    const meta: UserTagMeta = {}
     if (title && !isUrl(title)) {
       meta.title = title
     }
 
-    element.utags = { key, meta }
+    element.utags = {
+      key,
+      meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
+    } as UserTag
 
     matchedNodesSet.add(element)
   }
