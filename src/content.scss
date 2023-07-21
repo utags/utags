@@ -91,7 +91,7 @@
       height: 4px !important;
       font-size: 1px !important;
       background-color: #ffffffb3 !important;
-      transition: all 0s 0.3s;
+      transition: all 0s 0.3s !important;
     }
 
     .utags_captain_tag:hover,
@@ -109,10 +109,10 @@
   :not(a) + .utags_ul .utags_captain_tag {
     opacity: 100%;
     font-size: 10px !important;
-    width: 18px !important;
-    height: 18px !important;
-    background-position: 3px 3px !important;
-    transition: all 0s 0.1s;
+    width: 22px !important;
+    height: 22px !important;
+    background-position: 4px 4px !important;
+    transition: all 0s 0.1s !important;
     /* Fix v2ex 超级增强 start */
     z-index: 90;
     /* Fix v2ex 超级增强 end */
@@ -120,7 +120,7 @@
 
   .utags_hide_all .utags_captain_tag,
   .utags_show_all .utags_captain_tag {
-    transition: unset;
+    transition: unset !important;
   }
 
   :not(a) + .utags_ul .utags_captain_tag {
