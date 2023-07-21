@@ -18,7 +18,7 @@ type UrlMapMeta = {
 }
 type UrlMap = Record<string, TagsAndMeta | UrlMapMeta>
 
-const extensionVersion = "0.6.5"
+const extensionVersion = "0.6.6"
 const databaseVersion = 2
 const storageKey = "extension.utags.urlmap"
 let cachedUrlMap: UrlMap | undefined

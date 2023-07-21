@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.6.6
+
+- \[github\] Match username in issues, PRs and commits
+- Prevent utags elements from being remade when the tags have not changed
+
 ## 0.6.5
 
 - Apply utags to reddit.com

@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.6.5
+// @version              0.6.6
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -805,7 +805,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.6.5"
+  var extensionVersion = "0.6.6"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1461,20 +1461,40 @@
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)").filter((element) => {
         const href = element.href
-        if (/^https:\/\/github\.com\/\w+$/.test(href)) {
-          return true
+        if (href.startsWith("https://github.com/")) {
+          if (/since|until/.test(href)) {
+            return false
+          }
+          if (/^https:\/\/github\.com\/[\w-]+$/.test(href)) {
+            const username = /^https:\/\/github\.com\/([\w-]+)$/.exec(href)[1]
+            if (!/about|pricing|security/.test(username)) {
+              const meta = { type: "user" }
+              element.utags = { meta }
+            }
+            return true
+          }
+          if (/(author%3A|author=)[\w-]+/.test(href)) {
+            const username = /(author%3A|author=)([\w-]+)/.exec(href)[2]
+            const key = `https://github.com/${username}`
+            const title = username
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            return true
+          }
         }
         return false
       })
     },
-    excludeSelectors: [...default_default.excludeSelectors],
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      'section[aria-label~="User"] .Link--secondary',
+      ".Popover-message .Link--secondary",
+      ".IssueLabel",
+    ],
   }
   var github_com_default = site6
   var site7 = {
     matches: /reddit\.com/,
-    listNodesSelectors: [],
-    conditionNodesSelectors: [],
-    matchedNodesSelectors: ['a[href^="/user/"]'],
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)").filter((element) => {
         const href = element.href
@@ -1589,13 +1609,17 @@
         element.utags = {}
         continue
       }
-      const key = getCanonicalUrl4(element.href)
+      const utags = element.utags || {}
+      const key = utags.key || getCanonicalUrl4(element.href)
       const title = element.textContent.trim()
       const meta = {}
       if (title && !isUrl(title)) {
         meta.title = title
       }
-      element.utags = { key, meta }
+      element.utags = {
+        key,
+        meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
+      }
       matchedNodesSet.add(element)
     }
   }
@@ -1652,13 +1676,12 @@
     start = Date.now()
   }
   function appendTagsToPage(element, key, tags, meta) {
-    var _a, _b
-    if (
-      (_b = (_a = element.nextSibling) == null ? void 0 : _a.classList) == null
-        ? void 0
-        : _b.contains("utags_ul")
-    ) {
-      element.nextSibling.remove()
+    const utagsUl = element.nextSibling
+    if (hasClass(utagsUl, "utags_ul")) {
+      if (element.dataset.utags === tags.join(",")) {
+        return
+      }
+      utagsUl.remove()
     }
     const ul = createElement("ul")
     let li = createElement("li")
