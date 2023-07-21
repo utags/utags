@@ -4,12 +4,13 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.6.6
+// @version              0.6.7
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
+// @match                https://twitter.com/*
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*
 // @match                https://greasyfork.org/*
@@ -805,7 +806,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.6.6"
+  var extensionVersion = "0.6.7"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1520,9 +1521,38 @@
     ],
   }
   var reddit_com_default = site7
+  var site8 = {
+    matches: /twitter\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (href.startsWith("https://twitter.com/")) {
+          const href2 = href.slice(20)
+          if (/^\w+$/.test(href2)) {
+            if (
+              /^(home|explore|notifications|messages|tos|privacy)$/.test(href2)
+            ) {
+              return false
+            }
+            const textContent = element.textContent || ""
+            if (!textContent.startsWith("@")) {
+              return false
+            }
+            const meta = { type: "user" }
+            element.utags = { meta }
+            return true
+          }
+        }
+        return false
+      })
+    },
+    excludeSelectors: [...default_default.excludeSelectors],
+  }
+  var twitter_com_default = site8
   var sites = [
     github_com_default,
     v2ex_default,
+    twitter_com_default,
     reddit_com_default,
     greasyfork_org_default,
     news_ycombinator_com_default,

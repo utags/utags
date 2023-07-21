@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.6.7
+
+- Apply utags to twitter.com
+
 ## 0.6.6
 
 - \[github\] Match username in issues, PRs and commits
