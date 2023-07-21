@@ -69,6 +69,7 @@ const site = {
   ],
   excludeSelectors: [
     ...defaultSite.excludeSelectors,
+    ".utags_text_tag",
     // 导航栏
     ".site-nav a",
     // 标签栏
@@ -87,7 +88,7 @@ const site = {
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
     if (location.pathname.includes("/member/")) {
       // 个人主页
-      const profile = $("h1")
+      const profile = $(".content h1")
       if (profile) {
         const username = profile.textContent
         if (username) {
