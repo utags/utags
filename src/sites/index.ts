@@ -6,6 +6,7 @@ import greasyforkOrg from "./z001/002-greasyfork.org"
 import hackerNews from "./z001/003-news.ycombinator.com"
 import lobsters from "./z001/004-lobste.rs"
 import github from "./z001/005-github.com"
+import reddit from "./z001/006-reddit.com"
 
 type Site = {
   matches: RegExp
@@ -23,8 +24,8 @@ type Site = {
 const sites: Site[] = [
   github,
   v2ex,
+  reddit,
   greasyforkOrg,
-  //
   hackerNews,
   lobsters,
 ]
@@ -75,7 +76,9 @@ function getCanonicalUrl(url: string) {
 }
 
 const isValidUtagsElement = (element: HTMLAnchorElement) => {
-  if ($("img,svg,audio,video", element)) {
+  if (
+    $('img,svg,audio,video,button,.icon,[style*="background-image"]', element)
+  ) {
     return false
   }
 

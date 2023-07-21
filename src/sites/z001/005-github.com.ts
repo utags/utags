@@ -6,6 +6,19 @@ const site = {
   matches: /github\.com/,
   listNodesSelectors: [],
   conditionNodesSelectors: [],
+  getMatchedNodes() {
+    // TODO: add type. user/org, repo
+    return $$("a[href]:not(.utags_text_tag)").filter(
+      (element: HTMLAnchorElement) => {
+        const href = element.href
+        if (/^https:\/\/github\.com\/\w+$/.test(href)) {
+          return true
+        }
+
+        return false
+      }
+    ) as HTMLAnchorElement[]
+  },
   excludeSelectors: [
     ...defaultSite.excludeSelectors,
     // "#nav",
@@ -23,19 +36,6 @@ const site = {
     // 'a[href$="/hide"]',
     // 'a[href$="/suggest"]',
   ],
-  getMatchedNodes() {
-    // TODO: add type. user/org, repo
-    return $$("a[href]:not(.utags_text_tag)").filter(
-      (element: HTMLAnchorElement) => {
-        const href = element.href
-        if (/^https:\/\/github\.com\/\w+$/.test(href)) {
-          return true
-        }
-
-        return false
-      }
-    )
-  },
 }
 
 export default site
