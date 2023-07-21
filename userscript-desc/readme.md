@@ -91,6 +91,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.6.6
+  - \[github\] Match username in issues, PRs and commits
+  - Prevent utags elements from being remade when the tags have not changed
 - 0.6.5
   - Apply utags to reddit.com
 - 0.6.4

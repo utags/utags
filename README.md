@@ -55,6 +55,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.6.6
+  - \[github\] Match username in issues, PRs and commits
+  - Prevent utags elements from being remade when the tags have not changed
 - 0.6.5
   - Apply utags to reddit.com
 - 0.6.4
