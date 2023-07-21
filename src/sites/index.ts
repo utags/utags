@@ -8,6 +8,7 @@ import hackerNews from "./z001/003-news.ycombinator.com"
 import lobsters from "./z001/004-lobste.rs"
 import github from "./z001/005-github.com"
 import reddit from "./z001/006-reddit.com"
+import twitter from "./z001/007-twitter.com"
 
 type Site = {
   matches: RegExp
@@ -25,6 +26,7 @@ type Site = {
 const sites: Site[] = [
   github,
   v2ex,
+  twitter,
   reddit,
   greasyforkOrg,
   hackerNews,
