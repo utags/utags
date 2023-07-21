@@ -12,6 +12,7 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 - [lobste.rs](https://lobste.rs/)
 - [github.com](https://github.com/)
 - [www.reddit.com](https://www.reddit.com/)
+- [twitter.com](https://twitter.com/)
 - 更多网站会陆续支持
 
 ## Usage
@@ -80,8 +81,6 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 ## Roadmap
 
 - 网页内所有链接显示添加标签按钮
-- 支持更多的网站：
-  - Next: hacker news, lobsters, [DTO](https://dto.pipecraft.net/), P\*Hub
 - 支持自定义网站规则
 - 支持自定义标签样式
 - 展示其他用户们的标签内容
@@ -91,6 +90,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.6.7
+  - Apply utags to twitter.com
 - 0.6.6
   - \[github\] Match username in issues, PRs and commits
   - Prevent utags elements from being remade when the tags have not changed
