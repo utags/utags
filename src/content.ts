@@ -86,8 +86,13 @@ function appendTagsToPage(
   tags: string[],
   meta: Record<string, any>
 ) {
-  if (element.nextSibling?.classList?.contains("utags_ul")) {
-    element.nextSibling.remove()
+  const utagsUl = element.nextSibling as HTMLElement
+  if (hasClass(utagsUl, "utags_ul")) {
+    if (element.dataset.utags === tags.join(",")) {
+      return
+    }
+
+    utagsUl.remove()
   }
 
   const ul = createElement("ul")
