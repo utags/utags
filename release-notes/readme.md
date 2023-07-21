@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.6.5
+
+- Apply utags to reddit.com
+
 ## 0.6.4
 
 - Apply utags to github.com

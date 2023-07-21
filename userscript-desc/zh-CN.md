@@ -11,6 +11,7 @@
 - [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
 - [lobste.rs](https://lobste.rs/)
 - [github.com](https://github.com/)
+- [www.reddit.com](https://www.reddit.com/)
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -90,6 +91,8 @@
 
 ## 更新记录
 
+- 0.6.5
+  - UTags 开始支持 reddit.com
 - 0.6.4
   - UTags 开始支持 github.com
 - 0.6.3
