@@ -147,6 +147,10 @@
   - 支持 [www.v2ex.com](https://www.v2ex.com/) 网站，可以在用户名或帖子旁边添加或显示标签
   - 可以查看添加过标签的链接的[列表页面](https://utags.pipecraft.net/tags/)
 
+## 用户脚本定制
+
+提供付费定制用户脚本服务。有兴趣请联系。(pipecraft.ybd9n📮simplelogin.com)
+
 ## License
 
 Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](https://github.com/utags/utags/blob/main/LICENSE).
