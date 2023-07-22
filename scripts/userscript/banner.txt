@@ -17,9 +17,10 @@
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*
 // @match                https://*.v2ex.com/*
-// @match                https://www.journalduhacker.net/*
+// @match                https://mp.weixin.qq.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
+// @match                https://www.journalduhacker.net/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
