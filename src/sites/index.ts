@@ -1,4 +1,4 @@
-import { $, $$, getAttribute, isUrl } from "browser-extension-utils"
+import { $, $$, getAttribute, hasClass, isUrl } from "browser-extension-utils"
 
 import { type UserTag, type UserTagMeta } from "../types"
 import defaultSite from "./default"
@@ -79,6 +79,10 @@ function getCanonicalUrl(url: string) {
 }
 
 const isValidUtagsElement = (element: HTMLAnchorElement) => {
+  if (element.dataset.utags !== undefined) {
+    return true
+  }
+
   if (
     $('img,svg,audio,video,button,.icon,[style*="background-image"]', element)
   ) {
@@ -97,6 +101,11 @@ const isValidUtagsElement = (element: HTMLAnchorElement) => {
 
   const protocol = element.protocol
   if (protocol !== "http:" && protocol !== "https:") {
+    return false
+  }
+
+  const textContent = element.textContent
+  if (!textContent) {
     return false
   }
 
