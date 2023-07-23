@@ -14,6 +14,7 @@
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*
 // @match                https://www.instagram.com/*
+// @match                https://www.threads.net/*
 // @match                https://greasyfork.org/*
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*
