@@ -11,6 +11,7 @@ import reddit from "./z001/006-reddit.com"
 import twitter from "./z001/007-twitter.com"
 import weixin from "./z001/008-mp.weixin.qq.com"
 import instagram from "./z001/009-instagram.com"
+import threads from "./z001/010-threads.net"
 
 type Site = {
   matches: RegExp
@@ -35,6 +36,7 @@ const sites: Site[] = [
   lobsters,
   weixin,
   instagram,
+  threads,
 ]
 
 function matchedSite(hostname: string) {
