@@ -3,6 +3,7 @@ import fs from "node:fs"
 import * as sass from "sass"
 
 const EMOJI_LIST = [
+  //
   "⚽️",
   "🏀",
   "🏈",

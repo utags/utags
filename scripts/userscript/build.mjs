@@ -12,7 +12,7 @@ const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 let banner = fs.readFileSync("scripts/userscript/banner.txt", "utf8")
 
 if (tag !== "prod") {
-  banner = banner.replace(/({displayName(:.+)?})/gm, `$1 - ${tag}`)
+  banner = banner.replaceAll(/({displayName(:.+)?})/gm, `$1 - ${tag}`)
 }
 
 const buildOptions = {
@@ -48,7 +48,7 @@ for (const key of keys) {
 
 // Get all userscript GM_* and GM.* functions
 const matched = new Set()
-text.replace(/(GM[_.]\w+)/gm, (match) => {
+text.replaceAll(/(GM[_.]\w+)/gm, (match) => {
   matched.add(match)
 })
 const grants = [...matched]
@@ -59,7 +59,7 @@ text = text.replace("// ==/UserScript==", `${grants}\n// ==/UserScript==`)
 // Replace first one to 'use strict'
 text = text.replace("{", '{\n  "use strict";')
 // Remove all commenets staret with '// '
-text = text.replace(/^\s*\/\/ [^=@].*$/gm, "")
-text = text.replace(/\n+/gm, "\n")
+text = text.replaceAll(/^\s*\/\/ [^=@].*$/gm, "")
+text = text.replaceAll(/\n+/gm, "\n")
 
 fs.writeFileSync(buildOptions.outfile, text)

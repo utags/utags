@@ -24,8 +24,8 @@ await esbuild.build(buildOptions)
 
 let text = fs.readFileSync(buildOptions.outfile, "utf8")
 // Remove all commenets staret with '// '
-text = text.replace(/^\s*\/\/ [^=@].*$/gm, "")
-text = text.replace(/\n+/gm, "\n")
+text = text.replaceAll(/^\s*\/\/ [^=@].*$/gm, "")
+text = text.replaceAll(/\n+/gm, "\n")
 
 fs.writeFileSync(buildOptions.outfile, text)
 

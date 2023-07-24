@@ -17,7 +17,7 @@ const { port } = await runDevServer(buildOptions, target, tag)
 const text = fs.readFileSync(`build/${target}-${tag}/content.js`, "utf8")
 // Get all userscript GM_* and GM.* functions
 const matched = new Set()
-text.replace(/(GM[_.]\w+)/gm, (match) => {
+text.replaceAll(/(GM[_.]\w+)/gm, (match) => {
   matched.add(match)
 })
 

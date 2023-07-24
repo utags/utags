@@ -24,8 +24,8 @@ const bookmarklet = `(function () {
   script.defer = true;
   document.body.append(script);
 })();`
-  .replace(/^\s*/gm, "")
-  .replace(/\n/gm, "")
+  .replaceAll(/^\s*/gm, "")
+  .replaceAll(/\n/gm, "")
 
 let linkProd = ""
 const fileProd = `build/${target}-prod/${config.name}.bookmarklet.link`
