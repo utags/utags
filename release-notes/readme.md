@@ -2,6 +2,12 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.7.0
+
+- Apply utags to threads.net
+- Apply utags to instagram.com
+- Apply utags to mp.weixin.qq.com
+
 ## 0.6.7
 
 - Apply utags to twitter.com

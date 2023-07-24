@@ -13,6 +13,9 @@
 - [github.com](https://github.com/)
 - [www.reddit.com](https://www.reddit.com/)
 - [twitter.com](https://twitter.com/)
+- [mp.weixin.qq.com](https://mp.weixin.qq.com/)
+- [www.instagram.com](https://www.instagram.com/)
+- [www.threads.net](https://www.threads.net/)
 - 更多网站会陆续支持
 
 ## 使用方法
@@ -90,6 +93,10 @@
 
 ## 更新记录
 
+- 0.7.0
+  - UTags 开始支持 threads.net
+  - UTags 开始支持 instagram.com
+  - UTags 开始支持 mp.weixin.qq.com
 - 0.6.7
   - UTags 开始支持 twitter.com
 - 0.6.6
