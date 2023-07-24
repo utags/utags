@@ -96,10 +96,12 @@ function appendTagsToPage(
     utagsUl.remove()
   }
 
-  const ul = createElement("ul")
+  const ul = createElement("ul", {
+    class: "utags_ul",
+  })
   let li = createElement("li")
   if (tags.length === 0) {
-    addClass(li, "notag")
+    addClass(ul, "notag")
   }
 
   const a = createElement("button", {
@@ -152,7 +154,6 @@ function appendTagsToPage(
     ul.append(li)
   }
 
-  ul.setAttribute("class", "utags_ul")
   element.after(ul)
   element.dataset.utags = tags.join(",")
   /* Fix v2ex polish start */
@@ -257,7 +258,7 @@ async function main() {
   if ($("#utags_style")) {
     // already running
     console.log(
-      // eslint-disable-next-line n/prefer-global/process, @typescript-eslint/restrict-template-expressions
+      // eslint-disable-next-line n/prefer-global/process
       `[UTags] [${process.env.PLASMO_TARGET}-${process.env.PLASMO_TAG}] Skip this, since another instance is already running.`,
       location.href
     )
