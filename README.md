@@ -13,8 +13,8 @@
 
 ## Showcases
 
-- [UTags - Add usertags to links](https://github.com/utags/utags) - Allow users to add custom tags to links.
-- [Hacker News Apps Switcher](https://github.com/dev-topics-only/hacker-news-apps-switcher) - Open Hacker News links on the favorite apps
+- [🏷️ UTags - Add usertags to links](https://github.com/utags/utags) - Allow users to add custom tags to links.
+- [🔗 Links Helper](https://github.com/utags/links-helper) - Open external links in a new tab, open internal links matching the specified rules in a new tab, convert text to hyperlinks, convert image links to image tags, parse Markdown style links and image tags, parse BBCode style links and image tags
 
 ## How To Make A New Extension
 
