@@ -41,6 +41,62 @@ Allow users to add custom tags to links.
 - 帖子标题，用户名都可以设置标签。
   ![screenshots](assets/screenshots-03.png)
 
+## 手机版截图
+
+- 主题列表
+
+![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
+
+![screenshots](https://i.imgur.com/byywcBy.jpeg)
+
+![screenshots](https://i.imgur.com/YdilUsi.jpeg)
+
+- 评论区
+
+![screenshots](https://i.imgur.com/smU24o8.jpeg)
+
+![screenshots](https://i.imgur.com/coLUFOj.jpeg)
+
+![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
+
+- 功能设置
+
+![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+
+- 视频版演示
+
+📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+
+## Twitter.com Screenshots
+
+![screenshots](https://assets.bestxtools.com/i/vrnci)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/huzhd)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/otxvl)
+
+---
+
+## Threads.net Screenshots
+
+![screenshots](https://assets.bestxtools.com/i/irrgl)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/trwns)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/zvpbo)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/pckyc)
+
 ## 功能特点
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
