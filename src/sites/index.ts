@@ -14,6 +14,7 @@ import instagram from "./z001/009-instagram.com"
 import threads from "./z001/010-threads.net"
 import facebook from "./z001/011-facebook.com"
 import youtube from "./z001/012-youtube.com"
+import bilibili from "./z001/013-bilibili.com"
 
 type Site = {
   matches: RegExp
@@ -41,6 +42,7 @@ const sites: Site[] = [
   threads,
   facebook,
   youtube,
+  bilibili,
 ]
 
 function matchedSite(hostname: string) {
