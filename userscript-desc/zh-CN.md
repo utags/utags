@@ -58,6 +58,34 @@
 
 📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
+## Twitter.com Screenshots
+
+![screenshots](https://assets.bestxtools.com/i/vrnci)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/huzhd)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/otxvl)
+
+## Threads.net Screenshots
+
+![screenshots](https://assets.bestxtools.com/i/irrgl)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/trwns)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/zvpbo)
+
+---
+
+![screenshots](https://assets.bestxtools.com/i/pckyc)
+
 ## 功能特点
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
