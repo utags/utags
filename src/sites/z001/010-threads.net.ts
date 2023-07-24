@@ -50,7 +50,7 @@ const site = {
       const title = element.textContent!.trim()
       const key = getUserProfileUrl(location.href)
       if (title && key && key === "https://www.threads.net/@" + title) {
-        const meta = { title }
+        const meta = { title, type: "user" }
         element.utags = { key, meta }
         matchedNodesSet.add(element)
       }
