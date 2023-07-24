@@ -11,8 +11,8 @@
     box-sizing: border-box !important;
     display: inline !important;
     list-style-type: none !important;
-    margin: 0 0 0 2px !important;
-    padding: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
     vertical-align: text-bottom !important;
     line-height: normal !important;
     background-color: transparent;
@@ -31,10 +31,6 @@
       margin: 0 !important;
     }
 
-    > li.notag {
-      position: relative !important;
-    }
-
     .utags_text_tag {
       box-sizing: border-box !important;
       display: block !important;
@@ -42,7 +38,7 @@
       color: red !important;
       border-radius: 3px !important;
       padding: 1px 3px !important;
-      margin: 0px 3px !important;
+      margin: 0 3px !important;
       font-size: 10px !important;
       letter-spacing: 0 !important;
       line-height: 1 !important;
@@ -85,8 +81,8 @@
     .utags_captain_tag {
       opacity: 1%;
       position: absolute;
-      top: 0px;
-      left: -2px;
+      top: 0;
+      left: 0;
       padding: 0 !important;
       margin: 0 !important;
       width: 4px !important;
@@ -101,6 +97,14 @@
     .utags_captain_tag2:hover,
     .utags_captain_tag2:focus {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23256cf1' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E") !important;
+    }
+
+    &.notag {
+      margin: 0 !important;
+
+      > li {
+        position: relative !important;
+      }
     }
   }
 
