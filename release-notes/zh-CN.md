@@ -2,6 +2,12 @@
 
 > [English](readme.md) | 中文
 
+## 0.7.0
+
+- UTags 开始支持 threads.net
+- UTags 开始支持 instagram.com
+- UTags 开始支持 mp.weixin.qq.com
+
 ## 0.6.7
 
 - UTags 开始支持 twitter.com

@@ -13,6 +13,9 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 - [github.com](https://github.com/)
 - [www.reddit.com](https://www.reddit.com/)
 - [twitter.com](https://twitter.com/)
+- [mp.weixin.qq.com](https://mp.weixin.qq.com/)
+- [www.instagram.com](https://www.instagram.com/)
+- [www.threads.net](https://www.threads.net/)
 - 更多网站会陆续支持
 
 ## Usage
@@ -90,6 +93,10 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.7.0
+  - Apply utags to threads.net
+  - Apply utags to instagram.com
+  - Apply utags to mp.weixin.qq.com
 - 0.6.7
   - Apply utags to twitter.com
 - 0.6.6
