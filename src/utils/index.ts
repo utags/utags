@@ -8,3 +8,15 @@ export function cloneWithoutUtags(element: HTMLElement) {
 
   return newElement
 }
+
+export function getFirstHeadElement(tagName = "h1") {
+  for (const element of $$(tagName)) {
+    if (element.closest(".browser_extension_settings_container")) {
+      continue
+    }
+
+    return element
+  }
+
+  return undefined
+}

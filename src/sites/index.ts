@@ -12,6 +12,7 @@ import twitter from "./z001/007-twitter.com"
 import weixin from "./z001/008-mp.weixin.qq.com"
 import instagram from "./z001/009-instagram.com"
 import threads from "./z001/010-threads.net"
+import facebook from "./z001/011-facebook.com"
 
 type Site = {
   matches: RegExp
@@ -37,6 +38,7 @@ const sites: Site[] = [
   weixin,
   instagram,
   threads,
+  facebook,
 ]
 
 function matchedSite(hostname: string) {
