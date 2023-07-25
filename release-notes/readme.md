@@ -2,6 +2,13 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.7.1
+
+- Apply utags to tiktok.com
+- Apply utags to bilibili.com
+- Apply utags to youtube.com
+- Apply utags to facebook.com
+
 ## 0.7.0
 
 - Apply utags to threads.net

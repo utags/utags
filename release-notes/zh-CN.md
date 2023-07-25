@@ -2,6 +2,13 @@
 
 > [English](readme.md) | 中文
 
+## 0.7.1
+
+- UTags 开始支持 tiktok.com
+- UTags 开始支持 bilibili.com
+- UTags 开始支持 youtube.com
+- UTags 开始支持 facebook.com
+
 ## 0.7.0
 
 - UTags 开始支持 threads.net
