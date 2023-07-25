@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.7.0
+// @version              0.7.1
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -15,6 +15,10 @@
 // @match                https://www.reddit.com/*
 // @match                https://www.instagram.com/*
 // @match                https://www.threads.net/*
+// @match                https://*.facebook.com/*
+// @match                https://*.youtube.com/*
+// @match                https://www.tiktok.com/*
+// @match                https://*.bilibili.com/*
 // @match                https://greasyfork.org/*
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*
@@ -835,7 +839,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.7.0"
+  var extensionVersion = "0.7.1"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1553,12 +1557,13 @@
     ],
   }
   var reddit_com_default = site7
+  var prefix2 = "https://twitter.com/"
   var site8 = {
     matches: /twitter\.com/,
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)").filter((element) => {
         const href = element.href
-        if (href.startsWith("https://twitter.com/")) {
+        if (href.startsWith(prefix2)) {
           const href2 = href.slice(20)
           if (/^\w+$/.test(href2)) {
             if (
@@ -1579,6 +1584,19 @@
       })
     },
     excludeSelectors: [...default_default.excludeSelectors],
+    addExtraMatchedNodes(matchedNodesSet) {
+      const elements = $$('[data-testid="UserName"] span')
+      for (const element of elements) {
+        const title = element.textContent.trim()
+        if (!title || !title.startsWith("@")) {
+          continue
+        }
+        const key = prefix2 + title.slice(1)
+        const meta = { title, type: "user" }
+        element.utags = { key, meta }
+        matchedNodesSet.add(element)
+      }
+    },
   }
   var twitter_com_default = site8
   function getCanonicalUrl4(url) {
@@ -1663,7 +1681,7 @@
         const title = element.textContent.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key && key === "https://www.threads.net/@" + title) {
-          const meta = { title }
+          const meta = { title, type: "user" }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
@@ -1671,6 +1689,253 @@
     },
   }
   var threads_net_default = site11
+  function getFirstHeadElement(tagName = "h1") {
+    for (const element of $$(tagName)) {
+      if (element.closest(".browser_extension_settings_container")) {
+        continue
+      }
+      return element
+    }
+    return void 0
+  }
+  function getUserProfileUrl2(href) {
+    if (
+      href.startsWith("https://www.facebook.com/") ||
+      href.startsWith("https://m.facebook.com/")
+    ) {
+      const href2 = href.startsWith("https://m.facebook.com/")
+        ? href.slice(23)
+        : href.slice(25)
+      if (/^[\w.]+/.test(href2)) {
+        return "https://www.facebook.com/" + href2.replace(/(^[\w.]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site12 = {
+    matches: /facebook\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (
+          href.startsWith("https://www.facebook.com/") ||
+          href.startsWith("https://m.facebook.com/")
+        ) {
+          const pathname = element.pathname
+          if (/^\/[\w.]+$/.test(pathname)) {
+            if (
+              /^\/(policies|events|profile\.php|permalink\.php|photo\.php|\w+\.php)$/.test(
+                pathname
+              )
+            ) {
+              return false
+            }
+            const key = "https://www.facebook.com" + pathname
+            const meta = { type: "user" }
+            element.utags = { key, meta }
+            return true
+          }
+        }
+        return false
+      })
+    },
+    excludeSelectors: [...default_default.excludeSelectors],
+    addExtraMatchedNodes(matchedNodesSet) {
+      const element = getFirstHeadElement("h1")
+      if (element) {
+        const title = element.textContent.trim()
+        const key = getUserProfileUrl2(location.href)
+        if (title && key) {
+          const meta = { title, type: "user" }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    },
+  }
+  var facebook_com_default = site12
+  var prefix3 = "https://www.youtube.com/"
+  var prefix22 = "https://m.youtube.com/"
+  function getUserProfileUrl3(href) {
+    if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+      const href2 = href.startsWith(prefix22) ? href.slice(22) : href.slice(24)
+      if (/^@\w+/.test(href2)) {
+        return prefix3 + href2.replace(/(^@\w+).*/, "$1")
+      }
+      if (/^channel\/[\w-]+/.test(href2)) {
+        return prefix3 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site13 = {
+    matches: /youtube\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const hrefAttr = getAttribute(element, "href")
+        if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
+          return false
+        }
+        const href = element.href
+        if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+          const pathname = element.pathname
+          if (/^\/@\w+$/.test(pathname)) {
+            const key = prefix3 + pathname.slice(1)
+            const meta = { type: "user" }
+            element.utags = { key, meta }
+            return true
+          }
+          if (/^\/channel\/[\w-]+$/.test(pathname)) {
+            const key = prefix3 + pathname.slice(1)
+            const meta = { type: "channel" }
+            element.utags = { key, meta }
+            return true
+          }
+        }
+        return false
+      })
+    },
+    excludeSelectors: [...default_default.excludeSelectors],
+    addExtraMatchedNodes(matchedNodesSet) {
+      const element = $(
+        "#inner-header-container #container.ytd-channel-name #text"
+      )
+      if (element) {
+        const title = element.textContent.trim()
+        const key = getUserProfileUrl3(location.href)
+        if (title && key) {
+          const meta = { title }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    },
+  }
+  var youtube_com_default = site13
+  var prefix23 = "https://space.bilibili.com/"
+  var prefix32 = "https://m.bilibili.com/"
+  function getUserProfileUrl4(href) {
+    if (href.startsWith(prefix23)) {
+      const href2 = href.slice(27)
+      if (/^\d+/.test(href2)) {
+        return prefix23 + href2.replace(/(^\d+).*/, "$1")
+      }
+    }
+    if (href.startsWith(prefix32 + "space/")) {
+      const href2 = href.slice(29)
+      if (/^\d+/.test(href2)) {
+        return prefix23 + href2.replace(/(^\d+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site14 = {
+    matches: /bilibili\.com/,
+    addExtraMatchedNodes(matchedNodesSet) {
+      const elements = $$(
+        ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
+      )
+      for (const element of elements) {
+        const userId = element.dataset.userId
+        if (!userId) {
+          return false
+        }
+        const title = element.textContent.trim()
+        const key = prefix23 + userId
+        const meta = { title, type: "user" }
+        element.utags = { key, meta }
+        matchedNodesSet.add(element)
+      }
+      const elements2 = $$(".upname a")
+      for (const element of elements2) {
+        const href = element.href
+        if (href.startsWith(prefix23)) {
+          const key = getUserProfileUrl4(href)
+          if (key) {
+            const nameElement = $(".name", element)
+            if (nameElement) {
+              const title = nameElement.textContent
+              const meta = { title, type: "user" }
+              nameElement.utags = { key, meta }
+              matchedNodesSet.add(nameElement)
+            }
+          }
+        }
+      }
+      if (
+        location.href.startsWith(prefix23) ||
+        location.href.startsWith(prefix32 + "space/")
+      ) {
+        const element = $("#h-name,.m-space-info .name")
+        if (element) {
+          const title = element.textContent.trim()
+          const key = getUserProfileUrl4(location.href)
+          if (title && key) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+  }
+  var bilibili_com_default = site14
+  var prefix4 = "https://www.tiktok.com/"
+  function getUserProfileUrl5(url) {
+    if (url.startsWith(prefix4)) {
+      const href2 = url.slice(23)
+      if (/^@[\w.]+/.test(href2)) {
+        return prefix4 + href2.replace(/(^@[\w.]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site15 = {
+    matches: /tiktok\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (href.startsWith(prefix4)) {
+          const pathname = element.pathname
+          if (/^\/@[\w.]+$/.test(pathname)) {
+            const titleElement = $("h3", element)
+            let title
+            if (titleElement) {
+              title = titleElement.textContent
+            }
+            const key = prefix4 + pathname.slice(1)
+            const meta = { type: "user" }
+            if (title) {
+              meta.title = title
+            }
+            element.utags = { key, meta }
+            element.dataset.utags = element.dataset.utags || ""
+            return true
+          }
+        }
+        return false
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".avatar-anchor",
+      '[data-e2e*="avatar"]',
+      '[data-e2e="user-card-nickname"]',
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      const element = $('h1[data-e2e="user-title"]')
+      if (element) {
+        const title = element.textContent.trim()
+        const key = getUserProfileUrl5(location.href)
+        if (title && key) {
+          const meta = { title, type: "user" }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    },
+  }
+  var tiktok_com_default = site15
   var sites = [
     github_com_default,
     v2ex_default,
@@ -1682,6 +1947,10 @@
     mp_weixin_qq_com_default,
     instagram_com_default,
     threads_net_default,
+    facebook_com_default,
+    youtube_com_default,
+    bilibili_com_default,
+    tiktok_com_default,
   ]
   function matchedSite(hostname2) {
     for (const s of sites) {
@@ -1718,10 +1987,7 @@
     return url
   }
   var isValidUtagsElement = (element) => {
-    if (
-      (element.utags && element.utags.key) ||
-      element.dataset.utags !== void 0
-    ) {
+    if (element.dataset.utags !== void 0) {
       return true
     }
     if (

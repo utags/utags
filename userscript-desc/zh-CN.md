@@ -1,6 +1,6 @@
 # 小鱼标签 (UTags) - 为链接添加用户标签
 
-此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户、帖子、节点添加标签。支持 [www.v2ex.com](https://www.v2ex.com/)。陆续会支持更多网站。
+此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户、帖子、节点添加标签。
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -16,7 +16,11 @@
 - [mp.weixin.qq.com](https://mp.weixin.qq.com/)
 - [www.instagram.com](https://www.instagram.com/)
 - [www.threads.net](https://www.threads.net/)
-- 更多网站会陆续支持
+- [www.facebook.com](https://www.facebook.com/)
+- [www.youtube.com](https://www.youtube.com/)
+- [www.bilibili.com](https://www.bilibili.com/)
+- [www.tiktok.com](https://www.tiktok.com/)
+- 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 ## 使用方法
 
@@ -121,6 +125,11 @@
 
 ## 更新记录
 
+- 0.7.1
+  - UTags 开始支持 tiktok.com
+  - UTags 开始支持 bilibili.com
+  - UTags 开始支持 youtube.com
+  - UTags 开始支持 facebook.com
 - 0.7.0
   - UTags 开始支持 threads.net
   - UTags 开始支持 instagram.com

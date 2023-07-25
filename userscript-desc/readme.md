@@ -1,6 +1,6 @@
 # UTags - Add usertags to links
 
-Allow users to add custom tags to links. For example, you can add tags to forum members or posts. Supported sites: [www.v2ex.com](https://www.v2ex.com/), etc.
+Allow users to add custom tags to links. For example, you can add tags to forum members or posts.
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -16,7 +16,11 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 - [mp.weixin.qq.com](https://mp.weixin.qq.com/)
 - [www.instagram.com](https://www.instagram.com/)
 - [www.threads.net](https://www.threads.net/)
-- 更多网站会陆续支持
+- [www.facebook.com](https://www.facebook.com/)
+- [www.youtube.com](https://www.youtube.com/)
+- [www.bilibili.com](https://www.bilibili.com/)
+- [www.tiktok.com](https://www.tiktok.com/)
+- And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
 
@@ -121,6 +125,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.7.1
+  - Apply utags to tiktok.com
+  - Apply utags to bilibili.com
+  - Apply utags to youtube.com
+  - Apply utags to facebook.com
 - 0.7.0
   - Apply utags to threads.net
   - Apply utags to instagram.com
