@@ -15,6 +15,7 @@ import threads from "./z001/010-threads.net"
 import facebook from "./z001/011-facebook.com"
 import youtube from "./z001/012-youtube.com"
 import bilibili from "./z001/013-bilibili.com"
+import tiktok from "./z001/014-tiktok.com"
 
 type Site = {
   matches: RegExp
@@ -43,6 +44,7 @@ const sites: Site[] = [
   facebook,
   youtube,
   bilibili,
+  tiktok,
 ]
 
 function matchedSite(hostname: string) {
