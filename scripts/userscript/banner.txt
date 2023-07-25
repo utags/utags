@@ -17,6 +17,7 @@
 // @match                https://www.threads.net/*
 // @match                https://*.facebook.com/*
 // @match                https://*.youtube.com/*
+// @match                https://www.tiktok.com/*
 // @match                https://*.bilibili.com/*
 // @match                https://greasyfork.org/*
 // @match                https://lobste.rs/*
