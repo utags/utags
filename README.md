@@ -20,7 +20,11 @@ Allow users to add custom tags to links.
 - [mp.weixin.qq.com](https://mp.weixin.qq.com/)
 - [www.instagram.com](https://www.instagram.com/)
 - [www.threads.net](https://www.threads.net/)
-- 更多网站会陆续支持
+- [www.facebook.com](https://www.facebook.com/)
+- [www.youtube.com](https://www.youtube.com/)
+- [www.bilibili.com](https://www.bilibili.com/)
+- [www.tiktok.com](https://www.tiktok.com/)
+- And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## 安装
 
@@ -115,6 +119,11 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.7.1
+  - Apply utags to tiktok.com
+  - Apply utags to bilibili.com
+  - Apply utags to youtube.com
+  - Apply utags to facebook.com
 - 0.7.0
   - Apply utags to threads.net
   - Apply utags to instagram.com
