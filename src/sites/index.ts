@@ -17,6 +17,7 @@ import youtube from "./z001/012-youtube.com"
 import bilibili from "./z001/013-bilibili.com"
 import tiktok from "./z001/014-tiktok.com"
 import _52pojie from "./z001/015-52pojie.cn"
+import juejin from "./z001/016-juejin.cn"
 
 type Site = {
   matches: RegExp
@@ -47,6 +48,7 @@ const sites: Site[] = [
   bilibili,
   tiktok,
   _52pojie,
+  juejin,
 ]
 
 function matchedSite(hostname: string) {
