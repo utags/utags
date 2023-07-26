@@ -24,6 +24,8 @@ Allow users to add custom tags to links.
 - [www.youtube.com](https://www.youtube.com/)
 - [www.bilibili.com](https://www.bilibili.com/)
 - [www.tiktok.com](https://www.tiktok.com/)
+- [www.52pojie.cn](https://www.52pojie.cn/)
+- [juejin.cn](https://juejin.cn/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## 安装
@@ -119,6 +121,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.7.2
+  - Apply utags to 52pojie.cn
+  - Apply utags to juejin.cn
 - 0.7.1
   - Apply utags to tiktok.com
   - Apply utags to bilibili.com

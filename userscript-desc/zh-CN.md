@@ -20,6 +20,8 @@
 - [www.youtube.com](https://www.youtube.com/)
 - [www.bilibili.com](https://www.bilibili.com/)
 - [www.tiktok.com](https://www.tiktok.com/)
+- [www.52pojie.cn](https://www.52pojie.cn/)
+- [juejin.cn](https://juejin.cn/)
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 ## 使用方法
@@ -125,6 +127,9 @@
 
 ## 更新记录
 
+- 0.7.2
+  - UTags 开始支持 52pojie.cn
+  - UTags 开始支持 juejin.cn
 - 0.7.1
   - UTags 开始支持 tiktok.com
   - UTags 开始支持 bilibili.com
