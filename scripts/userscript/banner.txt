@@ -24,6 +24,7 @@
 // @match                https://news.ycombinator.com/*
 // @match                https://*.v2ex.com/*
 // @match                https://www.52pojie.cn/*
+// @match                https://juejin.cn/*
 // @match                https://mp.weixin.qq.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*

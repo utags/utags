@@ -301,7 +301,7 @@ async function main() {
 
   const observer = new MutationObserver(async (mutationsList) => {
     // console.error("mutation", Date.now(), mutationsList)
-    const count = $$("a:not(.utags_text_tag)").length
+    const count = $$("a:not(.utags_text_tag):not([data-utags]").length
     if (countOfLinks !== count) {
       // console.log(countOfLinks, count)
       countOfLinks = count
