@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.7.2
+
+- Apply utags to 52pojie.cn
+- Apply utags to juejin.cn
+
 ## 0.7.1
 
 - Apply utags to tiktok.com

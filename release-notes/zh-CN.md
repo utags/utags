@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.7.2
+
+- UTags 开始支持 52pojie.cn
+- UTags 开始支持 juejin.cn
+
 ## 0.7.1
 
 - UTags 开始支持 tiktok.com
