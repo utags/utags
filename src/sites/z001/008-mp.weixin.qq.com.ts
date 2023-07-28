@@ -3,8 +3,16 @@ import { $ } from "browser-extension-utils"
 import defaultSite from "../default"
 
 function getCanonicalUrl(url: string) {
+  if (url.startsWith("http://mp.weixin.qq.com")) {
+    url = url.replace(/^http:/, "https:")
+  }
+
   if (url.startsWith("https://mp.weixin.qq.com/s/")) {
     url = url.replace(/(\/s\/[\w-]+).*/, "$1")
+  }
+
+  if (url.startsWith("https://mp.weixin.qq.com/") && url.includes("#")) {
+    url = url.replace(/#.*/, "")
   }
 
   return url
@@ -26,6 +34,7 @@ const site = {
       }
     }
   },
+  getCanonicalUrl,
 }
 
 export default site
