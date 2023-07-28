@@ -1,4 +1,5 @@
-import { $, $$ } from "browser-extension-utils"
+import { $, $$, addStyle, runOnce } from "browser-extension-utils"
+import customStyle from "data-text:./013-bilibili.com.scss"
 
 const prefix = "https://www.bilibili.com/"
 const prefix2 = "https://space.bilibili.com/"
@@ -22,9 +23,27 @@ function getUserProfileUrl(href: string) {
   return undefined
 }
 
+function getVideoUrl(href: string) {
+  if (
+    href.startsWith(prefix + "video/") ||
+    href.startsWith(prefix3 + "video/")
+  ) {
+    const href2 = href.startsWith(prefix3) ? href.slice(23) : href.slice(25)
+    if (/^video\/\w+/.test(href2)) {
+      return prefix + href2.replace(/^(video\/\w+).*/, "$1")
+    }
+  }
+
+  return undefined
+}
+
 const site = {
   matches: /bilibili\.com/,
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    runOnce("site:addStyle", () => {
+      addStyle(customStyle)
+    })
+
     const elements = $$(
       ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
     )
@@ -58,6 +77,22 @@ const site = {
       }
     }
 
+    const elements3 = $$("a.up-name")
+    for (const element of elements3) {
+      const href = element.href as string
+      if (href.startsWith(prefix2)) {
+        const key = getUserProfileUrl(href)
+        if (key) {
+          const title = element.textContent!.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    }
+
     if (
       location.href.startsWith(prefix2) ||
       location.href.startsWith(prefix3 + "space/")
@@ -72,6 +107,18 @@ const site = {
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
+      }
+    }
+
+    // video title
+    const element = $("h1.video-title,h1.title-text")
+    if (element) {
+      const title = element.textContent!.trim()
+      const key = getVideoUrl(location.href)
+      if (title && key) {
+        const meta = { title, type: "video" }
+        element.utags = { key, meta }
+        matchedNodesSet.add(element)
       }
     }
   },
