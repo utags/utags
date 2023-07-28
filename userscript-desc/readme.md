@@ -127,6 +127,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.7.3
+  - Update bilibili selectors
+  - Update merging logic
 - 0.7.2
   - Apply utags to 52pojie.cn
   - Apply utags to juejin.cn

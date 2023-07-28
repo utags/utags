@@ -127,6 +127,9 @@
 
 ## 更新记录
 
+- 0.7.3
+  - Update bilibili selectors
+  - Update merging logic
 - 0.7.2
   - UTags 开始支持 52pojie.cn
   - UTags 开始支持 juejin.cn
