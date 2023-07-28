@@ -231,10 +231,11 @@ export async function mergeData(urlMapNew: Record<string, unknown>) {
     const orgData: TagsAndMeta = (urlMap[key] as TagsAndMeta) || { tags: [] }
     const orgTags = orgData.tags || []
     const newTags = mergeTags(orgTags, tags)
+    const now = Date.now()
     if (newTags.length > 0) {
       const orgMeta = orgData.meta || {}
-      const created = Math.min(orgMeta.created || 0, meta.created || 0)
-      const updated = Math.max(orgMeta.updated || 0, meta.updated || 0)
+      const created = Math.min(orgMeta.created || now, meta.created || now)
+      const updated = Math.max(orgMeta.updated || 0, meta.updated || 0, created)
       const newMata = Object.assign({}, orgMeta, meta, { created, updated })
       urlMap[key] = Object.assign({}, orgData, { tags: newTags, meta: newMata })
       numberOfTags += Math.max(newTags.length - orgTags.length, 0)
