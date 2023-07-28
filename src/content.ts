@@ -32,26 +32,34 @@ import {
 } from "./storage/index"
 import { type UserTag, type UserTagMeta } from "./types"
 
+const host = location.host
+
 const settingsTable = {
+  [`enableCurrentSite_${host}`]: {
+    title: "Enable current site",
+    defaultValue: true,
+  },
   showHidedItems: {
     title: "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
     defaultValue: false,
+    group: 2,
   },
   noOpacityEffect: {
     title: "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
     defaultValue: false,
+    group: 2,
   },
   openTagsPage: {
     title: "标签列表",
     type: "externalLink",
     url: "https://utags.pipecraft.net/tags/",
-    group: 2,
+    group: 3,
   },
   openDataPage: {
     title: "导出数据/导入数据",
     type: "externalLink",
     url: "https://utags.pipecraft.net/data/",
-    group: 2,
+    group: 3,
   },
 }
 
@@ -71,6 +79,17 @@ function onSettingsChange() {
     addClass(doc.documentElement, "utags_no_opacity_effect")
   } else {
     removeClass(doc.documentElement, "utags_no_opacity_effect")
+  }
+
+  if (!getSettingsValue(`enableCurrentSite_${host}`)) {
+    for (const element of $$(".utags_ul")) {
+      element.remove()
+    }
+
+    const style = $("#utags_style")
+    if (style) {
+      style.remove()
+    }
   }
 }
 
@@ -271,6 +290,7 @@ async function main() {
     id: "utags",
     title: "🏷️ 小鱼标签 (UTags) - 为链接添加用户标签",
     footer: `
+    <p>After change settings, reload the page to take effect</p>
     <p>
     <a href="https://github.com/utags/utags/issues" target="_blank">
     Report and Issue...
@@ -286,6 +306,10 @@ async function main() {
   })
 
   registerMenuCommand("⚙️ 设置", showSettings, "o")
+
+  if (!getSettingsValue(`enableCurrentSite_${host}`)) {
+    return
+  }
 
   await initStorage()
 
