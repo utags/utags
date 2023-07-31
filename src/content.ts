@@ -34,10 +34,18 @@ import { type UserTag, type UserTagMeta } from "./types"
 
 const host = location.host
 
+const isEnabledByDefault = () => {
+  if (host.includes("bilibili.com")) {
+    return false
+  }
+
+  return true
+}
+
 const settingsTable = {
   [`enableCurrentSite_${host}`]: {
     title: "Enable current site",
-    defaultValue: true,
+    defaultValue: isEnabledByDefault(),
   },
   showHidedItems: {
     title: "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
