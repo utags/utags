@@ -19,6 +19,7 @@
 // @match                https://*.youtube.com/*
 // @match                https://www.tiktok.com/*
 // @match                https://*.bilibili.com/*
+// @match                https://*.biligame.com/*
 // @match                https://greasyfork.org/*
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*

@@ -35,7 +35,7 @@ import { type UserTag, type UserTagMeta } from "./types"
 const host = location.host
 
 const isEnabledByDefault = () => {
-  if (host.includes("bilibili.com")) {
+  if (host.includes("www.bilibili.com")) {
     return false
   }
 

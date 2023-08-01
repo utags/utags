@@ -1,4 +1,10 @@
-import { $, $$, addStyle, runOnce } from "browser-extension-utils"
+import {
+  $,
+  $$,
+  addEventListener,
+  addStyle,
+  runOnce,
+} from "browser-extension-utils"
 import customStyle from "data-text:./013-bilibili.com.scss"
 
 const prefix = "https://www.bilibili.com/"
@@ -38,11 +44,38 @@ function getVideoUrl(href: string) {
 }
 
 const site = {
-  matches: /bilibili\.com/,
+  matches: /bilibili\.com|biligame\.com/,
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-    runOnce("site:addStyle", () => {
-      addStyle(customStyle)
-    })
+    // runOnce("site:window:error", () => {
+    //   addEventListener(
+    //     window,
+    //     "error",
+    //     (error) => {
+    //       console.error(error)
+    //       // error.preventDefault()
+    //       // error.stopPropagation()
+    //       // error.stopImmediatePropagation()
+    //     },
+    //     true
+    //   )
+    // })
+
+    if (location.href.startsWith(prefix + "video/")) {
+      // Must wait until video ready
+      if ($(".bpx-state-loading")) {
+        return
+      }
+
+      const img = $(".bpx-player-follow-face") as HTMLImageElement
+      const img2 = $("img.video-capture-img") as HTMLImageElement
+      if (!img?.src || !img2?.src) {
+        return
+      }
+    }
+
+    // runOnce("site:addStyle", () => {
+    //   addStyle(customStyle)
+    // })
 
     const elements = $$(
       ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
@@ -57,34 +90,49 @@ const site = {
       const key = prefix2 + userId
       const meta = { title, type: "user" }
       element.utags = { key, meta }
+      element.dataset.utags_node_type = "link"
       matchedNodesSet.add(element)
     }
 
-    const elements2 = $$(".upname a")
+    const elements2 = $$(".upname a,a.bili-video-card__info--owner")
     for (const element of elements2) {
       const href = element.href as string
       if (href.startsWith(prefix2)) {
         const key = getUserProfileUrl(href)
         if (key) {
-          const nameElement = $(".name", element)
+          const nameElement = $(".name,.bili-video-card__info--author", element)
           if (nameElement) {
             const title = nameElement.textContent
             const meta = { title, type: "user" }
             nameElement.utags = { key, meta }
+            nameElement.dataset.utags_node_type = "link"
             matchedNodesSet.add(nameElement)
           }
         }
       }
     }
 
-    const elements3 = $$("a.up-name")
+    const elements3 = $$(
+      [
+        "a.up-name",
+        "a.card-user-name",
+        ".usercard-wrap .user .name",
+        ".comment-list .user .name",
+        ".user-card .user .name",
+        "a[data-usercard-mid]",
+        "a.user-name",
+        ".user-name a",
+        'a[href^="https://space.bilibili.com/"]',
+      ].join(",")
+    )
     for (const element of elements3) {
       const href = element.href as string
       if (href.startsWith(prefix2)) {
         const key = getUserProfileUrl(href)
         if (key) {
-          const title = element.textContent!.trim()
+          let title = element.textContent!.trim()
           if (title) {
+            title = title.replace(/^@/, "")
             const meta = { title, type: "user" }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
