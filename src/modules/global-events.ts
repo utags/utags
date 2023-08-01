@@ -4,6 +4,7 @@ import {
   addClass,
   addEventListener,
   doc,
+  hasClass,
   isTouchScreen,
   removeClass,
 } from "browser-extension-utils"
@@ -62,6 +63,13 @@ export function bindDocumentEvents() {
       }
 
       if (target.closest(".utags_ul")) {
+        if (
+          hasClass(target, "utags_captain_tag") ||
+          hasClass(target, "utags_captain_tag2")
+        ) {
+          event.preventDefault()
+        }
+
         return
       }
 
