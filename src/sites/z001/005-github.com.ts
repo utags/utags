@@ -2,6 +2,29 @@ import { $$ } from "browser-extension-utils"
 
 import defaultSite from "../default"
 
+const noneUsers = new Set([
+  "about",
+  "pricing",
+  "security",
+  "login",
+  "logout",
+  "signup",
+  "explore",
+  "topics",
+  "trending",
+  "collections",
+  "events",
+  "sponsors",
+  "features",
+  "enterprise",
+  "team",
+  "customer-stories",
+  "readme",
+  "premium-support",
+  "sitemap",
+  "git-guides",
+])
+
 const site = {
   matches: /github\.com/,
   listNodesSelectors: [],
@@ -18,12 +41,13 @@ const site = {
 
           if (/^https:\/\/github\.com\/[\w-]+$/.test(href)) {
             const username = /^https:\/\/github\.com\/([\w-]+)$/.exec(href)![1]
-            if (!/about|pricing|security/.test(username)) {
+            if (!noneUsers.has(username)) {
               const meta = { type: "user" }
               element.utags = { meta }
+              return true
             }
 
-            return true
+            return false
           }
 
           if (/(author%3A|author=)[\w-]+/.test(href)) {
