@@ -121,6 +121,10 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.7.5
+  - Handle default site rules for chrome extension and firefox addon
+  - Add option to enable/disable utags on current site
+  - Update bilibili, github selectors
 - 0.7.2
   - Apply utags to 52pojie.cn
   - Apply utags to juejin.cn
