@@ -51,6 +51,21 @@ const sites: Site[] = [
   juejin,
 ]
 
+function siteForExtensions(hostname: string): Site {
+  const allowSites = [
+    //
+    /pipecraft\.net/,
+  ]
+  for (const s of allowSites) {
+    if (s.test(hostname)) {
+      return defaultSite
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  return {} as Site
+}
+
 function matchedSite(hostname: string) {
   for (const s of sites) {
     if (s.matches.test(hostname)) {
@@ -58,7 +73,16 @@ function matchedSite(hostname: string) {
     }
   }
 
-  return defaultSite as Site
+  if (
+    // eslint-disable-next-line n/prefer-global/process
+    process.env.PLASMO_TARGET === "chrome-mv3" ||
+    // eslint-disable-next-line n/prefer-global/process
+    process.env.PLASMO_TARGET === "firefox-mv2"
+  ) {
+    return siteForExtensions(hostname)
+  }
+
+  return defaultSite
 }
 
 const hostname = location.hostname
@@ -178,6 +202,7 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
       meta.title = title
     }
 
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     element.utags = {
       key,
       meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
