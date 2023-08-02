@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.7.3
+// @version              0.7.5
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -19,6 +19,7 @@
 // @match                https://*.youtube.com/*
 // @match                https://www.tiktok.com/*
 // @match                https://*.bilibili.com/*
+// @match                https://*.biligame.com/*
 // @match                https://greasyfork.org/*
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*
@@ -844,7 +845,7 @@
     handleShowSettingsUrl()
   }
   var content_default =
-    '\uFEFF:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_layer{height:200px;width:200px;background-color:red}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline !important;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;width:unset !important;height:14px !important;border:none !important;padding:0 !important;margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:1px solid red;color:red !important;border-radius:3px !important;padding:1px 3px !important;margin:0 3px !important;font-size:10px !important;letter-spacing:0 !important;line-height:1 !important;height:14px !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;cursor:pointer;background:unset !important;background-color:unset !important;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{text-indent:-9999px;width:14px !important;height:14px !important;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'%23ff6361\' class=\'bi bi-tags-fill\' viewBox=\'0 0 16 16\'%3E %3Cpath d=\'M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z\'/%3E %3Cpath d=\'M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z\'/%3E %3C/svg%3E") !important;background-size:13px !important;background-repeat:no-repeat !important;background-position:0 0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:not(#a):not(#b),:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:not(#a):not(#b){border:1px solid rgba(255,255,255,0) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:0;left:0;padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:rgba(255,255,255,.7019607843) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'%23256cf1\' class=\'bi bi-tags-fill\' viewBox=\'0 0 16 16\'%3E %3Cpath d=\'M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z\'/%3E %3Cpath d=\'M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z\'/%3E %3C/svg%3E") !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag{margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag>li{position:relative !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a)+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px !important;width:22px !important;height:22px !important;background-position:4px 4px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a)+.utags_ul .utags_captain_tag{position:relative}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:block !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}'
+    '\uFEFF:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_layer{height:200px;width:200px;background-color:red}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline !important;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;width:unset !important;height:14px !important;border:none !important;padding:0 !important;margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:1px solid red;color:red !important;border-radius:3px !important;padding:1px 3px !important;margin:0 3px !important;font-size:10px !important;letter-spacing:0 !important;line-height:1 !important;height:14px !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;cursor:pointer;background:unset !important;background-color:unset !important;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{text-indent:-9999px;width:14px !important;height:14px !important;background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'%23ff6361\' class=\'bi bi-tags-fill\' viewBox=\'0 0 16 16\'%3E %3Cpath d=\'M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z\'/%3E %3Cpath d=\'M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z\'/%3E %3C/svg%3E") !important;background-size:13px !important;background-repeat:no-repeat !important;background-position:0 0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:not(#a):not(#b),:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:not(#a):not(#b){border:1px solid rgba(255,255,255,0) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:0;left:0;padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:rgba(255,255,255,.7019607843) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{background-image:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'%23256cf1\' class=\'bi bi-tags-fill\' viewBox=\'0 0 16 16\'%3E %3Cpath d=\'M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z\'/%3E %3Cpath d=\'M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z\'/%3E %3C/svg%3E") !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag{margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag>li{position:relative !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;font-size:10px !important;width:22px !important;height:22px !important;background-position:4px 4px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{position:relative}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:block !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:block !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}'
   function createTag(tagName) {
     const a = createElement("a")
     a.dataset.utags_tag = tagName
@@ -856,7 +857,7 @@
     a.setAttribute("class", "utags_text_tag")
     return a
   }
-  var extensionVersion = "0.7.3"
+  var extensionVersion = "0.7.5"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap
@@ -1154,6 +1155,12 @@
           return
         }
         if (target.closest(".utags_ul")) {
+          if (
+            hasClass(target, "utags_captain_tag") ||
+            hasClass(target, "utags_captain_tag2")
+          ) {
+            event.preventDefault()
+          }
           return
         }
         hideAllUtagsInArea(target)
@@ -1513,6 +1520,28 @@
     ],
   }
   var lobste_rs_default = site5
+  var noneUsers = /* @__PURE__ */ new Set([
+    "about",
+    "pricing",
+    "security",
+    "login",
+    "logout",
+    "signup",
+    "explore",
+    "topics",
+    "trending",
+    "collections",
+    "events",
+    "sponsors",
+    "features",
+    "enterprise",
+    "team",
+    "customer-stories",
+    "readme",
+    "premium-support",
+    "sitemap",
+    "git-guides",
+  ])
   var site6 = {
     matches: /github\.com/,
     listNodesSelectors: [],
@@ -1526,11 +1555,12 @@
           }
           if (/^https:\/\/github\.com\/[\w-]+$/.test(href)) {
             const username = /^https:\/\/github\.com\/([\w-]+)$/.exec(href)[1]
-            if (!/about|pricing|security/.test(username)) {
+            if (!noneUsers.has(username)) {
               const meta = { type: "user" }
               element.utags = { meta }
+              return true
             }
-            return true
+            return false
           }
           if (/(author%3A|author=)[\w-]+/.test(href)) {
             const username = /(author%3A|author=)([\w-]+)/.exec(href)[2]
@@ -1622,8 +1652,14 @@
   }
   var twitter_com_default = site8
   function getCanonicalUrl4(url) {
+    if (url.startsWith("http://mp.weixin.qq.com")) {
+      url = url.replace(/^http:/, "https:")
+    }
     if (url.startsWith("https://mp.weixin.qq.com/s/")) {
       url = url.replace(/(\/s\/[\w-]+).*/, "$1")
+    }
+    if (url.startsWith("https://mp.weixin.qq.com/") && url.includes("#")) {
+      url = url.replace(/#.*/, "")
     }
     return url
   }
@@ -1643,6 +1679,7 @@
         }
       }
     },
+    getCanonicalUrl: getCanonicalUrl4,
   }
   var mp_weixin_qq_com_default = site9
   var site10 = {
@@ -1834,8 +1871,6 @@
     },
   }
   var youtube_com_default = site13
-  var bilibili_com_default =
-    ":not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .upname a .utags_ul.notag{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .upname a:hover .utags_ul.notag{display:inline !important}"
   var prefix4 = "https://www.bilibili.com/"
   var prefix23 = "https://space.bilibili.com/"
   var prefix32 = "https://m.bilibili.com/"
@@ -1867,11 +1902,21 @@
     return void 0
   }
   var site14 = {
-    matches: /bilibili\.com/,
+    matches: /bilibili\.com|biligame\.com/,
     addExtraMatchedNodes(matchedNodesSet) {
-      runOnce("site:addStyle", () => {
-        addStyle2(bilibili_com_default)
-      })
+      if (location.href.startsWith(prefix4 + "video/")) {
+        if ($(".bpx-state-loading")) {
+          return
+        }
+        const img = $(".bpx-player-follow-face")
+        const img2 = $("img.video-capture-img")
+        if (
+          !(img == null ? void 0 : img.src) ||
+          !(img2 == null ? void 0 : img2.src)
+        ) {
+          return
+        }
+      }
       const elements = $$(
         ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
       )
@@ -1884,32 +1929,50 @@
         const key = prefix23 + userId
         const meta = { title, type: "user" }
         element2.utags = { key, meta }
+        element2.dataset.utags_node_type = "link"
         matchedNodesSet.add(element2)
       }
-      const elements2 = $$(".upname a")
+      const elements2 = $$(".upname a,a.bili-video-card__info--owner")
       for (const element2 of elements2) {
         const href = element2.href
         if (href.startsWith(prefix23)) {
           const key = getUserProfileUrl4(href)
           if (key) {
-            const nameElement = $(".name", element2)
+            const nameElement = $(
+              ".name,.bili-video-card__info--author",
+              element2
+            )
             if (nameElement) {
               const title = nameElement.textContent
               const meta = { title, type: "user" }
               nameElement.utags = { key, meta }
+              nameElement.dataset.utags_node_type = "link"
               matchedNodesSet.add(nameElement)
             }
           }
         }
       }
-      const elements3 = $$("a.up-name")
+      const elements3 = $$(
+        [
+          "a.up-name",
+          "a.card-user-name",
+          ".usercard-wrap .user .name",
+          ".comment-list .user .name",
+          ".user-card .user .name",
+          "a[data-usercard-mid]",
+          "a.user-name",
+          ".user-name a",
+          'a[href^="https://space.bilibili.com/"]',
+        ].join(",")
+      )
       for (const element2 of elements3) {
         const href = element2.href
         if (href.startsWith(prefix23)) {
           const key = getUserProfileUrl4(href)
           if (key) {
-            const title = element2.textContent.trim()
+            let title = element2.textContent.trim()
             if (title) {
+              title = title.replace(/^@/, "")
               const meta = { title, type: "user" }
               element2.utags = { key, meta }
               matchedNodesSet.add(element2)
@@ -1944,7 +2007,7 @@
       }
     },
   }
-  var bilibili_com_default2 = site14
+  var bilibili_com_default = site14
   var prefix5 = "https://www.tiktok.com/"
   function getUserProfileUrl5(url) {
     if (url.startsWith(prefix5)) {
@@ -2116,7 +2179,7 @@
     threads_net_default,
     facebook_com_default,
     youtube_com_default,
-    bilibili_com_default2,
+    bilibili_com_default,
     tiktok_com_default,
     pojie_cn_default,
     juejin_cn_default,
@@ -2126,6 +2189,9 @@
       if (s.matches.test(hostname2)) {
         return s
       }
+    }
+    if (false) {
+      return siteForExtensions(hostname2)
     }
     return default_default
   }
@@ -2231,28 +2297,41 @@
     }
     return [...matchedNodesSet]
   }
+  var host = location.host
+  var isEnabledByDefault = () => {
+    if (host.includes("www.bilibili.com")) {
+      return false
+    }
+    return true
+  }
   var settingsTable2 = {
+    ["enableCurrentSite_".concat(host)]: {
+      title: "Enable current site",
+      defaultValue: isEnabledByDefault(),
+    },
     showHidedItems: {
       title:
         "\u663E\u793A\u88AB\u9690\u85CF\u7684\u5185\u5BB9 (\u6DFB\u52A0\u4E86 'block', 'hide', '\u9690\u85CF'\u7B49\u6807\u7B7E\u7684\u5185\u5BB9)",
       defaultValue: false,
+      group: 2,
     },
     noOpacityEffect: {
       title:
         "\u53BB\u9664\u534A\u900F\u660E\u6548\u679C (\u6DFB\u52A0\u4E86 'sb', '\u5FFD\u7565', '\u6807\u9898\u515A'\u7B49\u6807\u7B7E\u7684\u5185\u5BB9)",
       defaultValue: false,
+      group: 2,
     },
     openTagsPage: {
       title: "\u6807\u7B7E\u5217\u8868",
       type: "externalLink",
       url: "https://utags.pipecraft.net/tags/",
-      group: 2,
+      group: 3,
     },
     openDataPage: {
       title: "\u5BFC\u51FA\u6570\u636E/\u5BFC\u5165\u6570\u636E",
       type: "externalLink",
       url: "https://utags.pipecraft.net/data/",
-      group: 2,
+      group: 3,
     },
   }
   var addUtagsStyle = () => {
@@ -2269,6 +2348,15 @@
       addClass(doc.documentElement, "utags_no_opacity_effect")
     } else {
       removeClass(doc.documentElement, "utags_no_opacity_effect")
+    }
+    if (!getSettingsValue("enableCurrentSite_".concat(host))) {
+      for (const element of $$(".utags_ul")) {
+        element.remove()
+      }
+      const style = $("#utags_style")
+      if (style) {
+        style.remove()
+      }
     }
   }
   var start = 0
@@ -2426,13 +2514,16 @@
       title:
         "\u{1F3F7}\uFE0F \u5C0F\u9C7C\u6807\u7B7E (UTags) - \u4E3A\u94FE\u63A5\u6DFB\u52A0\u7528\u6237\u6807\u7B7E",
       footer:
-        '\n    <p>\n    <a href="https://github.com/utags/utags/issues" target="_blank">\n    Report and Issue...\n    </a></p>\n    <p>Made with \u2764\uFE0F by\n    <a href="https://www.pipecraft.net/" target="_blank">\n      Pipecraft\n    </a></p>',
+        '\n    <p>After change settings, reload the page to take effect</p>\n    <p>\n    <a href="https://github.com/utags/utags/issues" target="_blank">\n    Report and Issue...\n    </a></p>\n    <p>Made with \u2764\uFE0F by\n    <a href="https://www.pipecraft.net/" target="_blank">\n      Pipecraft\n    </a></p>',
       settingsTable: settingsTable2,
       async onValueChange() {
         onSettingsChange()
       },
     })
     registerMenuCommand("\u2699\uFE0F \u8BBE\u7F6E", showSettings, "o")
+    if (!getSettingsValue("enableCurrentSite_".concat(host))) {
+      return
+    }
     await initStorage()
     setTimeout(outputData, 1)
     onSettingsChange()

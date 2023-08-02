@@ -2,6 +2,12 @@
 
 > [English](readme.md) | 中文
 
+## 0.7.5
+
+- 处理 chrome extension 和 firefox addon 的默认网站规则
+- 添加在当前站点上启用/禁用 utags 的设置选项
+- 更新 bilibili, github 匹配规则
+
 ## 0.7.2
 
 - UTags 开始支持 52pojie.cn

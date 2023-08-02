@@ -127,6 +127,10 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.7.5
+  - Handle default site rules for chrome extension and firefox addon
+  - Add option to enable/disable utags on current site
+  - Update bilibili, github selectors
 - 0.7.3
   - Update bilibili selectors
   - Update merging logic
