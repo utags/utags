@@ -23,6 +23,7 @@ const noneUsers = new Set([
   "premium-support",
   "sitemap",
   "git-guides",
+  "open-source",
 ])
 
 const site = {
