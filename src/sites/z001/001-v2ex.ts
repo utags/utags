@@ -3,6 +3,14 @@ import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
 import defaultSite from "../default"
 
 function getCanonicalUrl(url: string) {
+  // https://links.pipecraft.net/www.v2ex.com/
+  // => https://www.v2ex.com/
+  if (url.startsWith("https://links.pipecraft")) {
+    url = url.replace("https://links.pipecraft.net/", "https://")
+  }
+
+  // TODO: /member/XXX 转为小写。但会影响已添加到的数据。需要做一个 migration
+
   return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
 }
 
