@@ -1,11 +1,5 @@
-import {
-  $,
-  $$,
-  addEventListener,
-  addStyle,
-  runOnce,
-} from "browser-extension-utils"
-import customStyle from "data-text:./013-bilibili.com.scss"
+import { $, $$, addEventListener, runOnce } from "browser-extension-utils"
+import styleText from "data-text:./013-bilibili.com.scss"
 
 const prefix = "https://www.bilibili.com/"
 const prefix2 = "https://space.bilibili.com/"
@@ -72,10 +66,6 @@ const site = {
         return
       }
     }
-
-    // runOnce("site:addStyle", () => {
-    //   addStyle(customStyle)
-    // })
 
     const elements = $$(
       ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
@@ -170,6 +160,7 @@ const site = {
       }
     }
   },
+  // getStyle: () => styleText,
 }
 
 export default site

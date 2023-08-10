@@ -1,4 +1,4 @@
-import { $, $$, getAttribute, hasClass, isUrl } from "browser-extension-utils"
+import { $, $$, addElement, getAttribute, isUrl } from "browser-extension-utils"
 
 import { type UserTag, type UserTagMeta } from "../types"
 import defaultSite from "./default"
@@ -30,6 +30,9 @@ type Site = {
   excludeSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
   getCanonicalUrl?: (url: string) => string
+  getStyle?: () => string
+  preProcess?: () => void
+  postProcess?: () => void
 }
 
 const sites: Site[] = [
@@ -89,6 +92,20 @@ const hostname = location.hostname
 const currentSite: Site = matchedSite(hostname)
 
 export function getListNodes() {
+  if (typeof currentSite.preProcess === "function") {
+    currentSite.preProcess()
+  }
+
+  if (typeof currentSite.getStyle === "function" && !$("#utags_site_style")) {
+    const styleText = currentSite.getStyle()
+    if (styleText) {
+      addElement("style", {
+        textContent: styleText,
+        id: "utags_site_style",
+      })
+    }
+  }
+
   if (typeof currentSite.getListNodes === "function") {
     return currentSite.getListNodes()
   }
@@ -237,6 +254,10 @@ export function matchedNodes() {
 
   //   matchedNodesSet.add(element)
   // }
+
+  if (typeof currentSite.postProcess === "function") {
+    currentSite.postProcess()
+  }
 
   return [...matchedNodesSet]
 }
