@@ -120,9 +120,12 @@ const site = {
       }
 
       const main = $("#Main") || $(".content")
-      const replyElements = $$('.box .cell[id^="r_"]', main)
+      const replyElements = $$(
+        '.box .cell[id^="r_"],.box .cell[id^="related_r_"]',
+        main
+      )
       for (const reply of replyElements) {
-        const replyId = reply.id
+        const replyId = reply.id.replace("related_", "")
         const floorNoElement = $(".no", reply)
         const replyContentElement = $(".reply_content", reply)
         const agoElement = $(".ago,.fade.small", reply)
