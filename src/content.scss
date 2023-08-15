@@ -29,6 +29,13 @@
       border: none !important;
       padding: 0 !important;
       margin: 0 !important;
+
+      &:first-child .utags_text_tag {
+        margin-left: 3px !important;
+      }
+      &:last-child .utags_text_tag {
+        margin-right: 3px !important;
+      }
     }
 
     .utags_text_tag {
@@ -38,7 +45,7 @@
       color: red !important;
       border-radius: 3px !important;
       padding: 1px 3px !important;
-      margin: 0 3px !important;
+      margin: 0 1px !important;
       font-size: 10px !important;
       letter-spacing: 0 !important;
       line-height: 1 !important;
@@ -62,23 +69,28 @@
 
     .utags_text_tag[data-utags_tag]::before {
       content: attr(data-utags_tag);
+      display: block;
+      font-size: 10px;
+      line-height: 1;
+      height: 10px;
     }
 
     .utags_captain_tag,
     .utags_captain_tag2 {
-      text-indent: -9999px;
       width: 14px !important;
       height: 14px !important;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E") !important;
-      background-size: 13px !important;
-      background-repeat: no-repeat !important;
-      background-position: 0 0 !important;
-    }
+      padding: 1px 0 0 1px !important;
+      background: none !important;
+      color: #ff6361 !important;
+      border: none !important;
 
-    .utags_captain_tag:not(#a):not(#b),
-    .utags_captain_tag2:not(#a):not(#b) {
-      /* Increase the specificity of border style */
-      border: 1px solid #fff0 !important;
+      &::before {
+        content: none !important;
+      }
+
+      svg {
+        vertical-align: -3px;
+      }
     }
 
     .utags_captain_tag {
@@ -99,7 +111,7 @@
     .utags_captain_tag:focus,
     .utags_captain_tag2:hover,
     .utags_captain_tag2:focus {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23256cf1' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E") !important;
+      color: #256cf1 !important;
     }
 
     &.notag {
@@ -117,10 +129,9 @@
   .utags_show_all .utags_captain_tag,
   :not(a):not([data-utags_node_type="link"]) + .utags_ul .utags_captain_tag {
     opacity: 100%;
-    font-size: 10px !important;
     width: 22px !important;
     height: 22px !important;
-    background-position: 4px 4px !important;
+    padding: 5px 4px 4px 5px !important;
     transition: all 0s 0.1s !important;
     /* Fix v2ex 超级增强 start */
     z-index: 90;

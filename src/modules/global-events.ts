@@ -9,6 +9,9 @@ import {
   removeClass,
 } from "browser-extension-utils"
 
+import { saveTags } from "../storage"
+import { type UserTag, type UserTagMeta } from "../types"
+
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
 
@@ -63,11 +66,34 @@ export function bindDocumentEvents() {
       }
 
       if (target.closest(".utags_ul")) {
-        if (
-          hasClass(target, "utags_captain_tag") ||
-          hasClass(target, "utags_captain_tag2")
-        ) {
+        const captainTag = target.closest(
+          ".utags_captain_tag,.utags_captain_tag2"
+        ) as HTMLElement | undefined
+        if (captainTag) {
           event.preventDefault()
+          event.stopPropagation()
+          event.stopImmediatePropagation()
+
+          if (!captainTag.dataset.utags_key) {
+            return
+          }
+
+          setTimeout(async () => {
+            const key = captainTag.dataset.utags_key
+            const tags = captainTag.dataset.utags_tags
+            const meta: UserTagMeta | undefined = captainTag.dataset.utags_meta
+              ? (JSON.parse(captainTag.dataset.utags_meta) as UserTagMeta)
+              : undefined
+            // eslint-disable-next-line no-alert
+            const newTags = prompt(
+              "[UTags] 请输入标签，用逗号分开多个标签",
+              tags
+            )
+            if (newTags !== null) {
+              const newTagsArray = newTags.split(/\s*[,，]\s*/)
+              await saveTags(key, newTagsArray, meta)
+            }
+          })
         }
 
         return
