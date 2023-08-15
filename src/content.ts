@@ -256,7 +256,9 @@ async function displayTags() {
 async function initStorage() {
   await migration()
   addTagsValueChangeListener(() => {
-    setTimeout(displayTags)
+    if (!doc.hidden) {
+      setTimeout(displayTags)
+    }
   })
 }
 
@@ -306,6 +308,12 @@ async function main() {
   onSettingsChange()
 
   await displayTags()
+
+  addEventListener(doc, "visibilitychange", async () => {
+    if (!doc.hidden) {
+      await displayTags()
+    }
+  })
 
   bindDocumentEvents()
 
