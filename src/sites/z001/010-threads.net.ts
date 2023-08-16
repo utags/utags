@@ -1,4 +1,4 @@
-import { $, $$ } from "browser-extension-utils"
+import { $, $$, setStyle } from "browser-extension-utils"
 
 import defaultSite from "../default"
 
@@ -6,7 +6,10 @@ function getUserProfileUrl(url: string) {
   if (url.startsWith("https://www.threads.net/")) {
     const href2 = url.slice(24)
     if (/^@[\w.]+/.test(href2)) {
-      return "https://www.threads.net/" + href2.replace(/(^@[\w.]+).*/, "$1")
+      return (
+        "https://www.threads.net/" +
+        href2.replace(/(^@[\w.]+).*/, "$1").toLowerCase()
+      )
     }
   }
 
@@ -30,6 +33,9 @@ const site = {
             if (sibling && sibling.href && sibling.href.includes("replies")) {
               return false
             }
+
+            const parant = element.parentElement!
+            setStyle(parant, { display: "flex" })
 
             const meta = { type: "user" }
             element.utags = { meta }
