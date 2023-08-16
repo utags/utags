@@ -1,4 +1,5 @@
-import { $$ } from "browser-extension-utils"
+import { $, $$ } from "browser-extension-utils"
+import styleText from "data-text:./009-instagram.com.scss"
 
 import defaultSite from "../default"
 
@@ -17,6 +18,10 @@ const site = {
               return false
             }
 
+            if ($("div span", element)) {
+              element.dataset.utags_node_type = "notag_relative"
+            }
+
             const meta = { type: "user" }
             element.utags = { meta }
 
@@ -29,6 +34,7 @@ const site = {
     ) as HTMLAnchorElement[]
   },
   excludeSelectors: [...defaultSite.excludeSelectors],
+  getStyle: () => styleText,
 }
 
 export default site
