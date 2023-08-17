@@ -80,6 +80,14 @@
       "import/order": 0,
       "@typescript-eslint/prefer-nullish-coalescing": 0,
       "capitalized-comments": 0
-    }
+    },
+    "overrides": [
+      {
+        "files": "src/messages/*.ts",
+        "rules": {
+          "@typescript-eslint/naming-convention": 0
+        }
+      }
+    ]
   }
 }

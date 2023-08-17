@@ -14,4 +14,12 @@ module.exports = {
   importOrder: ["^@plasmohq/(.*)$", "^~(.*)$", "^[./]"],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
+  overrides: [
+    {
+      files: "src/messages/*.ts",
+      options: {
+        printWidth: 9999,
+      },
+    },
+  ],
 }

@@ -1,8 +1,4 @@
-import {
-  getSettingsValue,
-  initSettings,
-  showSettings,
-} from "browser-extension-settings"
+import { getSettingsValue, initSettings } from "browser-extension-settings"
 import {
   addValueChangeListener,
   getValue,
@@ -13,15 +9,16 @@ import {
   $$,
   addElement,
   addStyle,
-  createElement,
-  registerMenuCommand,
-  setStyle,
+  doc,
+  runWhenBodyExists,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
 
+import { i } from "./messages"
+
 const settingsTable = {
   test1: {
-    title: "Test1",
+    title: i("settings.test1"),
     defaultValue: true,
   },
   test2: {
@@ -52,10 +49,6 @@ const settingsTable = {
   },
 }
 
-function registerMenuCommands() {
-  registerMenuCommand("⚙️ 设置", showSettings, "o")
-}
-
 function showVisitCount(visitCount: string) {
   const div =
     $("#myprefix_div") ||
@@ -76,18 +69,14 @@ function showVisitCount(visitCount: string) {
 }
 
 async function main() {
-  if (!document.body || $("#myprefix_div")) {
-    return
-  }
-
   await initSettings({
     id: "my-extension",
-    title: "My Extension",
+    title: i("settings.title"),
     footer: `
-    <p>After change settings, reload the page to take effect</p>
+    <p>${i("settings.information")}</p>
     <p>
     <a href="https://github.com/utags/browser-extension-starter/issues" target="_blank">
-    Report and Issue...
+    ${i("settings.report")}
     </a></p>
     <p>Made with ❤️ by
     <a href="https://www.pipecraft.net/" target="_blank">
@@ -95,7 +84,6 @@ async function main() {
     </a></p>`,
     settingsTable,
   })
-  registerMenuCommands()
 
   console.log(getSettingsValue("test1"))
   console.log(getSettingsValue("test2"))
@@ -124,5 +112,9 @@ async function main() {
   addStyle("#myprefix_div { padding: 6px; };")
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises, unicorn/prefer-top-level-await
-main()
+runWhenBodyExists(async () => {
+  if (doc.documentElement.dataset.myextensionId === undefined) {
+    doc.documentElement.dataset.myextensionId = ""
+    await main()
+  }
+})
