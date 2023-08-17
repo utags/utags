@@ -9,6 +9,7 @@ import {
   removeClass,
 } from "browser-extension-utils"
 
+import { i } from "../messages"
 import { saveTags } from "../storage"
 import { type UserTag, type UserTagMeta } from "../types"
 
@@ -85,10 +86,7 @@ export function bindDocumentEvents() {
               ? (JSON.parse(captainTag.dataset.utags_meta) as UserTagMeta)
               : undefined
             // eslint-disable-next-line no-alert
-            const newTags = prompt(
-              "[UTags] 请输入标签，用逗号分开多个标签",
-              tags
-            )
+            const newTags = prompt(i("prompt.addTags"), tags)
             if (newTags !== null) {
               const newTagsArray = newTags.split(/\s*[,，]\s*/)
               await saveTags(key, newTagsArray, meta)

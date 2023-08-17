@@ -1,8 +1,4 @@
-import {
-  getSettingsValue,
-  initSettings,
-  showSettings,
-} from "browser-extension-settings"
+import { getSettingsValue, initSettings } from "browser-extension-settings"
 import {
   $,
   $$,
@@ -12,7 +8,6 @@ import {
   createElement,
   doc,
   hasClass,
-  registerMenuCommand,
   removeClass,
   setStyle,
   uniq,
@@ -20,6 +15,7 @@ import {
 import styleText from "data-text:./content.scss"
 
 import createTag from "./components/tag"
+import { i } from "./messages"
 import { outputData } from "./modules/export-import"
 import { bindDocumentEvents, hideAllUtagsInArea } from "./modules/global-events"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
@@ -44,27 +40,27 @@ const isEnabledByDefault = () => {
 
 const settingsTable = {
   [`enableCurrentSite_${host}`]: {
-    title: "Enable current site",
+    title: i("settings.enableCurrentSite"),
     defaultValue: isEnabledByDefault(),
   },
   showHidedItems: {
-    title: "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
+    title: i("settings.showHidedItems"),
     defaultValue: false,
     group: 2,
   },
   noOpacityEffect: {
-    title: "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
+    title: i("settings.noOpacityEffect"),
     defaultValue: false,
     group: 2,
   },
   openTagsPage: {
-    title: "标签列表",
+    title: i("settings.openTagsPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/tags/",
     group: 3,
   },
   openDataPage: {
-    title: "导出数据/导入数据",
+    title: i("settings.openDataPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/data/",
     group: 3,
@@ -278,12 +274,12 @@ async function main() {
 
   await initSettings({
     id: "utags",
-    title: "🏷️ 小鱼标签 (UTags) - 为链接添加用户标签",
+    title: i("settings.title"),
     footer: `
-    <p>After change settings, reload the page to take effect</p>
+    <p>${i("settings.information")}</p>
     <p>
     <a href="https://github.com/utags/utags/issues" target="_blank">
-    Report and Issue...
+    ${i("settings.report")}
     </a></p>
     <p>Made with ❤️ by
     <a href="https://www.pipecraft.net/" target="_blank">
@@ -294,8 +290,6 @@ async function main() {
       onSettingsChange()
     },
   })
-
-  registerMenuCommand("⚙️ 设置", showSettings, "o")
 
   if (!getSettingsValue(`enableCurrentSite_${host}`)) {
     return
