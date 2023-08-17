@@ -121,6 +121,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.8.0
+  - Implement multi-language support, currently supports English and Chinese
 - 0.7.7
   - Update instagram.com, threads.net
   - Improve performance, update tags when document is not hidden

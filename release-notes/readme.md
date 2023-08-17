@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.8.0
+
+- Implement multi-language support, currently supports English and Chinese
+
 ## 0.7.6
 
 - use svg element instead of background-image with data: url to fix CSP issue

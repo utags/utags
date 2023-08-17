@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.0
+
+- 实现多语言支持，目前支持英文和中文
+
 ## 0.7.6
 
 - use svg element instead of background-image with data: url to fix CSP issue

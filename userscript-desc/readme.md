@@ -1,10 +1,10 @@
 # UTags - Add usertags to links
 
-Allow users to add custom tags to links. For example, you can add tags to forum members or posts.
+Allow users to add custom tags (labels) to links. For example, you can add tags to forum members or posts.
 
-**UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
+**UTags** = **Usertags**. **Userscript**, **Userstyle** allows users to customize the functionality and style of the site, **Usertags** allows users to customize the tags (labels) for the site.
 
-目前支持的网站
+Not it supports
 
 - [www.v2ex.com](https://www.v2ex.com/)
 - [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
@@ -26,41 +26,23 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 
 ## Usage
 
-- 鼠标移到帖子标题或用户名上面，旁边会出现标签 🏷️ 图标，点击图标添加标签
+- Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/5lso2l5779ompdep7mmvkivsyxin)
 
-- 多个标签用逗号分隔（半角逗号符号、全角逗号符号都可以）
+- Multiple tags are separated by commas
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/quyien946y8bbpdtdi0tyf0pbsmf)
 
-- 帖子标题，用户名，节点都可以添加标签
+- Tags can be added to post titles, usernames, and categories
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
 
-- 特殊标签有特殊效果，比如：sb, block, 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读等
+- Some special tags have special effects, such as 'ignore', 'clickbait', 'promotion', 'block', 'hide', etc.
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
-## 手机版截图
-
-- 主题列表
-
-![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
-
-![screenshots](https://i.imgur.com/byywcBy.jpeg)
-
-![screenshots](https://i.imgur.com/YdilUsi.jpeg)
-
-- 评论区
-
-![screenshots](https://i.imgur.com/smU24o8.jpeg)
-
-![screenshots](https://i.imgur.com/coLUFOj.jpeg)
-
-![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
-
-- 功能设置
+- Settings
 
 ![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
 
-- 视频版演示
+- Video demo
 
 📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
@@ -92,41 +74,25 @@ Allow users to add custom tags to links. For example, you can add tags to forum 
 
 ![screenshots](https://assets.bestxtools.com/i/pckyc)
 
-## 功能特点
+## Features
 
-- 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
-- 不仅可以给用户打标签，还可以给帖子（主题）和节点打标签
-- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
-- 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
-- 除了 V2EX，以后还会支持更多的网站
-- 与 V2EX Plus, V2EX Polish, V2EX 超级增强, [V2EX.REP](https://greasyfork.org/zh-CN/scripts/466589-v2ex-rep) 等插件兼容
-- 支持 V2EX 手机网页版
-- 兼容以下用户脚本管理器
-  - Tampermonkey (推荐)
+- You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
+- Tags can be added to post titles, usernames, and categories
+- Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tagss
+- On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
+- Support [data export and import](https://utags.pipecraft.net/data/)
+- Compatible with the following userscript managers
+  - Tampermonkey (recommend)
   - Violentmonkey
   - Greasemonkey
   - Userscripts (Safari)
-
-### 彩蛋
-
-- 标签设置为 'sb'，该用户的帖子或评论都会半透明显示，可以方便跳过价值低的内容
-- 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
-- 更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
-
-## Roadmap
-
-- 网页内所有链接显示添加标签按钮
-- 支持自定义网站规则
-- 支持自定义标签样式
-- 展示其他用户们的标签内容
-- 多设备数据同步
 
 More information: [https://github.com/utags/utags](https://github.com/utags/utags)
 
 ## Release Notes
 
+- 0.8.0
+  - Implement multi-language support, currently supports English and Chinese
 - 0.7.7
   - Update instagram.com, threads.net
   - Improve performance, update tags when document is not hidden
