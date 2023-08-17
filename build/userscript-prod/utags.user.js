@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.7.6
+// @version              0.7.7
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -1809,6 +1809,8 @@
     getCanonicalUrl: getCanonicalUrl4,
   }
   var mp_weixin_qq_com_default = site9
+  var instagram_com_default =
+    ":not(#a):not(#b):not(#c) [data-utags_node_type=notag_relative]+.utags_ul.notag .utags_captain_tag{position:relative !important;width:14px !important;height:14px !important;padding:1px 0 0 1px !important}"
   var site10 = {
     matches: /instagram\.com/,
     getMatchedNodes() {
@@ -1820,6 +1822,9 @@
             if (/^(explore|reels)\/$/.test(href2)) {
               return false
             }
+            if ($("div span", element)) {
+              element.dataset.utags_node_type = "notag_relative"
+            }
             const meta = { type: "user" }
             element.utags = { meta }
             return true
@@ -1829,13 +1834,17 @@
       })
     },
     excludeSelectors: [...default_default.excludeSelectors],
+    getStyle: () => instagram_com_default,
   }
-  var instagram_com_default = site10
+  var instagram_com_default2 = site10
   function getUserProfileUrl(url) {
     if (url.startsWith("https://www.threads.net/")) {
       const href2 = url.slice(24)
       if (/^@[\w.]+/.test(href2)) {
-        return "https://www.threads.net/" + href2.replace(/(^@[\w.]+).*/, "$1")
+        return (
+          "https://www.threads.net/" +
+          href2.replace(/(^@[\w.]+).*/, "$1").toLowerCase()
+        )
       }
     }
     return void 0
@@ -1852,6 +1861,8 @@
             if (sibling && sibling.href && sibling.href.includes("replies")) {
               return false
             }
+            const parant = element.parentElement
+            setStyle(parant, { display: "flex" })
             const meta = { type: "user" }
             element.utags = { meta }
             return true
@@ -2298,7 +2309,7 @@
     news_ycombinator_com_default,
     lobste_rs_default,
     mp_weixin_qq_com_default,
-    instagram_com_default,
+    instagram_com_default2,
     threads_net_default,
     facebook_com_default,
     youtube_com_default,
@@ -2609,7 +2620,9 @@
   async function initStorage() {
     await migration()
     addTagsValueChangeListener(() => {
-      setTimeout(displayTags)
+      if (!doc.hidden) {
+        setTimeout(displayTags)
+      }
     })
   }
   var countOfLinks = 0
@@ -2646,6 +2659,11 @@
     setTimeout(outputData, 1)
     onSettingsChange()
     await displayTags()
+    addEventListener(doc, "visibilitychange", async () => {
+      if (!doc.hidden) {
+        await displayTags()
+      }
+    })
     bindDocumentEvents()
     countOfLinks = $$("a:not(.utags_text_tag)").length
     const observer = new MutationObserver(async (mutationsList) => {
