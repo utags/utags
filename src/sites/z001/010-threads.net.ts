@@ -34,8 +34,8 @@ const site = {
               return false
             }
 
-            const parant = element.parentElement!
-            setStyle(parant, { display: "flex" })
+            const parent = element.parentElement!
+            setStyle(parent, { display: "flex" })
 
             const meta = { type: "user" }
             element.utags = { meta }

@@ -1,4 +1,4 @@
-import { $$ } from "browser-extension-utils"
+import { $$, setStyle } from "browser-extension-utils"
 
 import defaultSite from "../default"
 
@@ -25,6 +25,22 @@ const site = {
               return false
             }
             // console.log(href2)
+
+            const parent = element.parentElement!
+            setStyle(parent, { display: "flex", flexDirection: "row" })
+            const parentSibling = parent.nextSibling as HTMLElement
+            if (
+              // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+              parentSibling &&
+              parentSibling.textContent &&
+              parentSibling.textContent.includes("·")
+            ) {
+              // 增加用户名与时间之间的距离，否则点击按钮时，会点击到时间链接
+              setStyle(parentSibling, {
+                paddingLeft: "10px",
+                paddingRight: "10px",
+              })
+            }
 
             const meta = { type: "user" }
             element.utags = { meta }
