@@ -5,6 +5,7 @@ import { getFirstHeadElement } from "../../utils"
 import defaultSite from "../default"
 
 const prefix = "https://e-hentai.org/"
+const prefix2 = "https://exhentai.org/"
 
 function getPostUrl(url: string) {
   if (url.startsWith(prefix)) {
@@ -14,16 +15,23 @@ function getPostUrl(url: string) {
     }
   }
 
+  if (url.startsWith(prefix2)) {
+    const href2 = url.slice(21)
+    if (/^g\/\w+/.test(href2)) {
+      return prefix2 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+    }
+  }
+
   return undefined
 }
 
 const site = {
-  matches: /e-hentai\.org/,
+  matches: /e-hentai\.org|exhentai\.org/,
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)")
       .filter((element: HTMLAnchorElement) => {
         const href = element.href
-        if (href.startsWith(prefix)) {
+        if (href.startsWith(prefix) || href.startsWith(prefix2)) {
           const key = getPostUrl(href)
           if (key) {
             const titleElement = $(".glink", element)
