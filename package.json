@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "browser-extension-i18n": "^0.0.6",
-    "browser-extension-settings": "^0.5.3",
+    "browser-extension-settings": "^0.5.4",
     "browser-extension-storage": "^0.1.2",
     "browser-extension-utils": "^0.1.18",
     "plasmo": "^0.77.5",
@@ -47,17 +47,17 @@
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "^3.6.4",
-    "@types/chrome": "^0.0.243",
-    "@types/node": "^20.5.0",
-    "@types/react": "^18.2.20",
+    "@types/chrome": "^0.0.244",
+    "@types/node": "^20.5.9",
+    "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "bookmarkleter": "^1.1.0",
     "esbuild": "^0.19.2",
     "http-server": "^14.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "sass": "^1.65.1",
-    "typescript": "^5.1.6",
+    "sass": "^1.66.1",
+    "typescript": "^5.2.2",
     "xo": "^0.56.0"
   },
   "manifest": {
