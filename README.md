@@ -121,6 +121,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.8.4
+  - Fix a bug on YouTube, compare keys when reusing utags elements
+  - Update youtube selectors and style
 - 0.8.0
   - Implement multi-language support, currently supports English and Chinese
 - 0.7.7

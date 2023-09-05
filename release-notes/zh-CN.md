@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.4
+
+- 修复 YouTube bug, 重用 utags 元素时，比较键值
+- 更新 YouTube 匹配规则与样式
+
 ## 0.8.0
 
 - 实现多语言支持，目前支持英文和中文
