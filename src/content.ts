@@ -7,6 +7,7 @@ import {
   addStyle,
   createElement,
   doc,
+  getAttribute,
   hasClass,
   removeClass,
   setStyle,
@@ -112,7 +113,10 @@ function appendTagsToPage(
 ) {
   const utagsUl = element.nextSibling as HTMLElement
   if (hasClass(utagsUl, "utags_ul")) {
-    if (element.dataset.utags === tags.join(",")) {
+    if (
+      element.dataset.utags === tags.join(",") &&
+      key === getAttribute(utagsUl, "data-utags_key")
+    ) {
       return
     }
 
@@ -121,6 +125,7 @@ function appendTagsToPage(
 
   const ul = createElement("ul", {
     class: "utags_ul",
+    "data-utags_key": key,
   })
   let li = createElement("li")
   if (tags.length === 0) {
@@ -169,6 +174,23 @@ function appendTagsToPage(
     }
   }, 200)
   /* Fix v2ex polish end */
+}
+
+/**
+ * Clean utags elements after SPA web apps re-rendered.
+ * works on these sites
+ * - youtube
+ */
+function cleanUnusedUtags() {
+  const utagsUlList = $$(".utags_ul")
+  for (const utagsUl of utagsUlList) {
+    const element = utagsUl.previousSibling as HTMLElement
+    if (element && getAttribute(element, "data-utags") !== null) {
+      continue
+    }
+
+    utagsUl.remove()
+  }
 }
 
 async function displayTags() {
@@ -243,6 +265,8 @@ async function displayTags() {
         "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
     }
   }
+
+  cleanUnusedUtags()
 
   if (start) {
     console.error("end of displayTags", Date.now() - start)
