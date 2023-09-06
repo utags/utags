@@ -11,6 +11,7 @@ import {
   hasClass,
   removeClass,
   setStyle,
+  throttle,
   uniq,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
@@ -273,6 +274,8 @@ async function displayTags() {
   }
 }
 
+const displayTagsThrottled = throttle(displayTags, 500)
+
 async function initStorage() {
   await migration()
   addTagsValueChangeListener(() => {
@@ -282,7 +285,6 @@ async function initStorage() {
   })
 }
 
-let countOfLinks = 0
 async function main() {
   if ($("#utags_style")) {
     // already running
@@ -335,16 +337,10 @@ async function main() {
 
   bindDocumentEvents()
 
-  countOfLinks = $$("a:not(.utags_text_tag)").length
-
   const observer = new MutationObserver(async (mutationsList) => {
     // console.error("mutation", Date.now(), mutationsList)
-    const count = $$("a:not(.utags_text_tag):not([data-utags]").length
-    if (countOfLinks !== count) {
-      // console.log(countOfLinks, count)
-      countOfLinks = count
-      await displayTags()
-    }
+
+    displayTagsThrottled()
 
     if ($("#vimiumHintMarkerContainer")) {
       addClass(doc.body, "utags_show_all")
