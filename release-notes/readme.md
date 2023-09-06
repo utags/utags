@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.8.6
+
+- Apply utags to xiaohongshu.com
+
 ## 0.8.5
 
 - Apply utags to zhihu.com

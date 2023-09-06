@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.6
+
+- UTags 开始支持 xiaohongshu.com
+
 ## 0.8.5
 
 - UTags 开始支持 zhihu.com

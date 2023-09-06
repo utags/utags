@@ -22,6 +22,8 @@
 - [www.tiktok.com](https://www.tiktok.com/)
 - [www.52pojie.cn](https://www.52pojie.cn/)
 - [juejin.cn](https://juejin.cn/)
+- [zhihu.com](https://www.zhihu.com/)
+- [xiaohongshu.com](https://www.xiaohongshu.com/)
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 ## 使用方法
@@ -127,6 +129,8 @@
 
 ## 更新记录
 
+- 0.8.6
+  - UTags 开始支持 xiaohongshu.com
 - 0.8.5
   - UTags 开始支持 zhihu.com
 - 0.8.4

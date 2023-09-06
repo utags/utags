@@ -22,6 +22,8 @@ Not it supports
 - [www.tiktok.com](https://www.tiktok.com/)
 - [www.52pojie.cn](https://www.52pojie.cn/)
 - [juejin.cn](https://juejin.cn/)
+- [zhihu.com](https://www.zhihu.com/)
+- [xiaohongshu.com](https://www.xiaohongshu.com/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -91,6 +93,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.8.6
+  - Apply utags to xiaohongshu.com
 - 0.8.5
   - Apply utags to zhihu.com
 - 0.8.4

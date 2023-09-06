@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.8.5
+// @version              0.8.6
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -28,6 +28,7 @@
 // @match                https://www.52pojie.cn/*
 // @match                https://juejin.cn/*
 // @match                https://mp.weixin.qq.com/*
+// @match                https://www.xiaohongshu.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
 // @match                https://www.journalduhacker.net/*
@@ -221,6 +222,25 @@
     }
   }
   var isUrl = (text) => /^https?:\/\//.test(text)
+  var throttle = (func, interval) => {
+    let timeoutId = null
+    let next = false
+    const handler = (...args) => {
+      if (timeoutId) {
+        next = true
+      } else {
+        func.apply(void 0, args)
+        timeoutId = setTimeout(() => {
+          timeoutId = null
+          if (next) {
+            next = false
+            handler()
+          }
+        }, interval)
+      }
+    }
+    return handler
+  }
   if (typeof Object.hasOwn !== "function") {
     Object.hasOwn = (instance, prop) =>
       Object.prototype.hasOwnProperty.call(instance, prop)
@@ -2584,13 +2604,108 @@
     },
   }
   var zhihu_com_default = site18
-  var prefix8 = "https://e-hentai.org/"
-  var prefix24 = "https://exhentai.org/"
+  var prefix8 = "https://www.xiaohongshu.com/"
+  function getUserProfileUrl8(url, exact = false) {
+    if (url.startsWith(prefix8)) {
+      const href2 = url.slice(28)
+      if (exact) {
+        if (/^user\/profile\/\w+(\?.*)?$/.test(href2)) {
+          return prefix8 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+        }
+      } else if (/^user\/profile\/\w+/.test(href2)) {
+        return prefix8 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
   function getPostUrl(url) {
     if (url.startsWith(prefix8)) {
+      const href2 = url.slice(28)
+      if (/^explore\/\w+/.test(href2)) {
+        return prefix8 + href2.replace(/^(explore\/\w+).*/, "$1")
+      }
+      if (/^user\/profile\/\w+\/\w+/.test(href2)) {
+        return (
+          prefix8 +
+          "explore/" +
+          href2.replace(/^user\/profile\/\w+\/(\w+).*/, "$1")
+        )
+      }
+    }
+    return void 0
+  }
+  var site19 = {
+    matches: /www\.xiaohongshu\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (!href.includes("www.xiaohongshu.com")) {
+          return true
+        }
+        let key = getUserProfileUrl8(href, true)
+        if (key) {
+          const titleElement = hasClass(element, "name")
+            ? element
+            : $(".name", element)
+          let title
+          if (titleElement) {
+            title = titleElement.textContent
+          }
+          const meta = { type: "user" }
+          if (title) {
+            meta.title = title
+          } else {
+            return false
+          }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl(href)
+        if (key) {
+          const meta = { type: "post" }
+          element.utags = { key, meta }
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [...default_default.excludeSelectors, ".cover"],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getUserProfileUrl8(location.href)
+      if (key) {
+        const element = $(".user-info .user-name")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getPostUrl(location.href)
+      if (key) {
+        const element = $(".note-content .title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "post" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+  }
+  var xiaohongshu_com_default = site19
+  var prefix9 = "https://e-hentai.org/"
+  var prefix24 = "https://exhentai.org/"
+  function getPostUrl2(url) {
+    if (url.startsWith(prefix9)) {
       const href2 = url.slice(21)
       if (/^g\/\w+/.test(href2)) {
-        return prefix8 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+        return prefix9 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
       }
     }
     if (url.startsWith(prefix24)) {
@@ -2601,14 +2716,14 @@
     }
     return void 0
   }
-  var site19 = {
+  var site20 = {
     matches: /e-hentai\.org|exhentai\.org/,
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)")
         .filter((element) => {
           const href = element.href
-          if (href.startsWith(prefix8) || href.startsWith(prefix24)) {
-            const key = getPostUrl(href)
+          if (href.startsWith(prefix9) || href.startsWith(prefix24)) {
+            const key = getPostUrl2(href)
             if (key) {
               const titleElement = $(".glink", element)
               let title
@@ -2646,7 +2761,7 @@
       'a[href*="act=expunge"]',
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      const key = getPostUrl(location.href)
+      const key = getPostUrl2(location.href)
       if (key) {
         const element = getFirstHeadElement()
         if (element) {
@@ -2660,7 +2775,7 @@
       }
     },
   }
-  var e_hentai_org_default = site19
+  var e_hentai_org_default = site20
   var sites = [
     github_com_default,
     v2ex_default,
@@ -2679,6 +2794,7 @@
     pojie_cn_default2,
     juejin_cn_default,
     zhihu_com_default,
+    xiaohongshu_com_default,
     e_hentai_org_default,
   ]
   function matchedSite(hostname2) {
@@ -2993,6 +3109,7 @@
       console.error("end of displayTags", Date.now() - start)
     }
   }
+  var displayTagsThrottled = throttle(displayTags, 500)
   async function initStorage() {
     await migration()
     addTagsValueChangeListener(() => {
@@ -3001,7 +3118,6 @@
       }
     })
   }
-  var countOfLinks = 0
   async function main() {
     if ($("#utags_style")) {
       console.log(
@@ -3046,13 +3162,8 @@
       }
     })
     bindDocumentEvents()
-    countOfLinks = $$("a:not(.utags_text_tag)").length
     const observer = new MutationObserver(async (mutationsList) => {
-      const count = $$("a:not(.utags_text_tag):not([data-utags]").length
-      if (countOfLinks !== count) {
-        countOfLinks = count
-        await displayTags()
-      }
+      displayTagsThrottled()
       if ($("#vimiumHintMarkerContainer")) {
         addClass(doc.body, "utags_show_all")
         addClass(doc.documentElement, "utags_vimium_hint")

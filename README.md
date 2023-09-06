@@ -28,6 +28,8 @@ Allow users to add custom tags to links.
 - [www.tiktok.com](https://www.tiktok.com/)
 - [www.52pojie.cn](https://www.52pojie.cn/)
 - [juejin.cn](https://juejin.cn/)
+- [zhihu.com](https://www.zhihu.com/)
+- [xiaohongshu.com](https://www.xiaohongshu.com/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## 安装
@@ -123,6 +125,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.8.6
+  - Apply utags to xiaohongshu.com
 - 0.8.5
   - Apply utags to zhihu.com
 - 0.8.4
