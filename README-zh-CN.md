@@ -1,6 +1,6 @@
 # UTags - Add usertags to links
 
-> English | [中文](README-zh-CN.md)
+> [English](README.md) | 中文
 
 Allow users to add custom tags to links.
 
@@ -124,7 +124,7 @@ Allow users to add custom tags to links.
 ## 更新记录
 
 - 0.8.5
-  - Apply utags to zhihu.com
+  - UTags 开始支持 zhihu.com
 - 0.8.4
   - Fix a bug on YouTube, compare keys when reusing utags elements
   - Update youtube selectors and style
@@ -197,7 +197,7 @@ Allow users to add custom tags to links.
   - 支持给 www.v2ex.com 节点添加标签
 - 0.1.2
   - 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
-- [See more](release-notes/readme.md)
+- [更多内容](release-notes/zh-CN.md)
 
 ## Roadmap
 

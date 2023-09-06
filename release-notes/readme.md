@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.8.5
+
+- Apply utags to zhihu.com
+
 ## 0.8.4
 
 - Fix a bug on YouTube, compare keys when reusing utags elements

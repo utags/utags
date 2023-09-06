@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.5
+
+- UTags 开始支持 zhihu.com
+
 ## 0.8.4
 
 - 修复 YouTube bug, 重用 utags 元素时，比较键值

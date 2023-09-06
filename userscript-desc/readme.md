@@ -91,6 +91,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.8.5
+  - Apply utags to zhihu.com
 - 0.8.4
   - Fix a bug on YouTube, compare keys when reusing utags elements
   - Update youtube selectors and style

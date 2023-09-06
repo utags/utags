@@ -127,6 +127,8 @@
 
 ## 更新记录
 
+- 0.8.5
+  - UTags 开始支持 zhihu.com
 - 0.8.4
   - 修复 YouTube bug, 重用 utags 元素时，比较键值
   - 更新 YouTube 匹配规则与样式
