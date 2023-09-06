@@ -19,6 +19,7 @@ import tiktok from "./z001/014-tiktok.com"
 import _52pojie from "./z001/015-52pojie.cn"
 import juejin from "./z001/016-juejin.cn"
 import zhihu from "./z001/017-zhihu.com"
+import xiaohongshu from "./z001/018-xiaohongshu.com"
 import ehentai from "./z999/001-e-hentai.org"
 
 type Site = {
@@ -55,6 +56,7 @@ const sites: Site[] = [
   _52pojie,
   juejin,
   zhihu,
+  xiaohongshu,
   ehentai,
 ]
 
