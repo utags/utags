@@ -36,6 +36,11 @@
       &:last-child .utags_text_tag {
         margin-right: 3px !important;
       }
+
+      &::before,
+      &::after {
+        content: none;
+      }
     }
 
     .utags_text_tag {
