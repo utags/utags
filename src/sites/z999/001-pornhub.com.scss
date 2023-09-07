@@ -1,0 +1,11 @@
+:not(#a):not(#b):not(#c) {
+  .usernameWrap {
+    .utags_ul.notag .utags_captain_tag {
+      left: -20px;
+    }
+    .utags_ul:not(.notag)::before {
+      content: "";
+      display: block;
+    }
+  }
+}
