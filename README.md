@@ -30,6 +30,8 @@ Allow users to add custom tags to links.
 - [juejin.cn](https://juejin.cn/)
 - [zhihu.com](https://www.zhihu.com/)
 - [xiaohongshu.com](https://www.xiaohongshu.com/)
+- [pornhub.com](https://www.pornhub.com/)
+- [weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## 安装
@@ -125,6 +127,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.8.7
+  - Apply utags to weibo.com, weibo.cn
+  - Apply utags to pornhub.com
 - 0.8.6
   - Apply utags to xiaohongshu.com
 - 0.8.5

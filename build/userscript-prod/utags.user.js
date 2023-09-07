@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.8.6
+// @version              0.8.7
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -25,6 +25,8 @@
 // @match                https://news.ycombinator.com/*
 // @match                https://*.v2ex.com/*
 // @match                https://*.zhihu.com/*
+// @match                https://*.weibo.com/*
+// @match                https://*.weibo.cn/*
 // @match                https://www.52pojie.cn/*
 // @match                https://juejin.cn/*
 // @match                https://mp.weixin.qq.com/*
@@ -2699,30 +2701,102 @@
     },
   }
   var xiaohongshu_com_default = site19
-  var prefix9 = "https://e-hentai.org/"
-  var prefix24 = "https://exhentai.org/"
-  function getPostUrl2(url) {
-    if (url.startsWith(prefix9)) {
-      const href2 = url.slice(21)
-      if (/^g\/\w+/.test(href2)) {
-        return prefix9 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
-      }
-    }
-    if (url.startsWith(prefix24)) {
-      const href2 = url.slice(21)
-      if (/^g\/\w+/.test(href2)) {
-        return prefix24 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+  var prefix9 = "https://weibo.com/"
+  var prefix24 = "https://m.weibo.cn/"
+  function getUserProfileUrl9(url, exact = false) {
+    if (url.startsWith(prefix9) || url.startsWith(prefix24)) {
+      const href2 = url.startsWith(prefix24) ? url.slice(19) : url.slice(18)
+      if (exact) {
+        if (/^u\/\d+(\?.*)?$/.test(href2)) {
+          return prefix9 + href2.replace(/^(u\/\d+).*/, "$1")
+        }
+        if (/^profile\/\d+(\?.*)?$/.test(href2)) {
+          return prefix9 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
+        }
+        if (/^\d+(\?.*)?$/.test(href2)) {
+          return prefix9 + "u/" + href2.replace(/^(\d+).*/, "$1")
+        }
+      } else {
+        if (/^u\/\d+/.test(href2)) {
+          return prefix9 + href2.replace(/^(u\/\d+).*/, "$1")
+        }
+        if (/^profile\/\d+/.test(href2)) {
+          return prefix9 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
+        }
+        if (/^\d+/.test(href2)) {
+          return prefix9 + "u/" + href2.replace(/^(\d+).*/, "$1")
+        }
       }
     }
     return void 0
   }
   var site20 = {
+    matches: /weibo\.com|weibo\.cn/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (!href.includes("weibo.com") && !href.includes("weibo.cn")) {
+          return true
+        }
+        const key = getUserProfileUrl9(href, true)
+        if (key) {
+          const meta = { type: "user" }
+          element.utags = { key, meta }
+          if ($(".m-icon.vipicon", element)) {
+            element.dataset.utags = element.dataset.utags || ""
+          }
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      '[class^="Frame_side_"]',
+      'a[href*="promote.biz.weibo.cn"]',
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      const key = getUserProfileUrl9(location.href)
+      if (key) {
+        const element = $(
+          '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
+        )
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+  }
+  var weibo_com_default = site20
+  var prefix10 = "https://e-hentai.org/"
+  var prefix25 = "https://exhentai.org/"
+  function getPostUrl2(url) {
+    if (url.startsWith(prefix10)) {
+      const href2 = url.slice(21)
+      if (/^g\/\w+/.test(href2)) {
+        return prefix10 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+      }
+    }
+    if (url.startsWith(prefix25)) {
+      const href2 = url.slice(21)
+      if (/^g\/\w+/.test(href2)) {
+        return prefix25 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site21 = {
     matches: /e-hentai\.org|exhentai\.org/,
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)")
         .filter((element) => {
           const href = element.href
-          if (href.startsWith(prefix9) || href.startsWith(prefix24)) {
+          if (href.startsWith(prefix10) || href.startsWith(prefix25)) {
             const key = getPostUrl2(href)
             if (key) {
               const titleElement = $(".glink", element)
@@ -2775,7 +2849,135 @@
       }
     },
   }
-  var e_hentai_org_default = site20
+  var e_hentai_org_default = site21
+  var pornhub_com_default =
+    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul:not(.notag)::before{content:"";display:block}'
+  var prefix11 = "https://www.pornhub.com/"
+  function getUserProfileUrl10(href, exact = false) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (exact) {
+        if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix11 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+        }
+      } else if (/^(model|users)\/[\w-]+/.test(href2)) {
+        return prefix11 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getChannelUrl(href, exact = false) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (exact) {
+        if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix11 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+        }
+      } else if (/^channels\/[\w-]+/.test(href2)) {
+        return prefix11 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getVideoUrl3(href) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (/^view_video.php\?viewkey=\w+/.test(href2)) {
+        return prefix11 + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site22 = {
+    matches: /pornhub\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const hrefAttr = getAttribute(element, "href")
+        if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
+          return false
+        }
+        const href = element.href
+        let key = getChannelUrl(href, true)
+        if (key) {
+          const meta = { type: "channel" }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getUserProfileUrl10(href, true)
+        if (key) {
+          const meta = { type: "user" }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getVideoUrl3(href)
+        if (key) {
+          let title
+          const titleElement = $("#video-title", element)
+          if (titleElement) {
+            title = titleElement.textContent
+          }
+          const meta = title ? { title, type: "video" } : { type: "video" }
+          element.utags = { key, meta }
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".networkBarWrapper",
+      "#headerWrapper",
+      "#headerMenuContainer",
+      "#mainMenuProfile",
+      ".profileSubNav",
+      ".subFilterList",
+      ".greyButton",
+      ".orangeButton",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getUserProfileUrl10(location.href)
+      if (key) {
+        const element = $(".name h1")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getChannelUrl(location.href)
+      if (key) {
+        const element = $(".title h1")
+        if (element && !$("a", element)) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "channel" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getVideoUrl3(location.href)
+      if (key) {
+        const element = $("h1.title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "video" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+    getStyle: () => pornhub_com_default,
+  }
+  var pornhub_com_default2 = site22
   var sites = [
     github_com_default,
     v2ex_default,
@@ -2795,7 +2997,9 @@
     juejin_cn_default,
     zhihu_com_default,
     xiaohongshu_com_default,
+    weibo_com_default,
     e_hentai_org_default,
+    pornhub_com_default2,
   ]
   function matchedSite(hostname2) {
     for (const s of sites) {

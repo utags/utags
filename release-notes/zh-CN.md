@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.7
+
+- UTags 开始支持 weibo.com, weibo.cn
+- UTags 开始支持 pornhub.com
+
 ## 0.8.6
 
 - UTags 开始支持 xiaohongshu.com

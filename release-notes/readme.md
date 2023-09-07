@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.8.7
+
+- Apply utags to weibo.com, weibo.cn
+- Apply utags to pornhub.com
+
 ## 0.8.6
 
 - Apply utags to xiaohongshu.com
