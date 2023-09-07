@@ -20,6 +20,7 @@ import _52pojie from "./z001/015-52pojie.cn"
 import juejin from "./z001/016-juejin.cn"
 import zhihu from "./z001/017-zhihu.com"
 import xiaohongshu from "./z001/018-xiaohongshu.com"
+import weibo from "./z001/019-weibo.com"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 
@@ -58,6 +59,7 @@ const sites: Site[] = [
   juejin,
   zhihu,
   xiaohongshu,
+  weibo,
   pornhub,
   ehentai,
 ]
