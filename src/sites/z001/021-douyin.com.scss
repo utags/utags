@@ -1,0 +1,7 @@
+:not(#a):not(#b):not(#c) {
+  [data-e2e="comment-item"] {
+    .utags_ul.notag .utags_captain_tag {
+      left: -26px;
+    }
+  }
+}

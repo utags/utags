@@ -1,0 +1,100 @@
+import { $, $$, hasClass } from "browser-extension-utils"
+import styleText from "data-text:./021-douyin.com.scss"
+
+import { getFirstHeadElement } from "../../utils"
+import defaultSite from "../default"
+
+const prefix = "https://www.douyin.com/"
+
+function getUserProfileUrl(url: string, exact = false) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(23)
+    if (exact) {
+      if (/^user\/[\w-]+(\?.*)?$/.test(href2)) {
+        return prefix + href2.replace(/^(user\/[\w-]+).*/, "$1")
+      }
+    } else if (/^user\/[\w-]+/.test(href2)) {
+      return prefix + href2.replace(/^(user\/[\w-]+).*/, "$1")
+    }
+  }
+
+  return undefined
+}
+
+function getVideoUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(23)
+    if (/^video\/\w+/.test(href2)) {
+      return prefix + href2.replace(/^(video\/\w+).*/, "$1")
+    }
+  }
+
+  return undefined
+}
+
+const site = {
+  matches: /www\.douyin\.com/,
+  getMatchedNodes() {
+    return $$("a[href]:not(.utags_text_tag)").filter(
+      (element: HTMLAnchorElement) => {
+        const href = element.href
+
+        if (!href.includes("www.douyin.com")) {
+          return true
+        }
+
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const meta = { type: "user" }
+          element.utags = { key, meta }
+          return true
+        }
+
+        key = getVideoUrl(href)
+        if (key) {
+          const meta = { type: "video" }
+          element.utags = { key, meta }
+          return true
+        }
+
+        return true
+      }
+    ) as HTMLAnchorElement[]
+  },
+  excludeSelectors: [
+    ...defaultSite.excludeSelectors,
+    '[data-e2e="douyin-navigation"]',
+  ],
+  addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    let key = getUserProfileUrl(location.href)
+    if (key) {
+      // profile header
+      const element = getFirstHeadElement("h1")
+      if (element) {
+        const title = element.textContent!.trim()
+        if (title) {
+          const meta = { title, type: "user" }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    }
+
+    key = getVideoUrl(location.href)
+    if (key) {
+      // post title
+      const element = getFirstHeadElement("h1")
+      if (element) {
+        const title = element.textContent!.trim()
+        if (title) {
+          const meta = { title, type: "video" }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    }
+  },
+  getStyle: () => styleText,
+}
+
+export default site
