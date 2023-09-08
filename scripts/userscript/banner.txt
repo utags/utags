@@ -31,6 +31,7 @@
 // @match                https://juejin.cn/*
 // @match                https://mp.weixin.qq.com/*
 // @match                https://www.xiaohongshu.com/*
+// @match                https://sspai.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
 // @match                https://www.journalduhacker.net/*
