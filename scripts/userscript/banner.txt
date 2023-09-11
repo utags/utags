@@ -33,6 +33,7 @@
 // @match                https://www.xiaohongshu.com/*
 // @match                https://sspai.com/*
 // @match                https://www.douyin.com/*
+// @match                https://podcasts.google.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
 // @match                https://www.journalduhacker.net/*
