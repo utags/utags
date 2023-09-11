@@ -95,6 +95,10 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.8.8
+  - Apply utags to podcasts.google.com
+  - Apply utags to douyin.com
+  - Apply utags to sspai.com
 - 0.8.7
   - Apply utags to weibo.com, weibo.cn
   - Apply utags to pornhub.com

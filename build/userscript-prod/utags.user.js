@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.8.7
+// @version              0.8.8
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -31,6 +31,9 @@
 // @match                https://juejin.cn/*
 // @match                https://mp.weixin.qq.com/*
 // @match                https://www.xiaohongshu.com/*
+// @match                https://sspai.com/*
+// @match                https://www.douyin.com/*
+// @match                https://podcasts.google.com/*
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
 // @match                https://www.journalduhacker.net/*
@@ -315,6 +318,12 @@
       }
     }
     addEventListener(doc, "readystatechange", handler)
+  }
+  var isVisible = (element) => {
+    if (typeof element.checkVisibility === "function") {
+      return element.checkVisibility()
+    }
+    return element.offsetParent !== null
   }
   var isTouchScreen = () => "ontouchstart" in win
   var escapeHTMLPolicy =
@@ -2773,13 +2782,434 @@
     },
   }
   var weibo_com_default = site20
-  var prefix10 = "https://e-hentai.org/"
-  var prefix25 = "https://exhentai.org/"
+  var sspai_com_default =
+    ":not(#a):not(#b):not(#c) #article-title+.utags_ul{display:block !important;margin-top:-30px !important;margin-bottom:20px !important}:not(#a):not(#b):not(#c) .user__info__card__center .utags_ul{display:block !important;margin-bottom:5px !important}:not(#a):not(#b):not(#c) .pai_title .utags_ul{float:left}"
+  var prefix10 = "https://sspai.com/"
+  var excludeLinks = [
+    "https://sspai.com/prime",
+    "https://sspai.com/matrix",
+    "https://sspai.com/page/about-us",
+    "https://sspai.com/page/agreement",
+    "https://sspai.com/page/bussiness",
+    "https://sspai.com/post/37793",
+    "https://sspai.com/page/client",
+    "https://sspai.com/s/J71e",
+    "https://sspai.com/mall",
+  ]
+  function getCanonicalUrl5(url) {
+    if (url.startsWith(prefix10)) {
+      const href = url.slice(18)
+      if (href.startsWith("u/")) {
+        return prefix10 + href.replace(/^(u\/\w+).*/, "$1")
+      }
+    }
+    return url
+  }
+  function getUserProfileUrl10(url) {
+    if (url.startsWith(prefix10)) {
+      const href2 = url.slice(18)
+      if (/^u\/\w+/.test(href2)) {
+        return prefix10 + href2.replace(/^(u\/\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
   function getPostUrl2(url) {
     if (url.startsWith(prefix10)) {
+      const href2 = url.slice(18)
+      if (/^post\/\d+/.test(href2)) {
+        return prefix10 + href2.replace(/^(post\/\d+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site21 = {
+    matches: /sspai\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        for (const link of excludeLinks) {
+          if (href.includes(link)) {
+            return false
+          }
+        }
+        if (
+          hasClass(element, "ss__user__nickname__wrapper") ||
+          element.closest('.card_bottom > a[href^="/u/"]')
+        ) {
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      "header",
+      "footer",
+      ".pai_abstract",
+      ".pai_title .link",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getPostUrl2(location.href)
+      if (key) {
+        const element = $(".article-header .title")
+        if (element && !element.closest(".pai_title")) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "post" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getUserProfileUrl10(location.href)
+      if (key) {
+        const element = $(
+          ".user_content .user__info__card .ss__user__card__nickname"
+        )
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+    getCanonicalUrl: getCanonicalUrl5,
+    getStyle: () => sspai_com_default,
+  }
+  var sspai_com_default2 = site21
+  var douyin_com_default =
+    ":not(#a):not(#b):not(#c) [data-e2e=comment-item] .utags_ul.notag .utags_captain_tag{left:-26px}"
+  var prefix11 = "https://www.douyin.com/"
+  function getUserProfileUrl11(url, exact = false) {
+    if (url.startsWith(prefix11)) {
+      const href2 = url.slice(23)
+      if (exact) {
+        if (/^user\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix11 + href2.replace(/^(user\/[\w-]+).*/, "$1")
+        }
+      } else if (/^user\/[\w-]+/.test(href2)) {
+        return prefix11 + href2.replace(/^(user\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getVideoUrl3(url) {
+    if (url.startsWith(prefix11)) {
+      const href2 = url.slice(23)
+      if (/^video\/\w+/.test(href2)) {
+        return prefix11 + href2.replace(/^(video\/\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site22 = {
+    matches: /www\.douyin\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (!href.includes("www.douyin.com")) {
+          return true
+        }
+        let key = getUserProfileUrl11(href, true)
+        if (key) {
+          const meta = { type: "user" }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getVideoUrl3(href)
+        if (key) {
+          const meta = { type: "video" }
+          element.utags = { key, meta }
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      '[data-e2e="douyin-navigation"]',
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getUserProfileUrl11(location.href)
+      if (key) {
+        const element = getFirstHeadElement("h1")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getVideoUrl3(location.href)
+      if (key) {
+        const element = getFirstHeadElement("h1")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "video" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+    getStyle: () => douyin_com_default,
+  }
+  var douyin_com_default2 = site22
+  var podcasts_google_com_default = ""
+  var prefix12 = "https://podcasts.google.com/"
+  function getEpisodeUrl(url, exact = false) {
+    if (url.startsWith(prefix12)) {
+      const href2 = url.slice(28)
+      if (exact) {
+        if (/^feed\/\w+\/episode\/\w+(\?.*)?$/.test(href2)) {
+          return prefix12 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+        }
+      } else if (/^feed\/\w+\/episode\/\w+/.test(href2)) {
+        return prefix12 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getFeedUrl(url) {
+    if (url.startsWith(prefix12)) {
+      const href2 = url.slice(28)
+      if (/^feed\/\w+(\?.*)?$/.test(href2)) {
+        return prefix12 + href2.replace(/^(feed\/\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getCanonicalUrl6(url) {
+    if (url.startsWith(prefix12)) {
+      let url2 = getFeedUrl(url)
+      if (url2) {
+        return url2
+      }
+      url2 = getEpisodeUrl(url)
+      if (url2) {
+        return url2
+      }
+    }
+    return url
+  }
+  var site23 = {
+    matches: /podcasts\.google\.com/,
+    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      "header",
+      "gm-coplanar-drawer",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getEpisodeUrl(location.href)
+      if (key) {
+        const element = $("h5")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "episode" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getFeedUrl(location.href)
+      if (key) {
+        for (const container of $$("[data-encoded-feed]")) {
+          if (isVisible(container)) {
+            const element = $(
+              "div:first-child > div:first-child > div:first-child > div:first-child",
+              container
+            )
+            if (element) {
+              const title = element.textContent.trim()
+              if (title) {
+                const meta = { title, type: "feed" }
+                element.utags = { key, meta }
+                matchedNodesSet.add(element)
+              }
+            }
+          }
+        }
+      }
+      for (const element of $$('a[role="listitem"]')) {
+        const key2 = getEpisodeUrl(element.href)
+        const titleElement = $(
+          'div[role="navigation"] div div[role="presentation"]',
+          element
+        )
+        if (key2 && titleElement) {
+          const title = titleElement.textContent
+          const meta = { title, type: "episode" }
+          titleElement.utags = { key: key2, meta }
+          titleElement.dataset.utags_node_type = "link"
+          matchedNodesSet.add(titleElement)
+        }
+      }
+      for (const element of $$(
+        'a[href^="./feed/"]:not(a[href*="/episode/"])'
+      )) {
+        if (!isVisible(element)) {
+          continue
+        }
+        const key2 = getFeedUrl(element.href)
+        const titleElement = $("div > div", element)
+        if (titleElement) {
+          const title = titleElement.textContent
+          const meta = { title, type: "feed" }
+          titleElement.utags = { key: key2, meta }
+          titleElement.dataset.utags_node_type = "link"
+          matchedNodesSet.add(titleElement)
+        }
+      }
+    },
+    getCanonicalUrl: getCanonicalUrl6,
+    getStyle: () => podcasts_google_com_default,
+  }
+  var podcasts_google_com_default2 = site23
+  var pornhub_com_default =
+    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul:not(.notag)::before{content:"";display:block}'
+  var prefix13 = "https://www.pornhub.com/"
+  function getUserProfileUrl12(href, exact = false) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (exact) {
+        if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix13 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+        }
+      } else if (/^(model|users)\/[\w-]+/.test(href2)) {
+        return prefix13 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getChannelUrl(href, exact = false) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (exact) {
+        if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix13 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+        }
+      } else if (/^channels\/[\w-]+/.test(href2)) {
+        return prefix13 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getVideoUrl4(href) {
+    if (href.includes("pornhub.com")) {
+      const index = href.indexOf("pornhub.com") + 12
+      const href2 = href.slice(index)
+      if (/^view_video.php\?viewkey=\w+/.test(href2)) {
+        return prefix13 + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  var site24 = {
+    matches: /pornhub\.com/,
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const hrefAttr = getAttribute(element, "href")
+        if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
+          return false
+        }
+        const href = element.href
+        let key = getChannelUrl(href, true)
+        if (key) {
+          const meta = { type: "channel" }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getUserProfileUrl12(href, true)
+        if (key) {
+          const meta = { type: "user" }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getVideoUrl4(href)
+        if (key) {
+          let title
+          const titleElement = $("#video-title", element)
+          if (titleElement) {
+            title = titleElement.textContent
+          }
+          const meta = title ? { title, type: "video" } : { type: "video" }
+          element.utags = { key, meta }
+          return true
+        }
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".networkBarWrapper",
+      "#headerWrapper",
+      "#headerMenuContainer",
+      "#mainMenuProfile",
+      ".profileSubNav",
+      ".subFilterList",
+      ".greyButton",
+      ".orangeButton",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getUserProfileUrl12(location.href)
+      if (key) {
+        const element = $(".name h1")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getChannelUrl(location.href)
+      if (key) {
+        const element = $(".title h1")
+        if (element && !$("a", element)) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "channel" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getVideoUrl4(location.href)
+      if (key) {
+        const element = $("h1.title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "video" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+    getStyle: () => pornhub_com_default,
+  }
+  var pornhub_com_default2 = site24
+  var prefix14 = "https://e-hentai.org/"
+  var prefix25 = "https://exhentai.org/"
+  function getPostUrl3(url) {
+    if (url.startsWith(prefix14)) {
       const href2 = url.slice(21)
       if (/^g\/\w+/.test(href2)) {
-        return prefix10 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+        return prefix14 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
       }
     }
     if (url.startsWith(prefix25)) {
@@ -2790,14 +3220,14 @@
     }
     return void 0
   }
-  var site21 = {
+  var site25 = {
     matches: /e-hentai\.org|exhentai\.org/,
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)")
         .filter((element) => {
           const href = element.href
-          if (href.startsWith(prefix10) || href.startsWith(prefix25)) {
-            const key = getPostUrl2(href)
+          if (href.startsWith(prefix14) || href.startsWith(prefix25)) {
+            const key = getPostUrl3(href)
             if (key) {
               const titleElement = $(".glink", element)
               let title
@@ -2835,7 +3265,7 @@
       'a[href*="act=expunge"]',
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      const key = getPostUrl2(location.href)
+      const key = getPostUrl3(location.href)
       if (key) {
         const element = getFirstHeadElement()
         if (element) {
@@ -2849,135 +3279,73 @@
       }
     },
   }
-  var e_hentai_org_default = site21
-  var pornhub_com_default =
-    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul:not(.notag)::before{content:"";display:block}'
-  var prefix11 = "https://www.pornhub.com/"
-  function getUserProfileUrl10(href, exact = false) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
-      const href2 = href.slice(index)
+  var e_hentai_org_default = site25
+  var panda_chaika_moe_default =
+    ":not(#a):not(#b):not(#c) h5+.utags_ul{display:block !important;margin-top:-4px !important;margin-bottom:6px !important}"
+  var prefix15 = "https://panda.chaika.moe/"
+  function getPostUrl4(url, exact = false) {
+    if (url.startsWith(prefix15)) {
+      const href2 = url.slice(25)
       if (exact) {
-        if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix11 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+        if (/^archive\/\d+\/(\?.*)?$/.test(href2)) {
+          return prefix15 + href2.replace(/^(archive\/\d+\/).*/, "$1")
         }
-      } else if (/^(model|users)\/[\w-]+/.test(href2)) {
-        return prefix11 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+      } else if (/^archive\/\d+\//.test(href2)) {
+        return prefix15 + href2.replace(/^(archive\/\d+\/).*/, "$1")
       }
     }
     return void 0
   }
-  function getChannelUrl(href, exact = false) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
-      const href2 = href.slice(index)
-      if (exact) {
-        if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix11 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
-        }
-      } else if (/^channels\/[\w-]+/.test(href2)) {
-        return prefix11 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
-      }
-    }
-    return void 0
-  }
-  function getVideoUrl3(href) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
-      const href2 = href.slice(index)
-      if (/^view_video.php\?viewkey=\w+/.test(href2)) {
-        return prefix11 + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
-      }
-    }
-    return void 0
-  }
-  var site22 = {
-    matches: /pornhub\.com/,
-    getMatchedNodes() {
-      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
-        const hrefAttr = getAttribute(element, "href")
-        if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
-          return false
-        }
-        const href = element.href
-        let key = getChannelUrl(href, true)
-        if (key) {
-          const meta = { type: "channel" }
-          element.utags = { key, meta }
-          return true
-        }
-        key = getUserProfileUrl10(href, true)
-        if (key) {
-          const meta = { type: "user" }
-          element.utags = { key, meta }
-          return true
-        }
-        key = getVideoUrl3(href)
-        if (key) {
-          let title
-          const titleElement = $("#video-title", element)
-          if (titleElement) {
-            title = titleElement.textContent
-          }
-          const meta = title ? { title, type: "video" } : { type: "video" }
-          element.utags = { key, meta }
-          return true
-        }
-        return true
-      })
-    },
+  var site26 = {
+    matches: /panda\.chaika\.moe/,
+    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
     excludeSelectors: [
       ...default_default.excludeSelectors,
-      ".networkBarWrapper",
-      "#headerWrapper",
-      "#headerMenuContainer",
-      "#mainMenuProfile",
-      ".profileSubNav",
-      ".subFilterList",
-      ".greyButton",
-      ".orangeButton",
+      ".navbar",
+      "th",
+      ".pagination",
+      ".btn",
+      ".caption",
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      let key = getUserProfileUrl10(location.href)
+      const key = getPostUrl4(location.href)
       if (key) {
-        const element = $(".name h1")
+        const element = $("h5")
         if (element) {
           const title = element.textContent.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: "post" }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
         }
       }
-      key = getChannelUrl(location.href)
-      if (key) {
-        const element = $(".title h1")
-        if (element && !$("a", element)) {
-          const title = element.textContent.trim()
-          if (title) {
-            const meta = { title, type: "channel" }
-            element.utags = { key, meta }
-            matchedNodesSet.add(element)
-          }
+      for (const element of $$(".gallery a.cover")) {
+        const key2 = element.href
+        const titleElement = $(".cover-title", element)
+        if (titleElement) {
+          const title = titleElement.textContent
+          const meta = { title, type: "post" }
+          titleElement.utags = { key: key2, meta }
+          titleElement.dataset.utags_node_type = "link"
+          matchedNodesSet.add(titleElement)
         }
       }
-      key = getVideoUrl3(location.href)
-      if (key) {
-        const element = $("h1.title")
-        if (element) {
-          const title = element.textContent.trim()
-          if (title) {
-            const meta = { title, type: "video" }
-            element.utags = { key, meta }
-            matchedNodesSet.add(element)
-          }
+      for (const element of $$('.td-extended > a[href^="/archive/"]')) {
+        const key2 = element.href
+        const titleElement = $("h5", element.parentElement.parentElement)
+        if (titleElement) {
+          const title = titleElement.textContent
+          const meta = { title, type: "post" }
+          titleElement.utags = { key: key2, meta }
+          titleElement.dataset.utags_node_type = "link"
+          matchedNodesSet.add(titleElement)
         }
       }
     },
-    getStyle: () => pornhub_com_default,
+    getStyle: () => panda_chaika_moe_default,
   }
-  var pornhub_com_default2 = site22
+  var panda_chaika_moe_default2 = site26
   var sites = [
     github_com_default,
     v2ex_default,
@@ -2998,8 +3366,12 @@
     zhihu_com_default,
     xiaohongshu_com_default,
     weibo_com_default,
-    e_hentai_org_default,
+    sspai_com_default2,
+    douyin_com_default2,
+    podcasts_google_com_default2,
     pornhub_com_default2,
+    e_hentai_org_default,
+    panda_chaika_moe_default2,
   ]
   function matchedSite(hostname2) {
     for (const s of sites) {
@@ -3044,7 +3416,7 @@
     }
     return []
   }
-  function getCanonicalUrl5(url) {
+  function getCanonicalUrl7(url) {
     if (typeof currentSite.getCanonicalUrl === "function") {
       return currentSite.getCanonicalUrl(url)
     }
@@ -3105,7 +3477,7 @@
         continue
       }
       const utags = element.utags || {}
-      const key = utags.key || getCanonicalUrl5(element.href)
+      const key = utags.key || getCanonicalUrl7(element.href)
       const title = element.textContent.trim()
       const meta = {}
       if (title && !isUrl(title)) {
@@ -3225,7 +3597,7 @@
     })
     const svg =
       '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">\n<path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>\n<path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>\n</svg>\n'
-    a.innerHTML = svg
+    a.innerHTML = createHTML(svg)
     li.append(a)
     ul.append(li)
     for (const tag of tags) {

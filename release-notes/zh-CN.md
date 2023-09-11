@@ -2,6 +2,12 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.8
+
+- 适配 podcasts.google.com
+- 适配 douyin.com
+- 适配 sspai.com
+
 ## 0.8.7
 
 - UTags 开始支持 weibo.com, weibo.cn
