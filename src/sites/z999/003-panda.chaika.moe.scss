@@ -1,0 +1,7 @@
+:not(#a):not(#b):not(#c) {
+  h5 + .utags_ul {
+    display: block !important;
+    margin-top: -4px !important;
+    margin-bottom: 6px !important;
+  }
+}

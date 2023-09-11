@@ -25,6 +25,7 @@ import sspai from "./z001/020-sspai.com"
 import douyin from "./z001/021-douyin.com"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
+import panda_chaika_moe from "./z999/003-panda.chaika.moe"
 
 type Site = {
   matches: RegExp
@@ -66,6 +67,7 @@ const sites: Site[] = [
   douyin,
   pornhub,
   ehentai,
+  panda_chaika_moe,
 ]
 
 function siteForExtensions(hostname: string): Site {
