@@ -1,0 +1,16 @@
+:not(#a):not(#b):not(#c) {
+  .bili-video-card__info--right,
+  .video-page-card-small,
+  .video-page-operator-card-small {
+    a[href*="/video/"] + .utags_ul.notag,
+    h3.bili-video-card__info--tit + .utags_ul.notag {
+      display: block !important;
+      height: 0;
+
+      .utags_captain_tag {
+        top: -22px;
+        background-color: #ffffffdd !important;
+      }
+    }
+  }
+}

@@ -113,6 +113,7 @@ const site = {
         "a.user-name",
         ".user-name a",
         'a[href^="https://space.bilibili.com/"]',
+        "a.staff-name",
       ].join(",")
     )
     for (const element of elements3) {
@@ -159,8 +160,29 @@ const site = {
         matchedNodesSet.add(element)
       }
     }
+
+    const elements4 = $$(
+      ".bili-video-card__info--right a,.video-page-card-small .info a,.video-page-operator-card-small .info a"
+    ) as HTMLAnchorElement[]
+    for (const element of elements4) {
+      const key = getVideoUrl(element.href)
+      if (key) {
+        const title = element.textContent!.trim()
+        const target =
+          element.parentElement!.tagName === "H3"
+            ? element.parentElement!
+            : element
+
+        if (title) {
+          const meta = { title, type: "video" }
+          target.utags = { key, meta }
+          target.dataset.utags_node_type = "link"
+          matchedNodesSet.add(target)
+        }
+      }
+    }
   },
-  // getStyle: () => styleText,
+  getStyle: () => styleText,
 }
 
 export default site
