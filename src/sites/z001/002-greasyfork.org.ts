@@ -1,4 +1,5 @@
 import { $ } from "browser-extension-utils"
+import styleText from "data-text:./002-greasyfork.org.scss"
 
 import defaultSite from "../default"
 
@@ -84,6 +85,7 @@ const site = {
     }
   },
   getCanonicalUrl,
+  getStyle: () => styleText,
 }
 
 export default site

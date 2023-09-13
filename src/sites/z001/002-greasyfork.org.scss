@@ -1,0 +1,29 @@
+:not(#a):not(#b):not(#c) {
+  .discussion-title + .utags_ul.notag {
+    display: block !important;
+    height: 0;
+
+    .utags_captain_tag {
+      top: -26px;
+      background-color: #ffffffdd !important;
+    }
+  }
+
+  .discussion-title + .utags_ul:not(.notag) {
+    display: block !important;
+    margin-top: -12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .discussion-meta {
+    .script-link + .utags_ul.notag {
+      display: block !important;
+      height: 0;
+
+      .utags_captain_tag {
+        top: -22px;
+        background-color: #ffffffdd !important;
+      }
+    }
+  }
+}
