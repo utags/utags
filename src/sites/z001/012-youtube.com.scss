@@ -1,8 +1,65 @@
 :not(#a):not(#b):not(#c) {
-  yt-formatted-string[ellipsis-truncate-styling],
-  #container.ytd-channel-name yt-formatted-string {
-    .utags_ul.notag .utags_captain_tag {
-      left: -20px;
+  ytd-rich-item-renderer /* home page */ {
+    h3.ytd-rich-grid-media {
+      .utags_ul.notag {
+        display: block !important;
+        height: 0;
+
+        .utags_captain_tag {
+          top: -22px;
+          background-color: #ffffffdd !important;
+        }
+      }
     }
+
+    yt-formatted-string[ellipsis-truncate-styling] {
+      .utags_ul.notag .utags_captain_tag {
+        left: -20px;
+      }
+    }
+  }
+
+  ytd-video-renderer.ytd-item-section-renderer /* search result */,
+  ytd-video-renderer.ytd-vertical-list-renderer /* search result */ {
+    h3 {
+      .utags_ul.notag {
+        display: block !important;
+        height: 0;
+
+        .utags_captain_tag {
+          top: -22px;
+          background-color: #ffffffdd !important;
+        }
+      }
+    }
+
+    yt-formatted-string.ytd-channel-name {
+      .utags_ul.notag .utags_captain_tag {
+        left: -20px;
+      }
+    }
+  }
+
+  .watch-active-metadata ytd-channel-name yt-formatted-string /* watch page > channel name */,
+  ytd-comment-thread-renderer h3.ytd-comment-renderer {
+    .utags_ul.notag {
+      display: block !important;
+      height: 0;
+
+      .utags_captain_tag {
+        top: -22px;
+        background-color: #ffffffdd !important;
+      }
+    }
+  }
+
+  .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string /* shorts > channel name */ {
+    .utags_ul.notag .utags_captain_tag {
+      left: -24px;
+    }
+  }
+
+  [hidden] + .utags_ul {
+    display: none !important;
   }
 }
