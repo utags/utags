@@ -10,6 +10,7 @@
   .utags_ul {
     box-sizing: border-box !important;
     display: inline !important;
+    overflow: visible;
     list-style-type: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -24,6 +25,7 @@
       display: inline-flex !important;
       align-items: center !important;
       float: none !important;
+      overflow: visible;
       width: unset !important;
       height: 14px !important;
       border: none !important;

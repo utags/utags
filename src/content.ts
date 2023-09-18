@@ -27,7 +27,6 @@ import {
   getCachedUrlMap,
   getTags,
   migration,
-  saveTags,
 } from "./storage/index"
 import { type UserTag, type UserTagMeta } from "./types"
 
@@ -275,7 +274,7 @@ async function displayTags() {
   }
 }
 
-const displayTagsThrottled = throttle(displayTags, 500)
+const displayTagsThrottled = throttle(displayTags, 1000)
 
 async function initStorage() {
   await migration()
@@ -284,6 +283,17 @@ async function initStorage() {
       setTimeout(displayTags)
     }
   })
+}
+
+const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|LI)$/
+function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
+  for (const node of nodeList) {
+    if (nodeNameCheckPattern.test(node.nodeName)) {
+      return true
+    }
+  }
+
+  return false
 }
 
 async function main() {
@@ -340,8 +350,22 @@ async function main() {
 
   const observer = new MutationObserver(async (mutationsList) => {
     // console.error("mutation", Date.now(), mutationsList)
+    let shouldUpdate = false
+    for (const mutationRecord of mutationsList) {
+      if (shouldUpdateUtagsWhenNodeUpdated(mutationRecord.addedNodes)) {
+        shouldUpdate = true
+        break
+      }
 
-    displayTagsThrottled()
+      if (shouldUpdateUtagsWhenNodeUpdated(mutationRecord.removedNodes)) {
+        shouldUpdate = true
+        break
+      }
+    }
+
+    if (shouldUpdate) {
+      displayTagsThrottled()
+    }
 
     if ($("#vimiumHintMarkerContainer")) {
       addClass(doc.body, "utags_show_all")

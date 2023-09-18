@@ -4,4 +4,44 @@
       left: -26px;
     }
   }
+
+  [data-e2e="detail-video-info"] {
+    .utags_ul[data-utags_key*="/video/"] {
+      display: block !important;
+      margin-top: 0px !important;
+      margin-bottom: 2px !important;
+
+      &.notag {
+        height: 0;
+
+        .utags_captain_tag {
+          top: -26px;
+          background-color: #ffffffdd !important;
+        }
+      }
+    }
+  }
+
+  [data-e2e="related-video"] {
+    .utags_ul.notag[data-utags_key*="/video/"] {
+      display: block !important;
+      height: 0;
+
+      .utags_captain_tag {
+        top: -26px;
+        background-color: #ffffffdd !important;
+      }
+    }
+
+    .utags_ul.notag[data-utags_key*="/user/"] {
+      display: block !important;
+      height: 0px;
+      width: 0px;
+
+      .utags_captain_tag {
+        top: -22px;
+        background-color: #ffffffdd !important;
+      }
+    }
+  }
 }

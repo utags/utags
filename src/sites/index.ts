@@ -160,10 +160,35 @@ const isValidUtagsElement = (element: HTMLAnchorElement) => {
     return true
   }
 
-  if (
-    $('img,svg,audio,video,button,.icon,[style*="background-image"]', element)
-  ) {
+  if (!element.textContent) {
     return false
+  }
+
+  if (!element.offsetHeight || !element.offsetWidth) {
+    return false
+  }
+
+  const media = $(
+    'img,svg,audio,video,button,.icon,[style*="background-image"]',
+    element
+  )
+
+  if (media) {
+    const mediaHeight = media.offsetHeight || media.clientHeight
+    const mediaWidth = media.offsetWidth || media.clientWidth
+
+    if (!mediaHeight || !mediaWidth) {
+      // 获取不到图片大小时，暂时不显示 utags
+      return false
+    }
+
+    // 允许文字与图片混合的元素。整个元素都是图片不可以。
+    if (
+      element.offsetHeight - mediaHeight < 14 &&
+      element.offsetWidth - mediaWidth < 14
+    ) {
+      return false
+    }
   }
 
   let href = getAttribute(element, "href")
@@ -178,11 +203,6 @@ const isValidUtagsElement = (element: HTMLAnchorElement) => {
 
   const protocol = element.protocol
   if (protocol !== "http:" && protocol !== "https:") {
-    return false
-  }
-
-  const textContent = element.textContent
-  if (!textContent) {
     return false
   }
 

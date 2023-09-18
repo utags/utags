@@ -32,6 +32,17 @@ function getVideoUrl(url: string) {
   return undefined
 }
 
+function getNoteUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(23)
+    if (/^note\/\w+/.test(href2)) {
+      return prefix + href2.replace(/^(note\/\w+).*/, "$1")
+    }
+  }
+
+  return undefined
+}
+
 const site = {
   matches: /www\.douyin\.com/,
   getMatchedNodes() {
@@ -53,6 +64,13 @@ const site = {
         key = getVideoUrl(href)
         if (key) {
           const meta = { type: "video" }
+          element.utags = { key, meta }
+          return true
+        }
+
+        key = getNoteUrl(href)
+        if (key) {
+          const meta = { type: "post" }
           element.utags = { key, meta }
           return true
         }
@@ -86,8 +104,24 @@ const site = {
       const element = getFirstHeadElement("h1")
       if (element) {
         const title = element.textContent!.trim()
+        const target = element.parentElement!.parentElement!
         if (title) {
           const meta = { title, type: "video" }
+          target.utags = { key, meta }
+          target.dataset.utags_node_type = "link"
+          matchedNodesSet.add(target)
+        }
+      }
+    }
+
+    key = getNoteUrl(location.href)
+    if (key) {
+      // post title
+      const element = getFirstHeadElement("h1")
+      if (element) {
+        const title = element.textContent!.trim()
+        if (title) {
+          const meta = { title, type: "post" }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
