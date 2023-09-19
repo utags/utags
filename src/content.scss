@@ -99,6 +99,11 @@
         fill: currentColor !important;
         vertical-align: -3px;
       }
+
+      * {
+        color: inherit !important;
+        fill: currentColor !important;
+      }
     }
 
     .utags_captain_tag {

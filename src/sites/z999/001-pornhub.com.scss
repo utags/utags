@@ -8,4 +8,47 @@
       display: block;
     }
   }
+
+  .vidTitleWrapper .title {
+    .utags_ul.notag {
+      display: block !important;
+      height: 0;
+      position: absolute;
+      top: 0;
+
+      .utags_captain_tag {
+        background-color: #ffffffdd !important;
+      }
+    }
+
+    .utags_ul:not(.notag) {
+      display: block !important;
+      height: 0;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
+  ul.videos .thumbnail-info-wrapper {
+    position: relative;
+    .title {
+      .utags_ul.notag {
+        display: block !important;
+        height: 0;
+        position: absolute;
+        top: 0;
+
+        .utags_captain_tag {
+          background-color: #ffffffdd !important;
+        }
+      }
+
+      .utags_ul:not(.notag) {
+        display: block !important;
+        height: 0;
+        position: absolute;
+        bottom: 0;
+      }
+    }
+  }
 }
