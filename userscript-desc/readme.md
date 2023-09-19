@@ -95,6 +95,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.8.9
+  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
 - 0.8.8
   - Apply utags to podcasts.google.com
   - Apply utags to douyin.com

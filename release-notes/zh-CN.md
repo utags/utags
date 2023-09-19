@@ -2,6 +2,10 @@
 
 > [English](readme.md) | 中文
 
+## 0.8.9
+
+- 更新 bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com 等网站的样式与匹配规则
+
 ## 0.8.8
 
 - 适配 podcasts.google.com

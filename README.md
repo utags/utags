@@ -127,6 +127,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.8.9
+  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
 - 0.8.8
   - Apply utags to podcasts.google.com
   - Apply utags to douyin.com
