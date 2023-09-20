@@ -27,7 +27,7 @@ function getCanonicalUrl(url: string) {
 
 const site = {
   matches: /(greasyfork|sleazyfork)\.org/,
-  listNodesSelectors: [".script-list li", ".discussion-list-container"],
+  listNodesSelectors: [".script-list > li", ".discussion-list-container"],
   conditionNodesSelectors: [
     // script title
     ".script-list li .script-link",
