@@ -73,6 +73,10 @@ const sites: Site[] = [
   panda_chaika_moe,
 ]
 
+const getCanonicalUrlFunctionList = sites
+  .map((site) => site.getCanonicalUrl)
+  .filter((v) => typeof v === "function")
+
 function siteForExtensions(hostname: string): Site {
   const allowSites = [
     //
@@ -149,8 +153,10 @@ export function getConditionNodes() {
 }
 
 function getCanonicalUrl(url: string) {
-  if (typeof currentSite.getCanonicalUrl === "function") {
-    return currentSite.getCanonicalUrl(url)
+  for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
+    if (getCanonicalUrlFunc) {
+      url = getCanonicalUrlFunc(url)
+    }
   }
 
   return url

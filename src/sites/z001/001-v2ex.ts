@@ -11,7 +11,11 @@ function getCanonicalUrl(url: string) {
 
   // TODO: /member/XXX 转为小写。但会影响已添加到的数据。需要做一个 migration
 
-  return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+  if (url.includes("v2ex.com")) {
+    return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
+  }
+
+  return url
 }
 
 export function cloneWithoutCitedReplies(element: HTMLElement) {
