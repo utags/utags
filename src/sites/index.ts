@@ -37,6 +37,7 @@ type Site = {
   matchedNodesSelectors?: string[]
   getMatchedNodes?: () => HTMLAnchorElement[]
   excludeSelectors?: string[]
+  validMediaSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
   getCanonicalUrl?: (url: string) => string
   getStyle?: () => string
@@ -155,7 +156,10 @@ function getCanonicalUrl(url: string) {
   return url
 }
 
-const isValidUtagsElement = (element: HTMLAnchorElement) => {
+const isValidUtagsElement = (
+  element: HTMLAnchorElement,
+  validMediaSelector: string
+) => {
   if (element.dataset.utags !== undefined) {
     return true
   }
@@ -174,19 +178,11 @@ const isValidUtagsElement = (element: HTMLAnchorElement) => {
   )
 
   if (media) {
-    const mediaHeight = media.offsetHeight || media.clientHeight
-    const mediaWidth = media.offsetWidth || media.clientWidth
-
-    if (!mediaHeight || !mediaWidth) {
-      // 获取不到图片大小时，暂时不显示 utags
+    if (!validMediaSelector) {
       return false
     }
 
-    // 允许文字与图片混合的元素。整个元素都是图片不可以。
-    if (
-      element.offsetHeight - mediaHeight < 14 &&
-      element.offsetWidth - mediaWidth < 14
-    ) {
+    if (!media.closest(validMediaSelector)) {
       return false
     }
   }
@@ -238,10 +234,12 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
 
   const excludeSelectors = currentSite.excludeSelectors || []
   const excludeSelector = excludeSelectors.join(",")
+  const validMediaSelectors = currentSite.validMediaSelectors || []
+  const validMediaSelector = validMediaSelectors.join(",")
 
   for (const element of elements) {
     if (
-      !isValidUtagsElement(element) ||
+      !isValidUtagsElement(element, validMediaSelector) ||
       isExcluedUtagsElement(element, excludeSelector)
     ) {
       // It's not a candidate
