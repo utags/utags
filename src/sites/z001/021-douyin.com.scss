@@ -44,4 +44,17 @@
       }
     }
   }
+
+  [data-e2e="user-info"] a + {
+    .utags_ul.notag[data-utags_key*="/user/"] {
+      display: block !important;
+      height: 0px;
+      width: 0px;
+
+      .utags_captain_tag {
+        top: -22px;
+        background-color: #ffffffdd !important;
+      }
+    }
+  }
 }

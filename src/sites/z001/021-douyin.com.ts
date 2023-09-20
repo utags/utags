@@ -83,6 +83,10 @@ const site = {
     ...defaultSite.excludeSelectors,
     '[data-e2e="douyin-navigation"]',
   ],
+  validMediaSelectors: [
+    // 昵称中的 emoji 图片
+    'img[src*="twemoji"]',
+  ],
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
     let key = getUserProfileUrl(location.href)
     if (key) {
