@@ -206,12 +206,6 @@ async function displayTags() {
     node.dataset.utags_list_node = ""
   }
 
-  const conditionNodes = getConditionNodes()
-  for (const node of conditionNodes) {
-    // Flag condition nodes
-    node.dataset.utags_condition_node = ""
-  }
-
   if (start) {
     console.error("before matchedNodes", Date.now() - start)
   }
@@ -245,18 +239,28 @@ async function displayTags() {
     console.error("after appendTagsToPage", Date.now() - start)
   }
 
+  const conditionNodes = getConditionNodes()
+  for (const node of conditionNodes) {
+    if (getAttribute(node, "data-utags") !== null) {
+      // Flag condition nodes
+      node.dataset.utags_condition_node = ""
+    }
+  }
+
   for (const node of listNodes) {
     const conditionNodes = $$("[data-utags_condition_node]", node)
     const tagsArray: string[] = []
     for (const node2 of conditionNodes) {
+      if (!node2.dataset.utags) {
+        continue
+      }
+
       if (node2.closest("[data-utags_list_node]") !== node) {
         // Nested list node
         continue
       }
 
-      if (node2.dataset.utags) {
-        tagsArray.push(node2.dataset.utags)
-      }
+      tagsArray.push(node2.dataset.utags)
     }
 
     if (tagsArray.length === 1) {
