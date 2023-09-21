@@ -84,7 +84,7 @@ const site = {
     // V2EX comment count
     ".absolute.rounded-xl",
     // GitHub description
-    "p a",
+    "ul li h1 + p a",
   ],
   validMediaSelectors: [
     // 微博
@@ -93,6 +93,7 @@ const site = {
     ".items-center .rounded-full",
     'a[href^="https://github.com/"] svg',
     'a[href^="https://space.bilibili.com/"] img',
+    'a[href^="https://toutiao.io/subjects/"] img',
     "svg.arco-icon",
   ],
   getStyle: () => styleText,
