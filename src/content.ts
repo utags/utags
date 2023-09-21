@@ -20,7 +20,11 @@ import styleText from "data-text:./content.scss"
 import createTag from "./components/tag"
 import { i } from "./messages"
 import { outputData } from "./modules/export-import"
-import { bindDocumentEvents, hideAllUtagsInArea } from "./modules/global-events"
+import {
+  bindDocumentEvents,
+  bindWindowEvents,
+  hideAllUtagsInArea,
+} from "./modules/global-events"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
@@ -351,6 +355,7 @@ async function main() {
   })
 
   bindDocumentEvents()
+  bindWindowEvents()
 
   const observer = new MutationObserver(async (mutationsList) => {
     // console.error("mutation", Date.now(), mutationsList)

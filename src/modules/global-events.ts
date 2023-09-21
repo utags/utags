@@ -4,7 +4,7 @@ import {
   addClass,
   addEventListener,
   doc,
-  hasClass,
+  extendHistoryApi,
   isTouchScreen,
   removeClass,
 } from "browser-extension-utils"
@@ -145,4 +145,12 @@ export function bindDocumentEvents() {
     },
     true
   )
+}
+
+export function bindWindowEvents() {
+  extendHistoryApi()
+
+  addEventListener(window, "locationchange", function () {
+    hideAllUtagsInArea()
+  })
 }
