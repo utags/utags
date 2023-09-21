@@ -32,6 +32,10 @@ Allow users to add custom tags to links.
 - [xiaohongshu.com](https://www.xiaohongshu.com/)
 - [pornhub.com](https://www.pornhub.com/)
 - [weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/)
+- [sspai.com](https://sspai.com/)
+- [douyin.com](https://www.douyin.com/)
+- [podcasts.google.com](https://podcasts.google.com/)
+- [rebang.today](https://rebang.today/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## 安装
@@ -125,8 +129,10 @@ Allow users to add custom tags to links.
 - 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
 - 更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
 
-## 更新记录
+## Release Notes
 
+- 0.8.10
+  - Apply utags to rebang.today
 - 0.8.9
   - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
 - 0.8.8

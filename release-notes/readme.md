@@ -2,6 +2,10 @@
 
 > English | [中文](zh-CN.md)
 
+## 0.8.10
+
+- Apply utags to rebang.today
+
 ## 0.8.9
 
 - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules

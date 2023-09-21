@@ -26,6 +26,10 @@ Not it supports
 - [xiaohongshu.com](https://www.xiaohongshu.com/)
 - [pornhub.com](https://www.pornhub.com/)
 - [weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/)
+- [sspai.com](https://sspai.com/)
+- [douyin.com](https://www.douyin.com/)
+- [podcasts.google.com](https://podcasts.google.com/)
+- [rebang.today](https://rebang.today/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -95,6 +99,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.8.10
+  - Apply utags to rebang.today
 - 0.8.9
   - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
 - 0.8.8
