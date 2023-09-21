@@ -176,10 +176,6 @@ const isValidUtagsElement = (
     return false
   }
 
-  if (!element.offsetHeight || !element.offsetWidth) {
-    return false
-  }
-
   const media = $(
     'img,svg,audio,video,button,.icon,[style*="background-image"]',
     element
