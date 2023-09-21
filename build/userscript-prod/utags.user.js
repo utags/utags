@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.8.10
+// @version              0.8.11
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -250,6 +250,23 @@
   if (typeof Object.hasOwn !== "function") {
     Object.hasOwn = (instance, prop) =>
       Object.prototype.hasOwnProperty.call(instance, prop)
+  }
+  var extendHistoryApi = () => {
+    const pushState = history.pushState
+    const replaceState = history.replaceState
+    history.pushState = function () {
+      pushState.apply(history, arguments)
+      window.dispatchEvent(new Event("pushstate"))
+      window.dispatchEvent(new Event("locationchange"))
+    }
+    history.replaceState = function () {
+      replaceState.apply(history, arguments)
+      window.dispatchEvent(new Event("replacestate"))
+      window.dispatchEvent(new Event("locationchange"))
+    }
+    window.addEventListener("popstate", function () {
+      window.dispatchEvent(new Event("locationchange"))
+    })
   }
   var parseInt10 = (number, defaultValue) => {
     if (typeof number === "number" && !Number.isNaN(number)) {
@@ -1510,6 +1527,12 @@
       },
       true
     )
+  }
+  function bindWindowEvents() {
+    extendHistoryApi()
+    addEventListener(window, "locationchange", function () {
+      hideAllUtagsInArea()
+    })
   }
   var getCanonicalUrl = (url) => url
   var site = {
@@ -3215,13 +3238,14 @@
       ...default_default.excludeSelectors,
       "header",
       ".absolute.rounded-xl",
-      "p a",
+      "ul li h1 + p a",
     ],
     validMediaSelectors: [
       ".text-text-100",
       ".items-center .rounded-full",
       'a[href^="https://github.com/"] svg',
       'a[href^="https://space.bilibili.com/"] img',
+      'a[href^="https://toutiao.io/subjects/"] img',
       "svg.arco-icon",
     ],
     getStyle: () => rebang_today_default,
@@ -3590,9 +3614,6 @@
     if (!element.textContent) {
       return false
     }
-    if (!element.offsetHeight || !element.offsetWidth) {
-      return false
-    }
     const media = $(
       'img,svg,audio,video,button,.icon,[style*="background-image"]',
       element
@@ -3922,6 +3943,7 @@
       }
     })
     bindDocumentEvents()
+    bindWindowEvents()
     const observer = new MutationObserver(async (mutationsList) => {
       let shouldUpdate = false
       for (const mutationRecord of mutationsList) {
