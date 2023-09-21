@@ -1,0 +1,123 @@
+:not(#a):not(#b):not(#c) {
+  .w-screen ul {
+    --utags-list-node-display: flex;
+
+    /* 百度，百度贴吧 */
+    .flex-1:not(.relative) >,
+    /* 豆瓣社区，百度 > 热梗/小说等 */
+    .relative > {
+      .utags_ul.notag {
+        display: block !important;
+        height: 0;
+        position: absolute;
+        top: 0;
+
+        .utags_captain_tag {
+          background-color: #ffffffdd !important;
+        }
+      }
+
+      .utags_ul:not(.notag) {
+        display: block !important;
+      }
+    }
+
+    /* 百度，百度贴吧 */
+    .flex-1:not(.relative) > {
+      .utags_ul.notag {
+        top: 20px;
+      }
+    }
+
+    /* V2EX */
+    .text-base .block +,
+    /* 开发者头条*/
+    .flex-col .text-base +,
+    /* GitHub */
+    h1 {
+      .utags_ul.notag {
+        display: block !important;
+        height: 0;
+        position: initial;
+
+        .utags_captain_tag {
+          top: -26px;
+          background-color: #ffffffdd !important;
+        }
+      }
+    }
+
+    /* 豆瓣社区 > 来自 */
+    .truncate {
+      .utags_ul.notag .utags_captain_tag {
+        left: -22px;
+      }
+    }
+
+    /* 技术期刊 */
+    li > div.overflow-hidden:nth-of-type(2):not(.relative) > a +,
+    /* 新浪财经, 微博 */
+    li > a + {
+      .utags_ul.notag {
+        display: block !important;
+        position: absolute;
+
+        .utags_captain_tag {
+          left: 26px;
+          top: -24px;
+          background-color: #ffffffdd !important;
+        }
+      }
+    }
+
+    /* 新浪财经 */
+    li > a.text-base + {
+      .utags_ul.notag {
+        .utags_captain_tag {
+          left: 14px;
+          top: 0;
+        }
+      }
+    }
+
+    /* 技术期刊 */
+    li > div.overflow-hidden:nth-of-type(2):not(.relative) > a + {
+      .utags_ul.notag {
+        .utags_captain_tag {
+          left: -4px;
+          top: -24px;
+        }
+      }
+    }
+  }
+
+  aside {
+    --utags-list-node-display: flex;
+
+    .select-none {
+      .utags_ul.notag .utags_captain_tag {
+        left: -22px;
+      }
+
+      .arco-tag {
+        .utags_ul.notag .utags_captain_tag {
+          left: -6px;
+        }
+      }
+    }
+  }
+
+  #markdown-body.markdown-body {
+    a + {
+      .utags_ul.notag {
+        display: inline !important;
+        position: initial;
+
+        .utags_captain_tag {
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+  }
+}

@@ -37,6 +37,7 @@
 // @match                https://sleazyfork.org/*
 // @match                https://tilde.news/*
 // @match                https://www.journalduhacker.net/*
+// @match                https://rebang.today/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

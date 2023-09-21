@@ -190,7 +190,7 @@
   [data-utags_list_node*=",稍后阅读,"] {
     background-image: linear-gradient(to right, #ffffff, #fefce8) !important;
     opacity: 100% !important;
-    display: block !important;
+    display: var(--utags-list-node-display) !important;
   }
 
   [data-utags_list_node*=",热门,"],
@@ -205,9 +205,13 @@
 }
 
 .utags_no_hide [data-utags_list_node*=","] {
-  display: block !important;
+  display: var(--utags-list-node-display) !important;
 }
 
 .utags_no_opacity_effect [data-utags_list_node*=","] {
   opacity: 100% !important;
+}
+
+:root {
+  --utags-list-node-display: block;
 }
