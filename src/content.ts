@@ -129,13 +129,10 @@ function appendTagsToPage(
   }
 
   const ul = createElement("ul", {
-    class: "utags_ul",
+    class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
     "data-utags_key": key,
   })
   let li = createElement("li")
-  if (tags.length === 0) {
-    addClass(ul, "notag")
-  }
 
   const a = createElement("button", {
     // href: "",

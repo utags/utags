@@ -6,7 +6,7 @@
     .flex-1:not(.relative) >,
     /* 豆瓣社区，百度 > 热梗/小说等 */
     .relative > {
-      .utags_ul.notag {
+      .utags_ul_0 {
         display: block !important;
         height: 0;
         position: absolute;
@@ -17,14 +17,14 @@
         }
       }
 
-      .utags_ul:not(.notag) {
+      .utags_ul_1 {
         display: block !important;
       }
     }
 
     /* 百度，百度贴吧 */
     .flex-1:not(.relative) > {
-      .utags_ul.notag {
+      .utags_ul_0 {
         top: 20px;
       }
     }
@@ -35,7 +35,7 @@
     .flex-col .text-base +,
     /* GitHub */
     h1 {
-      .utags_ul.notag {
+      .utags_ul_0 {
         display: block !important;
         height: 0;
         position: initial;
@@ -49,7 +49,7 @@
 
     /* 豆瓣社区 > 来自 */
     .truncate {
-      .utags_ul.notag .utags_captain_tag {
+      .utags_ul_0 .utags_captain_tag {
         left: -22px;
       }
     }
@@ -58,7 +58,7 @@
     li > div.overflow-hidden:nth-of-type(2):not(.relative) > a +,
     /* 新浪财经, 微博 */
     li > a + {
-      .utags_ul.notag {
+      .utags_ul_0 {
         display: block !important;
         position: absolute;
 
@@ -72,7 +72,7 @@
 
     /* 新浪财经 */
     li > a.text-base + {
-      .utags_ul.notag {
+      .utags_ul_0 {
         .utags_captain_tag {
           left: 14px;
           top: 0;
@@ -82,7 +82,7 @@
 
     /* 技术期刊 */
     li > div.overflow-hidden:nth-of-type(2):not(.relative) > a + {
-      .utags_ul.notag {
+      .utags_ul_0 {
         .utags_captain_tag {
           left: -4px;
           top: -24px;
@@ -95,12 +95,12 @@
     --utags-list-node-display: flex;
 
     .select-none {
-      .utags_ul.notag .utags_captain_tag {
+      .utags_ul_0 .utags_captain_tag {
         left: -22px;
       }
 
       .arco-tag {
-        .utags_ul.notag .utags_captain_tag {
+        .utags_ul_0 .utags_captain_tag {
           left: -6px;
         }
       }
@@ -109,7 +109,7 @@
 
   #markdown-body.markdown-body {
     a + {
-      .utags_ul.notag {
+      .utags_ul_0 {
         display: inline !important;
         position: initial;
 

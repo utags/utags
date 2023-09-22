@@ -1,6 +1,6 @@
 :not(#a):not(#b):not(#c) {
   [data-e2e="comment-item"] {
-    .utags_ul.notag .utags_captain_tag {
+    .utags_ul_0 .utags_captain_tag {
       left: -26px;
     }
   }
@@ -11,7 +11,7 @@
       margin-top: 0px !important;
       margin-bottom: 2px !important;
 
-      &.notag {
+      &.utags_ul_0 {
         height: 0;
 
         .utags_captain_tag {
@@ -23,7 +23,7 @@
   }
 
   [data-e2e="related-video"] {
-    .utags_ul.notag[data-utags_key*="/video/"] {
+    .utags_ul_0[data-utags_key*="/video/"] {
       display: block !important;
       height: 0;
 
@@ -33,7 +33,7 @@
       }
     }
 
-    .utags_ul.notag[data-utags_key*="/user/"] {
+    .utags_ul_0[data-utags_key*="/user/"] {
       display: block !important;
       height: 0px;
       width: 0px;
@@ -46,7 +46,7 @@
   }
 
   [data-e2e="user-info"] a + {
-    .utags_ul.notag[data-utags_key*="/user/"] {
+    .utags_ul_0[data-utags_key*="/user/"] {
       display: block !important;
       height: 0px;
       width: 0px;

@@ -2,8 +2,8 @@
   .bili-video-card__info--right,
   .video-page-card-small,
   .video-page-operator-card-small {
-    a[href*="/video/"] + .utags_ul.notag,
-    h3.bili-video-card__info--tit + .utags_ul.notag {
+    a[href*="/video/"] + .utags_ul_0,
+    h3.bili-video-card__info--tit + .utags_ul_0 {
       display: block !important;
       height: 0;
 

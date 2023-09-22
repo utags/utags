@@ -1,16 +1,16 @@
 :not(#a):not(#b):not(#c) {
   .usernameWrap {
-    .utags_ul.notag .utags_captain_tag {
+    .utags_ul_0 .utags_captain_tag {
       left: -20px;
     }
-    .utags_ul:not(.notag)::before {
+    .utags_ul_1::before {
       content: "";
       display: block;
     }
   }
 
   .vidTitleWrapper .title {
-    .utags_ul.notag {
+    .utags_ul_0 {
       display: block !important;
       height: 0;
       position: absolute;
@@ -21,7 +21,7 @@
       }
     }
 
-    .utags_ul:not(.notag) {
+    .utags_ul_1 {
       display: block !important;
       height: 0;
       position: absolute;
@@ -32,7 +32,7 @@
   ul.videos .thumbnail-info-wrapper {
     position: relative;
     .title {
-      .utags_ul.notag {
+      .utags_ul_0 {
         display: block !important;
         height: 0;
         position: absolute;
@@ -43,7 +43,7 @@
         }
       }
 
-      .utags_ul:not(.notag) {
+      .utags_ul_1 {
         display: block !important;
         height: 0;
         position: absolute;

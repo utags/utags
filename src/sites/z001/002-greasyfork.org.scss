@@ -1,5 +1,5 @@
 :not(#a):not(#b):not(#c) {
-  .discussion-title + .utags_ul.notag {
+  .discussion-title + .utags_ul_0 {
     display: block !important;
     height: 0;
 
@@ -9,14 +9,14 @@
     }
   }
 
-  .discussion-title + .utags_ul:not(.notag) {
+  .discussion-title + .utags_ul_1 {
     display: block !important;
     margin-top: -12px !important;
     margin-bottom: 8px !important;
   }
 
   .discussion-meta {
-    .script-link + .utags_ul.notag {
+    .script-link + .utags_ul_0 {
       display: block !important;
       height: 0;
 

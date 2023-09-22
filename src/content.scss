@@ -48,8 +48,8 @@
     .utags_text_tag {
       box-sizing: border-box !important;
       display: block !important;
-      border: 1px solid red;
-      color: red !important;
+      border: 1px solid var(--utags-text-tag-border-color);
+      color: var(--utags-text-tag-color) !important;
       border-radius: 3px !important;
       padding: 1px 3px !important;
       margin: 0 1px !important;
@@ -68,7 +68,7 @@
       max-height: unset !important;
       cursor: pointer;
       background: unset !important;
-      background-color: unset !important;
+      background-color: var(--utags-text-tag-background-color) !important;
       /* Fix v2ex polish start */
       pointer-events: auto;
       /* Fix v2ex polish end */
@@ -88,7 +88,7 @@
       height: 14px !important;
       padding: 1px 0 0 1px !important;
       background: none !important;
-      color: #ff6361 !important;
+      color: var(--utags-captain-tag-color) !important;
       border: none !important;
 
       &::before {
@@ -116,7 +116,7 @@
       width: 4px !important;
       height: 4px !important;
       font-size: 1px !important;
-      background-color: #ffffffb3 !important;
+      background-color: var(--utags-captain-tag-background-color) !important;
       transition: all 0s 0.3s !important;
     }
 
@@ -124,11 +124,12 @@
     .utags_captain_tag:focus,
     .utags_captain_tag2:hover,
     .utags_captain_tag2:focus {
-      color: #256cf1 !important;
+      color: var(--utags-captain-tag-hover-color) !important;
     }
 
-    &.notag {
+    &.utags_ul_0 {
       margin: 0 !important;
+      float: var(--utags-ul-notag-float);
 
       > li {
         position: relative !important;
@@ -158,6 +159,11 @@
 
   :not(a):not([data-utags_node_type="link"]) + .utags_ul .utags_captain_tag {
     position: relative;
+  }
+
+  .utags_ul_notag_float_left .utags_ul_0,
+  .utags_ul_0.utags_ul_notag_float_left {
+    float: left;
   }
 
   [data-utags_list_node*=",标题党,"],
@@ -214,4 +220,11 @@
 
 :root {
   --utags-list-node-display: block;
+  --utags-ul-notag-float: none;
+  --utags-captain-tag-background-color: #ffffffb3;
+  --utags-captain-tag-color: #ff6361;
+  --utags-captain-tag-hover-color: #256cf1;
+  --utags-text-tag-color: red;
+  --utags-text-tag-border-color: red;
+  --utags-text-tag-background-color: unset;
 }
