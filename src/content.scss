@@ -109,8 +109,8 @@
     .utags_captain_tag {
       opacity: 1%;
       position: absolute;
-      top: 0;
-      left: 0;
+      top: var(--utags-notag-captain-tag-top, 0);
+      left: var(--utags-notag-captain-tag-left, 0);
       padding: 0 !important;
       margin: 0 !important;
       width: 4px !important;
@@ -129,7 +129,12 @@
 
     &.utags_ul_0 {
       margin: 0 !important;
-      float: var(--utags-ul-notag-float);
+      display: var(--utags-notag-ul-disply, inline) !important;
+      float: var(--utags-notag-ul-float, none);
+      height: var(--utags-notag-ul-height, unset);
+      width: var(--utags-notag-ul-width, unset);
+      position: var(--utags-notag-ul-position, unset);
+      top: var(--utags-notag-ul-top, unset);
 
       > li {
         position: relative !important;
@@ -220,11 +225,59 @@
 
 :root {
   --utags-list-node-display: block;
-  --utags-ul-notag-float: none;
   --utags-captain-tag-background-color: #ffffffb3;
+  --utags-captain-tag-background-color-overlap: #ffffffdd;
   --utags-captain-tag-color: #ff6361;
   --utags-captain-tag-hover-color: #256cf1;
   --utags-text-tag-color: red;
   --utags-text-tag-border-color: red;
   --utags-text-tag-background-color: unset;
+
+  --utags-notag-ul-disply-1: inline;
+  --utags-notag-ul-float-1: none;
+  --utags-notag-ul-height-1: unset;
+  --utags-notag-ul-width-1: unset;
+  --utags-notag-ul-position-1: unset;
+  --utags-notag-ul-top-1: unset;
+  --utags-notag-captain-tag-top-1: 0;
+  --utags-notag-captain-tag-left-1: 0;
+
+  /* If anchor element has display: block
+     or parent element of anchor element has flex-direction: column */
+  --utags-notag-ul-disply-2: block;
+  --utags-notag-ul-height-2: 0;
+  --utags-notag-ul-width-2: 0;
+  --utags-notag-ul-position-2: unset;
+  --utags-notag-ul-top-2: unset;
+  --utags-notag-captain-tag-top-2: -22px;
+  --utags-notag-captain-tag-left-2: -4px;
+
+  /* If parent element of anchor element has position: relative,
+     and anchor element is multi-line */
+  --utags-notag-ul-disply-3: block;
+  --utags-notag-ul-height-3: 0;
+  --utags-notag-ul-width-3: 0;
+  --utags-notag-ul-position-3: absolute;
+  --utags-notag-ul-top-3: 0;
+  --utags-notag-captain-tag-top-3: 0;
+  --utags-notag-captain-tag-left-3: -4px;
+
+  /* If parent element of anchor element don't has position: relative,
+     and anchor element is multi-line */
+  --utags-notag-ul-disply-4: block;
+  --utags-notag-ul-height-4: 0;
+  --utags-notag-ul-width-4: 0;
+  --utags-notag-ul-position-4: absolute;
+  --utags-notag-ul-top-4: unset;
+  --utags-notag-captain-tag-top-4: 0;
+  --utags-notag-captain-tag-left-4: -4px;
+
+  --utags-notag-ul-disply: var(--utags-notag-ul-disply-1);
+  --utags-notag-ul-float: var(--utags-notag-ul-float-1);
+  --utags-notag-ul-height: var(--utags-notag-ul-height-1);
+  --utags-notag-ul-width: var(--utags-notag-ul-width-1);
+  --utags-notag-ul-position: var(--utags-notag-ul-position-1);
+  --utags-notag-ul-top: var(--utags-notag-ul-top-1);
+  --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);
+  --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);
 }

@@ -4,89 +4,102 @@
 
     /* 百度，百度贴吧 */
     .flex-1:not(.relative) >,
+    /* 宽带山 */
+    .flex.flex-col.relative .flex-1,
     /* 豆瓣社区，百度 > 热梗/小说等 */
     .relative > {
       .utags_ul_0 {
-        display: block !important;
-        height: 0;
-        position: absolute;
-        top: 0;
-
-        .utags_captain_tag {
-          background-color: #ffffffdd !important;
-        }
-      }
-
-      .utags_ul_1 {
-        display: block !important;
+        --utags-notag-ul-disply: var(--utags-notag-ul-disply-3);
+        --utags-notag-ul-height: var(--utags-notag-ul-height-3);
+        --utags-notag-ul-position: var(--utags-notag-ul-position-3);
+        --utags-notag-ul-top: var(--utags-notag-ul-top-3);
+        --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);
+        --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-3);
+        --utags-captain-tag-background-color: var(
+          --utags-captain-tag-background-color-overlap
+        );
       }
     }
 
+    /* 宽带山 */
+    .flex.flex-col.relative .flex-1,
     /* 百度，百度贴吧 */
     .flex-1:not(.relative) > {
       .utags_ul_0 {
-        top: 20px;
+        --utags-notag-captain-tag-top: 18px;
       }
     }
 
     /* V2EX */
     .text-base .block +,
-    /* 开发者头条*/
-    .flex-col .text-base +,
+    /* GitHub */
+    h1,
+    /* 技术期刊 */
+    li > div.overflow-hidden:nth-of-type(2):not(.relative) > a +,
+    /* 微博 */
+    li > a + {
+      .utags_ul_0 {
+        --utags-notag-ul-disply: var(--utags-notag-ul-disply-2);
+        --utags-notag-ul-height: var(--utags-notag-ul-height-2);
+        --utags-notag-ul-position: var(--utags-notag-ul-position-2);
+        --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);
+        --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);
+        --utags-captain-tag-background-color: var(
+          --utags-captain-tag-background-color-overlap
+        );
+      }
+    }
+
+    /* V2EX */
+    .text-base .block + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: -24px;
+      }
+    }
+
     /* GitHub */
     h1 {
       .utags_ul_0 {
-        display: block !important;
-        height: 0;
-        position: initial;
-
-        .utags_captain_tag {
-          top: -26px;
-          background-color: #ffffffdd !important;
-        }
+        --utags-notag-captain-tag-top: -28px;
       }
     }
 
-    /* 豆瓣社区 > 来自 */
-    .truncate {
-      .utags_ul_0 .utags_captain_tag {
-        left: -22px;
-      }
-    }
-
-    /* 技术期刊 */
-    li > div.overflow-hidden:nth-of-type(2):not(.relative) > a +,
-    /* 新浪财经, 微博 */
+    /* 微博 */
     li > a + {
       .utags_ul_0 {
-        display: block !important;
-        position: absolute;
+        --utags-notag-captain-tag-left: 26px;
+      }
+    }
 
-        .utags_captain_tag {
-          left: 26px;
-          top: -24px;
-          background-color: #ffffffdd !important;
-        }
+    /* 雪球，东方财富, 开发者头条 */
+    .flex.flex-col .text-base +,
+    /* 新浪财经 */
+    li > a.text-base + {
+      .utags_ul_0 {
+        --utags-notag-ul-disply: var(--utags-notag-ul-disply-4);
+        --utags-notag-ul-height: var(--utags-notag-ul-height-4);
+        --utags-notag-ul-position: var(--utags-notag-ul-position-4);
+        --utags-notag-ul-top: var(--utags-notag-ul-top-4);
+        --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);
+        --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);
+        --utags-captain-tag-background-color: var(
+          --utags-captain-tag-background-color-overlap
+        );
       }
     }
 
     /* 新浪财经 */
     li > a.text-base + {
       .utags_ul_0 {
-        .utags_captain_tag {
-          left: 14px;
-          top: 0;
-        }
+        --utags-notag-captain-tag-top: -10px;
+        --utags-notag-captain-tag-left: 14px;
       }
     }
 
-    /* 技术期刊 */
-    li > div.overflow-hidden:nth-of-type(2):not(.relative) > a + {
+    /* 豆瓣社区 > 来自 */
+    .truncate {
       .utags_ul_0 {
-        .utags_captain_tag {
-          left: -4px;
-          top: -24px;
-        }
+        --utags-notag-captain-tag-left: -22px;
       }
     }
   }
@@ -95,13 +108,13 @@
     --utags-list-node-display: flex;
 
     .select-none {
-      .utags_ul_0 .utags_captain_tag {
-        left: -22px;
+      .utags_ul_0 {
+        --utags-notag-captain-tag-left: -22px;
       }
 
       .arco-tag {
-        .utags_ul_0 .utags_captain_tag {
-          left: -6px;
+        .utags_ul_0 {
+          --utags-notag-captain-tag-left: -6px;
         }
       }
     }
@@ -110,13 +123,13 @@
   #markdown-body.markdown-body {
     a + {
       .utags_ul_0 {
-        display: inline !important;
-        position: initial;
-
-        .utags_captain_tag {
-          left: 0;
-          top: 0;
-        }
+        --utags-notag-ul-disply: var(--utags-notag-ul-disply-1);
+        --utags-notag-ul-height: var(--utags-notag-ul-height-1);
+        --utags-notag-ul-width: var(--utags-notag-ul-width-1);
+        --utags-notag-ul-position: var(--utags-notag-ul-position-1);
+        --utags-notag-ul-top: var(--utags-notag-ul-top-1);
+        --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);
+        --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);
       }
     }
   }
