@@ -103,6 +103,8 @@
       * {
         color: inherit !important;
         fill: currentColor !important;
+        width: unset;
+        height: unset;
       }
     }
 
@@ -171,6 +173,192 @@
     float: left;
   }
 
+  .utags_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 0;
+    background-color: #ff6361;
+    overflow: scroll;
+    z-index: 100000;
+
+    .utags_modal_wrapper {
+      position: fixed;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      inset: 0px;
+      padding: 14vh 16px 16px;
+      background-color: rgba(255, 255, 255, 0.1);
+      z-index: 100000;
+    }
+
+    .utags_modal_content {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      max-height: 100%;
+      overflow: auto;
+      color: #000000;
+      background-color: #ffffff;
+      border-radius: 5px;
+      padding: 14px;
+      -webkit-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
+      -moz-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
+      box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
+    }
+
+    .utags_title {
+      display: block;
+      color: #000000;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .utags_buttons_wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+      padding: 10px 0 10px 0;
+
+      button {
+        font-size: 14px;
+        height: 32px;
+        min-width: 80px;
+        font-weight: 600;
+        padding: 0 8px;
+        border-radius: 2px;
+        color: var(--utags-button-text-color);
+        border: 1px solid var(--utags-button-border-color);
+        background-color: var(--utags-button-bg-color);
+
+        &:hover {
+          background-color: var(--utags-button-hover-bg-color);
+          border-color: var(--utags-button-hover-border-color);
+        }
+
+        &:not(:first-child) {
+          margin-left: 10px;
+        }
+
+        &.utags_primary {
+          --utags-button-text-color: var(--utags-action-button-text-color);
+          --utags-button-bg-color: var(--utags-action-button-bg-color);
+          --utags-button-border-color: var(--utags-action-button-border-color);
+          --utags-button-hover-bg-color: var(
+            --utags-action-button-hover-bg-color
+          );
+          --utags-button-hover-border-color: var(
+            --utags-action-button-hover-border-color
+          );
+        }
+      }
+    }
+
+    .utags_prompt {
+      input {
+        -webkit-appearance: none;
+        background-color: var(--utags-button-hover-bg-color);
+        border: none;
+        border-bottom: 2px solid var(--utags-button-hover-bg-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+        caret-color: var(--cr-input-focus-color);
+        color: var(--cr-input-color);
+        font-family: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        min-height: var(--cr-input-min-height, auto);
+        outline: 0;
+        padding-bottom: var(--cr-input-padding-bottom, 6px);
+        padding-inline-end: var(--cr-input-padding-end, 8px);
+        padding-inline-start: var(--cr-input-padding-start, 8px);
+        padding-top: var(--cr-input-padding-top, 6px);
+        text-align: left;
+        text-overflow: ellipsis;
+        width: 100%;
+        font-size: 12px;
+
+        &:focus,
+        &:focus-visible {
+          border-bottom: 2px solid var(--utags-action-button-hover-border-color);
+        }
+      }
+    }
+  }
+
+  ul.utags_inputed_tags {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 10px 0 !important;
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &:empty {
+      display: none !important;
+    }
+
+    li .utags_text_tag:hover {
+      --utags-text-tag-color: #000;
+      --utags-text-tag-border-color: #000;
+      --utags-text-tag-background-color: unset;
+      opacity: 0.5;
+      text-decoration: line-through !important;
+    }
+  }
+
+  .utags_list_wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ul.utags_select_list {
+    flex-grow: 1;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px 0 10px 0;
+
+    &:empty {
+      display: none !important;
+    }
+
+    &:not(:first-child) {
+      margin-left: 4px;
+    }
+
+    &::before {
+      content: attr(data-utags_list_name);
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      padding: 0 2px 0 8px;
+      cursor: default;
+      background-color: var(--utags-button-hover-bg-color);
+    }
+
+    li {
+      cursor: pointer;
+      font-size: 12px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      padding: 0 2px 0 8px;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.utags_active,
+      &.utags_active2 {
+        background-color: #fef2f2;
+      }
+    }
+  }
+
   [data-utags_list_node*=",标题党,"],
   [data-utags_list_node*=",推广,"],
   [data-utags_list_node*=",无聊,"],
@@ -232,6 +420,16 @@
   --utags-text-tag-color: red;
   --utags-text-tag-border-color: red;
   --utags-text-tag-background-color: unset;
+  --utags-button-text-color: #1a73e8;
+  --utags-button-bg-color: #ffffff;
+  --utags-button-border-color: #dadce0;
+  --utags-button-hover-bg-color: #4285f40a;
+  --utags-button-hover-border-color: #d2e3fc;
+  --utags-action-button-text-color: #ffffff;
+  --utags-action-button-bg-color: #1a73e8;
+  --utags-action-button-border-color: #1a73e8;
+  --utags-action-button-hover-bg-color: #1a73e8e6;
+  --utags-action-button-hover-border-color: #1a73e8e6;
 
   --utags-notag-ul-disply-1: inline;
   --utags-notag-ul-float-1: none;

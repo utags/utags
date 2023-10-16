@@ -20,3 +20,11 @@ export function getFirstHeadElement(tagName = "h1") {
 
   return undefined
 }
+
+export function splitTags(text: string | undefined) {
+  if (!text) {
+    return []
+  }
+
+  return text.replaceAll(/[\n\r\t]/gm, " ").split(/\s*[,，]\s*/)
+}

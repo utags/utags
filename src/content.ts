@@ -59,17 +59,40 @@ const settingsTable = {
     defaultValue: false,
     group: 2,
   },
+  pinnedTagsTitle: {
+    title: i("settings.pinnedTags"),
+    type: "action",
+    async onclick() {
+      const input = $('textarea[data-key="pinnedTags"]')
+      if (input) {
+        input.focus()
+      }
+    },
+    group: 3,
+  },
+  pinnedTags: {
+    title: i("settings.pinnedTags"),
+    defaultValue: i("settings.pinnedTagsDefaultValue"),
+    placeholder: i("settings.pinnedTagsPlaceholder"),
+    type: "textarea",
+    group: 3,
+  },
+  useSimplePrompt: {
+    title: i("settings.useSimplePrompt"),
+    defaultValue: false,
+    group: 4,
+  },
   openTagsPage: {
     title: i("settings.openTagsPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/tags/",
-    group: 3,
+    group: 5,
   },
   openDataPage: {
     title: i("settings.openDataPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/data/",
-    group: 3,
+    group: 5,
   },
 }
 

@@ -1,3 +1,4 @@
+import { getSettingsValue } from "browser-extension-settings"
 import {
   $,
   $$,
@@ -11,7 +12,10 @@ import {
 
 import { i } from "../messages"
 import { saveTags } from "../storage"
-import { type UserTag, type UserTagMeta } from "../types"
+import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
+import { splitTags } from "../utils"
+import { advancedPrompt } from "./advanced-tag-manager"
+import { simplePrompt } from "./simple-tag-manger"
 
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
@@ -66,6 +70,10 @@ export function bindDocumentEvents() {
         return
       }
 
+      if (target.closest(".utags_prompt")) {
+        return
+      }
+
       if (target.closest(".utags_ul")) {
         const captainTag = target.closest(
           ".utags_captain_tag,.utags_captain_tag2"
@@ -85,10 +93,17 @@ export function bindDocumentEvents() {
             const meta: UserTagMeta | undefined = captainTag.dataset.utags_meta
               ? (JSON.parse(captainTag.dataset.utags_meta) as UserTagMeta)
               : undefined
-            // eslint-disable-next-line no-alert
-            const newTags = prompt(i("prompt.addTags"), tags)
-            if (newTags !== null) {
-              const newTagsArray = newTags.split(/\s*[,，]\s*/)
+            const myPrompt = getSettingsValue("useSimplePrompt")
+              ? simplePrompt
+              : advancedPrompt
+            const newTags = (await myPrompt(i("prompt.addTags"), tags)) as
+              | string
+              | NullOrUndefined
+
+            captainTag.focus()
+            // eslint-disable-next-line eqeqeq
+            if (key && newTags != undefined) {
+              const newTagsArray = splitTags(newTags)
               await saveTags(key, newTagsArray, meta)
             }
           })
