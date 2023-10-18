@@ -35,10 +35,10 @@ Not it supports
 ## Usage
 
 - Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/5lso2l5779ompdep7mmvkivsyxin)
+  ![screenshots](https://assets.bestxtools.com/i/nqpyh)
 
 - Multiple tags are separated by commas
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/quyien946y8bbpdtdi0tyf0pbsmf)
+  ![screenshots](https://assets.bestxtools.com/i/iczcg)
 
 - Tags can be added to post titles, usernames, and categories
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
@@ -99,6 +99,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.0
+  - Use advanced tag input prompt UI
+  - Define utag ul styles with css custom properties
 - 0.8.10
   - Apply utags to rebang.today
 - 0.8.9

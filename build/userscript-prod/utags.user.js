@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.8.11
+// @version              0.9.0
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -1120,7 +1120,7 @@
     handleShowSettingsUrl()
   }
   var content_default =
-    '\uFEFF:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_layer{height:200px;width:200px;background-color:red}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline !important;overflow:visible;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:14px !important;border:none !important;padding:0 !important;margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:1px solid red;color:red !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:10px !important;letter-spacing:0 !important;line-height:1 !important;height:14px !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;cursor:pointer;background:unset !important;background-color:unset !important;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:10px;line-height:1;height:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{width:14px !important;height:14px !important;padding:1px 0 0 1px !important;background:none !important;color:#ff6361 !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:0;left:0;padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:rgba(255,255,255,.7019607843) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{color:#256cf1 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag{margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.notag>li{position:relative !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;width:22px !important;height:22px !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{position:relative}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}:root{--utags-list-node-display: block}'
+    '\uFEFF:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_layer{height:200px;width:200px;background-color:red}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline !important;overflow:visible;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:14px !important;border:none !important;padding:0 !important;margin:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:1px solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:10px !important;letter-spacing:0 !important;line-height:1 !important;height:14px !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;cursor:pointer;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:10px;line-height:1;height:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{width:14px !important;height:14px !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset);position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li{position:relative !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;width:22px !important;height:22px !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{position:relative}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul_notag_float_left .utags_ul_0,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul_0.utags_ul_notag_float_left{float:left}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;background-color:#ff6361;overflow:scroll;z-index:100000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding:14vh 16px 16px;background-color:rgba(255,255,255,.1);z-index:100000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:600px;max-height:100%;overflow:auto;color:#000;background-color:#fff;border-radius:5px;padding:14px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:inherit;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_inputed_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_inputed_tags:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_inputed_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);display:block;font-size:12px;font-weight:600;text-align:left;padding:0 2px 0 8px;cursor:default;background-color:var(--utags-button-hover-bg-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{cursor:pointer;font-size:12px;height:16px;display:flex;align-items:center;padding:0 2px 0 8px;max-width:100px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, #ffffff, #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, #ffffff, #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}'
   function createTag(tagName) {
     const a = createElement("a")
     a.dataset.utags_tag = tagName
@@ -1137,6 +1137,11 @@
     "settings.showHidedItems": "Show hidden items (tags with 'block', 'hide')",
     "settings.noOpacityEffect":
       "No opacity mask effect (tags with 'ignore', 'clickbait', 'promotion')",
+    "settings.pinnedTags": "Add the tags you want to pin, separated by commas.",
+    "settings.pinnedTagsDefaultValue":
+      "block, hide, ignore, clickbait, promotion",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.useSimplePrompt": "Use simple prompt method to add tags",
     "settings.openTagsPage": "Open the tag list page",
     "settings.openDataPage": "Open the import data/export data page",
     "settings.title": "\u{1F3F7}\uFE0F UTags - Add usertags to links",
@@ -1145,6 +1150,9 @@
     "settings.report": "Report and Issue...",
     "prompt.addTags":
       "[UTags] Please enter tags, multiple tags are separated by commas",
+    "prompt.pinnedTags": "Pinned",
+    "prompt.mostUsedTags": "Recently commonly used",
+    "prompt.recentAddedTags": "Newly added",
   }
   var en_default2 = messages3
   var messages4 = {
@@ -1153,6 +1161,13 @@
       "\u663E\u793A\u88AB\u9690\u85CF\u7684\u5185\u5BB9 (\u6DFB\u52A0\u4E86 'block', 'hide', '\u9690\u85CF'\u7B49\u6807\u7B7E\u7684\u5185\u5BB9)",
     "settings.noOpacityEffect":
       "\u53BB\u9664\u534A\u900F\u660E\u6548\u679C (\u6DFB\u52A0\u4E86 'sb', '\u5FFD\u7565', '\u6807\u9898\u515A'\u7B49\u6807\u7B7E\u7684\u5185\u5BB9)",
+    "settings.pinnedTags":
+      "\u5728\u4E0B\u9762\u6DFB\u52A0\u8981\u7F6E\u9876\u7684\u6807\u7B7E\uFF0C\u4EE5\u9017\u53F7\u5206\u9694",
+    "settings.pinnedTagsDefaultValue":
+      "\u6536\u85CF, block, sb, \u9690\u85CF, \u5DF2\u9605, \u5FFD\u7565, \u6807\u9898\u515A, \u63A8\u5E7F, \u5173\u6CE8",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.useSimplePrompt":
+      "\u4F7F\u7528\u7B80\u5355\u65B9\u5F0F\u6DFB\u52A0\u6807\u7B7E",
     "settings.openTagsPage": "\u6807\u7B7E\u5217\u8868",
     "settings.openDataPage":
       "\u5BFC\u51FA\u6570\u636E/\u5BFC\u5165\u6570\u636E",
@@ -1163,15 +1178,36 @@
     "settings.report": "\u53CD\u9988\u95EE\u9898",
     "prompt.addTags":
       "[UTags] \u8BF7\u8F93\u5165\u6807\u7B7E\uFF0C\u591A\u4E2A\u6807\u7B7E\u4EE5\u9017\u53F7\u5206\u9694",
+    "prompt.pinnedTags": "\u7F6E\u9876",
+    "prompt.mostUsedTags": "\u6700\u8FD1\u5E38\u7528",
+    "prompt.recentAddedTags": "\u6700\u65B0\u6DFB\u52A0",
   }
   var zh_cn_default2 = messages4
   var i2 = initI18n({
     "en,en-US": en_default2,
     "zh,zh-CN": zh_cn_default2,
   })
+  function getFirstHeadElement(tagName = "h1") {
+    for (const element of $$(tagName)) {
+      if (element.closest(".browser_extension_settings_container")) {
+        continue
+      }
+      return element
+    }
+    return void 0
+  }
+  function splitTags(text) {
+    if (!text) {
+      return []
+    }
+    return text.replaceAll(/[\n\r\t]/gm, " ").split(/\s*[,，]\s*/)
+  }
   var extensionVersion = "0.8.0"
   var databaseVersion = 2
   var storageKey2 = "extension.utags.urlmap"
+  var storageKeyRecentTags = "extension.utags.recenttags"
+  var storageKeyMostUsedTags = "extension.utags.mostusedtags"
+  var storageKeyRecentAddedTags = "extension.utags.recentaddedtags"
   var cachedUrlMap
   async function getUrlMap() {
     return (await getValue(storageKey2)) || {}
@@ -1195,11 +1231,13 @@
       databaseVersion,
     })
     const newTags = mergeTags(tags, [])
+    let oldTags = []
     if (newTags.length === 0) {
       delete urlMap[key]
     } else {
       const now = Date.now()
       const data = urlMap[key] || {}
+      oldTags = data.tags
       const newMeta = Object.assign({}, data.meta, meta, {
         updated: now,
       })
@@ -1210,6 +1248,74 @@
       }
     }
     await setValue(storageKey2, urlMap)
+    await addRecentTags(newTags, oldTags)
+  }
+  function getScore(weight = 1) {
+    return (Math.floor(Date.now() / 1e3) / 1e9) * weight
+  }
+  async function addRecentTags(newTags, oldTags) {
+    if (newTags.length === 0) {
+      return
+    }
+    newTags =
+      oldTags && oldTags.length > 0
+        ? newTags.filter((v) => !oldTags.includes(v))
+        : newTags
+    if (newTags.length > 0) {
+      const recentTags = (await getValue(storageKeyRecentTags)) || []
+      const score = getScore()
+      for (const tag of newTags) {
+        recentTags.push({
+          tag,
+          score,
+        })
+      }
+      if (recentTags.length > 1e3) {
+        recentTags.splice(0, 100)
+      }
+      await setValue(storageKeyRecentTags, recentTags)
+      await generateMostUsedAndRecentAddedTags(recentTags)
+    }
+  }
+  async function generateMostUsedAndRecentAddedTags(recentTags) {
+    const mostUsed = {}
+    for (const recentTag of recentTags) {
+      if (!recentTag.tag) {
+        continue
+      }
+      if (mostUsed[recentTag.tag]) {
+        mostUsed[recentTag.tag].score += recentTag.score
+      } else if (recentTag.tag) {
+        mostUsed[recentTag.tag] = {
+          tag: recentTag.tag,
+          score: recentTag.score,
+        }
+      }
+    }
+    const mostUsedTags2 = Object.values(mostUsed)
+      .filter((v) => v.score > getScore(1.5))
+      .sort((a, b) => {
+        return b.score - a.score
+      })
+      .map((v) => v.tag)
+      .slice(0, 200)
+    const uniqSet = /* @__PURE__ */ new Set()
+    const recentAddedTags2 = recentTags
+      .map((v) => v.tag)
+      .reverse()
+      .filter((v) => v && !uniqSet.has(v) && uniqSet.add(v))
+      .slice(0, 200)
+    await setValue(storageKeyMostUsedTags, mostUsedTags2)
+    await setValue(storageKeyRecentAddedTags, recentAddedTags2)
+  }
+  async function getMostUsedTags() {
+    return (await getValue(storageKeyMostUsedTags)) || []
+  }
+  async function getRecentAddedTags() {
+    return (await getValue(storageKeyRecentAddedTags)) || []
+  }
+  async function getPinnedTags() {
+    return splitTags(getSettingsValue("pinnedTags") || "")
   }
   function addTagsValueChangeListener(func) {
     addValueChangeListener(storageKey2, func)
@@ -1424,6 +1530,374 @@
       })
     }
   }
+  function createModal(attributes) {
+    const div = addElement2(doc.body, "div", {
+      class: "utags_modal",
+    })
+    const wrapper = addElement2(div, "div", {
+      class: "utags_modal_wrapper",
+    })
+    const content = addElement2(wrapper, "div", attributes)
+    addClass(content, "utags_modal_content")
+    let removed = false
+    return {
+      remove() {
+        if (!removed) {
+          removed = true
+          div.remove()
+        }
+      },
+      getContentElement() {
+        return content
+      },
+    }
+  }
+  var pinnedTags
+  var mostUsedTags
+  var recentAddedTags
+  var displayedTags = /* @__PURE__ */ new Set()
+  var currentTags = /* @__PURE__ */ new Set()
+  function onSelect(selected, input) {
+    if (selected) {
+      input.value = ""
+      const tags = splitTags(selected)
+      for (const tag of tags) {
+        if (tag.trim()) {
+          currentTags.add(tag.trim())
+        }
+      }
+      updateLists()
+    }
+  }
+  function removeTag(tag) {
+    if (tag) {
+      tag = tag.trim()
+      currentTags.delete(tag)
+      updateLists()
+    }
+  }
+  function updateLists() {
+    displayedTags = /* @__PURE__ */ new Set()
+    const ul1 = $(".utags_modal_content ul.utags_inputed_tags")
+    if (ul1) {
+      updateInputedTagList(ul1)
+    }
+    const ul = $(".utags_modal_content ul.utags_select_list.utags_pined_list")
+    if (ul) {
+      updateCandidateTagList(ul, pinnedTags)
+    }
+    const ul2 = $(".utags_modal_content ul.utags_select_list.utags_most_used")
+    if (ul2) {
+      updateCandidateTagList(ul2, mostUsedTags)
+    }
+    const ul3 = $(
+      ".utags_modal_content ul.utags_select_list.utags_recent_added"
+    )
+    if (ul3) {
+      updateCandidateTagList(ul3, recentAddedTags)
+    }
+  }
+  function updateCandidateTagList(ul, candidateTags) {
+    ul.textContent = ""
+    let index = 0
+    for (const text of candidateTags) {
+      if (displayedTags.has(text)) {
+        continue
+      }
+      displayedTags.add(text)
+      const li = addElement2(ul, "li", {})
+      addElement2(li, "span", {
+        textContent: text,
+      })
+      index++
+      if (index >= 10) {
+        break
+      }
+    }
+  }
+  function updateInputedTagList(ul) {
+    ul.textContent = ""
+    for (const tag of currentTags) {
+      displayedTags.add(tag)
+      const li = addElement2(ul, "li")
+      addElement2(li, "a", {
+        "data-utags_tag": tag,
+        class: "utags_text_tag",
+      })
+    }
+  }
+  function removeAllActive(type) {
+    if (type !== 2) {
+      const selector = ".utags_modal_content ul.utags_select_list .utags_active"
+      for (const li of $$(selector)) {
+        removeClass(li, "utags_active")
+      }
+    }
+    if (type !== 1) {
+      const selector =
+        ".utags_modal_content ul.utags_select_list .utags_active2"
+      for (const li of $$(selector)) {
+        removeClass(li, "utags_active2")
+      }
+    }
+  }
+  function createPromptView(message, value, resolve) {
+    const modal = createModal({ class: "utags_prompt" })
+    const content = modal.getContentElement()
+    value = value || ""
+    addElement2(content, "span", {
+      class: "utags_title",
+      textContent: message,
+      "data-utags": "",
+    })
+    addElement2(content, "ul", {
+      class: "utags_inputed_tags utags_ul",
+    })
+    const input = addElement2(content, "input", {
+      type: "text",
+      placeholder: "foo, bar",
+      onblur(event) {
+        event.preventDefault()
+        closeModal2()
+      },
+    })
+    input.focus()
+    input.select()
+    const listWrapper = addElement2(content, "div", {
+      class: "utags_list_wrapper",
+    })
+    addElement2(listWrapper, "ul", {
+      class: "utags_select_list utags_pined_list",
+      "data-utags_list_name": i2("prompt.pinnedTags"),
+    })
+    addElement2(listWrapper, "ul", {
+      class: "utags_select_list utags_most_used",
+      "data-utags_list_name": i2("prompt.mostUsedTags"),
+    })
+    addElement2(listWrapper, "ul", {
+      class: "utags_select_list utags_recent_added",
+      "data-utags_list_name": i2("prompt.recentAddedTags"),
+    })
+    updateLists()
+    const buttonWrapper = addElement2(content, "div", {
+      class: "utags_buttons_wrapper",
+    })
+    let closed = false
+    const closeModal2 = (value2) => {
+      if (closed) {
+        return
+      }
+      closed = true
+      modal.remove()
+      removeEventListener(input, "keydown", keydonwHandler, true)
+      removeEventListener(doc, "keydown", keydonwHandler, true)
+      removeEventListener(doc, "mousedown", mousedownHandler, true)
+      removeEventListener(doc, "click", clickHandler, true)
+      removeEventListener(doc, "mouseover", mouseoverHandler, true)
+      resolve(value2 == null ? null : value2)
+    }
+    const okHandler = () => {
+      closeModal2(Array.from(currentTags).join(","))
+    }
+    addElement2(buttonWrapper, "button", {
+      textContent: "Cancel",
+      onclick() {
+        closeModal2()
+      },
+    })
+    addElement2(buttonWrapper, "button", {
+      class: "utags_primary",
+      textContent: "OK",
+      onclick() {
+        onSelect(input.value.trim(), input)
+        okHandler()
+      },
+    })
+    const keydonwHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      let current = $(".utags_modal_content ul.utags_select_list .utags_active")
+      switch (event.key) {
+        case "Escape": {
+          event.preventDefault()
+          closeModal2()
+          break
+        }
+        case "Enter": {
+          event.preventDefault()
+          input.focus()
+          if (current) {
+            onSelect(current.textContent, input)
+          } else if (input.value.trim()) {
+            onSelect(input.value.trim(), input)
+          } else {
+            okHandler()
+          }
+          break
+        }
+        case "Tab": {
+          event.preventDefault()
+          input.focus()
+          break
+        }
+        case "ArrowDown": {
+          event.preventDefault()
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const next = current.nextElementSibling
+            if (next) {
+              removeAllActive()
+              addClass(next, "utags_active")
+            }
+          } else {
+            const next = $(".utags_modal_content ul.utags_select_list li")
+            if (next) {
+              removeAllActive()
+              addClass(next, "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowUp": {
+          event.preventDefault()
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const previous = current.previousElementSibling
+            if (previous) {
+              removeAllActive()
+              addClass(previous, "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowLeft": {
+          event.preventDefault()
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const parentElement = current.parentElement
+            const index = Array.prototype.indexOf.call(
+              parentElement.children,
+              current
+            )
+            const parentPrevious = parentElement.previousElementSibling
+            if (parentPrevious) {
+              removeAllActive()
+              const newIndex = Math.min(
+                parentPrevious.children.length - 1,
+                index
+              )
+              addClass(parentPrevious.children[newIndex], "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowRight": {
+          event.preventDefault()
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const parentElement = current.parentElement
+            const index = Array.prototype.indexOf.call(
+              parentElement.children,
+              current
+            )
+            const parentNext = parentElement.nextElementSibling
+            if (parentNext) {
+              removeAllActive()
+              const newIndex = Math.min(parentNext.children.length - 1, index)
+              addClass(parentNext.children[newIndex], "utags_active")
+            }
+          }
+          break
+        }
+        default: {
+          removeAllActive()
+          break
+        }
+      }
+    }
+    addEventListener(input, "keydown", keydonwHandler, true)
+    addEventListener(doc, "keydown", keydonwHandler, true)
+    const mousedownHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      const target = event.target
+      if (!target) {
+        return
+      }
+      if (target.closest(".utags_modal_content")) {
+        if (target === input) {
+          return
+        }
+        event.preventDefault()
+        input.focus()
+      } else {
+        event.preventDefault()
+        input.focus()
+      }
+    }
+    addEventListener(doc, "mousedown", mousedownHandler, true)
+    const clickHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      const target = event.target
+      if (!target) {
+        return
+      }
+      if (target.closest(".utags_modal_content")) {
+        input.focus()
+        if (target.closest(".utags_modal_content ul.utags_select_list li")) {
+          onSelect(target.textContent, input)
+        }
+        if (target.closest(".utags_modal_content ul.utags_inputed_tags li a")) {
+          removeTag(target.dataset.utags_tag)
+        }
+      } else {
+        closeModal2()
+      }
+    }
+    addEventListener(doc, "click", clickHandler, true)
+    const mouseoverHandler = (event) => {
+      const target = event.target
+      if (!(target == null ? void 0 : target.closest(".utags_modal_content"))) {
+        return
+      }
+      const li = target.closest("ul.utags_select_list li")
+      if (li) {
+        removeAllActive()
+        addClass(li, "utags_active2")
+      } else {
+        removeAllActive(2)
+      }
+    }
+    addEventListener(doc, "mousemove", mouseoverHandler, true)
+  }
+  async function advancedPrompt(message, value) {
+    pinnedTags = await getPinnedTags()
+    mostUsedTags = await getMostUsedTags()
+    recentAddedTags = await getRecentAddedTags()
+    currentTags = new Set(splitTags(value))
+    return new Promise((resolve) => {
+      createPromptView(message, value, resolve)
+    })
+  }
+  async function simplePrompt(message, value) {
+    return prompt(message, value)
+  }
   var numberLimitOfShowAllUtagsInArea = 10
   var lastShownArea
   function hideAllUtagsInArea(target) {
@@ -1466,6 +1940,9 @@
         if (!target) {
           return
         }
+        if (target.closest(".utags_prompt")) {
+          return
+        }
         if (target.closest(".utags_ul")) {
           const captainTag = target.closest(
             ".utags_captain_tag,.utags_captain_tag2"
@@ -1483,9 +1960,13 @@
               const meta = captainTag.dataset.utags_meta
                 ? JSON.parse(captainTag.dataset.utags_meta)
                 : void 0
-              const newTags = prompt(i2("prompt.addTags"), tags)
-              if (newTags !== null) {
-                const newTagsArray = newTags.split(/\s*[,，]\s*/)
+              const myPrompt = getSettingsValue("useSimplePrompt")
+                ? simplePrompt
+                : advancedPrompt
+              const newTags = await myPrompt(i2("prompt.addTags"), tags)
+              captainTag.focus()
+              if (key && newTags != void 0) {
+                const newTagsArray = splitTags(newTags)
                 await saveTags(key, newTagsArray, meta)
               }
             })
@@ -1669,7 +2150,7 @@
   }
   var v2ex_default = site2
   var greasyfork_org_default =
-    ":not(#a):not(#b):not(#c) .discussion-title+.utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) .discussion-title+.utags_ul.notag .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .discussion-title+.utags_ul:not(.notag){display:block !important;margin-top:-12px !important;margin-bottom:8px !important}:not(#a):not(#b):not(#c) .discussion-meta .script-link+.utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) .discussion-meta .script-link+.utags_ul.notag .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}"
+    ":not(#a):not(#b):not(#c) .discussion-title+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .discussion-title+.utags_ul_0 .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .discussion-title+.utags_ul_1{display:block !important;margin-top:-12px !important;margin-bottom:8px !important}:not(#a):not(#b):not(#c) .discussion-meta .script-link+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .discussion-meta .script-link+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}"
   function getScriptUrl(url) {
     return getCanonicalUrl3(url.replace(/(scripts\/\d+)(.*)/, "$1"))
   }
@@ -2046,7 +2527,7 @@
   }
   var mp_weixin_qq_com_default = site9
   var instagram_com_default =
-    ":not(#a):not(#b):not(#c) [data-utags_node_type=notag_relative]+.utags_ul.notag .utags_captain_tag{position:relative !important;width:14px !important;height:14px !important;padding:1px 0 0 1px !important}"
+    ":not(#a):not(#b):not(#c) [data-utags_node_type=notag_relative]+.utags_ul_0 .utags_captain_tag{position:relative !important;width:14px !important;height:14px !important;padding:1px 0 0 1px !important}"
   var site10 = {
     matches: /instagram\.com/,
     getMatchedNodes() {
@@ -2122,15 +2603,6 @@
     },
   }
   var threads_net_default = site11
-  function getFirstHeadElement(tagName = "h1") {
-    for (const element of $$(tagName)) {
-      if (element.closest(".browser_extension_settings_container")) {
-        continue
-      }
-      return element
-    }
-    return void 0
-  }
   function getUserProfileUrl2(href) {
     if (
       href.startsWith("https://www.facebook.com/") ||
@@ -2188,7 +2660,7 @@
   }
   var facebook_com_default = site12
   var youtube_com_default =
-    ":not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul.notag .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) ytd-rich-item-renderer yt-formatted-string[ellipsis-truncate-styling] .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul.notag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul.notag .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer yt-formatted-string.ytd-channel-name .utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer yt-formatted-string.ytd-channel-name .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul.notag,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul.notag .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string .utags_ul.notag .utags_captain_tag{left:-24px}:not(#a):not(#b):not(#c) [hidden]+.utags_ul{display:none !important}"
+    ":not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-rich-item-renderer yt-formatted-string[ellipsis-truncate-styling] .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul_0,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul_0,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string .utags_ul_0 .utags_captain_tag{left:-24px}:not(#a):not(#b):not(#c) [hidden]+.utags_ul{display:none !important}"
   var prefix3 = "https://www.youtube.com/"
   var prefix22 = "https://m.youtube.com/"
   function getUserProfileUrl3(href) {
@@ -2291,7 +2763,7 @@
   }
   var youtube_com_default2 = site13
   var bilibili_com_default =
-    ':not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul.notag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul.notag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul.notag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul.notag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul.notag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul.notag{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul.notag .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}'
+    ':not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}'
   var prefix4 = "https://www.bilibili.com/"
   var prefix23 = "https://space.bilibili.com/"
   var prefix32 = "https://m.bilibili.com/"
@@ -2938,7 +3410,7 @@
   }
   var sspai_com_default2 = site21
   var douyin_com_default =
-    ':not(#a):not(#b):not(#c) [data-e2e=comment-item] .utags_ul.notag .utags_captain_tag{left:-26px}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"]{display:block !important;margin-top:0px !important;margin-bottom:2px !important}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].notag{height:0}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].notag .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul.notag[data-utags_key*="/video/"]{display:block !important;height:0}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul.notag[data-utags_key*="/video/"] .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul.notag[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul.notag[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul.notag[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul.notag[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}'
+    ':not(#a):not(#b):not(#c) [data-e2e=comment-item] .utags_ul_0 .utags_captain_tag{left:-26px}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"]{display:block !important;margin-top:0px !important;margin-bottom:2px !important}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].utags_ul_0{height:0}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].utags_ul_0 .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/video/"]{display:block !important;height:0}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/video/"] .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul_0[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul_0[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}'
   var prefix11 = "https://www.douyin.com/"
   function getUserProfileUrl11(url, exact = false) {
     if (url.startsWith(prefix11)) {
@@ -3161,7 +3633,7 @@
   }
   var podcasts_google_com_default2 = site23
   var rebang_today_default =
-    ":not(#a):not(#b):not(#c) .w-screen ul{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul.notag,:not(#a):not(#b):not(#c) .w-screen ul .relative>.utags_ul.notag{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .w-screen ul .relative>.utags_ul.notag .utags_captain_tag{background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul:not(.notag),:not(#a):not(#b):not(#c) .w-screen ul .relative>.utags_ul:not(.notag){display:block !important}:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul.notag{top:20px}:not(#a):not(#b):not(#c) .w-screen ul .text-base .block+.utags_ul.notag,:not(#a):not(#b):not(#c) .w-screen ul .flex-col .text-base+.utags_ul.notag,:not(#a):not(#b):not(#c) .w-screen ul h1 .utags_ul.notag{display:block !important;height:0;position:initial}:not(#a):not(#b):not(#c) .w-screen ul .text-base .block+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .w-screen ul .flex-col .text-base+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .w-screen ul h1 .utags_ul.notag .utags_captain_tag{top:-26px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .w-screen ul .truncate .utags_ul.notag .utags_captain_tag{left:-22px}:not(#a):not(#b):not(#c) .w-screen ul li>div.overflow-hidden:nth-of-type(2):not(.relative)>a+.utags_ul.notag,:not(#a):not(#b):not(#c) .w-screen ul li>a+.utags_ul.notag{display:block !important;position:absolute}:not(#a):not(#b):not(#c) .w-screen ul li>div.overflow-hidden:nth-of-type(2):not(.relative)>a+.utags_ul.notag .utags_captain_tag,:not(#a):not(#b):not(#c) .w-screen ul li>a+.utags_ul.notag .utags_captain_tag{left:26px;top:-24px;background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .w-screen ul li>a.text-base+.utags_ul.notag .utags_captain_tag{left:14px;top:0}:not(#a):not(#b):not(#c) .w-screen ul li>div.overflow-hidden:nth-of-type(2):not(.relative)>a+.utags_ul.notag .utags_captain_tag{left:-4px;top:-24px}:not(#a):not(#b):not(#c) aside{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) aside .select-none .utags_ul.notag .utags_captain_tag{left:-22px}:not(#a):not(#b):not(#c) aside .select-none .arco-tag .utags_ul.notag .utags_captain_tag{left:-6px}:not(#a):not(#b):not(#c) #markdown-body.markdown-body a+.utags_ul.notag{display:inline !important;position:initial}:not(#a):not(#b):not(#c) #markdown-body.markdown-body a+.utags_ul.notag .utags_captain_tag{left:0;top:0}"
+    ":not(#a):not(#b):not(#c) .w-screen ul{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul .flex.flex-col.relative .flex-1 .utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul .relative>.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-3);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .w-screen ul .flex.flex-col.relative .flex-1 .utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul .flex-1:not(.relative)>.utags_ul_0{--utags-notag-captain-tag-top: 18px}:not(#a):not(#b):not(#c) .w-screen ul .text-base .block+.utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul h1 .utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul li>div.overflow-hidden:nth-of-type(2):not(.relative)>a+.utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul li>a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .w-screen ul .text-base .block+.utags_ul_0{--utags-notag-captain-tag-top: -24px}:not(#a):not(#b):not(#c) .w-screen ul h1 .utags_ul_0{--utags-notag-captain-tag-top: -28px}:not(#a):not(#b):not(#c) .w-screen ul li>a+.utags_ul_0{--utags-notag-captain-tag-left: 26px}:not(#a):not(#b):not(#c) .w-screen ul .flex.flex-col .text-base+.utags_ul_0,:not(#a):not(#b):not(#c) .w-screen ul li>a.text-base+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .w-screen ul li>a.text-base+.utags_ul_0{--utags-notag-captain-tag-top: -10px;--utags-notag-captain-tag-left: 14px}:not(#a):not(#b):not(#c) .w-screen ul .truncate .utags_ul_0{--utags-notag-captain-tag-left: -22px}:not(#a):not(#b):not(#c) aside{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) aside .select-none .utags_ul_0{--utags-notag-captain-tag-left: -22px}:not(#a):not(#b):not(#c) aside .select-none .arco-tag .utags_ul_0{--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) #markdown-body.markdown-body a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}"
   var nodeNameMap = {
     知乎: "zhihu",
     微博: "weibo",
@@ -3252,7 +3724,7 @@
   }
   var rebang_today_default2 = site24
   var pornhub_com_default =
-    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul.notag .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul:not(.notag)::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul.notag{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul.notag .utags_captain_tag{background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul:not(.notag){display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul.notag{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul.notag .utags_captain_tag{background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul:not(.notag){display:block !important;height:0;position:absolute;bottom:0}'
+    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0 .utags_captain_tag{background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0 .utags_captain_tag{background-color:rgba(255,255,255,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
   var prefix13 = "https://www.pornhub.com/"
   function getUserProfileUrl12(href, exact = false) {
     if (href.includes("pornhub.com")) {
@@ -3716,17 +4188,40 @@
       defaultValue: false,
       group: 2,
     },
+    pinnedTagsTitle: {
+      title: i2("settings.pinnedTags"),
+      type: "action",
+      async onclick() {
+        const input = $('textarea[data-key="pinnedTags"]')
+        if (input) {
+          input.focus()
+        }
+      },
+      group: 3,
+    },
+    pinnedTags: {
+      title: i2("settings.pinnedTags"),
+      defaultValue: i2("settings.pinnedTagsDefaultValue"),
+      placeholder: i2("settings.pinnedTagsPlaceholder"),
+      type: "textarea",
+      group: 3,
+    },
+    useSimplePrompt: {
+      title: i2("settings.useSimplePrompt"),
+      defaultValue: false,
+      group: 4,
+    },
     openTagsPage: {
       title: i2("settings.openTagsPage"),
       type: "externalLink",
       url: "https://utags.pipecraft.net/tags/",
-      group: 3,
+      group: 5,
     },
     openDataPage: {
       title: i2("settings.openDataPage"),
       type: "externalLink",
       url: "https://utags.pipecraft.net/data/",
-      group: 3,
+      group: 5,
     },
   }
   var addUtagsStyle = () => {
@@ -3770,13 +4265,10 @@
       utagsUl.remove()
     }
     const ul = createElement("ul", {
-      class: "utags_ul",
+      class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
     })
     let li = createElement("li")
-    if (tags.length === 0) {
-      addClass(ul, "notag")
-    }
     const a = createElement("button", {
       title: "Add tags",
       "data-utags_tag": "\u{1F3F7}\uFE0F",

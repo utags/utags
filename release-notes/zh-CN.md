@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## 0.9.0
+
+- Use advanced tag input prompt UI
+- Define utag ul styles with css custom properties
+
 ## 0.8.10
 
 - 适配 rebang.today

@@ -35,10 +35,10 @@
 ## 使用方法
 
 - 鼠标移到帖子标题或用户名上面，旁边会出现标签 🏷️ 图标，点击图标添加标签
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/5lso2l5779ompdep7mmvkivsyxin)
+  ![screenshots](https://assets.bestxtools.com/i/nqpyh)
 
 - 多个标签用逗号分隔（半角逗号符号、全角逗号符号都可以）
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/quyien946y8bbpdtdi0tyf0pbsmf)
+  ![screenshots](https://assets.bestxtools.com/i/iczcg)
 
 - 帖子标题，用户名，节点都可以添加标签
   ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
@@ -135,6 +135,9 @@
 
 ## 更新记录
 
+- 0.9.0
+  - Use advanced tag input prompt UI
+  - Define utag ul styles with css custom properties
 - 0.8.10
   - 适配 rebang.today
 - 0.8.9
