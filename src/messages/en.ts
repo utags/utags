@@ -15,6 +15,9 @@ const messages = {
   "prompt.pinnedTags": "Pinned",
   "prompt.mostUsedTags": "Recently commonly used",
   "prompt.recentAddedTags": "Newly added",
+  "prompt.copy": "Copy",
+  "prompt.cancel": "Cancle",
+  "prompt.ok": "OK",
 }
 
 export default messages

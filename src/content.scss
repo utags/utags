@@ -234,6 +234,7 @@
         color: var(--utags-button-text-color);
         border: 1px solid var(--utags-button-border-color);
         background-color: var(--utags-button-bg-color);
+        text-shadow: none;
 
         &:hover {
           background-color: var(--utags-button-hover-bg-color);
@@ -290,7 +291,24 @@
     }
   }
 
-  ul.utags_inputed_tags {
+  .utags_current_tags_wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .utags_button_copy {
+      cursor: pointer;
+      font-size: 10px;
+      line-height: 1;
+      height: 18px;
+      border-radius: 2px;
+      color: var(--utags-action-button-text-color);
+      background-color: var(--utags-action-button-bg-color);
+      border: 1px solid var(--utags-action-button-border-color);
+      text-shadow: none;
+    }
+  }
+
+  ul.utags_current_tags {
     list-style-type: none;
     margin: 0;
     padding: 0 0 10px 0 !important;
@@ -298,7 +316,8 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    &:empty {
+    &:empty,
+    &:empty + button {
       display: none !important;
     }
 

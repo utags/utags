@@ -46,9 +46,9 @@ function removeTag(tag: string | undefined) {
 
 function updateLists() {
   displayedTags = new Set()
-  const ul1 = $(".utags_modal_content ul.utags_inputed_tags")
+  const ul1 = $(".utags_modal_content ul.utags_current_tags")
   if (ul1) {
-    updateInputedTagList(ul1)
+    updateCurrentTagList(ul1)
   }
 
   const ul = $(".utags_modal_content ul.utags_select_list.utags_pined_list")
@@ -91,7 +91,7 @@ function updateCandidateTagList(ul: HTMLElement, candidateTags: string[]) {
   }
 }
 
-function updateInputedTagList(ul: HTMLElement) {
+function updateCurrentTagList(ul: HTMLElement) {
   ul.textContent = ""
 
   for (const tag of currentTags) {
@@ -123,6 +123,12 @@ function removeAllActive(type?: number) {
   }
 }
 
+function copyCurrentTags(input: HTMLInputElement) {
+  input.value = Array.from(currentTags).join(", ")
+  input.focus()
+  input.select()
+}
+
 function createPromptView(
   message: string,
   value: string | undefined,
@@ -136,11 +142,18 @@ function createPromptView(
   addElement(content, "span", {
     class: "utags_title",
     textContent: message,
-    "data-utags": "",
   })
 
-  addElement(content, "ul", {
-    class: "utags_inputed_tags utags_ul",
+  const currentTagsWrapper = addElement(content, "div", {
+    class: "utags_current_tags_wrapper",
+  })
+  addElement(currentTagsWrapper, "span", {
+    textContent: "",
+    style: "display: none;",
+    "data-utags": "",
+  })
+  addElement(currentTagsWrapper, "ul", {
+    class: "utags_current_tags utags_ul",
   })
 
   const input = addElement(content, "input", {
@@ -155,6 +168,14 @@ function createPromptView(
 
   input.focus()
   input.select()
+
+  addElement(currentTagsWrapper, "button", {
+    class: "utags_button_copy",
+    textContent: i("prompt.copy"),
+    onclick() {
+      copyCurrentTags(input)
+    },
+  })
 
   const listWrapper = addElement(content, "div", {
     class: "utags_list_wrapper",
@@ -202,14 +223,14 @@ function createPromptView(
   }
 
   addElement(buttonWrapper, "button", {
-    textContent: "Cancel",
+    textContent: i("prompt.cancel"),
     onclick() {
       closeModal()
     },
   })
   addElement(buttonWrapper, "button", {
     class: "utags_primary",
-    textContent: "OK",
+    textContent: i("prompt.ok"),
     onclick() {
       onSelect(input.value.trim(), input)
       okHandler()
@@ -408,7 +429,7 @@ function createPromptView(
         onSelect(target.textContent!, input)
       }
 
-      if (target.closest(".utags_modal_content ul.utags_inputed_tags li a")) {
+      if (target.closest(".utags_modal_content ul.utags_current_tags li a")) {
         removeTag(target.dataset.utags_tag)
       }
     } else {
