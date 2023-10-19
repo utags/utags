@@ -12,7 +12,7 @@ import {
 import createModal from "../components/modal"
 import { i } from "../messages"
 import { getMostUsedTags, getPinnedTags, getRecentAddedTags } from "../storage"
-import { splitTags } from "../utils"
+import { copyText, splitTags } from "../utils"
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
@@ -123,8 +123,10 @@ function removeAllActive(type?: number) {
   }
 }
 
-function copyCurrentTags(input: HTMLInputElement) {
-  input.value = Array.from(currentTags).join(", ")
+async function copyCurrentTags(input: HTMLInputElement) {
+  const value = Array.from(currentTags).join(", ")
+  await copyText(value)
+  input.value = value
   input.focus()
   input.select()
 }
@@ -161,8 +163,12 @@ function createPromptView(
     placeholder: "foo, bar",
     onblur(event: Event) {
       // console.log(event)
-      event.preventDefault()
-      closeModal()
+      setTimeout(() => {
+        // When press 'Escape' key
+        if (doc.activeElement === doc.body) {
+          closeModal()
+        }
+      }, 1)
     },
   }) as HTMLInputElement
 
@@ -172,8 +178,8 @@ function createPromptView(
   addElement(currentTagsWrapper, "button", {
     class: "utags_button_copy",
     textContent: i("prompt.copy"),
-    onclick() {
-      copyCurrentTags(input)
+    async onclick() {
+      await copyCurrentTags(input)
     },
   })
 

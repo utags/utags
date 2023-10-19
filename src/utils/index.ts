@@ -1,4 +1,4 @@
-import { $$ } from "browser-extension-utils"
+import { $$, createElement } from "browser-extension-utils"
 
 export function cloneWithoutUtags(element: HTMLElement) {
   const newElement = element.cloneNode(true) as HTMLElement
@@ -27,4 +27,17 @@ export function splitTags(text: string | undefined) {
   }
 
   return text.replaceAll(/[\n\r\t]/gm, " ").split(/\s*[,，]\s*/)
+}
+
+export async function copyText(data: string) {
+  const textArea = createElement("textarea", {
+    style: "position: absolute; left: -100%;",
+    contentEditable: "true",
+  }) as HTMLTextAreaElement
+  textArea.value = data.replaceAll("\u00A0", " ")
+
+  document.body.append(textArea)
+  textArea.select()
+  await navigator.clipboard.writeText(textArea.value)
+  textArea.remove()
 }
