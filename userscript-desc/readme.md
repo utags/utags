@@ -99,9 +99,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.1
+  - Add the copy button in the prompt UI
 - 0.9.0
   - Use advanced tag input prompt UI
-  - Define utag ul styles with css custom properties
+  - Define utags ul styles with css custom properties
 - 0.8.10
   - Apply utags to rebang.today
 - 0.8.9
@@ -203,6 +205,10 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 - 0.0.1
   - Support [www.v2ex.com](https://www.v2ex.com/) site, add or display tags on member or post links
   - Added [list page](https://utags.pipecraft.net/tags/) with tagged links
+
+## Buy Me a Coffee
+
+- [https://afdian.net/a/pipecraft](https://afdian.net/a/pipecraft)
 
 ## License
 

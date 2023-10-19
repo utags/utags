@@ -131,9 +131,11 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.9.1
+  - Add the copy button in the prompt UI
 - 0.9.0
   - Use advanced tag input prompt UI
-  - Define utag ul styles with css custom properties
+  - Define utags ul styles with css custom properties
 - 0.8.10
   - 适配 rebang.today
 - 0.8.9
