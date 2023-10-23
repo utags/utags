@@ -41,5 +41,6 @@
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
+// @run-at               document-start
 // ==/UserScript==
 //

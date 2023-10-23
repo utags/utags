@@ -11,11 +11,13 @@ import {
   getAttribute,
   hasClass,
   removeClass,
+  runWhenHeadExists,
   setStyle,
   throttle,
   uniq,
 } from "browser-extension-utils"
 import styleText from "data-text:./content.scss"
+import type { PlasmoCSConfig } from "plasmo"
 
 import createTag from "./components/tag"
 import { i } from "./messages"
@@ -33,6 +35,11 @@ import {
   migration,
 } from "./storage/index"
 import { type UserTag, type UserTagMeta } from "./types"
+
+export const config: PlasmoCSConfig = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  run_at: "document_start",
+}
 
 const host = location.host
 
@@ -325,16 +332,6 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
 }
 
 async function main() {
-  if ($("#utags_style")) {
-    // already running
-    console.log(
-      // eslint-disable-next-line n/prefer-global/process
-      `[UTags] [${process.env.PLASMO_TARGET}-${process.env.PLASMO_TAG}] Skip this, since another instance is already running.`,
-      location.href
-    )
-    return
-  }
-
   addUtagsStyle()
 
   await initSettings({
@@ -410,5 +407,9 @@ async function main() {
   })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises, unicorn/prefer-top-level-await
-main()
+runWhenHeadExists(async () => {
+  if (doc.documentElement.dataset.utags === undefined) {
+    doc.documentElement.dataset.utags = ""
+    await main()
+  }
+})
