@@ -91,6 +91,24 @@ function updateCandidateTagList(ul: HTMLElement, candidateTags: string[]) {
   }
 }
 
+function getNextList(parentElement: HTMLElement) {
+  let parentNext = parentElement.nextElementSibling as HTMLElement
+  while (parentNext && parentNext.children.length === 0) {
+    parentNext = parentNext.nextElementSibling as HTMLElement
+  }
+
+  return parentNext
+}
+
+function getPreviousList(parentElement: HTMLElement) {
+  let parentPrevious = parentElement.previousElementSibling as HTMLElement
+  while (parentPrevious && parentPrevious.children.length === 0) {
+    parentPrevious = parentPrevious.previousElementSibling as HTMLElement
+  }
+
+  return parentPrevious
+}
+
 function updateCurrentTagList(ul: HTMLElement) {
   ul.textContent = ""
 
@@ -338,8 +356,7 @@ function createPromptView(
             parentElement.children,
             current
           ) as number
-          const parentPrevious =
-            parentElement.previousElementSibling as HTMLElement
+          const parentPrevious = getPreviousList(parentElement)
           if (parentPrevious) {
             removeAllActive()
             const newIndex = Math.min(parentPrevious.children.length - 1, index)
@@ -366,7 +383,7 @@ function createPromptView(
             parentElement.children,
             current
           ) as number
-          const parentNext = parentElement.nextElementSibling as HTMLElement
+          const parentNext = getNextList(parentElement)
           if (parentNext) {
             removeAllActive()
             const newIndex = Math.min(parentNext.children.length - 1, index)
