@@ -75,7 +75,7 @@ const sites: Site[] = [
   panda_chaika_moe,
 ]
 
-const getCanonicalUrlFunctionList = sites
+const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
   .filter((v) => typeof v === "function")
 

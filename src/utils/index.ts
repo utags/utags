@@ -41,3 +41,48 @@ export async function copyText(data: string) {
   await navigator.clipboard.writeText(textArea.value)
   textArea.remove()
 }
+
+export function deleteUrlParameters(
+  urlString: string,
+  keys: string[] | string,
+  excepts?: string[]
+) {
+  const url = new URL(urlString)
+  if (keys === "*") {
+    if (excepts && excepts.length > 0) {
+      const parameters = new URLSearchParams(url.search)
+      keys = []
+      for (const key of parameters.keys()) {
+        if (!excepts.includes(key)) {
+          keys.push(key)
+        }
+      }
+    } else {
+      url.search = ""
+      return url.toString()
+    }
+  }
+
+  if (typeof keys === "string") {
+    keys = [keys]
+  }
+
+  const parameters = new URLSearchParams(url.search)
+  for (const key of keys) {
+    parameters.delete(key)
+  }
+
+  url.search = parameters.size === 0 ? "" : "?" + parameters.toString()
+  return url.toString()
+}
+
+/*
+let testUrl = "https://example.com?foo=1&bar=2&foo=3&hoo=11"
+console.log(deleteUrlParameters(testUrl, ["", "bar"]))
+
+console.log(deleteUrlParameters(testUrl, "*"))
+
+console.log(deleteUrlParameters(testUrl, "foo"))
+
+console.log(deleteUrlParameters(testUrl, "*", ["bar"]))
+*/

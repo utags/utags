@@ -1,4 +1,12 @@
-export const getCanonicalUrl = (url: string) => url
+import { deleteUrlParameters } from "../utils"
+
+export const getCanonicalUrl = (url: string) =>
+  deleteUrlParameters(url, [
+    // common useless parameters
+    "utm_campaign",
+    "utm_source",
+    "utm_medium",
+  ])
 
 const site = {
   matches: /.*/,
