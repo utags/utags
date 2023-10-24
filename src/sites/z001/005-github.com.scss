@@ -1,0 +1,43 @@
+:not(#a):not(#b):not(#c) {
+  .search-title,
+  /* https://github.com/topics */
+  .d-flex.flex-justify-between a[href^="/topics/"] +,
+   /* https://github.com/stars */
+   .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex +,
+  /* https://github.com/explore */
+  ul.f4 a[href^="/topics/"].d-flex + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-4);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-4);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-4);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-4);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+  }
+
+  .search-title .utags_ul_0 {
+    --utags-notag-captain-tag-top: -10px;
+  }
+
+  /* https://github.com/topics */
+  .d-flex.flex-justify-between a[href^="/topics/"] + .utags_ul_0 {
+    --utags-notag-captain-tag-top: 6px;
+    --utags-notag-captain-tag-left: 76px;
+  }
+
+  /* https://github.com/stars */
+  .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex + .utags_ul_0 {
+    --utags-notag-captain-tag-top: 20px;
+    --utags-notag-captain-tag-left: 76px;
+  }
+
+  /* https://github.com/explore */
+  ul.f4 a[href^="/topics/"].d-flex + .utags_ul_0 {
+    --utags-notag-captain-tag-top: -24px;
+    --utags-notag-captain-tag-left: -2px;
+  }
+}

@@ -286,6 +286,7 @@
 
         &:focus,
         &:focus-visible {
+          outline: 0;
           border-bottom: 2px solid var(--utags-action-button-hover-border-color);
         }
       }
