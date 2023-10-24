@@ -1,0 +1,6 @@
+:not(#a):not(#b):not(#c) {
+  tbody.list-item td.title {
+    --utags-notag-captain-tag-top: -6px;
+    --utags-notag-captain-tag-left: -24px;
+  }
+}

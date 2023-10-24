@@ -1,3 +1,5 @@
+import styleText from "data-text:./024-myanimelist.net.scss"
+
 import defaultSite from "../default"
 
 const site = {
@@ -25,6 +27,7 @@ const site = {
     '[class*="icon-"]',
     '[rel*="sponsored"]',
   ],
+  getStyle: () => styleText,
 }
 
 export default site
