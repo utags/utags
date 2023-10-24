@@ -2,6 +2,13 @@
 
 > [English](readme.md) | 中文
 
+## 0.9.3
+
+- Update selectors and style
+- Apply utags to douban.com
+- Apply utags to myanimelist.net
+- Change the injection moment to 'document_start'
+
 ## 0.9.1
 
 - Add the copy button in the prompt UI

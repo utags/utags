@@ -30,6 +30,8 @@ Not it supports
 - [douyin.com](https://www.douyin.com/)
 - [podcasts.google.com](https://podcasts.google.com/)
 - [rebang.today](https://rebang.today/)
+- [myanimelist.net](https://myanimelist.net/)
+- [douban.com](https://www.douban.com/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -99,6 +101,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.3
+  - Update selectors and style
+  - Apply utags to douban.com
+  - Apply utags to myanimelist.net
+  - Change the injection moment to 'document_start'
 - 0.9.1
   - Add the copy button in the prompt UI
 - 0.9.0
