@@ -91,6 +91,29 @@ function getTopicsUrl(href: string) {
   return undefined
 }
 
+function getIssuesUrl(href: string) {
+  if (href.startsWith(prefix)) {
+    const href2 = href.slice(19)
+
+    if (
+      /^[\w-]+\/[\w-.]+\/(issues|pull|discussions)\/\d+(\?.*)?$/.test(href2)
+    ) {
+      const username = /^([\w-]+)/.exec(href2)![1]
+      if (username && !noneUsers.has(username)) {
+        return (
+          prefix +
+          href2.replace(
+            /(^[\w-]+\/[\w-.]+\/(issues|pull|discussions)\/\d+).*/,
+            "$1"
+          )
+        )
+      }
+    }
+  }
+
+  return undefined
+}
+
 const site = {
   matches: /github\.com/,
   listNodesSelectors: [],
@@ -129,8 +152,15 @@ const site = {
               return false
             }
 
-            const title = key.replace(prefix, "")
+            const title = "#" + key.replace(prefix + "topics/", "")
             const meta = { title, type: "topic" }
+            element.utags = { key, meta }
+            return true
+          }
+
+          key = getIssuesUrl(href)
+          if (key) {
+            const meta = { type: "issue" }
             element.utags = { key, meta }
             return true
           }
