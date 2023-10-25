@@ -133,6 +133,9 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.9.4
+  - Update selectors for GitHub, now can add tags to issues, pulls and discussions
+  - Define utags font-size and icon size with CSS custom properties
 - 0.9.3
   - Update selectors and style
   - Apply utags to douban.com
