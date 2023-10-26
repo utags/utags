@@ -49,12 +49,14 @@
     .utags_text_tag {
       box-sizing: border-box !important;
       display: block !important;
-      border: var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);
+      border: var(--utags-text-tag-border-width) solid
+        var(--utags-text-tag-border-color);
       color: var(--utags-text-tag-color) !important;
       border-radius: 3px !important;
       padding: 1px 3px !important;
       margin: 0 1px !important;
-      font-size: 10px !important;
+      font-size: var(--utags-text-tag-font-size) !important;
+      font-family: var(--utags-text-tag-font-family) !important;
       letter-spacing: 0 !important;
       line-height: 1 !important;
       height: unset !important;
@@ -81,6 +83,14 @@
       font-size: var(--utags-text-tag-font-size);
       line-height: 1;
       height: unset;
+    }
+
+    .utags_emoji_tag {
+      --utags-text-tag-background-color: var(
+        --utags-emoji-tag-background-color
+      );
+      --utags-text-tag-font-size: var(--utags-emoji-tag-font-size);
+      --utags-text-tag-border-width: var(--utags-emoji-tag-border-width);
     }
 
     .utags_captain_tag,
@@ -269,7 +279,7 @@
         box-sizing: border-box;
         caret-color: var(--cr-input-focus-color);
         color: var(--cr-input-color);
-        font-family: inherit;
+        font-family: var(--utags-text-tag-font-family) !important;
         font-weight: inherit;
         line-height: inherit;
         min-height: var(--cr-input-min-height, auto);
@@ -384,6 +394,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-family: var(--utags-text-tag-font-family) !important;
       }
     }
   }
@@ -440,6 +451,10 @@
   opacity: 100% !important;
 }
 
+textarea[data-key="emojiTags"] {
+  font-family: var(--utags-text-tag-font-family);
+}
+
 :root {
   --utags-list-node-display: block;
   --utags-captain-tag-background-color: #ffffffb3;
@@ -452,6 +467,13 @@
   --utags-text-tag-background-color: unset;
   --utags-text-tag-font-size: 10px;
   --utags-text-tag-border-width: 1px;
+  --utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei",
+    "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
+    "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-emoji-tag-background-color: #f8fafe;
+  --utags-emoji-tag-font-size: 12px;
+  --utags-emoji-tag-border-width: 0;
   --utags-button-text-color: #1a73e8;
   --utags-button-bg-color: #ffffff;
   --utags-button-border-color: #dadce0;

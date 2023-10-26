@@ -26,7 +26,10 @@ export function splitTags(text: string | undefined) {
     return []
   }
 
-  return text.replaceAll(/[\n\r\t]/gm, " ").split(/\s*[,，]\s*/)
+  return text
+    .trim()
+    .replaceAll(/[\n\r\t]/gm, " ")
+    .split(/\s*[,，]\s*/)
 }
 
 export async function copyText(data: string) {

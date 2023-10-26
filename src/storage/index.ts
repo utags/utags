@@ -173,6 +173,10 @@ export async function getPinnedTags(): Promise<string[]> {
   return splitTags((getSettingsValue("pinnedTags") as string) || "")
 }
 
+export async function getEmojiTags(): Promise<string[]> {
+  return splitTags((getSettingsValue("emojiTags") as string) || "")
+}
+
 export function addTagsValueChangeListener(func) {
   addValueChangeListener(storageKey, func)
 }

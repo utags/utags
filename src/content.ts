@@ -31,6 +31,7 @@ import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
   getCachedUrlMap,
+  getEmojiTags,
   getTags,
   migration,
 } from "./storage/index"
@@ -41,6 +42,7 @@ export const config: PlasmoCSConfig = {
   run_at: "document_start",
 }
 
+let emojiTags: string[]
 const host = location.host
 
 const isEnabledByDefault = () => {
@@ -81,6 +83,25 @@ const settingsTable = {
     title: i("settings.pinnedTags"),
     defaultValue: i("settings.pinnedTagsDefaultValue"),
     placeholder: i("settings.pinnedTagsPlaceholder"),
+    type: "textarea",
+    group: 3,
+  },
+  emojiTagsTitle: {
+    title: i("settings.emojiTags"),
+    type: "action",
+    async onclick() {
+      const input = $('textarea[data-key="emojiTags"]')
+      if (input) {
+        input.focus()
+      }
+    },
+    group: 3,
+  },
+  emojiTags: {
+    title: i("settings.emojiTags"),
+    defaultValue:
+      "👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌",
+    placeholder: "👍, 👎",
     type: "textarea",
     group: 3,
   },
@@ -189,7 +210,7 @@ function appendTagsToPage(
 
   for (const tag of tags) {
     li = createElement("li")
-    const a = createTag(tag)
+    const a = createTag(tag, { isEmoji: emojiTags.includes(tag) })
     li.append(a)
     ul.append(li)
   }
@@ -229,6 +250,8 @@ async function displayTags() {
   if (start) {
     console.error("start of displayTags", Date.now() - start)
   }
+
+  emojiTags = await getEmojiTags()
 
   // console.error("displayTags")
   const listNodes = getListNodes()

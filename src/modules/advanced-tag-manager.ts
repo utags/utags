@@ -9,16 +9,24 @@ import {
   removeEventListener,
 } from "browser-extension-utils"
 
+import createTag from "~components/tag"
+
 import createModal from "../components/modal"
 import { i } from "../messages"
-import { getMostUsedTags, getPinnedTags, getRecentAddedTags } from "../storage"
+import {
+  getEmojiTags,
+  getMostUsedTags,
+  getPinnedTags,
+  getRecentAddedTags,
+} from "../storage"
 import { copyText, splitTags } from "../utils"
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
 let recentAddedTags: string[]
+let emojiTags: string[]
 let displayedTags = new Set()
-let currentTags = new Set()
+let currentTags = new Set<string>()
 
 function onSelect(selected: string, input: HTMLInputElement) {
   if (selected) {
@@ -54,6 +62,11 @@ function updateLists() {
   const ul = $(".utags_modal_content ul.utags_select_list.utags_pined_list")
   if (ul) {
     updateCandidateTagList(ul, pinnedTags)
+  }
+
+  const ul4 = $(".utags_modal_content ul.utags_select_list.utags_emoji_list")
+  if (ul4) {
+    updateCandidateTagList(ul4, emojiTags)
   }
 
   const ul2 = $(".utags_modal_content ul.utags_select_list.utags_most_used")
@@ -115,10 +128,8 @@ function updateCurrentTagList(ul: HTMLElement) {
   for (const tag of currentTags) {
     displayedTags.add(tag)
     const li = addElement(ul, "li")
-    addElement(li, "a", {
-      "data-utags_tag": tag,
-      class: "utags_text_tag",
-    })
+    const a = createTag(tag, { isEmoji: emojiTags.includes(tag), noLink: true })
+    li.append(a)
   }
 }
 
@@ -220,6 +231,11 @@ function createPromptView(
     "data-utags_list_name": i("prompt.recentAddedTags"),
   })
 
+  addElement(listWrapper, "ul", {
+    class: "utags_select_list utags_emoji_list",
+    "data-utags_list_name": i("prompt.emojiTags"),
+  })
+
   updateLists()
 
   const buttonWrapper = addElement(content, "div", {
@@ -232,12 +248,12 @@ function createPromptView(
     }
 
     closed = true
-    modal.remove()
     removeEventListener(input, "keydown", keydonwHandler, true)
     removeEventListener(doc, "keydown", keydonwHandler, true)
     removeEventListener(doc, "mousedown", mousedownHandler, true)
     removeEventListener(doc, "click", clickHandler, true)
     removeEventListener(doc, "mouseover", mouseoverHandler, true)
+    modal.remove()
     // eslint-disable-next-line eqeqeq, no-eq-null
     resolve(value == null ? null : value)
   }
@@ -487,6 +503,7 @@ export async function advancedPrompt(
   pinnedTags = await getPinnedTags()
   mostUsedTags = await getMostUsedTags()
   recentAddedTags = await getRecentAddedTags()
+  emojiTags = await getEmojiTags()
   currentTags = new Set(splitTags(value))
 
   return new Promise((resolve) => {
