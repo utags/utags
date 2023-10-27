@@ -32,6 +32,26 @@ export function splitTags(text: string | undefined) {
     .split(/\s*[,，]\s*/)
 }
 
+export function sortTags(tags: string[], privilegedTags: string[]) {
+  return tags.sort((a, b) => {
+    const pA = privilegedTags.includes(a)
+    const pB = privilegedTags.includes(b)
+    if (pA && pB) {
+      return 0
+    }
+
+    if (pA) {
+      return -1
+    }
+
+    if (pB) {
+      return 1
+    }
+
+    return 0
+  })
+}
+
 export async function copyText(data: string) {
   const textArea = createElement("textarea", {
     style: "position: absolute; left: -100%;",

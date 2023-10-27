@@ -11,9 +11,9 @@ import {
 } from "browser-extension-utils"
 
 import { i } from "../messages"
-import { saveTags } from "../storage"
+import { getEmojiTags, saveTags } from "../storage"
 import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
-import { splitTags } from "../utils"
+import { sortTags, splitTags } from "../utils"
 import { advancedPrompt } from "./advanced-tag-manager"
 import { simplePrompt } from "./simple-tag-manger"
 
@@ -103,7 +103,8 @@ export function bindDocumentEvents() {
             captainTag.focus()
             // eslint-disable-next-line eqeqeq
             if (key && newTags != undefined) {
-              const newTagsArray = splitTags(newTags)
+              const emojiTags = await getEmojiTags()
+              const newTagsArray = sortTags(splitTags(newTags), emojiTags)
               await saveTags(key, newTagsArray, meta)
             }
           })

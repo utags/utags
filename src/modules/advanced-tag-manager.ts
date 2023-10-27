@@ -19,7 +19,7 @@ import {
   getPinnedTags,
   getRecentAddedTags,
 } from "../storage"
-import { copyText, splitTags } from "../utils"
+import { copyText, sortTags, splitTags } from "../utils"
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
@@ -125,7 +125,8 @@ function getPreviousList(parentElement: HTMLElement) {
 function updateCurrentTagList(ul: HTMLElement) {
   ul.textContent = ""
 
-  for (const tag of currentTags) {
+  const sortedTags = sortTags([...currentTags], emojiTags)
+  for (const tag of sortedTags) {
     displayedTags.add(tag)
     const li = addElement(ul, "li")
     const a = createTag(tag, { isEmoji: emojiTags.includes(tag), noLink: true })
@@ -153,7 +154,7 @@ function removeAllActive(type?: number) {
 }
 
 async function copyCurrentTags(input: HTMLInputElement) {
-  const value = Array.from(currentTags).join(", ")
+  const value = sortTags([...currentTags], emojiTags).join(", ")
   await copyText(value)
   input.value = value
   input.focus()
