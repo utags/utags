@@ -9,7 +9,10 @@
 
   .utags_ul {
     box-sizing: border-box !important;
-    display: inline !important;
+    display: inline-flex !important;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
     overflow: visible;
     white-space: normal;
     list-style-type: none !important;
