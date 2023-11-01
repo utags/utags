@@ -2,6 +2,13 @@
 
 > [English](readme.md) | 中文
 
+## 0.9.5
+
+- Add emoji tags 👍
+- Increase the size of the list of candidate tags
+- Enable the select/find feature on the tag management page
+- Use CSS custom properties to define the width of the text tag border
+
 ## 0.9.4
 
 - Update selectors for GitHub, now can add tags to issues, pulls and discussions
