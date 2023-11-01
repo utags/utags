@@ -5,8 +5,12 @@ export default function createTag(
   options: Record<string, any>
 ) {
   const a = createElement("a")
-  // a.textContent = tagName
-  a.dataset.utags_tag = tagName
+  if (options.enableSelect) {
+    a.textContent = tagName
+  } else {
+    a.dataset.utags_tag = tagName
+  }
+
   if (!options.noLink) {
     a.setAttribute(
       "href",

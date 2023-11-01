@@ -69,12 +69,15 @@
       min-height: unset !important;
       max-width: unset !important;
       max-height: unset !important;
-      cursor: pointer;
       background: unset !important;
       background-color: var(--utags-text-tag-background-color) !important;
       /* Fix v2ex polish start */
       pointer-events: auto;
       /* Fix v2ex polish end */
+
+      &:link {
+        cursor: pointer;
+      }
     }
 
     .utags_text_tag[data-utags_tag]::before {

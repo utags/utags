@@ -53,6 +53,8 @@ const isEnabledByDefault = () => {
   return true
 }
 
+const isTagManager = location.href.includes("utags.pipecraft.net/tags/")
+
 const settingsTable = {
   [`enableCurrentSite_${host}`]: {
     title: i("settings.enableCurrentSite"),
@@ -210,7 +212,11 @@ function appendTagsToPage(
 
   for (const tag of tags) {
     li = createElement("li")
-    const a = createTag(tag, { isEmoji: emojiTags.includes(tag) })
+    const a = createTag(tag, {
+      isEmoji: emojiTags.includes(tag),
+      noLink: isTagManager,
+      enableSelect: isTagManager,
+    })
     li.append(a)
     ul.append(li)
   }
