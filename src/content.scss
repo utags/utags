@@ -49,7 +49,7 @@
     .utags_text_tag {
       box-sizing: border-box !important;
       display: block !important;
-      border: 1px solid var(--utags-text-tag-border-color);
+      border: var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);
       color: var(--utags-text-tag-color) !important;
       border-radius: 3px !important;
       padding: 1px 3px !important;
@@ -451,6 +451,7 @@
   --utags-text-tag-border-color: red;
   --utags-text-tag-background-color: unset;
   --utags-text-tag-font-size: 10px;
+  --utags-text-tag-border-width: 1px;
   --utags-button-text-color: #1a73e8;
   --utags-button-bg-color: #ffffff;
   --utags-button-border-color: #dadce0;
