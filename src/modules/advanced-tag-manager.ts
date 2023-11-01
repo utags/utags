@@ -98,7 +98,7 @@ function updateCandidateTagList(ul: HTMLElement, candidateTags: string[]) {
       textContent: text,
     })
     index++
-    if (index >= 10) {
+    if (index >= 50) {
       break
     }
   }
@@ -326,6 +326,7 @@ function createPromptView(
         if (current) {
           const next = current.nextElementSibling as HTMLElement
           if (next) {
+            next.scrollIntoView({ block: "end" })
             removeAllActive()
             addClass(next, "utags_active")
           }
@@ -333,6 +334,7 @@ function createPromptView(
           // set first item as active
           const next = $(".utags_modal_content ul.utags_select_list li")
           if (next) {
+            next.scrollIntoView({ block: "end" })
             removeAllActive()
             addClass(next, "utags_active")
           }
@@ -351,6 +353,7 @@ function createPromptView(
         if (current) {
           const previous = current.previousElementSibling as HTMLElement
           if (previous) {
+            previous.scrollIntoView({ block: "end" })
             removeAllActive()
             addClass(previous, "utags_active")
           }
@@ -376,10 +379,9 @@ function createPromptView(
           if (parentPrevious) {
             removeAllActive()
             const newIndex = Math.min(parentPrevious.children.length - 1, index)
-            addClass(
-              parentPrevious.children[newIndex] as HTMLElement,
-              "utags_active"
-            )
+            const next = parentPrevious.children[newIndex] as HTMLElement
+            next.scrollIntoView({ block: "end" })
+            addClass(next, "utags_active")
           }
         }
 
@@ -403,10 +405,9 @@ function createPromptView(
           if (parentNext) {
             removeAllActive()
             const newIndex = Math.min(parentNext.children.length - 1, index)
-            addClass(
-              parentNext.children[newIndex] as HTMLElement,
-              "utags_active"
-            )
+            const next = parentNext.children[newIndex] as HTMLElement
+            next.scrollIntoView({ block: "end" })
+            addClass(next, "utags_active")
           }
         }
 

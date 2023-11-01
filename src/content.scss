@@ -349,6 +349,8 @@
   .utags_list_wrapper {
     display: flex;
     justify-content: space-between;
+    max-height: 200px;
+    overflow-y: auto;
   }
 
   ul.utags_select_list {
@@ -367,13 +369,15 @@
 
     &::before {
       content: attr(data-utags_list_name);
+      position: sticky;
+      top: 0;
       display: block;
       font-size: 12px;
       font-weight: 600;
       text-align: left;
       padding: 0 2px 0 8px;
       cursor: default;
-      background-color: var(--utags-button-hover-bg-color);
+      background-color: #f8fafe;
     }
 
     li {
@@ -384,6 +388,7 @@
       display: flex;
       align-items: center;
       padding: 0 2px 0 8px;
+      margin: 0;
       max-width: 150px;
       overflow: hidden;
       text-overflow: ellipsis;
