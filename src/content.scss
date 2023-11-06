@@ -96,7 +96,9 @@
         --utags-emoji-tag-background-color
       );
       --utags-text-tag-font-size: var(--utags-emoji-tag-font-size);
+      --utags-text-tag-font-family: var(--utags-emoji-tag-font-family);
       --utags-text-tag-border-width: var(--utags-emoji-tag-border-width);
+      --utags-text-tag-border-color: var(--utags-emoji-tag-border-color);
     }
 
     .utags_captain_tag,
@@ -406,6 +408,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         font-family: var(--utags-text-tag-font-family) !important;
+        font-size: 12px;
+        line-height: 1;
       }
     }
   }
@@ -482,9 +486,13 @@ textarea[data-key="emojiTags"] {
     "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
     "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-emoji-tag-border-color: #fff0;
   --utags-emoji-tag-background-color: #f8fafe;
   --utags-emoji-tag-font-size: 12px;
   --utags-emoji-tag-border-width: 0;
+  --utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
+    "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-button-text-color: #1a73e8;
   --utags-button-bg-color: #ffffff;
   --utags-button-border-color: #dadce0;
