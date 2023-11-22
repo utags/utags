@@ -179,6 +179,11 @@ function appendTagsToPage(
     }
 
     utagsUl.remove()
+  } else {
+    // fix mp.weixin.qq.com issue
+    if (key === getAttribute(utagsUl, "data-utags_key")) {
+      utagsUl.remove()
+    }
   }
 
   const ul = createElement("ul", {
