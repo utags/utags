@@ -11,8 +11,8 @@ dependencies:
     specifier: ^0.1.2
     version: 0.1.2(react@18.2.0)
   browser-extension-utils:
-    specifier: ^0.1.18
-    version: 0.1.18
+    specifier: ^0.1.19
+    version: 0.1.19
   plasmo:
     specifier: ^0.77.5
     version: 0.77.5(react-dom@18.2.0)(react@18.2.0)
@@ -3558,7 +3558,7 @@ packages:
     dependencies:
       browser-extension-i18n: 0.0.6
       browser-extension-storage: 0.1.2(react@18.2.0)
-      browser-extension-utils: 0.1.18
+      browser-extension-utils: 0.1.19
     transitivePeerDependencies:
       - react
     dev: false
@@ -3572,8 +3572,8 @@ packages:
       - react
     dev: false
 
-  /browser-extension-utils@0.1.18:
-    resolution: {integrity: sha512-ES8KoI8JHOKu1YOB77OJ9AxHQ3W6Gyh02vvawMK/v03fIa/eMeqAqjFmNnZay+ltuuiKeixvMnq+WE4YSpJXKg==}
+  /browser-extension-utils@0.1.19:
+    resolution: {integrity: sha512-mTA2Eu0clhGZhFhiUihzYdSGJaqugqGDujbFbNUrlXtM0JAIptKRSu81vjUXdVaWZJcH96QvebAVNiNBk5uzRQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
