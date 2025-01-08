@@ -4,6 +4,8 @@
   .d-flex.flex-justify-between a[href^="/topics/"] +,
    /* https://github.com/stars */
    .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex +,
+  /* Starred topics in  https://github.com/username?tab=stars */
+  [id="user-starred-repos"] a[href^="/topics/"].flex-items-center +,
   /* https://github.com/explore */
   ul.f4 a[href^="/topics/"].d-flex + {
     .utags_ul_0 {
@@ -39,5 +41,17 @@
   ul.f4 a[href^="/topics/"].d-flex + .utags_ul_0 {
     --utags-notag-captain-tag-top: -24px;
     --utags-notag-captain-tag-left: -2px;
+  }
+
+  /* repo title in https://github.com/username/reponame */
+  div[id="repo-title-component"] strong[itemprop="name"] a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-4);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-4);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-4);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-4);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);
+    }
   }
 }

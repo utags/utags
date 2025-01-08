@@ -9,3 +9,4 @@ build/*-dev/**
 pnpm-lock.yaml
 tsconfig.json
 tsconfig.tsbuildinfo
+._*

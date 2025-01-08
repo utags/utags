@@ -182,6 +182,9 @@ const site = {
     ".subnav-links",
     ".btn",
     ".filter-item",
+    ".js-github-dev-shortcut",
+    ".js-github-dev-new-tab-shortcut",
+    ".js-skip-to-content",
   ],
   validMediaSelectors: [
     // Repo icon
