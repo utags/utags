@@ -78,6 +78,9 @@ export function bindDocumentEvents() {
         const captainTag = target.closest(
           ".utags_captain_tag,.utags_captain_tag2"
         ) as HTMLElement | undefined
+        const textTag = target.closest(".utags_text_tag") as
+          | HTMLElement
+          | undefined
         if (captainTag) {
           event.preventDefault()
           event.stopPropagation()
@@ -108,6 +111,9 @@ export function bindDocumentEvents() {
               await saveTags(key, newTagsArray, meta)
             }
           })
+        } else if (textTag) {
+          event.stopPropagation()
+          event.stopImmediatePropagation()
         }
 
         return

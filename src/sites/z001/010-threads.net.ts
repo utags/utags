@@ -1,4 +1,5 @@
-import { $, $$, setStyle } from "browser-extension-utils"
+import { $, $$ } from "browser-extension-utils"
+import styleText from "data-text:./010-threads.net.scss"
 
 import defaultSite from "../default"
 
@@ -27,16 +28,6 @@ const site = {
           const href2 = href.slice(24)
           // console.log(href2)
           if (/^@[\w.]+$/.test(href2)) {
-            const sibling = element.nextElementSibling as HTMLAnchorElement
-            // Tabs
-            // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-            if (sibling && sibling.href && sibling.href.includes("replies")) {
-              return false
-            }
-
-            const parent = element.parentElement!
-            setStyle(parent, { display: "flex" })
-
             const meta = { type: "user" }
             element.utags = { meta }
 
@@ -48,10 +39,14 @@ const site = {
       }
     ) as HTMLAnchorElement[]
   },
-  excludeSelectors: [...defaultSite.excludeSelectors],
+  excludeSelectors: [
+    ...defaultSite.excludeSelectors,
+    // Tabs
+    '[role="tablist"]',
+  ],
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
     // profile header
-    const element = $("h2+div>div>span")
+    const element = $("h1+div>div>span,h2+div>div>span")
     if (element) {
       const title = element.textContent!.trim()
       const key = getUserProfileUrl(location.href)
@@ -62,6 +57,7 @@ const site = {
       }
     }
   },
+  getStyle: () => styleText,
 }
 
 export default site
