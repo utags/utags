@@ -1,4 +1,5 @@
 import { $, $$ } from "browser-extension-utils"
+import styleText from "data-text:./002-e-hentai.org.scss"
 
 import type { UserTag } from "../../types"
 import { getFirstHeadElement } from "../../utils"
@@ -25,6 +26,20 @@ function getPostUrl(url: string) {
   return undefined
 }
 
+function isImageViewUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(21)
+    return /^s\/\w+/.test(href2)
+  }
+
+  if (url.startsWith(prefix2)) {
+    const href2 = url.slice(21)
+    return /^s\/\w+/.test(href2)
+  }
+
+  return false
+}
+
 const site = {
   matches: /e-hentai\.org|exhentai\.org/,
   getMatchedNodes() {
@@ -47,6 +62,10 @@ const site = {
 
             element.utags = { key, meta }
             return true
+          }
+
+          if (isImageViewUrl(href)) {
+            return false
           }
         }
 
@@ -89,6 +108,7 @@ const site = {
       }
     }
   },
+  getStyle: () => styleText,
 }
 
 export default site

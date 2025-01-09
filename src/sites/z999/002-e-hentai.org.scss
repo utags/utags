@@ -1,0 +1,41 @@
+:not(#a):not(#b):not(#c) {
+  /* div.gt,div.gtl,div.gtw { position: relative; }*/
+  div.gt a +,
+  div.gtl a +,
+  div.gtw a +,
+  /* title in Extended list view */
+  div.gl4e.glname .glink +,
+  /* title in Minimal/Minimal+ list view */
+  .gltm .glname a +,
+  /* title in Compact list view */
+  .gltc .glname a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-3);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-3);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-3);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-3);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);
+      --utags-notag-captain-tag-left: 24px;
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+      /* fix Minimal/Minimal+ list view issue */
+      z-index: 200;
+    }
+  }
+
+  /* title in Thumbnail view */
+  div.gl1t a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-4);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-4);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-4);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-4);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);
+      --utags-notag-captain-tag-left: 24px;
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+  }
+}
