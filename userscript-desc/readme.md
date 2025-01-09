@@ -6,32 +6,32 @@ Allow users to add custom tags (labels) to links. For example, you can add tags 
 
 Not it supports
 
-- [www.v2ex.com](https://www.v2ex.com/)
-- [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
-- [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
-- [lobste.rs](https://lobste.rs/)
-- [github.com](https://github.com/)
-- [www.reddit.com](https://www.reddit.com/)
-- [twitter.com](https://twitter.com/)
-- [mp.weixin.qq.com](https://mp.weixin.qq.com/)
-- [www.instagram.com](https://www.instagram.com/)
-- [www.threads.net](https://www.threads.net/)
-- [www.facebook.com](https://www.facebook.com/)
-- [www.youtube.com](https://www.youtube.com/)
-- [www.bilibili.com](https://www.bilibili.com/)
-- [www.tiktok.com](https://www.tiktok.com/)
-- [www.52pojie.cn](https://www.52pojie.cn/)
-- [juejin.cn](https://juejin.cn/)
-- [zhihu.com](https://www.zhihu.com/)
-- [xiaohongshu.com](https://www.xiaohongshu.com/)
-- [pornhub.com](https://www.pornhub.com/)
-- [weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/)
-- [sspai.com](https://sspai.com/)
-- [douyin.com](https://www.douyin.com/)
-- [podcasts.google.com](https://podcasts.google.com/)
-- [rebang.today](https://rebang.today/)
-- [myanimelist.net](https://myanimelist.net/)
-- [douban.com](https://www.douban.com/)
+- V2EX ([www.v2ex.com](https://www.v2ex.com/))
+- Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
+- Hacker News ([news.ycombinator.com](https://news.ycombinator.com/))
+- Lobsters ([lobste.rs](https://lobste.rs/))
+- GitHub ([github.com](https://github.com/))
+- Reddit ([www.reddit.com](https://www.reddit.com/))
+- X(Twitter) ([x.com](https://x.com/) / [twitter.com](https://twitter.com/))
+- Wechat ([mp.weixin.qq.com](https://mp.weixin.qq.com/))
+- Instagram ([www.instagram.com](https://www.instagram.com/))
+- Threads ([www.threads.net](https://www.threads.net/))
+- Facebook ([www.facebook.com](https://www.facebook.com/))
+- YouTube ([www.youtube.com](https://www.youtube.com/))
+- Bilibili ([www.bilibili.com](https://www.bilibili.com/))
+- TikTok ([www.tiktok.com](https://www.tiktok.com/))
+- 52pojie ([www.52pojie.cn](https://www.52pojie.cn/))
+- juejin ([juejin.cn](https://juejin.cn/))
+- zhihu ([zhihu.com](https://www.zhihu.com/))
+- xiaohongshu ([xiaohongshu.com](https://www.xiaohongshu.com/))
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- weibo ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
+- sspai ([sspai.com](https://sspai.com/))
+- douyin ([douyin.com](https://www.douyin.com/))
+- Google Podcasts ([podcasts.google.com](https://podcasts.google.com/))
+- Rebang.Today ([rebang.today](https://rebang.today/))
+- MyAnimeList ([myanimelist.net](https://myanimelist.net/))
+- douban ([douban.com](https://www.douban.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -101,6 +101,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.8
+  - twitter.com -> x.com
+  - fix github.com, threads.net, e-hentai.org issues
 - 0.9.5
   - Add emoji tags 👍
   - Increase the size of the list of candidate tags
@@ -223,7 +226,7 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Buy Me a Coffee
 
-- [https://afdian.net/a/pipecraft](https://afdian.net/a/pipecraft)
+- [https://afdian.com/a/pipecraft](https://afdian.net/a/pipecraft)
 
 ## License
 

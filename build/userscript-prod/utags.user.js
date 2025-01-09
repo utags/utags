@@ -4,12 +4,13 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.9.7
+// @version              0.9.8
 // @description          Allow users to add custom tags to links.
-// @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
+// @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。支持 V2EX, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
+// @match                https://x.com/*
 // @match                https://twitter.com/*
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*
@@ -2086,6 +2087,7 @@
           const captainTag = target.closest(
             ".utags_captain_tag,.utags_captain_tag2"
           )
+          const textTag = target.closest(".utags_text_tag")
           if (captainTag) {
             event.preventDefault()
             event.stopPropagation()
@@ -2110,6 +2112,9 @@
                 await saveTags(key, newTagsArray, meta)
               }
             })
+          } else if (textTag) {
+            event.stopPropagation()
+            event.stopImmediatePropagation()
           }
           return
         }
@@ -2492,7 +2497,7 @@
   }
   var lobste_rs_default = site5
   var github_com_default =
-    ':not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}'
+    ':not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) [id=user-starred-repos] a[href^="/topics/"].flex-items-center+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}:not(#a):not(#b):not(#c) div[id=repo-title-component] strong[itemprop=name] a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
   var noneUsers = /* @__PURE__ */ new Set([
     "about",
     "pricing",
@@ -2644,6 +2649,9 @@
       ".subnav-links",
       ".btn",
       ".filter-item",
+      ".js-github-dev-shortcut",
+      ".js-github-dev-new-tab-shortcut",
+      ".js-skip-to-content",
     ],
     validMediaSelectors: ["svg.octicon-repo"],
     getStyle: () => github_com_default,
@@ -2676,14 +2684,17 @@
     ],
   }
   var reddit_com_default = site7
-  var prefix3 = "https://twitter.com/"
+  var prefix3 = "https://x.com/"
+  var prefix22 = "https://twitter.com/"
   var site8 = {
-    matches: /twitter\.com/,
+    matches: /x\.com|twitter\.com/,
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)").filter((element) => {
         const href = element.href
-        if (href.startsWith(prefix3)) {
-          const href2 = href.slice(20)
+        if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+          const href2 = href.startsWith(prefix22)
+            ? href.slice(20)
+            : href.slice(14)
           if (/^\w+$/.test(href2)) {
             if (
               /^(home|explore|notifications|messages|tos|privacy)$/.test(href2)
@@ -2790,6 +2801,8 @@
     getStyle: () => instagram_com_default,
   }
   var instagram_com_default2 = site10
+  var threads_net_default =
+    ':not(#a):not(#b):not(#c) a[href^="/@"][data-utags]+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: -22px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
   function getUserProfileUrl2(url) {
     if (url.startsWith("https://www.threads.net/")) {
       const href2 = url.slice(24)
@@ -2810,12 +2823,6 @@
         if (href.startsWith("https://www.threads.net/")) {
           const href2 = href.slice(24)
           if (/^@[\w.]+$/.test(href2)) {
-            const sibling = element.nextElementSibling
-            if (sibling && sibling.href && sibling.href.includes("replies")) {
-              return false
-            }
-            const parent = element.parentElement
-            setStyle(parent, { display: "flex" })
             const meta = { type: "user" }
             element.utags = { meta }
             return true
@@ -2824,9 +2831,9 @@
         return false
       })
     },
-    excludeSelectors: [...default_default.excludeSelectors],
+    excludeSelectors: [...default_default.excludeSelectors, '[role="tablist"]'],
     addExtraMatchedNodes(matchedNodesSet) {
-      const element = $("h2+div>div>span")
+      const element = $("h1+div>div>span,h2+div>div>span")
       if (element) {
         const title = element.textContent.trim()
         const key = getUserProfileUrl2(location.href)
@@ -2837,8 +2844,9 @@
         }
       }
     },
+    getStyle: () => threads_net_default,
   }
-  var threads_net_default = site11
+  var threads_net_default2 = site11
   function getUserProfileUrl3(href) {
     if (
       href.startsWith("https://www.facebook.com/") ||
@@ -2898,10 +2906,10 @@
   var youtube_com_default =
     ":not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-rich-item-renderer yt-formatted-string[ellipsis-truncate-styling] .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul_0,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul_0,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string .utags_ul_0 .utags_captain_tag{left:-24px}:not(#a):not(#b):not(#c) [hidden]+.utags_ul{display:none !important}"
   var prefix4 = "https://www.youtube.com/"
-  var prefix22 = "https://m.youtube.com/"
+  var prefix23 = "https://m.youtube.com/"
   function getUserProfileUrl4(href) {
-    if (href.startsWith(prefix4) || href.startsWith(prefix22)) {
-      const href2 = href.startsWith(prefix22) ? href.slice(22) : href.slice(24)
+    if (href.startsWith(prefix4) || href.startsWith(prefix23)) {
+      const href2 = href.startsWith(prefix23) ? href.slice(22) : href.slice(24)
       if (/^@[\w-]+/.test(href2)) {
         return prefix4 + href2.replace(/(^@[\w-]+).*/, "$1")
       }
@@ -2912,8 +2920,8 @@
     return void 0
   }
   function getVideoUrl(href) {
-    if (href.startsWith(prefix4) || href.startsWith(prefix22)) {
-      const href2 = href.startsWith(prefix22) ? href.slice(22) : href.slice(24)
+    if (href.startsWith(prefix4) || href.startsWith(prefix23)) {
+      const href2 = href.startsWith(prefix23) ? href.slice(22) : href.slice(24)
       if (href2.includes("&lc=")) {
         return void 0
       }
@@ -2935,7 +2943,7 @@
           return false
         }
         const href = element.href
-        if (href.startsWith(prefix4) || href.startsWith(prefix22)) {
+        if (href.startsWith(prefix4) || href.startsWith(prefix23)) {
           const pathname = element.pathname
           if (/^\/@[\w-]+$/.test(pathname)) {
             const key2 = prefix4 + pathname.slice(1)
@@ -3001,19 +3009,19 @@
   var bilibili_com_default =
     ':not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:rgba(255,255,255,.8666666667) !important}'
   var prefix5 = "https://www.bilibili.com/"
-  var prefix23 = "https://space.bilibili.com/"
+  var prefix24 = "https://space.bilibili.com/"
   var prefix32 = "https://m.bilibili.com/"
   function getUserProfileUrl5(href) {
-    if (href.startsWith(prefix23)) {
+    if (href.startsWith(prefix24)) {
       const href2 = href.slice(27)
       if (/^\d+/.test(href2)) {
-        return prefix23 + href2.replace(/(^\d+).*/, "$1")
+        return prefix24 + href2.replace(/(^\d+).*/, "$1")
       }
     }
     if (href.startsWith(prefix32 + "space/")) {
       const href2 = href.slice(29)
       if (/^\d+/.test(href2)) {
-        return prefix23 + href2.replace(/(^\d+).*/, "$1")
+        return prefix24 + href2.replace(/(^\d+).*/, "$1")
       }
     }
     return void 0
@@ -3055,7 +3063,7 @@
           return false
         }
         const title = element2.textContent.trim()
-        const key = prefix23 + userId
+        const key = prefix24 + userId
         const meta = { title, type: "user" }
         element2.utags = { key, meta }
         element2.dataset.utags_node_type = "link"
@@ -3064,7 +3072,7 @@
       const elements2 = $$(".upname a,a.bili-video-card__info--owner")
       for (const element2 of elements2) {
         const href = element2.href
-        if (href.startsWith(prefix23)) {
+        if (href.startsWith(prefix24)) {
           const key = getUserProfileUrl5(href)
           if (key) {
             const nameElement = $(
@@ -3097,7 +3105,7 @@
       )
       for (const element2 of elements3) {
         const href = element2.href
-        if (href.startsWith(prefix23)) {
+        if (href.startsWith(prefix24)) {
           const key = getUserProfileUrl5(href)
           if (key) {
             let title = element2.textContent.trim()
@@ -3111,7 +3119,7 @@
         }
       }
       if (
-        location.href.startsWith(prefix23) ||
+        location.href.startsWith(prefix24) ||
         location.href.startsWith(prefix32 + "space/")
       ) {
         const element2 = $("#h-name,.m-space-info .name")
@@ -3474,10 +3482,10 @@
   }
   var xiaohongshu_com_default = site19
   var prefix10 = "https://weibo.com/"
-  var prefix24 = "https://m.weibo.cn/"
+  var prefix25 = "https://m.weibo.cn/"
   function getUserProfileUrl10(url, exact = false) {
-    if (url.startsWith(prefix10) || url.startsWith(prefix24)) {
-      const href2 = url.startsWith(prefix24) ? url.slice(19) : url.slice(18)
+    if (url.startsWith(prefix10) || url.startsWith(prefix25)) {
+      const href2 = url.startsWith(prefix25) ? url.slice(19) : url.slice(18)
       if (exact) {
         if (/^u\/\d+(\?.*)?$/.test(href2)) {
           return prefix10 + href2.replace(/^(u\/\d+).*/, "$1")
@@ -4151,8 +4159,10 @@
     getStyle: () => pornhub_com_default,
   }
   var pornhub_com_default2 = site27
+  var e_hentai_org_default =
+    ":not(#a):not(#b):not(#c) div.gt a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtl a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtw a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gl4e.glname .glink+.utags_ul_0,:not(#a):not(#b):not(#c) .gltm .glname a+.utags_ul_0,:not(#a):not(#b):not(#c) .gltc .glname a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );z-index:200}:not(#a):not(#b):not(#c) div.gl1t a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}"
   var prefix15 = "https://e-hentai.org/"
-  var prefix25 = "https://exhentai.org/"
+  var prefix26 = "https://exhentai.org/"
   function getPostUrl3(url) {
     if (url.startsWith(prefix15)) {
       const href2 = url.slice(21)
@@ -4160,13 +4170,24 @@
         return prefix15 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
       }
     }
-    if (url.startsWith(prefix25)) {
+    if (url.startsWith(prefix26)) {
       const href2 = url.slice(21)
       if (/^g\/\w+/.test(href2)) {
-        return prefix25 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+        return prefix26 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
       }
     }
     return void 0
+  }
+  function isImageViewUrl(url) {
+    if (url.startsWith(prefix15)) {
+      const href2 = url.slice(21)
+      return /^s\/\w+/.test(href2)
+    }
+    if (url.startsWith(prefix26)) {
+      const href2 = url.slice(21)
+      return /^s\/\w+/.test(href2)
+    }
+    return false
   }
   var site28 = {
     matches: /e-hentai\.org|exhentai\.org/,
@@ -4174,7 +4195,7 @@
       return $$("a[href]:not(.utags_text_tag)")
         .filter((element) => {
           const href = element.href
-          if (href.startsWith(prefix15) || href.startsWith(prefix25)) {
+          if (href.startsWith(prefix15) || href.startsWith(prefix26)) {
             const key = getPostUrl3(href)
             if (key) {
               const titleElement = $(".glink", element)
@@ -4188,6 +4209,9 @@
               }
               element.utags = { key, meta }
               return true
+            }
+            if (isImageViewUrl(href)) {
+              return false
             }
           }
           return true
@@ -4226,8 +4250,9 @@
         }
       }
     },
+    getStyle: () => e_hentai_org_default,
   }
-  var e_hentai_org_default = site28
+  var e_hentai_org_default2 = site28
   var panda_chaika_moe_default =
     ":not(#a):not(#b):not(#c) h5+.utags_ul{display:block !important;margin-top:-4px !important;margin-bottom:6px !important}"
   var prefix16 = "https://panda.chaika.moe/"
@@ -4304,7 +4329,7 @@
     lobste_rs_default,
     mp_weixin_qq_com_default,
     instagram_com_default2,
-    threads_net_default,
+    threads_net_default2,
     facebook_com_default,
     youtube_com_default2,
     bilibili_com_default2,
@@ -4321,7 +4346,7 @@
     myanimelist_net_default2,
     douban_com_default,
     pornhub_com_default2,
-    e_hentai_org_default,
+    e_hentai_org_default2,
     panda_chaika_moe_default2,
   ]
   var getCanonicalUrlFunctionList = [default_default, ...sites]
