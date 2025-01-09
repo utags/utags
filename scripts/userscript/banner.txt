@@ -10,6 +10,7 @@
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}
+// @match                https://x.com/*
 // @match                https://twitter.com/*
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*

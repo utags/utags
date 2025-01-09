@@ -2,17 +2,20 @@ import { $$, setStyle } from "browser-extension-utils"
 
 import defaultSite from "../default"
 
-const prefix = "https://twitter.com/"
+const prefix = "https://x.com/"
+const prefix2 = "https://twitter.com/"
 
 const site = {
-  matches: /twitter\.com/,
+  matches: /x\.com|twitter\.com/,
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)").filter(
       (element: HTMLAnchorElement) => {
         const href = element.href
-        if (href.startsWith(prefix)) {
+        if (href.startsWith(prefix) || href.startsWith(prefix2)) {
           // Remove prefix
-          const href2 = href.slice(20)
+          const href2 = href.startsWith(prefix2)
+            ? href.slice(20)
+            : href.slice(14)
           if (/^\w+$/.test(href2)) {
             if (
               /^(home|explore|notifications|messages|tos|privacy)$/.test(href2)
