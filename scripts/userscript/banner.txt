@@ -44,6 +44,9 @@
 // @match                https://www.pixiv.net/*
 // @match                https://linux.do/*
 // @match                https://meta.appinn.net/*
+// @match                https://bbs.nga.cn/*
+// @match                https://nga.178.com/*
+// @match                https://ngabbs.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
