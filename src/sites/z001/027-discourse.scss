@@ -1,0 +1,25 @@
+:not(#a):not(#b):not(#c) {
+  /* user name */
+  a[href^="/u/"][data-utags] + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-2);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-2);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-2);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-2);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);
+    }
+  }
+
+  /* primary name */
+  .names .first a[href^="/u/"][data-utags] + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-4);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-4);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-4);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-4);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);
+    }
+  }
+}

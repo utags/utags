@@ -42,6 +42,8 @@
 // @match                https://rebang.today/*
 // @match                https://myanimelist.net/*
 // @match                https://www.pixiv.net/*
+// @match                https://linux.do/*
+// @match                https://meta.appinn.net/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
