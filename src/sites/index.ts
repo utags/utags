@@ -27,6 +27,7 @@ import podcasts_google_com from "./z001/022-podcasts.google.com"
 import rebang_today from "./z001/023-rebang.today"
 import myanimelist_net from "./z001/024-myanimelist.net"
 import douban from "./z001/025-douban.com"
+import pixiv from "./z001/026-pixiv.net"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
@@ -74,6 +75,7 @@ const sites: Site[] = [
   rebang_today,
   myanimelist_net,
   douban,
+  pixiv,
   pornhub,
   ehentai,
   panda_chaika_moe,
