@@ -30,6 +30,7 @@ import douban from "./z001/025-douban.com"
 import pixiv from "./z001/026-pixiv.net"
 import discourse from "./z001/027-discourse"
 import nga from "./z001/028-nga.cn"
+import dlsite_com from "./z001/029-dlsite.com"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
@@ -83,6 +84,7 @@ const sites: Site[] = [
   pornhub,
   ehentai,
   panda_chaika_moe,
+  dlsite_com,
 ]
 
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
