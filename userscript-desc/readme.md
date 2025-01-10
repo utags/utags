@@ -32,6 +32,10 @@ Not it supports
 - Rebang.Today ([rebang.today](https://rebang.today/))
 - MyAnimeList ([myanimelist.net](https://myanimelist.net/))
 - douban ([douban.com](https://www.douban.com/))
+- pixiv ([www.pixiv.net](https://www.pixiv.net/))
+- LINUX DO ([linux.do](https://linux.do/))
+- APPINN ([meta.appinn.net](https://meta.appinn.net/))
+- NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -101,6 +105,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.9
+  - Apply utags to www.pixiv.net
+  - Apply utags to linux.do
+  - Apply utags to meta.appinn.net
+  - Apply utags to NGA
 - 0.9.8
   - twitter.com -> x.com
   - fix github.com, threads.net, e-hentai.org issues

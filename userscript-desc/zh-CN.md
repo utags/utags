@@ -32,6 +32,10 @@
 - 今日热榜 Rebang.Today ([rebang.today](https://rebang.today/))
 - MyAnimeList ([myanimelist.net](https://myanimelist.net/))
 - 豆瓣 ([douban.com](https://www.douban.com/))
+- pixiv ([www.pixiv.net](https://www.pixiv.net/))
+- LINUX DO ([linux.do](https://linux.do/))
+- 小众软件 ([meta.appinn.net](https://meta.appinn.net/))
+- NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 ## 使用方法
@@ -137,6 +141,11 @@
 
 ## 更新记录
 
+- 0.9.9
+  - Apply utags to www.pixiv.net
+  - Apply utags to linux.do
+  - Apply utags to meta.appinn.net
+  - Apply utags to NGA
 - 0.9.8
   - twitter.com -> x.com
   - fix github.com, threads.net, e-hentai.org issues
