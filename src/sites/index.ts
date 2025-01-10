@@ -35,6 +35,7 @@ import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
 import dmm_co_jp from "./z999/004-dmm.co.jp"
+import kemono_su from "./z999/005-kemono.su"
 
 type Site = {
   matches: RegExp
@@ -87,6 +88,7 @@ const sites: Site[] = [
   panda_chaika_moe,
   dlsite_com,
   dmm_co_jp,
+  kemono_su,
 ]
 
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]

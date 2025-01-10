@@ -9,6 +9,7 @@ import {
   createHTML,
   doc,
   getAttribute,
+  getOffsetPosition,
   hasClass,
   removeClass,
   runWhenHeadExists,
@@ -179,11 +180,9 @@ function appendTagsToPage(
     }
 
     utagsUl.remove()
-  } else {
     // fix mp.weixin.qq.com issue
-    if (key === getAttribute(utagsUl, "data-utags_key")) {
-      utagsUl.remove()
-    }
+  } else if (key === getAttribute(utagsUl, "data-utags_key")) {
+    utagsUl.remove()
   }
 
   const ul = createElement("ul", {
@@ -354,7 +353,7 @@ async function initStorage() {
   })
 }
 
-const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|LI)$/
+const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|LI|SECTION)$/
 function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   for (const node of nodeList) {
     if (nodeNameCheckPattern.test(node.nodeName)) {
@@ -363,6 +362,87 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   }
 
   return false
+}
+
+function updateTagsPosition() {
+  const elements = $$("[data-utags_position]")
+  for (const element of elements) {
+    const utags = element.nextElementSibling as HTMLElement
+    if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
+      continue
+    }
+
+    if (
+      !utags.offsetParent &&
+      utags.offsetHeight === 0 &&
+      utags.offsetWidth === 0
+    ) {
+      continue
+    }
+
+    // 22 is the size of captain tag
+    const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
+
+    const offset = getOffsetPosition(
+      element,
+      (utags.offsetParent as HTMLElement) || doc.body
+    )
+    const position = element.dataset.utags_position
+
+    switch (position) {
+      // left-top
+      case "LT": {
+        utags.style.left = offset.left + "px"
+        utags.style.top = offset.top + "px"
+        break
+      }
+
+      // left-bottom
+      case "LB": {
+        utags.style.left = offset.left + "px"
+        utags.style.top =
+          offset.top +
+          (element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix +
+          "px"
+        break
+      }
+
+      // right-top
+      case "RT": {
+        utags.style.left =
+          offset.left +
+          (element.clientWidth || element.offsetWidth) -
+          utags.clientWidth -
+          utagsSizeFix +
+          "px"
+        utags.style.top = offset.top + "px"
+        break
+      }
+
+      // right-bottom
+      case "RB": {
+        utags.style.left =
+          offset.left +
+          (element.clientWidth || element.offsetWidth) -
+          utags.clientWidth -
+          utagsSizeFix +
+          "px"
+        utags.style.top =
+          offset.top +
+          (element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix +
+          "px"
+        break
+      }
+
+      default: {
+        break
+      }
+    }
+  }
 }
 
 async function main() {
@@ -439,6 +519,8 @@ async function main() {
     childList: true,
     subtree: true,
   })
+
+  setInterval(updateTagsPosition, 500)
 }
 
 runWhenHeadExists(async () => {
