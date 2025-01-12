@@ -36,6 +36,10 @@
 - LINUX DO ([linux.do](https://linux.do/))
 - 小众软件 ([meta.appinn.net](https://meta.appinn.net/))
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
+- Keylol 其乐 ([keylol.com](https://keylol.com/))
+- DLsite ([www.dlsite.com](http://www.dlsite.com/))
+- Kemono ([kemono.su](https://kemono.su/))
+- Coomer ([coomer.su](https://coomer.su/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 ## 使用方法
@@ -141,6 +145,12 @@
 
 ## 更新记录
 
+- 0.9.10
+  - Apply utags to dlsite.com
+  - Apply utags to dmm.co.jp
+  - Apply utags to kemono.su
+  - Apply utags to coomer.su
+  - Apply utags to keylol.com
 - 0.9.9
   - Apply utags to www.pixiv.net
   - Apply utags to linux.do

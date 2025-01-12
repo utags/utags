@@ -36,6 +36,10 @@ Not it supports
 - LINUX DO ([linux.do](https://linux.do/))
 - APPINN ([meta.appinn.net](https://meta.appinn.net/))
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
+- Keylol ([keylol.com](https://keylol.com/))
+- DLsite ([www.dlsite.com](http://www.dlsite.com/))
+- Kemono ([kemono.su](https://kemono.su/))
+- Coomer ([coomer.su](https://coomer.su/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 ## Usage
@@ -105,6 +109,12 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.10
+  - Apply utags to dlsite.com
+  - Apply utags to dmm.co.jp
+  - Apply utags to kemono.su
+  - Apply utags to coomer.su
+  - Apply utags to keylol.com
 - 0.9.9
   - Apply utags to www.pixiv.net
   - Apply utags to linux.do
