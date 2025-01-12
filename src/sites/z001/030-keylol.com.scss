@@ -1,0 +1,23 @@
+:not(#a):not(#b):not(#c) {
+  /* user name */
+  a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: 0;
+      --utags-notag-captain-tag-left: 20px;
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      z-index: 100;
+      margin-top: 14px !important;
+    }
+  }
+}

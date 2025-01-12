@@ -49,6 +49,7 @@
 // @match                https://ngabbs.com/*
 // @match                https://www.dlsite.com/*
 // @match                https://www.dmm.co.jp/*
+// @match                https://keylol.com/*
 // @match                https://kemono.su/*
 // @match                https://coomer.su/*
 // @match                https://v2hot.pipecraft.net/*
