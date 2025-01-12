@@ -24,7 +24,6 @@
 - 掘金 ([juejin.cn](https://juejin.cn/))
 - 知乎 ([zhihu.com](https://www.zhihu.com/))
 - 小红书 xiaohongshu ([xiaohongshu.com](https://www.xiaohongshu.com/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
 - 微博 ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
 - 少数派 ([sspai.com](https://sspai.com/))
 - 抖音 ([douyin.com](https://www.douyin.com/))
@@ -41,6 +40,15 @@
 - Kemono ([kemono.su](https://kemono.su/))
 - Coomer ([coomer.su](https://coomer.su/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
+
+另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
+
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- panda.chaika.moe [panda.chaika.moe](https://panda.chaika.moe/)
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+
+![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## 使用方法
 
@@ -295,5 +303,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
 [![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
-[![DTO](https://img.shields.io/badge/site-DTO-brightgreen)](https://dto.pipecraft.net)
 [![BestXTools](https://img.shields.io/badge/site-bestxtools-brightgreen)](https://www.bestxtools.com)

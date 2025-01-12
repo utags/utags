@@ -24,7 +24,6 @@ Not it supports
 - juejin ([juejin.cn](https://juejin.cn/))
 - zhihu ([zhihu.com](https://www.zhihu.com/))
 - xiaohongshu ([xiaohongshu.com](https://www.xiaohongshu.com/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
 - weibo ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
 - sspai ([sspai.com](https://sspai.com/))
 - douyin ([douyin.com](https://www.douyin.com/))
@@ -41,6 +40,15 @@ Not it supports
 - Kemono ([kemono.su](https://kemono.su/))
 - Coomer ([coomer.su](https://coomer.su/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
+
+In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
+
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- panda.chaika.moe [panda.chaika.moe](https://panda.chaika.moe/)
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+
+![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## Usage
 
@@ -96,7 +104,7 @@ Not it supports
 
 - You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
 - Tags can be added to post titles, usernames, and categories
-- Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tagss
+- Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
 - On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
 - Support [data export and import](https://utags.pipecraft.net/data/)
 - Compatible with the following userscript managers
@@ -255,5 +263,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
 [![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
-[![DTO](https://img.shields.io/badge/site-DTO-brightgreen)](https://dto.pipecraft.net)
 [![BestXTools](https://img.shields.io/badge/site-bestxtools-brightgreen)](https://www.bestxtools.com)
