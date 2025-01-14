@@ -67,7 +67,8 @@ function getTagUrl(url: string, exact = false) {
 }
 
 const site = {
-  matches: /meta\.discourse\.org|linux\.do|meta\.appinn\.net/,
+  matches:
+    /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com/,
   listNodesSelectors: [".topic-list tr", ".topic-area .topic-post"],
   conditionNodesSelectors: [
     // topic title
