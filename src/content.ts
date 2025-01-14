@@ -525,6 +525,11 @@ async function main() {
   })
 
   setInterval(updateTagsPosition, 500)
+
+  // For debug
+  // setInterval(() => {
+  //   document.body.classList.add("utags_show_all")
+  // }, 5000)
 }
 
 runWhenHeadExists(async () => {

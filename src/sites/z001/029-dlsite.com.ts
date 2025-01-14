@@ -1,9 +1,31 @@
-import { $$, getAttribute } from "browser-extension-utils"
+import { $, $$, getAttribute } from "browser-extension-utils"
 import styleText from "data-text:./029-dlsite.com.scss"
 
 import defaultSite from "../default"
 
 const prefix = "https://www.dlsite.com/"
+
+function getProductUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(prefix.length)
+    if (href2.includes("=/product_id/")) {
+      return prefix + href2.replace(/^(.+\.html).*/, "$1")
+    }
+  }
+
+  return undefined
+}
+
+function getMakerUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    const href2 = url.slice(prefix.length)
+    if (href2.includes("/profile/=/maker_id/")) {
+      return prefix + href2.replace(/^(.+\.html).*/, "$1")
+    }
+  }
+
+  return undefined
+}
 
 const site = {
   matches: /dlsite\.com/,
@@ -11,17 +33,23 @@ const site = {
     return $$("a[href]:not(.utags_text_tag)").filter(
       (element: HTMLAnchorElement) => {
         const href = element.href
-        const hrefAttr = getAttribute(element, "href")
+        element.dataset.utags_position = "LB"
 
-        if (hrefAttr.startsWith("#")) {
-          return false
-        }
+        // $(".banner_container")?.remove()
 
         if (!href.startsWith(prefix)) {
           return true
         }
 
         if (href.includes("/=/")) {
+          if (href.includes("=/product_id/")) {
+            element.dataset.utags_position = "LT"
+          }
+          // if (element.closest(".genre_ranking .maker_name")) {
+          //   element.dataset.utags_position = "LB"
+          //   element.dataset.utags_position2 = "RB"
+          // }
+
           return true
         }
 
@@ -87,7 +115,38 @@ const site = {
     ".left_module_comipo",
     "div#left",
     ".footer_floor_nav",
+    ".prof_label_list",
+    ".type_btn",
   ],
+  addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    let key = getProductUrl(location.href)
+    if (key) {
+      // post title
+      const element = $("h1#work_name")
+      if (element) {
+        const title = element.textContent!.trim()
+        if (title) {
+          const meta = { title }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    }
+
+    key = getMakerUrl(location.href)
+    if (key) {
+      // post title
+      const element = $(".prof_maker_name")
+      if (element) {
+        const title = element.textContent!.trim()
+        if (title) {
+          const meta = { title }
+          element.utags = { key, meta }
+          matchedNodesSet.add(element)
+        }
+      }
+    }
+  },
   getStyle: () => styleText,
 }
 
