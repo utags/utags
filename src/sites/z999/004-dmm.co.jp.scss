@@ -1,0 +1,100 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      background-color: var(--utags-captain-tag-background-color) !important;
+      border-radius: 3px !important;
+      --utags-emoji-tag-background-color: #fff0;
+    }
+  }
+
+  .productList {
+    .tileListTtl__txt {
+      margin-bottom: 16px;
+
+      a + {
+        .utags_ul_0 {
+          --utags-notag-captain-tag-top: 16px;
+        }
+        .utags_ul_1 {
+          position: absolute;
+          top: -9999px;
+          z-index: 100;
+          margin-top: 15px !important;
+          margin-left: 0px !important;
+        }
+      }
+    }
+    .tileListTtl__txt--author a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: 16px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 15px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  .mainList__item {
+    a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: -90px;
+        --utags-notag-captain-tag-left: 4px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: -90px !important;
+        margin-left: 10px !important;
+      }
+    }
+  }
+
+  .pickup .fn-responsiveImg {
+    a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: -70px;
+        --utags-notag-captain-tag-left: 4px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: -70px !important;
+        margin-left: 10px !important;
+      }
+    }
+  }
+
+  #l-areaRecommendProduct {
+    a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: -80px;
+        --utags-notag-captain-tag-left: 4px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: -80px !important;
+        margin-left: 8px !important;
+      }
+    }
+  }
+}
