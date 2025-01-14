@@ -254,7 +254,11 @@ function createPromptView(
     removeEventListener(doc, "mousedown", mousedownHandler, true)
     removeEventListener(doc, "click", clickHandler, true)
     removeEventListener(doc, "mouseover", mouseoverHandler, true)
-    modal.remove()
+    // use setTimeout to resolve Safari issue
+    // modal.remove()
+    setTimeout(() => {
+      modal.remove()
+    })
     // eslint-disable-next-line eqeqeq, no-eq-null
     resolve(value == null ? null : value)
   }
