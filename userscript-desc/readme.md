@@ -117,6 +117,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.9.11
+  - Enable add tags to posts, categories and tags on linux.do and other discourse sites
 - 0.9.10
   - Apply utags to dlsite.com
   - Apply utags to dmm.co.jp

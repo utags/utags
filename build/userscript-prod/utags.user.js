@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.9.10
+// @version              0.9.11
 // @description          Allow users to add custom tags to links.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。支持 V2EX, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -44,11 +44,11 @@
 // @match                https://www.pixiv.net/*
 // @match                https://linux.do/*
 // @match                https://meta.appinn.net/*
+// @match                https://meta.discourse.org/*
 // @match                https://bbs.nga.cn/*
 // @match                https://nga.178.com/*
 // @match                https://ngabbs.com/*
 // @match                https://www.dlsite.com/*
-// @match                https://www.dmm.co.jp/*
 // @match                https://keylol.com/*
 // @match                https://kemono.su/*
 // @match                https://coomer.su/*
@@ -1846,7 +1846,9 @@
       removeEventListener(doc, "mousedown", mousedownHandler, true)
       removeEventListener(doc, "click", clickHandler, true)
       removeEventListener(doc, "mouseover", mouseoverHandler, true)
-      modal.remove()
+      setTimeout(() => {
+        modal.remove()
+      })
       resolve(value2 == null ? null : value2)
     }
     const okHandler = () => {
@@ -4113,7 +4115,7 @@
   }
   var pixiv_net_default2 = site27
   var discourse_default =
-    ':not(#a):not(#b):not(#c) a[href^="/u/"][data-utags]+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-ul-top: var(--utags-notag-ul-top-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2)}:not(#a):not(#b):not(#c) .names .first a[href^="/u/"][data-utags]+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
+    ':not(#a):not(#b):not(#c) a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 2px;--utags-notag-captain-tag-left: 22px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_0{--utags-notag-captain-tag-top: -18px}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:2px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{--utags-notag-captain-tag-top: 22px;--utags-notag-captain-tag-left: 0px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:16px !important;margin-left:3px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_0{--utags-notag-captain-tag-top: -12px}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag="1"]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_0{--utags-notag-captain-tag-top: -18px}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:6px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:12px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:14px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_0{--utags-notag-captain-tag-top: -18px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:2px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:14px !important}'
   var prefix15 = location.origin + "/"
   var hostname = location.hostname
   function getUserProfileUrl14(url, exact = false) {
@@ -4129,23 +4131,116 @@
     }
     return void 0
   }
+  function getPostUrl3(url, exact = false) {
+    if (url.startsWith(prefix15)) {
+      const href2 = url.slice(prefix15.length).toLowerCase()
+      if (exact) {
+        if (/^t\/[\w-]+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
+          return prefix15 + href2.replace(/^(t\/[\w-]+\/\d+).*/, "$1")
+        }
+      } else if (/^t\/[\w-]+\/\d+?/.test(href2)) {
+        return prefix15 + href2.replace(/^(t\/[\w-]+\/\d+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getCategoryUrl(url, exact = false) {
+    if (url.startsWith(prefix15)) {
+      const href2 = url.slice(prefix15.length).toLowerCase()
+      if (exact) {
+        if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
+          return (
+            prefix15 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+          )
+        }
+      } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
+        return prefix15 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+      }
+    }
+    return void 0
+  }
+  function getTagUrl(url, exact = false) {
+    if (url.startsWith(prefix15)) {
+      const href2 = url.slice(prefix15.length).toLowerCase()
+      if (exact) {
+        if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
+          return prefix15 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+        }
+      } else if (/^tag\/[^/?#]+?/.test(href2)) {
+        return prefix15 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+      }
+    }
+    return void 0
+  }
   var site28 = {
-    matches: /linux\.do|meta\.appinn\.net/,
+    matches: /meta\.discourse\.org|linux\.do|meta\.appinn\.net/,
+    listNodesSelectors: [".topic-list tr", ".topic-area .topic-post"],
+    conditionNodesSelectors: [
+      ".topic-list tr .title",
+      ".topic-list tr .badge-category__wrapper ",
+      ".topic-list tr .discourse-tag",
+      ".topic-list tr .posters a:first-of-type",
+      ".topic-area .topic-post:nth-of-type(n+2) .names a",
+    ],
     getMatchedNodes() {
       return $$("a[href]:not(.utags_text_tag)").filter((element) => {
         const href = element.href
+        element.dataset.utags_position = "LB"
         if (!href.startsWith(prefix15)) {
           return true
         }
-        const key = getUserProfileUrl14(href, true)
+        let key = getUserProfileUrl14(href, true)
         if (key) {
-          const title = element.textContent
-          if (!title) {
+          const title = element.textContent.trim()
+          if (
+            !title &&
+            !element.closest(".topic-list tr .posters a:first-of-type")
+          ) {
             return false
           }
           const meta = { type: "user", title }
           element.utags = { key, meta }
           element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl3(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          if (element.closest("header .topic-link")) {
+            if (getComputedStyle(element).display === "inline") {
+              element.dataset.utags_flag = "1"
+            }
+            element.dataset.utags_position = "RB"
+          }
+          if (element.closest(".search-container .search-link")) {
+            element.dataset.utags_position = "LB"
+            element.dataset.utags_position2 = "RB"
+          }
+          const meta = { type: "post", title }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getCategoryUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          const meta = { type: "category", title }
+          element.utags = { key, meta }
+          return true
+        }
+        key = getTagUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          const meta = { type: "tag", title }
+          element.utags = { key, meta }
           return true
         }
         return false
@@ -4155,6 +4250,25 @@
       ...default_default.excludeSelectors,
       ".topic-map",
       ".names .second",
+      ".post-activity",
+      ".topic-last-activity",
+      ".topic-item-stats .activity",
+      ".topic-post-badges",
+      ".topic-excerpt",
+      ".list-vote-count",
+      ".post-date",
+      ".category__badges",
+      ".topic-timeline",
+      ".with-timeline",
+      ".sidebar-wrapper",
+      "#skip-link",
+      "#navigation-bar",
+    ],
+    validMediaSelectors: [
+      "a img.emoji",
+      "a svg.svg-string",
+      ".category-title-link",
+      ".topic-list tr .posters a:first-of-type",
     ],
     addExtraMatchedNodes(matchedNodesSet) {
       const key = getUserProfileUrl14(location.href)
@@ -4165,7 +4279,7 @@
             ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
           )
         if (element) {
-          const title = element.textContent.trim()
+          const title = element.textContent.trim().trim()
           if (title) {
             const meta = { title, type: "user" }
             element.utags = { key, meta }
@@ -4528,7 +4642,7 @@
     ":not(#a):not(#b):not(#c) div.gt a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtl a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtw a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gl4e.glname .glink+.utags_ul_0,:not(#a):not(#b):not(#c) .gltm .glname a+.utags_ul_0,:not(#a):not(#b):not(#c) .gltc .glname a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );z-index:200}:not(#a):not(#b):not(#c) div.gl1t a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}"
   var prefix20 = "https://e-hentai.org/"
   var prefix26 = "https://exhentai.org/"
-  function getPostUrl3(url) {
+  function getPostUrl4(url) {
     if (url.startsWith(prefix20)) {
       const href2 = url.slice(21)
       if (/^g\/\w+/.test(href2)) {
@@ -4561,7 +4675,7 @@
         .filter((element) => {
           const href = element.href
           if (href.startsWith(prefix20) || href.startsWith(prefix26)) {
-            const key = getPostUrl3(href)
+            const key = getPostUrl4(href)
             if (key) {
               const titleElement = $(".glink", element)
               let title
@@ -4602,7 +4716,7 @@
       'a[href*="act=expunge"]',
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      const key = getPostUrl3(location.href)
+      const key = getPostUrl4(location.href)
       if (key) {
         const element = getFirstHeadElement()
         if (element) {
@@ -4621,7 +4735,7 @@
   var panda_chaika_moe_default =
     ":not(#a):not(#b):not(#c) h5+.utags_ul{display:block !important;margin-top:-4px !important;margin-bottom:6px !important}"
   var prefix21 = "https://panda.chaika.moe/"
-  function getPostUrl4(url, exact = false) {
+  function getPostUrl5(url, exact = false) {
     if (url.startsWith(prefix21)) {
       const href2 = url.slice(25)
       if (exact) {
@@ -4646,7 +4760,7 @@
       ".caption",
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      const key = getPostUrl4(location.href)
+      const key = getPostUrl5(location.href)
       if (key) {
         const element = $("h5")
         if (element) {
@@ -4727,7 +4841,7 @@
   var kemono_su_default =
     ":not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_0,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_0,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:-6px !important;margin-left:4px !important;transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1 .utags_text_tag{--utags-text-tag-background-color: yellow}"
   var prefix28 = location.origin + "/"
-  function getPostUrl5(url) {
+  function getPostUrl6(url) {
     if (url.startsWith(prefix28)) {
       const href2 = url.slice(prefix28.length)
       if (/^\w+\/user\/\w+\/post\/\w+/.test(href2)) {
@@ -4777,7 +4891,7 @@
       'a[href^="/authentication/"]',
     ],
     addExtraMatchedNodes(matchedNodesSet) {
-      const key = getPostUrl5(location.href)
+      const key = getPostUrl6(location.href)
       if (key) {
         const element = $("h1.post__title")
         if (element) {
@@ -5243,7 +5357,9 @@
       }
       const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
       const offset = getOffsetPosition(element, utags.offsetParent || doc.body)
-      const position = element.dataset.utags_position
+      const position = utagsSizeFix
+        ? element.dataset.utags_position
+        : element.dataset.utags_position2 || element.dataset.utags_position
       switch (position) {
         case "LT": {
           utags.style.left = offset.left + "px"

@@ -153,6 +153,8 @@
 
 ## 更新记录
 
+- 0.9.11
+  - 可以在 LINUX DO 和其他 Discourse 网站给帖子，分类，标签加标签，并可以使用特殊标签
 - 0.9.10
   - Apply utags to dlsite.com
   - Apply utags to dmm.co.jp
