@@ -387,7 +387,11 @@ function updateTagsPosition() {
       element,
       (utags.offsetParent as HTMLElement) || doc.body
     )
-    const position = element.dataset.utags_position
+
+    // version 5
+    const position = utagsSizeFix
+      ? element.dataset.utags_position
+      : element.dataset.utags_position2 || element.dataset.utags_position
 
     switch (position) {
       // left-top
