@@ -1,0 +1,119 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      background-color: var(--utags-captain-tag-background-color) !important;
+      border-radius: 3px !important;
+    }
+  }
+
+  /* 笔记内容 */
+  .author-container .author-wrapper .name + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: -10px;
+      --utags-notag-captain-tag-left: 30px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: 4px !important;
+      margin-left: 8px !important;
+    }
+  }
+
+  /* 防止笔记 #关键字 跟着一起滚动 */
+  .note-text {
+    position: relative;
+
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-1);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-1);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-1);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-1);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+  }
+
+  /* 评论区 */
+  .comments-container .author-wrapper .name + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: 0px;
+      --utags-notag-captain-tag-left: 16px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: -18px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  /* 被 @ 的用户 */
+  .note-content-user + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: 0px;
+      --utags-notag-captain-tag-left: 20px;
+    }
+  }
+
+  /* 用户信息弹窗 */
+  .tooltip-content .user-content .avatar-info + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: 6px;
+      --utags-notag-captain-tag-left: 46px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: 6px !important;
+      margin-left: 46px !important;
+    }
+  }
+
+  /* 信息流 */
+  .note-item .author-wrapper .author + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: 0px;
+      --utags-notag-captain-tag-left: 36px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: 12px !important;
+      margin-left: 22px !important;
+    }
+  }
+
+  /* 主页 */
+  #userPageContainer .user-info .user-name + {
+    .utags_ul_0 {
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: -16px;
+      --utags-notag-captain-tag-left: -6px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: -15px !important;
+      margin-left: -4px !important;
+    }
+  }
+}
