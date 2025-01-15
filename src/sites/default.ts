@@ -11,7 +11,7 @@ export const getCanonicalUrl = (url: string) =>
 const site = {
   matches: /.*/,
   matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
-  excludeSelectors: [".browser_extension_settings_container"],
+  excludeSelectors: [".browser_extension_settings_container", "a a"],
   getCanonicalUrl,
 }
 

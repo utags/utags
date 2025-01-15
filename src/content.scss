@@ -79,6 +79,7 @@
       max-height: unset !important;
       background: unset !important;
       background-color: var(--utags-text-tag-background-color) !important;
+      z-index: 0;
       /* Fix v2ex polish start */
       pointer-events: auto;
       /* Fix v2ex polish end */
@@ -210,7 +211,7 @@
     left: 0;
     height: 0;
     width: 0;
-    z-index: 100000;
+    z-index: 200000;
 
     .utags_modal_wrapper {
       position: fixed;
@@ -221,7 +222,7 @@
       inset: 0px;
       padding: 14vh 16px 16px;
       background-color: rgba(255, 255, 255, 0.1);
-      z-index: 100000;
+      z-index: 200000;
     }
 
     .utags_modal_content {
@@ -453,7 +454,7 @@
   [data-utags_list_node*=",收藏,"],
   [data-utags_list_node*=",关注,"],
   [data-utags_list_node*=",稍后阅读,"] {
-    background-image: linear-gradient(to right, #ffffff, #fefce8) !important;
+    background-image: linear-gradient(to right, #ffffff00, #fefce8) !important;
     opacity: 100% !important;
     display: var(--utags-list-node-display) !important;
   }
@@ -461,7 +462,7 @@
   [data-utags_list_node*=",热门,"],
   [data-utags_list_node*=",收藏,"],
   [data-utags_list_node*=",关注,"] {
-    background-image: linear-gradient(to right, #ffffff, #fef2f2) !important;
+    background-image: linear-gradient(to right, #ffffff00, #fef2f2) !important;
   }
 
   [data-utags_list_node]:hover {
@@ -498,7 +499,8 @@ textarea[data-key="emojiTags"] {
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
     "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-emoji-tag-border-color: #fff0;
-  --utags-emoji-tag-background-color: #f8fafe;
+  --utags-emoji-tag-background-color: #fff0;
+  /* --utags-emoji-tag-background-color: #f8fafe; */
   --utags-emoji-tag-font-size: 12px;
   --utags-emoji-tag-border-width: 0;
   --utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji",

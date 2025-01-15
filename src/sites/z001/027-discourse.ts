@@ -174,6 +174,7 @@ const site = {
     ".topic-item-stats .activity",
     ".topic-post-badges",
     ".topic-excerpt",
+    ".topic-list-category-expert-tags",
     ".list-vote-count",
     ".post-date",
     ".category__badges",
