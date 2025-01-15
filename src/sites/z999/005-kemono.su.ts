@@ -17,7 +17,7 @@ function getPostUrl(url: string) {
 }
 
 const site = {
-  matches: /kemono\.su|coomer\.su/,
+  matches: /kemono\.su|coomer\.su|nekohouse\.su/,
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)").filter(
       (element: HTMLAnchorElement) => {
@@ -57,8 +57,10 @@ const site = {
     ".global-sidebar",
     ".paginator",
     ".post__nav-links",
+    ".scrape__nav-links",
     ".tabs",
     ".user-header__actions",
+    ".posts-board__sidebar",
     "#add-new-link",
     'a[href^="/authentication/"]',
   ],
@@ -66,7 +68,7 @@ const site = {
     const key = getPostUrl(location.href)
     if (key) {
       // post title
-      const element = $("h1.post__title")
+      const element = $("h1.post__title,h1.scrape__title")
       if (element) {
         const title = element.textContent!.trim()
         if (title) {

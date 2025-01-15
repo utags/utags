@@ -54,6 +54,7 @@
 // @match                https://keylol.com/*
 // @match                https://kemono.su/*
 // @match                https://coomer.su/*
+// @match                https://nekohouse.su/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
