@@ -15,6 +15,11 @@ function getCanonicalUrl(url: string) {
     return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.com/, "www.v2ex.com")
   }
 
+  // https://global.v2ex.co/
+  if (url.includes("v2ex.co")) {
+    return url.replace(/[?#].*/, "").replace(/(\w+\.)?v2ex.co/, "www.v2ex.com")
+  }
+
   return url
 }
 
@@ -28,7 +33,7 @@ export function cloneWithoutCitedReplies(element: HTMLElement) {
 }
 
 const site = {
-  matches: /v2ex\.com|v2hot\./,
+  matches: /v2ex\.com|v2hot\.|v2ex\.co/,
   listNodesSelectors: [
     ".box .cell",
     // v2ex 超级增强

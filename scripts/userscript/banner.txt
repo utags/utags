@@ -25,6 +25,7 @@
 // @match                https://lobste.rs/*
 // @match                https://news.ycombinator.com/*
 // @match                https://*.v2ex.com/*
+// @match                https://*.v2ex.co/*
 // @match                https://*.zhihu.com/*
 // @match                https://*.weibo.com/*
 // @match                https://*.weibo.cn/*
