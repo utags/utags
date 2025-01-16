@@ -109,3 +109,48 @@ console.log(deleteUrlParameters(testUrl, "foo"))
 
 console.log(deleteUrlParameters(testUrl, "*", ["bar"]))
 */
+
+export function getUrlParameters(
+  urlString: string,
+  keys: string[] | string,
+  allowEmpty = false
+) {
+  const url = new URL(urlString)
+
+  if (typeof keys === "string") {
+    keys = [keys]
+  }
+
+  const result = {}
+  const parameters = new URLSearchParams(url.search)
+  for (const key of keys) {
+    if (key) {
+      const value = parameters.get(key)
+      if (
+        (allowEmpty && value !== undefined && value !== null) ||
+        (!allowEmpty && value)
+      ) {
+        result[key] = value
+      }
+    }
+  }
+
+  return result
+}
+
+/*
+let testUrl = "https://example.com?foo=1&bar=2&foo=3&hoo=11&car=&go#boo=5"
+console.log(getUrlParameters(testUrl, ["", "bar"]))
+
+console.log(getUrlParameters(testUrl, "*"))
+
+console.log(getUrlParameters(testUrl, "foo"))
+
+console.log(getUrlParameters(testUrl, ["bar"]))
+
+console.log(getUrlParameters(testUrl, ["bar", "foo", "boo"]))
+
+console.log(getUrlParameters(testUrl, ["bar", "foo", "car", "go"]))
+
+console.log(getUrlParameters(testUrl, ["bar", "foo", "car", "go"], true))
+*/

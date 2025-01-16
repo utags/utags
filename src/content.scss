@@ -468,6 +468,14 @@
   [data-utags_list_node]:hover {
     opacity: 100% !important;
   }
+
+  /* For debugging */
+  [data-utags_other="1"] + ul.utags_ul {
+    .utags_captain_tag,
+    .utags_captain_tag2 {
+      color: yellow !important;
+    }
+  }
 }
 
 .utags_no_hide [data-utags_list_node*=","] {
