@@ -69,12 +69,18 @@ function getTagUrl(url: string, exact = false) {
 const site = {
   matches:
     /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com/,
-  listNodesSelectors: [".topic-list tr", ".topic-area .topic-post"],
+  listNodesSelectors: [
+    ".topic-list tr",
+    // replies
+    ".topic-area .topic-post",
+    // search results
+    ".search-results .fps-result",
+  ],
   conditionNodesSelectors: [
     // topic title
     ".topic-list tr .title",
     // category
-    ".topic-list tr .badge-category__wrapper ",
+    ".topic-list tr .badge-category__wrapper",
     // tag
     ".topic-list tr .discourse-tag",
     // author
@@ -82,6 +88,12 @@ const site = {
 
     // replies
     ".topic-area .topic-post:nth-of-type(n+2) .names a",
+
+    // search results
+    ".search-results .fps-result .author a",
+    ".search-results .fps-result .search-link",
+    ".search-results .fps-result .badge-category__wrapper",
+    ".search-results .fps-result .discourse-tag",
   ],
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)").filter(
@@ -99,7 +111,13 @@ const site = {
           const title = element.textContent!.trim()
           if (
             !title &&
-            !element.closest(".topic-list tr .posters a:first-of-type")
+            !element.closest(".topic-list tr .posters a:first-of-type") &&
+            !element.closest(".bookmark-list tr a.avatar") &&
+            !element.closest(
+              ".user-content .user-stream-item__header a.avatar-link"
+            ) &&
+            !element.closest(".column .latest-topic-list .topic-poster a") &&
+            !element.closest(".search-results .author a")
           ) {
             return false
           }
@@ -129,7 +147,7 @@ const site = {
 
           if (element.closest(".search-container .search-link")) {
             element.dataset.utags_position = "LB"
-            element.dataset.utags_position2 = "RB"
+            element.dataset.utags_position2 = "LT"
           }
 
           const meta = { type: "post", title }
@@ -178,6 +196,7 @@ const site = {
     ".list-vote-count",
     ".post-date",
     ".category__badges",
+    ".badge-posts",
     ".topic-timeline",
     ".with-timeline",
     ".sidebar-wrapper",
@@ -189,6 +208,7 @@ const site = {
     "a svg.svg-string",
     ".category-title-link",
     ".topic-list tr .posters a:first-of-type",
+    ".search-results .author a .avatar",
   ],
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
     const key = getUserProfileUrl(location.href)

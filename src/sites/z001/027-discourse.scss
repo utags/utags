@@ -112,34 +112,91 @@
       margin-top: 14px !important;
     }
   }
-  .column .latest-topic-list .main-link {
-    .title + {
-      .utags_ul_0 {
-        --utags-notag-captain-tag-top: -18px;
-      }
+  .column .latest-topic-list {
+    .main-link {
+      .title + {
+        .utags_ul_0 {
+          --utags-notag-captain-tag-top: -18px;
+        }
 
-      .utags_ul_1 {
-        margin-bottom: 2px !important;
+        .utags_ul_1 {
+          margin-bottom: 2px !important;
+        }
+      }
+      .badge-category__wrapper + {
+        .utags_ul_1 {
+          padding-top: 3px !important;
+        }
+      }
+      .discourse-tag + {
+        .utags_ul_1 {
+          margin-top: 4px !important;
+        }
       }
     }
-    .badge-category__wrapper + {
-      .utags_ul_1 {
-        padding-top: 3px !important;
+
+    .topic-poster a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: 12px;
+        --utags-notag-captain-tag-left: 10px;
       }
-    }
-    .discourse-tag + {
       .utags_ul_1 {
-        margin-top: 4px !important;
+        position: absolute;
+        top: -9999px;
+        margin-top: 32px !important;
+        margin-left: 0px !important;
       }
     }
   }
   /* https://discourse.org/search?q= */
-  .search-container .search-link + {
+  .search-container {
+    --utags-list-node-display: flex;
+    .search-link + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: -14px !important;
+      }
+    }
+
+    .search-results .author a + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: 35px;
+        --utags-notag-captain-tag-left: 11px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 30px !important;
+      }
+    }
+  }
+
+  /* https://linux.do/u/nickname/activity/bookmarks */
+  .bookmark-list tr a.avatar + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: 26px;
+      --utags-notag-captain-tag-left: 0px;
+    }
     .utags_ul_1 {
       position: absolute;
       top: -9999px;
-      z-index: 100;
-      margin-top: 14px !important;
+      margin-top: 24px !important;
+      margin-left: 4px !important;
     }
+  }
+
+  /* https://linux.do/u/nickname/activity/reactions */
+  .user-content .user-stream-item__header a.avatar-link + {
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: 16px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  .search-menu .results {
+    position: relative;
   }
 }
