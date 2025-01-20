@@ -3,7 +3,7 @@ export const messages = {
   "settings.showHidedItems": "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
   "settings.noOpacityEffect": "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
   "settings.pinnedTags": "在下面添加要置顶的标签，以逗号分隔",
-  "settings.pinnedTagsDefaultValue": "收藏, block, sb, 隐藏, 已阅, 忽略, 标题党, 推广, 关注",
+  "settings.pinnedTagsDefaultValue": "收藏, block, sb, 屏蔽, 隐藏, 已阅, 忽略, 标题党, 推广, 关注",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "在下面添加表情符号标签，以逗号分隔",
   "settings.useSimplePrompt": "使用简单方式添加标签",
