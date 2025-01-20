@@ -21,8 +21,8 @@
   /* 笔记内容 */
   .author-container .author-wrapper .name + {
     .utags_ul_0 {
-      --utags-notag-captain-tag-top: -10px;
-      --utags-notag-captain-tag-left: 30px;
+      --utags-notag-captain-tag-top: 6px;
+      --utags-notag-captain-tag-left: 8px;
     }
     .utags_ul_1 {
       position: absolute;
@@ -52,7 +52,7 @@
   /* 评论区 */
   .comments-container .author-wrapper .name + {
     .utags_ul_0 {
-      --utags-notag-captain-tag-top: 0px;
+      --utags-notag-captain-tag-top: 2px;
       --utags-notag-captain-tag-left: 16px;
     }
     .utags_ul_1 {
@@ -86,16 +86,30 @@
   }
 
   /* 信息流 */
-  .note-item .author-wrapper .author + {
-    .utags_ul_0 {
-      --utags-notag-captain-tag-top: 0px;
-      --utags-notag-captain-tag-left: 36px;
+  .note-item {
+    .cover + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: 18px;
+        --utags-notag-captain-tag-left: -8px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 14px !important;
+        margin-left: -4px !important;
+      }
     }
-    .utags_ul_1 {
-      position: absolute;
-      top: -9999px;
-      margin-top: 12px !important;
-      margin-left: 22px !important;
+    .author-wrapper .author + {
+      .utags_ul_0 {
+        --utags-notag-captain-tag-top: 16px;
+        --utags-notag-captain-tag-left: 20px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 12px !important;
+        margin-left: 22px !important;
+      }
     }
   }
 

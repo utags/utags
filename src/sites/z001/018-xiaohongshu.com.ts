@@ -52,6 +52,12 @@ function getPostUrl(url: string) {
         href2.replace(/^user\/profile\/\w+\/(\w+).*/, "$1")
       )
     }
+
+    if (/^search_result\/\w+/.test(href2)) {
+      return (
+        prefix + "explore/" + href2.replace(/^search_result\/(\w+).*/, "$1")
+      )
+    }
   }
 
   return undefined
@@ -59,6 +65,18 @@ function getPostUrl(url: string) {
 
 const site = {
   matches: /www\.xiaohongshu\.com/,
+  listNodesSelectors: [
+    ".feeds-container section",
+    // replies
+    ".comment-item",
+  ],
+  conditionNodesSelectors: [
+    // author
+    ".feeds-container section .author-wrapper .author",
+    ".feeds-container section .cover",
+    // replies
+    ".comment-item .author-wrapper .author a",
+  ],
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)").filter(
       (element: HTMLAnchorElement) => {
@@ -71,24 +89,22 @@ const site = {
 
         let key = getUserProfileUrl(href, true)
         if (key) {
-          if (element.closest(".note-content-user")) {
-            console.log(element)
-          }
-
           const titleElement =
             (hasClass(element, "name") ? element : $(".name", element)) ||
             element
           let title: string | undefined
           if (titleElement) {
-            title = titleElement.textContent!
+            title = titleElement.textContent!.trim()
           }
 
           if (!title) {
             return false
           }
 
-          if (element.closest(".author-container .author-wrapper .name")) {
-            // element.dataset.utags_position = "LT"
+          // 评论区
+          if (element.closest(".comments-container .author-wrapper .name")) {
+            element.dataset.utags_position = "RB"
+            element.dataset.utags_position2 = "LB"
           }
 
           const meta = { type: "user", title }
@@ -101,6 +117,23 @@ const site = {
         key = getPostUrl(href)
         if (key) {
           const meta = { type: "post" }
+
+          if (hasClass(element, "cover")) {
+            const sibling = element.nextElementSibling as HTMLElement
+            if (sibling && hasClass(sibling, "footer")) {
+              const titleElement = $(".title span", sibling)
+              if (titleElement) {
+                const title = titleElement.textContent!.trim()
+                if (title) {
+                  meta.title = title
+                }
+              }
+
+              // 没有标题的笔记
+              element.dataset.utags = element.dataset.utags || ""
+            }
+          }
+
           element.utags = { key, meta }
           return true
         }
@@ -111,7 +144,6 @@ const site = {
   },
   excludeSelectors: [
     ...defaultSite.excludeSelectors,
-    ".cover",
     ".side-bar",
     ".dropdown-nav",
     ".dropdown-container",
