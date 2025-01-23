@@ -70,7 +70,7 @@ const site = {
   matches:
     /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com/,
   listNodesSelectors: [
-    ".topic-list tr",
+    ".topic-list .topic-list-body tr",
     // replies
     ".topic-area .topic-post",
     // search results
@@ -78,13 +78,13 @@ const site = {
   ],
   conditionNodesSelectors: [
     // topic title
-    ".topic-list tr .title",
+    ".topic-list .topic-list-body tr .title",
     // category
-    ".topic-list tr .badge-category__wrapper",
+    ".topic-list .topic-list-body tr .badge-category__wrapper",
     // tag
-    ".topic-list tr .discourse-tag",
+    ".topic-list .topic-list-body tr .discourse-tag",
     // author
-    ".topic-list tr .posters a:first-of-type",
+    ".topic-list .topic-list-body tr .posters a:first-of-type",
 
     // replies
     ".topic-area .topic-post:nth-of-type(n+2) .names a",

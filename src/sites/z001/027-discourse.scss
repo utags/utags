@@ -306,4 +306,9 @@
       }
     }
   }
+
+  /* 主题列表最后一个需要显示， */
+  [data-utags_list_node]:last-of-type {
+    display: var(--utags-list-node-display) !important;
+  }
 }
