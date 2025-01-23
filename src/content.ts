@@ -297,6 +297,10 @@ async function displayTags() {
 
     const tags: string[] = (object.tags as string[]) || []
     appendTagsToPage(node, key, tags, utags.meta)
+
+    setTimeout(() => {
+      updateTagPosition(node)
+    })
   }
 
   if (start) {
@@ -364,187 +368,184 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   return false
 }
 
-function updateTagsPosition() {
-  const elements = $$("[data-utags_position]")
-  for (const element of elements) {
-    const utags = element.nextElementSibling as HTMLElement
-    if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
-      continue
-    }
-
-    if (
-      !utags.offsetParent &&
-      utags.offsetHeight === 0 &&
-      utags.offsetWidth === 0
-    ) {
-      continue
-    }
-
-    const style = getComputedStyle(utags)
-    if (style.position !== "absolute") {
-      continue
-    }
-
-    element.dataset.utags_fit_content = "1"
-
-    // 22 is the size of captain tag
-    const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
-
-    const offset = getOffsetPosition(
-      element,
-      (utags.offsetParent as HTMLElement) || doc.body
-    )
-
-    // version 5
-    let position = utagsSizeFix
-      ? element.dataset.utags_position
-      : element.dataset.utags_position2 || element.dataset.utags_position
-
-    // version 6
-    switch (style.objectPosition) {
-      case "0% 0%": {
-        position = "LT"
-        break
-      }
-
-      case "0% 100%": {
-        position = "LB"
-        break
-      }
-
-      case "0% 200%": {
-        position = "LB2"
-        break
-      }
-
-      case "100% 0%": {
-        position = "RT"
-        break
-      }
-
-      case "200% 0%": {
-        position = "R2T"
-        break
-      }
-
-      case "100% 100%": {
-        position = "RB"
-        break
-      }
-
-      case "100% 200%": {
-        position = "RB2"
-        break
-      }
-
-      case "200% 100%": {
-        position = "R2B"
-        break
-      }
-
-      default: {
-        break
-      }
-    }
-
-    switch (position) {
-      // left-top
-      case "LT": {
-        utags.style.left = offset.left + "px"
-        utags.style.top = offset.top + "px"
-        break
-      }
-
-      // left-bottom
-      case "LB": {
-        utags.style.left = offset.left + "px"
-        utags.style.top =
-          offset.top +
-          (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
-          utagsSizeFix +
-          "px"
-        break
-      }
-
-      // left-bottom, out of element box
-      case "LB2": {
-        utags.style.left = offset.left + "px"
-        utags.style.top =
-          offset.top + (element.clientHeight || element.offsetHeight) + "px"
-        break
-      }
-
-      // right-top
-      case "RT": {
-        utags.style.left =
-          offset.left +
-          (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
-          utagsSizeFix +
-          "px"
-        utags.style.top = offset.top + "px"
-        break
-      }
-
-      // right-top, out of element box
-      case "R2T": {
-        utags.style.left =
-          offset.left + (element.clientWidth || element.offsetWidth) + "px"
-        utags.style.top = offset.top + "px"
-        break
-      }
-
-      // right-bottom
-      case "RB": {
-        utags.style.left =
-          offset.left +
-          (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
-          utagsSizeFix +
-          "px"
-        utags.style.top =
-          offset.top +
-          (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
-          utagsSizeFix +
-          "px"
-        break
-      }
-
-      // right-bottom, out of element box
-      case "RB2": {
-        utags.style.left =
-          offset.left +
-          (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
-          utagsSizeFix +
-          "px"
-        utags.style.top =
-          offset.top + (element.clientHeight || element.offsetHeight) + "px"
-        break
-      }
-
-      // right-bottom, out of element box
-      case "R2B": {
-        utags.style.left =
-          offset.left + (element.clientWidth || element.offsetWidth) + "px"
-        utags.style.top =
-          offset.top +
-          (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
-          utagsSizeFix +
-          "px"
-        break
-      }
-
-      default: {
-        break
-      }
-    }
-
-    element.dataset.utags_fit_content = "0"
+function updateTagPosition(element: HTMLElement) {
+  const utags = element.nextElementSibling as HTMLElement
+  if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
+    return
   }
+
+  if (
+    !utags.offsetParent &&
+    utags.offsetHeight === 0 &&
+    utags.offsetWidth === 0
+  ) {
+    return
+  }
+
+  const style = getComputedStyle(utags)
+  if (style.position !== "absolute") {
+    return
+  }
+
+  element.dataset.utags_fit_content = "1"
+
+  // 22 is the size of captain tag
+  const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
+
+  const offset = getOffsetPosition(
+    element,
+    (utags.offsetParent as HTMLElement) || doc.body
+  )
+
+  // version 5
+  let position = utagsSizeFix
+    ? element.dataset.utags_position
+    : element.dataset.utags_position2 || element.dataset.utags_position
+
+  // version 6
+  switch (style.objectPosition) {
+    case "0% 0%": {
+      position = "LT"
+      break
+    }
+
+    case "0% 100%": {
+      position = "LB"
+      break
+    }
+
+    case "0% 200%": {
+      position = "LB2"
+      break
+    }
+
+    case "100% 0%": {
+      position = "RT"
+      break
+    }
+
+    case "200% 0%": {
+      position = "R2T"
+      break
+    }
+
+    case "100% 100%": {
+      position = "RB"
+      break
+    }
+
+    case "100% 200%": {
+      position = "RB2"
+      break
+    }
+
+    case "200% 100%": {
+      position = "R2B"
+      break
+    }
+
+    default: {
+      break
+    }
+  }
+
+  switch (position) {
+    // left-top
+    case "LT": {
+      utags.style.left = offset.left + "px"
+      utags.style.top = offset.top + "px"
+      break
+    }
+
+    // left-bottom
+    case "LB": {
+      utags.style.left = offset.left + "px"
+      utags.style.top =
+        offset.top +
+        (element.clientHeight || element.offsetHeight) -
+        utags.clientHeight -
+        utagsSizeFix +
+        "px"
+      break
+    }
+
+    // left-bottom, out of element box
+    case "LB2": {
+      utags.style.left = offset.left + "px"
+      utags.style.top =
+        offset.top + (element.clientHeight || element.offsetHeight) + "px"
+      break
+    }
+
+    // right-top
+    case "RT": {
+      utags.style.left =
+        offset.left +
+        (element.clientWidth || element.offsetWidth) -
+        utags.clientWidth -
+        utagsSizeFix +
+        "px"
+      utags.style.top = offset.top + "px"
+      break
+    }
+
+    // right-top, out of element box
+    case "R2T": {
+      utags.style.left =
+        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+      utags.style.top = offset.top + "px"
+      break
+    }
+
+    // right-bottom
+    case "RB": {
+      utags.style.left =
+        offset.left +
+        (element.clientWidth || element.offsetWidth) -
+        utags.clientWidth -
+        utagsSizeFix +
+        "px"
+      utags.style.top =
+        offset.top +
+        (element.clientHeight || element.offsetHeight) -
+        utags.clientHeight -
+        utagsSizeFix +
+        "px"
+      break
+    }
+
+    // right-bottom, out of element box
+    case "RB2": {
+      utags.style.left =
+        offset.left +
+        (element.clientWidth || element.offsetWidth) -
+        utags.clientWidth -
+        utagsSizeFix +
+        "px"
+      utags.style.top =
+        offset.top + (element.clientHeight || element.offsetHeight) + "px"
+      break
+    }
+
+    // right-bottom, out of element box
+    case "R2B": {
+      utags.style.left =
+        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+      utags.style.top =
+        offset.top +
+        (element.clientHeight || element.offsetHeight) -
+        utags.clientHeight -
+        utagsSizeFix +
+        "px"
+      break
+    }
+
+    default: {
+      break
+    }
+  }
+
+  element.dataset.utags_fit_content = "0"
 }
 
 async function main() {
@@ -621,8 +622,6 @@ async function main() {
     childList: true,
     subtree: true,
   })
-
-  setInterval(updateTagsPosition, 500)
 
   // For debug
   // setInterval(() => {
