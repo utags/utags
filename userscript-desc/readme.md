@@ -23,7 +23,7 @@ Not it supports
 - 52pojie ([www.52pojie.cn](https://www.52pojie.cn/))
 - juejin ([juejin.cn](https://juejin.cn/))
 - zhihu ([zhihu.com](https://www.zhihu.com/))
-- xiaohongshu ([xiaohongshu.com](https://www.xiaohongshu.com/))
+- xiaohongshu, RedNote ([xiaohongshu.com](https://www.xiaohongshu.com/))
 - weibo ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
 - sspai ([sspai.com](https://sspai.com/))
 - douyin ([douyin.com](https://www.douyin.com/))
@@ -39,6 +39,10 @@ Not it supports
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
 - Kemono ([kemono.su](https://kemono.su/))
 - Coomer ([coomer.su](https://coomer.su/))
+- Nekohouse ([nekohouse.su](https://nekohouse.su/))
+- Discourse ([meta.discourse.org](https://meta.discourse.org/))
+- Open AI ([community.openai.com](https://community.openai.com/))
+- Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -117,8 +121,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.10.1
+  - Enable add tags to notes and users on RedNote(xiaohongshu). Filtering notes and replies with special tags.
+  - Improve performance
 - 0.9.11
-  - Enable add tags to posts, categories and tags on linux.do and other discourse sites
+  - Enable add tags to posts, categories and tags on linux.do and other discourse sites. Filtering posts and replies with special tags.
 - 0.9.10
   - Apply utags to dlsite.com
   - Apply utags to dmm.co.jp

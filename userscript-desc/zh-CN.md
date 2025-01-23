@@ -1,6 +1,6 @@
 # 小鱼标签 (UTags) - 为链接添加用户标签
 
-此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户、帖子、节点添加标签。
+此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户、帖子、节点添加标签。并可以使用特殊标签过滤帖子和回复
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -39,6 +39,10 @@
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
 - Kemono ([kemono.su](https://kemono.su/))
 - Coomer ([coomer.su](https://coomer.su/))
+- Nekohouse ([nekohouse.su](https://nekohouse.su/))
+- Discourse ([meta.discourse.org](https://meta.discourse.org/))
+- Open AI ([community.openai.com](https://community.openai.com/))
+- Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -153,8 +157,11 @@
 
 ## 更新记录
 
+- 0.10.1
+  - 可以在【小红书】的笔记和用户加标签和备注，并可以使用特殊标签过滤笔记和评论
+  - 优化标签显示的位置，提升性能
 - 0.9.11
-  - 可以在 LINUX DO 和其他 Discourse 网站给帖子，分类，标签加标签，并可以使用特殊标签
+  - 可以在 LINUX DO 和其他 Discourse 网站给帖子，分类，标签加标签，并可以使用特殊标签过滤主题和回复
 - 0.9.10
   - Apply utags to dlsite.com
   - Apply utags to dmm.co.jp
