@@ -28,6 +28,7 @@
     background-color: transparent;
     border: none !important;
     box-shadow: none !important;
+    width: max-content !important;
 
     > li {
       box-sizing: border-box !important;
@@ -165,7 +166,7 @@
       display: var(--utags-notag-ul-disply, inline) !important;
       float: var(--utags-notag-ul-float, none);
       height: var(--utags-notag-ul-height, unset);
-      width: var(--utags-notag-ul-width, unset);
+      width: var(--utags-notag-ul-width, unset) !important;
       position: var(--utags-notag-ul-position, unset);
       top: var(--utags-notag-ul-top, unset);
 

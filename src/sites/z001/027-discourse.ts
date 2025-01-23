@@ -100,8 +100,6 @@ const site = {
       (element: HTMLAnchorElement) => {
         const href = element.href
 
-        element.dataset.utags_position = "LB"
-
         if (!href.startsWith(prefix)) {
           return true
         }
@@ -137,17 +135,11 @@ const site = {
             return false
           }
 
-          if (element.closest("header .topic-link")) {
-            if (getComputedStyle(element).display === "inline") {
-              element.dataset.utags_flag = "1"
-            }
-
-            element.dataset.utags_position = "RB"
-          }
-
-          if (element.closest(".search-container .search-link")) {
-            element.dataset.utags_position = "LB"
-            element.dataset.utags_position2 = "LT"
+          if (
+            element.closest("header .topic-link") &&
+            getComputedStyle(element).display === "inline"
+          ) {
+            element.dataset.utags_flag = "inline"
           }
 
           const meta = { type: "post", title }

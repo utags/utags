@@ -380,6 +380,13 @@ function updateTagsPosition() {
       continue
     }
 
+    const style = getComputedStyle(utags)
+    if (style.position !== "absolute") {
+      continue
+    }
+
+    element.dataset.utags_fit_content = "1"
+
     // 22 is the size of captain tag
     const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
 
@@ -389,9 +396,56 @@ function updateTagsPosition() {
     )
 
     // version 5
-    const position = utagsSizeFix
+    let position = utagsSizeFix
       ? element.dataset.utags_position
       : element.dataset.utags_position2 || element.dataset.utags_position
+
+    // version 6
+    switch (style.objectPosition) {
+      case "0% 0%": {
+        position = "LT"
+        break
+      }
+
+      case "0% 100%": {
+        position = "LB"
+        break
+      }
+
+      case "0% 200%": {
+        position = "LB2"
+        break
+      }
+
+      case "100% 0%": {
+        position = "RT"
+        break
+      }
+
+      case "200% 0%": {
+        position = "R2T"
+        break
+      }
+
+      case "100% 100%": {
+        position = "RB"
+        break
+      }
+
+      case "100% 200%": {
+        position = "RB2"
+        break
+      }
+
+      case "200% 100%": {
+        position = "R2B"
+        break
+      }
+
+      default: {
+        break
+      }
+    }
 
     switch (position) {
       // left-top
@@ -413,6 +467,14 @@ function updateTagsPosition() {
         break
       }
 
+      // left-bottom, out of element box
+      case "LB2": {
+        utags.style.left = offset.left + "px"
+        utags.style.top =
+          offset.top + (element.clientHeight || element.offsetHeight) + "px"
+        break
+      }
+
       // right-top
       case "RT": {
         utags.style.left =
@@ -421,6 +483,14 @@ function updateTagsPosition() {
           utags.clientWidth -
           utagsSizeFix +
           "px"
+        utags.style.top = offset.top + "px"
+        break
+      }
+
+      // right-top, out of element box
+      case "R2T": {
+        utags.style.left =
+          offset.left + (element.clientWidth || element.offsetWidth) + "px"
         utags.style.top = offset.top + "px"
         break
       }
@@ -442,10 +512,38 @@ function updateTagsPosition() {
         break
       }
 
+      // right-bottom, out of element box
+      case "RB2": {
+        utags.style.left =
+          offset.left +
+          (element.clientWidth || element.offsetWidth) -
+          utags.clientWidth -
+          utagsSizeFix +
+          "px"
+        utags.style.top =
+          offset.top + (element.clientHeight || element.offsetHeight) + "px"
+        break
+      }
+
+      // right-bottom, out of element box
+      case "R2B": {
+        utags.style.left =
+          offset.left + (element.clientWidth || element.offsetWidth) + "px"
+        utags.style.top =
+          offset.top +
+          (element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix +
+          "px"
+        break
+      }
+
       default: {
         break
       }
     }
+
+    element.dataset.utags_fit_content = "0"
   }
 }
 
