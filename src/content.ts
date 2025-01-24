@@ -398,67 +398,54 @@ function updateTagPosition(element: HTMLElement) {
   )
 
   // version 5
-  let position = utagsSizeFix
+  const position = utagsSizeFix
     ? element.dataset.utags_position
     : element.dataset.utags_position2 || element.dataset.utags_position
 
   // version 6
-  switch (style.objectPosition) {
-    case "0% 0%": {
-      position = "LT"
-      break
-    }
+  let objectPosition = style.objectPosition
+  if (objectPosition === "50% 50%" && position) {
+    switch (position) {
+      // left-top
+      case "LT": {
+        objectPosition = "0% 0%"
+        break
+      }
 
-    case "0% 100%": {
-      position = "LB"
-      break
-    }
+      // left-bottom
+      case "LB": {
+        objectPosition = "0% 100%"
+        break
+      }
 
-    case "0% 200%": {
-      position = "LB2"
-      break
-    }
+      // right-top
+      case "RT": {
+        objectPosition = "100% 0%"
+        break
+      }
 
-    case "100% 0%": {
-      position = "RT"
-      break
-    }
+      // right-bottom
+      case "RB": {
+        objectPosition = "100% 100%"
+        break
+      }
 
-    case "200% 0%": {
-      position = "R2T"
-      break
-    }
-
-    case "100% 100%": {
-      position = "RB"
-      break
-    }
-
-    case "100% 200%": {
-      position = "RB2"
-      break
-    }
-
-    case "200% 100%": {
-      position = "R2B"
-      break
-    }
-
-    default: {
-      break
+      default: {
+        break
+      }
     }
   }
 
-  switch (position) {
+  switch (objectPosition) {
     // left-top
-    case "LT": {
+    case "0% 0%": {
       utags.style.left = offset.left + "px"
       utags.style.top = offset.top + "px"
       break
     }
 
     // left-bottom
-    case "LB": {
+    case "0% 100%": {
       utags.style.left = offset.left + "px"
       utags.style.top =
         offset.top +
@@ -470,7 +457,7 @@ function updateTagPosition(element: HTMLElement) {
     }
 
     // left-bottom, out of element box
-    case "LB2": {
+    case "0% 200%": {
       utags.style.left = offset.left + "px"
       utags.style.top =
         offset.top + (element.clientHeight || element.offsetHeight) + "px"
@@ -478,7 +465,7 @@ function updateTagPosition(element: HTMLElement) {
     }
 
     // right-top
-    case "RT": {
+    case "100% 0%": {
       utags.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
@@ -489,16 +476,26 @@ function updateTagPosition(element: HTMLElement) {
       break
     }
 
-    // right-top, out of element box
-    case "R2T": {
+    // right-center
+    case "100% 50%": {
       utags.style.left =
-        offset.left + (element.clientWidth || element.offsetWidth) + "px"
-      utags.style.top = offset.top + "px"
+        offset.left +
+        (element.clientWidth || element.offsetWidth) -
+        utags.clientWidth -
+        utagsSizeFix +
+        "px"
+      utags.style.top =
+        offset.top +
+        ((element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix) /
+          2 +
+        "px"
       break
     }
 
     // right-bottom
-    case "RB": {
+    case "100% 100%": {
       utags.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
@@ -515,7 +512,7 @@ function updateTagPosition(element: HTMLElement) {
     }
 
     // right-bottom, out of element box
-    case "RB2": {
+    case "100% 200%": {
       utags.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
@@ -527,8 +524,30 @@ function updateTagPosition(element: HTMLElement) {
       break
     }
 
+    // right-top, out of element box
+    case "200% 0%": {
+      utags.style.left =
+        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+      utags.style.top = offset.top + "px"
+      break
+    }
+
+    // right-center, out of element box
+    case "200% 50%": {
+      utags.style.left =
+        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+      utags.style.top =
+        offset.top +
+        ((element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix) /
+          2 +
+        "px"
+      break
+    }
+
     // right-bottom, out of element box
-    case "R2B": {
+    case "200% 100%": {
       utags.style.left =
         offset.left + (element.clientWidth || element.offsetWidth) + "px"
       utags.style.top =
@@ -607,6 +626,8 @@ async function main() {
     }
 
     if (shouldUpdate) {
+      // Clean up immediately. Some app like tictok re-render while mouse over something
+      cleanUnusedUtags()
       displayTagsThrottled()
     }
 
