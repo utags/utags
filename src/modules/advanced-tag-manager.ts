@@ -161,6 +161,12 @@ async function copyCurrentTags(input: HTMLInputElement) {
   input.select()
 }
 
+function stopEventPropagation(event: Event) {
+  event.preventDefault()
+  event.stopPropagation()
+  event.stopImmediatePropagation()
+}
+
 function createPromptView(
   message: string,
   value: string | undefined,
@@ -191,8 +197,14 @@ function createPromptView(
   const input = addElement(content, "input", {
     type: "text",
     placeholder: "foo, bar",
-    onblur(event: Event) {
-      // console.log(event)
+    onblur(event: FocusEvent) {
+      // console.log(event.relatedTarget)
+      // relatedTarget is null when Escape key pressed
+      if (event.relatedTarget) {
+        input.focus()
+        stopEventPropagation(event)
+      }
+
       setTimeout(() => {
         // When press 'Escape' key
         if (doc.activeElement === doc.body) {
@@ -293,14 +305,14 @@ function createPromptView(
     switch (event.key) {
       case "Escape": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         closeModal()
         break
       }
 
       case "Enter": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
 
         if (current) {
@@ -316,14 +328,14 @@ function createPromptView(
 
       case "Tab": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
         break
       }
 
       case "ArrowDown": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
         current = $(
           ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
@@ -350,7 +362,7 @@ function createPromptView(
 
       case "ArrowUp": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
         current = $(
           ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
@@ -369,7 +381,7 @@ function createPromptView(
 
       case "ArrowLeft": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
         current = $(
           ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
@@ -395,7 +407,7 @@ function createPromptView(
 
       case "ArrowRight": {
         // 取消默认动作，从而避免处理两次。
-        event.preventDefault()
+        stopEventPropagation(event)
         input.focus()
         current = $(
           ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
@@ -466,6 +478,10 @@ function createPromptView(
     const target = event.target as HTMLElement
     if (!target) {
       return
+    }
+
+    if (!target.closest(".utags_modal_content button")) {
+      stopEventPropagation(event)
     }
 
     if (target.closest(".utags_modal_content")) {
