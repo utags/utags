@@ -1,0 +1,130 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-top */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  /* 信息流 */
+  .css-x6y88p-DivItemContainerV2 {
+  }
+
+  /* 视频播放页面作者用户名 */
+  .css-e2j6y6-StyledLink {
+    & + {
+      .utags_ul_0 {
+        object-position: 0% 200%;
+        --utags-notag-captain-tag-top: -4px;
+        --utags-notag-captain-tag-left: -4px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  /* 视频播放页面评论区 */
+  .css-1gstnae-DivCommentItemWrapper {
+    --utags-list-node-display: flex;
+    a[href^="/@"] p {
+      display: inline;
+    }
+  }
+
+  .css-ulyotp-DivCommentContentContainer {
+    --utags-list-node-display: flex;
+  }
+
+  /* 直播播主用户名 */
+  .css-1asahzr-DivBroadcastTitleWrapper a {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+      }
+    }
+
+    & + {
+      .utags_ul_1 {
+        object-position: 200% 50%;
+        position: absolute;
+        top: -9999px;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  /* 直播播主用户名悬浮窗 */
+  .css-c5ejjw-DivProfileContainer[data-e2e="user-profile-card"] a {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+      }
+    }
+  }
+  /* 直播评论用户名悬浮窗 */
+  .css-8c0sl4-AName {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+      height: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+        height: fit-content !important;
+      }
+    }
+
+    & + {
+      .utags_ul_0 {
+        object-position: 0% 200%;
+        --utags-notag-captain-tag-top: -4px;
+        --utags-notag-captain-tag-left: -4px;
+      }
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  [data-e2e="recommend-card"] a + {
+    .utags_ul_0 {
+      object-position: 0% 200%;
+      --utags-notag-captain-tag-top: -2px;
+      --utags-notag-captain-tag-left: -4px;
+    }
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: 2px !important;
+      margin-left: 0px !important;
+    }
+  }
+}
