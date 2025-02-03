@@ -12,33 +12,53 @@ Allow users to add custom tags to links.
 
 目前支持的网站
 
-- [www.v2ex.com](https://www.v2ex.com/)
-- [greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/)
-- [hacker news](https://news.ycombinator.com/) (news.ycombinator.com)
-- [lobste.rs](https://lobste.rs/)
-- [github.com](https://github.com/)
-- [www.reddit.com](https://www.reddit.com/)
-- [twitter.com](https://twitter.com/)
-- [mp.weixin.qq.com](https://mp.weixin.qq.com/)
-- [www.instagram.com](https://www.instagram.com/)
-- [www.threads.net](https://www.threads.net/)
-- [www.facebook.com](https://www.facebook.com/)
-- [www.youtube.com](https://www.youtube.com/)
-- [www.bilibili.com](https://www.bilibili.com/)
-- [www.tiktok.com](https://www.tiktok.com/)
-- [www.52pojie.cn](https://www.52pojie.cn/)
-- [juejin.cn](https://juejin.cn/)
-- [zhihu.com](https://www.zhihu.com/)
-- [xiaohongshu.com](https://www.xiaohongshu.com/)
-- [pornhub.com](https://www.pornhub.com/)
-- [weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/)
-- [sspai.com](https://sspai.com/)
-- [douyin.com](https://www.douyin.com/)
-- [podcasts.google.com](https://podcasts.google.com/)
-- [rebang.today](https://rebang.today/)
-- [myanimelist.net](https://myanimelist.net/)
-- [douban.com](https://www.douban.com/)
+- V2EX ([www.v2ex.com](https://www.v2ex.com/))
+- Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
+- Hacker News ([news.ycombinator.com](https://news.ycombinator.com/))
+- Lobsters ([lobste.rs](https://lobste.rs/))
+- GitHub ([github.com](https://github.com/))
+- Reddit ([www.reddit.com](https://www.reddit.com/))
+- X(Twitter) ([x.com](https://x.com/) / [twitter.com](https://twitter.com/))
+- 微信公众号 ([mp.weixin.qq.com](https://mp.weixin.qq.com/))
+- Instagram ([www.instagram.com](https://www.instagram.com/))
+- Threads ([www.threads.net](https://www.threads.net/))
+- Facebook ([www.facebook.com](https://www.facebook.com/))
+- YouTube ([www.youtube.com](https://www.youtube.com/))
+- B 站 Bilibili ([www.bilibili.com](https://www.bilibili.com/))
+- TikTok ([www.tiktok.com](https://www.tiktok.com/))
+- 吾爱破解 ([www.52pojie.cn](https://www.52pojie.cn/))
+- 掘金 ([juejin.cn](https://juejin.cn/))
+- 知乎 ([zhihu.com](https://www.zhihu.com/))
+- 小红书 xiaohongshu ([xiaohongshu.com](https://www.xiaohongshu.com/))
+- 微博 ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
+- 少数派 ([sspai.com](https://sspai.com/))
+- 抖音 ([douyin.com](https://www.douyin.com/))
+- Google Podcasts ([podcasts.google.com](https://podcasts.google.com/))
+- 今日热榜 Rebang.Today ([rebang.today](https://rebang.today/))
+- MyAnimeList ([myanimelist.net](https://myanimelist.net/))
+- 豆瓣 ([douban.com](https://www.douban.com/))
+- pixiv ([www.pixiv.net](https://www.pixiv.net/))
+- LINUX DO ([linux.do](https://linux.do/))
+- 小众软件 ([meta.appinn.net](https://meta.appinn.net/))
+- NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
+- Keylol 其乐 ([keylol.com](https://keylol.com/))
+- DLsite ([www.dlsite.com](http://www.dlsite.com/))
+- Kemono ([kemono.su](https://kemono.su/))
+- Coomer ([coomer.su](https://coomer.su/))
+- Nekohouse ([nekohouse.su](https://nekohouse.su/))
+- Discourse ([meta.discourse.org](https://meta.discourse.org/))
+- Open AI ([community.openai.com](https://community.openai.com/))
+- Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
+
+另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
+
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- panda.chaika.moe [panda.chaika.moe](https://panda.chaika.moe/)
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+
+![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## 安装
 
@@ -129,10 +149,32 @@ Allow users to add custom tags to links.
 
 - 标签设置为 'sb'，该用户的帖子或评论都会半透明显示，可以方便跳过价值低的内容
 - 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
-- 更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
+- 更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 屏蔽, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
 
 ## 更新记录
 
+- 0.10.3
+  - 可以在【Reddit】给社区、主题和用户加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的社区和用户的主题和评论
+  - 可以在【TikTok】给视频加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的用户的视频和评论
+- 0.10.1
+  - 可以在【小红书】的笔记和用户加标签和备注，并可以使用特殊标签过滤笔记和评论
+  - 优化标签显示的位置，提升性能
+- 0.9.11
+  - 可以在 LINUX DO 和其他 Discourse 网站给帖子，分类，标签加标签，并可以使用特殊标签过滤主题和回复
+- 0.9.10
+  - Apply utags to dlsite.com
+  - Apply utags to dmm.co.jp
+  - Apply utags to kemono.su
+  - Apply utags to coomer.su
+  - Apply utags to keylol.com
+- 0.9.9
+  - Apply utags to www.pixiv.net
+  - Apply utags to linux.do
+  - Apply utags to meta.appinn.net
+  - Apply utags to NGA
+- 0.9.8
+  - twitter.com -> x.com
+  - fix github.com, threads.net, e-hentai.org issues
 - 0.9.5
   - Add emoji tags 👍
   - Increase the size of the list of candidate tags
@@ -325,5 +367,3 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
 [![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
-[![DTO](https://img.shields.io/badge/site-DTO-brightgreen)](https://dto.pipecraft.net)
-[![BestXTools](https://img.shields.io/badge/site-bestxtools-brightgreen)](https://www.bestxtools.com)

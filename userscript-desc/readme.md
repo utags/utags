@@ -4,7 +4,7 @@ Allow users to add custom tags (labels) to links. For example, you can add tags 
 
 **UTags** = **Usertags**. **Userscript**, **Userstyle** allows users to customize the functionality and style of the site, **Usertags** allows users to customize the tags (labels) for the site.
 
-Not it supports
+For now it supports
 
 - V2EX ([www.v2ex.com](https://www.v2ex.com/))
 - Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
@@ -121,6 +121,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.10.3
+  - Enable add tags to communities, posts and users on Reddit. Filtering posts and comments with special tags.
+  - Enable add tags to videos and users on TikTok. Filtering videos and replies with special tags.
 - 0.10.1
   - Enable add tags to notes and users on RedNote(xiaohongshu). Filtering notes and replies with special tags.
   - Improve performance
