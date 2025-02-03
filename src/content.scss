@@ -1,12 +1,10 @@
+#TOFIX_uFEFF {
+  display: block;
+}
+
 :not(#utags_should_has_higher_specificity):not(
     #utags_should_has_higher_specificity
   ) {
-  #utags_layer {
-    height: 200px;
-    width: 200px;
-    background-color: red;
-  }
-
   /* fix mp.weixin.qq.com issue */
   [data-utags_key] {
     display: none !important;

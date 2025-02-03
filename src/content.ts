@@ -380,6 +380,14 @@ function updateTagPosition(element: HTMLElement) {
     utags.offsetHeight === 0 &&
     utags.offsetWidth === 0
   ) {
+    // if (!element.addedMouseoverListener) {
+    // // maybe the element is hidden now
+    // element.addedMouseoverListener = true
+    // addEventListener(element, "mouseover", () => {
+    //   updateTagPosition(element)
+    // })
+    // }
+
     return
   }
 
@@ -643,6 +651,14 @@ async function main() {
   observer.observe(doc, {
     childList: true,
     subtree: true,
+  })
+
+  // To fix issues on reddit, add mouseover event
+  addEventListener(doc, "mouseover", (event: Event) => {
+    const target = event.target as HTMLElement
+    if (target && target.tagName === "A") {
+      displayTagsThrottled()
+    }
   })
 
   // For debug
