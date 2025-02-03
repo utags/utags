@@ -56,6 +56,8 @@
 // @match                https://kemono.su/*
 // @match                https://coomer.su/*
 // @match                https://nekohouse.su/*
+// @match                https://rule34video.com/*
+// @match                https://rule34gen.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
