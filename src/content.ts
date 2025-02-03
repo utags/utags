@@ -22,6 +22,7 @@ import type { PlasmoCSConfig } from "plasmo"
 
 import createTag from "./components/tag"
 import { i } from "./messages"
+import { registerDebuggingHotkey } from "./modules/debugging"
 import { outputData } from "./modules/export-import"
 import {
   bindDocumentEvents,
@@ -645,9 +646,7 @@ async function main() {
   })
 
   // For debug
-  // setInterval(() => {
-  //   document.body.classList.add("utags_show_all")
-  // }, 5000)
+  // registerDebuggingHotkey()
 }
 
 runWhenHeadExists(async () => {
