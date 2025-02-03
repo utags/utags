@@ -49,6 +49,8 @@ For now it supports
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
+- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
+- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -153,6 +155,8 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 
 ## Release Notes
 
+- 0.10.4
+  - Apply utags to rule34video.com, rule34gen.com
 - 0.10.3
   - Enable add tags to communities, posts and users on Reddit. Filtering posts and comments with special tags.
   - Enable add tags to videos and users on TikTok. Filtering videos and replies with special tags.

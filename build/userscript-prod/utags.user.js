@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.10.3
+// @version              0.10.4
 // @description          Allow users to add custom tags to links. Works on Greasy Fork, Hacker News, Reddit, GitHub, X(Twitter), Facebook, Threads, Instagram, Youtube, TikTok, pixiv and many sites.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。支持 V2EX, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -56,6 +56,8 @@
 // @match                https://kemono.su/*
 // @match                https://coomer.su/*
 // @match                https://nekohouse.su/*
+// @match                https://rule34video.com/*
+// @match                https://rule34gen.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
@@ -5330,6 +5332,157 @@
     getStyle: () => kemono_su_default,
   }
   var kemono_su_default2 = site36
+  var rule34video_com_default =
+    ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .thumbs .thumb a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -2px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .list_items .item a.wrap_item+.utags_ul_0,:not(#a):not(#b):not(#c) .aside_wrap a.item+.utags_ul_0{object-position:100% 50%}"
+  var prefix31 = location.origin + "/"
+  function getModelUrl(url) {
+    if (url.startsWith(prefix31)) {
+      const href2 = url.slice(prefix31.length)
+      if (/^models\/[\w-]+/.test(href2)) {
+        return prefix31 + href2.replace(/^(models\/[\w-]+).*/, "$1") + "/"
+      }
+    }
+    return void 0
+  }
+  function getMemberUrl(url) {
+    if (url.startsWith(prefix31)) {
+      const href2 = url.slice(prefix31.length)
+      if (/^members\/\d+/.test(href2)) {
+        return prefix31 + href2.replace(/^(members\/\d+).*/, "$1") + "/"
+      }
+    }
+    return void 0
+  }
+  function getCategoryUrl2(url) {
+    if (url.startsWith(prefix31)) {
+      const href2 = url.slice(prefix31.length)
+      if (/^categories\/[\w-]+/.test(href2)) {
+        return prefix31 + href2.replace(/^(categories\/[\w-]+).*/, "$1") + "/"
+      }
+    }
+    return void 0
+  }
+  function getVideoUrl5(url) {
+    if (url.startsWith(prefix31)) {
+      const href2 = url.slice(prefix31.length)
+      if (/^video\/\d+(\/[\w-]+)?/.test(href2)) {
+        return (
+          prefix31 + href2.replace(/^(video\/\d+(\/[\w-]+)?).*/, "$1") + "/"
+        )
+      }
+    }
+    return void 0
+  }
+  var site37 = {
+    matches: /rule34video\.com|rule34gen\.com/,
+    listNodesSelectors: [
+      //
+      ".list-comments .item",
+      ".thumbs .item",
+    ],
+    conditionNodesSelectors: [
+      //
+      ".list-comments .item .comment-info .inner a",
+      ".thumbs .item a.th",
+    ],
+    getMatchedNodes() {
+      return $$("a[href]:not(.utags_text_tag)").filter((element) => {
+        const href = element.href
+        if (!href.startsWith(prefix31)) {
+          if ($("header", element.parentElement)) {
+            const key2 = href.replace(/(https?:\/\/[^/]+\/).*/, "$1")
+            const meta = { type: "AD", title: "AD" }
+            element.utags = { key: key2, meta }
+            element.dataset.utags = element.dataset.utags || ""
+          }
+          return true
+        }
+        const key = getVideoUrl5(href)
+        if (key) {
+          const titleElement = $(".thumb_title", element)
+          const title = titleElement
+            ? titleElement.textContent.trim()
+            : element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          const meta = { type: "video", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        element.dataset.utags = element.dataset.utags || ""
+        return true
+      })
+    },
+    excludeSelectors: [
+      ...default_default.excludeSelectors,
+      ".header",
+      ".btn_more",
+      ".tabs-menu",
+      ".pagination",
+      ".headline",
+      ".prev",
+      ".next",
+      ".btn",
+      ".all",
+      ".tag_item_suggest",
+      'a[href*="download"]',
+      ".list-comments .wrap_image",
+    ],
+    addExtraMatchedNodes(matchedNodesSet) {
+      let key = getModelUrl(location.href)
+      if (key) {
+        const element = $(".brand_inform .title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "model" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getMemberUrl(location.href)
+      if (key) {
+        const element = $(".channel_logo .title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "user" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getCategoryUrl2(location.href)
+      if (key) {
+        const element = $(".brand_inform .title")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "category" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+      key = getVideoUrl5(location.href)
+      if (key) {
+        const element = $("h1.title_video")
+        if (element) {
+          const title = element.textContent.trim()
+          if (title) {
+            const meta = { title, type: "video" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
+    getStyle: () => rule34video_com_default,
+  }
+  var rule34video_com_default2 = site37
   var sites = [
     github_com_default2,
     v2ex_default,
@@ -5366,9 +5519,10 @@
     dlsite_com_default2,
     dmm_co_jp_default2,
     kemono_su_default2,
+    rule34video_com_default2,
   ]
   var getCanonicalUrlFunctionList = [default_default, ...sites]
-    .map((site37) => site37.getCanonicalUrl)
+    .map((site38) => site38.getCanonicalUrl)
     .filter((v) => typeof v === "function")
   function matchedSite(hostname3) {
     for (const s of sites) {

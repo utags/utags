@@ -49,6 +49,8 @@ Allow users to add custom tags to links.
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
+- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
+- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -153,6 +155,8 @@ Allow users to add custom tags to links.
 
 ## 更新记录
 
+- 0.10.4
+  - Apply utags to rule34video.com, rule34gen.com
 - 0.10.3
   - 可以在【Reddit】给社区、主题和用户加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的社区和用户的主题和评论
   - 可以在【TikTok】给视频加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的用户的视频和评论
