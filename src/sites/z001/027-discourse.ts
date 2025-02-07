@@ -25,11 +25,11 @@ function getPostUrl(url: string, exact = false) {
   if (url.startsWith(prefix)) {
     const href2 = url.slice(prefix.length).toLowerCase()
     if (exact) {
-      if (/^t\/[\w-]+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
-        return prefix + href2.replace(/^(t\/[\w-]+\/\d+).*/, "$1")
+      if (/^t\/.+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
+        return prefix + href2.replace(/^(t\/.+\/\d+).*/, "$1")
       }
-    } else if (/^t\/[\w-]+\/\d+?/.test(href2)) {
-      return prefix + href2.replace(/^(t\/[\w-]+\/\d+).*/, "$1")
+    } else if (/^t\/.+\/\d+?/.test(href2)) {
+      return prefix + href2.replace(/^(t\/.+\/\d+).*/, "$1")
     }
   }
 
@@ -68,7 +68,7 @@ function getTagUrl(url: string, exact = false) {
 
 const site = {
   matches:
-    /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com/,
+    /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com/,
   listNodesSelectors: [
     ".topic-list .topic-list-body tr",
     // replies
