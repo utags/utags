@@ -1,4 +1,5 @@
 import { $$, setStyle } from "browser-extension-utils"
+import styleText from "data-text:./007-twitter.com.scss"
 
 import defaultSite from "../default"
 
@@ -7,6 +8,14 @@ const prefix2 = "https://twitter.com/"
 
 const site = {
   matches: /x\.com|twitter\.com/,
+  listNodesSelectors: [
+    // feed
+    '[data-testid="cellInnerDiv"]',
+  ],
+  conditionNodesSelectors: [
+    // feed
+    '[data-testid="cellInnerDiv"] [data-testid="User-Name"] a',
+  ],
   getMatchedNodes() {
     return $$("a[href]:not(.utags_text_tag)").filter(
       (element: HTMLAnchorElement) => {
@@ -30,20 +39,7 @@ const site = {
             // console.log(href2)
 
             const parent = element.parentElement!
-            setStyle(parent, { display: "flex", flexDirection: "row" })
-            const parentSibling = parent.nextSibling as HTMLElement
-            if (
-              // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-              parentSibling &&
-              parentSibling.textContent &&
-              parentSibling.textContent.includes("·")
-            ) {
-              // 增加用户名与时间之间的距离，否则点击按钮时，会点击到时间链接
-              setStyle(parentSibling, {
-                paddingLeft: "10px",
-                paddingRight: "10px",
-              })
-            }
+            setStyle(parent, { zIndex: "1" })
 
             const meta = { type: "user" }
             element.utags = { meta }
@@ -72,6 +68,7 @@ const site = {
       matchedNodesSet.add(element)
     }
   },
+  getStyle: () => styleText,
 }
 
 export default site

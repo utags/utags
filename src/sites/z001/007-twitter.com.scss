@@ -1,0 +1,37 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+  }
+
+  /* tweet content: z-index: 0, display: inline-flex */
+  .css-175oi2r.r-xoduu5:hover {
+    z-index: 2 !important;
+  }
+
+  [data-testid="User-Name"]:hover,
+  [data-testid="HoverCard"]:hover,
+  /* Who to follow */
+  [data-testid="UserCell"]:hover {
+    .utags_ul .utags_captain_tag {
+      opacity: 100%;
+      width: calc(var(--utags-captain-tag-size) + 8px) !important;
+      height: calc(var(--utags-captain-tag-size) + 8px) !important;
+      padding: 5px 4px 4px 5px !important;
+      transition: all 0s 0.1s !important;
+      z-index: 0;
+    }
+  }
+}

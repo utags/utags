@@ -264,6 +264,8 @@
         border: 1px solid var(--utags-button-border-color);
         background-color: var(--utags-button-bg-color);
         text-shadow: none;
+        text-align: center;
+        font-family: revert;
 
         &:hover {
           background-color: var(--utags-button-hover-bg-color);
@@ -337,6 +339,8 @@
       background-color: var(--utags-action-button-bg-color);
       border: 1px solid var(--utags-action-button-border-color);
       text-shadow: none;
+      text-align: center;
+      font-family: revert;
     }
   }
 
