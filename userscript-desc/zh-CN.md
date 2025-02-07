@@ -45,13 +45,14 @@
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
+- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
+- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
 
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- panda.chaika.moe [panda.chaika.moe](https://panda.chaika.moe/)
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 
 ![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
@@ -159,6 +160,8 @@
 
 ## 更新记录
 
+- 0.10.6
+  - Apply utags to community.wanikani.com
 - 0.10.4
   - Apply utags to rule34video.com, rule34gen.com
 - 0.10.3
