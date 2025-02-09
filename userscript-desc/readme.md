@@ -124,6 +124,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.10.7
+  - Enhance add tags on X (Twitter). Filtering tweet and comments with special tags.
 - 0.10.6
   - Apply utags to community.wanikani.com
 - 0.10.4

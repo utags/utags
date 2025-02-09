@@ -160,6 +160,8 @@
 
 ## 更新记录
 
+- 0.10.7
+  - 优化在【 X (Twitter)】添加标签的体验，并可以使用特殊标签屏蔽过滤不喜欢的用户的推文和评论
 - 0.10.6
   - Apply utags to community.wanikani.com
 - 0.10.4
