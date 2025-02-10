@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.10.7
+// @version              0.10.8
 // @description          Allow users to add custom tags to links. Works on Greasy Fork, Hacker News, Reddit, GitHub, X(Twitter), Facebook, Threads, Instagram, Youtube, TikTok, pixiv and many sites.
 // @description:zh-CN    此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。支持 V2EX, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -4436,11 +4436,11 @@
     if (url.startsWith(prefix17)) {
       const href2 = url.slice(prefix17.length).toLowerCase()
       if (exact) {
-        if (/^t\/.+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
-          return prefix17 + href2.replace(/^(t\/.+\/\d+).*/, "$1")
+        if (/^t\/[^/]+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
+          return prefix17 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
         }
-      } else if (/^t\/.+\/\d+?/.test(href2)) {
-        return prefix17 + href2.replace(/^(t\/.+\/\d+).*/, "$1")
+      } else if (/^t\/[^/]+\/\d+?/.test(href2)) {
+        return prefix17 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
       }
     }
     return void 0
