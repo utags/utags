@@ -25,11 +25,11 @@ function getPostUrl(url: string, exact = false) {
   if (url.startsWith(prefix)) {
     const href2 = url.slice(prefix.length).toLowerCase()
     if (exact) {
-      if (/^t\/.+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
-        return prefix + href2.replace(/^(t\/.+\/\d+).*/, "$1")
+      if (/^t\/[^/]+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
+        return prefix + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
       }
-    } else if (/^t\/.+\/\d+?/.test(href2)) {
-      return prefix + href2.replace(/^(t\/.+\/\d+).*/, "$1")
+    } else if (/^t\/[^/]+\/\d+?/.test(href2)) {
+      return prefix + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
     }
   }
 
