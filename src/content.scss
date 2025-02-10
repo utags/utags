@@ -441,6 +441,7 @@
   }
 
   [data-utags_list_node*=",已阅,"],
+  [data-utags_list_node*=",已读,"],
   [data-utags_list_node*=",新用户,"] {
     opacity: 50%;
   }
@@ -456,6 +457,7 @@
 
   [data-utags_list_node*=",热门,"],
   [data-utags_list_node*=",收藏,"],
+  [data-utags_list_node*=",重要,"],
   [data-utags_list_node*=",关注,"],
   [data-utags_list_node*=",稍后阅读,"] {
     background-image: linear-gradient(to right, #ffffff00, #fefce8) !important;
@@ -465,6 +467,7 @@
 
   [data-utags_list_node*=",热门,"],
   [data-utags_list_node*=",收藏,"],
+  [data-utags_list_node*=",重要,"],
   [data-utags_list_node*=",关注,"] {
     background-image: linear-gradient(to right, #ffffff00, #fef2f2) !important;
   }
