@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name                 {displayName}
-// @name:zh-CN           {displayName:zh-CN}
+// @name                 🏷️ {displayName}
+// @name:zh-CN           🏷️ {displayName:zh-CN}
 // @namespace            {namespace}
 // @homepageURL          {homepage}
 // @supportURL           {bugs.url}
 // @version              {version}
-// @description          {description}
-// @description:zh-CN    {description:zh-CN}
+// @description          {description_userscript}
+// @description:zh-CN    {description_userscript:zh-CN}
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}

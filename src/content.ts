@@ -42,6 +42,8 @@ import { type UserTag, type UserTagMeta } from "./types"
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   run_at: "document_start",
+  matches: ["https://*/*"],
+  all_frames: false,
 }
 
 let emojiTags: string[]
