@@ -1,12 +1,8 @@
-# UTags - Add usertags to links
+# 小鱼标签 (UTags) - 为链接添加用户标签，备注信息
 
 > [English](README.md) | 中文
 
-Allow users to add custom tags to links.
-
-## 小鱼标签 (UTags) - 为链接添加用户标签
-
-此扩展/油猴脚本允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
+这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B 站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。并可以使用特殊标签过滤帖子和回复。
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -61,7 +57,7 @@ Allow users to add custom tags to links.
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 
-![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## 安装
 
@@ -73,70 +69,43 @@ Allow users to add custom tags to links.
 
 ## 使用方法
 
-- 鼠标移到帖子标题或用户名的上面，会显示标签图标。
-  ![screenshots](assets/screenshots-01.png)
+- 鼠标移到帖子标题或用户名的上面，会显示 🏷️ 标签图标。
 
-- 点击标签图标，输入标签，用逗号分开多个标签。
-  ![screenshots](assets/screenshots-02.png)
+- 点击 🏷️ 标签图标，输入标签，用逗号分开多个标签。
 
 - 帖子标题，用户名都可以设置标签。
-  ![screenshots](assets/screenshots-03.png)
 
-## 手机版截图
+## 网页截图
 
-- 主题列表
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-01.png)
 
-![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-02.png)
 
-![screenshots](https://i.imgur.com/byywcBy.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-03.png)
 
-![screenshots](https://i.imgur.com/YdilUsi.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-04.png)
 
-- 评论区
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
 
-![screenshots](https://i.imgur.com/smU24o8.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://i.imgur.com/coLUFOj.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
 
-![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
 
-- 功能设置
+![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
 
-![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
 
-- 视频版演示
+![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
 
-📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
 
-## Twitter.com Screenshots
+![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
 
-![screenshots](https://assets.bestxtools.com/i/vrnci)
+## 视频演示
 
----
-
-![screenshots](https://assets.bestxtools.com/i/huzhd)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/otxvl)
-
----
-
-## Threads.net Screenshots
-
-![screenshots](https://assets.bestxtools.com/i/irrgl)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/trwns)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/zvpbo)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/pckyc)
+- 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
 ## 功能特点
 

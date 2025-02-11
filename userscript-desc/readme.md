@@ -1,10 +1,10 @@
 # UTags - Add usertags to links
 
-Allow users to add custom tags (labels) to links. For example, you can add tags to forum members or posts.
+Add **custom tags** or **notes** to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 
 **UTags** = **Usertags**. **Userscript**, **Userstyle** allows users to customize the functionality and style of the site, **Usertags** allows users to customize the tags (labels) for the site.
 
-For now it supports
+For now it works on
 
 - V2EX ([www.v2ex.com](https://www.v2ex.com/))
 - Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
@@ -55,57 +55,51 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 
-![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## Usage
 
 - Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags
-  ![screenshots](https://assets.bestxtools.com/i/nqpyh)
 
 - Multiple tags are separated by commas
-  ![screenshots](https://assets.bestxtools.com/i/iczcg)
 
 - Tags can be added to post titles, usernames, and categories
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
 
 - Some special tags have special effects, such as 'ignore', 'clickbait', 'promotion', 'block', 'hide', etc.
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
-- Settings
+## Screenshots
 
-![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-01.png)
 
-- Video demo
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-02.png)
 
-📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-03.png)
 
-## Twitter.com Screenshots
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-04.png)
 
-![screenshots](https://assets.bestxtools.com/i/vrnci)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
 
----
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://assets.bestxtools.com/i/huzhd)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
 
----
+![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
 
-![screenshots](https://assets.bestxtools.com/i/otxvl)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
 
-## Threads.net Screenshots
+![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
 
-![screenshots](https://assets.bestxtools.com/i/irrgl)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
 
----
+![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
 
-![screenshots](https://assets.bestxtools.com/i/trwns)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
 
----
+## Video Demos
 
-![screenshots](https://assets.bestxtools.com/i/zvpbo)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/pckyc)
+- 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
 ## Features
 

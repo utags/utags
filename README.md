@@ -2,15 +2,11 @@
 
 > English | [中文](README-zh-CN.md)
 
-Allow users to add custom tags to links.
+Add **custom tags** or **notes** to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 
-## 小鱼标签 (UTags) - 为链接添加用户标签
+**UTags** = **Usertags**. **Userscript**, **Userstyle** allows users to customize the functionality and style of the site, **Usertags** allows users to customize the tags (labels) for the site.
 
-此扩展/油猴脚本允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户或帖子添加标签。
-
-**UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
-
-For now it supports
+For now it works on
 
 - V2EX ([www.v2ex.com](https://www.v2ex.com/))
 - Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
@@ -61,7 +57,7 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 
-![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## 安装
 
@@ -73,70 +69,43 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 
 ## 使用方法
 
-- 鼠标移到帖子标题或用户名的上面，会显示标签图标。
-  ![screenshots](assets/screenshots-01.png)
+- 鼠标移到帖子标题或用户名的上面，会显示 🏷️ 标签图标。
 
-- 点击标签图标，输入标签，用逗号分开多个标签。
-  ![screenshots](assets/screenshots-02.png)
+- 点击 🏷️ 标签图标，输入标签，用逗号分开多个标签。
 
 - 帖子标题，用户名都可以设置标签。
-  ![screenshots](assets/screenshots-03.png)
 
-## 手机版截图
+## Screenshots
 
-- 主题列表
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-01.png)
 
-![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-02.png)
 
-![screenshots](https://i.imgur.com/byywcBy.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-03.png)
 
-![screenshots](https://i.imgur.com/YdilUsi.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-04.png)
 
-- 评论区
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
 
-![screenshots](https://i.imgur.com/smU24o8.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://i.imgur.com/coLUFOj.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
 
-![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
 
-- 功能设置
+![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
 
-![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
 
-- 视频版演示
+![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
 
-📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
 
-## Twitter.com Screenshots
+![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
 
-![screenshots](https://assets.bestxtools.com/i/vrnci)
+## Video Demos
 
----
-
-![screenshots](https://assets.bestxtools.com/i/huzhd)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/otxvl)
-
----
-
-## Threads.net Screenshots
-
-![screenshots](https://assets.bestxtools.com/i/irrgl)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/trwns)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/zvpbo)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/pckyc)
+- 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
 ## 功能特点
 

@@ -1,6 +1,6 @@
-# 小鱼标签 (UTags) - 为链接添加用户标签
+# 小鱼标签 (UTags) - 为链接添加用户标签，备注信息
 
-此插件允许用户为网站的链接添加自定义标签。比如，可以给论坛的用户、帖子、节点添加标签。并可以使用特殊标签过滤帖子和回复
+这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B 站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。并可以使用特殊标签过滤帖子和回复。
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -55,75 +55,51 @@
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 
-![user matches](https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
 ## 使用方法
 
 - 鼠标移到帖子标题或用户名上面，旁边会出现标签 🏷️ 图标，点击图标添加标签
-  ![screenshots](https://assets.bestxtools.com/i/nqpyh)
 
 - 多个标签用逗号分隔（半角逗号符号、全角逗号符号都可以）
-  ![screenshots](https://assets.bestxtools.com/i/iczcg)
 
 - 帖子标题，用户名，节点都可以添加标签
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
 
 - 特殊标签有特殊效果，比如：sb, block, 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读等
-  ![screenshots](https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
-## 手机版截图
+## 截图
 
-- 主题列表
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-01.png)
 
-![screenshots](https://i.imgur.com/RBpOdzL.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-02.png)
 
-![screenshots](https://i.imgur.com/byywcBy.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-03.png)
 
-![screenshots](https://i.imgur.com/YdilUsi.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-04.png)
 
-- 评论区
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
 
-![screenshots](https://i.imgur.com/smU24o8.jpeg)
+![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://i.imgur.com/coLUFOj.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
 
-![screenshots](https://i.imgur.com/vwtalwQ.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
 
-- 功能设置
+![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
 
-![screenshots](https://i.imgur.com/SYbJxGe.jpeg)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
 
-- 视频版演示
+![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
 
-📺 [YouTube](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
 
-## Twitter.com Screenshots
+![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
 
-![screenshots](https://assets.bestxtools.com/i/vrnci)
+## 视频版演示
 
----
-
-![screenshots](https://assets.bestxtools.com/i/huzhd)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/otxvl)
-
-## Threads.net Screenshots
-
-![screenshots](https://assets.bestxtools.com/i/irrgl)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/trwns)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/zvpbo)
-
----
-
-![screenshots](https://assets.bestxtools.com/i/pckyc)
+- 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
 ## 功能特点
 
