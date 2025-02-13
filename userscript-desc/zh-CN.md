@@ -108,10 +108,7 @@
 - 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
 - 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
-- 除了 V2EX，以后还会支持更多的网站
-- 与 V2EX Plus, V2EX Polish, V2EX 超级增强, [V2EX.REP](https://greasyfork.org/zh-CN/scripts/466589-v2ex-rep) 等插件兼容
-- 支持 V2EX 手机网页版
+- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
 - 兼容以下用户脚本管理器
   - Tampermonkey (推荐)
   - Violentmonkey
@@ -136,6 +133,9 @@
 
 ## 更新记录
 
+- 0.11.0
+  - 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
+  - 在标签输入界面展示 “设置” 按钮
 - 0.10.7
   - 优化在【 X (Twitter)】添加标签的体验，并可以使用特殊标签屏蔽过滤不喜欢的用户的推文和评论
 - 0.10.6

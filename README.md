@@ -49,31 +49,30 @@ For now it works on
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
-
-In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
-
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+- And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+## Installation
 
-## 安装
+- Chrome: Under review
+- Edge: Under review
+- Firefox: [Firefox Addon Store](https://addons.mozilla.org/firefox/addon/utags/)
+- User Script: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- [Manually install browser extensions](manual-installation.md)
 
-- 类 Chrome 浏览器: 即将上架 Chrome 商店
-- Edge 浏览器: 即将上架 Edge 商店
-- Firefox 浏览器: 已上架 [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)，[点击这里](https://addons.mozilla.org/firefox/addon/utags/)安装。
-- 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
-- [手动安装浏览器扩展](manual-installation.md)
+## Usage
 
-## 使用方法
+- Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags
 
-- 鼠标移到帖子标题或用户名的上面，会显示 🏷️ 标签图标。
+- Multiple tags are separated by commas
 
-- 点击 🏷️ 标签图标，输入标签，用逗号分开多个标签。
+- Tags can be added to post titles, usernames, and categories
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
 
-- 帖子标题，用户名都可以设置标签。
+- Some special tags have special effects, such as 'ignore', 'clickbait', 'promotion', 'block', 'hide', etc.
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
 ## Screenshots
 
@@ -107,24 +106,20 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 
 - 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
 
-## 功能特点
+## Features
 
-- 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
-- 不仅可以给用户打标签，还可以给帖子和节点打标签
-- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
-- 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
-- 除了 v2ex，以后还会支持更多的网站
-
-### 彩蛋
-
-- 标签设置为 'sb'，该用户的帖子或评论都会半透明显示，可以方便跳过价值低的内容
-- 标签设置为 'block'，该用户的帖子或评论都会被隐藏，眼不见，心不烦
-- 更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
+- You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
+- Tags can be added to post titles, usernames, and categories
+- Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
+- On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
+- Support [data export and import](https://utags.pipecraft.net/data/)
+- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
 
 ## Release Notes
 
+- 0.11.0
+  - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
+  - Display the "Settings" button in the tag input interface
 - 0.10.7
   - Enhance add tags on X (Twitter). Filtering tweet and comments with special tags.
 - 0.10.6
@@ -259,17 +254,6 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - 0.1.2
   - 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
 - [See more](release-notes/readme.md)
-
-## Roadmap
-
-- 扩展实现 popup, option 页面功能
-- 网页内所有链接显示添加标签按钮
-- 支持自定义网站规则
-- 支持自定义标签样式
-- [列表页](https://utags.pipecraft.net/tags/)显示用户头像
-- 展示其他用户们的标签内容
-- 显示在哪个页面添加的标签
-- 多设备数据同步
 
 ## Development
 

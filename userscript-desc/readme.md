@@ -108,6 +108,7 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
 - On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
 - Support [data export and import](https://utags.pipecraft.net/data/)
+- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
 - Compatible with the following userscript managers
   - Tampermonkey (recommend)
   - Violentmonkey
@@ -118,6 +119,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.11.0
+  - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
+  - Display the "Settings" button in the tag input interface
 - 0.10.7
   - Enhance add tags on X (Twitter). Filtering tweet and comments with special tags.
 - 0.10.6

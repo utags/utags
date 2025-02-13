@@ -49,15 +49,10 @@
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
-
-另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
-
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+- 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
 
@@ -114,8 +109,7 @@
 - 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
 - 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 支持导入 [v2ex user tag](https://greasyfork.org/scripts/437891-v2ex-user-tag) 油猴脚本的数据
-- 除了 v2ex，以后还会支持更多的网站
+- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
 
 ### 彩蛋
 
@@ -125,6 +119,9 @@
 
 ## 更新记录
 
+- 0.11.0
+  - 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
+  - 在标签输入界面展示 “设置” 按钮
 - 0.10.7
   - 优化在【 X (Twitter)】添加标签的体验，并可以使用特殊标签屏蔽过滤不喜欢的用户的推文和评论
 - 0.10.6
