@@ -52,6 +52,20 @@ export function sortTags(tags: string[], privilegedTags: string[]) {
   })
 }
 
+export function filterTags(tags: string[], removed: string[] | string) {
+  if (typeof removed === "string") {
+    removed = [removed]
+  }
+
+  if (removed.length === 0) {
+    return tags
+  }
+
+  return tags.filter((value) => {
+    return !removed.includes(value)
+  })
+}
+
 export async function copyText(data: string) {
   const textArea = createElement("textarea", {
     style: "position: absolute; left: -100%;",

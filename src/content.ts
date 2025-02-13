@@ -29,6 +29,10 @@ import {
   bindWindowEvents,
   hideAllUtagsInArea,
 } from "./modules/global-events"
+import {
+  TAG_VISITED,
+  onSettingsChange as visitedOnSettingsChange,
+} from "./modules/visited"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
@@ -43,6 +47,7 @@ export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   run_at: "document_start",
   matches: ["https://*/*"],
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   all_frames: false,
 }
 
@@ -59,21 +64,44 @@ const isEnabledByDefault = () => {
 
 const isTagManager = location.href.includes("utags.pipecraft.net/tags/")
 
+let groupNumber = 1
+
 const settingsTable = {
   [`enableCurrentSite_${host}`]: {
     title: i("settings.enableCurrentSite"),
     defaultValue: isEnabledByDefault(),
   },
+
   showHidedItems: {
     title: i("settings.showHidedItems"),
     defaultValue: false,
-    group: 2,
+    group: ++groupNumber,
   },
   noOpacityEffect: {
     title: i("settings.noOpacityEffect"),
     defaultValue: false,
-    group: 2,
+    group: groupNumber,
   },
+
+  [`useVisitedFunction_${host}`]: {
+    title: i("settings.useVisitedFunction"),
+    defaultValue: false,
+    group: ++groupNumber,
+  },
+  [`displayEffectOfTheVisitedContent_${host}`]: {
+    title: i("settings.displayEffectOfTheVisitedContent"),
+    type: "select",
+    // 默认值：中
+    defaultValue: "2",
+    options: {
+      [i("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
+      [i("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
+      [i("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
+      [i("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+    },
+    group: groupNumber,
+  },
+
   pinnedTagsTitle: {
     title: i("settings.pinnedTags"),
     type: "action",
@@ -83,14 +111,14 @@ const settingsTable = {
         input.focus()
       }
     },
-    group: 3,
+    group: ++groupNumber,
   },
   pinnedTags: {
     title: i("settings.pinnedTags"),
     defaultValue: i("settings.pinnedTagsDefaultValue"),
     placeholder: i("settings.pinnedTagsPlaceholder"),
     type: "textarea",
-    group: 3,
+    group: groupNumber,
   },
   emojiTagsTitle: {
     title: i("settings.emojiTags"),
@@ -101,7 +129,7 @@ const settingsTable = {
         input.focus()
       }
     },
-    group: 3,
+    group: groupNumber,
   },
   emojiTags: {
     title: i("settings.emojiTags"),
@@ -109,24 +137,26 @@ const settingsTable = {
       "👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌",
     placeholder: "👍, 👎",
     type: "textarea",
-    group: 3,
+    group: groupNumber,
   },
+
   useSimplePrompt: {
     title: i("settings.useSimplePrompt"),
     defaultValue: false,
-    group: 4,
+    group: ++groupNumber,
   },
+
   openTagsPage: {
     title: i("settings.openTagsPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/tags/",
-    group: 5,
+    group: ++groupNumber,
   },
   openDataPage: {
     title: i("settings.openDataPage"),
     type: "externalLink",
     url: "https://utags.pipecraft.net/data/",
-    group: 5,
+    group: groupNumber,
   },
 }
 
@@ -148,6 +178,9 @@ function onSettingsChange() {
     removeClass(doc.documentElement, "utags_no_opacity_effect")
   }
 
+  doc.documentElement.dataset.utags_displayEffectOfTheVisitedContent =
+    getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) as string
+
   if (!getSettingsValue(`enableCurrentSite_${host}`)) {
     for (const element of $$(".utags_ul")) {
       element.remove()
@@ -158,6 +191,8 @@ function onSettingsChange() {
       style.remove()
     }
   }
+
+  displayTagsThrottled()
 }
 
 // For debug, 0 disable, 1 enable
@@ -298,7 +333,11 @@ async function displayTags() {
 
     const object = getTags(key)
 
-    const tags: string[] = (object.tags as string[]) || []
+    const tags: string[] = ((object.tags as string[]) || []).slice()
+    if (node.dataset.utags_visited === "1") {
+      tags.push(TAG_VISITED)
+    }
+
     appendTagsToPage(node, key, tags, utags.meta)
 
     setTimeout(() => {
@@ -596,7 +635,19 @@ async function main() {
     </a></p>`,
     settingsTable,
     async onValueChange() {
+      visitedOnSettingsChange()
       onSettingsChange()
+    },
+    onViewUpdate(settingsMainView) {
+      const item = $(
+        `[data-key="displayEffectOfTheVisitedContent_${host}"]`,
+        settingsMainView
+      )
+      if (item) {
+        item.style.display = getSettingsValue(`useVisitedFunction_${host}`)
+          ? "flex"
+          : "none"
+      }
     },
   })
 
@@ -608,6 +659,7 @@ async function main() {
 
   setTimeout(outputData, 1)
 
+  visitedOnSettingsChange()
   onSettingsChange()
 
   await displayTags()

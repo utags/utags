@@ -13,9 +13,10 @@ import {
 import { i } from "../messages"
 import { getEmojiTags, saveTags } from "../storage"
 import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
-import { sortTags, splitTags } from "../utils"
+import { filterTags, sortTags, splitTags } from "../utils"
 import { advancedPrompt } from "./advanced-tag-manager"
 import { simplePrompt } from "./simple-tag-manger"
+import { TAG_VISITED, addVisited, removeVisited } from "./visited"
 
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
@@ -92,7 +93,7 @@ export function bindDocumentEvents() {
 
           setTimeout(async () => {
             const key = captainTag.dataset.utags_key
-            const tags = captainTag.dataset.utags_tags
+            const tags = captainTag.dataset.utags_tags || ""
             const meta: UserTagMeta | undefined = captainTag.dataset.utags_meta
               ? (JSON.parse(captainTag.dataset.utags_meta) as UserTagMeta)
               : undefined
@@ -107,7 +108,23 @@ export function bindDocumentEvents() {
             // eslint-disable-next-line eqeqeq
             if (key && newTags != undefined) {
               const emojiTags = await getEmojiTags()
-              const newTagsArray = sortTags(splitTags(newTags), emojiTags)
+              const newTagsArray = sortTags(
+                filterTags(splitTags(newTags), TAG_VISITED),
+                emojiTags
+              )
+
+              if (
+                tags.includes(TAG_VISITED) &&
+                !newTags.includes(TAG_VISITED)
+              ) {
+                removeVisited(key)
+              } else if (
+                !tags.includes(TAG_VISITED) &&
+                newTags.includes(TAG_VISITED)
+              ) {
+                addVisited(key)
+              }
+
               await saveTags(key, newTagsArray, meta)
             }
           })

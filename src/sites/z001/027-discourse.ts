@@ -1,10 +1,11 @@
-import { $, $$, hasClass } from "browser-extension-utils"
+import { $, $$ } from "browser-extension-utils"
 import styleText from "data-text:./027-discourse.scss"
 
+import { addVisited, isVisited } from "../../modules/visited"
 import defaultSite from "../default"
 
 const prefix = location.origin + "/"
-const hostname = location.hostname
+const cache = {}
 
 function getUserProfileUrl(url: string, exact = false) {
   if (url.startsWith(prefix)) {
@@ -144,6 +145,12 @@ const site = {
 
           const meta = { type: "post", title }
           element.utags = { key, meta }
+          if (isVisited(key)) {
+            element.dataset.utags_visited = "1"
+          } else if (element.dataset.utags_visited === "1") {
+            delete element.dataset.utags_visited
+          }
+
           return true
         }
 
@@ -203,7 +210,7 @@ const site = {
     ".search-results .author a .avatar",
   ],
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-    const key = getUserProfileUrl(location.href)
+    let key = getUserProfileUrl(location.href)
     if (key) {
       // profile header
       const element =
@@ -219,6 +226,12 @@ const site = {
           matchedNodesSet.add(element)
         }
       }
+    }
+
+    key = getPostUrl(location.href)
+    if (key && !cache[key]) {
+      cache[key] = 1
+      addVisited(key)
     }
   },
   getStyle: () => styleText,

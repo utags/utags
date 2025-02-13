@@ -78,6 +78,7 @@
       max-height: unset !important;
       background: unset !important;
       background-color: var(--utags-text-tag-background-color) !important;
+      cursor: pointer;
       z-index: 0;
       /* Fix v2ex polish start */
       pointer-events: auto;
@@ -100,6 +101,22 @@
       background: unset;
       margin: unset;
       padding: unset;
+    }
+
+    .utags_text_tag[data-utags_tag=":visited"] {
+      height: 12px !important;
+      width: 12px !important;
+      border-radius: 12px !important;
+      --utags-text-tag-background-color: var(
+        --utags-visited-tag-background-color
+      );
+      --utags-text-tag-border-color: var(--utags-visited-tag-background-color);
+      --utags-text-tag-border-width: 0px;
+      margin-left: 2px !important;
+
+      &::before {
+        display: none;
+      }
     }
 
     .utags_emoji_tag {
@@ -364,6 +381,14 @@
       opacity: 0.5;
       text-decoration: line-through !important;
     }
+
+    li .utags_text_tag[data-utags_tag=":visited"]:hover {
+      --utags-text-tag-background-color: var(
+        --utags-visited-tag-background-color
+      );
+      --utags-text-tag-border-color: var(--utags-visited-tag-background-color);
+      opacity: 0.3;
+    }
   }
 
   .utags_list_wrapper {
@@ -485,6 +510,17 @@
   }
 }
 
+[data-utags_display-effect-of-the-visited-content="2"]
+  [data-utags_list_node*=",:visited,"] {
+  opacity: 10%;
+}
+
+[data-utags_display-effect-of-the-visited-content="3"]
+  [data-utags_list_node*=",:visited,"] {
+  opacity: 5%;
+  display: none;
+}
+
 .utags_no_hide [data-utags_list_node*=","] {
   display: var(--utags-list-node-display) !important;
 }
@@ -521,6 +557,7 @@ textarea[data-key="emojiTags"] {
   --utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
     "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-visited-tag-background-color: #bdbdbd;
   --utags-button-text-color: #1a73e8;
   --utags-button-bg-color: #ffffff;
   --utags-button-border-color: #dadce0;
