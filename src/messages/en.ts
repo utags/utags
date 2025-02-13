@@ -26,6 +26,7 @@ const messages = {
   "prompt.copy": "Copy",
   "prompt.cancel": "Cancle",
   "prompt.ok": "OK",
+  "prompt.settings": "Settings",
 }
 
 export default messages

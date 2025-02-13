@@ -338,6 +338,13 @@
           border-bottom: 2px solid var(--utags-action-button-hover-border-color);
         }
       }
+
+      .utags_link_settings {
+        font-size: 12px;
+        text-decoration: underline;
+        cursor: pointer;
+        color: #374151;
+      }
     }
   }
 

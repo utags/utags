@@ -1,3 +1,4 @@
+import { showSettings } from "browser-extension-settings"
 import {
   $,
   $$,
@@ -9,9 +10,8 @@ import {
   removeEventListener,
 } from "browser-extension-utils"
 
-import createTag from "~components/tag"
-
 import createModal from "../components/modal"
+import createTag from "../components/tag"
 import { i } from "../messages"
 import {
   getEmojiTags,
@@ -480,7 +480,10 @@ function createPromptView(
       return
     }
 
-    if (!target.closest(".utags_modal_content button")) {
+    if (
+      !target.closest(".utags_modal_content button") &&
+      !target.closest(".utags_modal_content .utags_footer a")
+    ) {
       stopEventPropagation(event)
     }
 
@@ -516,6 +519,19 @@ function createPromptView(
   }
 
   addEventListener(doc, "mousemove", mouseoverHandler, true)
+
+  const footer = addElement(content, "div", {
+    class: "utags_footer",
+  })
+
+  addElement(footer, "a", {
+    class: "utags_link_settings",
+    textContent: i("prompt.settings"),
+    async onclick() {
+      closeModal()
+      setTimeout(showSettings, 1)
+    },
+  })
 }
 
 export async function advancedPrompt(

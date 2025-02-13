@@ -26,6 +26,7 @@ export const messages = {
   "prompt.copy": "复制",
   "prompt.cancel": "取消",
   "prompt.ok": "确认",
+  "prompt.settings": "设置",
 }
 
 export default messages
