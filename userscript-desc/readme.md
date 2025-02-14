@@ -113,7 +113,9 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
   - Tampermonkey (recommend)
   - Violentmonkey
   - Greasemonkey
-  - Userscripts (Safari)
+  - ScriptCat
+  - Userscripts (Safari MacOS/iOS)
+  - Addons (Safari iOS)
 
 More information: [https://github.com/utags/utags](https://github.com/utags/utags)
 

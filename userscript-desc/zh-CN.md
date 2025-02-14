@@ -113,7 +113,9 @@
   - Tampermonkey (推荐)
   - Violentmonkey
   - Greasemonkey
-  - Userscripts (Safari)
+  - ScriptCat
+  - Userscripts (Safari MacOS/iOS)
+  - Addons (Safari iOS)
 
 ### 彩蛋
 
