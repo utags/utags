@@ -32,6 +32,7 @@ import {
 } from "./modules/global-events"
 import {
   TAG_VISITED,
+  isAvailableOnCurrentSite,
   onSettingsChange as visitedOnSettingsChange,
 } from "./modules/visited"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
@@ -679,7 +680,14 @@ async function main() {
       onSettingsChange()
     },
     onViewUpdate(settingsMainView) {
-      let item = $(
+      let item = $(`[data-key="useVisitedFunction_${host}"]`, settingsMainView)
+
+      if (!isAvailableOnCurrentSite() && item) {
+        item.style.display = "none"
+        item.parentElement!.style.display = "none"
+      }
+
+      item = $(
         `[data-key="displayEffectOfTheVisitedContent_${host}"]`,
         settingsMainView
       )

@@ -5,6 +5,10 @@ const host = location.host
 let useVisitedFunction = false
 let displayMark = false
 
+export function isAvailableOnCurrentSite() {
+  return /linux\.do|v2ex\.coxx/.test(host)
+}
+
 export function onSettingsChange() {
   useVisitedFunction = getSettingsValue(`useVisitedFunction_${host}`) as boolean
   displayMark =
