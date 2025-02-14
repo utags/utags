@@ -1,4 +1,4 @@
-import { $, $$ } from "browser-extension-utils"
+import { $, $$, doc } from "browser-extension-utils"
 import styleText from "data-text:./027-discourse.scss"
 
 import { addVisited, isVisited } from "../../modules/visited"
@@ -210,6 +210,9 @@ const site = {
     ".search-results .author a .avatar",
   ],
   addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    const isDarkMode = $("header picture > source")?.media === "all"
+    doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+
     let key = getUserProfileUrl(location.href)
     if (key) {
       // profile header

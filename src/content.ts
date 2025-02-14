@@ -96,6 +96,7 @@ const settingsTable = {
     options: {
       [i("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
       [i("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
+      [i("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
       [i("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
       [i("settings.displayEffectOfTheVisitedContent.hide")]: "3",
     },

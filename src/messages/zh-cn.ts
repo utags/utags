@@ -6,6 +6,7 @@ export const messages = {
   "settings.displayEffectOfTheVisitedContent": "已浏览内容的展示效果",
   "settings.displayEffectOfTheVisitedContent.recordingonly": "只保存记录，不显示标记",
   "settings.displayEffectOfTheVisitedContent.showtagonly": "只显示标记",
+  "settings.displayEffectOfTheVisitedContent.changecolor": "更改标题颜色",
   "settings.displayEffectOfTheVisitedContent.translucent": "半透明",
   "settings.displayEffectOfTheVisitedContent.hide": "隐藏",
   "settings.pinnedTags": "在下面添加要置顶的标签，以逗号分隔",

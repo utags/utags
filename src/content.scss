@@ -517,9 +517,16 @@
   }
 }
 
+[data-utags_display-effect-of-the-visited-content="4"]
+  [data-utags_list_node*=",:visited,"] {
+  .main-link a.title {
+    color: var(--utags-visited-title-color);
+  }
+}
+
 [data-utags_display-effect-of-the-visited-content="2"]
   [data-utags_list_node*=",:visited,"] {
-  opacity: 10%;
+  opacity: var(--utags-visited-opacity);
 }
 
 [data-utags_display-effect-of-the-visited-content="3"]
@@ -565,6 +572,8 @@ textarea[data-key="emojiTags"] {
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
     "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-visited-tag-background-color: #bdbdbd;
+  --utags-visited-title-color: #aaa;
+  --utags-visited-opacity: 10%;
   --utags-button-text-color: #1a73e8;
   --utags-button-bg-color: #ffffff;
   --utags-button-border-color: #dadce0;
@@ -632,4 +641,8 @@ textarea[data-key="emojiTags"] {
   --utags-notag-ul-top: var(--utags-notag-ul-top-1);
   --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);
   --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);
+}
+
+[data-utags_darkmode="1"] {
+  --utags-visited-title-color: #666;
 }

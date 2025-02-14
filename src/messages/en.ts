@@ -6,6 +6,7 @@ const messages = {
   "settings.displayEffectOfTheVisitedContent": "The display effect of the browsed content",
   "settings.displayEffectOfTheVisitedContent.recordingonly": "Save records only, no mark display",
   "settings.displayEffectOfTheVisitedContent.showtagonly": "Only display marks",
+  "settings.displayEffectOfTheVisitedContent.changecolor": "Change the title color",
   "settings.displayEffectOfTheVisitedContent.translucent": "Translucent",
   "settings.displayEffectOfTheVisitedContent.hide": "Hide",
   "settings.pinnedTags": "Add the tags you want to pin, separated by commas.",
