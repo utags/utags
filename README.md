@@ -117,6 +117,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.11.1
+  - Add an option for change the title color for the browsed content
 - 0.11.0
   - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
   - Display the "Settings" button in the tag input interface
