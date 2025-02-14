@@ -13,6 +13,69 @@ const messages = {
   "settings.pinnedTagsDefaultValue": "block, hide, ignore, clickbait, promotion",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "Add the emoji tags, separated by commas",
+  "settings.customStyle": "Customize style",
+  "settings.customStyleDefaultValue": `/* Custom style */
+body {
+  /* Tag text color */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  --utags-text-tag-border-color: red;
+  /* Tag background color */
+  --utags-text-tag-background-color: red;
+}
+
+/* The tag style for the tag with the label 'TEST' */
+.utags_text_tag[data-utags_tag="TEST"] {
+  /* Tag text color */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  --utags-text-tag-border-color: orange;
+  /* Tag background color */
+  --utags-text-tag-background-color: orange;
+}`,
+  "settings.customStyleExamples": "Examples",
+  "settings.customStyleExamplesContent": `<p>Custom style examples</p>
+  <p>
+  <pre>/* Custom style */
+body {
+  /* Tag text color */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  --utags-text-tag-border-color: red;
+  /* Tag background color */
+  --utags-text-tag-background-color: red;
+}
+
+/* The tag style for the tag with the label 'TEST' */
+.utags_text_tag[data-utags_tag="TEST"] {
+  /* Tag text color */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  --utags-text-tag-border-color: orange;
+  /* Tag background color */
+  --utags-text-tag-background-color: orange;
+}
+
+data-utags_list_node*=",bar,"] {
+  /* The background color of the entries
+  in the list that contain the 'bar' tag */
+  background-color: aqua;
+}
+
+body {
+  /* The title color of viewed posts */
+  --utags-visited-title-color: red;
+}
+
+/* Dark mode */
+[data-utags_darkmode="1"] body {
+  /* The title color of viewed posts */
+  --utags-visited-title-color: yellow;
+}
+</pre>
+  </p>
+  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">More examples</a></p>
+  `,
   "settings.useSimplePrompt": "Use simple prompt method to add tags",
   "settings.openTagsPage": "Open the tag list page",
   "settings.openDataPage": "Open the import data/export data page",

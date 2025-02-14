@@ -3,6 +3,7 @@ import {
   $,
   $$,
   addClass,
+  addElement,
   addEventListener,
   addStyle,
   createElement,
@@ -141,6 +142,25 @@ const settingsTable = {
     group: groupNumber,
   },
 
+  customStyle: {
+    title: i("settings.customStyle"),
+    defaultValue: false,
+    group: ++groupNumber,
+  },
+  customStyleValue: {
+    title: "Custom style value",
+    defaultValue: i("settings.customStyleDefaultValue"),
+    placeholder: i("settings.customStyleDefaultValue"),
+    type: "textarea",
+    group: groupNumber,
+  },
+  customStyleTip: {
+    title: i("settings.customStyleExamples"),
+    type: "tip",
+    tipContent: i("settings.customStyleExamplesContent"),
+    group: groupNumber,
+  },
+
   useSimplePrompt: {
     title: i("settings.useSimplePrompt"),
     defaultValue: false,
@@ -164,6 +184,24 @@ const settingsTable = {
 const addUtagsStyle = () => {
   const style = addStyle(styleText)
   style.id = "utags_style"
+}
+
+function updateCustomStyle() {
+  console.warn("updateCustomStyle")
+  const customStyleValue =
+    (getSettingsValue("customStyleValue") as string) || ""
+  if (getSettingsValue("customStyle") && customStyleValue) {
+    if ($("#utags_custom_style")) {
+      $("#utags_custom_style")!.textContent = customStyleValue
+    } else {
+      addElement("style", {
+        id: "utags_custom_style",
+        textContent: customStyleValue,
+      })
+    }
+  } else if ($("#utags_custom_style")) {
+    $("#utags_custom_style")!.remove()
+  }
 }
 
 function onSettingsChange() {
@@ -194,6 +232,7 @@ function onSettingsChange() {
   }
 
   displayTagsThrottled()
+  updateCustomStyle()
 }
 
 // For debug, 0 disable, 1 enable
@@ -640,7 +679,7 @@ async function main() {
       onSettingsChange()
     },
     onViewUpdate(settingsMainView) {
-      const item = $(
+      let item = $(
         `[data-key="displayEffectOfTheVisitedContent_${host}"]`,
         settingsMainView
       )
@@ -648,6 +687,19 @@ async function main() {
         item.style.display = getSettingsValue(`useVisitedFunction_${host}`)
           ? "flex"
           : "none"
+      }
+
+      item = $(`[data-key="customStyleValue"]`, settingsMainView)
+      if (item) {
+        // FIXME: data-key should on the parent element of textarea
+        item.parentElement!.style.display = getSettingsValue(`customStyle`)
+          ? "block"
+          : "none"
+      }
+
+      item = $(`.bes_tip`, settingsMainView)
+      if (item) {
+        item.style.display = getSettingsValue(`customStyle`) ? "block" : "none"
       }
     },
   })

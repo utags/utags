@@ -13,6 +13,68 @@ export const messages = {
   "settings.pinnedTagsDefaultValue": "收藏, block, sb, 屏蔽, 隐藏, 已阅, 忽略, 标题党, 推广, 关注",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "在下面添加表情符号标签，以逗号分隔",
+  "settings.customStyle": "自定义样式",
+  "settings.customStyleDefaultValue": `/* 自定义样式 */
+body {
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: red;
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: red;
+}
+
+/* 标签为 'TEST' 的标签样式 */
+.utags_text_tag[data-utags_tag="TEST"] {
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: orange;
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: orange;
+}`,
+  "settings.customStyleExamples": "示例",
+  "settings.customStyleExamplesContent": `<p>自定义样式示例</p>
+  <p>
+  <pre>/* 自定义样式 */
+body {
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: red;
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: red;
+}
+
+/* 标签为 'TEST' 的标签样式 */
+.utags_text_tag[data-utags_tag="TEST"] {
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: orange;
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: orange;
+}
+
+data-utags_list_node*=",bar,"] {
+  /* 列表中含有 'bar' 标签的条目的背景色 */
+  background-color: aqua;
+}
+
+body {
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: red;
+}
+
+/* 深色模式 */
+[data-utags_darkmode="1"] body {
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: yellow;
+}
+</pre>
+  </p>
+  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">更多示例</a></p>
+  `,
   "settings.useSimplePrompt": "使用简单方式添加标签",
   "settings.openTagsPage": "标签列表",
   "settings.openDataPage": "导出数据/导入数据",

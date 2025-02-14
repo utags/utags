@@ -461,6 +461,10 @@
     }
   }
 
+  textarea[data-key="customStyleValue"] {
+    height: 300px;
+  }
+
   [data-utags_list_node*=",标题党,"],
   [data-utags_list_node*=",推广,"],
   [data-utags_list_node*=",无聊,"],
