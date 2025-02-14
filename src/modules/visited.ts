@@ -1,12 +1,17 @@
 import { getSettingsValue } from "browser-extension-settings"
 
-const prefix = location.origin + "/"
+let prefix = location.origin + "/"
 const host = location.host
 let useVisitedFunction = false
 let displayMark = false
+const cache = {}
+
+export function setPrefix(newPrefix: string) {
+  prefix = newPrefix
+}
 
 export function isAvailableOnCurrentSite() {
-  return /linux\.do|v2ex\.coxx/.test(host)
+  return /(linux\.do|v2ex\.(com|co))|bbs\.tampermonkey\.net\.cn$/.test(host)
 }
 
 export function onSettingsChange() {
@@ -45,6 +50,13 @@ function convertKey(url: string) {
 export const TAG_VISITED = ":visited"
 
 export function addVisited(key: string) {
+  // Only add it once each time the page is loaded.
+  if (key && !cache[key]) {
+    cache[key] = 1
+  } else {
+    return
+  }
+
   key = convertKey(key)
   const visitedLinks = getVisitedLinks()
   if (!visitedLinks.includes(key)) {

@@ -1,5 +1,6 @@
 import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
 
+import { addVisited, isVisited, setPrefix } from "../../modules/visited"
 import defaultSite from "../default"
 
 function getCanonicalUrl(url: string) {
@@ -34,6 +35,9 @@ export function cloneWithoutCitedReplies(element: HTMLElement) {
 
 const site = {
   matches: /v2ex\.com|v2hot\.|v2ex\.co/,
+  preProcess() {
+    setPrefix("https://www.v2ex.com/")
+  },
   listNodesSelectors: [
     ".box .cell",
     // v2ex 超级增强
@@ -126,6 +130,14 @@ const site = {
         const meta = { title, type: "topic" }
         header.utags = { key, meta }
         matchedNodesSet.add(header)
+
+        addVisited(key)
+
+        if (isVisited(key)) {
+          header.dataset.utags_visited = "1"
+        } else if (header.dataset.utags_visited === "1") {
+          delete header.dataset.utags_visited
+        }
       }
 
       const main = $("#Main") || $(".content")
@@ -213,6 +225,17 @@ const site = {
     }
   },
   getCanonicalUrl,
+  postProcess() {
+    for (const element of $$('a[href*="/t/"]') as HTMLAnchorElement[]) {
+      const key = getCanonicalUrl(element.href)
+
+      if (isVisited(key)) {
+        element.dataset.utags_visited = "1"
+      } else if (element.dataset.utags_visited === "1") {
+        delete element.dataset.utags_visited
+      }
+    }
+  },
 }
 
 export default site
