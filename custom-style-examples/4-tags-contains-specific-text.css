@@ -8,8 +8,7 @@
   --utags-text-tag-border-color: red;
   /* Tag background color */
   /* 标签背景颜色 */
-  --utags-text-tag-background-color: rgb(12, 22, 33);
-  color: rgb(12, 22, 33);
+  --utags-text-tag-background-color: red;
 }
 
 /* 同时包含 '年' '月' '日' 的标签 */
