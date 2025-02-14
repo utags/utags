@@ -1,0 +1,5 @@
+[data-utags_list_node*=",foo,"] {
+  /* 隐藏列表中含有 'foo' 标签的条目 */
+  opacity: 5%;
+  display: none;
+}

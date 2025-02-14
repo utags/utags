@@ -1,0 +1,56 @@
+body {
+  /* 图标颜色 */
+  --utags-captain-tag-color: #ff6361;
+  /* 鼠标移到图标上面时的颜色 */
+  --utags-captain-tag-hover-color: #256cf1;
+  /* 图标大小 */
+  --utags-captain-tag-size: 14px;
+
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: red;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: red;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: unset;
+  /* 标签文字字体大小 */
+  --utags-text-tag-font-size: 10px;
+  /* 标签边框宽度 */
+  --utags-text-tag-border-width: 1px;
+  /* 标签字体 */
+  --utags-text-tag-font-family: "helvetica neue", "...";
+
+  /* 表情符号标签背景色 */
+  --utags-emoji-tag-background-color: #f8fafe;
+  /* 表情符号标签字体大小 */
+  --utags-emoji-tag-font-size: 12px;
+  /* 表情符号标签边框宽度 */
+  --utags-emoji-tag-border-width: 0;
+
+  /* 浏览过的话题的标记的背景颜色 */
+  --utags-visited-tag-background-color: #bdbdbd;
+  /* The title color of viewed posts */
+  /* 浏览过的话题的标题颜色 */
+  --utags-visited-title-color: red;
+  /* 浏览过的话题的不透明度 */
+  --utags-visited-opacity: 30%;
+}
+
+/* Dark mode */
+/* 深色模式 */
+[data-utags_darkmode="1"] body {
+  /* 图标颜色 */
+  --utags-captain-tag-color: #ff6361;
+  /* 鼠标移到图标上面时的颜色 */
+  --utags-captain-tag-hover-color: #256cf1;
+
+  /* ... */
+
+  /* The title color of viewed posts */
+  /* 浏览过的话题的标题颜色 */
+  --utags-visited-title-color: yellow;
+  /* 浏览过的话题的不透明度 */
+  --utags-visited-opacity: 10%;
+}

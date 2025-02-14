@@ -1,0 +1,39 @@
+/* 2023 开头的标签 */
+.utags_text_tag[data-utags_tag^="2023"] {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: red;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: rgb(12, 22, 33);
+  color: rgb(12, 22, 33);
+}
+
+/* 同时包含 '年' '月' '日' 的标签 */
+.utags_text_tag[data-utags_tag*="年"][data-utags_tag*="月"][data-utags_tag*="日"] {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: green;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: green;
+}
+
+/* 同时包含 '点' '分' '秒' 的标签 */
+.utags_text_tag[data-utags_tag*="点"][data-utags_tag*="分"][data-utags_tag*="秒"] {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: pink;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: pink;
+}

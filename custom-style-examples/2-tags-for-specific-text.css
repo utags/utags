@@ -1,0 +1,27 @@
+/* The tag style for the tag with the label 'TEST' */
+/* 标签为 'TEST' 的标签样式 */
+.utags_text_tag[data-utags_tag="TEST"] {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: orange;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: orange;
+}
+
+/* The tag style for the tag with the label 'GOOD' */
+/* 标签为 'GOOD' 的标签样式 */
+.utags_text_tag[data-utags_tag="GOOD"] {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: green;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: green;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: yellow;
+}

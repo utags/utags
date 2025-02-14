@@ -1,0 +1,11 @@
+body {
+  /* Tag text color */
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* Tag border color */
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: red;
+  /* Tag background color */
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: red;
+}

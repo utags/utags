@@ -1,0 +1,11 @@
+body {
+  /* 浏览过的帖子的不透明度 */
+  --utags-visited-opacity: 30%;
+}
+
+/* Dark mode */
+/* 深色模式 */
+[data-utags_darkmode="1"] body {
+  /* 浏览过的帖子的不透明度 */
+  --utags-visited-opacity: 40%;
+}

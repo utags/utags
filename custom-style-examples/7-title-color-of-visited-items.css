@@ -1,0 +1,13 @@
+body {
+  /* The title color of viewed posts */
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: red;
+}
+
+/* Dark mode */
+/* 深色模式 */
+[data-utags_darkmode="1"] body {
+  /* The title color of viewed posts */
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: yellow;
+}
