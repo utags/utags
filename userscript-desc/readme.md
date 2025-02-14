@@ -121,6 +121,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.0
+  - Enable applying custom style
 - 0.11.1
   - Add an option for change the title color for the browsed content
 - 0.11.0

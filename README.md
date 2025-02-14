@@ -117,6 +117,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.0
+  - Enable applying custom style
 - 0.11.1
   - Add an option for change the title color for the browsed content
 - 0.11.0
