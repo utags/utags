@@ -47,7 +47,7 @@ For now it works on
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- tampermonkey.net.cn [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
+- tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.

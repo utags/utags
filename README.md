@@ -52,13 +52,13 @@ For now it works on
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- tampermonkey.net.cn [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
+- tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
 
 - Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
-- Edge: Under review
+- Edge: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
 - Firefox: [Firefox Addon Store](https://addons.mozilla.org/firefox/addon/utags/)
 - User Script: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
 - [Manually install browser extensions](manual-installation.md)

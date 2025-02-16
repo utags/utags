@@ -84,6 +84,7 @@
 ////                         Extension Version                                                                                              ////
 ////                            浏览器扩展版本                                                                                                ////
 //// * Chrome Web Store - https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig               ////
+//// * Edge Add-ons - https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe            ////
 //// * Firefox Addon Store - https://addons.mozilla.org/firefox/addon/utags/                                                                ////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

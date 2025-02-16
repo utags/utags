@@ -47,7 +47,7 @@
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- 油猴中文网 [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
+- 油猴中文网 ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
