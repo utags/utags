@@ -48,15 +48,16 @@ For now it works on
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
+- tampermonkey.net.cn [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
 
-- Chrome: Under review
+- Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge: Under review
 - Firefox: [Firefox Addon Store](https://addons.mozilla.org/firefox/addon/utags/)
 - User Script: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
@@ -117,6 +118,11 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.1
+  - Make UTags support the website bbs.tampermonkey.net.cn
+  - Add the official installation URLs for userscripts as well as the URLs of extension stores.
+  - Enable browsing content tagging on V2EX
+  - Display the enable button on websites that support browsing content tagging
 - 0.12.0
   - Enable applying custom style
 - 0.11.1

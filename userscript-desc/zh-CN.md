@@ -47,6 +47,7 @@
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
+- 油猴中文网 [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -135,6 +136,11 @@
 
 ## 更新记录
 
+- 0.12.1
+  - 使 UTags 支持 bbs.tampermonkey.net.cn 网站
+  - 添加用户脚本的官方安装网址以及扩展程序商店的网址
+  - 使自动标记浏览过的帖子功能支持 V2EX
+  - 设置界面里只在支持浏览内容标记功能的网站上显示启用按钮
 - 0.12.0
   - 支持应用自定义样式
 - 0.11.1

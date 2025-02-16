@@ -47,6 +47,7 @@ For now it works on
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
+- tampermonkey.net.cn [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -121,6 +122,11 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.1
+  - Make UTags support the website bbs.tampermonkey.net.cn
+  - Add the official installation URLs for userscripts as well as the URLs of extension stores.
+  - Enable browsing content tagging on V2EX
+  - Display the enable button on websites that support browsing content tagging
 - 0.12.0
   - Enable applying custom style
 - 0.11.1

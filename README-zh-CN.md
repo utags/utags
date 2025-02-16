@@ -48,15 +48,16 @@
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
+- 油猴中文网 [bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/)
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
 
-- 类 Chrome 浏览器: 即将上架 Chrome 商店
+- 类 Chrome 浏览器: [Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge 浏览器: 即将上架 Edge 商店
 - Firefox 浏览器: 已上架 [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)，[点击这里](https://addons.mozilla.org/firefox/addon/utags/)安装。
 - 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
@@ -119,6 +120,11 @@
 
 ## 更新记录
 
+- 0.12.1
+  - 使 UTags 支持 bbs.tampermonkey.net.cn 网站
+  - 添加用户脚本的官方安装网址以及扩展程序商店的网址
+  - 使自动标记浏览过的帖子功能支持 V2EX
+  - 设置界面里只在支持浏览内容标记功能的网站上显示启用按钮
 - 0.12.0
   - 支持应用自定义样式
 - 0.11.1
