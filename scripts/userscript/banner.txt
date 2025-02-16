@@ -60,6 +60,7 @@
 // @match                https://rule34gen.com/*
 // @match                https://community.wanikani.com/*
 // @match                https://panda.chaika.moe/*
+// @match                https://bbs.tampermonkey.net.cn/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

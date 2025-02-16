@@ -1,3 +1,5 @@
+import styleText from "data-text:./default.scss"
+
 import { deleteUrlParameters } from "../utils"
 
 export const getCanonicalUrl = (url: string) =>
@@ -13,6 +15,7 @@ const site = {
   matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
   excludeSelectors: [".browser_extension_settings_container", "a a"],
   getCanonicalUrl,
+  getStyle: () => styleText,
 }
 
 export default site

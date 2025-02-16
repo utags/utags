@@ -59,6 +59,7 @@ function stopDebuggingMode() {
 
 let intervalId: NodeJS.Timeout
 function startAutoShowAllUtags() {
+  console.log("startAutoShowAllUtags")
   document.body.classList.add("utags_show_all")
   intervalId = setInterval(() => {
     document.body.classList.add("utags_show_all")
@@ -66,6 +67,7 @@ function startAutoShowAllUtags() {
 }
 
 function stopAutoShowAllUtags() {
+  console.log("stopAutoShowAllUtags")
   clearInterval(intervalId)
   document.body.classList.remove("utags_show_all")
 }
@@ -76,6 +78,8 @@ let lastKey = ""
 let keydownCount = 0
 
 export function registerDebuggingHotkey() {
+  startAutoShowAllUtags()
+  isAutoShowAllUtagsMode = true
   addEventListener(
     doc,
     "keydown",

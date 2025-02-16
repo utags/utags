@@ -188,7 +188,6 @@ const addUtagsStyle = () => {
 }
 
 function updateCustomStyle() {
-  console.warn("updateCustomStyle")
   const customStyleValue =
     (getSettingsValue("customStyleValue") as string) || ""
   if (getSettingsValue("customStyle") && customStyleValue) {
@@ -557,24 +556,30 @@ function updateTagPosition(element: HTMLElement) {
 
     // right-top
     case "100% 0%": {
-      utags.style.left =
-        offset.left +
+      let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
-        utagsSizeFix +
-        "px"
+        utagsSizeFix
+      if (offsetLeft < 100) {
+        offsetLeft = element.clientWidth || element.offsetWidth
+      }
+
+      utags.style.left = offset.left + offsetLeft + "px"
       utags.style.top = offset.top + "px"
       break
     }
 
     // right-center
     case "100% 50%": {
-      utags.style.left =
-        offset.left +
+      let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
-        utagsSizeFix +
-        "px"
+        utagsSizeFix
+      if (offsetLeft < 100) {
+        offsetLeft = element.clientWidth || element.offsetWidth
+      }
+
+      utags.style.left = offset.left + offsetLeft + "px"
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
@@ -587,12 +592,15 @@ function updateTagPosition(element: HTMLElement) {
 
     // right-bottom
     case "100% 100%": {
-      utags.style.left =
-        offset.left +
+      let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
-        utagsSizeFix +
-        "px"
+        utagsSizeFix
+      if (offsetLeft < 100) {
+        offsetLeft = element.clientWidth || element.offsetWidth
+      }
+
+      utags.style.left = offset.left + offsetLeft + "px"
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -

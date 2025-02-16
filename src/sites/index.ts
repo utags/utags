@@ -32,6 +32,7 @@ import discourse from "./z001/027-discourse"
 import nga from "./z001/028-nga.cn"
 import dlsite_com from "./z001/029-dlsite.com"
 import keylol_com from "./z001/030-keylol.com"
+import tampermonkey_net_cn from "./z001/031-tampermonkey.net.cn"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
@@ -86,6 +87,7 @@ const sites: Site[] = [
   discourse,
   nga,
   keylol_com,
+  tampermonkey_net_cn,
   pornhub,
   ehentai,
   panda_chaika_moe,
@@ -192,7 +194,7 @@ const isValidUtagsElement = (
     return true
   }
 
-  if (!element.textContent) {
+  if (!element.textContent?.trim()) {
     return false
   }
 

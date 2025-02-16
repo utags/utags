@@ -5,7 +5,6 @@ import { addVisited, isVisited } from "../../modules/visited"
 import defaultSite from "../default"
 
 const prefix = location.origin + "/"
-const cache = {}
 
 function getUserProfileUrl(url: string, exact = false) {
   if (url.startsWith(prefix)) {
@@ -222,7 +221,7 @@ const site = {
           ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
         )
       if (element) {
-        const title = element.textContent!.trim().trim()
+        const title = element.textContent!.trim()
         if (title) {
           const meta = { title, type: "user" }
           element.utags = { key, meta }
@@ -232,8 +231,7 @@ const site = {
     }
 
     key = getPostUrl(location.href)
-    if (key && !cache[key]) {
-      cache[key] = 1
+    if (key) {
       addVisited(key)
     }
   },
