@@ -53,6 +53,11 @@ For now it works on
 - dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
+- Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
+- Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
+- Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
+- Veryfb ([veryfb.com](https://veryfb.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -118,6 +123,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.2
+  - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1
   - Make UTags support the website bbs.tampermonkey.net.cn
   - Add the official installation URLs for userscripts as well as the URLs of extension stores.

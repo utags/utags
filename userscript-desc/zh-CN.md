@@ -48,6 +48,11 @@
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - 油猴中文网 ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
+- Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
+- Flarum 中文社区 ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
+- 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
+- Veryfb ([veryfb.com](https://veryfb.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -136,6 +141,8 @@
 
 ## 更新记录
 
+- 0.12.2
+  - 使 UTags 支持 flarum 论坛网站, 包括 discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1
   - 使 UTags 支持 bbs.tampermonkey.net.cn 网站
   - 添加用户脚本的官方安装网址以及扩展程序商店的网址

@@ -48,6 +48,11 @@ For now it works on
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
+- Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
+- Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
+- Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
+- Veryfb ([veryfb.com](https://veryfb.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -122,6 +127,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.2
+  - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1
   - Make UTags support the website bbs.tampermonkey.net.cn
   - Add the official installation URLs for userscripts as well as the URLs of extension stores.
