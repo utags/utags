@@ -61,6 +61,12 @@
 // @match                https://community.wanikani.com/*
 // @match                https://panda.chaika.moe/*
 // @match                https://bbs.tampermonkey.net.cn/*
+// @match                https://discuss.flarum.org/*
+// @match                https://discuss.flarum.org.cn/*
+// @match                https://www.nodeloc.com/*
+// @match                https://freesmth.net/*
+// @match                https://freesmth.uk/*
+// @match                https://veryfb.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

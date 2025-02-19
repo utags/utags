@@ -1,0 +1,135 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  a.DiscussionListItem-main + {
+    .utags_ul_1 {
+      object-position: 200% 50%;
+      position: absolute;
+      top: -9999px;
+      z-index: 100;
+      margin-top: 0px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  a.DiscussionListItem-author + {
+    .utags_ul_0 {
+      object-position: 0% 0%;
+      --utags-notag-captain-tag-top: -22px;
+    }
+    .utags_ul_1 {
+      object-position: 0% 0%;
+      position: absolute;
+      top: -9999px;
+      z-index: 100;
+      margin-top: -18px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  .DiscussionList--searchResults a.DiscussionListItem-main + {
+    .utags_ul_0 {
+      object-position: 0% 200%;
+      --utags-notag-captain-tag-top: -18px;
+    }
+    .utags_ul_1 {
+      object-position: 0% 200%;
+      position: absolute;
+      top: -9999px;
+      z-index: 100;
+      margin-top: -14px !important;
+      margin-left: 0px !important;
+    }
+  }
+
+  .TagTiles {
+    a.TagTile-info + {
+      .utags_ul_0 {
+        object-position: 0% 0%;
+      }
+      .utags_ul_1 {
+        object-position: 0% 0%;
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+
+    a.TagTile-lastPostedDiscussion + {
+      .utags_ul_1 {
+        object-position: 200% 50%;
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  h1.Hero-title {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+      }
+    }
+
+    & + {
+      .utags_ul_0 {
+        object-position: 200% 50%;
+        --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+        --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+        --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+        --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+        --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+        --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+        --utags-captain-tag-background-color: var(
+          --utags-captain-tag-background-color-overlap
+        );
+      }
+      .utags_ul_1 {
+        object-position: 200% 50%;
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
+  .UserCard-profile h1 a + {
+    .utags_ul_0 {
+      --utags-notag-captain-tag-top: -8px;
+    }
+  }
+
+  /* Always show the start post */
+  .PostStream .PostStream-item[data-index="0"] {
+    display: block !important;
+  }
+}

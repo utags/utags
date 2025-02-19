@@ -11,7 +11,9 @@ export function setPrefix(newPrefix: string) {
 }
 
 export function isAvailableOnCurrentSite() {
-  return /(linux\.do|v2ex\.(com|co))|bbs\.tampermonkey\.net\.cn$/.test(host)
+  return /(linux\.do|v2ex\.(com|co)|bbs\.tampermonkey\.net\.cn|discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com)$/.test(
+    host
+  )
 }
 
 export function onSettingsChange() {
@@ -84,4 +86,12 @@ export function isVisited(key: string) {
   key = convertKey(key)
   const visitedLinks = getVisitedLinks()
   return visitedLinks.includes(key)
+}
+
+export function markElementWhetherVisited(key: string, element: HTMLElement) {
+  if (isVisited(key)) {
+    element.dataset.utags_visited = "1"
+  } else if (element.dataset.utags_visited === "1") {
+    delete element.dataset.utags_visited
+  }
 }

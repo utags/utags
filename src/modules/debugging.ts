@@ -59,6 +59,11 @@ function stopDebuggingMode() {
 
 let intervalId: NodeJS.Timeout
 function startAutoShowAllUtags() {
+  if (!document.body) {
+    setTimeout(startAutoShowAllUtags, 100)
+    return
+  }
+
   console.log("startAutoShowAllUtags")
   document.body.classList.add("utags_show_all")
   intervalId = setInterval(() => {
@@ -70,6 +75,14 @@ function stopAutoShowAllUtags() {
   console.log("stopAutoShowAllUtags")
   clearInterval(intervalId)
   document.body.classList.remove("utags_show_all")
+}
+
+function startDelayedDebugger() {
+  console.log("start debugger after 5 seconds")
+  setTimeout(() => {
+    // eslint-disable-next-line no-debugger
+    debugger
+  }, 5000)
 }
 
 let isDebuggingMode = false
@@ -84,7 +97,7 @@ export function registerDebuggingHotkey() {
     doc,
     "keydown",
     (event: KeyboardEvent) => {
-      if (event.key === "F1" || event.key === "F2") {
+      if (event.key === "F1" || event.key === "F2" || event.key === "F3") {
         if (event.key === lastKey) {
           keydownCount++
         } else {
@@ -102,26 +115,41 @@ export function registerDebuggingHotkey() {
         console.log(keydownCount)
 
         if (keydownCount >= 3) {
-          if (event.key === "F1") {
-            if (isDebuggingMode) {
-              keydownCount = 0
-              isDebuggingMode = false
-              stopDebuggingMode()
-            } else {
-              keydownCount = 0
-              isDebuggingMode = true
-              startDebuggingMode()
+          switch (event.key) {
+            case "F1": {
+              if (isDebuggingMode) {
+                keydownCount = 0
+                isDebuggingMode = false
+                stopDebuggingMode()
+              } else {
+                keydownCount = 0
+                isDebuggingMode = true
+                startDebuggingMode()
+              }
+
+              break
             }
-          } else if (event.key === "F2") {
-            if (isAutoShowAllUtagsMode) {
-              keydownCount = 0
-              isAutoShowAllUtagsMode = false
-              stopAutoShowAllUtags()
-            } else {
-              keydownCount = 0
-              isAutoShowAllUtagsMode = true
-              startAutoShowAllUtags()
+
+            case "F2": {
+              if (isAutoShowAllUtagsMode) {
+                keydownCount = 0
+                isAutoShowAllUtagsMode = false
+                stopAutoShowAllUtags()
+              } else {
+                keydownCount = 0
+                isAutoShowAllUtagsMode = true
+                startAutoShowAllUtags()
+              }
+
+              break
             }
+
+            case "F3": {
+              startDelayedDebugger()
+
+              break
+            }
+            // No default
           }
         }
       } else {

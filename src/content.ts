@@ -477,6 +477,10 @@ function updateTagPosition(element: HTMLElement) {
     return
   }
 
+  if (element.dataset.utags_position_selector) {
+    element = $(element.dataset.utags_position_selector, element) || element
+  }
+
   element.dataset.utags_fit_content = "1"
 
   // 22 is the size of captain tag
@@ -790,7 +794,7 @@ async function main() {
 
 runWhenHeadExists(async () => {
   if (doc.documentElement.dataset.utags === undefined) {
-    doc.documentElement.dataset.utags = ""
+    doc.documentElement.dataset.utags = `${host}`
     await main()
   }
 })

@@ -80,6 +80,12 @@
         "rules": {
           "@typescript-eslint/naming-convention": 0
         }
+      },
+      {
+        "files": "src/sites/**/*.ts",
+        "rules": {
+          "n/file-extension-in-import": 0
+        }
       }
     ]
   }
