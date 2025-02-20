@@ -110,9 +110,9 @@
     }
 
     .utags_text_tag[data-utags_tag=":visited"] {
-      height: 12px !important;
-      width: 12px !important;
-      border-radius: 12px !important;
+      height: var(--utags-visited-tag-size) !important;
+      width: var(--utags-visited-tag-size) !important;
+      border-radius: var(--utags-visited-tag-size) !important;
       --utags-text-tag-background-color: var(
         --utags-visited-tag-background-color
       );
@@ -585,6 +585,7 @@ textarea[data-key="emojiTags"] {
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
     "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-visited-tag-background-color: #bdbdbd;
+  --utags-visited-tag-size: 11px;
   --utags-visited-title-color: #aaa;
   --utags-visited-opacity: 10%;
   --utags-button-text-color: #1a73e8;

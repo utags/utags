@@ -1,0 +1,50 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  ul.post-list li.post-list-item {
+    --utags-list-node-display: flex;
+
+    a.post-category + {
+      .utags_ul_0 {
+        object-position: -100% 50%;
+      }
+      .utags_ul_1 {
+        object-position: -100% 50%;
+        position: absolute;
+        top: -9999px;
+      }
+    }
+  }
+
+  /* post page and comments */
+  .nsk-post-wrapper .author-info ul.utags_ul_1 {
+    vertical-align: middle !important;
+
+    a.utags_text_tag {
+      height: 15px !important;
+    }
+  }
+
+  .hover-user-card {
+    z-index: 100;
+  }
+}

@@ -567,6 +567,26 @@ function updateTagPosition(element: HTMLElement) {
   }
 
   switch (objectPosition) {
+    // left-center
+    case "-100% 50%": {
+      utags.style.left = offset.left - utags.clientWidth - utagsSizeFix + "px"
+      utags.style.top =
+        offset.top +
+        ((element.clientHeight || element.offsetHeight) -
+          utags.clientHeight -
+          utagsSizeFix) /
+          2 +
+        "px"
+      break
+    }
+
+    // left-top
+    case "0% -100%": {
+      utags.style.left = offset.left + "px"
+      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
+      break
+    }
+
     // left-top
     case "0% 0%": {
       utags.style.left = offset.left + "px"
@@ -591,6 +611,18 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left = offset.left + "px"
       utags.style.top =
         offset.top + (element.clientHeight || element.offsetHeight) + "px"
+      break
+    }
+
+    // right-top
+    case "100% -100%": {
+      utags.style.left =
+        offset.left +
+        (element.clientWidth || element.offsetWidth) -
+        utags.clientWidth -
+        utagsSizeFix +
+        "px"
+      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
       break
     }
 
