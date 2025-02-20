@@ -1,9 +1,9 @@
 export const messages = {
-  "settings.enableCurrentSite": "在当前网站启用",
+  "settings.enableCurrentSite": "在当前网站启用小鱼标签",
   "settings.showHidedItems": "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
   "settings.noOpacityEffect": "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
-  "settings.useVisitedFunction": "启用浏览内容标记功能",
-  "settings.displayEffectOfTheVisitedContent": "已浏览内容的展示效果",
+  "settings.useVisitedFunction": "在当前网站启用浏览内容标记功能",
+  "settings.displayEffectOfTheVisitedContent": "当前网站的已浏览内容的展示效果",
   "settings.displayEffectOfTheVisitedContent.recordingonly": "只保存记录，不显示标记",
   "settings.displayEffectOfTheVisitedContent.showtagonly": "只显示标记",
   "settings.displayEffectOfTheVisitedContent.changecolor": "更改标题颜色",
@@ -13,7 +13,8 @@ export const messages = {
   "settings.pinnedTagsDefaultValue": "收藏, block, sb, 屏蔽, 隐藏, 已阅, 忽略, 标题党, 推广, 关注",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "在下面添加表情符号标签，以逗号分隔",
-  "settings.customStyle": "自定义样式",
+  "settings.customStyle": "启用全局自定义样式",
+  "settings.customStyleCurrentSite": "启用当前网站的自定义样式",
   "settings.customStyleDefaultValue": `/* 自定义样式 */
 body {
   /* 标签文字颜色 */

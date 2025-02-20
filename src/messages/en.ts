@@ -1,8 +1,8 @@
 const messages = {
-  "settings.enableCurrentSite": "Enable on current site",
+  "settings.enableCurrentSite": "Enable UTags on the current website",
   "settings.showHidedItems": "Show hidden items (tags with 'block', 'hide')",
   "settings.noOpacityEffect": "No opacity mask effect (tags with 'ignore', 'clickbait', 'promotion')",
-  "settings.useVisitedFunction": "Enable browsing content tagging",
+  "settings.useVisitedFunction": "Enable browsing content tagging on the current website",
   "settings.displayEffectOfTheVisitedContent": "The display effect of the browsed content",
   "settings.displayEffectOfTheVisitedContent.recordingonly": "Save records only, no mark display",
   "settings.displayEffectOfTheVisitedContent.showtagonly": "Only display marks",
@@ -13,7 +13,8 @@ const messages = {
   "settings.pinnedTagsDefaultValue": "block, hide, ignore, clickbait, promotion",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "Add the emoji tags, separated by commas",
-  "settings.customStyle": "Customize style",
+  "settings.customStyle": "Enable custom style for all websites",
+  "settings.customStyleCurrentSite": "Enable custom style for the current website",
   "settings.customStyleDefaultValue": `/* Custom style */
 body {
   /* Tag text color */

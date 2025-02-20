@@ -162,6 +162,19 @@ const settingsTable = {
     group: groupNumber,
   },
 
+  [`customStyle_${host}`]: {
+    title: i(`settings.customStyleCurrentSite`),
+    defaultValue: false,
+    group: ++groupNumber,
+  },
+  [`customStyleValue_${host}`]: {
+    title: "Custom style value",
+    defaultValue: "",
+    placeholder: i("settings.customStyleDefaultValue"),
+    type: "textarea",
+    group: groupNumber,
+  },
+
   useSimplePrompt: {
     title: i("settings.useSimplePrompt"),
     defaultValue: false,
@@ -198,9 +211,27 @@ function updateCustomStyle() {
         id: "utags_custom_style",
         textContent: customStyleValue,
       })
+      if ($("#utags_custom_style_2")) {
+        $("#utags_custom_style_2")!.remove()
+      }
     }
   } else if ($("#utags_custom_style")) {
     $("#utags_custom_style")!.remove()
+  }
+
+  const customStyleValue2 =
+    (getSettingsValue(`customStyleValue_${host}`) as string) || ""
+  if (getSettingsValue(`customStyle_${host}`) && customStyleValue2) {
+    if ($("#utags_custom_style_2")) {
+      $("#utags_custom_style_2")!.textContent = customStyleValue2
+    } else {
+      addElement("style", {
+        id: "utags_custom_style_2",
+        textContent: customStyleValue2,
+      })
+    }
+  } else if ($("#utags_custom_style_2")) {
+    $("#utags_custom_style_2")!.remove()
   }
 }
 
@@ -720,6 +751,16 @@ async function main() {
       item = $(`.bes_tip`, settingsMainView)
       if (item) {
         item.style.display = getSettingsValue(`customStyle`) ? "block" : "none"
+      }
+
+      item = $(`[data-key="customStyleValue_${host}"]`, settingsMainView)
+      if (item) {
+        // FIXME: data-key should on the parent element of textarea
+        item.parentElement!.style.display = getSettingsValue(
+          `customStyle_${host}`
+        )
+          ? "block"
+          : "none"
       }
     },
   })

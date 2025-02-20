@@ -462,7 +462,10 @@
   }
 
   textarea[data-key="customStyleValue"] {
-    height: 300px;
+    height: 250px;
+  }
+  textarea[data-key^="customStyleValue_"] {
+    height: 250px;
   }
 
   [data-utags_list_node*=",标题党,"],
