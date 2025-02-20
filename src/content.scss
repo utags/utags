@@ -10,6 +10,12 @@
     display: none !important;
   }
 
+  &[data-utags="off"] {
+    .utags_ul {
+      display: none !important;
+    }
+  }
+
   .utags_ul {
     box-sizing: border-box !important;
     display: inline-flex !important;

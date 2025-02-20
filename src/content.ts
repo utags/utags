@@ -251,19 +251,24 @@ function onSettingsChange() {
   doc.documentElement.dataset.utags_displayEffectOfTheVisitedContent =
     getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) as string
 
-  if (!getSettingsValue(`enableCurrentSite_${host}`)) {
-    for (const element of $$(".utags_ul")) {
-      element.remove()
+  if (getSettingsValue(`enableCurrentSite_${host}`)) {
+    doc.documentElement.dataset.utags = `${host}`
+    displayTagsThrottled()
+    updateCustomStyle()
+  } else {
+    doc.documentElement.dataset.utags = "off"
+    if ($("#utags_custom_style")) {
+      $("#utags_custom_style")!.remove()
     }
 
-    const style = $("#utags_style")
-    if (style) {
-      style.remove()
+    if ($("#utags_custom_style_2")) {
+      $("#utags_custom_style_2")!.remove()
+    }
+
+    if ($("#utags_site_style")) {
+      $("#utags_site_style")!.remove()
     }
   }
-
-  displayTagsThrottled()
-  updateCustomStyle()
 }
 
 // For debug, 0 disable, 1 enable
