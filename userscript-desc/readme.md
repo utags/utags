@@ -53,6 +53,7 @@ For now it works on
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -127,6 +128,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.3
+  - Make UTags support the website www.nodeseek.com
 - 0.12.2
   - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1

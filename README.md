@@ -58,6 +58,7 @@ For now it works on
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -123,6 +124,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.3
+  - Make UTags support the website www.nodeseek.com
 - 0.12.2
   - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1

@@ -58,6 +58,7 @@
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
@@ -125,6 +126,8 @@
 
 ## 更新记录
 
+- 0.12.3
+  - 使 UTags 支持 website www.nodeseek.com 网站
 - 0.12.2
   - 使 UTags 支持 flarum 论坛网站, 包括 discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1
