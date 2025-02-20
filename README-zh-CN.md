@@ -64,8 +64,8 @@
 
 - 类 Chrome 浏览器: [Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge 浏览器: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-- Firefox 浏览器: 已上架 [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)，[点击这里](https://addons.mozilla.org/firefox/addon/utags/)安装。
-- 油猴脚本: [https://greasyfork.org/scripts/460718-utags-add-usertags-to-links](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- Firefox 浏览器: [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)
+- 油猴脚本: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links), [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784)
 - [手动安装浏览器扩展](manual-installation.md)
 
 ## 使用方法
