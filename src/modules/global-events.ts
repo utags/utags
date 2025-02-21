@@ -20,6 +20,7 @@ import { TAG_VISITED, addVisited, removeVisited } from "./visited"
 
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
+let isPromptShown = false
 
 export function hideAllUtagsInArea(target?: HTMLElement | undefined) {
   const element = $(".utags_show_all")
@@ -87,9 +88,11 @@ export function bindDocumentEvents() {
           event.stopPropagation()
           event.stopImmediatePropagation()
 
-          if (!captainTag.dataset.utags_key) {
+          if (!captainTag.dataset.utags_key || isPromptShown) {
             return
           }
+
+          isPromptShown = true
 
           setTimeout(async () => {
             const key = captainTag.dataset.utags_key
@@ -103,6 +106,8 @@ export function bindDocumentEvents() {
             const newTags = (await myPrompt(i("prompt.addTags"), tags)) as
               | string
               | NullOrUndefined
+
+            isPromptShown = false
 
             captainTag.focus()
             // eslint-disable-next-line eqeqeq
