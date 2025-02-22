@@ -28,11 +28,14 @@
     margin: 0 !important;
     padding: 0 !important;
     vertical-align: text-bottom !important;
+    align-self: center !important;
     line-height: normal !important;
     background-color: transparent;
     border: none !important;
     box-shadow: none !important;
-    width: max-content !important;
+    /* https://github.com/utags/utags/commit/099f4eb0f74cdf5305d464315583323741a14c71 */
+    /* width: max-content !important; */
+    /* https://github.com/utags/utags/commit/ac6cd537bfe8b53f0994bb1720cf7c17ad9d6778*/
     max-width: 100% !important;
 
     > li {
@@ -206,6 +209,8 @@
 
   .utags_captain_tag:focus,
   *:hover + .utags_ul .utags_captain_tag,
+  /* utags_position_selector matches the ancestor elements */
+  [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,
   .utags_ul:hover .utags_captain_tag,
   .utags_show_all .utags_captain_tag,
   :not(a):not([data-utags_node_type="link"]) + .utags_ul .utags_captain_tag {

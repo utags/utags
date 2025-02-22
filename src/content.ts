@@ -514,7 +514,10 @@ function updateTagPosition(element: HTMLElement) {
   }
 
   if (element.dataset.utags_position_selector) {
-    element = $(element.dataset.utags_position_selector, element) || element
+    element =
+      $(element.dataset.utags_position_selector, element) ||
+      element.closest(element.dataset.utags_position_selector) ||
+      element
   }
 
   element.dataset.utags_fit_content = "1"
@@ -526,6 +529,16 @@ function updateTagPosition(element: HTMLElement) {
     element,
     (utags.offsetParent as HTMLElement) || doc.body
   )
+
+  // For debug
+  // if (1) {
+  //   element.dataset.offsetWidth = String(element.offsetWidth)
+  //   element.dataset.clientWidth = String(element.clientWidth)
+  //   element.dataset.offsetHeight = String(element.offsetHeight)
+  //   element.dataset.clientHeight = String(element.clientHeight)
+  //   element.dataset.offsetLeft = String(offset.left)
+  //   element.dataset.offsetTop = String(offset.top)
+  // }
 
   // version 5
   const position = utagsSizeFix

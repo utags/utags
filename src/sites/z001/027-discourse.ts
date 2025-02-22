@@ -111,8 +111,13 @@ const site = {
             !title &&
             !element.closest(".topic-list tr .posters a:first-of-type") &&
             !element.closest(".bookmark-list tr a.avatar") &&
+            // https://linux.do/u/neo/activity/reactions
             !element.closest(
               ".user-content .user-stream-item__header a.avatar-link"
+            ) &&
+            // https://linux.do/u/neo/activity/likes-given
+            !element.closest(
+              ".user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link"
             ) &&
             !element.closest(".column .latest-topic-list .topic-poster a") &&
             !element.closest(".search-results .author a")
@@ -124,6 +129,12 @@ const site = {
 
           element.utags = { key, meta }
           element.dataset.utags = element.dataset.utags || ""
+
+          if (element.closest(".topic-body .names a")) {
+            element.dataset.utags_position_selector = ".topic-body .names"
+          } else if (element.closest(".user-card .names a")) {
+            element.dataset.utags_position_selector = ".user-card .names"
+          }
 
           return true
         }
@@ -162,6 +173,12 @@ const site = {
 
           const meta = { type: "category", title }
           element.utags = { key, meta }
+
+          if (element.closest(".column .category-list .category-title-link")) {
+            element.dataset.utags_position_selector =
+              ".category-text-title .category-name"
+          }
+
           return true
         }
 
