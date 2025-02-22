@@ -189,6 +189,21 @@ export function bindDocumentEvents() {
     },
     true
   )
+
+  addEventListener(
+    doc,
+    "mouseup",
+    (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+
+      if (target?.closest(".utags_ul")) {
+        event.preventDefault()
+        event.stopPropagation()
+        event.stopImmediatePropagation()
+      }
+    },
+    true
+  )
 }
 
 function extendHistoryApi2() {

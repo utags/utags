@@ -33,6 +33,7 @@
     border: none !important;
     box-shadow: none !important;
     width: max-content !important;
+    max-width: 100% !important;
 
     > li {
       box-sizing: border-box !important;
@@ -45,6 +46,7 @@
       border: none !important;
       padding: 0 !important;
       margin: 0 !important;
+      vertical-align: top !important;
 
       &:first-child .utags_text_tag {
         margin-left: 3px !important;
@@ -102,6 +104,10 @@
       line-height: 1;
       height: unset;
       width: unset;
+      max-width: var(--utags-text-tag-max-width);
+      white-space: preserve nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       border-radius: unset;
       border: unset;
       background: unset;
@@ -220,11 +226,6 @@
 
   :not(a):not([data-utags_node_type="link"]) + .utags_ul .utags_captain_tag {
     position: relative;
-  }
-
-  .utags_ul_notag_float_left .utags_ul_0,
-  .utags_ul_0.utags_ul_notag_float_left {
-    float: left;
   }
 
   .utags_modal {
@@ -572,6 +573,7 @@ textarea[data-key="emojiTags"] {
   --utags-text-tag-background-color: unset;
   --utags-text-tag-font-size: 10px;
   --utags-text-tag-border-width: 1px;
+  --utags-text-tag-max-width: 90px;
   --utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei",
     "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",

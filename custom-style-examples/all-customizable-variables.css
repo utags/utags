@@ -19,6 +19,8 @@ body {
   --utags-text-tag-font-size: 10px;
   /* 标签边框宽度 */
   --utags-text-tag-border-width: 1px;
+  /* 标签最大宽度 */
+  --utags-text-tag-max-width: 90px;
   /* 标签字体 */
   --utags-text-tag-font-family: "helvetica neue", "...";
 

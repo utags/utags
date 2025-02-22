@@ -1,0 +1,91 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  .article_tile_footer_feed_title a + {
+    .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: -4px !important;
+    }
+  }
+
+  /* 防止标题很长时，标题被截断 */
+  .article_tile[data-utags_list_node^=","] .article_tile_content_wraper {
+    position: unset;
+  }
+
+  /* Column view */
+  .ar .column_view_title a,
+  /* Card view */
+  .article_tile a.article_title_link,
+  /* Magazine View */
+  .article_magazine a.article_magazine_title_link,
+  /* Read later */
+  .ar.article_card .article-details a.article_title_link {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+    }
+  }
+
+  /* Article pull page */
+  .article_full_contents div.article_title + {
+    .utags_ul_0 {
+      object-position: 0% -100%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      object-position: 0% -100%;
+      position: absolute;
+      top: -9999px;
+      margin-top: 0px !important;
+    }
+  }
+
+  #search_content {
+    a.featured_category + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 2px !important;
+      }
+    }
+
+    a.search_feed_article + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: 2px !important;
+      }
+    }
+  }
+}
