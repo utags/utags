@@ -116,14 +116,13 @@
     }
   }
 
-  .UserCard-profile h1 a + {
-    .utags_ul_0 {
-      --utags-notag-captain-tag-top: -8px;
-    }
-  }
-
   /* Always show the start post */
   .PostStream .PostStream-item[data-index="0"] {
     display: block !important;
+  }
+
+  /* Fix scroll issue */
+  .UserBio .UserBio-content p {
+    position: relative;
   }
 }

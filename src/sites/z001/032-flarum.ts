@@ -167,6 +167,7 @@ const site = {
         if (title) {
           const meta = { title, type: "post" }
           element.utags = { key, meta }
+          element.dataset.utags_node_type = "link"
           matchedNodesSet.add(element)
           markElementWhetherVisited(key, element)
         }
@@ -181,6 +182,7 @@ const site = {
         if (title) {
           const meta = { title, type: "tag" }
           element.utags = { key, meta }
+          element.dataset.utags_node_type = "link"
           matchedNodesSet.add(element)
         }
       }
