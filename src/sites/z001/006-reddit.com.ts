@@ -5,6 +5,27 @@ import defaultSite from "../default"
 
 const prefix = "https://www.reddit.com/"
 
+function getCanonicalUrl(url: string) {
+  if (url.startsWith(prefix)) {
+    let href2 = getUserProfileUrl(url, true)
+    if (href2) {
+      return href2
+    }
+
+    href2 = getCommunityUrl(url, true)
+    if (href2) {
+      return href2
+    }
+
+    href2 = getCommentsUrl(url, true)
+    if (href2) {
+      return href2
+    }
+  }
+
+  return url
+}
+
 function getUserProfileUrl(url: string, exact = false) {
   if (url.startsWith(prefix)) {
     const href2 = url.slice(prefix.length)
@@ -195,6 +216,7 @@ const site = {
       }
     }, 1000)
   },
+  getCanonicalUrl,
 }
 
 export default site
