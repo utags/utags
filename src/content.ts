@@ -306,6 +306,7 @@ function appendTagsToPage(
   let li = createElement("li")
 
   const a = createElement("button", {
+    type: "button",
     // href: "",
     // tabindex: "0",
     title: "Add tags",
@@ -874,7 +875,10 @@ async function main() {
   // To fix issues on reddit, add mouseover event
   addEventListener(doc, "mouseover", (event: Event) => {
     const target = event.target as HTMLElement
-    if (target && target.tagName === "A") {
+    if (
+      target &&
+      (target.tagName === "A" || target.dataset.utags !== undefined)
+    ) {
       displayTagsThrottled()
     }
   })

@@ -229,10 +229,6 @@
     transition: unset !important;
   }
 
-  :not(a):not([data-utags_node_type="link"]) + .utags_ul .utags_captain_tag {
-    position: relative;
-  }
-
   .utags_modal {
     position: fixed;
     top: 0;
@@ -606,6 +602,7 @@ textarea[data-key="emojiTags"] {
   --utags-action-button-hover-bg-color: #1a73e8e6;
   --utags-action-button-hover-border-color: #1a73e8e6;
 
+  /* If anchor element has display: inline */
   --utags-notag-ul-disply-1: inline;
   --utags-notag-ul-float-1: none;
   --utags-notag-ul-height-1: unset;

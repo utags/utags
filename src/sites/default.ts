@@ -15,6 +15,7 @@ const site = {
   matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
   excludeSelectors: [
     ".browser_extension_settings_container",
+    ".utags_text_tag",
     "a a",
     'a[href^="javascript:"]',
     'a[href="#"]',

@@ -1,4 +1,5 @@
 import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
+import styleText from "data-text:./001-v2ex.scss"
 
 import { addVisited, isVisited, setPrefix } from "../../modules/visited"
 import defaultSite from "../default"
@@ -87,10 +88,12 @@ const site = {
     // 所有外部链接
     'a[href^="https://"]:not([href*="v2ex.com"])',
     'a[href^="http://"]:not([href*="v2ex.com"])',
+    // 帖子标签
+    ".box .cell .fr .tag",
+    ".box .inner .tag",
   ],
   excludeSelectors: [
     ...defaultSite.excludeSelectors,
-    ".utags_text_tag",
     // 导航栏
     ".site-nav a",
     // 标签栏
@@ -214,16 +217,30 @@ const site = {
 
     if (location.pathname.includes("/go/")) {
       // 节点页面
-      const header = $(".cell_ops.flex-one-row input")
+      const header = $(".title .node-breadcrumb")
       if (header) {
         const key = getCanonicalUrl("https://www.v2ex.com" + location.pathname)
-        const title = document.title.replace(/.*›\s*/, "").trim()
+        const title = header.textContent!.replaceAll(/\s+/g, " ").trim()
         const meta = { title, type: "node" }
         header.utags = { key, meta }
         matchedNodesSet.add(header)
       }
     }
+
+    if (location.pathname.includes("/tag/")) {
+      // 标签页面
+      const header = $(".box .header > span")
+      if (header) {
+        const key = getCanonicalUrl("https://www.v2ex.com" + location.pathname)
+        const title = header.textContent!.replaceAll(/\s+/g, " ").trim()
+        const meta = { title, type: "tag" }
+        header.utags = { key, meta }
+        header.dataset.utags_flag = "tag_page"
+        matchedNodesSet.add(header)
+      }
+    }
   },
+  getStyle: () => styleText,
   getCanonicalUrl,
   postProcess() {
     for (const element of $$('a[href*="/t/"]') as HTMLAnchorElement[]) {

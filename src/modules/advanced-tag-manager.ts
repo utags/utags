@@ -218,6 +218,7 @@ function createPromptView(
   input.select()
 
   addElement(currentTagsWrapper, "button", {
+    type: "button",
     class: "utags_button_copy",
     textContent: i("prompt.copy"),
     async onclick() {
@@ -280,12 +281,14 @@ function createPromptView(
   }
 
   addElement(buttonWrapper, "button", {
+    type: "button",
     textContent: i("prompt.cancel"),
     onclick() {
       closeModal()
     },
   })
   addElement(buttonWrapper, "button", {
+    type: "button",
     class: "utags_primary",
     textContent: i("prompt.ok"),
     onclick() {
