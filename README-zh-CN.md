@@ -59,6 +59,7 @@
 - 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
+- Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
@@ -126,6 +127,8 @@
 
 ## 更新记录
 
+- 0.12.4
+  - 使 UTags 支持 website www.inoreader.com 网站
 - 0.12.3
   - 使 UTags 支持 website www.nodeseek.com 网站
 - 0.12.2

@@ -59,6 +59,7 @@ For now it works on
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
+- Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -124,6 +125,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.4
+  - Make UTags support the website www.inoreader.com
 - 0.12.3
   - Make UTags support the website www.nodeseek.com
 - 0.12.2

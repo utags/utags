@@ -54,6 +54,7 @@ For now it works on
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
+- Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -128,6 +129,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.4
+  - Make UTags support the website www.inoreader.com
 - 0.12.3
   - Make UTags support the website www.nodeseek.com
 - 0.12.2
