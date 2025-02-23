@@ -58,6 +58,8 @@
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- Kater ([kater.me](https://kater.me/))
+- 生如夏花论坛 ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
@@ -127,10 +129,13 @@
 
 ## 更新记录
 
+- 0.12.5
+  - 优化 discourse (linux.do) 手机端体验
+  - 使 UTags 支持 kater.me 和 bbs.viva-la-vita.org 网站
 - 0.12.4
-  - 使 UTags 支持 website www.inoreader.com 网站
+  - 使 UTags 支持 www.inoreader.com 网站
 - 0.12.3
-  - 使 UTags 支持 website www.nodeseek.com 网站
+  - 使 UTags 支持 www.nodeseek.com 网站
 - 0.12.2
   - 使 UTags 支持 flarum 论坛网站, 包括 discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1

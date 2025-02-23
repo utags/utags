@@ -53,6 +53,8 @@ For now it works on
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- Kater ([kater.me](https://kater.me/))
+- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
@@ -129,6 +131,9 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.5
+  - Enhance the mobile experience of Discourse
+  - Make UTags support the website kater.me and bbs.viva-la-vita.org
 - 0.12.4
   - Make UTags support the website www.inoreader.com
 - 0.12.3
@@ -295,16 +300,10 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
   - Support [www.v2ex.com](https://www.v2ex.com/) site, add or display tags on member or post links
   - Added [list page](https://utags.pipecraft.net/tags/) with tagged links
 
-## Buy Me a Coffee
-
-- [https://afdian.com/a/pipecraft](https://afdian.net/a/pipecraft)
-
 ## License
 
 Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](https://github.com/utags/utags/blob/main/LICENSE).
 
 ## >\_
 
-[![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
 [![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
-[![BestXTools](https://img.shields.io/badge/site-bestxtools-brightgreen)](https://www.bestxtools.com)

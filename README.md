@@ -58,6 +58,8 @@ For now it works on
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
+- Kater ([kater.me](https://kater.me/))
+- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
@@ -125,6 +127,9 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.5
+  - Enhance the mobile experience of Discourse
+  - Make UTags support the website kater.me and bbs.viva-la-vita.org
 - 0.12.4
   - Make UTags support the website www.inoreader.com
 - 0.12.3
