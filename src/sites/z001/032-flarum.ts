@@ -1,7 +1,11 @@
 import { $, $$, doc, hasClass } from "browser-extension-utils"
 import styleText from "data-text:./032-flarum.scss"
 
-import { addVisited, markElementWhetherVisited } from "../../modules/visited"
+import {
+  addVisited,
+  markElementWhetherVisited,
+  setVisitedAvailable,
+} from "../../modules/visited"
 import defaultSite from "../default"
 
 const prefix = location.origin + "/"
@@ -54,6 +58,9 @@ function getTagUrl(url: string, exact = false) {
 const site = {
   matches:
     /discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
+  preProcess() {
+    setVisitedAvailable(true)
+  },
   listNodesSelectors: [
     "ul.DiscussionList-discussions li",
     ".hotDiscussion-content ul li",

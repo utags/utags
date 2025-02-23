@@ -1,7 +1,11 @@
 import { $, $$ } from "browser-extension-utils"
 import styleText from "data-text:./031-tampermonkey.net.cn.scss"
 
-import { addVisited, isVisited } from "../../modules/visited"
+import {
+  addVisited,
+  markElementWhetherVisited,
+  setVisitedAvailable,
+} from "../../modules/visited"
 import { deleteUrlParameters } from "../../utils"
 import defaultSite from "../default"
 
@@ -100,6 +104,9 @@ function getPostUrl(url: string) {
 const site = {
   // Discuz
   matches: /bbs\.tampermonkey\.net\.cn/,
+  preProcess() {
+    setVisitedAvailable(true)
+  },
   listNodesSelectors: [
     //
     "#threadlist table tbody",
@@ -178,12 +185,7 @@ const site = {
             href === title ? { type: "post" } : { type: "post", title }
 
           element.utags = { key, meta }
-
-          if (isVisited(key)) {
-            element.dataset.utags_visited = "1"
-          } else if (element.dataset.utags_visited === "1") {
-            delete element.dataset.utags_visited
-          }
+          markElementWhetherVisited(key, element)
 
           return true
         }

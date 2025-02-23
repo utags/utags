@@ -1,7 +1,11 @@
 import { $, $$, doc, hasClass } from "browser-extension-utils"
 import styleText from "data-text:./033-nodeseek.com.scss"
 
-import { addVisited, markElementWhetherVisited } from "../../modules/visited"
+import {
+  addVisited,
+  markElementWhetherVisited,
+  setVisitedAvailable,
+} from "../../modules/visited"
 import defaultSite from "../default"
 
 const prefix = location.origin + "/"
@@ -53,6 +57,9 @@ function getCategoryUrl(url: string, exact = false) {
 
 const site = {
   matches: /www\.nodeseek\.com/,
+  preProcess() {
+    setVisitedAvailable(true)
+  },
   listNodesSelectors: [
     "ul.post-list li.post-list-item",
     // comments

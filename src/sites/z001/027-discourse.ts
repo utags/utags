@@ -1,7 +1,11 @@
 import { $, $$, doc } from "browser-extension-utils"
 import styleText from "data-text:./027-discourse.scss"
 
-import { addVisited, isVisited } from "../../modules/visited"
+import {
+  addVisited,
+  markElementWhetherVisited,
+  setVisitedAvailable,
+} from "../../modules/visited"
 import defaultSite from "../default"
 
 const prefix = location.origin + "/"
@@ -69,6 +73,9 @@ function getTagUrl(url: string, exact = false) {
 const site = {
   matches:
     /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com/,
+  preProcess() {
+    setVisitedAvailable(true)
+  },
   listNodesSelectors: [
     ".topic-list .topic-list-body tr",
     // replies
@@ -171,11 +178,7 @@ const site = {
 
           const meta = { type: "post", title }
           element.utags = { key, meta }
-          if (isVisited(key)) {
-            element.dataset.utags_visited = "1"
-          } else if (element.dataset.utags_visited === "1") {
-            delete element.dataset.utags_visited
-          }
+          markElementWhetherVisited(key, element)
 
           element.dataset.utags = element.dataset.utags || ""
 

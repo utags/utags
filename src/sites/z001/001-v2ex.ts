@@ -1,7 +1,12 @@
 import { $, $$, createElement, parseInt10 } from "browser-extension-utils"
 import styleText from "data-text:./001-v2ex.scss"
 
-import { addVisited, isVisited, setPrefix } from "../../modules/visited"
+import {
+  addVisited,
+  markElementWhetherVisited,
+  setPrefix,
+  setVisitedAvailable,
+} from "../../modules/visited"
 import defaultSite from "../default"
 
 function getCanonicalUrl(url: string) {
@@ -37,6 +42,7 @@ export function cloneWithoutCitedReplies(element: HTMLElement) {
 const site = {
   matches: /v2ex\.com|v2hot\.|v2ex\.co/,
   preProcess() {
+    setVisitedAvailable(true)
     setPrefix("https://www.v2ex.com/")
   },
   listNodesSelectors: [
@@ -136,11 +142,7 @@ const site = {
 
         addVisited(key)
 
-        if (isVisited(key)) {
-          header.dataset.utags_visited = "1"
-        } else if (header.dataset.utags_visited === "1") {
-          delete header.dataset.utags_visited
-        }
+        markElementWhetherVisited(key, header)
       }
 
       const main = $("#Main") || $(".content")
@@ -246,11 +248,7 @@ const site = {
     for (const element of $$('a[href*="/t/"]') as HTMLAnchorElement[]) {
       const key = getCanonicalUrl(element.href)
 
-      if (isVisited(key)) {
-        element.dataset.utags_visited = "1"
-      } else if (element.dataset.utags_visited === "1") {
-        delete element.dataset.utags_visited
-      }
+      markElementWhetherVisited(key, element)
     }
   },
 }
