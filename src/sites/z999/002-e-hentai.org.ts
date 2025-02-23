@@ -78,7 +78,6 @@ const site = {
           titleElement.utags = element.utags as UserTag
           titleElement.dataset.utags = titleElement.dataset.utags || ""
           titleElement.dataset.utags_node_type = "link"
-          console.log(titleElement.utags)
           return titleElement
         }
 

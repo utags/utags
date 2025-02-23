@@ -244,7 +244,7 @@
       justify-content: center;
       width: 100%;
       inset: 0px;
-      padding: 14vh 16px 16px;
+      padding-top: 5vh;
       background-color: rgba(255, 255, 255, 0.1);
       z-index: 200000;
     }
@@ -253,13 +253,15 @@
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      max-width: 600px;
+      max-width: 94%;
       max-height: 100%;
+      overflow: hidden;
       overflow: auto;
       color: #000000;
       background-color: #ffffff;
       border-radius: 5px;
       padding: 14px;
+      margin: 0 auto;
       -webkit-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
       -moz-box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);
       box-shadow: 0px 10px 39px 10px rgba(62, 66, 66, 0.22);

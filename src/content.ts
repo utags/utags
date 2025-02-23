@@ -109,8 +109,11 @@ const settingsTable = {
     title: i("settings.pinnedTags"),
     type: "action",
     async onclick() {
-      const input = $('textarea[data-key="pinnedTags"]')
+      const input = $('textarea[data-key="pinnedTags"]') as HTMLInputElement
       if (input) {
+        input.scrollIntoView({ block: "start" })
+        input.selectionStart = input.value.length
+        input.selectionEnd = input.value.length
         input.focus()
       }
     },
@@ -127,8 +130,11 @@ const settingsTable = {
     title: i("settings.emojiTags"),
     type: "action",
     async onclick() {
-      const input = $('textarea[data-key="emojiTags"]')
+      const input = $('textarea[data-key="emojiTags"]') as HTMLInputElement
       if (input) {
+        input.scrollIntoView({ block: "start" })
+        input.selectionStart = input.value.length
+        input.selectionEnd = input.value.length
         input.focus()
       }
     },
@@ -487,6 +493,15 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   return false
 }
 
+function getMaxOffsetLeft(utags: HTMLElement, utagsSizeFix: number) {
+  const maxOffsetRight =
+    document.body.offsetWidth -
+    getOffsetPosition((utags.offsetParent as HTMLElement) || doc.body).left -
+    2
+
+  return maxOffsetRight - utags.clientWidth - utagsSizeFix
+}
+
 function updateTagPosition(element: HTMLElement) {
   const utags = element.nextElementSibling as HTMLElement
   if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
@@ -583,7 +598,8 @@ function updateTagPosition(element: HTMLElement) {
   switch (objectPosition) {
     // left-center
     case "-100% 50%": {
-      utags.style.left = offset.left - utags.clientWidth - utagsSizeFix + "px"
+      utags.style.left =
+        Math.max(offset.left - utags.clientWidth - utagsSizeFix, 0) + "px"
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
@@ -650,7 +666,11 @@ function updateTagPosition(element: HTMLElement) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left = offset.left + offsetLeft + "px"
+      utags.style.left =
+        Math.min(
+          offset.left + offsetLeft,
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top = offset.top + "px"
       break
     }
@@ -665,7 +685,11 @@ function updateTagPosition(element: HTMLElement) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left = offset.left + offsetLeft + "px"
+      utags.style.left =
+        Math.min(
+          offset.left + offsetLeft,
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
@@ -686,7 +710,11 @@ function updateTagPosition(element: HTMLElement) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left = offset.left + offsetLeft + "px"
+      utags.style.left =
+        Math.min(
+          offset.left + offsetLeft,
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
@@ -712,7 +740,10 @@ function updateTagPosition(element: HTMLElement) {
     // right-top, out of element box
     case "200% 0%": {
       utags.style.left =
-        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+        Math.min(
+          offset.left + (element.clientWidth || element.offsetWidth),
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top = offset.top + "px"
       break
     }
@@ -720,7 +751,10 @@ function updateTagPosition(element: HTMLElement) {
     // right-center, out of element box
     case "200% 50%": {
       utags.style.left =
-        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+        Math.min(
+          offset.left + (element.clientWidth || element.offsetWidth),
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
@@ -734,7 +768,10 @@ function updateTagPosition(element: HTMLElement) {
     // right-bottom, out of element box
     case "200% 100%": {
       utags.style.left =
-        offset.left + (element.clientWidth || element.offsetWidth) + "px"
+        Math.min(
+          offset.left + (element.clientWidth || element.offsetWidth),
+          getMaxOffsetLeft(utags, utagsSizeFix)
+        ) + "px"
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -

@@ -85,6 +85,8 @@ const site = {
     ".topic-list .topic-list-body tr .discourse-tag",
     // author
     ".topic-list .topic-list-body tr .posters a:first-of-type",
+    // mobile - author
+    ".mobile-view .topic-list a[data-user-card]",
 
     // replies
     ".topic-area .topic-post:nth-of-type(n+2) .names a",
@@ -142,6 +144,20 @@ const site = {
         key = getPostUrl(href)
         if (key) {
           const title = element.textContent!.trim()
+
+          if (
+            element.closest(".mobile-view .topic-list a[data-user-card]") &&
+            element.dataset.userCard
+          ) {
+            const title = element.dataset.userCard
+            key = prefix + "u/" + title.toLowerCase()
+            const meta = { type: "user", title }
+
+            element.utags = { key, meta }
+            element.dataset.utags = element.dataset.utags || ""
+            return true
+          }
+
           if (!title) {
             return false
           }
@@ -160,6 +176,8 @@ const site = {
           } else if (element.dataset.utags_visited === "1") {
             delete element.dataset.utags_visited
           }
+
+          element.dataset.utags = element.dataset.utags || ""
 
           return true
         }
@@ -194,7 +212,7 @@ const site = {
           return true
         }
 
-        return false
+        return true
       }
     ) as HTMLAnchorElement[]
   },
@@ -217,6 +235,9 @@ const site = {
     ".sidebar-wrapper",
     "#skip-link",
     "#navigation-bar",
+    ".user-navigation",
+    ".search-menu",
+    "footer.category-topics-count",
   ],
   validMediaSelectors: [
     "a img.emoji",
@@ -250,6 +271,23 @@ const site = {
     key = getPostUrl(location.href)
     if (key) {
       addVisited(key)
+    }
+
+    // Leader board
+    for (const element of $$(".leaderboard div[data-user-card]")) {
+      const title = element.dataset.userCard
+      if (title) {
+        key = prefix + "u/" + title.toLowerCase()
+        const meta = { type: "user", title }
+
+        element.utags = { key, meta }
+        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags_node_type = "link"
+        element.dataset.utags_position_selector = element.closest(".winner")
+          ? ".winner"
+          : ".user__name"
+        matchedNodesSet.add(element)
+      }
     }
   },
   getStyle: () => styleText,

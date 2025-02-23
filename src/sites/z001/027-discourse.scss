@@ -1,6 +1,6 @@
 :not(#a):not(#b):not(#c) {
   /* default */
-  a + {
+  * + {
     .utags_ul_0 {
       /* right-center */
       object-position: 200% 50%;
@@ -107,6 +107,13 @@
         top: -9999px;
         z-index: 100;
       }
+    }
+  }
+
+  .post-links-container .post-links .track-link {
+    &[data-utags_fit_content="1"] {
+      max-width: max-content !important;
+      max-height: max-content !important;
     }
   }
 
@@ -272,8 +279,75 @@
     }
   }
 
+  /* profile header */
+  .user-profile-names [data-utags] {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+      }
+    }
+  }
+
+  /* Leader board */
+  .leaderboard .winner {
+    padding-bottom: 50px;
+
+    .winner__avatar[data-user-card] + {
+      .utags_ul_0 {
+        object-position: 0% 200%;
+        --utags-notag-captain-tag-top: -56px;
+        --utags-notag-captain-tag-left: -4px;
+      }
+      .utags_ul_1 {
+        object-position: 0% 200%;
+        position: absolute;
+        top: -9999px;
+        margin-top: -56px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
   /* 主题列表最后一个需要显示， */
   [data-utags_list_node]:last-of-type {
     display: var(--utags-list-node-display) !important;
+  }
+}
+
+/* Mobile */
+/* topic list > author */
+.mobile-view:not(#a):not(#b):not(#c) {
+  .topic-list a[data-user-card] + {
+    .utags_ul_0 {
+      object-position: 0% 200%;
+      --utags-notag-captain-tag-top: 14px;
+      --utags-notag-captain-tag-left: -8px;
+    }
+    .utags_ul_1 {
+      object-position: 0% 200%;
+      position: absolute;
+      top: -9999px;
+      margin-top: 18px !important;
+      margin-left: -4px !important;
+      max-width: 58px !important;
+    }
+  }
+
+  .topic-body .topic-meta-data .names a + {
+    .utags_ul_0 {
+      object-position: 0% 200%;
+      --utags-notag-captain-tag-top: -4px;
+      --utags-notag-captain-tag-left: -4px;
+    }
+
+    .utags_ul_1 {
+      object-position: 0% 200%;
+      position: absolute;
+      top: -9999px;
+      z-index: 100;
+    }
   }
 }
