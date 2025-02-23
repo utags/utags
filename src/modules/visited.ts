@@ -11,7 +11,7 @@ export function setPrefix(newPrefix: string) {
 }
 
 export function isAvailableOnCurrentSite() {
-  return /(linux\.do|v2ex\.(com|co)|bbs\.tampermonkey\.net\.cn|discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|www\.nodeseek\.com)$/.test(
+  return /(linux\.do|v2ex\.(com|co)|bbs\.tampermonkey\.net\.cn|discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|www\.nodeseek\.com|kater\.me|bbs\.viva-la-vita\.org)$/.test(
     host
   )
 }
