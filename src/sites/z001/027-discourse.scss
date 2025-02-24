@@ -311,9 +311,37 @@
     }
   }
 
+  /* Notifications */
+  .notification a {
+    &[data-utags_fit_content="1"] {
+      display: inline-flex !important;
+      width: fit-content !important;
+
+      *:not(svg) {
+        width: fit-content !important;
+      }
+    }
+
+    & + {
+      .utags_ul_1 {
+        object-position: 0% 200%;
+        position: absolute;
+        top: -9999px;
+        margin-top: -6px !important;
+        margin-left: 42px !important;
+      }
+    }
+  }
+
   /* 主题列表最后一个需要显示， */
   [data-utags_list_node]:last-of-type {
     display: var(--utags-list-node-display) !important;
+  }
+
+  /* 覆盖通知列表第二列内容 */
+  .user-menu.revamped .menu-tabs-container {
+    z-index: 91;
+    background-color: var(--secondary);
   }
 }
 

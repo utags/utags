@@ -241,6 +241,11 @@ const site = {
     ".user-navigation",
     ".search-menu",
     "footer.category-topics-count",
+    '[role="tablist"]',
+    ".nav.nav-pills",
+    ".btn",
+    // chat
+    ".chat-time",
   ],
   validMediaSelectors: [
     "a img.emoji",
@@ -289,6 +294,21 @@ const site = {
         element.dataset.utags_position_selector = element.closest(".winner")
           ? ".winner"
           : ".user__name"
+        matchedNodesSet.add(element)
+      }
+    }
+
+    // chat
+    for (const element of $$(".chat-message span[data-user-card]")) {
+      const title = element.dataset.userCard
+      if (title) {
+        key = prefix + "u/" + title.toLowerCase()
+        const meta = { type: "user", title }
+
+        element.utags = { key, meta }
+        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags_node_type = "link"
+
         matchedNodesSet.add(element)
       }
     }
