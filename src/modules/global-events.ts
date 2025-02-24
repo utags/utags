@@ -52,12 +52,69 @@ function showAllUtagsInArea(element: HTMLElement | undefined) {
   }
 
   const utags = $$(".utags_ul", element)
+  // console.log("showAllUtagsInArea", utags.length, element)
   if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
     addClass(element, "utags_show_all")
     return true
   }
 
   return false
+}
+
+function findElementToShowAllUtags(target: HTMLElement) {
+  hideAllUtagsInArea(target)
+  // hideAllUtagsInArea(doc.documentElement)
+
+  if (!target) {
+    return
+  }
+
+  const targets: HTMLElement[] = []
+  let width: number
+  let height: number
+  // Add parent elements to candidates, up to 8
+  do {
+    targets.push(target)
+
+    const tagName = target.tagName
+    const style = getComputedStyle(target)
+
+    if (
+      style.position === "fixed" ||
+      style.position === "sticky" ||
+      /^(BODY|TABLE|UL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
+    ) {
+      break
+    }
+
+    target = target.parentElement!
+    if (target) {
+      width = target.offsetWidth || target.clientWidth
+      height = target.offsetHeight || target.clientHeight
+    } else {
+      width = 0
+      height = 0
+    }
+  } while (targets.length < 8 && target && width > 20 && height > 10)
+
+  // Start testing from the outermost parent element
+  while (targets.length > 0) {
+    const area = targets.pop()
+    if (showAllUtagsInArea(area)) {
+      if (lastShownArea === area) {
+        hideAllUtagsInArea()
+        return
+      }
+
+      lastShownArea = area
+      return
+    }
+  }
+
+  // Failed testing showAllUtagsInArea
+  // console.log("Failed testing showAllUtagsInArea")
+  hideAllUtagsInArea()
+  lastShownArea = undefined
 }
 
 export function bindDocumentEvents() {
@@ -67,7 +124,7 @@ export function bindDocumentEvents() {
     doc,
     eventType,
     (event: Event) => {
-      let target = event.target as HTMLElement
+      const target = event.target as HTMLElement
       if (!target) {
         return
       }
@@ -141,31 +198,9 @@ export function bindDocumentEvents() {
         return
       }
 
-      hideAllUtagsInArea(target)
-
-      const targets: HTMLElement[] = []
-      // Add parent elements to candidates, up to 8
-      do {
-        targets.push(target)
-        target = target.parentElement!
-      } while (targets.length <= 8 && target)
-
-      // Start testing from the outermost parent element
-      while (targets.length > 0) {
-        const area = targets.pop()
-        if (showAllUtagsInArea(area)) {
-          if (lastShownArea === area) {
-            hideAllUtagsInArea()
-            return
-          }
-
-          lastShownArea = area
-          return
-        }
-      }
-
-      // Failed testing showAllUtagsInArea
-      lastShownArea = undefined
+      setTimeout(() => {
+        findElementToShowAllUtags(target)
+      }, 100)
 
       // TODO: delay display utags in corner of page for current page
     },
