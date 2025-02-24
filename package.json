@@ -2,7 +2,7 @@
   "name": "utags",
   "displayName": "UTags - Add usertags to links",
   "displayName:zh-CN": "小鱼标签 (UTags) - 为链接添加用户标签",
-  "version": "0.12.5",
+  "version": "0.12.6",
   "description": "Add custom tags or notes to links such as users, posts and videos. It works on X, Facebook, Youtube, TikTok, Reddit and many sites.",
   "description_userscript": "Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.",
   "description_userscript:zh-CN": "这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。",
