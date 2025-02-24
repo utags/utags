@@ -36,3 +36,16 @@
   /* 标签背景颜色 */
   --utags-text-tag-background-color: pink;
 }
+
+/* 同时包含 '年' '月' '日' 的标签 /
+/* 显示全部内容，不换行 */
+.utags_text_tag[data-utags_tag*="年"][data-utags_tag*="月"][data-utags_tag*="日"] {
+  --utags-text-tag-color: rgb(199, 14, 14);
+  --utags-text-tag-border-color: rgb(15, 245, 7);
+  --utags-text-tag-background-color: rgb(208, 255, 0);
+  /* 标签文字字体大小 */
+  --utags-text-tag-font-size: 16px;
+  /* 标签最大宽度 */
+  --utags-text-tag-max-width: 100%; /* 默认 90px */
+  --utags-text-tag-white-space: nowrap;
+}
