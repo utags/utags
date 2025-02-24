@@ -21,6 +21,8 @@ body {
   --utags-text-tag-border-width: 1px;
   /* 标签最大宽度 */
   --utags-text-tag-max-width: 90px;
+  /* 标签是否换行。nowrap 不换行，normal 换行 */
+  --utags-text-tag-white-space: nowrap;
   /* 标签字体 */
   --utags-text-tag-font-family: "helvetica neue", "...";
 

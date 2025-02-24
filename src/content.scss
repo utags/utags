@@ -108,7 +108,7 @@
       height: unset;
       width: unset;
       max-width: var(--utags-text-tag-max-width);
-      white-space: preserve nowrap;
+      white-space: var(--utags-text-tag-white-space);
       overflow: hidden;
       text-overflow: ellipsis;
       border-radius: unset;
@@ -577,6 +577,7 @@ textarea[data-key="emojiTags"] {
   --utags-text-tag-font-size: 10px;
   --utags-text-tag-border-width: 1px;
   --utags-text-tag-max-width: 90px;
+  --utags-text-tag-white-space: nowrap;
   --utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei",
     "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
