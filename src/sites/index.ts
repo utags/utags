@@ -46,11 +46,10 @@ import rule34video_com from "./z999/006-rule34video.com"
 type Site = {
   matches: RegExp
   listNodesSelectors?: string[]
-  getListNodes?: () => HTMLElement[]
   conditionNodesSelectors?: string[]
-  getConditionNodes?: () => HTMLElement[]
   matchedNodesSelectors?: string[]
-  getMatchedNodes?: () => HTMLAnchorElement[]
+  validate?: (element: HTMLElement) => boolean
+  map?: (element: HTMLElement) => HTMLElement
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
@@ -141,8 +140,40 @@ function matchedSite(hostname: string) {
   return defaultSite
 }
 
+function joinSelectors(selectors: string[] | undefined) {
+  return selectors ? selectors.join(",") : undefined
+}
+
 const hostname = location.hostname
 const currentSite: Site = matchedSite(hostname)
+
+const listNodesSelector = joinSelectors(currentSite.listNodesSelectors)
+
+const conditionNodesSelector = joinSelectors(
+  currentSite.conditionNodesSelectors
+)
+
+const matchedNodesSelector = joinSelectors(
+  currentSite.matchedNodesSelectors ||
+    (currentSite.matches ? defaultSite.matchedNodesSelectors : undefined)
+)
+
+const excludeSelector = joinSelectors(currentSite.excludeSelectors)
+
+const validMediaSelector = joinSelectors(currentSite.validMediaSelectors)
+
+const validateFunction = currentSite.validate || defaultSite.validate
+const mappingFunction =
+  typeof currentSite.map === "function" ? currentSite.map : undefined
+
+// console.log([
+//   currentSite,
+//   "listNodesSelector: " + listNodesSelector,
+//   "conditionNodesSelector: " + conditionNodesSelector,
+//   "matchedNodesSelector: " + matchedNodesSelector,
+//   "excludeSelector: " + excludeSelector,
+//   "validMediaSelector: " + validMediaSelector,
+// ])
 
 export function getListNodes() {
   if (typeof currentSite.preProcess === "function") {
@@ -159,30 +190,18 @@ export function getListNodes() {
     }
   }
 
-  if (typeof currentSite.getListNodes === "function") {
-    return currentSite.getListNodes()
-  }
-
-  if (currentSite.listNodesSelectors) {
-    return $$(currentSite.listNodesSelectors.join(",") || "none")
-  }
-
-  return []
+  return listNodesSelector ? $$(listNodesSelector) : []
 }
 
 export function getConditionNodes() {
-  if (typeof currentSite.getConditionNodes === "function") {
-    return currentSite.getConditionNodes()
-  }
-
-  if (currentSite.conditionNodesSelectors) {
-    return $$(currentSite.conditionNodesSelectors.join(",") || "none")
-  }
-
-  return []
+  return conditionNodesSelector ? $$(conditionNodesSelector) : []
 }
 
-function getCanonicalUrl(url: string) {
+function getCanonicalUrl(url: string | undefined) {
+  if (!url) {
+    return undefined
+  }
+
   for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
     if (getCanonicalUrlFunc) {
       url = getCanonicalUrlFunc(url)
@@ -192,18 +211,53 @@ function getCanonicalUrl(url: string) {
   return url
 }
 
-const isValidUtagsElement = (
-  element: HTMLAnchorElement,
-  validMediaSelector: string
-) => {
+// pre-validation function
+const preValidate = (element: HTMLElement) => {
+  if (!element) {
+    return false
+  }
+
+  if (element.tagName === "A") {
+    let href = getAttribute(element, "href")
+    if (!href) {
+      return false
+    }
+
+    href = href.trim()
+    if (href.length === 0 || href === "#") {
+      return false
+    }
+
+    const protocol = (element as HTMLAnchorElement).protocol
+    if (protocol !== "http:" && protocol !== "https:") {
+      return false
+    }
+  }
+
+  if (
+    element.closest(".utags_text_tag,.browser_extension_settings_container,a a")
+  ) {
+    return false
+  }
+
+  return true
+}
+
+// post-validation function
+const isValidUtagsElement = (element: HTMLElement) => {
   if (element.dataset.utags !== undefined) {
     return true
   }
 
-  if (!element.textContent?.trim()) {
+  if (!element.textContent) {
     return false
   }
 
+  if (!element.textContent.trim()) {
+    return false
+  }
+
+  // TODO: there may be more than one media object
   const media = $(
     'img,svg,audio,video,button,.icon,[style*="background-image"]',
     element
@@ -219,68 +273,52 @@ const isValidUtagsElement = (
     }
   }
 
-  let href = getAttribute(element, "href")
-  if (!href) {
-    return false
-  }
-
-  href = href.trim()
-  if (href.length === 0 || href === "#") {
-    return false
-  }
-
-  const protocol = element.protocol
-  if (protocol !== "http:" && protocol !== "https:") {
-    return false
-  }
-
   return true
 }
 
-const isExcluedUtagsElement = (
-  element: HTMLElement,
-  excludeSelector: string
-) => {
+const isExcludedUtagsElement = (element: HTMLElement) => {
   return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
 }
 
 const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
-  let elements: HTMLAnchorElement[]
-  if (typeof currentSite.getMatchedNodes === "function") {
-    elements = currentSite.getMatchedNodes()
-  } else {
-    const matchedNodesSelectors = currentSite.matchedNodesSelectors
-
-    if (!matchedNodesSelectors || matchedNodesSelectors.length === 0) {
-      return
-    }
-
-    elements = $$(
-      matchedNodesSelectors.join(",") || "none"
-    ) as HTMLAnchorElement[]
+  if (!matchedNodesSelector) {
+    return
   }
+
+  const elements = $$(matchedNodesSelector)
 
   if (elements.length === 0) {
     return
   }
 
-  const excludeSelectors = currentSite.excludeSelectors || []
-  const excludeSelector = excludeSelectors.join(",")
-  const validMediaSelectors = currentSite.validMediaSelectors || []
-  const validMediaSelector = validMediaSelectors.join(",")
-
-  for (const element of elements) {
-    if (
-      !isValidUtagsElement(element, validMediaSelector) ||
-      isExcluedUtagsElement(element, excludeSelector)
-    ) {
+  const process = (element: HTMLElement) => {
+    if (!preValidate(element) || !validateFunction(element)) {
       // It's not a candidate
-      element.utags = {}
-      continue
+      delete element.utags
+      return
+    }
+
+    if (mappingFunction) {
+      // Map to another element, which could be a child, parent, or sibling element.
+      const newElement = mappingFunction(element)
+      if (newElement && newElement !== element) {
+        process(newElement)
+        return
+      }
+    }
+
+    if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
+      // It's not a candidate
+      delete element.utags
+      return
     }
 
     const utags: UserTag = (element.utags as UserTag) || {}
-    const key = utags.key || getCanonicalUrl(element.href)
+    const key = utags.key || getCanonicalUrl(element.href as string | undefined)
+    if (!key) {
+      return
+    }
+
     const title = element.textContent!.trim()
     const meta: UserTagMeta = {}
     if (title && !isUrl(title)) {
@@ -294,6 +332,14 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
     } as UserTag
 
     matchedNodesSet.add(element)
+  }
+
+  for (const element of elements) {
+    try {
+      process(element)
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 

@@ -50,10 +50,6 @@ const site = {
     // v2ex 超级增强
     ".my-box .comment",
   ],
-  // getListNodes() {
-  //   const patterns = [".box .cell"]
-  //   return $$(patterns.join(","))
-  // },
   conditionNodesSelectors: [
     // 帖子标题
     ".box .cell .topic-link",
@@ -74,16 +70,6 @@ const site = {
     // 回复内容标签 (v2ex 超级增强)
     ".comment .ago",
   ],
-  // getConditionNodes() {
-  //   const patterns = [
-  //     ".box .cell .topic-link", // 帖子标题
-  //     ".item_hot_topic_title a", // 右边栏标题
-  //     '.box .cell .topic_info strong:first-of-type a[href*="/member/"]', // 帖子作者
-  //     ".box .cell .topic_info .node", // 帖子节点
-  //     '#Main strong a.dark[href*="/member/"]', // 评论者
-  //   ]
-  //   return $$(patterns.join(","))
-  // },
   matchedNodesSelectors: [
     // 所有页面帖子链接
     'a[href*="/t/"]',
