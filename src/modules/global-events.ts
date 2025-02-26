@@ -123,7 +123,7 @@ export function bindDocumentEvents() {
   addEventListener(
     doc,
     eventType,
-    (event: Event) => {
+    (event: PointerEvent) => {
       const target = event.target as HTMLElement
       if (!target) {
         return
@@ -225,6 +225,20 @@ export function bindDocumentEvents() {
     true
   )
 
+  addEventListener(
+    doc,
+    "mousedown",
+    (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+
+      if (target?.closest(".utags_ul")) {
+        event.preventDefault()
+        event.stopPropagation()
+        event.stopImmediatePropagation()
+      }
+    },
+    true
+  )
   addEventListener(
     doc,
     "mouseup",

@@ -472,7 +472,7 @@ function createPromptView(
 
   addEventListener(doc, "mousedown", mousedownHandler, true)
 
-  const clickHandler = (event: Event) => {
+  const clickHandler = (event: PointerEvent) => {
     if (event.defaultPrevented || !$(".utags_modal_content")) {
       return // 如果事件已经在进行中，则不做任何事。
     }
