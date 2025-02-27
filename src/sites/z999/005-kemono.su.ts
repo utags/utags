@@ -1,4 +1,4 @@
-import { $, $$, getAttribute, hasClass } from "browser-extension-utils"
+import { $, getAttribute, hasClass } from "browser-extension-utils"
 import styleText from "data-text:./005-kemono.su.scss"
 
 import defaultSite from "../default"
@@ -20,12 +20,14 @@ export default (() => {
   return {
     matches: /kemono\.su|coomer\.su|nekohouse\.su/,
     validate(element: HTMLAnchorElement) {
-      const href = element.href
       const hrefAttr = getAttribute(element, "href")
 
+      // Comments
       if (hrefAttr.startsWith("#")) {
         return false
       }
+
+      const href = element.href
 
       if (!href.startsWith(prefix)) {
         return true
@@ -36,7 +38,6 @@ export default (() => {
         hasClass(element, "user-header__avatar") ||
         element.closest(".post-card")
       ) {
-        element.dataset.utags_position = "LB"
         element.dataset.utags = element.dataset.utags || ""
       }
 

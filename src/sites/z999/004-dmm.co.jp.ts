@@ -1,6 +1,7 @@
 import { $ } from "browser-extension-utils"
 import styleText from "data-text:./004-dmm.co.jp.scss"
 
+import { getTrimmedTitle } from "../../utils"
 import defaultSite from "../default"
 
 export default (() => {
@@ -44,13 +45,26 @@ export default (() => {
     validate(element: HTMLAnchorElement) {
       const href = element.href
 
-      element.dataset.utags_position = "LB"
-
       if (!href.startsWith(prefix)) {
         return true
       }
 
       if (href.includes("/=/")) {
+        const key = getProductUrl(href)
+        if (key) {
+          const titleElement = $(
+            ".mainListLinkWork__txt,.responsive-name",
+            element
+          )
+          const title = titleElement
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
+          if (title) {
+            const meta = { title, type: "product" }
+            element.utags = { key, meta }
+          }
+        }
+
         return true
       }
 
@@ -75,6 +89,8 @@ export default (() => {
       ".m-listHeader",
       ".dcd-review__rating_map",
       ".dcd-review_boxpagenation",
+      ".sampleButton",
+      ".right_navi_link",
     ],
     validMediaSelectors: [
       ".mainList",

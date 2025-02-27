@@ -494,10 +494,19 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
 }
 
 function getMaxOffsetLeft(utags: HTMLElement, utagsSizeFix: number) {
-  const maxOffsetRight =
-    document.body.offsetWidth -
-    getOffsetPosition((utags.offsetParent as HTMLElement) || doc.body).left -
-    2
+  const offsetParent = utags.offsetParent as HTMLElement | undefined
+  let maxOffsetRight: number
+
+  if (offsetParent && offsetParent.offsetWidth > 0) {
+    // X轴 scroll 时计算正确
+    maxOffsetRight = offsetParent.offsetWidth
+  } else {
+    // X轴 scroll 时会计算错误
+    maxOffsetRight =
+      document.body.offsetWidth -
+      getOffsetPosition(offsetParent || doc.body).left -
+      2
+  }
 
   return maxOffsetRight - utags.clientWidth - utagsSizeFix
 }
@@ -556,44 +565,8 @@ function updateTagPosition(element: HTMLElement) {
   //   element.dataset.offsetTop = String(offset.top)
   // }
 
-  // version 5
-  const position = utagsSizeFix
-    ? element.dataset.utags_position
-    : element.dataset.utags_position2 || element.dataset.utags_position
-
   // version 6
-  let objectPosition = style.objectPosition
-  if (objectPosition === "50% 50%" && position) {
-    switch (position) {
-      // left-top
-      case "LT": {
-        objectPosition = "0% 0%"
-        break
-      }
-
-      // left-bottom
-      case "LB": {
-        objectPosition = "0% 100%"
-        break
-      }
-
-      // right-top
-      case "RT": {
-        objectPosition = "100% 0%"
-        break
-      }
-
-      // right-bottom
-      case "RB": {
-        objectPosition = "100% 100%"
-        break
-      }
-
-      default: {
-        break
-      }
-    }
-  }
+  const objectPosition = style.objectPosition
 
   switch (objectPosition) {
     // left-center

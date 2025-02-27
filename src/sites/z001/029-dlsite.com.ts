@@ -1,4 +1,4 @@
-import { $, $$, getAttribute } from "browser-extension-utils"
+import { $ } from "browser-extension-utils"
 import styleText from "data-text:./029-dlsite.com.scss"
 
 import defaultSite from "../default"
@@ -31,28 +31,44 @@ export default (() => {
   return {
     matches: /dlsite\.com/,
     validate(element: HTMLAnchorElement) {
-      const href = element.href
-      element.dataset.utags_position = "LB"
+      if (element.tagName !== "A") {
+        return true
+      }
 
-      // $(".banner_container")?.remove()
+      const href = element.href
 
       if (!href.startsWith(prefix)) {
         return true
       }
 
+      // work name or maker name
       if (href.includes("/=/")) {
-        if (href.includes("=/product_id/")) {
-          element.dataset.utags_position = "LT"
-        }
-        // if (element.closest(".genre_ranking .maker_name")) {
-        //   element.dataset.utags_position = "LB"
-        //   element.dataset.utags_position2 = "RB"
-        // }
-
         return true
       }
 
       return false
+    },
+    map(element: HTMLAnchorElement) {
+      if (
+        element.tagName === "A" &&
+        element.closest(
+          ".n_worklist .work_name,.recommend_list dt.work_name,.genre_ranking .work_name"
+        )
+      ) {
+        const key = getProductUrl(element.href)
+        const title = element.textContent!.trim()
+
+        if (!key || !title) {
+          return
+        }
+
+        const parentElement = element.parentElement!
+        const meta = { title }
+
+        parentElement.utags = { key, meta }
+        parentElement.dataset.utags_node_type = "link"
+        return parentElement
+      }
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
@@ -125,6 +141,7 @@ export default (() => {
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
+            element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
           }
         }
@@ -139,6 +156,7 @@ export default (() => {
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
+            element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
           }
         }

@@ -80,7 +80,6 @@ export default (() => {
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
-      element.dataset.utags_position = "LB"
 
       if (!href.startsWith(prefix)) {
         return true
@@ -97,12 +96,6 @@ export default (() => {
 
         if (!title) {
           return false
-        }
-
-        // 评论区
-        if (element.closest(".comments-container .author-wrapper .name")) {
-          element.dataset.utags_position = "RB"
-          element.dataset.utags_position2 = "LB"
         }
 
         const meta = { type: "user", title }
@@ -155,8 +148,8 @@ export default (() => {
           if (title) {
             const meta = { title, type: "user" }
             element.utags = { key, meta }
+            element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
-            element.dataset.utags_position = "LT"
           }
         }
       }

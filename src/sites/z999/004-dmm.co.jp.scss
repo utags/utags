@@ -2,6 +2,8 @@
   /* default */
   a + {
     .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
       --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
       --utags-notag-ul-height: var(--utags-notag-ul-height-5);
       --utags-notag-ul-position: var(--utags-notag-ul-position-5);
@@ -19,81 +21,58 @@
     }
   }
 
-  .productList {
-    .tileListTtl__txt {
-      margin-bottom: 16px;
-
-      a + {
-        .utags_ul_0 {
-          --utags-notag-captain-tag-top: 16px;
-        }
-        .utags_ul_1 {
-          position: absolute;
-          top: -9999px;
-          z-index: 100;
-          margin-top: 15px !important;
-          margin-left: 0px !important;
-        }
-      }
-    }
-    .tileListTtl__txt--author a + {
-      .utags_ul_0 {
-        --utags-notag-captain-tag-top: 16px;
-      }
-      .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: 15px !important;
-        margin-left: 0px !important;
-      }
-    }
-  }
-
+  /* 列表页面 - https://www.dmm.co.jp/dc/doujin/ */
   .mainList__item {
     a + {
       .utags_ul_0 {
+        object-position: 0% 100%;
         --utags-notag-captain-tag-top: -90px;
         --utags-notag-captain-tag-left: 4px;
       }
       .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: -90px !important;
-        margin-left: 10px !important;
+        margin-top: 6px !important;
+        width: 100%;
       }
     }
   }
 
+  /* 列表页面 - https://www.dmm.co.jp/dc/doujin/ */
   .pickup .fn-responsiveImg {
     a + {
       .utags_ul_0 {
+        object-position: 0% 100%;
         --utags-notag-captain-tag-top: -70px;
         --utags-notag-captain-tag-left: 4px;
       }
       .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: -70px !important;
-        margin-left: 10px !important;
+        margin-top: 6px !important;
+        width: 100%;
       }
     }
   }
 
+  /* 作品一覧 - https://www.dmm.co.jp/dc/doujin/-/list/=/sort=date/*/
+  /* 详细页产品区域 */
+  .productList {
+    .tileListTtl__txt {
+      height: unset;
+    }
+    .tileListTtl__txt--author {
+      white-space: normal;
+    }
+  }
+
+  /* 详细页推荐区域 */
   #l-areaRecommendProduct {
     a + {
       .utags_ul_0 {
+        object-position: 0% 100%;
         --utags-notag-captain-tag-top: -80px;
         --utags-notag-captain-tag-left: 4px;
       }
       .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: -80px !important;
-        margin-left: 8px !important;
+        margin-top: 6px !important;
+        width: 100%;
       }
     }
   }

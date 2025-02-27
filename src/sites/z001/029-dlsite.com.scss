@@ -1,7 +1,9 @@
 :not(#a):not(#b):not(#c) {
   /* default */
-  a + {
+  * + {
     .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
       --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
       --utags-notag-ul-height: var(--utags-notag-ul-height-5);
       --utags-notag-ul-position: var(--utags-notag-ul-position-5);
@@ -13,6 +15,9 @@
       );
     }
     .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+      /* When UTags are shown above images, their background color should be set. */
       background-color: var(--utags-captain-tag-background-color) !important;
       border-radius: 3px !important;
       --utags-emoji-tag-background-color: #fff0;
@@ -20,72 +25,29 @@
   }
 
   .n_worklist,
-  .recommend_list {
-    a.work_name +,
-    .work_name a + {
-      .utags_ul_0 {
-        --utags-notag-captain-tag-top: -16px;
-      }
-      .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: -12px !important;
-        margin-left: 3px !important;
-      }
-    }
-    .maker_name a + {
-      .utags_ul_0 {
-        --utags-notag-captain-tag-top: 16px;
-      }
-      .utags_ul_1 {
-        position: absolute;
-        top: -9999px;
-        z-index: 100;
-        margin-top: 13px !important;
-        margin-left: -2px !important;
-      }
-    }
-  }
-
+  .recommend_list,
   .genre_ranking {
-    .work_name {
-      margin-top: 18px;
-      a + {
+    a.work_name,
+    dt.work_name {
+      width: fit-content;
+
+      & + {
         .utags_ul_0 {
-          --utags-notag-captain-tag-top: -12px;
-        }
-        .utags_ul_1 {
-          position: absolute;
-          top: -9999px;
-          z-index: 100;
-          margin-top: -14px !important;
-          margin-left: 3px !important;
+          object-position: 200% 0%;
         }
       }
     }
     .maker_name {
-      margin-bottom: 18px;
-      a + {
-        .utags_ul_1 {
-          position: absolute;
-          top: -9999px;
-          z-index: 100;
-          margin-top: 12px !important;
-          margin-left: -2px !important;
-          /*
-          overflow: hidden;
-          width: 18px;
-          height: 14px;
+      white-space: wrap;
+      -webkit-line-clamp: unset;
+      height: unset;
+    }
+  }
 
-          &:hover {
-            overflow: unset;
-            width: unset;
-            height: unset;
-          }
-          */
-        }
-      }
+  h1#work_name {
+    &[data-utags_fit_content="1"] {
+      /* width: fit-content !important; */
+      max-width: max-content !important;
     }
   }
 }

@@ -5,6 +5,7 @@
   /* post card */
   .post-card a + {
     .utags_ul_0 {
+      object-position: 0% 100%;
       --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
       --utags-notag-ul-height: var(--utags-notag-ul-height-5);
       --utags-notag-ul-position: var(--utags-notag-ul-position-5);
@@ -18,6 +19,7 @@
     }
 
     .utags_ul_1 {
+      object-position: 0% 100%;
       position: absolute;
       top: -9999px;
       z-index: 100;

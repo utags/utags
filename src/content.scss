@@ -29,7 +29,8 @@
     margin: 0 !important;
     padding: 0 !important;
     vertical-align: text-bottom !important;
-    align-self: center !important;
+    /* 大部分情况下 utags_ul 应该靠左对齐，改为默认值：align-self: auto;
+    align-self: center !important; */
     line-height: normal !important;
     background-color: transparent;
     border: none !important;

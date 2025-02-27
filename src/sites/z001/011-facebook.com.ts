@@ -84,7 +84,7 @@ export default (() => {
         }
 
         if ($("svg,img", element)) {
-          element.dataset.utags_position = "LB"
+          element.dataset.utags_flag = "username_with_avatar"
         }
 
         const meta = { type: "user", title }

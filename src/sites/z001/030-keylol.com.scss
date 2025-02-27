@@ -2,22 +2,31 @@
   /* user name */
   a + {
     .utags_ul_0 {
+      object-position: 200% 50%;
       --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
       --utags-notag-ul-height: var(--utags-notag-ul-height-5);
       --utags-notag-ul-position: var(--utags-notag-ul-position-5);
       --utags-notag-ul-top: var(--utags-notag-ul-top-5);
-      --utags-notag-captain-tag-top: 0;
-      --utags-notag-captain-tag-left: 20px;
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
       --utags-captain-tag-background-color: var(
         --utags-captain-tag-background-color-overlap
       );
     }
+  }
 
-    .utags_ul_1 {
-      position: absolute;
-      top: -9999px;
-      z-index: 100;
-      margin-top: 14px !important;
-    }
+  /* 首页 Tabs */
+  .frame-tab .dxb_bc .module {
+    position: relative;
+  }
+
+  /* 帖子的头像上面的名字 */
+  .favatar .pi {
+    height: unset;
+  }
+
+  /* 帖子里的评分区域 */
+  .ratl td:first-of-type {
+    white-space: normal;
   }
 }

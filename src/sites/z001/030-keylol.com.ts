@@ -47,7 +47,6 @@ export default (() => {
     matches: /keylol\.com/,
     validate(element: HTMLAnchorElement) {
       const href = element.href
-      element.dataset.utags_position = "LB"
 
       if (!href.startsWith(prefix)) {
         return true
@@ -62,7 +61,6 @@ export default (() => {
 
         const meta = { type: "user", title }
 
-        element.dataset.utags_position = "LB"
         element.utags = { key, meta }
         element.dataset.utags = element.dataset.utags || ""
         return true
