@@ -1,7 +1,7 @@
 import { $, $$ } from "browser-extension-utils"
 import styleText from "data-text:./002-e-hentai.org.scss"
 
-import type { UserTag } from "../../types"
+import type { UserTagMeta, UtagsHTMLElement } from "../../types"
 import { getFirstHeadElement } from "../../utils"
 import defaultSite from "../default"
 
@@ -43,13 +43,13 @@ export default (() => {
 
   return {
     matches: /e-hentai\.org|exhentai\.org/,
-    validate(element: HTMLAnchorElement) {
+    validate(element: UtagsHTMLElement) {
       if (element.tagName !== "A") {
         return true
       }
 
       const href = element.href
-      if (href.startsWith(prefix) || href.startsWith(prefix2)) {
+      if (href && (href.startsWith(prefix) || href.startsWith(prefix2))) {
         const key = getPostUrl(href)
         if (key) {
           const titleElement = $(".glink", element)
@@ -58,7 +58,7 @@ export default (() => {
             title = titleElement.textContent!
           }
 
-          const meta = { type: "post" }
+          const meta: UserTagMeta = { type: "post" }
           if (title) {
             meta.title = title
           }
@@ -74,11 +74,11 @@ export default (() => {
 
       return true
     },
-    map(element: HTMLAnchorElement) {
+    map(element: UtagsHTMLElement) {
       // Extened view
-      const titleElement = $(".gl4e.glname .glink", element)
+      const titleElement = $(".gl4e.glname .glink", element) as UtagsHTMLElement
       if (titleElement) {
-        titleElement.utags = element.utags as UserTag
+        titleElement.utags = element.utags
         titleElement.dataset.utags = titleElement.dataset.utags || ""
         titleElement.dataset.utags_node_type = "link"
         return titleElement
@@ -94,11 +94,11 @@ export default (() => {
       'a[href*="report=select"]',
       'a[href*="act=expunge"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
       const key = getPostUrl(location.href)
       if (key) {
         // post title
-        const element = getFirstHeadElement()
+        const element = getFirstHeadElement() as UtagsHTMLElement
         if (element) {
           const title = element.textContent!.trim()
           if (title) {

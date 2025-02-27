@@ -1,6 +1,6 @@
 import { $, $$, addElement, getAttribute, isUrl } from "browser-extension-utils"
 
-import { type UserTag, type UserTagMeta } from "../types"
+import type { UserTag, UserTagMeta, UtagsHTMLElement } from "../types"
 import { getTrimmedTitle, trimTitle } from "../utils"
 import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
@@ -49,11 +49,11 @@ type Site = {
   listNodesSelectors?: string[]
   conditionNodesSelectors?: string[]
   matchedNodesSelectors?: string[]
-  validate?: (element: HTMLElement) => boolean
-  map?: (element: HTMLElement) => HTMLElement
+  validate?: (element: UtagsHTMLElement) => boolean
+  map?: (element: UtagsHTMLElement) => UtagsHTMLElement
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
-  addExtraMatchedNodes?: (matchedNodesSet: Set<HTMLElement>) => void
+  addExtraMatchedNodes?: (matchedNodesSet: Set<UtagsHTMLElement>) => void
   getCanonicalUrl?: (url: string) => string
   getStyle?: () => string
   preProcess?: () => void
@@ -281,7 +281,7 @@ const isExcludedUtagsElement = (element: HTMLElement) => {
   return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
 }
 
-const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
+const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   if (!matchedNodesSelector) {
     return
   }
@@ -292,7 +292,7 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
     return
   }
 
-  const process = (element: HTMLElement) => {
+  const process = (element: UtagsHTMLElement) => {
     if (!preValidate(element) || !validateFunction(element)) {
       // It's not a candidate
       delete element.utags
@@ -314,8 +314,8 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
       return
     }
 
-    const utags: UserTag = (element.utags as UserTag) || {}
-    const key = utags.key || getCanonicalUrl(element.href as string | undefined)
+    const utags: UserTag = element.utags! || {}
+    const key = utags.key || getCanonicalUrl(element.href)
     if (!key) {
       return
     }
@@ -349,7 +349,7 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
 }
 
 export function matchedNodes() {
-  const matchedNodesSet = new Set<HTMLElement>()
+  const matchedNodesSet = new Set<UtagsHTMLElement>()
 
   addMatchedNodes(matchedNodesSet)
 

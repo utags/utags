@@ -43,7 +43,7 @@ import {
   getTags,
   migration,
 } from "./storage/index"
-import { type UserTag, type UserTagMeta } from "./types"
+import type { UserTag, UserTagMeta } from "./types"
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -404,7 +404,7 @@ async function displayTags() {
   await getCachedUrlMap()
 
   for (const node of nodes) {
-    const utags: UserTag = node.utags as UserTag
+    const utags: UserTag = node.utags!
     if (!utags) {
       continue
     }
