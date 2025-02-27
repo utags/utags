@@ -6,6 +6,7 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from "../../modules/visited"
+import type { UserTagMeta, UtagsHTMLElement } from "../../types"
 
 export default (() => {
   const prefix = location.origin + "/"
@@ -251,18 +252,26 @@ export default (() => {
       ".topic-list tr .posters a:first-of-type",
       ".search-results .author a .avatar",
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
       const isDarkMode = $("header picture > source")?.media === "all"
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
 
       let key = getUserProfileUrl(location.href)
       if (key) {
+        // Clear cache
+        for (const element of $$(
+          ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+        ) as UtagsHTMLElement[]) {
+          delete element.dataset.utags
+          delete element.utags
+        }
+
         // profile header
-        const element =
-          $(".user-profile-names .username") ||
-          $(
+        const element: UtagsHTMLElement =
+          ($(".user-profile-names .username") as UtagsHTMLElement) ||
+          ($(
             ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-          )
+          ) as UtagsHTMLElement)
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
