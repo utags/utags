@@ -1,6 +1,7 @@
 import { $, $$, addElement, getAttribute, isUrl } from "browser-extension-utils"
 
 import { type UserTag, type UserTagMeta } from "../types"
+import { getTrimmedTitle, trimTitle } from "../utils"
 import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"
@@ -319,10 +320,14 @@ const addMatchedNodes = (matchedNodesSet: Set<HTMLElement>) => {
       return
     }
 
-    const title = element.textContent!.trim()
+    const title = getTrimmedTitle(element)
     const meta: UserTagMeta = {}
     if (title && !isUrl(title)) {
       meta.title = title
+    }
+
+    if (utags.meta?.title) {
+      utags.meta.title = trimTitle(utags.meta.title)
     }
 
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
