@@ -100,10 +100,11 @@ export default (() => {
       ".topic-area .topic-post:nth-of-type(n+2) .names a",
 
       // search results
-      ".search-results .fps-result .author a",
       ".search-results .fps-result .search-link",
       ".search-results .fps-result .badge-category__wrapper",
       ".search-results .fps-result .discourse-tag",
+      // Maybe it's the author of the post, not the author of the topic.
+      // ".search-results .fps-result .author a",
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
