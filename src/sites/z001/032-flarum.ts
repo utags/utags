@@ -85,6 +85,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
+        // ".GroupList-UserList-user .username" => example.com/groups page
         const titleElement = $(".GroupList-UserList-user .username", element)
         const title = (titleElement || element).textContent!.trim()
 
@@ -100,6 +101,8 @@ export default (() => {
         if (titleElement) {
           element.dataset.utags_position_selector =
             ".GroupList-UserList-user .username"
+        } else if (element.closest(".PostUser .PostUser-name")) {
+          element.dataset.utags_position_selector = ".PostUser"
         }
 
         return true

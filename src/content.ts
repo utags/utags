@@ -493,8 +493,12 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   return false
 }
 
-function getMaxOffsetLeft(utags: HTMLElement, utagsSizeFix: number) {
-  const offsetParent = utags.offsetParent as HTMLElement | undefined
+function getMaxOffsetLeft(
+  element: HTMLElement,
+  utags: HTMLElement,
+  utagsSizeFix: number
+) {
+  const offsetParent = element.offsetParent as HTMLElement
   let maxOffsetRight: number
 
   if (offsetParent && offsetParent.offsetWidth > 0) {
@@ -517,19 +521,7 @@ function updateTagPosition(element: HTMLElement) {
     return
   }
 
-  if (
-    !utags.offsetParent &&
-    utags.offsetHeight === 0 &&
-    utags.offsetWidth === 0
-  ) {
-    // if (!element.addedMouseoverListener) {
-    // // maybe the element is hidden now
-    // element.addedMouseoverListener = true
-    // addEventListener(element, "mouseover", () => {
-    //   updateTagPosition(element)
-    // })
-    // }
-
+  if (!utags.offsetParent && !utags.offsetHeight && !utags.offsetWidth) {
     return
   }
 
@@ -564,6 +556,11 @@ function updateTagPosition(element: HTMLElement) {
   //   element.dataset.offsetLeft = String(offset.left)
   //   element.dataset.offsetTop = String(offset.top)
   // }
+
+  // element is hidden
+  if (!element.offsetWidth && !element.clientWidth) {
+    return
+  }
 
   // version 6
   const objectPosition = style.objectPosition
@@ -642,7 +639,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top = offset.top + "px"
       break
@@ -661,7 +658,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -686,7 +683,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -715,7 +712,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top = offset.top + "px"
       break
@@ -726,7 +723,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -743,7 +740,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(utags, utagsSizeFix)
+          getMaxOffsetLeft(element, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
