@@ -97,7 +97,7 @@ export default (() => {
       ".mobile-view .topic-list a[data-user-card]",
 
       // replies
-      ".topic-area .topic-post:nth-of-type(n+2) .names a",
+      ".topic-area .topic-post:nth-of-type(n+2) .topic-meta-data:not(.embedded-reply) .names a",
 
       // search results
       ".search-results .fps-result .search-link",
