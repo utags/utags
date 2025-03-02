@@ -305,7 +305,10 @@ function appendTagsToPage(
     utagsUl.remove()
   }
 
-  const ul = createElement("ul", {
+  // On some websites, using the `UL` tag will affect the selectors of the original website.
+  // For example: https://www.zhipin.com/
+  const tagName = element.dataset.utags_ul_type === "ol" ? "ol" : "ul"
+  const ul = createElement(tagName, {
     class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
     "data-utags_key": key,
   })
@@ -471,7 +474,7 @@ async function displayTags() {
   }
 }
 
-const displayTagsThrottled = throttle(displayTags, 1000)
+const displayTagsThrottled = throttle(displayTags, 500)
 
 async function initStorage() {
   await migration()
@@ -482,7 +485,7 @@ async function initStorage() {
   })
 }
 
-const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|LI|SECTION)$/
+const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|OL|LI|SECTION)$/
 function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   for (const node of nodeList) {
     if (nodeNameCheckPattern.test(node.nodeName)) {
@@ -517,7 +520,7 @@ function getMaxOffsetLeft(
 
 function updateTagPosition(element: HTMLElement) {
   const utags = element.nextElementSibling as HTMLElement
-  if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
+  if (!utags || !hasClass(utags, "utags_ul")) {
     return
   }
 

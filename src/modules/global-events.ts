@@ -82,7 +82,7 @@ function findElementToShowAllUtags(target: HTMLElement) {
     if (
       style.position === "fixed" ||
       style.position === "sticky" ||
-      /^(BODY|TABLE|UL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
+      /^(BODY|TABLE|UL|OL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
     ) {
       break
     }
