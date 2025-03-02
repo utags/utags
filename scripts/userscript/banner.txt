@@ -71,6 +71,7 @@
 // @match                https://*.inoreader.com/*
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*
+// @match                https://www.zhipin.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

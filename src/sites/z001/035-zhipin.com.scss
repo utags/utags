@@ -1,0 +1,156 @@
+:not(#a):not(#b):not(#c) {
+  /* default */
+  * + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  /* 首页 > 精选职位/热招职位 */
+  .sub-li {
+    a.job-info + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+      }
+    }
+
+    .sub-li-bottom a + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: -2px !important;
+      }
+    }
+  }
+
+  /* 首页 > 热门企业 */
+  .hot-company-wrapper {
+    a.company-info-top + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: -16px !important;
+        width: inherit;
+      }
+    }
+    .company-job-item a.job-info + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 0px !important;
+        width: inherit;
+      }
+    }
+  }
+
+  /* 推荐职位 https://www.zhipin.com/web/geek/job-recommend */
+  .job-recommend-result {
+    .job-info .job-title a.job-name {
+      &[data-utags_fit_content="1"] {
+        display: inline-block !important;
+        max-width: fit-content !important;
+      }
+
+      & + .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: -2px !important;
+      }
+    }
+    .job-card-footer a.boss-info + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: -2px !important;
+      }
+    }
+  }
+
+  /* 搜索页面 https://www.zhipin.com/web/geek/job?query= */
+  .search-job-result .job-card-body {
+    a.job-card-left + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 34px !important;
+      }
+    }
+
+    .job-card-right .company-name {
+      max-width: 290px;
+      height: unset;
+    }
+  }
+
+  /* 职位详细页职位名称 */
+  .job-banner .info-primary .name,
+  .smallbanner .company-info .name {
+    &[data-utags_fit_content="1"] {
+      display: inline-block !important;
+      width: fit-content !important;
+    }
+  }
+
+  /* 职位详细页 > 右侧栏 */
+  .job-sider {
+    /* 公司基本信息 */
+    .sider-company {
+      .company-info a + {
+        .utags_ul_1 {
+          position: absolute;
+          top: -9999px;
+          margin-top: -2px !important;
+          width: 194px;
+        }
+      }
+
+      /* 职位详细页 > 右侧栏 > 行业 */
+      [ka="job-detail-brandindustry"] {
+        &[data-utags_fit_content="1"] {
+          display: inline-flex !important;
+          max-width: fit-content !important;
+        }
+      }
+    }
+  }
+
+  /* 职位详细页 */
+  .job-detail {
+    /* 职位详细页 > 底部精选职位/看过该职位的人还看了 */
+    .more-job-section .look-job-list li {
+      a + {
+        .utags_ul_1 {
+          position: absolute;
+          top: -9999px;
+        }
+      }
+
+      .info-company div[data-url] + {
+        .utags_ul_1 {
+          position: absolute;
+          top: -9999px;
+        }
+      }
+    }
+  }
+
+  /* 职位悬浮卡片 */
+  .job-detail-card {
+    z-index: 91;
+  }
+}

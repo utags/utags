@@ -1,4 +1,11 @@
-import { $, $$, addElement, getAttribute, isUrl } from "browser-extension-utils"
+import {
+  $,
+  $$,
+  addElement,
+  getAttribute,
+  isUrl,
+  uniq,
+} from "browser-extension-utils"
 
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from "../types"
 import { getTrimmedTitle, trimTitle } from "../utils"
@@ -37,6 +44,7 @@ import tampermonkey_net_cn from "./z001/031-tampermonkey.net.cn"
 import flarum from "./z001/032-flarum"
 import nodeseek_com from "./z001/033-nodeseek.com"
 import inoreader_com from "./z001/034-inoreader.com"
+import zhipin_com from "./z001/035-zhipin.com"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
@@ -94,6 +102,7 @@ const sites: Site[] = [
   flarum,
   nodeseek_com,
   inoreader_com,
+  zhipin_com,
   pornhub,
   ehentai,
   panda_chaika_moe,
@@ -377,6 +386,34 @@ export function matchedNodes() {
   if (typeof currentSite.postProcess === "function") {
     currentSite.postProcess()
   }
+
+  // Debug
+  // if (0) {
+  //   let list = uniq(
+  //     $$("a[href]:not(.utags_text_tag)")
+  //       .map((v: HTMLAnchorElement) => v.href)
+  //       .sort()
+  //       .filter((v) => v && !v.includes(hostname))
+  //   )
+  //   console.log(list)
+
+  //   list = uniq(
+  //     $$("a[href]:not(.utags_text_tag)")
+  //       .map((v: HTMLAnchorElement) => v.href)
+  //       .sort()
+  //       .filter((v) => v?.includes(hostname))
+  //   )
+  //   console.log(list)
+
+  //   list = uniq(
+  //     $$("a[href]:not(.utags_text_tag)")
+  //       .map((v: HTMLAnchorElement) => v.href)
+  //       .sort()
+  //       .filter((v) => v?.includes(hostname))
+  //       .filter((v) => v.includes("?"))
+  //   )
+  //   console.log(list)
+  // }
 
   return [...matchedNodesSet]
 }
