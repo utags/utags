@@ -1,6 +1,6 @@
 # 小鱼标签 (UTags) - 为链接添加用户标签，备注信息
 
-这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B 站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。并可以使用特殊标签过滤帖子和回复。
+这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B 站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS 直聘等网站。并可以使用特殊标签过滤帖子和回复。
 
 **UTags** = **Usertags**。**Userscript**, **Userstyle** 可以让用户自定义网站的功能和样式，**Usertags** 允许用户自定义网站的标签。
 
@@ -57,6 +57,7 @@
 - 生如夏花论坛 ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
+- BOSS 直聘 ([www.zhipin.com](https://www.zhipin.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -145,6 +146,8 @@
 
 ## 更新记录
 
+- 0.12.9
+  - 使 UTags 支持 BOSS 直聘 (www.zhipin.com) 网站
 - 0.12.5
   - 优化 discourse (linux.do) 手机端体验
   - 使 UTags 支持 kater.me 和 bbs.viva-la-vita.org 网站

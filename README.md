@@ -62,6 +62,7 @@ For now it works on
 - Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
+- zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -127,6 +128,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.9
+  - Make UTags support the website www.zhipin.com
 - 0.12.5
   - Enhance the mobile experience of Discourse
   - Make UTags support the website kater.me and bbs.viva-la-vita.org

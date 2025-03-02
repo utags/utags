@@ -4,9 +4,9 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.12.8
+// @version              0.12.9
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
-// @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA 等网站。
+// @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
@@ -71,6 +71,7 @@
 // @match                https://*.inoreader.com/*
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*
+// @match                https://www.zhipin.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
@@ -2337,7 +2338,7 @@
       if (
         style.position === "fixed" ||
         style.position === "sticky" ||
-        /^(BODY|TABLE|UL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
+        /^(BODY|TABLE|UL|OL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
       ) {
         break
       }
@@ -4814,7 +4815,7 @@
         ".topic-list .topic-list-body tr .discourse-tag",
         ".topic-list .topic-list-body tr .posters a:first-of-type",
         ".mobile-view .topic-list a[data-user-card]",
-        ".topic-area .topic-post:nth-of-type(n+2) .names a",
+        ".topic-area .topic-post:nth-of-type(n+2) .topic-meta-data:not(.embedded-reply) .names a",
         ".search-results .fps-result .search-link",
         ".search-results .fps-result .badge-category__wrapper",
         ".search-results .fps-result .discourse-tag",
@@ -5597,6 +5598,8 @@
           if (titleElement) {
             element.dataset.utags_position_selector =
               ".GroupList-UserList-user .username"
+          } else if (element.closest(".PostUser .PostUser-name")) {
+            element.dataset.utags_position_selector = ".PostUser"
           }
           return true
         }
@@ -5907,6 +5910,187 @@
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
       getStyle: () => inoreader_com_default,
+    }
+  })()
+  var zhipin_com_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .sub-li a.job-info+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .sub-li .sub-li-bottom a+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .hot-company-wrapper a.company-info-top+.utags_ul_1{position:absolute;top:-9999px;margin-top:-16px !important;width:inherit}:not(#a):not(#b):not(#c) .hot-company-wrapper .company-job-item a.job-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:0px !important;width:inherit}:not(#a):not(#b):not(#c) .job-recommend-result .job-info .job-title a.job-name[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .job-recommend-result .job-info .job-title a.job-name+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .job-recommend-result .job-card-footer a.boss-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .search-job-result .job-card-body a.job-card-left+.utags_ul_1{position:absolute;top:-9999px;margin-top:34px !important}:not(#a):not(#b):not(#c) .search-job-result .job-card-body .job-card-right .company-name{max-width:290px;height:unset}:not(#a):not(#b):not(#c) .job-banner .info-primary .name[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .smallbanner .company-info .name[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .job-sider .sider-company .company-info a+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important;width:194px}:not(#a):not(#b):not(#c) .job-sider .sider-company [ka=job-detail-brandindustry][data-utags_fit_content="1"]{display:inline-flex !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .job-detail .more-job-section .look-job-list li a+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .job-detail .more-job-section .look-job-list li .info-company div[data-url]+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .job-detail-card{z-index:91}'
+  var zhipin_com_default2 = (() => {
+    const prefix3 = "https://www.zhipin.com/"
+    function getCanonicalUrl2(url) {
+      if (url.includes(prefix3)) {
+        return url.replace(/[?#].*/, "")
+      }
+      return url
+    }
+    function getCompanyUrl(url) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length)
+        if (/^gongsi\/[\w-~]+\.html/.test(href2)) {
+          return prefix3 + href2.replace(/^(gongsi\/[\w-~]+\.html).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getJobDetailUrl(url) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length)
+        if (/^job_detail\/[\w-]+\.html/.test(href2)) {
+          return prefix3 + href2.replace(/^(job_detail\/[\w-]+\.html).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /www\.zhipin\.com/,
+      listNodesSelectors: [
+        ".common-tab-box ul li",
+        ".hot-company-wrapper ul li",
+        ".hot-company-wrapper ul li .company-job-list li",
+        ".job-recommend-result .job-card-wrap",
+        ".search-job-result .job-card-wrapper",
+        ".history-job-list li",
+      ],
+      conditionNodesSelectors: [
+        ".common-tab-box ul li .sub-li a.job-info",
+        ".common-tab-box ul li .sub-li-bottom a.user-info",
+        ".hot-company-wrapper ul li .company-info-top",
+        ".hot-company-wrapper ul li .company-job-list li a.job-info",
+        ".job-recommend-result .job-card-wrap .job-info .job-title a.job-name",
+        ".job-recommend-result .job-card-wrap .job-card-footer .boss-info",
+        ".search-job-result .job-card-wrapper a.job-card-left",
+        ".search-job-result .job-card-wrapper .job-card-right .company-name a",
+        ".history-job-list li a",
+      ],
+      matchedNodesSelectors: [
+        ...default_default2.matchedNodesSelectors,
+        ".info-company div[data-url]",
+      ],
+      preProcess() {
+        setVisitedAvailable(true)
+        for (const element of $$(".info-company div[data-url]")) {
+          if (element.dataset.url) {
+            element.href =
+              location.origin + element.dataset.url.replace("/job/", "/")
+            element.dataset.utags_node_type = "link"
+          }
+        }
+      },
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        if (element.closest(".common-tab-box")) {
+          element.dataset.utags_ul_type = "ol"
+        }
+        let key = getCompanyUrl(href)
+        if (key) {
+          const titleElement = $(
+            ".name,.company-info-top h3,.card-desc .title",
+            element
+          )
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          const meta = { type: "company", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          if (element.closest(".sub-li-bottom a.user-info")) {
+            element.dataset.utags_position_selector = "a > p"
+          }
+          return true
+        }
+        key = getJobDetailUrl(href)
+        if (key) {
+          const titleElement = $(
+            ".job-title .job-name,.job-info-top,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top",
+            element
+          )
+          let title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          title = title.replace(" \u5728\u7EBF ", "")
+          const meta = { type: "job-detail", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          element.dataset.utags_position_selector =
+            ".job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top"
+          markElementWhetherVisited(key, element)
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        "#header",
+        ".look-all",
+        ".more-job-btn",
+        ".look-more",
+        ".all-jobs-hot",
+        ".view-more",
+        "h3:not(.company-name):not(.name)",
+        ".compare-btn",
+        ".job_pk",
+        ".search-hot",
+        ".filter-box",
+        ".sign-form",
+        ".login-card-wrapper",
+        ".login-entry-page",
+        ".btn",
+        ".footer-icon",
+        ".company-tab",
+        ".school-type-box",
+        ".search-condition-wrapper",
+        ".filter-select-box",
+        'a[href*="/web/geek/job"]',
+        ".page",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getCompanyUrl(location.href)
+        if (key) {
+          const element = $(".company-banner h1")
+          if (element) {
+            const title = element.childNodes[0].textContent.trim()
+            if (title) {
+              const meta = { title, type: "company" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getJobDetailUrl(location.href)
+        if (key) {
+          addVisited(key)
+          let element = $(".job-banner .info-primary .name")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "job-detail" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+          element = $(".smallbanner .company-info .name")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "job-detail" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      postProcess() {
+        const isDarkMode = hasClass(doc.body, "theme_dark")
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+      },
+      getStyle: () => zhipin_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
     }
   })()
   var pornhub_com_default =
@@ -6568,6 +6752,7 @@
     flarum_default2,
     nodeseek_com_default2,
     inoreader_com_default2,
+    zhipin_com_default2,
     pornhub_com_default2,
     e_hentai_org_default2,
     panda_chaika_moe_default2,
@@ -6976,7 +7161,8 @@
     } else if (key === getAttribute(utagsUl, "data-utags_key")) {
       utagsUl.remove()
     }
-    const ul = createElement("ul", {
+    const tagName = element.dataset.utags_ul_type === "ol" ? "ol" : "ul"
+    const ul = createElement(tagName, {
       class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
     })
@@ -7097,7 +7283,7 @@
       console.error("end of displayTags", Date.now() - start)
     }
   }
-  var displayTagsThrottled = throttle(displayTags, 1e3)
+  var displayTagsThrottled = throttle(displayTags, 500)
   async function initStorage() {
     await migration()
     addTagsValueChangeListener(() => {
@@ -7106,7 +7292,7 @@
       }
     })
   }
-  var nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|LI|SECTION)$/
+  var nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|OL|LI|SECTION)$/
   function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
     for (const node of nodeList) {
       if (nodeNameCheckPattern.test(node.nodeName)) {
@@ -7115,8 +7301,8 @@
     }
     return false
   }
-  function getMaxOffsetLeft(utags, utagsSizeFix) {
-    const offsetParent = utags.offsetParent
+  function getMaxOffsetLeft(element, utags, utagsSizeFix) {
+    const offsetParent = element.offsetParent
     let maxOffsetRight
     if (offsetParent && offsetParent.offsetWidth > 0) {
       maxOffsetRight = offsetParent.offsetWidth
@@ -7130,14 +7316,10 @@
   }
   function updateTagPosition(element) {
     const utags = element.nextElementSibling
-    if (!utags || utags.tagName !== "UL" || !hasClass(utags, "utags_ul")) {
+    if (!utags || !hasClass(utags, "utags_ul")) {
       return
     }
-    if (
-      !utags.offsetParent &&
-      utags.offsetHeight === 0 &&
-      utags.offsetWidth === 0
-    ) {
+    if (!utags.offsetParent && !utags.offsetHeight && !utags.offsetWidth) {
       return
     }
     const style = getComputedStyle(utags)
@@ -7153,6 +7335,9 @@
     element.dataset.utags_fit_content = "1"
     const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
     const offset = getOffsetPosition(element, utags.offsetParent || doc.body)
+    if (!element.offsetWidth && !element.clientWidth) {
+      return
+    }
     const objectPosition = style.objectPosition
     switch (objectPosition) {
       case "-100% 50%": {
@@ -7214,7 +7399,7 @@
         utags.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top = offset.top + "px"
         break
@@ -7230,7 +7415,7 @@
         utags.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top =
           offset.top +
@@ -7252,7 +7437,7 @@
         utags.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top =
           offset.top +
@@ -7277,7 +7462,7 @@
         utags.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top = offset.top + "px"
         break
@@ -7286,7 +7471,7 @@
         utags.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top =
           offset.top +
@@ -7301,7 +7486,7 @@
         utags.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(utags, utagsSizeFix)
+            getMaxOffsetLeft(element, utags, utagsSizeFix)
           ) + "px"
         utags.style.top =
           offset.top +

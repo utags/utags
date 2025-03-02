@@ -57,6 +57,7 @@ For now it works on
 - Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
+- zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -131,6 +132,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.9
+  - Make UTags support the website www.zhipin.com
 - 0.12.5
   - Enhance the mobile experience of Discourse
   - Make UTags support the website kater.me and bbs.viva-la-vita.org
