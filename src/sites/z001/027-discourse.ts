@@ -73,7 +73,7 @@ export default (() => {
 
   return {
     matches:
-      /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com/,
+      /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com/,
     preProcess() {
       setVisitedAvailable(true)
     },

@@ -43,11 +43,13 @@
 // @match                https://rebang.today/*
 // @match                https://myanimelist.net/*
 // @match                https://www.pixiv.net/*
+// @match                https://meta.discourse.org/*
 // @match                https://linux.do/*
 // @match                https://meta.appinn.net/*
-// @match                https://meta.discourse.org/*
 // @match                https://community.openai.com/*
 // @match                https://community.cloudflare.com/*
+// @match                https://community.wanikani.com/*
+// @match                https://forum.cursor.com/*
 // @match                https://bbs.nga.cn/*
 // @match                https://nga.178.com/*
 // @match                https://ngabbs.com/*
@@ -58,7 +60,6 @@
 // @match                https://nekohouse.su/*
 // @match                https://rule34video.com/*
 // @match                https://rule34gen.com/*
-// @match                https://community.wanikani.com/*
 // @match                https://panda.chaika.moe/*
 // @match                https://bbs.tampermonkey.net.cn/*
 // @match                https://discuss.flarum.org/*
