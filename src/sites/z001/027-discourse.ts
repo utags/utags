@@ -7,6 +7,7 @@ import {
   setVisitedAvailable,
 } from "../../modules/visited"
 import type { UserTagMeta, UtagsHTMLElement } from "../../types"
+import { getTrimmedTitle } from "../../utils"
 
 export default (() => {
   const prefix = location.origin + "/"
@@ -83,6 +84,8 @@ export default (() => {
       ".topic-area .topic-post",
       // search results
       ".search-results .fps-result",
+      // categories
+      ".column .latest-topic-list .latest-topic-list-item",
     ],
     conditionNodesSelectors: [
       // topic title
@@ -105,6 +108,11 @@ export default (() => {
       ".search-results .fps-result .discourse-tag",
       // Maybe it's the author of the post, not the author of the topic.
       // ".search-results .fps-result .author a",
+
+      // categories
+      ".column .latest-topic-list .latest-topic-list-item .main-link .title",
+      ".column .latest-topic-list .latest-topic-list-item .main-link .badge-category__wrapper",
+      ".column .latest-topic-list .latest-topic-list-item .main-link .discourse-tag",
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -115,7 +123,9 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        // span.username -> https://meta.discourse.org/u
+        const titleElement = $("span.username", element)
+        const title = getTrimmedTitle(titleElement || element)
         if (
           !title &&
           !element.closest(".topic-list tr .posters a:first-of-type") &&
@@ -143,6 +153,8 @@ export default (() => {
           element.dataset.utags_position_selector = ".topic-body .names"
         } else if (element.closest(".user-card .names a")) {
           element.dataset.utags_position_selector = ".user-card .names"
+        } else if ($("span.username", element)) {
+          element.dataset.utags_position_selector = "span.username"
         }
 
         return true
@@ -243,6 +255,7 @@ export default (() => {
       '[role="tablist"]',
       ".nav.nav-pills",
       ".btn",
+      ".custom-header-links",
       // chat
       ".chat-time",
     ],
@@ -254,7 +267,10 @@ export default (() => {
       ".search-results .author a .avatar",
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const isDarkMode = $("header picture > source")?.media === "all"
+      const isDarkMode =
+        doc.documentElement.dataset.themeType === "dark" ||
+        // linux.do
+        $("header picture > source")?.media === "all"
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
 
       let key = getUserProfileUrl(location.href)
