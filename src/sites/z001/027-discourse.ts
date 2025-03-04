@@ -276,11 +276,15 @@ export default (() => {
       let key = getUserProfileUrl(location.href)
       if (key) {
         // Clear cache
+        let index = 0
         for (const element of $$(
           ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
         ) as UtagsHTMLElement[]) {
-          delete element.dataset.utags
-          delete element.utags
+          index++
+          if (key !== element.dataset.utags_key || index === 2) {
+            delete element.dataset.utags
+            delete element.utags
+          }
         }
 
         // profile header
@@ -294,6 +298,7 @@ export default (() => {
           if (title) {
             const meta = { title, type: "user" }
             element.utags = { key, meta }
+            element.dataset.utags_key = key
             matchedNodesSet.add(element)
           }
         }
