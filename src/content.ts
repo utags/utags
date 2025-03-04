@@ -300,9 +300,6 @@ function appendTagsToPage(
     }
 
     utagsUl.remove()
-    // fix mp.weixin.qq.com issue
-  } else if (key === getAttribute(utagsUl, "data-utags_key")) {
-    utagsUl.remove()
   }
 
   // On some websites, using the `UL` tag will affect the selectors of the original website.
@@ -367,9 +364,11 @@ function appendTagsToPage(
  * Clean utags elements after SPA web apps re-rendered.
  * works on these sites
  * - youtube
+ *
+ * Fix mp.weixin.qq.com issue, 有推荐阅读, 往期推荐内容时，utags_ul 和子元素的 class 都会被清空。https://github.com/utags/utags/issues/29
  */
 function cleanUnusedUtags() {
-  const utagsUlList = $$(".utags_ul")
+  const utagsUlList = $$(".utags_ul,ul[data-utags_key],ol[data-utags_key]")
   for (const utagsUl of utagsUlList) {
     const element = utagsUl.previousSibling as HTMLElement
     if (element && getAttribute(element, "data-utags") !== null) {
