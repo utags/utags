@@ -97,6 +97,30 @@
     }
   }
 
+  /* 公司搜索页 https://www.zhipin.com/gongsi/_zzz_c101010100/ */
+  .company-search {
+    a.company-info {
+      h4[data-utags_fit_content="1"] {
+        display: inline-block !important;
+        width: fit-content !important;
+      }
+
+      & + .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+        margin-top: 34px !important;
+        width: 194px;
+      }
+    }
+
+    a.about-info + .utags_ul_1 {
+      position: absolute;
+      top: -9999px;
+      margin-top: -14px !important;
+      width: 214px;
+    }
+  }
+
   /* 职位详细页职位名称 */
   .job-banner .info-primary .name,
   .smallbanner .company-info .name {
@@ -127,23 +151,110 @@
         }
       }
     }
+
+    /* 相似职位 */
+    ul.similar-job-list {
+      li > a {
+        & + .utags_ul_1 {
+          position: absolute;
+          top: -9999px;
+          margin-top: 0px !important;
+          width: 260px;
+        }
+
+        .similar-job-attr {
+          flex-wrap: wrap;
+
+          span.similar-job-company[data-url] + {
+            .utags_ul_1 {
+              width: 100%;
+              order: 1;
+            }
+          }
+        }
+      }
+    }
   }
 
   /* 职位详细页 */
   .job-detail {
     /* 职位详细页 > 底部精选职位/看过该职位的人还看了 */
-    .more-job-section .look-job-list li {
-      a + {
-        .utags_ul_1 {
-          position: absolute;
-          top: -9999px;
+    .more-job-section ul.look-job-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        a {
+          height: unset;
+
+          & + {
+            .utags_ul_1 {
+              position: absolute;
+              top: -9999px;
+            }
+          }
+        }
+
+        .info-company {
+          flex-wrap: wrap;
+
+          div[data-url] + {
+            .utags_ul_1 {
+              width: 100%;
+              order: 1;
+            }
+          }
         }
       }
+    }
+  }
 
-      .info-company div[data-url] + {
-        .utags_ul_1 {
-          position: absolute;
-          top: -9999px;
+  /* 公司详细页 */
+  .company-new {
+    /* 热招职位 */
+    .company-hotjob a + {
+      .utags_ul_1 {
+        position: absolute;
+        top: -9999px;
+      }
+    }
+  }
+
+  /* 公司职位列表页 */
+  .page-company-position {
+    /* 职位列表 */
+    ul.position-job-list {
+      .job-title {
+        height: unset;
+        flex-wrap: wrap;
+
+        .job-name {
+          &[data-utags_fit_content="1"] {
+            display: inline-flex !important;
+            max-width: fit-content !important;
+          }
+
+          & + .utags_ul_1 {
+            width: 100%;
+            order: 1;
+          }
+        }
+      }
+    }
+
+    /* 精选职位 */
+    ul.similar-job-list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .company-info {
+        flex-wrap: wrap;
+
+        a.company-logo {
+          & + .utags_ul_1 {
+            width: 100%;
+            order: 1;
+          }
         }
       }
     }
@@ -152,5 +263,10 @@
   /* 职位悬浮卡片 */
   .job-detail-card {
     z-index: 91;
+  }
+
+  ul li .sub-li {
+    /* 方式页面抖动 */
+    position: relative;
   }
 }
