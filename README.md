@@ -63,6 +63,7 @@ For now it works on
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
+- Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -128,6 +129,9 @@ For now it works on
 
 ## Release Notes
 
+- 0.12.10
+  - On BOSS Zhipin, you can mark companies and job positions and leave remarks. For instance, adding tags like "block" or "hide" allows you to hide uninterested companies and job positions.
+  - Make UTags support the website forum.cursor.com
 - 0.12.9
   - Make UTags support the website www.zhipin.com
 - 0.12.5

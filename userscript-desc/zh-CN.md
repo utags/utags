@@ -58,6 +58,7 @@
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - BOSS 直聘 ([www.zhipin.com](https://www.zhipin.com/))
+- Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -126,7 +127,7 @@
   - Greasemonkey
   - ScriptCat
   - Userscripts (Safari MacOS/iOS)
-  - Addons (Safari iOS)
+  - Addons (Safari MacOS/iOS)
 
 ### 彩蛋
 
@@ -146,6 +147,9 @@
 
 ## 更新记录
 
+- 0.12.10
+  - 在 BOSS 直聘网站，你能够对公司与职位进行标记并添加备注。例如，添加 `block`, `屏蔽` 等标签，即可将不感兴趣的公司和职位隐藏起来 。
+  - 使 UTags 支持 forum.cursor.com 网站
 - 0.12.9
   - 使 UTags 支持 BOSS 直聘 (www.zhipin.com) 网站
 - 0.12.5

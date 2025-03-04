@@ -58,6 +58,7 @@ For now it works on
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
+- Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -126,12 +127,15 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
   - Greasemonkey
   - ScriptCat
   - Userscripts (Safari MacOS/iOS)
-  - Addons (Safari iOS)
+  - Addons (Safari MacOS/iOS)
 
 More information: [https://github.com/utags/utags](https://github.com/utags/utags)
 
 ## Release Notes
 
+- 0.12.10
+  - On BOSS Zhipin, you can mark companies and job positions and leave remarks. For instance, adding tags like "block" or "hide" allows you to hide uninterested companies and job positions.
+  - Make UTags support the website www.zhipin.com
 - 0.12.9
   - Make UTags support the website www.zhipin.com
 - 0.12.5
