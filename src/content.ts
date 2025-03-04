@@ -484,12 +484,33 @@ async function initStorage() {
   })
 }
 
-const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|OL|LI|SECTION)$/
+/* eslint-disable @typescript-eslint/naming-convention */
+const validNodeNames = {
+  A: true,
+  H1: true,
+  H2: true,
+  H3: true,
+  H4: true,
+  H5: true,
+  H6: true,
+  DIV: true,
+  SPAN: true,
+  P: true,
+  UL: true,
+  OL: true,
+  LI: true,
+  SECTION: true,
+}
+/* eslint-enable @typescript-eslint/naming-convention */
+
 function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
-  for (const node of nodeList) {
+  const length = nodeList.length
+  for (let i = 0; i < length; i++) {
+    const node = nodeList[i]
     if (
+      validNodeNames[node.nodeName] &&
       !hasClass(node as HTMLElement, "utags_ul") &&
-      nodeNameCheckPattern.test(node.nodeName)
+      !hasClass(node as HTMLElement, "utags_modal")
     ) {
       return true
     }

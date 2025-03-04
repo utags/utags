@@ -52,29 +52,41 @@ function removeTag(tag: string | undefined) {
   }
 }
 
-function updateLists() {
+function updateLists(container?: HTMLElement) {
   displayedTags = new Set()
-  const ul1 = $(".utags_modal_content ul.utags_current_tags")
+  const ul1 = $(".utags_modal_content ul.utags_current_tags", container)
   if (ul1) {
     updateCurrentTagList(ul1)
   }
 
-  const ul = $(".utags_modal_content ul.utags_select_list.utags_pined_list")
+  const ul = $(
+    ".utags_modal_content ul.utags_select_list.utags_pined_list",
+    container
+  )
   if (ul) {
     updateCandidateTagList(ul, pinnedTags)
   }
 
-  const ul4 = $(".utags_modal_content ul.utags_select_list.utags_emoji_list")
+  const ul4 = $(
+    ".utags_modal_content ul.utags_select_list.utags_emoji_list",
+    container
+  )
   if (ul4) {
     updateCandidateTagList(ul4, emojiTags)
   }
 
-  const ul2 = $(".utags_modal_content ul.utags_select_list.utags_most_used")
+  const ul2 = $(
+    ".utags_modal_content ul.utags_select_list.utags_most_used",
+    container
+  )
   if (ul2) {
     updateCandidateTagList(ul2, mostUsedTags)
   }
 
-  const ul3 = $(".utags_modal_content ul.utags_select_list.utags_recent_added")
+  const ul3 = $(
+    ".utags_modal_content ul.utags_select_list.utags_recent_added",
+    container
+  )
   if (ul3) {
     updateCandidateTagList(ul3, recentAddedTags)
   }
@@ -214,8 +226,10 @@ function createPromptView(
     },
   }) as HTMLInputElement
 
-  input.focus()
-  input.select()
+  setTimeout(() => {
+    input.focus()
+    input.select()
+  })
 
   addElement(currentTagsWrapper, "button", {
     type: "button",
@@ -250,7 +264,7 @@ function createPromptView(
     "data-utags_list_name": i("prompt.emojiTags"),
   })
 
-  updateLists()
+  updateLists(content)
 
   const buttonWrapper = addElement(content, "div", {
     class: "utags_buttons_wrapper",
@@ -535,6 +549,8 @@ function createPromptView(
       setTimeout(showSettings, 1)
     },
   })
+
+  modal.append()
 }
 
 export async function advancedPrompt(

@@ -1,7 +1,12 @@
-import { addClass, addElement, doc } from "browser-extension-utils"
+import {
+  addClass,
+  addElement,
+  createElement,
+  doc,
+} from "browser-extension-utils"
 
 export default function createModal(attributes?: Record<string, unknown>) {
-  const div = addElement(doc.body, "div", {
+  const div = createElement("div", {
     class: "utags_modal",
   })
 
@@ -19,6 +24,9 @@ export default function createModal(attributes?: Record<string, unknown>) {
         removed = true
         div.remove()
       }
+    },
+    append(element?: HTMLElement) {
+      ;(element || doc.body).append(div)
     },
     getContentElement() {
       return content
