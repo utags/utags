@@ -487,7 +487,10 @@ async function initStorage() {
 const nodeNameCheckPattern = /^(A|H\d|DIV|SPAN|P|UL|OL|LI|SECTION)$/
 function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   for (const node of nodeList) {
-    if (nodeNameCheckPattern.test(node.nodeName)) {
+    if (
+      !hasClass(node as HTMLElement, "utags_ul") &&
+      nodeNameCheckPattern.test(node.nodeName)
+    ) {
       return true
     }
   }
@@ -495,27 +498,66 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   return false
 }
 
+function getOutermostOffsetParent(
+  element1: HTMLElement,
+  element2: HTMLElement
+): HTMLElement | undefined {
+  if (
+    !(element1 instanceof HTMLElement) ||
+    !(element2 instanceof HTMLElement)
+  ) {
+    throw new TypeError("Both arguments must be valid HTMLElements.")
+  }
+
+  const offsetParent1 = element1.offsetParent as HTMLElement
+  const offsetParent2 = element2.offsetParent as HTMLElement
+
+  if (offsetParent1 && offsetParent2) {
+    if (offsetParent1.contains(offsetParent2)) {
+      return offsetParent1
+    }
+
+    if (offsetParent2.contains(offsetParent1)) {
+      return offsetParent2
+    }
+
+    return undefined
+  }
+
+  return offsetParent1 || offsetParent2
+}
+
 function getMaxOffsetLeft(
-  element: HTMLElement,
+  offsetParent: HTMLElement | undefined,
   utags: HTMLElement,
   utagsSizeFix: number
 ) {
-  const offsetParent = element.offsetParent as HTMLElement
   let maxOffsetRight: number
 
   if (offsetParent && offsetParent.offsetWidth > 0) {
     // X轴 scroll 时计算正确
-    maxOffsetRight = offsetParent.offsetWidth
+    if (offsetParent === utags.offsetParent) {
+      maxOffsetRight = offsetParent.offsetWidth
+    } else {
+      maxOffsetRight =
+        offsetParent.offsetWidth -
+        getOffsetPosition(utags.offsetParent as HTMLElement, offsetParent).left
+    }
   } else {
     // X轴 scroll 时会计算错误
     maxOffsetRight =
       document.body.offsetWidth -
-      getOffsetPosition(offsetParent || doc.body).left -
+      getOffsetPosition(utags.offsetParent as HTMLElement).left -
       2
   }
 
   return maxOffsetRight - utags.clientWidth - utagsSizeFix
 }
+
+// position: fixed -> offsetParent = null
+// position: static -> offsetParent = TD element or the ancestor element whitch has postion: (relative|absolute|fixed|sticky) or document.body
+// position: (relative|absolute|fixed|sticky) -> offsetParent = the ancestor element whitch has postion: (relative|absolute|fixed|sticky) or document.body
+// display: contents -> offsetParent = null, offsetWith = 0, offsetLeft = 0, offsetTop = 0
 
 function updateTagPosition(element: HTMLElement) {
   const utags = element.nextElementSibling as HTMLElement
@@ -544,19 +586,43 @@ function updateTagPosition(element: HTMLElement) {
   // 22 is the size of captain tag
   const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
 
-  const offset = getOffsetPosition(
-    element,
-    (utags.offsetParent as HTMLElement) || doc.body
-  )
+  const offsetParent =
+    element.offsetParent === utags.offsetParent
+      ? (element.offsetParent as HTMLElement)
+      : getOutermostOffsetParent(element, utags)
+
+  const offset = getOffsetPosition(element, offsetParent! || doc.body)
+
+  if (offsetParent !== utags.offsetParent) {
+    const offset2 = getOffsetPosition(
+      utags.offsetParent as HTMLElement,
+      offsetParent! || doc.body
+    )
+
+    offset.top -= offset2.top
+    offset.left -= offset2.left
+  }
 
   // For debug
   // if (1) {
+  //   const style = getComputedStyle(element)
   //   element.dataset.offsetWidth = String(element.offsetWidth)
   //   element.dataset.clientWidth = String(element.clientWidth)
   //   element.dataset.offsetHeight = String(element.offsetHeight)
   //   element.dataset.clientHeight = String(element.clientHeight)
-  //   element.dataset.offsetLeft = String(offset.left)
-  //   element.dataset.offsetTop = String(offset.top)
+  //   element.dataset.offsetLeft = String(element.offsetLeft)
+  //   element.dataset.offsetTop = String(element.offsetTop)
+  //   element.dataset.offsetLeft2 = String(offset.left)
+  //   element.dataset.offsetTop2 = String(offset.top)
+  //   element.dataset.offsetParent = element.offsetParent?.outerHTML.replaceAll(
+  //     />[\s\S]*/gm,
+  //     ">"
+  //   )
+  //   element.dataset.display = style.display
+  //   utags.dataset.offsetParent = utags.offsetParent?.outerHTML.replaceAll(
+  //     />[\s\S]*/gm,
+  //     ">"
+  //   )
   // }
 
   // element is hidden
@@ -641,7 +707,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top = offset.top + "px"
       break
@@ -660,7 +726,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -685,7 +751,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -714,7 +780,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top = offset.top + "px"
       break
@@ -725,7 +791,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +
@@ -742,7 +808,7 @@ function updateTagPosition(element: HTMLElement) {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(element, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
         ) + "px"
       utags.style.top =
         offset.top +

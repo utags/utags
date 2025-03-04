@@ -527,7 +527,8 @@
   }
 
   [data-utags_list_node]:hover {
-    opacity: 100% !important;
+    /* 如果设置为 100% ，鼠标移到边缘时会剧烈闪烁 */
+    opacity: 99.99% !important;
   }
 
   /* For debugging */
