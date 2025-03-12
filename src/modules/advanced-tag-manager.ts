@@ -9,6 +9,7 @@ import {
   removeClass,
   removeEventListener,
 } from "browser-extension-utils"
+import { splitTags } from "utags-utils"
 
 import createModal from "../components/modal"
 import createTag from "../components/tag"
@@ -19,7 +20,7 @@ import {
   getPinnedTags,
   getRecentAddedTags,
 } from "../storage"
-import { copyText, sortTags, splitTags } from "../utils"
+import { copyText, sortTags } from "../utils"
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
@@ -34,9 +35,7 @@ function onSelect(selected: string, input: HTMLInputElement) {
 
     const tags = splitTags(selected)
     for (const tag of tags) {
-      if (tag.trim()) {
-        currentTags.add(tag.trim())
-      }
+      currentTags.add(tag)
     }
 
     updateLists()

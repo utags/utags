@@ -9,11 +9,12 @@ import {
   isTouchScreen,
   removeClass,
 } from "browser-extension-utils"
+import { splitTags } from "utags-utils"
 
 import { i } from "../messages"
 import { getEmojiTags, saveTags } from "../storage"
 import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
-import { filterTags, sortTags, splitTags } from "../utils"
+import { filterTags, sortTags } from "../utils"
 import { advancedPrompt } from "./advanced-tag-manager"
 import { simplePrompt } from "./simple-tag-manger"
 import { TAG_VISITED, addVisited, removeVisited } from "./visited"

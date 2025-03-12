@@ -1,5 +1,6 @@
 import { $, $$, doc } from "browser-extension-utils"
 import styleText from "data-text:./027-discourse.scss"
+import { getTrimmedTitle } from "utags-utils"
 
 import {
   addVisited,
@@ -7,7 +8,6 @@ import {
   setVisitedAvailable,
 } from "../../modules/visited"
 import type { UserTagMeta, UtagsHTMLElement } from "../../types"
-import { getTrimmedTitle } from "../../utils"
 
 export default (() => {
   const prefix = location.origin + "/"

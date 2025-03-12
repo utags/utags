@@ -40,7 +40,8 @@
     "browser-extension-utils": "^0.1.19",
     "plasmo": "^0.77.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "utags-utils": "^0.0.3"
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "^3.6.4",
@@ -68,6 +69,10 @@
     "globals": [
       "document"
     ],
+    "envs": [
+      "browser",
+      "webextensions"
+    ],
     "rules": {
       "import/extensions": 0,
       "import/order": 0,
@@ -87,6 +92,19 @@
           "n/file-extension-in-import": 0
         }
       }
+    ]
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "sharp"
+    ],
+    "onlyBuiltDependencies": [
+      "sharp"
     ]
   }
 }

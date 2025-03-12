@@ -1,7 +1,7 @@
 import { $ } from "browser-extension-utils"
 import styleText from "data-text:./004-dmm.co.jp.scss"
+import { getTrimmedTitle } from "utags-utils"
 
-import { getTrimmedTitle } from "../../utils"
 import defaultSite from "../default"
 
 export default (() => {

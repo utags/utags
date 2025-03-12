@@ -6,9 +6,9 @@ import {
   isUrl,
   uniq,
 } from "browser-extension-utils"
+import { getTrimmedTitle, trimTitle } from "utags-utils"
 
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from "../types"
-import { getTrimmedTitle, trimTitle } from "../utils"
 import defaultSite from "./default"
 import v2ex from "./z001/001-v2ex"
 import greasyforkOrg from "./z001/002-greasyfork.org"

@@ -5,9 +5,9 @@ import {
   setValue,
 } from "browser-extension-storage"
 import { isUrl, uniq } from "browser-extension-utils"
+import { splitTags } from "utags-utils"
 
 import type { RecentTag } from "../types"
-import { splitTags } from "../utils"
 
 type TagsAndMeta = {
   tags: string[]

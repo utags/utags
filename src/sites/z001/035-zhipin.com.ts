@@ -1,5 +1,6 @@
 import { $, $$, doc, hasClass } from "browser-extension-utils"
 import styleText from "data-text:./035-zhipin.com.scss"
+import { getTrimmedTitle } from "utags-utils"
 
 import {
   addVisited,
@@ -11,7 +12,6 @@ import type {
   UtagsHTMLAnchorElement,
   UtagsHTMLElement,
 } from "../../types"
-import { getTrimmedTitle } from "../../utils"
 import defaultSite from "../default"
 
 export default (() => {
