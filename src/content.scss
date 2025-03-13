@@ -105,22 +105,27 @@
       }
     }
 
-    .utags_text_tag[data-utags_tag]::before {
-      content: attr(data-utags_tag);
-      display: block;
-      font-size: var(--utags-text-tag-font-size);
-      line-height: 1;
-      height: unset;
-      width: unset;
-      max-width: var(--utags-text-tag-max-width);
-      white-space: var(--utags-text-tag-white-space);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      border-radius: unset;
-      border: unset;
-      background: unset;
-      margin: unset;
-      padding: unset;
+    .utags_text_tag[data-utags_tag] {
+      &::before {
+        content: attr(data-utags_tag);
+        display: block;
+        font-size: var(--utags-text-tag-font-size);
+        line-height: 1;
+        height: unset;
+        width: unset;
+        max-width: var(--utags-text-tag-max-width);
+        white-space: var(--utags-text-tag-white-space);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-radius: unset;
+        border: unset;
+        background: unset;
+        margin: unset;
+        padding: unset;
+      }
+      &::after {
+        display: none;
+      }
     }
 
     .utags_text_tag[data-utags_tag=":visited"] {

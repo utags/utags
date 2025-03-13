@@ -90,7 +90,9 @@
     }
   }
 
-  .topic-body .topic-meta-data .names {
+  .topic-body .topic-meta-data .names,
+  /* https://github.com/hmjz100/DiscourseHelper this userscript remove 'topic-meta-data' class */
+  .topic-body .names {
     &[data-utags_fit_content="1"] {
       /* width: fit-content !important; */
       max-width: max-content !important;
