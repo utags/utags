@@ -71,7 +71,7 @@ function updateLists(container?: HTMLElement) {
     container
   )
   if (ul4) {
-    updateCandidateTagList(ul4, emojiTags)
+    updateCandidateTagList(ul4, emojiTags, 1000)
   }
 
   const ul2 = $(
@@ -91,7 +91,11 @@ function updateLists(container?: HTMLElement) {
   }
 }
 
-function updateCandidateTagList(ul: HTMLElement, candidateTags: string[]) {
+function updateCandidateTagList(
+  ul: HTMLElement,
+  candidateTags: string[],
+  limitSize?: number
+) {
   ul.textContent = ""
 
   let index = 0
@@ -109,7 +113,7 @@ function updateCandidateTagList(ul: HTMLElement, candidateTags: string[]) {
       textContent: text,
     })
     index++
-    if (index >= 50) {
+    if (index >= (limitSize || 50)) {
       break
     }
   }
