@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name                 🏷️ UTags - Add usertags to links
-// @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签
+// @name                 🏷️ UTags - Add usertags to links - staging
+// @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签 - staging
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues

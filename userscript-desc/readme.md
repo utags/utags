@@ -133,6 +133,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.12.11
+  - Remove the limit on the number of settable emoji tags
 - 0.12.10
   - On BOSS Zhipin, you can mark companies and job positions and leave remarks. For instance, adding tags like "block" or "hide" allows you to hide uninterested companies and job positions.
   - Make UTags support the website www.zhipin.com
