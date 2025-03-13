@@ -262,7 +262,7 @@ function extendHistoryApi2() {
     const url2 = location.href
     if (url !== url2) {
       url = url2
-      window.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event("locationchange"))
     }
   }, 100)
 }
@@ -277,7 +277,7 @@ export function bindWindowEvents() {
   // Firefox extension: X
   extendHistoryApi2()
 
-  addEventListener(window, "locationchange", function () {
+  addEventListener(globalThis, "locationchange", function () {
     hideAllUtagsInArea()
   })
 }

@@ -4,6 +4,7 @@ LICENSE
 build/chrome-*/**
 build/firefox-*/**
 build/bookmarklet-*/**
+build/module-*/**
 build/*-dev/**
 *.min.js
 pnpm-lock.yaml

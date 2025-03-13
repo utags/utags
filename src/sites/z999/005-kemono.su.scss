@@ -15,7 +15,9 @@
       --utags-captain-tag-background-color: var(
         --utags-captain-tag-background-color-overlap
       );
-      transition: top ease 0.1s, left ease 0.1s;
+      transition:
+        top ease 0.1s,
+        left ease 0.1s;
     }
 
     .utags_ul_1 {
@@ -25,7 +27,9 @@
       z-index: 100;
       margin-top: -6px !important;
       margin-left: 4px !important;
-      transition: top ease 0.1s, left ease 0.1s;
+      transition:
+        top ease 0.1s,
+        left ease 0.1s;
       .utags_text_tag {
         --utags-text-tag-background-color: yellow;
       }

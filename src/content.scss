@@ -584,18 +584,20 @@ textarea[data-key="emojiTags"] {
   --utags-text-tag-border-width: 1px;
   --utags-text-tag-max-width: 90px;
   --utags-text-tag-white-space: nowrap;
-  --utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei",
-    "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
-    "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-text-tag-font-family:
+    "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla",
+    "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-emoji-tag-border-color: #fff0;
   --utags-emoji-tag-background-color: #fff0;
   /* --utags-emoji-tag-background-color: #f8fafe; */
   --utags-emoji-tag-font-size: 12px;
   --utags-emoji-tag-border-width: 0;
-  --utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols",
-    "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-emoji-tag-font-family:
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla",
+    "twemoji mozilla", "Segoe UI", "Noto Sans";
   --utags-visited-tag-background-color: #bdbdbd;
   --utags-visited-tag-size: 11px;
   --utags-visited-title-color: #aaa;

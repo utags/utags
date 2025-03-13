@@ -47,7 +47,6 @@ export async function getCachedUrlMap(): Promise<Record<string, unknown>> {
 }
 
 export function getTags(key: string): Record<string, unknown> {
-  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   return (cachedUrlMap && cachedUrlMap[key]) || { tags: [] }
 }
 
