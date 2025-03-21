@@ -1,5 +1,5 @@
-import * as esbuild from "esbuild"
 import fs from "node:fs"
+import * as esbuild from "esbuild"
 import * as sass from "sass"
 
 const EMOJI_LIST = [

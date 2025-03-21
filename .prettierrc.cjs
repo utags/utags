@@ -10,10 +10,17 @@ module.exports = {
   trailingComma: "es5",
   bracketSpacing: true,
   bracketSameLine: true,
-  plugins: [require.resolve("@plasmohq/prettier-plugin-sort-imports")],
-  importOrder: ["^@plasmohq/(.*)$", "^~(.*)$", "^[./]"],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
+  plugins: [require.resolve("@ianvs/prettier-plugin-sort-imports")],
+  importOrder: [
+    "<BUILTIN_MODULES>",
+    "<THIRD_PARTY_MODULES>",
+    "",
+    "^@plasmohq/(.*)$",
+    "",
+    "^~(.*)$",
+    "",
+    "^[./]",
+  ],
   overrides: [
     {
       files: "src/messages/*.ts",

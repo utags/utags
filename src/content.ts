@@ -31,8 +31,8 @@ import {
   hideAllUtagsInArea,
 } from "./modules/global-events"
 import {
-  TAG_VISITED,
   isAvailableOnCurrentSite,
+  TAG_VISITED,
   onSettingsChange as visitedOnSettingsChange,
 } from "./modules/visited"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"

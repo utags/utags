@@ -17,7 +17,7 @@ import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
 import { filterTags, sortTags } from "../utils"
 import { advancedPrompt } from "./advanced-tag-manager"
 import { simplePrompt } from "./simple-tag-manger"
-import { TAG_VISITED, addVisited, removeVisited } from "./visited"
+import { addVisited, removeVisited, TAG_VISITED } from "./visited"
 
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined

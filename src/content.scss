@@ -3,8 +3,8 @@
 }
 
 :not(#utags_should_has_higher_specificity):not(
-    #utags_should_has_higher_specificity
-  ) {
+  #utags_should_has_higher_specificity
+) {
   /* fix mp.weixin.qq.com issue. https://github.com/utags/utags/issues/29 */
   ul,
   ol {
