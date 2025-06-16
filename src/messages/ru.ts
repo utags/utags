@@ -1,6 +1,6 @@
 const messages = {
   "settings.enableCurrentSite": "Включить UTags на текущем сайте",
-  "settings.showHidedItems": "Показывать скрытые элементы (метки с «block», «hide», «скрыто»)",
+  "settings.showHidedItems": "Показывать скрытые элементы (метки с «блок», «скрыто»)",
   "settings.noOpacityEffect": "Без эффекта прозрачной маски (метки с «игнор», «кликбейт», «реклама»)",
   "settings.useVisitedFunction": "Включить метки контента для просмотра на текущем сайте",
   "settings.displayEffectOfTheVisitedContent": "Эффект отображения просмотренного содержимого",
@@ -10,7 +10,7 @@ const messages = {
   "settings.displayEffectOfTheVisitedContent.translucent": "Прозрачный",
   "settings.displayEffectOfTheVisitedContent.hide": "Скрыть",
   "settings.pinnedTags": "Добавьте метки, которые вы хотите прикрепить, разделив их запятыми.",
-  "settings.pinnedTagsDefaultValue": "block, hide, ignore, скрыто, игнор, clickbait, кликбейт, ad, реклама",
+  "settings.pinnedTagsDefaultValue": "block, блок, hide, скрыто, ignore, игнор, clickbait, кликбейт, ad, реклама",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "Добавьте метки эмодзи, разделив их запятыми",
   "settings.customStyle": "Включить пользовательский стиль для всех сайтов",
