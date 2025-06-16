@@ -10,7 +10,7 @@ const messages = {
   "settings.displayEffectOfTheVisitedContent.translucent": "Прозрачный",
   "settings.displayEffectOfTheVisitedContent.hide": "Скрыть",
   "settings.pinnedTags": "Добавьте метки, которые вы хотите прикрепить, разделив их запятыми.",
-  "settings.pinnedTagsDefaultValue": "block, блок, hide, скрыто, ignore, игнор, clickbait, кликбейт, ad, реклама",
+  "settings.pinnedTagsDefaultValue": "блок, скрыто, игнор, кликбейт, реклама",
   "settings.pinnedTagsPlaceholder": "foo, bar",
   "settings.emojiTags": "Добавьте метки эмодзи, разделив их запятыми",
   "settings.customStyle": "Включить пользовательский стиль для всех сайтов",
