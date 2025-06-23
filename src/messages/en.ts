@@ -89,7 +89,7 @@ body {
   "prompt.recentAddedTags": "Newly added",
   "prompt.emojiTags": "Emoji",
   "prompt.copy": "Copy",
-  "prompt.cancel": "Cancle",
+  "prompt.cancel": "Cancel",
   "prompt.ok": "OK",
   "prompt.settings": "Settings",
 }

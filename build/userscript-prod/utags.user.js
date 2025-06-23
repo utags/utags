@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.12.11
+// @version              0.12.13
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -153,12 +153,13 @@
     }
   }
   var doc = document
-  var win = window
+  var win = globalThis
   var uniq = (array) => [...new Set(array)]
   if (typeof String.prototype.replaceAll !== "function") {
     String.prototype.replaceAll = String.prototype.replace
   }
-  var $ = (selectors, element) => (element || doc).querySelector(selectors)
+  var $ = (selectors, element) =>
+    (element || doc).querySelector(selectors) || void 0
   var $$ = (selectors, element) => [
     ...(element || doc).querySelectorAll(selectors),
   ]
@@ -220,7 +221,7 @@
     }
   }
   var getAttribute = (element, name) =>
-    element && element.getAttribute ? element.getAttribute(name) : null
+    element && element.getAttribute ? element.getAttribute(name) : void 0
   var setAttribute = (element, name, value) =>
     element && element.setAttribute ? element.setAttribute(name, value) : void 0
   var setAttributes = (element, attributes) => {
@@ -313,16 +314,16 @@
     const replaceState = history.replaceState
     history.pushState = function () {
       pushState.apply(history, arguments)
-      window.dispatchEvent(new Event("pushstate"))
-      window.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event("pushstate"))
+      globalThis.dispatchEvent(new Event("locationchange"))
     }
     history.replaceState = function () {
       replaceState.apply(history, arguments)
-      window.dispatchEvent(new Event("replacestate"))
-      window.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event("replacestate"))
+      globalThis.dispatchEvent(new Event("locationchange"))
     }
-    window.addEventListener("popstate", function () {
-      window.dispatchEvent(new Event("locationchange"))
+    globalThis.addEventListener("popstate", function () {
+      globalThis.dispatchEvent(new Event("locationchange"))
     })
   }
   var getOffsetPosition = (element, referElement) => {
@@ -463,7 +464,7 @@
   var addStyle = (styleText) =>
     addElement2(null, "style", { textContent: styleText })
   var registerMenuCommand = (name, callback, accessKey) => {
-    if (window !== top) {
+    if (globalThis !== top) {
       return
     }
     if (typeof GM.registerMenuCommand !== "function") {
@@ -1253,7 +1254,7 @@
     "prompt.recentAddedTags": "Newly added",
     "prompt.emojiTags": "Emoji",
     "prompt.copy": "Copy",
-    "prompt.cancel": "Cancle",
+    "prompt.cancel": "Cancel",
     "prompt.ok": "OK",
     "prompt.settings": "Settings",
   }
@@ -1321,7 +1322,8 @@
     "zh,zh-CN": zh_cn_default2,
   })
   function trimTitle(title) {
-    return title ? title.replaceAll(/\s+/gm, " ").trim() : ""
+    if (!title) return ""
+    return title.replaceAll(/\s+/gm, " ").trim()
   }
   function getTrimmedTitle(element) {
     return trimTitle(element.textContent)
@@ -1330,11 +1332,25 @@
     if (!text) {
       return []
     }
+    let inputText
+    if (Array.isArray(text)) {
+      inputText = text.join(",")
+    } else if (text instanceof Set) {
+      inputText = [...text].join(",")
+    } else {
+      inputText = text
+    }
+    if (!inputText.trim()) {
+      return []
+    }
     return [
       ...new Set(
-        text
-          .replaceAll(/[\n\r\t\s]+/g, " ")
-          .split(/[,，]/)
+        inputText
+          .replaceAll(
+            /[ \t\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+/g,
+            " "
+          )
+          .split(/[,，\n\r]+/)
           .map((tag) => tag.trim())
           .filter(Boolean)
       ),
