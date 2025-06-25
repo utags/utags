@@ -39,10 +39,10 @@ import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
   getCachedUrlMap,
-  getEmojiTags,
   getTags,
-  migration,
-} from "./storage/index"
+  initBookmarksStore,
+} from "./storage/bookmarks"
+import { getEmojiTags } from "./storage/tags"
 import type { UserTag, UserTagMeta } from "./types"
 
 export const config: PlasmoCSConfig = {
@@ -418,7 +418,7 @@ async function displayTags() {
 
     const object = getTags(key)
 
-    const tags: string[] = ((object.tags as string[]) || []).slice()
+    const tags: string[] = (object.tags || []).slice()
     if (node.dataset.utags_visited === "1") {
       tags.push(TAG_VISITED)
     }
@@ -476,7 +476,7 @@ async function displayTags() {
 const displayTagsThrottled = throttle(displayTags, 500)
 
 async function initStorage() {
-  await migration()
+  await initBookmarksStore()
   addTagsValueChangeListener(() => {
     if (!doc.hidden) {
       setTimeout(displayTags)

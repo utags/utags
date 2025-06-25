@@ -19,7 +19,7 @@ import {
   getMostUsedTags,
   getPinnedTags,
   getRecentAddedTags,
-} from "../storage"
+} from "../storage/tags"
 import { copyText, sortTags } from "../utils"
 
 let pinnedTags: string[]
