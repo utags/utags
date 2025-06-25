@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.12.13
+// @version              0.13.0
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -108,6 +108,31 @@
 //
 ;(() => {
   "use strict"
+  var __defProp = Object.defineProperty
+  var __defProps = Object.defineProperties
+  var __getOwnPropDescs = Object.getOwnPropertyDescriptors
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols
+  var __hasOwnProp = Object.prototype.hasOwnProperty
+  var __propIsEnum = Object.prototype.propertyIsEnumerable
+  var __defNormalProp = (obj, key, value) =>
+    key in obj
+      ? __defProp(obj, key, {
+          enumerable: true,
+          configurable: true,
+          writable: true,
+          value,
+        })
+      : (obj[key] = value)
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop])
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop])
+      }
+    return a
+  }
+  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b))
   var listeners = {}
   var getValue = async (key) => {
     const value = await GM.getValue(key)
@@ -1356,117 +1381,90 @@
       ),
     ]
   }
-  var extensionVersion = "0.8.0"
-  var databaseVersion = 2
-  var storageKey2 = "extension.utags.urlmap"
-  var storageKeyRecentTags = "extension.utags.recenttags"
-  var storageKeyMostUsedTags = "extension.utags.mostusedtags"
-  var storageKeyRecentAddedTags = "extension.utags.recentaddedtags"
-  var cachedUrlMap
-  async function getUrlMap() {
-    return (await getValue(storageKey2)) || {}
-  }
-  async function getUrlMapVesion1() {
-    return getValue("plugin.utags.tags.v1")
-  }
-  async function getCachedUrlMap() {
-    if (!cachedUrlMap) {
-      cachedUrlMap = await getUrlMap()
-    }
-    return cachedUrlMap
-  }
-  function getTags(key) {
-    return (cachedUrlMap && cachedUrlMap[key]) || { tags: [] }
-  }
-  async function saveTags(key, tags, meta) {
-    const urlMap = await getUrlMap()
-    urlMap.meta = Object.assign({}, urlMap.meta, {
-      extensionVersion,
-      databaseVersion,
-    })
-    const newTags = mergeTags(tags, [])
-    let oldTags = []
-    if (newTags.length === 0) {
-      delete urlMap[key]
-    } else {
-      const now = Date.now()
-      const data = urlMap[key] || {}
-      oldTags = data.tags
-      const newMeta = Object.assign({}, data.meta, meta, {
-        updated: now,
-      })
-      newMeta.created = newMeta.created || now
-      urlMap[key] = {
-        tags: newTags,
-        meta: newMeta,
-      }
-    }
-    await setValue(storageKey2, urlMap)
-    await addRecentTags(newTags, oldTags)
-  }
+  var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
+  var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
+  var STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
   function getScore(weight = 1) {
     return (Math.floor(Date.now() / 1e3) / 1e9) * weight
   }
+  var isUpdating = false
+  var updateQueue = []
   async function addRecentTags(newTags, oldTags) {
-    if (newTags.length === 0) {
-      return
+    if (newTags.length === 0) return
+    if (isUpdating) {
+      return new Promise((resolve) => {
+        updateQueue.push({ newTags, oldTags })
+        resolve()
+      })
     }
-    newTags =
-      oldTags && oldTags.length > 0
-        ? newTags.filter((v) => !oldTags.includes(v))
-        : newTags
-    if (newTags.length > 0) {
-      const recentTags = (await getValue(storageKeyRecentTags)) || []
-      const score = getScore()
-      for (const tag of newTags) {
-        recentTags.push({
-          tag,
-          score,
-        })
+    isUpdating = true
+    try {
+      await processTagUpdate(newTags, oldTags)
+      while (updateQueue.length > 0) {
+        const nextUpdate = updateQueue.shift()
+        if (nextUpdate) {
+          await processTagUpdate(nextUpdate.newTags, nextUpdate.oldTags)
+        }
       }
-      if (recentTags.length > 1e3) {
-        recentTags.splice(0, 100)
-      }
-      await setValue(storageKeyRecentTags, recentTags)
-      await generateMostUsedAndRecentAddedTags(recentTags)
+    } finally {
+      isUpdating = false
     }
   }
+  async function processTagUpdate(newTags, oldTags) {
+    const uniqueNewTags =
+      (oldTags == null ? void 0 : oldTags.length) > 0
+        ? newTags.filter((tag) => tag && !oldTags.includes(tag))
+        : newTags.filter(Boolean)
+    if (uniqueNewTags.length === 0) return
+    const recentTags = (await getValue(STORAGE_KEY_RECENT_TAGS)) || []
+    const score = getScore()
+    for (const tag of uniqueNewTags) {
+      recentTags.push({ tag, score })
+    }
+    if (recentTags.length > 1e3) {
+      recentTags.splice(0, 100)
+    }
+    await setValue(STORAGE_KEY_RECENT_TAGS, recentTags)
+    await generateMostUsedAndRecentAddedTags(recentTags)
+  }
   async function generateMostUsedAndRecentAddedTags(recentTags) {
-    const mostUsed = {}
+    const tagScores = {}
     for (const recentTag of recentTags) {
       if (!recentTag.tag) {
         continue
       }
-      if (mostUsed[recentTag.tag]) {
-        mostUsed[recentTag.tag].score += recentTag.score
-      } else if (recentTag.tag) {
-        mostUsed[recentTag.tag] = {
+      if (tagScores[recentTag.tag]) {
+        tagScores[recentTag.tag].score += recentTag.score
+      } else {
+        tagScores[recentTag.tag] = {
           tag: recentTag.tag,
           score: recentTag.score,
         }
       }
     }
-    const mostUsedTags2 = Object.values(mostUsed)
-      .filter((v) => v.score > getScore(1.5))
-      .sort((a, b) => {
-        return b.score - a.score
-      })
-      .map((v) => v.tag)
+    const mostUsedTags2 = Object.values(tagScores)
+      .filter((tag) => tag.score > getScore(1.5))
+      .sort((a, b) => b.score - a.score)
+      .map((tag) => tag.tag)
       .slice(0, 200)
-    const uniqSet = /* @__PURE__ */ new Set()
-    const recentAddedTags2 = recentTags
-      .map((v) => v.tag)
-      .reverse()
-      .filter((v) => v && !uniqSet.has(v) && uniqSet.add(v))
-      .slice(0, 200)
-    await setValue(storageKeyMostUsedTags, mostUsedTags2)
-    await setValue(storageKeyRecentAddedTags, recentAddedTags2)
+    const recentAddedTags2 = Array.from(
+      new Set(
+        recentTags
+          .map((tag) => tag.tag)
+          .reverse()
+          .filter(Boolean)
+      )
+    ).slice(0, 200)
+    await Promise.all([
+      setValue(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags2),
+      setValue(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags2),
+    ])
   }
   async function getMostUsedTags() {
-    return (await getValue(storageKeyMostUsedTags)) || []
+    return (await getValue(STORAGE_KEY_MOST_USED_TAGS)) || []
   }
   async function getRecentAddedTags() {
-    return (await getValue(storageKeyRecentAddedTags)) || []
+    return (await getValue(STORAGE_KEY_RECENT_ADDED_TAGS)) || []
   }
   async function getPinnedTags() {
     return splitTags(getSettingsValue("pinnedTags") || "")
@@ -1474,185 +1472,258 @@
   async function getEmojiTags() {
     return splitTags(getSettingsValue("emojiTags") || "")
   }
+  var currentExtensionVersion = "0.13.0"
+  var currentDatabaseVersion = 3
+  var storageKey2 = "extension.utags.urlmap"
+  var cachedUrlMap = {}
+  var addTagsValueChangeListenerInitialized = false
+  function createEmptyBookmarksStore() {
+    const store = {
+      data: {},
+      meta: {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+        created: Date.now(),
+        updated: Date.now(),
+      },
+    }
+    return store
+  }
+  async function getBookmarksStore() {
+    const bookmarksStore =
+      (await getValue(storageKey2)) || createEmptyBookmarksStore()
+    if (!bookmarksStore.data) {
+      bookmarksStore.data = {}
+    }
+    if (!bookmarksStore.meta) {
+      bookmarksStore.meta = createEmptyBookmarksStore().meta
+    }
+    cachedUrlMap = bookmarksStore.data
+    return bookmarksStore
+  }
+  async function persistBookmarksStore(bookmarksStore) {
+    await setValue(storageKey2, bookmarksStore)
+    cachedUrlMap = bookmarksStore.data
+  }
+  async function getUrlMap() {
+    const bookmarksStore = await getBookmarksStore()
+    return bookmarksStore.data
+  }
+  async function getCachedUrlMap() {
+    return cachedUrlMap
+  }
+  function getBookmark(key) {
+    return (
+      cachedUrlMap[key] || {
+        tags: [],
+        meta: { created: 0, updated: 0 },
+      }
+    )
+  }
+  var getTags = getBookmark
+  async function saveBookmark(key, tags, meta) {
+    var _a
+    const now = Date.now()
+    const bookmarksStore = await getBookmarksStore()
+    const urlMap = bookmarksStore.data
+    bookmarksStore.meta = __spreadProps(
+      __spreadValues({}, bookmarksStore.meta),
+      {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+        updated: now,
+      }
+    )
+    const newTags = mergeTags(tags, [])
+    let oldTags = []
+    if (newTags.length === 0 || !isValidKey(key)) {
+      delete urlMap[key]
+    } else {
+      const existingData = urlMap[key] || {}
+      oldTags = existingData.tags || []
+      const newMeta = __spreadProps(
+        __spreadValues(__spreadValues({}, existingData.meta), meta),
+        {
+          created:
+            ((_a = existingData.meta) == null ? void 0 : _a.created) || now,
+          updated: now,
+        }
+      )
+      urlMap[key] = {
+        tags: newTags,
+        meta: newMeta,
+      }
+    }
+    await persistBookmarksStore(bookmarksStore)
+    await addRecentTags(newTags, oldTags)
+  }
+  var saveTags = saveBookmark
   function addTagsValueChangeListener(func) {
     addValueChangeListener(storageKey2, func)
   }
-  addTagsValueChangeListener(async () => {
-    cachedUrlMap = void 0
-    await checkVersion()
-  })
   async function reload() {
-    console.log("Current extionsion is outdated, need reload page")
-    const urlMap = await getUrlMap()
-    urlMap.meta = urlMap.meta || {}
-    await setValue(storageKey2, urlMap)
+    console.log("Current extension is outdated, page reload required")
     location.reload()
   }
-  async function checkVersion() {
-    cachedUrlMap = await getUrlMap()
-    const meta = cachedUrlMap.meta || {}
-    if (meta.extensionVersion !== extensionVersion) {
-      console.log(
-        "Previous extension version:",
-        meta.extensionVersion,
-        "current extension version:",
-        extensionVersion
+  function isValidKey(key) {
+    return isUrl(key)
+  }
+  function isValidTags(tags) {
+    return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
+  }
+  function mergeTags(tags, tags2) {
+    const array1 = tags || []
+    const array2 = tags2 || []
+    return uniq(
+      array1
+        .concat(array2)
+        .map((tag) => (tag ? String(tag).trim() : tag))
+        .filter(Boolean)
+    )
+  }
+  async function migrateV2toV3(bookmarksStore) {
+    var _a, _b
+    console.log("Starting migration from V2 to V3")
+    const now = Date.now()
+    let minCreated = now
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in bookmarksStore) {
+      if (key === "meta") {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkV2 = bookmarksStore[key]
+      if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2))
+        )
+        continue
+      }
+      if (!bookmarkV2.tags || !isValidTags(bookmarkV2.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2.tags))
+        )
+        continue
+      }
+      if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
+        if (
+          bookmarkV2.meta.title !== void 0 &&
+          typeof bookmarkV2.meta.title !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid title type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.title)
+          )
+          delete bookmarkV2.meta.title
+        }
+        if (
+          bookmarkV2.meta.description !== void 0 &&
+          typeof bookmarkV2.meta.description !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid description type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.description)
+          )
+          delete bookmarkV2.meta.description
+        }
+        const created = Number(bookmarkV2.meta.created)
+        if (Number.isNaN(created) || created < 0) {
+          console.warn(
+            "Migration: Invalid created timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.created)
+          )
+          delete bookmarkV2.meta.created
+        }
+        const updated = Number(bookmarkV2.meta.updated)
+        if (Number.isNaN(updated) || updated < 0) {
+          console.warn(
+            "Migration: Invalid updated timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.updated)
+          )
+          delete bookmarkV2.meta.updated
+        }
+      }
+      const meta = __spreadProps(__spreadValues({}, bookmarkV2.meta), {
+        created: ((_a = bookmarkV2.meta) == null ? void 0 : _a.created) || now,
+        updated: ((_b = bookmarkV2.meta) == null ? void 0 : _b.updated) || now,
+      })
+      const bookmarkV3 = {
+        tags: bookmarkV2.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkV3
+      minCreated = Math.min(minCreated, meta.created)
+    }
+    bookmarksStoreNew.meta.created = minCreated
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.log("Migration to V3 completed successfully")
+  }
+  async function checkVersion(meta) {
+    if (meta.extensionVersion !== currentExtensionVersion) {
+      console.warn(
+        "Version mismatch - Previous: "
+          .concat(meta.extensionVersion, ", Current: ")
+          .concat(currentExtensionVersion)
       )
-      if (meta.extensionVersion > extensionVersion) {
+      if (meta.extensionVersion > currentExtensionVersion) {
       }
     }
-    if (meta.databaseVersion !== databaseVersion) {
-      console.log(
-        "Previous database version:",
-        meta.databaseVersion,
-        "current database version:",
-        databaseVersion
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      console.warn(
+        "Database version mismatch - Previous: "
+          .concat(meta.databaseVersion, ", Current: ")
+          .concat(currentDatabaseVersion)
       )
-      if (meta.databaseVersion > databaseVersion) {
+      if (meta.databaseVersion > currentDatabaseVersion) {
         await reload()
         return false
       }
     }
     return true
   }
-  function isValidKey(key) {
-    return isUrl(key)
-  }
-  function isValidTags(tags) {
-    return Array.isArray(tags)
-  }
-  function mergeTags(tags, tags2) {
-    tags = tags || []
-    tags2 = tags2 || []
-    return uniq(
-      tags
-        .concat(tags2)
-        .map((v) => (v ? String(v).trim() : v))
-        .filter(Boolean)
-    )
-  }
-  async function migrationData(urlMap) {
-    console.log("Before migration", JSON.stringify(urlMap))
-    const meta = urlMap.meta || {}
-    const now = Date.now()
-    const meta2 = { created: now, updated: now }
-    if (!meta.databaseVersion) {
-      meta.databaseVersion = 1
-    }
-    if (meta.databaseVersion === 1) {
-      for (const key in urlMap) {
-        if (!Object.hasOwn(urlMap, key)) {
-          continue
-        }
-        if (!isValidKey(key)) {
-          continue
-        }
-        const tags = urlMap[key]
-        if (!isValidTags(tags)) {
-          throw new Error("Invaid data format.")
-        }
-        const newTags = mergeTags(tags, [])
-        if (newTags.length > 0) {
-          urlMap[key] = { tags: newTags, meta: meta2 }
-        } else {
-          delete urlMap[key]
-        }
-      }
-      meta.databaseVersion = 2
-    }
-    if (meta.databaseVersion === 2) {
-    }
-    urlMap.meta = meta
-    console.log("After migration", JSON.stringify(urlMap))
-    return urlMap
-  }
-  async function mergeData(urlMapNew) {
-    if (typeof urlMapNew !== "object") {
-      throw new TypeError("Invalid data format")
-    }
-    let numberOfLinks = 0
-    let numberOfTags = 0
-    const urlMap = await getUrlMap()
-    if (
-      !urlMapNew.meta ||
-      urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion
-    ) {
-      urlMapNew = await migrationData(urlMapNew)
-    }
-    if (urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion) {
-      throw new Error("Invalid database version")
-    }
-    for (const key in urlMapNew) {
-      if (!Object.hasOwn(urlMapNew, key)) {
-        continue
-      }
-      if (!isValidKey(key)) {
-        continue
-      }
-      const tags = urlMapNew[key].tags || []
-      const meta = urlMapNew[key].meta || {}
-      if (!isValidTags(tags)) {
-        throw new Error("Invaid data format.")
-      }
-      const orgData = urlMap[key] || { tags: [] }
-      const orgTags = orgData.tags || []
-      const newTags = mergeTags(orgTags, tags)
-      const now = Date.now()
-      if (newTags.length > 0) {
-        const orgMeta = orgData.meta || {}
-        const created = Math.min(orgMeta.created || now, meta.created || now)
-        const updated = Math.max(
-          orgMeta.updated || 0,
-          meta.updated || 0,
-          created
-        )
-        const newMata = Object.assign({}, orgMeta, meta, { created, updated })
-        urlMap[key] = Object.assign({}, orgData, {
-          tags: newTags,
-          meta: newMata,
-        })
-        numberOfTags += Math.max(newTags.length - orgTags.length, 0)
-        if (orgTags.length === 0) {
-          numberOfLinks++
-        }
-      } else {
-        delete urlMap[key]
-      }
-    }
-    await setValue(storageKey2, urlMap)
-    console.log(
-      "\u6570\u636E\u5DF2\u6210\u529F\u5BFC\u5165\uFF0C\u65B0\u589E "
-        .concat(numberOfLinks, " \u6761\u94FE\u63A5\uFF0C\u65B0\u589E ")
-        .concat(numberOfTags, " \u6761\u6807\u7B7E\u3002")
-    )
-    return { numberOfLinks, numberOfTags }
-  }
-  async function migration() {
-    const result = await checkVersion()
-    if (!result) {
+  async function initBookmarksStore() {
+    cachedUrlMap = {}
+    const bookmarksStore = await getBookmarksStore()
+    const meta = bookmarksStore.meta
+    const isVersionCompatible = await checkVersion(meta)
+    if (!isVersionCompatible) {
       return
     }
-    cachedUrlMap = await getUrlMap()
-    const meta = cachedUrlMap.meta || {}
-    if (meta.databaseVersion !== databaseVersion) {
-      meta.databaseVersion = meta.databaseVersion || 1
-      if (meta.databaseVersion < databaseVersion) {
-        console.log("Migration start")
-        await saveTags("any", [])
-        console.log("Migration done")
-      }
+    if (meta.databaseVersion === 2) {
+      await migrateV2toV3(bookmarksStore)
+      await initBookmarksStore()
+      return
     }
-    const urlMapVer1 = await getUrlMapVesion1()
-    if (urlMapVer1) {
-      console.log(
-        "Migration start: database version 1 to database version",
-        databaseVersion
-      )
-      const result2 = await mergeData(urlMapVer1)
-      if (result2) {
-        await setValue("plugin.utags.tags.v1", null)
-      }
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      const errorMessage = "Database version mismatch - Previous: "
+        .concat(meta.databaseVersion, ", Current: ")
+        .concat(currentDatabaseVersion)
+      console.error(errorMessage)
+      throw new Error(errorMessage)
     }
+    console.log("Bookmarks store initialized")
+    if (!addTagsValueChangeListenerInitialized) {
+      addTagsValueChangeListenerInitialized = true
+      addTagsValueChangeListener(async () => {
+        console.log("Data updated in other tab, clearing cache")
+        cachedUrlMap = {}
+        await initBookmarksStore()
+      })
+    }
+  }
+  var mergeData = async () => {
+    return { numberOfLinks: 0, numberOfTags: 0 }
   }
   async function outputData() {
     if (
@@ -7356,7 +7427,7 @@
   }
   var displayTagsThrottled = throttle(displayTags, 500)
   async function initStorage() {
-    await migration()
+    await initBookmarksStore()
     addTagsValueChangeListener(() => {
       if (!doc.hidden) {
         setTimeout(displayTags)
