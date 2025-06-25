@@ -12,7 +12,8 @@ import {
 import { splitTags } from "utags-utils"
 
 import { i } from "../messages"
-import { getEmojiTags, saveTags } from "../storage"
+import { saveTags } from "../storage/bookmarks"
+import { getEmojiTags } from "../storage/tags"
 import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
 import { filterTags, sortTags } from "../utils"
 import { advancedPrompt } from "./advanced-tag-manager"

@@ -1,6 +1,10 @@
 import { createElement, doc } from "browser-extension-utils"
 
-import { getUrlMap, mergeData } from "../storage/index"
+import { getUrlMap } from "../storage/bookmarks"
+
+const mergeData = async () => {
+  return { numberOfLinks: 0, numberOfTags: 0 }
+}
 
 export async function outputData() {
   if (

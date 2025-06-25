@@ -1,222 +1,408 @@
-import { getSettingsValue } from "browser-extension-settings"
 import {
   addValueChangeListener,
   getValue,
   setValue,
 } from "browser-extension-storage"
 import { isUrl, uniq } from "browser-extension-utils"
-import { splitTags } from "utags-utils"
 
-import type { RecentTag } from "../types"
+import type {
+  BookmarkMetadata,
+  BookmarksData,
+  BookmarkTagsAndMetadata,
+} from "../types/bookmarks.js"
+import { addRecentTags } from "./tags.js"
 
+/**
+ * The bookmarks store.
+ * This is the main data structure that holds all bookmark information.
+ * It contains both the actual bookmark data and metadata about the store itself.
+ */
+export type BookmarksStoreV2 = {
+  [key: string]: TagsAndMeta | UrlMapMeta
+  /**
+   * Metadata about the bookmarks store.
+   * Contains version information and timestamps for tracking database state.
+   */
+  meta: {
+    /**
+     * The version number of the database schema.
+     * Used to handle migrations between different data structure versions.
+     */
+    databaseVersion: number
+    /**
+     * The version of the extension.
+     */
+    extensionVersion: string
+  }
+}
+
+/**
+ * The bookmarks store.
+ * This is the main data structure that holds all bookmark information.
+ * It contains both the actual bookmark data and metadata about the store itself.
+ */
+type BookmarksStoreV3 = {
+  /**
+   * The collection of all bookmarks, organized as a record with URLs as keys.
+   * Each entry contains tags and metadata for a specific bookmark.
+   */
+  data: BookmarksData
+  /**
+   * Metadata about the bookmarks store.
+   * Contains version information and timestamps for tracking database state.
+   */
+  meta: {
+    /**
+     * The version number of the database schema.
+     * Used to handle migrations between different data structure versions.
+     */
+    databaseVersion: number
+    /**
+     * The version of the extension.
+     */
+    extensionVersion: string
+    /**
+     * The timestamp when the bookmarks store was initially created.
+     * Stored as milliseconds since epoch.
+     */
+    created: number
+    /**
+     * The timestamp when the bookmarks store was last updated.
+     * Stored as milliseconds since epoch.
+     */
+    updated?: number
+    /**
+     * The timestamp when the bookmarks were last exported.
+     * Only used during bookmark export operations.
+     * Stored as milliseconds since epoch.
+     */
+    exported?: number
+  }
+}
+
+// V3 changed to BookmarkTagsAndMetadata
 type TagsAndMeta = {
   tags: string[]
   meta?: ItemMeta
 }
 
+// V3 changed to BookmarkMetadata
 type ItemMeta = Record<string, any>
 
 type UrlMapMeta = {
   extensionVersion: string
   databaseVersion: number
 }
-type UrlMap = Record<string, TagsAndMeta | UrlMapMeta>
+type UrlMap = BookmarksStoreV2
+type BookmarksStore = BookmarksStoreV3
 
-const extensionVersion = "0.8.0"
-const databaseVersion = 2
+/**
+ * Current extension version and database configuration
+ * TODO: Read version from package.json
+ */
+export const currentExtensionVersion = "0.13.0"
+export const currentDatabaseVersion = 3
 const storageKey = "extension.utags.urlmap"
-const storageKeyRecentTags = "extension.utags.recenttags"
-const storageKeyMostUsedTags = "extension.utags.mostusedtags"
-const storageKeyRecentAddedTags = "extension.utags.recentaddedtags"
-let cachedUrlMap: UrlMap | undefined
 
-export async function getUrlMap(): Promise<UrlMap> {
-  return ((await getValue(storageKey)) as UrlMap) || ({} as UrlMap)
-}
+/** Cache for URL map data to improve performance */
+let cachedUrlMap: BookmarksData = {}
+let addTagsValueChangeListenerInitialized = false
 
-async function getUrlMapVesion1(): Promise<Record<string, unknown>> {
-  return getValue("plugin.utags.tags.v1") as Promise<Record<string, unknown>>
-}
-
-export async function getCachedUrlMap(): Promise<Record<string, unknown>> {
-  if (!cachedUrlMap) {
-    cachedUrlMap = await getUrlMap()
+function createEmptyBookmarksStore(): BookmarksStore {
+  const store: BookmarksStore = {
+    data: {},
+    meta: {
+      databaseVersion: currentDatabaseVersion,
+      extensionVersion: currentExtensionVersion,
+      created: Date.now(),
+      updated: Date.now(),
+    },
   }
+  return store
+}
+
+async function getBookmarksStore(): Promise<BookmarksStore> {
+  const bookmarksStore: BookmarksStore =
+    ((await getValue(storageKey)) as BookmarksStore) ||
+    createEmptyBookmarksStore()
+
+  if (!bookmarksStore.data) {
+    bookmarksStore.data = {}
+  }
+
+  if (!bookmarksStore.meta) {
+    bookmarksStore.meta = createEmptyBookmarksStore().meta
+  }
+
+  cachedUrlMap = bookmarksStore.data
+  return bookmarksStore
+}
+
+async function persistBookmarksStore(bookmarksStore: BookmarksStore) {
+  await setValue(storageKey, bookmarksStore)
+  cachedUrlMap = bookmarksStore.data
+}
+
+export async function getUrlMap(): Promise<BookmarksData> {
+  const bookmarksStore = await getBookmarksStore()
+
+  return bookmarksStore.data
+}
+
+// TODO: remove this function
+export async function getCachedUrlMap(): Promise<BookmarksData> {
+  // Ensure cachedUrlMap is initialized
+  // if (!cachedUrlMap) {
+  //   try {
+  //     cachedUrlMap = await getUrlMap()
+  //   } catch (error) {
+  //     console.error("Error getting cachedUrlMap:", error)
+  //     cachedUrlMap = {}
+  //   }
+  // }
 
   return cachedUrlMap
 }
 
-export function getTags(key: string): Record<string, unknown> {
-  return (cachedUrlMap && cachedUrlMap[key]) || { tags: [] }
+/**
+ * Retrieves bookmark data for a given URL
+ * @param key URL of the bookmark
+ * @returns Bookmark data including tags and metadata
+ */
+export function getBookmark(key: string): BookmarkTagsAndMetadata {
+  return (
+    cachedUrlMap[key] || {
+      tags: [],
+      meta: { created: 0, updated: 0 },
+    }
+  )
 }
 
-export async function saveTags(
+// Alias for backward compatibility
+export const getTags = getBookmark
+
+/**
+ * Saves or updates a bookmark with tags and metadata
+ * @param key URL of the bookmark
+ * @param tags Array of tags to associate with the bookmark
+ * @param meta Additional metadata for the bookmark
+ */
+export async function saveBookmark(
   key: string,
   tags: string[],
   meta: Record<string, any>
-) {
-  // console.log("saveTags 1", key, tags, meta)
-  const urlMap = await getUrlMap()
+): Promise<void> {
+  const now = Date.now()
+  const bookmarksStore = await getBookmarksStore()
+  const urlMap = bookmarksStore.data
 
-  urlMap.meta = Object.assign({}, urlMap.meta as Record<string, unknown>, {
-    extensionVersion,
-    databaseVersion,
-  })
+  // Update store metadata
+  bookmarksStore.meta = {
+    ...bookmarksStore.meta,
+    databaseVersion: currentDatabaseVersion,
+    extensionVersion: currentExtensionVersion,
+    updated: now,
+  }
 
   const newTags = mergeTags(tags, [])
   let oldTags: string[] = []
-  if (newTags.length === 0) {
+
+  if (newTags.length === 0 || !isValidKey(key)) {
+    // Remove bookmark if no tags are provided
     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete urlMap[key]
   } else {
-    const now = Date.now()
-    const data = (urlMap[key] as TagsAndMeta) || ({} as TagsAndMeta)
-    oldTags = data.tags
-    const newMeta = Object.assign({}, data.meta, meta, {
+    // Update or create bookmark
+    const existingData = urlMap[key] || {}
+    oldTags = existingData.tags || []
+
+    const newMeta: BookmarkMetadata = {
+      ...existingData.meta,
+      ...meta,
+      created: existingData.meta?.created || now,
       updated: now,
-    }) as ItemMeta
-    newMeta.created = (newMeta.created as number) || now
+    }
+
     urlMap[key] = {
       tags: newTags,
       meta: newMeta,
     }
-    // console.log("saveTags 2", key, JSON.stringify(urlMap[key]))
   }
 
-  await setValue(storageKey, urlMap)
-
+  await persistBookmarksStore(bookmarksStore)
   await addRecentTags(newTags, oldTags)
 }
 
-function getScore(weight = 1) {
-  return (Math.floor(Date.now() / 1000) / 1_000_000_000) * weight
-}
+// Alias for backward compatibility
+export const saveTags = saveBookmark
 
-async function addRecentTags(newTags: string[], oldTags: string[]) {
-  if (newTags.length === 0) {
-    return
-  }
-
-  newTags =
-    oldTags && oldTags.length > 0
-      ? newTags.filter((v) => !oldTags.includes(v))
-      : newTags
-
-  if (newTags.length > 0) {
-    const recentTags: RecentTag[] = (await getValue(storageKeyRecentTags)) || []
-    const score = getScore()
-
-    for (const tag of newTags) {
-      recentTags.push({
-        tag,
-        score,
-      })
-    }
-
-    if (recentTags.length > 1000) {
-      recentTags.splice(0, 100)
-    }
-
-    await setValue(storageKeyRecentTags, recentTags)
-    await generateMostUsedAndRecentAddedTags(recentTags)
-  }
-}
-
-async function generateMostUsedAndRecentAddedTags(recentTags: RecentTag[]) {
-  const mostUsed: Record<string, RecentTag> = {}
-
-  for (const recentTag of recentTags) {
-    if (!recentTag.tag) {
-      continue
-    }
-
-    if (mostUsed[recentTag.tag]) {
-      mostUsed[recentTag.tag].score += recentTag.score
-    } else if (recentTag.tag) {
-      mostUsed[recentTag.tag] = {
-        tag: recentTag.tag,
-        score: recentTag.score,
-      }
-    }
-  }
-
-  const mostUsedTags = Object.values(mostUsed)
-    // Use at least 2 times
-    .filter((v) => v.score > getScore(1.5))
-    .sort((a, b) => {
-      return b.score - a.score
-    })
-    .map((v) => v.tag)
-    .slice(0, 200)
-
-  const uniqSet = new Set()
-  const recentAddedTags = recentTags
-    .map((v) => v.tag)
-    .reverse()
-    .filter((v) => v && !uniqSet.has(v) && uniqSet.add(v))
-    .slice(0, 200)
-
-  await setValue(storageKeyMostUsedTags, mostUsedTags)
-  await setValue(storageKeyRecentAddedTags, recentAddedTags)
-}
-
-export async function getMostUsedTags(): Promise<string[]> {
-  return (await getValue(storageKeyMostUsedTags)) || []
-}
-
-export async function getRecentAddedTags(): Promise<string[]> {
-  return (await getValue(storageKeyRecentAddedTags)) || []
-}
-
-export async function getPinnedTags(): Promise<string[]> {
-  return splitTags((getSettingsValue("pinnedTags") as string) || "")
-}
-
-export async function getEmojiTags(): Promise<string[]> {
-  return splitTags((getSettingsValue("emojiTags") as string) || "")
-}
-
-export function addTagsValueChangeListener(func) {
+export function addTagsValueChangeListener(
+  func: (key: string, oldValue: any, newValue: any, remote: boolean) => void
+) {
   addValueChangeListener(storageKey, func)
 }
 
-addTagsValueChangeListener(async () => {
-  cachedUrlMap = undefined
-  await checkVersion()
-})
-
+/**
+ * Reloads the page when extension version mismatch is detected
+ * TODO: Add confirmation dialog and implement reload count tracking to prevent infinite reloads
+ */
 async function reload() {
-  console.log("Current extionsion is outdated, need reload page")
-  const urlMap = await getUrlMap()
-  urlMap.meta = urlMap.meta || {}
-  await setValue(storageKey, urlMap)
+  console.log("Current extension is outdated, page reload required")
   location.reload()
 }
 
-async function checkVersion() {
-  cachedUrlMap = await getUrlMap()
-  const meta = cachedUrlMap.meta || {}
-  if (meta.extensionVersion !== extensionVersion) {
-    console.log(
-      "Previous extension version:",
-      meta.extensionVersion,
-      "current extension version:",
-      extensionVersion
+/**
+ * Validates if a given key is a valid URL
+ * @param key The key to validate
+ * @returns boolean indicating if key is a valid URL
+ */
+function isValidKey(key: string): boolean {
+  return isUrl(key)
+}
+
+/**
+ * Validates if the provided value is a valid tags array
+ * @param tags Value to validate
+ * @returns boolean indicating if value is a valid tags array
+ */
+function isValidTags(tags: unknown): boolean {
+  return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
+}
+
+/**
+ * Merges two arrays of tags, removing duplicates and empty values
+ * @param tags First array of tags
+ * @param tags2 Second array of tags
+ * @returns Merged and cleaned array of tags
+ */
+function mergeTags(tags: string[], tags2: string[]): string[] {
+  const array1 = tags || []
+  const array2 = tags2 || []
+
+  return uniq(
+    array1
+      .concat(array2)
+      .map((tag) => (tag ? String(tag).trim() : tag))
+      .filter(Boolean)
+  ) as string[]
+}
+
+/**
+ * Migrates bookmark data from V2 to V3 format
+ * @param bookmarksStore V2 format bookmark store
+ */
+async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
+  console.log("Starting migration from V2 to V3")
+  const now = Date.now()
+  let minCreated = now
+  const bookmarksStoreNew: BookmarksStoreV3 = createEmptyBookmarksStore()
+
+  for (const key in bookmarksStore) {
+    if (key === "meta") {
+      continue // Skip meta field
+    }
+
+    if (!isValidKey(key)) {
+      console.warn(`Migration: Invalid URL key: ${key}`)
+      continue
+    }
+
+    const bookmarkV2 = bookmarksStore[key] as TagsAndMeta
+    if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
+      console.warn(
+        `Migration: Invalid value for key ${key}: ${String(bookmarkV2)}`
+      )
+      continue
+    }
+
+    if (!bookmarkV2.tags || !isValidTags(bookmarkV2.tags)) {
+      console.warn(
+        `Migration: Invalid tags for key ${key}: ${String(bookmarkV2.tags)}`
+      )
+      continue
+    }
+
+    // Validate metadata fields
+    if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
+      if (
+        bookmarkV2.meta.title !== undefined &&
+        typeof bookmarkV2.meta.title !== "string"
+      ) {
+        console.warn(
+          `Migration: Invalid title type for key ${key}: ${typeof bookmarkV2.meta.title}`
+        )
+        delete bookmarkV2.meta.title
+      }
+
+      if (
+        bookmarkV2.meta.description !== undefined &&
+        typeof bookmarkV2.meta.description !== "string"
+      ) {
+        console.warn(
+          `Migration: Invalid description type for key ${key}: ${typeof bookmarkV2.meta.description}`
+        )
+        delete bookmarkV2.meta.description
+      }
+
+      const created = Number(bookmarkV2.meta.created)
+      if (Number.isNaN(created) || created < 0) {
+        console.warn(
+          `Migration: Invalid created timestamp for key ${key}: ${bookmarkV2.meta.created}`
+        )
+        delete bookmarkV2.meta.created
+      }
+
+      const updated = Number(bookmarkV2.meta.updated)
+      if (Number.isNaN(updated) || updated < 0) {
+        console.warn(
+          `Migration: Invalid updated timestamp for key ${key}: ${bookmarkV2.meta.updated}`
+        )
+        delete bookmarkV2.meta.updated
+      }
+    }
+
+    const meta: BookmarkMetadata = {
+      ...bookmarkV2.meta,
+      created: (bookmarkV2.meta?.created as number | undefined) || now,
+      updated: (bookmarkV2.meta?.updated as number | undefined) || now,
+    }
+    const bookmarkV3: BookmarkTagsAndMetadata = {
+      tags: bookmarkV2.tags,
+      meta,
+    }
+    bookmarksStoreNew.data[key] = bookmarkV3
+
+    minCreated = Math.min(minCreated, meta.created)
+  }
+
+  bookmarksStoreNew.meta.created = minCreated
+  await persistBookmarksStore(bookmarksStoreNew)
+  console.log("Migration to V3 completed successfully")
+}
+
+/**
+ * Checks if the current version is compatible with stored version
+ * @param meta Metadata containing version information
+ * @returns boolean indicating version compatibility
+ */
+async function checkVersion(meta: BookmarksStore["meta"]) {
+  if (meta.extensionVersion !== currentExtensionVersion) {
+    console.warn(
+      `Version mismatch - Previous: ${meta.extensionVersion}, Current: ${currentExtensionVersion}`
     )
-    if (meta.extensionVersion > extensionVersion) {
+    if (meta.extensionVersion > currentExtensionVersion) {
+      // TODO: Implement version upgrade handling
       // await reload()
       // return false
     }
   }
 
-  if (meta.databaseVersion !== databaseVersion) {
-    console.log(
-      "Previous database version:",
-      meta.databaseVersion,
-      "current database version:",
-      databaseVersion
+  if (meta.databaseVersion !== currentDatabaseVersion) {
+    console.warn(
+      `Database version mismatch - Previous: ${meta.databaseVersion}, Current: ${currentDatabaseVersion}`
     )
-    if (meta.databaseVersion > databaseVersion) {
+    // TODO: Add user confirmation before reload
+    if (meta.databaseVersion > currentDatabaseVersion) {
       await reload()
       return false
     }
@@ -225,163 +411,42 @@ async function checkVersion() {
   return true
 }
 
-function isValidKey(key) {
-  return isUrl(key)
-}
+/**
+ * Initialize the bookmarks store
+ * This is the first function to be called when the extension loads
+ */
+export async function initBookmarksStore(): Promise<void> {
+  cachedUrlMap = {}
+  const bookmarksStore = await getBookmarksStore()
+  const meta = bookmarksStore.meta
 
-function isValidTags(tags) {
-  return Array.isArray(tags)
-}
-
-function mergeTags(tags: string[], tags2: string[]) {
-  tags = tags || []
-  tags2 = tags2 || []
-  return uniq(
-    tags
-      .concat(tags2)
-      .map((v) => (v ? String(v).trim() : v))
-      .filter(Boolean)
-  ) as string[]
-}
-
-async function migrationData(urlMap: Record<string, unknown>) {
-  console.log("Before migration", JSON.stringify(urlMap))
-  const meta = urlMap.meta || {}
-
-  const now = Date.now()
-  const meta2 = { created: now, updated: now }
-
-  if (!meta.databaseVersion) {
-    meta.databaseVersion = 1
-  }
-
-  if (meta.databaseVersion === 1) {
-    for (const key in urlMap) {
-      if (!Object.hasOwn(urlMap, key)) {
-        continue
-      }
-
-      if (!isValidKey(key)) {
-        continue
-      }
-
-      const tags = urlMap[key]
-      if (!isValidTags(tags)) {
-        throw new Error("Invaid data format.")
-      }
-
-      const newTags = mergeTags(tags, [])
-      if (newTags.length > 0) {
-        urlMap[key] = { tags: newTags, meta: meta2 }
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-        delete urlMap[key]
-      }
-    }
-
-    meta.databaseVersion = 2
-  }
-
-  if (meta.databaseVersion === 2) {
-    // Latest version
-  }
-
-  urlMap.meta = meta
-
-  console.log("After migration", JSON.stringify(urlMap))
-  return urlMap
-}
-
-export async function mergeData(urlMapNew: Record<string, unknown>) {
-  if (typeof urlMapNew !== "object") {
-    throw new TypeError("Invalid data format")
-  }
-
-  let numberOfLinks = 0
-  let numberOfTags = 0
-  const urlMap = await getUrlMap()
-  if (
-    !urlMapNew.meta ||
-    urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion
-  ) {
-    urlMapNew = await migrationData(urlMapNew)
-  }
-
-  if (urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion) {
-    throw new Error("Invalid database version")
-  }
-
-  for (const key in urlMapNew) {
-    if (!Object.hasOwn(urlMapNew, key)) {
-      continue
-    }
-
-    if (!isValidKey(key)) {
-      continue
-    }
-
-    const tags = (urlMapNew[key].tags as string[]) || []
-    const meta = (urlMapNew[key].meta as ItemMeta) || {}
-    if (!isValidTags(tags)) {
-      throw new Error("Invaid data format.")
-    }
-
-    const orgData: TagsAndMeta = (urlMap[key] as TagsAndMeta) || { tags: [] }
-    const orgTags = orgData.tags || []
-    const newTags = mergeTags(orgTags, tags)
-    const now = Date.now()
-    if (newTags.length > 0) {
-      const orgMeta = orgData.meta || {}
-      const created = Math.min(orgMeta.created || now, meta.created || now)
-      const updated = Math.max(orgMeta.updated || 0, meta.updated || 0, created)
-      const newMata = Object.assign({}, orgMeta, meta, { created, updated })
-      urlMap[key] = Object.assign({}, orgData, { tags: newTags, meta: newMata })
-      numberOfTags += Math.max(newTags.length - orgTags.length, 0)
-      if (orgTags.length === 0) {
-        numberOfLinks++
-      }
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete urlMap[key]
-    }
-  }
-
-  await setValue(storageKey, urlMap)
-  console.log(
-    `数据已成功导入，新增 ${numberOfLinks} 条链接，新增 ${numberOfTags} 条标签。`
-  )
-  return { numberOfLinks, numberOfTags }
-}
-
-export async function migration() {
-  const result = await checkVersion()
-  if (!result) {
+  const isVersionCompatible = await checkVersion(meta)
+  if (!isVersionCompatible) {
     return
   }
 
-  cachedUrlMap = await getUrlMap()
-  // console.log(cachedUrlMap)
-  const meta = (cachedUrlMap.meta as UrlMapMeta) || ({} as UrlMapMeta)
-
-  if (meta.databaseVersion !== databaseVersion) {
-    meta.databaseVersion = meta.databaseVersion || 1
-
-    if (meta.databaseVersion < databaseVersion) {
-      console.log("Migration start")
-      await saveTags("any", [])
-      console.log("Migration done")
-    }
+  if (meta.databaseVersion === 2) {
+    await migrateV2toV3(bookmarksStore as unknown as BookmarksStoreV2)
+    // Reload data after migration
+    await initBookmarksStore()
+    return
   }
 
-  const urlMapVer1 = await getUrlMapVesion1()
-  if (urlMapVer1) {
-    console.log(
-      "Migration start: database version 1 to database version",
-      databaseVersion
-    )
-    const result = await mergeData(urlMapVer1)
-    if (result) {
-      await setValue("plugin.utags.tags.v1", null)
-    }
+  if (meta.databaseVersion !== currentDatabaseVersion) {
+    const errorMessage = `Database version mismatch - Previous: ${meta.databaseVersion}, Current: ${currentDatabaseVersion}`
+    console.error(errorMessage)
+    throw new Error(errorMessage)
+  }
+
+  console.log("Bookmarks store initialized")
+
+  if (!addTagsValueChangeListenerInitialized) {
+    addTagsValueChangeListenerInitialized = true
+    // When data is updated in other tabs, clear cache and check version
+    addTagsValueChangeListener(async () => {
+      console.log("Data updated in other tab, clearing cache")
+      cachedUrlMap = {}
+      await initBookmarksStore()
+    })
   }
 }

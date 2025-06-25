@@ -31,7 +31,9 @@
     "build:userscript": "node scripts/userscript/build.mjs && pnpm prettier --log-level warn --write build/userscript-prod/",
     "package": "run-s package:*",
     "package:chrome": "plasmo package",
-    "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip"
+    "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip",
+    "test": "vitest",
+    "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
     "browser-extension-i18n": "^0.0.6",
@@ -49,14 +51,18 @@
     "@types/node": "^24.0.3",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
     "addons-linter": "^7.15.0",
     "bookmarkleter": "^1.1.0",
     "esbuild": "^0.25.5",
     "http-server": "^14.1.1",
+    "jsdom": "^26.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.6.0",
     "sass": "^1.89.2",
     "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
     "xo": "^0.60.0"
   },
   "manifest": {
@@ -92,6 +98,12 @@
         }
       },
       {
+        "files": "src/**/*.test.ts",
+        "rules": {
+          "@typescript-eslint/naming-convention": 0
+        }
+      },
+      {
         "files": "src/sites/**/*.ts",
         "rules": {
           "n/file-extension-in-import": 0
@@ -99,6 +111,7 @@
       }
     ],
     "ignores": [
+      "src/storage/index.ts",
       "build/**/*"
     ]
   },
