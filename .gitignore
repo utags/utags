@@ -46,3 +46,4 @@ keys.json
 tsconfig.tsbuildinfo
 
 ._*
+src/remote/**

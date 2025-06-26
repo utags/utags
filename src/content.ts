@@ -30,6 +30,7 @@ import {
   bindWindowEvents,
   hideAllUtagsInArea,
 } from "./modules/global-events"
+import { destroySyncAdapter, initSyncAdapter } from "./modules/sync-adapter"
 import {
   isAvailableOnCurrentSite,
   TAG_VISITED,
@@ -477,6 +478,7 @@ const displayTagsThrottled = throttle(displayTags, 500)
 
 async function initStorage() {
   await initBookmarksStore()
+  initSyncAdapter()
   addTagsValueChangeListener(() => {
     if (!doc.hidden) {
       setTimeout(displayTags)
