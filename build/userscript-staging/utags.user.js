@@ -1350,6 +1350,33 @@
     "en,en-US": en_default2,
     "zh,zh-CN": zh_cn_default2,
   })
+  var MIN_VALID_TIMESTAMP = 631152e6
+  var MAX_VALID_TIMESTAMP = 9999999999999
+  function isValidDate(date) {
+    return (
+      typeof date === "number" &&
+      date > MIN_VALID_TIMESTAMP &&
+      date < MAX_VALID_TIMESTAMP
+    )
+  }
+  function normalizeCreated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const minValidDate = Math.min(
+      isCreatedValid ? created : Infinity,
+      isUpdatedValid ? updated : Infinity
+    )
+    return Number.isFinite(minValidDate) ? minValidDate : defaultDate
+  }
+  function normalizeUpdated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const maxValidDate = Math.max(
+      isCreatedValid ? created : 0,
+      isUpdatedValid ? updated : 0
+    )
+    return maxValidDate || defaultDate
+  }
   function trimTitle(title) {
     if (!title) return ""
     return title.replaceAll(/\s+/gm, " ").trim()
@@ -1476,7 +1503,7 @@
   async function getEmojiTags() {
     return splitTags(getSettingsValue("emojiTags") || "")
   }
-  var currentExtensionVersion = "0.13.0"
+  var currentExtensionVersion = "0.14.2"
   var currentDatabaseVersion = 3
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap = {}
@@ -1534,7 +1561,7 @@
   }
   var getTags = getBookmark
   async function saveBookmark(key, tags, meta) {
-    var _a
+    var _a, _b
     const now = Date.now()
     const bookmarksStore = await getBookmarksStore()
     const urlMap = bookmarksStore.data
@@ -1556,8 +1583,11 @@
       const newMeta = __spreadProps(
         __spreadValues(__spreadValues({}, existingData.meta), meta),
         {
-          created:
-            ((_a = existingData.meta) == null ? void 0 : _a.created) || now,
+          created: normalizeCreated(
+            (_a = existingData.meta) == null ? void 0 : _a.created,
+            (_b = existingData.meta) == null ? void 0 : _b.updated,
+            now
+          ),
           updated: now,
         }
       )
@@ -1594,7 +1624,7 @@
     )
   }
   async function migrateV2toV3(bookmarksStore) {
-    var _a, _b
+    var _a, _b, _c
     console.log("Starting migration from V2 to V3")
     const now = Date.now()
     let minCreated = now
@@ -1666,18 +1696,89 @@
           delete bookmarkV2.meta.updated
         }
       }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkV2.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkV2.meta) == null ? void 0 : _b.updated,
+        now
+      )
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkV2.meta) == null ? void 0 : _c.updated,
+        now
+      )
       const meta = __spreadProps(__spreadValues({}, bookmarkV2.meta), {
-        created: ((_a = bookmarkV2.meta) == null ? void 0 : _a.created) || now,
-        updated: ((_b = bookmarkV2.meta) == null ? void 0 : _b.updated) || now,
+        created: normalizedCreated,
+        updated: normalizedUpdated,
       })
       const bookmarkV3 = {
         tags: bookmarkV2.tags,
         meta,
       }
       bookmarksStoreNew.data[key] = bookmarkV3
-      minCreated = Math.min(minCreated, meta.created)
+      minCreated = Math.min(minCreated, normalizedCreated)
     }
     bookmarksStoreNew.meta.created = minCreated
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.log("Migration to V3 completed successfully")
+  }
+  async function migrateV3_fixV0_13_0TimestampBug(bookmarksStore) {
+    var _a, _b, _c
+    const oldMeta = bookmarksStore.meta
+    const oldData = bookmarksStore.data
+    if (oldMeta.extensionVersion !== "0.13.0") {
+      return
+    }
+    console.log(
+      "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
+    )
+    const now = Date.now()
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in oldData) {
+      if (!Object.hasOwn(oldData, key)) {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkOld = oldData[key]
+      if (!bookmarkOld || typeof bookmarkOld !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld))
+        )
+        continue
+      }
+      if (!bookmarkOld.tags || !isValidTags(bookmarkOld.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld.tags))
+        )
+        continue
+      }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkOld.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkOld.meta) == null ? void 0 : _b.updated,
+        now
+      )
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkOld.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      const meta = __spreadProps(__spreadValues({}, bookmarkOld.meta), {
+        created: normalizedCreated,
+        updated: normalizedUpdated,
+      })
+      const bookmarkNew = {
+        tags: bookmarkOld.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkNew
+    }
+    bookmarksStoreNew.meta.created = oldMeta.created
     await persistBookmarksStore(bookmarksStoreNew)
     console.log("Migration to V3 completed successfully")
   }
@@ -1714,6 +1815,11 @@
     }
     if (meta.databaseVersion === 2) {
       await migrateV2toV3(bookmarksStore)
+      await initBookmarksStore()
+      return
+    }
+    if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
+      await migrateV3_fixV0_13_0TimestampBug(bookmarksStore)
       await initBookmarksStore()
       return
     }
