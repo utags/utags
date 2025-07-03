@@ -4,6 +4,7 @@ import {
   setValue,
 } from "browser-extension-storage"
 import { isUrl, uniq } from "browser-extension-utils"
+import { normalizeCreated, normalizeUpdated } from "utags-utils"
 
 import type {
   BookmarkMetadata,
@@ -100,7 +101,7 @@ type BookmarksStore = BookmarksStoreV3
  * Current extension version and database configuration
  * TODO: Read version from package.json
  */
-export const currentExtensionVersion = "0.13.0"
+export const currentExtensionVersion = "0.14.1"
 export const currentDatabaseVersion = 3
 const storageKey = "extension.utags.urlmap"
 
@@ -257,7 +258,13 @@ export async function saveBookmark(
     const newMeta: BookmarkMetadata = {
       ...existingData.meta,
       ...meta,
-      created: existingData.meta?.created || now,
+      // Use existing data's created time, not the input meta.created
+      // This preserves the original creation timestamp of the bookmark
+      created: normalizeCreated(
+        existingData.meta?.created,
+        existingData.meta?.updated,
+        now
+      ),
       updated: now,
     }
 
@@ -330,7 +337,18 @@ function mergeTags(tags: string[], tags2: string[]): string[] {
  * @param bookmarksStore V2 format bookmark store
  */
 async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
-  console.log("Starting migration from V2 to V3")
+  const meta = bookmarksStore.meta
+  if (meta.databaseVersion === 2) {
+    console.log("Starting migration database from V2 to V3")
+  } else if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
+    console.log(
+      "Starting migration extension from v0.13.0 to v" + currentDatabaseVersion
+    )
+  } else {
+    console.log("No migration needed")
+    return
+  }
+
   const now = Date.now()
   let minCreated = now
   const bookmarksStoreNew: BookmarksStoreV3 = createEmptyBookmarksStore()
@@ -399,10 +417,20 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
       }
     }
 
+    const normalizedCreated = normalizeCreated(
+      bookmarkV2.meta?.created as number | undefined,
+      bookmarkV2.meta?.updated as number | undefined,
+      now
+    )
+    const normalizedUpdated = normalizeUpdated(
+      normalizedCreated,
+      bookmarkV2.meta?.updated as number | undefined,
+      now
+    )
     const meta: BookmarkMetadata = {
       ...bookmarkV2.meta,
-      created: (bookmarkV2.meta?.created as number | undefined) || now,
-      updated: (bookmarkV2.meta?.updated as number | undefined) || now,
+      created: normalizedCreated,
+      updated: normalizedUpdated,
     }
     const bookmarkV3: BookmarkTagsAndMetadata = {
       tags: bookmarkV2.tags,
@@ -410,7 +438,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
     }
     bookmarksStoreNew.data[key] = bookmarkV3
 
-    minCreated = Math.min(minCreated, meta.created)
+    minCreated = Math.min(minCreated, normalizedCreated)
   }
 
   bookmarksStoreNew.meta.created = minCreated
@@ -463,7 +491,10 @@ export async function initBookmarksStore(): Promise<void> {
     return
   }
 
-  if (meta.databaseVersion === 2) {
+  if (
+    meta.databaseVersion === 2 ||
+    (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0")
+  ) {
     await migrateV2toV3(bookmarksStore as unknown as BookmarksStoreV2)
     // Reload data after migration
     await initBookmarksStore()
