@@ -10,6 +10,10 @@
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}
+// @match                https://*.utags.link/*
+// @match                https://*.utags.top/*
+// @match                https://*.utags.plus/*
+// @match                https://*.utags.vip/*
 // @match                https://x.com/*
 // @match                https://twitter.com/*
 // @match                https://github.com/*

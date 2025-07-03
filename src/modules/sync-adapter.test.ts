@@ -59,6 +59,10 @@ let mockPostMessage: Mock
 let mockAddEventListener: Mock
 let mockRemoveEventListener: Mock
 let mockWindow: Window
+let loadMetadataMockValue:
+  | SyncMetadata
+  | undefined
+  | (() => Promise<SyncMetadata | undefined>)
 const testExtensionId = "utags-extension"
 
 // Helper to simulate a message from the webapp
@@ -93,11 +97,21 @@ const getSentMessage = (callIndex = 0) => {
   ][0] as BrowserExtensionResponse<any>
 }
 
+const setMockMetadata = (
+  metadata: SyncMetadata | undefined | (() => Promise<SyncMetadata | undefined>)
+) => {
+  loadMetadataMockValue = metadata
+}
+
 describe("SyncAdapter", () => {
   let messageHandler: Mock<(event: MessageEvent) => Promise<void>>
 
   beforeEach(async () => {
     vi.resetAllMocks()
+
+    // Mock process.env.PLASMO_TAG to prevent undefined error
+    vi.stubEnv("PLASMO_TARGET", "userscript")
+    vi.stubEnv("PLASMO_TAG", "dev")
 
     mockPostMessage = vi.fn()
 
@@ -143,8 +157,24 @@ describe("SyncAdapter", () => {
 
     destroySyncAdapter()
 
+    loadMetadataMockValue = undefined
     // Mock getValue to return the extension ID
-    ;(getValue as Mock).mockResolvedValue(testExtensionId)
+    ;(getValue as Mock).mockImplementation(async (key: string) => {
+      if (key.includes("extension_id")) {
+        return testExtensionId
+      }
+
+      if (key.includes("metadata")) {
+        if (typeof loadMetadataMockValue === "function") {
+          const metadata = await loadMetadataMockValue()
+          return metadata
+        }
+
+        return loadMetadataMockValue
+      }
+
+      return undefined // Mock data comes from serializeBookmarks
+    })
     // initSyncAdapter must be called AFTER the mock window is set up
     // so it can capture the spied-upon addEventListener
     await initSyncAdapter()
@@ -263,7 +293,7 @@ describe("SyncAdapter", () => {
     it("should handle GET_REMOTE_METADATA request when metadata exists", async () => {
       const existingMetadata = { timestamp: 123, version: "v1" }
       await initSyncAdapter()
-      ;(getValue as Mock).mockResolvedValue(existingMetadata)
+      setMockMetadata(existingMetadata)
       await simulateWebappMessage("GET_REMOTE_METADATA")
       expect(messageHandler).toHaveBeenCalled()
       expect(mockPostMessage).toHaveBeenCalled()
@@ -273,7 +303,7 @@ describe("SyncAdapter", () => {
     })
 
     it("should return undefined for GET_REMOTE_METADATA when no data exists", async () => {
-      ;(getValue as Mock).mockResolvedValue(undefined)
+      setMockMetadata(undefined)
       await simulateWebappMessage("GET_REMOTE_METADATA")
       expect(messageHandler).toHaveBeenCalled()
       expect(mockPostMessage).toHaveBeenCalled()
@@ -288,13 +318,7 @@ describe("SyncAdapter", () => {
         bookmarks: [{ url: "https://example.com" }],
       })
       const mockMetadata = { timestamp: 123, version: "v1" }
-      ;(getValue as Mock).mockImplementation(async (key: string) => {
-        if (key.includes("metadata")) {
-          return mockMetadata
-        }
-
-        return undefined // Mock data comes from serializeBookmarks
-      })
+      setMockMetadata(mockMetadata)
       ;(serializeBookmarks as Mock).mockResolvedValue(mockData)
 
       await simulateWebappMessage("DOWNLOAD_DATA")
@@ -310,7 +334,7 @@ describe("SyncAdapter", () => {
     })
 
     it("should return empty data for DOWNLOAD_DATA when no data exists", async () => {
-      ;(getValue as Mock).mockResolvedValue(undefined)
+      setMockMetadata(undefined)
       ;(serializeBookmarks as Mock).mockResolvedValue("")
 
       await simulateWebappMessage("DOWNLOAD_DATA")
@@ -324,7 +348,7 @@ describe("SyncAdapter", () => {
 
     describe("UPLOAD_DATA handling", () => {
       it("should handle a valid UPLOAD_DATA request when no remote data exists", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote data
+        setMockMetadata(undefined) // No remote data
         const mockData = JSON.stringify({ foo: "bar" })
         await simulateWebappMessage("UPLOAD_DATA", { data: mockData })
         expect(setValue).toHaveBeenCalled()
@@ -339,7 +363,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should increment version on subsequent uploads", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote data
+        setMockMetadata(undefined) // No remote data
         const mockData = JSON.stringify({ foo: "bar" })
         await simulateWebappMessage("UPLOAD_DATA", { data: mockData })
         let response = getSentMessage(
@@ -350,7 +374,7 @@ describe("SyncAdapter", () => {
         // Simulate the second upload
         const existingMetadata = (response.payload as UploadMessagePayload)
           .metadata
-        ;(getValue as Mock).mockResolvedValue(existingMetadata)
+        setMockMetadata(existingMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: `{"data": "new data"}`,
@@ -387,7 +411,7 @@ describe("SyncAdapter", () => {
     describe("UPLOAD_DATA conflicts", () => {
       it("should fail if expected metadata does not match current metadata", async () => {
         const existingMetadata = { timestamp: 2, version: "v1" }
-        ;(getValue as Mock).mockResolvedValue(existingMetadata)
+        setMockMetadata(existingMetadata)
 
         const mockMetadata = { timestamp: 1, version: "v1" } // Mismatched timestamp
 
@@ -406,7 +430,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should fail if expected metadata is provided but no remote data exists", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
 
         const mockMetadata = { timestamp: 1, version: "v1" }
 
@@ -426,7 +450,7 @@ describe("SyncAdapter", () => {
 
       it("should fail if remote data exists but no expected metadata is provided", async () => {
         const existingMetadata = { timestamp: 1, version: "v1" }
-        ;(getValue as Mock).mockResolvedValue(existingMetadata)
+        setMockMetadata(existingMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: "new data",
@@ -497,7 +521,7 @@ describe("SyncAdapter", () => {
     describe("getVersionNumber logic through UPLOAD_DATA", () => {
       it("should default to v1 if version format is invalid", async () => {
         const existingMetadata = { timestamp: 123, version: "invalid-format" }
-        ;(getValue as Mock).mockResolvedValue(existingMetadata)
+        setMockMetadata(existingMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: `{"data": "some data"}`,
@@ -509,12 +533,14 @@ describe("SyncAdapter", () => {
       })
 
       it("should default to v1 if version is missing", async () => {
-        const existingMetadata = { timestamp: 123, version: undefined }
-        ;(getValue as Mock).mockResolvedValue(existingMetadata)
+        const existingMetadata = {
+          timestamp: 123,
+          version: undefined,
+        } as unknown as SyncMetadata
+        setMockMetadata(existingMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: `{"data": "some data"}`,
-          // @ts-expect-error - for testing
           metadata: existingMetadata,
         })
 
@@ -543,7 +569,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle errors when saving data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const mockData = JSON.stringify({ foo: "bar" })
         ;(deserializeBookmarks as Mock).mockRejectedValue(
           new Error("Deserialization failed")
@@ -555,7 +581,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle errors when saving metadata", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const mockData = JSON.stringify({ foo: "bar" })
         ;(deserializeBookmarks as Mock).mockResolvedValue(undefined)
         ;(setValue as Mock).mockRejectedValue(new Error("Metadata save failed"))
@@ -614,7 +640,7 @@ describe("SyncAdapter", () => {
 
     describe("Additional Edge Cases", () => {
       it("should handle messages with empty string data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         await simulateWebappMessage("UPLOAD_DATA", { data: "" })
         const response = getSentMessage()
         expect(response.type).toBe("UPLOAD_DATA")
@@ -623,7 +649,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle messages with very large data payload", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const largeData = "x".repeat(1_000_000) // 1MB of data
         await simulateWebappMessage("UPLOAD_DATA", {
           data: JSON.stringify(largeData),
@@ -634,7 +660,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle malformed JSON in UPLOAD_DATA", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const malformedJson = '{"incomplete": '
         await simulateWebappMessage("UPLOAD_DATA", { data: malformedJson })
         const response = getSentMessage()
@@ -674,9 +700,9 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle version overflow gracefully", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const highVersionMetadata = { timestamp: 123, version: "v999999" }
-        ;(getValue as Mock).mockResolvedValue(highVersionMetadata)
+        setMockMetadata(highVersionMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: JSON.stringify("test data"),
@@ -689,9 +715,9 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle metadata with negative version numbers", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const negativeVersionMetadata = { timestamp: 123, version: "v-1" }
-        ;(getValue as Mock).mockResolvedValue(negativeVersionMetadata)
+        setMockMetadata(negativeVersionMetadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: JSON.stringify("test data"),
@@ -705,7 +731,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle messages with special characters in data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const specialCharsData = JSON.stringify({
           text: 'Hello 世界! 🌍 "quotes" \n\t\r',
           emoji: "🚀💻🎉",
@@ -723,7 +749,7 @@ describe("SyncAdapter", () => {
       it("should handle timestamp precision edge cases", async () => {
         const preciseTimestamp = 1_234_567_890_123.456
         const metadata = { timestamp: preciseTimestamp, version: "v1" }
-        ;(getValue as Mock).mockResolvedValue(metadata)
+        setMockMetadata(metadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: JSON.stringify("test"),
@@ -892,7 +918,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle XSS attempts in message data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const xssPayload = '<script>alert("XSS")</script>'
         await simulateWebappMessage("UPLOAD_DATA", { data: xssPayload })
 
@@ -903,7 +929,7 @@ describe("SyncAdapter", () => {
       })
 
       it("should handle SQL injection attempts in data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         const sqlInjection = "'; DROP TABLE users; --"
         await simulateWebappMessage("UPLOAD_DATA", { data: sqlInjection })
 
@@ -974,7 +1000,7 @@ describe("SyncAdapter", () => {
     describe("Async Operation Tests", () => {
       it("should handle slow storage operations", async () => {
         // Mock slow getValue operation
-        ;(getValue as Mock).mockImplementation(
+        setMockMetadata(
           async () =>
             new Promise((resolve) =>
               // eslint-disable-next-line no-promise-executor-return, max-nested-callbacks
@@ -994,7 +1020,7 @@ describe("SyncAdapter", () => {
 
       it("should handle storage operation timeouts gracefully", async () => {
         // Mock a very slow operation that might timeout
-        ;(getValue as Mock).mockImplementation(
+        setMockMetadata(
           async () =>
             new Promise((resolve) =>
               // eslint-disable-next-line no-promise-executor-return
@@ -1011,7 +1037,7 @@ describe("SyncAdapter", () => {
 
       it("should handle interleaved async operations", async () => {
         let callCount = 0
-        ;(getValue as Mock).mockImplementation(async () => {
+        setMockMetadata(async () => {
           const delay = callCount++ * 50 // Increasing delays
           // eslint-disable-next-line no-promise-executor-return
           await new Promise((resolve) => setTimeout(resolve, delay))
@@ -1032,7 +1058,7 @@ describe("SyncAdapter", () => {
 
     describe("Edge Case Data Scenarios", () => {
       it("should handle circular reference attempts in data", async () => {
-        ;(getValue as Mock).mockResolvedValue(undefined) // No remote metadata
+        setMockMetadata(undefined) // No remote metadata
         // This would normally cause JSON.stringify to fail, but we're passing pre-stringified data
         const circularData = '{"self": "reference to self"}'
         await simulateWebappMessage("UPLOAD_DATA", { data: circularData })
@@ -1045,7 +1071,7 @@ describe("SyncAdapter", () => {
       it("should handle extremely long version strings", async () => {
         const longVersion = "v" + "1".repeat(1000)
         const metadata = { timestamp: 123, version: longVersion }
-        ;(getValue as Mock).mockResolvedValue(metadata)
+        setMockMetadata(metadata)
 
         await simulateWebappMessage("UPLOAD_DATA", {
           data: JSON.stringify("test"),
@@ -1064,7 +1090,7 @@ describe("SyncAdapter", () => {
 
         for (const timestamp of edgeCaseTimestamps) {
           const metadata = { timestamp, version: "v1" }
-          ;(getValue as Mock).mockResolvedValue(metadata)
+          setMockMetadata(metadata)
 
           // eslint-disable-next-line no-await-in-loop
           await simulateWebappMessage("UPLOAD_DATA", {

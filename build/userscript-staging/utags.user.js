@@ -10,6 +10,10 @@
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
+// @match                https://*.utags.link/*
+// @match                https://*.utags.top/*
+// @match                https://*.utags.plus/*
+// @match                https://*.utags.vip/*
 // @match                https://x.com/*
 // @match                https://twitter.com/*
 // @match                https://github.com/*
@@ -1766,6 +1770,8 @@
       })
     }
   }
+  var isUserscript = true
+  var isProduction = false
   function getFirstHeadElement(tagName = "h1") {
     for (const element of $$(tagName)) {
       if (element.closest(".browser_extension_settings_container")) {
@@ -2648,7 +2654,7 @@
       return false
     }
     if (
-      !/^(utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
+      !/^((.*\.)?utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
         location.hostname
       )
     ) {
@@ -2802,16 +2808,16 @@
     event.source.postMessage(response, event.origin)
   }
   async function initExtensionId() {
+    const type = isUserscript ? "Userscript" : "Extension"
+    const tag = isProduction ? "" : " - ".concat("staging".toUpperCase())
     let storedId = await getValue(STORAGE_KEY_EXTENSION_ID)
     if (!storedId) {
-      storedId = "utags-extension-".concat(crypto.randomUUID())
+      storedId = "utags-"
+        .concat(type.toLowerCase(), "-")
+        .concat(crypto.randomUUID())
       await setValue(STORAGE_KEY_EXTENSION_ID, storedId)
     }
     MY_EXTENSION_ID = storedId
-    const type = false ? "Extension" : "Userscript"
-    const tag = false
-      ? ""
-      : " - ".concat("staging" == null ? void 0 : "staging".toUpperCase())
     MY_EXTENSION_NAME = "UTags ".concat(type).concat(tag)
     console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
   }

@@ -6,6 +6,7 @@ import {
 import { parseInt10 } from "browser-extension-utils"
 
 import { deserializeBookmarks, serializeBookmarks } from "../storage/bookmarks"
+import { isProduction, isUserscript } from "../utils"
 
 // Message types for communication with the webapp
 type MessageType =
@@ -158,7 +159,7 @@ function isValidMessage(event: MessageEvent): boolean {
   }
 
   if (
-    !/^(utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
+    !/^((.*\.)?utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
       location.hostname
     )
   ) {
@@ -338,26 +339,20 @@ const messageHandler = async (event: MessageEvent) => {
 }
 
 async function initExtensionId(): Promise<void> {
+  const type = isUserscript ? "Userscript" : "Extension"
+  // eslint-disable-next-line n/prefer-global/process
+  const tag = isProduction ? "" : ` - ${process.env.PLASMO_TAG!.toUpperCase()}`
+
   let storedId: string | undefined = (await getValue(
     STORAGE_KEY_EXTENSION_ID
   )) as string | undefined
+
   if (!storedId) {
-    storedId = `utags-extension-${crypto.randomUUID()}`
+    storedId = `utags-${type.toLowerCase()}-${crypto.randomUUID()}`
     await setValue(STORAGE_KEY_EXTENSION_ID, storedId)
   }
 
   MY_EXTENSION_ID = storedId
-  const type =
-    // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "chrome-mv3" ||
-    // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "firefox-mv2"
-      ? "Extension"
-      : "Userscript"
-  const tag =
-    process.env.PLASMO_TAG === "production"
-      ? ""
-      : ` - ${process.env.PLASMO_TAG?.toUpperCase()}`
   MY_EXTENSION_NAME = `UTags ${type}${tag}`
   // MY_EXTENSION_ID = 'utags-extension'
   console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)

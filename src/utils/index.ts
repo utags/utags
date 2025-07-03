@@ -1,5 +1,16 @@
 import { $$, createElement } from "browser-extension-utils"
 
+// eslint-disable-next-line n/prefer-global/process
+export const isChromeExtension = process.env.PLASMO_TARGET === "chrome-mv3"
+// eslint-disable-next-line n/prefer-global/process
+export const isFirefoxExtension = process.env.PLASMO_TARGET === "firefox-mv2"
+export const isExtension = isChromeExtension || isFirefoxExtension
+// @ts-expect-error `scripts/common.mjs` handle it
+// eslint-disable-next-line n/prefer-global/process
+export const isUserscript = process.env.PLASMO_TARGET === "userscript"
+// eslint-disable-next-line n/prefer-global/process
+export const isProduction = process.env.PLASMO_TAG === "prod"
+
 export function cloneWithoutUtags(element: HTMLElement) {
   const newElement = element.cloneNode(true) as HTMLElement
   for (const utag of $$(".utags_ul", newElement)) {
