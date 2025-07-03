@@ -138,9 +138,47 @@ async function getBookmarksStore(): Promise<BookmarksStore> {
   return bookmarksStore
 }
 
-async function persistBookmarksStore(bookmarksStore: BookmarksStore) {
+/**
+ * Serializes the current bookmarks store to a JSON string.
+ * This is used for exporting bookmarks or syncing with other instances.
+ *
+ * @returns A promise that resolves with the serialized bookmarks store
+ */
+export async function serializeBookmarks(): Promise<string> {
+  const bookmarksStore = await getBookmarksStore()
+  return JSON.stringify(bookmarksStore)
+}
+
+/**
+ * Persists the bookmarks store to storage and updates the cache.
+ *
+ * @param bookmarksStore The bookmarks store to persist
+ * @returns A promise that resolves when the store is persisted
+ */
+async function persistBookmarksStore(
+  bookmarksStore: BookmarksStore | undefined
+) {
   await setValue(storageKey, bookmarksStore)
-  cachedUrlMap = bookmarksStore.data
+  cachedUrlMap = bookmarksStore ? bookmarksStore.data : {}
+}
+
+/**
+ * Deserializes a JSON string into the bookmarks store and persists it.
+ * This is used for importing bookmarks or syncing with other instances.
+ *
+ * @param data The serialized bookmarks store data
+ * @returns A promise that resolves when the data is deserialized and persisted
+ * @throws {Error} If the data is invalid or cannot be parsed
+ */
+export async function deserializeBookmarks(
+  data: string | undefined
+): Promise<void> {
+  const bookmarksStore = data ? (JSON.parse(data) as BookmarksStore) : undefined
+  // TODO: validate data structure and types
+  // TODO: validate version compatibility
+  // TODO: validate data integrity
+
+  await persistBookmarksStore(bookmarksStore)
 }
 
 export async function getUrlMap(): Promise<BookmarksData> {

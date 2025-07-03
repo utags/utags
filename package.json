@@ -32,7 +32,8 @@
     "package": "run-s package:*",
     "package:chrome": "plasmo package",
     "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip",
-    "test": "vitest",
+    "test": "vitest --run",
+    "test:watch": "vitest watch",
     "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {

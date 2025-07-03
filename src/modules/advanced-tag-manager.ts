@@ -529,7 +529,9 @@ function createPromptView(
       return
     }
 
-    const li = target.closest("ul.utags_select_list li")!
+    const li = target.closest("ul.utags_select_list li") as
+      | HTMLElement
+      | undefined
     if (li) {
       removeAllActive()
       addClass(li, "utags_active2")

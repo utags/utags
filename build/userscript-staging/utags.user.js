@@ -1501,9 +1501,17 @@
     cachedUrlMap = bookmarksStore.data
     return bookmarksStore
   }
+  async function serializeBookmarks() {
+    const bookmarksStore = await getBookmarksStore()
+    return JSON.stringify(bookmarksStore)
+  }
   async function persistBookmarksStore(bookmarksStore) {
     await setValue(storageKey2, bookmarksStore)
-    cachedUrlMap = bookmarksStore.data
+    cachedUrlMap = bookmarksStore ? bookmarksStore.data : {}
+  }
+  async function deserializeBookmarks(data) {
+    const bookmarksStore = data ? JSON.parse(data) : void 0
+    await persistBookmarksStore(bookmarksStore)
   }
   async function getUrlMap() {
     const bookmarksStore = await getBookmarksStore()
@@ -2599,6 +2607,223 @@
     addEventListener(globalThis, "locationchange", function () {
       hideAllUtagsInArea()
     })
+  }
+  var SCRIPT_NAME = "[UTags Extension Sync Adapter]"
+  var MY_EXTENSION_ID
+  var MY_EXTENSION_NAME
+  var STORAGE_KEY_EXTENSION_ID = "extension.utags.extension_id"
+  var SYNC_STORAGE_KEY_METADATA = "extension.utags.sync_metadata"
+  var SOURCE_WEBAPP = "utags-webapp"
+  var SOURCE_EXTENSION = "utags-extension"
+  var PING_MESSAGE_TYPE = "PING"
+  var PONG_MESSAGE_TYPE = "PONG"
+  var DISCOVER_MESSAGE_TYPE = "DISCOVER_UTAGS_TARGETS"
+  var DISCOVERY_RESPONSE_TYPE = "DISCOVERY_RESPONSE"
+  var GET_REMOTE_METADATA_MESSAGE_TYPE = "GET_REMOTE_METADATA"
+  var DOWNLOAD_MESSAGE_TYPE = "DOWNLOAD_DATA"
+  var UPLOAD_MESSAGE_TYPE = "UPLOAD_DATA"
+  var GET_AUTH_STATUS_MESSAGE_TYPE = "GET_AUTH_STATUS"
+  async function saveData(data) {
+    await deserializeBookmarks(data)
+  }
+  async function loadData() {
+    const data = await serializeBookmarks()
+    return data || ""
+  }
+  async function saveMetadata(metadata) {
+    await setValue(SYNC_STORAGE_KEY_METADATA, metadata)
+  }
+  async function loadMetadata() {
+    return await getValue(SYNC_STORAGE_KEY_METADATA)
+  }
+  function getVersionNumber(metadata) {
+    const version =
+      metadata && metadata.version
+        ? parseInt10(metadata.version.replace("v", ""), 0)
+        : 0
+    return Math.max(version, 0)
+  }
+  function isValidMessage(event) {
+    if (event.origin !== location.origin) {
+      return false
+    }
+    if (
+      !/^(utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
+        location.hostname
+      )
+    ) {
+      return false
+    }
+    if (!event.source || typeof event.source.postMessage !== "function") {
+      return false
+    }
+    const message = event.data
+    if (
+      !message ||
+      typeof message !== "object" ||
+      message.source !== SOURCE_WEBAPP || // Check source
+      !message.id || // Check for id
+      (message.targetExtensionId !== MY_EXTENSION_ID &&
+        message.targetExtensionId !== "*") || // Allow broadcast messages
+      !message.type || // Check for type (which is the action)
+      typeof message.type !== "string" ||
+      ![
+        PING_MESSAGE_TYPE,
+        DISCOVER_MESSAGE_TYPE,
+        GET_AUTH_STATUS_MESSAGE_TYPE,
+        GET_REMOTE_METADATA_MESSAGE_TYPE,
+        DOWNLOAD_MESSAGE_TYPE,
+        UPLOAD_MESSAGE_TYPE,
+      ].includes(message.type)
+    ) {
+      return false
+    }
+    return true
+  }
+  var messageHandler = async (event) => {
+    if (!MY_EXTENSION_ID) {
+      console.error("MY_EXTENSION_ID not initialized")
+      return
+    }
+    if (!isValidMessage(event)) {
+      return
+    }
+    const message = event.data
+    console.log("".concat(SCRIPT_NAME, " Received message:"), message)
+    let responsePayload
+    let error
+    const actionType = message.type
+    const payload = message.payload
+    const id = message.id
+    try {
+      const remoteMetadata = await loadMetadata()
+      switch (actionType) {
+        case DISCOVER_MESSAGE_TYPE: {
+          responsePayload = {
+            extensionId: MY_EXTENSION_ID,
+            extensionName: MY_EXTENSION_NAME,
+          }
+          event.source.postMessage(
+            {
+              source: SOURCE_EXTENSION,
+              type: DISCOVERY_RESPONSE_TYPE,
+              id,
+              extensionId: MY_EXTENSION_ID,
+              payload: responsePayload,
+            },
+            event.origin
+          )
+          console.log(
+            "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
+          )
+          return
+        }
+        case PING_MESSAGE_TYPE: {
+          responsePayload = { status: PONG_MESSAGE_TYPE }
+          console.log(
+            "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
+          )
+          break
+        }
+        case GET_AUTH_STATUS_MESSAGE_TYPE: {
+          responsePayload = { status: "authenticated" }
+          console.log(
+            "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case GET_REMOTE_METADATA_MESSAGE_TYPE: {
+          responsePayload = { metadata: remoteMetadata }
+          console.log(
+            "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case DOWNLOAD_MESSAGE_TYPE: {
+          const data = await loadData()
+          responsePayload = { data, remoteMeta: remoteMetadata }
+          console.log(
+            "".concat(SCRIPT_NAME, " Data requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case UPLOAD_MESSAGE_TYPE: {
+          if (!payload || typeof payload.data !== "string") {
+            throw new Error("UPLOAD_DATA: Invalid payload")
+          }
+          const expectedMeta = payload.metadata
+          if (expectedMeta && remoteMetadata) {
+            if (
+              expectedMeta.version !== remoteMetadata.version ||
+              expectedMeta.timestamp !== remoteMetadata.timestamp
+            ) {
+              throw new Error(
+                "Conflict: Expected remote metadata does not match current remote metadata."
+              )
+            }
+          } else if (expectedMeta && !remoteMetadata) {
+            throw new Error(
+              "Conflict: Expected remote metadata, but no remote data found."
+            )
+          } else if (!expectedMeta && remoteMetadata) {
+            throw new Error(
+              "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
+            )
+          }
+          const newTimestamp = Date.now()
+          const oldVersionNumber = getVersionNumber(remoteMetadata)
+          const newVersion = "v".concat(oldVersionNumber + 1)
+          const newMeta = { timestamp: newTimestamp, version: newVersion }
+          await saveData(payload.data)
+          await saveMetadata(newMeta)
+          responsePayload = { metadata: newMeta }
+          console.log(
+            "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
+            newMeta
+          )
+          break
+        }
+      }
+    } catch (error_) {
+      error = error_ instanceof Error ? error_.message : String(error_)
+      console.log("".concat(SCRIPT_NAME, " Error processing message:"), error_)
+    }
+    const response = {
+      type: actionType,
+      source: SOURCE_EXTENSION,
+      id,
+      extensionId: MY_EXTENSION_ID,
+      payload: responsePayload,
+      error,
+    }
+    event.source.postMessage(response, event.origin)
+  }
+  async function initExtensionId() {
+    let storedId = await getValue(STORAGE_KEY_EXTENSION_ID)
+    if (!storedId) {
+      storedId = "utags-extension-".concat(crypto.randomUUID())
+      await setValue(STORAGE_KEY_EXTENSION_ID, storedId)
+    }
+    MY_EXTENSION_ID = storedId
+    const type = false ? "Extension" : "Userscript"
+    const tag = false
+      ? ""
+      : " - ".concat("staging" == null ? void 0 : "staging".toUpperCase())
+    MY_EXTENSION_NAME = "UTags ".concat(type).concat(tag)
+    console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
+  }
+  function destroySyncAdapter() {
+    MY_EXTENSION_ID = void 0
+    window.removeEventListener("message", messageHandler)
+  }
+  async function initSyncAdapter() {
+    destroySyncAdapter()
+    await initExtensionId()
+    window.addEventListener("message", messageHandler)
+    console.log("".concat(SCRIPT_NAME, " initialized."))
   }
   var default_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
@@ -7085,7 +7310,7 @@
   }
   var config = {
     run_at: "document_start",
-    matches: ["https://*/*"],
+    matches: ["https://*/*", "http://*/*"],
     all_frames: false,
   }
   var emojiTags2
@@ -7428,6 +7653,7 @@
   var displayTagsThrottled = throttle(displayTags, 500)
   async function initStorage() {
     await initBookmarksStore()
+    await initSyncAdapter()
     addTagsValueChangeListener(() => {
       if (!doc.hidden) {
         setTimeout(displayTags)

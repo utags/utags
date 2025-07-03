@@ -30,6 +30,7 @@ import {
   bindWindowEvents,
   hideAllUtagsInArea,
 } from "./modules/global-events"
+import { destroySyncAdapter, initSyncAdapter } from "./modules/sync-adapter"
 import {
   isAvailableOnCurrentSite,
   TAG_VISITED,
@@ -48,7 +49,7 @@ import type { UserTag, UserTagMeta } from "./types"
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   run_at: "document_start",
-  matches: ["https://*/*"],
+  matches: ["https://*/*", "http://*/*"],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   all_frames: false,
 }
@@ -477,6 +478,7 @@ const displayTagsThrottled = throttle(displayTags, 500)
 
 async function initStorage() {
   await initBookmarksStore()
+  await initSyncAdapter()
   addTagsValueChangeListener(() => {
     if (!doc.hidden) {
       setTimeout(displayTags)
