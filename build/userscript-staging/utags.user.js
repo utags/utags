@@ -1856,7 +1856,10 @@
       textarea.addEventListener("click", async () => {
         if (textarea.dataset.utags_type === "export") {
           const urlMap2 = await getUrlMap()
-          textarea.value = JSON.stringify(urlMap2)
+          const sortedBookmarks = Object.fromEntries(
+            sortBookmarks(Object.entries(urlMap2))
+          )
+          textarea.value = JSON.stringify(sortedBookmarks)
           textarea.dataset.utags_type = "export_done"
           textarea.click()
         } else if (textarea.dataset.utags_type === "import") {
@@ -1875,6 +1878,13 @@
         }
       })
     }
+  }
+  function sortBookmarks(bookmarks) {
+    return [...bookmarks].sort((a, b) => {
+      const entryA = a[1]
+      const entryB = b[1]
+      return entryB.meta.created - entryA.meta.created
+    })
   }
   var isUserscript = true
   var isProduction = false
