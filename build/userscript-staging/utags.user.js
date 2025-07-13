@@ -1881,9 +1881,12 @@
   }
   function sortBookmarks(bookmarks) {
     return [...bookmarks].sort((a, b) => {
-      const entryA = a[1]
-      const entryB = b[1]
-      return entryB.meta.created - entryA.meta.created
+      const createdA = a[1].meta.created
+      const createdB = b[1].meta.created
+      if (createdB === createdA) {
+        return a[0].localeCompare(b[0])
+      }
+      return createdB - createdA
     })
   }
   var isUserscript = true

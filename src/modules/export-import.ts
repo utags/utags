@@ -62,9 +62,13 @@ type BookmarkItem = [string, BookmarkTagsAndMetadata]
  */
 export function sortBookmarks(bookmarks: BookmarkItem[]): BookmarkItem[] {
   return [...bookmarks].sort((a, b) => {
-    const entryA = a[1]
-    const entryB = b[1]
+    const createdA = a[1].meta.created
+    const createdB = b[1].meta.created
 
-    return entryB.meta.created - entryA.meta.created
+    if (createdB === createdA) {
+      return a[0].localeCompare(b[0])
+    }
+
+    return createdB - createdA
   })
 }
