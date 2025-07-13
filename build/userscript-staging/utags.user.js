@@ -1840,55 +1840,6 @@
       })
     }
   }
-  var mergeData = async () => {
-    return { numberOfLinks: 0, numberOfTags: 0 }
-  }
-  async function outputData() {
-    if (
-      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
-    ) {
-      const urlMap = await getUrlMap()
-      const textarea = createElement("textarea")
-      textarea.id = "utags_output"
-      textarea.setAttribute("style", "display:none")
-      textarea.value = JSON.stringify(urlMap)
-      doc.body.append(textarea)
-      textarea.addEventListener("click", async () => {
-        if (textarea.dataset.utags_type === "export") {
-          const urlMap2 = await getUrlMap()
-          const sortedBookmarks = Object.fromEntries(
-            sortBookmarks(Object.entries(urlMap2))
-          )
-          textarea.value = JSON.stringify(sortedBookmarks)
-          textarea.dataset.utags_type = "export_done"
-          textarea.click()
-        } else if (textarea.dataset.utags_type === "import") {
-          const data = textarea.value
-          try {
-            const result = await mergeData(JSON.parse(data))
-            textarea.value = JSON.stringify(result)
-            textarea.dataset.utags_type = "import_done"
-            textarea.click()
-          } catch (error) {
-            console.error(error)
-            textarea.value = JSON.stringify(error)
-            textarea.dataset.utags_type = "import_failed"
-            textarea.click()
-          }
-        }
-      })
-    }
-  }
-  function sortBookmarks(bookmarks) {
-    return [...bookmarks].sort((a, b) => {
-      const createdA = a[1].meta.created
-      const createdB = b[1].meta.created
-      if (createdB === createdA) {
-        return a[0].localeCompare(b[0])
-      }
-      return createdB - createdA
-    })
-  }
   var isUserscript = true
   var isProduction = false
   function getFirstHeadElement(tagName = "h1") {
@@ -1983,6 +1934,93 @@
       }
     }
     return result
+  }
+  function sortBookmarks(bookmarks) {
+    return [...bookmarks].sort((a, b) => {
+      const createdA = a[1].meta.created
+      const createdB = b[1].meta.created
+      if (createdB === createdA) {
+        return a[0].localeCompare(b[0])
+      }
+      return createdB - createdA
+    })
+  }
+  function sortMetaProperties(meta) {
+    if (!meta || typeof meta !== "object") {
+      return meta
+    }
+    const sortedMeta = {}
+    const entries = Object.entries(meta)
+    const createdEntry = entries.find(([key]) => key === "created")
+    const otherEntries = entries
+      .filter(([key]) => key !== "created")
+      .sort(([a], [b]) => a.localeCompare(b))
+    for (const [key, value] of otherEntries) {
+      sortedMeta[key] = value
+    }
+    if (createdEntry) {
+      sortedMeta[createdEntry[0]] = createdEntry[1]
+    }
+    return sortedMeta
+  }
+  function normalizeBookmarkData(data) {
+    if (data === null || data === void 0) {
+      return data
+    }
+    if (Array.isArray(data)) {
+      return data.map((item) => normalizeBookmarkData(item))
+    }
+    if (typeof data === "object") {
+      const result = {}
+      for (const [key, value] of Object.entries(data)) {
+        if (key === "meta" && value && typeof value === "object") {
+          result[key] = sortMetaProperties(value)
+        } else {
+          result[key] = normalizeBookmarkData(value)
+        }
+      }
+      return result
+    }
+    return data
+  }
+  var mergeData = async () => {
+    return { numberOfLinks: 0, numberOfTags: 0 }
+  }
+  async function outputData() {
+    if (
+      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ) {
+      const urlMap = await getUrlMap()
+      const textarea = createElement("textarea")
+      textarea.id = "utags_output"
+      textarea.setAttribute("style", "display:none")
+      textarea.value = JSON.stringify(urlMap)
+      doc.body.append(textarea)
+      textarea.addEventListener("click", async () => {
+        if (textarea.dataset.utags_type === "export") {
+          const urlMap2 = await getUrlMap()
+          const sortedBookmarks = Object.fromEntries(
+            normalizeBookmarkData(sortBookmarks(Object.entries(urlMap2)))
+          )
+          textarea.value = JSON.stringify(sortedBookmarks)
+          textarea.dataset.utags_type = "export_done"
+          textarea.click()
+        } else if (textarea.dataset.utags_type === "import") {
+          const data = textarea.value
+          try {
+            const result = await mergeData()
+            textarea.value = JSON.stringify(result)
+            textarea.dataset.utags_type = "import_done"
+            textarea.click()
+          } catch (error) {
+            console.error(error)
+            textarea.value = JSON.stringify(error)
+            textarea.dataset.utags_type = "import_failed"
+            textarea.click()
+          }
+        }
+      })
+    }
   }
   function createModal(attributes) {
     const div = createElement("div", {

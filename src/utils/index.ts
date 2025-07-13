@@ -1,5 +1,7 @@
 import { $$, createElement } from "browser-extension-utils"
 
+import type { BookmarkTagsAndMetadata } from "../types/bookmarks.js"
+
 // eslint-disable-next-line n/prefer-global/process
 export const isChromeExtension = process.env.PLASMO_TARGET === "chrome-mv3"
 // eslint-disable-next-line n/prefer-global/process
@@ -168,3 +170,101 @@ console.log(getUrlParameters(testUrl, ["bar", "foo", "car", "go"]))
 
 console.log(getUrlParameters(testUrl, ["bar", "foo", "car", "go"], true))
 */
+
+type BookmarkItem = [string, BookmarkTagsAndMetadata]
+
+/**
+ * Sort an array of bookmarks by created date desc
+ * @param bookmarks Array of bookmarks in format [[url, entry], ...]
+ * @returns Sorted array of bookmarks
+ */
+export function sortBookmarks(bookmarks: BookmarkItem[]): BookmarkItem[] {
+  return [...bookmarks].sort((a, b) => {
+    const createdA = a[1].meta.created
+    const createdB = b[1].meta.created
+
+    if (createdB === createdA) {
+      return a[0].localeCompare(b[0])
+    }
+
+    return createdB - createdA
+  })
+}
+
+/**
+ * Sort meta object properties with created at the end for consistent export format
+ * @param meta - Meta object to sort
+ * @returns Sorted meta object with created property at the end
+ */
+function sortMetaProperties(
+  meta: BookmarkTagsAndMetadata["meta"]
+): BookmarkTagsAndMetadata["meta"] {
+  if (!meta || typeof meta !== "object") {
+    return meta
+  }
+
+  // Use Record type for better type safety
+  const sortedMeta: Record<string, unknown> = {}
+  const entries = Object.entries(meta)
+
+  // Separate created from other properties for more efficient processing
+  const createdEntry = entries.find(([key]) => key === "created")
+  const otherEntries = entries
+    .filter(([key]) => key !== "created")
+    .sort(([a], [b]) => a.localeCompare(b))
+
+  // Add sorted properties first
+  for (const [key, value] of otherEntries) {
+    sortedMeta[key] = value
+  }
+
+  // Add created property at the end if it exists
+  if (createdEntry) {
+    sortedMeta[createdEntry[0]] = createdEntry[1]
+  }
+
+  return sortedMeta as BookmarkTagsAndMetadata["meta"]
+}
+
+/**
+ * Normalize bookmark data structure by standardizing meta object properties for consistent format
+ * Recursively processes the data structure and ensures all meta objects have their properties
+ * sorted alphabetically with 'created' property positioned at the end for export consistency
+ * @param data - Bookmark data to normalize (can be any valid JSON value)
+ * @returns Normalized data with standardized meta object structure
+ */
+export function normalizeBookmarkData<T>(data: T): T {
+  // Handle null and undefined explicitly
+  if (data === null || data === undefined) {
+    return data
+  }
+
+  // Handle arrays
+  if (Array.isArray(data)) {
+    return data.map((item) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      normalizeBookmarkData(item)
+    ) as T
+  }
+
+  // Handle objects (excluding null which is already handled)
+  if (typeof data === "object") {
+    const result: Record<string, unknown> = {}
+
+    for (const [key, value] of Object.entries(data)) {
+      if (key === "meta" && value && typeof value === "object") {
+        // Type assertion is safe here as we've checked the conditions
+        result[key] = sortMetaProperties(
+          value as BookmarkTagsAndMetadata["meta"]
+        )
+      } else {
+        result[key] = normalizeBookmarkData(value)
+      }
+    }
+
+    return result as T
+  }
+
+  // Handle primitives (string, number, boolean)
+  return data
+}

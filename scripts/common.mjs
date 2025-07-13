@@ -75,7 +75,7 @@ export const getBuildOptions = (target, tag, fileName = "content") => {
       "process.env.PLASMO_TARGET": `"${target}"`,
       "process.env.PLASMO_TAG": `"${tag}"`,
     },
-    target: ["chrome58", "firefox57", "safari11", "edge16"],
+    target: ["chrome58", "firefox57", "safari11", "edge18"],
     outfile: `build/${target}-${tag}/${fileName}.js`,
   }
 }
