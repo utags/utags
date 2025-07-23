@@ -227,6 +227,50 @@ function sortMetaProperties(
 }
 
 /**
+ * Type guard to check if a value is a valid meta object
+ * @param value - Value to check
+ * @returns True if value is a valid meta object
+ */
+function isMetaObject(
+  value: unknown
+): value is BookmarkTagsAndMetadata["meta"] {
+  return value !== null && typeof value === "object"
+}
+
+/**
+ * Type guard to check if a value is a BookmarkTagsAndMetadata object
+ * @param value - Value to check
+ * @returns True if value has the structure of BookmarkTagsAndMetadata
+ */
+function isBookmarkTagsAndMetadata(
+  value: unknown
+): value is BookmarkTagsAndMetadata {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    "tags" in value &&
+    Array.isArray((value as BookmarkTagsAndMetadata).tags)
+  )
+}
+
+/**
+ * Sort bookmark properties to ensure consistent structure
+ * Places tags first, followed by other properties, with meta always at the end
+ * @param value - Bookmark data with tags and metadata
+ * @returns Sorted bookmark object with consistent property order
+ */
+function sortBookmarkProperties(
+  value: BookmarkTagsAndMetadata
+): BookmarkTagsAndMetadata {
+  const { tags, meta, ...rest } = value
+  return {
+    tags,
+    ...rest,
+    meta,
+  }
+}
+
+/**
  * Normalize bookmark data structure by standardizing meta object properties for consistent format
  * Recursively processes the data structure and ensures all meta objects have their properties
  * sorted alphabetically with 'created' property positioned at the end for export consistency
@@ -252,14 +296,14 @@ export function normalizeBookmarkData<T>(data: T): T {
     const result: Record<string, unknown> = {}
 
     for (const [key, value] of Object.entries(data)) {
-      if (key === "meta" && value && typeof value === "object") {
-        // Type assertion is safe here as we've checked the conditions
-        result[key] = sortMetaProperties(
-          value as BookmarkTagsAndMetadata["meta"]
-        )
-      } else {
-        result[key] = normalizeBookmarkData(value)
-      }
+      result[key] =
+        key === "meta" && isMetaObject(value)
+          ? sortMetaProperties(value)
+          : normalizeBookmarkData(value)
+    }
+
+    if (isBookmarkTagsAndMetadata(result)) {
+      return sortBookmarkProperties(result) as T
     }
 
     return result as T
