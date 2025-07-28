@@ -118,9 +118,9 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
 - Tags can be added to post titles, usernames, and categories
 - Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
-- On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
-- Support [data export and import](https://utags.pipecraft.net/data/)
-- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
+- On the [tag list](https://utags.link/) page, you can see tagged users and posts, sorted by update order
+- Support [data export and import](https://utags.link/)
+- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do` and `v2ex.com`.
 - Compatible with the following userscript managers
   - Tampermonkey (recommend)
   - Violentmonkey
@@ -133,6 +133,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.15.0
+  - Integration with the new webapp ([https://utags.link](https://utags.link))
 - 0.12.11
   - Remove the limit on the number of settable emoji tags
 - 0.12.10
@@ -315,4 +317,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 ## >\_
 
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

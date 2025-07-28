@@ -117,10 +117,10 @@
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
 - 不仅可以给用户打标签，还可以给帖子（主题）和节点打标签
-- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 在[标签列表](https://utags.link/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
+- 支持[数据导出、导入](https://utags.link/)
+- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do`, `v2ex.com` 等部分网站。
 - 兼容以下用户脚本管理器
   - Tampermonkey (推荐)
   - Violentmonkey
@@ -147,6 +147,8 @@
 
 ## 更新记录
 
+- 0.15.0
+  - 与新版 webapp ([https://utags.link](https://utags.link)) 集成
 - 0.12.11
   - 取消对可设置的 emoji 标签数量的限制
 - 0.12.10
@@ -334,4 +336,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 ## >\_
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)
