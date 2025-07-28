@@ -191,13 +191,13 @@ const settingsTable = {
   openTagsPage: {
     title: i("settings.openTagsPage"),
     type: "externalLink",
-    url: "https://utags.pipecraft.net/tags/",
+    url: "https://utags.link/",
     group: ++groupNumber,
   },
   openDataPage: {
     title: i("settings.openDataPage"),
     type: "externalLink",
-    url: "https://utags.pipecraft.net/data/",
+    url: "https://utags.link/",
     group: groupNumber,
   },
 }

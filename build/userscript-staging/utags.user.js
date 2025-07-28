@@ -1245,7 +1245,7 @@
     if (!options.noLink) {
       a.setAttribute(
         "href",
-        "https://utags.pipecraft.net/tags/#" + encodeURIComponent(tagName)
+        "https://utags.link/#" + encodeURIComponent(tagName)
       )
       a.setAttribute("target", "_blank")
     }
@@ -7641,13 +7641,13 @@
     openTagsPage: {
       title: i2("settings.openTagsPage"),
       type: "externalLink",
-      url: "https://utags.pipecraft.net/tags/",
+      url: "https://utags.link/",
       group: ++groupNumber,
     },
     openDataPage: {
       title: i2("settings.openDataPage"),
       type: "externalLink",
-      url: "https://utags.pipecraft.net/data/",
+      url: "https://utags.link/",
       group: groupNumber,
     },
   }

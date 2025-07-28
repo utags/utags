@@ -20,7 +20,7 @@ export default function createTag(
   if (!options.noLink) {
     a.setAttribute(
       "href",
-      "https://utags.pipecraft.net/tags/#" + encodeURIComponent(tagName)
+      "https://utags.link/#" + encodeURIComponent(tagName)
     )
     a.setAttribute("target", "_blank")
   }

@@ -16,12 +16,12 @@ function IndexOptions() {
           padding: 16,
         }}>
         <li>
-          <a href="https://utags.pipecraft.net/tags/" target="_blank">
+          <a href="https://utags.link/" target="_blank">
             链接列表
           </a>
         </li>
         <li>
-          <a href="https://utags.pipecraft.net/data/" target="_blank">
+          <a href="https://utags.link/" target="_blank">
             导出数据/导入数据
           </a>
         </li>
