@@ -18,10 +18,7 @@ export default function createTag(
   }
 
   if (!options.noLink) {
-    a.setAttribute(
-      "href",
-      "https://utags.link/#" + encodeURIComponent(tagName)
-    )
+    a.setAttribute("href", "https://utags.link/#" + encodeURIComponent(tagName))
     a.setAttribute("target", "_blank")
   }
 

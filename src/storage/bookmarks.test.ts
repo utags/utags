@@ -22,6 +22,7 @@ import type {
 import {
   currentDatabaseVersion,
   currentExtensionVersion,
+  DELETED_BOOKMARK_TAG,
   getBookmark,
   getCachedUrlMap,
   getUrlMap,
@@ -964,7 +965,7 @@ describe("bookmarks", () => {
     expect(bookmark.tags).toEqual(["tag1", "tag2"])
   })
 
-  test("should remove bookmark when no tags provided", async () => {
+  test("should mark as deleted bookmark when no tags provided", async () => {
     const url = "https://example.com"
 
     await initBookmarksStore()
@@ -996,7 +997,17 @@ describe("bookmarks", () => {
     // Verify second saveBookmark call
     expect(setValue).toHaveBeenCalledWith("extension.utags.urlmap", {
       data: {
-        // Deleted the previous bookmark
+        [url]: {
+          tags: ["tag1", DELETED_BOOKMARK_TAG],
+          meta: expect.objectContaining({
+            created: initialTime,
+            updated: initialTime,
+          }) as unknown as BookmarkMetadata,
+          deletedMeta: expect.objectContaining({
+            deleted: secondCallTime,
+            actionType: "DELETE",
+          }),
+        },
       },
       meta: {
         created: initialTime,
@@ -1558,24 +1569,48 @@ describe("bookmarks", () => {
     // Simulate concurrent deletions from different tabs
     // First tab deletes url1 by setting empty tags
     vi.setSystemTime(secondCallTime)
-    await saveBookmark(url1, [], { title: "Example 1" })
+    await saveBookmark(url1, [], { title: "Example 1 updated" })
 
     // Second tab deletes url2
     vi.setSystemTime(thirdCallTime)
-    await saveBookmark(url2, [], { title: "Example 2" })
+    await saveBookmark(url2, [], { title: "Example 2 updated" })
 
     // Verify final state
     const finalUrlMap = await getUrlMap()
     const finalCachedUrlMap = await getCachedUrlMap()
 
     // Both maps should be empty after deletions
-    expect(Object.keys(finalUrlMap).length).toBe(0)
+    expect(Object.keys(finalUrlMap).length).toBe(2)
     expect(Object.keys(finalCachedUrlMap).length).toBe(0)
-    expect(finalCachedUrlMap).toEqual(finalUrlMap)
+    expect(finalCachedUrlMap).not.toEqual(finalUrlMap)
 
     // Verify specific bookmarks are removed
-    expect(finalUrlMap[url1]).toBeUndefined()
-    expect(finalUrlMap[url2]).toBeUndefined()
+    // expect(finalUrlMap[url1]).toBeUndefined()
+    // expect(finalUrlMap[url2]).toBeUndefined()
+    expect(finalUrlMap[url1]).toEqual({
+      tags: ["tag1", DELETED_BOOKMARK_TAG],
+      meta: {
+        title: "Example 1",
+        created: initialTime,
+        updated: initialTime,
+      },
+      deletedMeta: {
+        deleted: secondCallTime,
+        actionType: "DELETE",
+      },
+    })
+    expect(finalUrlMap[url2]).toEqual({
+      tags: ["tag2", DELETED_BOOKMARK_TAG],
+      meta: {
+        title: "Example 2",
+        created: initialTime,
+        updated: initialTime,
+      },
+      deletedMeta: {
+        deleted: thirdCallTime,
+        actionType: "DELETE",
+      },
+    })
   })
 
   test("should handle created field normalization in saveBookmark", async () => {
@@ -2153,7 +2188,7 @@ describe("bookmarks", () => {
       }
 
       getValue.mockResolvedValueOnce(buggyV0_13_0Store)
-      setValue.mockResolvedValue(undefined)
+      // setValue.mockResolvedValue(undefined)
 
       // Initialize store to trigger migration
       await initBookmarksStore()
@@ -2260,7 +2295,7 @@ describe("bookmarks", () => {
       }
 
       getValue.mockResolvedValueOnce(invalidV0_13_0Store)
-      setValue.mockResolvedValue(undefined)
+      // setValue.mockResolvedValue(undefined)
 
       // Initialize store to trigger migration
       await initBookmarksStore()
@@ -2282,6 +2317,189 @@ describe("bookmarks", () => {
 
       // Verify metadata is preserved
       expect(savedStore.meta.created).toBe(initialTime - 5000)
+    })
+  })
+
+  describe("filterDeleted functionality", () => {
+    test("should filter out bookmarks with '._DELETED_' tag from cachedUrlMap", async () => {
+      await initBookmarksStore()
+
+      const url1 = "https://example1.com"
+      const url2 = "https://example2.com"
+      const url3 = "https://example3.com"
+
+      // Save normal bookmarks
+      await saveBookmark(url1, ["tag1", "tag2"], { title: "Example 1" })
+      await saveBookmark(url2, ["tag2", "tag3"], { title: "Example 2" })
+
+      // Save bookmark with deleted tag
+      await saveBookmark(url3, ["tag3", DELETED_BOOKMARK_TAG], {
+        title: "Example 3",
+      })
+
+      // Get cached URL map
+      const cachedUrlMap = await getCachedUrlMap()
+
+      // Verify that cachedUrlMap does not contain bookmarks with '._DELETED_' tag
+      expect(Object.keys(cachedUrlMap)).toHaveLength(2)
+      expect(cachedUrlMap[url1]).toBeDefined()
+      expect(cachedUrlMap[url2]).toBeDefined()
+      expect(cachedUrlMap[url3]).toBeUndefined()
+
+      // Verify the content of non-deleted bookmarks
+      expect(cachedUrlMap[url1]).toEqual({
+        tags: ["tag1", "tag2"],
+        meta: expect.objectContaining({
+          title: "Example 1",
+          created: initialTime,
+          updated: initialTime,
+        }),
+      })
+
+      expect(cachedUrlMap[url2]).toEqual({
+        tags: ["tag2", "tag3"],
+        meta: expect.objectContaining({
+          title: "Example 2",
+          created: initialTime,
+          updated: initialTime,
+        }),
+      })
+    })
+
+    test("should handle bookmarks that only have '._DELETED_' tag", async () => {
+      await initBookmarksStore()
+
+      const url1 = "https://example1.com"
+      const url2 = "https://example2.com"
+
+      // Save normal bookmark
+      await saveBookmark(url1, ["tag1"], { title: "Example 1" })
+
+      // Save bookmark with only deleted tag
+      await saveBookmark(url2, [DELETED_BOOKMARK_TAG], { title: "Example 2" })
+
+      const cachedUrlMap = await getCachedUrlMap()
+
+      // Verify only non-deleted bookmark is in cache
+      expect(Object.keys(cachedUrlMap)).toHaveLength(1)
+      expect(cachedUrlMap[url1]).toBeDefined()
+      expect(cachedUrlMap[url2]).toBeUndefined()
+    })
+
+    test("should handle empty bookmarks data", async () => {
+      await initBookmarksStore()
+
+      const cachedUrlMap = await getCachedUrlMap()
+
+      // Verify empty cache for empty data
+      expect(Object.keys(cachedUrlMap)).toHaveLength(0)
+      expect(cachedUrlMap).toEqual({})
+    })
+
+    test("should filter deleted bookmarks during store initialization", async () => {
+      // Mock existing store with mixed bookmarks
+      const existingStore = {
+        data: {
+          "https://example1.com": {
+            tags: ["tag1", "tag2"],
+            meta: {
+              title: "Example 1",
+              created: initialTime - 1000,
+              updated: initialTime - 500,
+            },
+          },
+          "https://example2.com": {
+            tags: ["tag2", DELETED_BOOKMARK_TAG],
+            meta: {
+              title: "Example 2 (Deleted)",
+              created: initialTime - 2000,
+              updated: initialTime - 1000,
+            },
+          },
+          "https://example3.com": {
+            tags: ["tag3"],
+            meta: {
+              title: "Example 3",
+              created: initialTime - 1500,
+              updated: initialTime - 750,
+            },
+          },
+        },
+        meta: {
+          databaseVersion: currentDatabaseVersion,
+          extensionVersion: currentExtensionVersion,
+          created: initialTime - 2000,
+          updated: initialTime,
+        },
+      }
+
+      getValue.mockResolvedValueOnce(existingStore)
+
+      // Initialize store
+      await initBookmarksStore()
+
+      const cachedUrlMap = await getCachedUrlMap()
+
+      // Verify only non-deleted bookmarks are cached
+      expect(Object.keys(cachedUrlMap)).toHaveLength(2)
+      expect(cachedUrlMap["https://example1.com"]).toBeDefined()
+      expect(cachedUrlMap["https://example2.com"]).toBeUndefined()
+      expect(cachedUrlMap["https://example3.com"]).toBeDefined()
+    })
+
+    test("should update cachedUrlMap when bookmark is marked as deleted", async () => {
+      await initBookmarksStore()
+
+      const url = "https://example.com"
+
+      // Save normal bookmark
+      await saveBookmark(url, ["tag1"], { title: "Example" })
+
+      let cachedUrlMap = await getCachedUrlMap()
+      expect(cachedUrlMap[url]).toBeDefined()
+
+      // Mark bookmark as deleted
+      vi.setSystemTime(secondCallTime)
+      await saveBookmark(url, ["tag1", DELETED_BOOKMARK_TAG], {
+        title: "Example",
+      })
+
+      cachedUrlMap = await getCachedUrlMap()
+
+      // Verify bookmark is removed from cache
+      expect(cachedUrlMap[url]).toBeUndefined()
+      expect(Object.keys(cachedUrlMap)).toHaveLength(0)
+    })
+
+    test("should restore bookmark to cachedUrlMap when deleted tag is removed", async () => {
+      await initBookmarksStore()
+
+      const url = "https://example.com"
+
+      // Save bookmark with deleted tag
+      await saveBookmark(url, ["tag1", DELETED_BOOKMARK_TAG], {
+        title: "Example",
+      })
+
+      let cachedUrlMap = await getCachedUrlMap()
+      expect(cachedUrlMap[url]).toBeUndefined()
+
+      // Remove deleted tag
+      vi.setSystemTime(secondCallTime)
+      await saveBookmark(url, ["tag1"], { title: "Example" })
+
+      cachedUrlMap = await getCachedUrlMap()
+
+      // Verify bookmark is restored to cache
+      expect(cachedUrlMap[url]).toBeDefined()
+      expect(cachedUrlMap[url]).toEqual({
+        tags: ["tag1"],
+        meta: expect.objectContaining({
+          title: "Example",
+          created: initialTime,
+          updated: secondCallTime,
+        }),
+      })
     })
   })
 

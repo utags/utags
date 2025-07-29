@@ -103,6 +103,8 @@ type BookmarksStore = BookmarksStoreV3
  */
 export const currentExtensionVersion = "0.14.2"
 export const currentDatabaseVersion = 3
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const DELETED_BOOKMARK_TAG = "._DELETED_"
 const storageKey = "extension.utags.urlmap"
 
 /** Cache for URL map data to improve performance */
@@ -135,7 +137,7 @@ async function getBookmarksStore(): Promise<BookmarksStore> {
     bookmarksStore.meta = createEmptyBookmarksStore().meta
   }
 
-  cachedUrlMap = bookmarksStore.data
+  cachedUrlMap = filterDeleted(bookmarksStore.data)
   return bookmarksStore
 }
 
@@ -160,7 +162,7 @@ async function persistBookmarksStore(
   bookmarksStore: BookmarksStore | undefined
 ) {
   await setValue(storageKey, bookmarksStore)
-  cachedUrlMap = bookmarksStore ? bookmarksStore.data : {}
+  cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
 }
 
 /**
@@ -246,10 +248,22 @@ export async function saveBookmark(
   const newTags = mergeTags(tags, [])
   let oldTags: string[] = []
 
-  if (newTags.length === 0 || !isValidKey(key)) {
-    // Remove bookmark if no tags are provided
+  if (!isValidKey(key)) {
     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete urlMap[key]
+  } else if (newTags.length === 0) {
+    // Mark as deleted bookmark if no tags are provided
+    const existingData = urlMap[key]
+    if (existingData) {
+      oldTags = existingData.tags || []
+      if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
+        existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
+        existingData.deletedMeta = {
+          deleted: now,
+          actionType: "DELETE",
+        }
+      }
+    }
   } else {
     // Update or create bookmark
     const existingData = urlMap[key] || {}
@@ -330,6 +344,24 @@ function mergeTags(tags: string[], tags2: string[]): string[] {
       .map((tag) => (tag ? String(tag).trim() : tag))
       .filter(Boolean)
   ) as string[]
+}
+
+/**
+ * Filters out bookmarks that contain the '._DELETED_' tag
+ * @param data The bookmarks data to filter
+ * @returns A new BookmarksData object with deleted bookmarks removed
+ */
+function filterDeleted(data: BookmarksData): BookmarksData {
+  const filteredData: BookmarksData = {}
+
+  for (const [key, bookmark] of Object.entries(data)) {
+    // Check if the bookmark contains the '._DELETED_' tag
+    if (bookmark.tags && !bookmark.tags.includes(DELETED_BOOKMARK_TAG)) {
+      filteredData[key] = bookmark
+    }
+  }
+
+  return filteredData
 }
 
 /**

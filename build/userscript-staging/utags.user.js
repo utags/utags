@@ -1517,6 +1517,7 @@
   }
   var currentExtensionVersion = "0.14.2"
   var currentDatabaseVersion = 3
+  var DELETED_BOOKMARK_TAG = "._DELETED_"
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap = {}
   var addTagsValueChangeListenerInitialized = false
@@ -1541,7 +1542,7 @@
     if (!bookmarksStore.meta) {
       bookmarksStore.meta = createEmptyBookmarksStore().meta
     }
-    cachedUrlMap = bookmarksStore.data
+    cachedUrlMap = filterDeleted(bookmarksStore.data)
     return bookmarksStore
   }
   async function serializeBookmarks() {
@@ -1550,7 +1551,7 @@
   }
   async function persistBookmarksStore(bookmarksStore) {
     await setValue(storageKey2, bookmarksStore)
-    cachedUrlMap = bookmarksStore ? bookmarksStore.data : {}
+    cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
   }
   async function deserializeBookmarks(data) {
     const bookmarksStore = data ? JSON.parse(data) : void 0
@@ -1587,8 +1588,20 @@
     )
     const newTags = mergeTags(tags, [])
     let oldTags = []
-    if (newTags.length === 0 || !isValidKey(key)) {
+    if (!isValidKey(key)) {
       delete urlMap[key]
+    } else if (newTags.length === 0) {
+      const existingData = urlMap[key]
+      if (existingData) {
+        oldTags = existingData.tags || []
+        if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
+          existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
+          existingData.deletedMeta = {
+            deleted: now,
+            actionType: "DELETE",
+          }
+        }
+      }
     } else {
       const existingData = urlMap[key] || {}
       oldTags = existingData.tags || []
@@ -1634,6 +1647,15 @@
         .map((tag) => (tag ? String(tag).trim() : tag))
         .filter(Boolean)
     )
+  }
+  function filterDeleted(data) {
+    const filteredData = {}
+    for (const [key, bookmark] of Object.entries(data)) {
+      if (bookmark.tags && !bookmark.tags.includes(DELETED_BOOKMARK_TAG)) {
+        filteredData[key] = bookmark
+      }
+    }
+    return filteredData
   }
   async function migrateV2toV3(bookmarksStore) {
     var _a, _b, _c
