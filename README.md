@@ -129,6 +129,8 @@ For now it works on
 
 ## Release Notes
 
+- 0.16.0
+  - Implement soft delete for bookmarks
 - 0.15.0
   - Integration with the new webapp ([https://utags.link](https://utags.link))
 - 0.12.11

@@ -147,6 +147,8 @@
 
 ## 更新记录
 
+- 0.16.0
+  - 实现书签的软删除功能
 - 0.15.0
   - 与新版 webapp ([https://utags.link](https://utags.link)) 集成
 - 0.12.11
