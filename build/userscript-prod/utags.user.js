@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.16.0
+// @version              0.17.1
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -80,6 +80,8 @@
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
+// @connect              dav.jianguoyun.com
+// @connect              *
 // @run-at               document-start
 // @grant                GM.getValue
 // @grant                GM.setValue
@@ -87,6 +89,8 @@
 // @grant                GM_removeValueChangeListener
 // @grant                GM_addElement
 // @grant                GM.registerMenuCommand
+// @grant                GM.xmlHttpRequest
+// @grant                GM_xmlhttpRequest
 // ==/UserScript==
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3050,6 +3054,164 @@
     await initExtensionId()
     window.addEventListener("message", messageHandler)
     console.log("".concat(SCRIPT_NAME, " initialized."))
+  }
+  function handleHttpRequest(message, event) {
+    if (false) {
+      handleHttpRequestExtension(message, event)
+    } else {
+      handleHttpRequestUserscript(message, event)
+    }
+  }
+  function handleHttpRequestUserscript(message, event) {
+    const { id, payload } = message
+    const { method, url, headers, body, timeout } = payload
+    console.log(
+      "[UTags Extension] Processing HTTP request: "
+        .concat(method, " ")
+        .concat(url)
+    )
+    const gmRequest =
+      (GM == null ? void 0 : GM.xmlHttpRequest) || GM_xmlhttpRequest
+    if (!gmRequest) {
+      sendHttpError(id, "GM.xmlHttpRequest not available", event)
+      return
+    }
+    gmRequest({
+      method,
+      url,
+      headers: headers || {},
+      data: body,
+      timeout: timeout || 3e4,
+      onload(response) {
+        console.log(
+          "[UTags Extension] HTTP request successful: ".concat(response.status)
+        )
+        const responseHeaders = {}
+        if (response.responseHeaders) {
+          const headerLines = response.responseHeaders.split("\r\n")
+          for (const line of headerLines) {
+            const [key, value] = line.split(": ")
+            if (key && value) {
+              responseHeaders[key.toLowerCase()] = value
+            }
+          }
+        }
+        sendHttpResponse(
+          id,
+          {
+            ok: response.status >= 200 && response.status < 300,
+            status: response.status,
+            statusText: response.statusText,
+            headers: responseHeaders,
+            body: response.responseText,
+          },
+          event
+        )
+      },
+      onerror(error) {
+        console.error("[UTags Extension] HTTP request failed:", error)
+        sendHttpError(
+          id,
+          error && typeof error.statusText === "string"
+            ? error.statusText
+            : "Network error",
+          event,
+          error
+        )
+      },
+      ontimeout() {
+        console.error("[UTags Extension] HTTP request timeout")
+        sendHttpError(id, "Request timeout", event)
+      },
+    })
+  }
+  function sendHttpResponse(requestId, responseData, event) {
+    const responseMessage = {
+      type: "HTTP_RESPONSE",
+      source: "utags-extension",
+      id: requestId,
+      payload: responseData,
+    }
+    if (event.source) {
+      event.source.postMessage(responseMessage, { targetOrigin: event.origin })
+    }
+  }
+  function sendHttpError(requestId, error, event, details) {
+    const errorMessage = {
+      type: "HTTP_ERROR",
+      source: "utags-extension",
+      id: requestId,
+      payload: {
+        error,
+        details,
+      },
+    }
+    if (event.source) {
+      event.source.postMessage(errorMessage, { targetOrigin: event.origin })
+    }
+  }
+  function handlePing(message, event) {
+    console.log("[UTags Extension] Received ping, sending pong")
+    const pongMessage = {
+      type: "PONG",
+      source: "utags-extension",
+      id: message.id,
+    }
+    if (event.source) {
+      event.source.postMessage(pongMessage, { targetOrigin: event.origin })
+    }
+  }
+  function messageListener(event) {
+    if (event.origin !== globalThis.location.origin) {
+      return
+    }
+    const message = event.data
+    try {
+      if (
+        !message ||
+        typeof message !== "object" ||
+        !message.type ||
+        !message.id
+      ) {
+        return
+      }
+      if (message.source !== "utags-webapp") {
+        return
+      }
+      console.log("[UTags Extension] Received message:", message.type)
+      switch (message.type) {
+        case "PING": {
+          handlePing(message, event)
+          break
+        }
+        case "HTTP_REQUEST": {
+          handleHttpRequest(message, event)
+          break
+        }
+        default: {
+          console.log(
+            "[UTags Extension] Unknown message type: ".concat(message.type)
+          )
+        }
+      }
+    } catch (error) {
+      console.error("[UTags Extension] Error handling message:", error)
+      if (message && message.id) {
+        sendHttpError(
+          message.id,
+          error instanceof Error ? error.message : String(error),
+          event,
+          {
+            context: "messageListener",
+            messageType: message.type,
+          }
+        )
+      }
+    }
+  }
+  function setupWebappBridge() {
+    window.addEventListener("message", messageListener)
+    console.log("[UTags Extension] ready for HTTP proxy requests")
   }
   var default_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
@@ -8221,6 +8383,7 @@
     if (!getSettingsValue("enableCurrentSite_".concat(host2))) {
       return
     }
+    setupWebappBridge()
     await initStorage()
     setTimeout(outputData, 1)
     onSettingsChange()

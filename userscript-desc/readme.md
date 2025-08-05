@@ -133,6 +133,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.17.1
+  - Support data synchronization via GitHub and WebDAV
 - 0.16.0
   - Implement soft delete for bookmarks
 - 0.15.0
@@ -319,4 +321,5 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 ## >\_
 
+[![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
 [![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

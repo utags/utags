@@ -141,12 +141,13 @@
 - 支持自定义网站规则
 - 支持自定义标签样式
 - 展示其他用户们的标签内容
-- 多设备数据同步
 
 更多内容请访问 [https://github.com/utags/utags](https://github.com/utags/utags)
 
 ## 更新记录
 
+- 0.17.1
+  - 支持通过 GitHub, WebDAV 同步数据
 - 0.16.0
   - 实现书签的软删除功能
 - 0.15.0
