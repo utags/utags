@@ -36,6 +36,7 @@ import {
   TAG_VISITED,
   onSettingsChange as visitedOnSettingsChange,
 } from "./modules/visited"
+import { setupWebappBridge } from "./modules/webapp-bridge"
 import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
 import {
   addTagsValueChangeListener,
@@ -917,6 +918,8 @@ async function main() {
   if (!getSettingsValue(`enableCurrentSite_${host}`)) {
     return
   }
+
+  setupWebappBridge()
 
   await initStorage()
 

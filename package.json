@@ -75,6 +75,7 @@
     "space": 2,
     "prettier": true,
     "globals": [
+      "GM",
       "document"
     ],
     "envs": [

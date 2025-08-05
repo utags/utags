@@ -80,6 +80,8 @@
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
+// @connect              dav.jianguoyun.com
+// @connect              *
 // @run-at               document-start
 // @grant                GM.getValue
 // @grant                GM.setValue
@@ -87,6 +89,8 @@
 // @grant                GM_removeValueChangeListener
 // @grant                GM_addElement
 // @grant                GM.registerMenuCommand
+// @grant                GM.xmlHttpRequest
+// @grant                GM_xmlhttpRequest
 // ==/UserScript==
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3050,6 +3054,164 @@
     await initExtensionId()
     window.addEventListener("message", messageHandler)
     console.log("".concat(SCRIPT_NAME, " initialized."))
+  }
+  function handleHttpRequest(message, event) {
+    if (false) {
+      handleHttpRequestExtension(message, event)
+    } else {
+      handleHttpRequestUserscript(message, event)
+    }
+  }
+  function handleHttpRequestUserscript(message, event) {
+    const { id, payload } = message
+    const { method, url, headers, body, timeout } = payload
+    console.log(
+      "[UTags Extension] Processing HTTP request: "
+        .concat(method, " ")
+        .concat(url)
+    )
+    const gmRequest =
+      (GM == null ? void 0 : GM.xmlHttpRequest) || GM_xmlhttpRequest
+    if (!gmRequest) {
+      sendHttpError(id, "GM.xmlHttpRequest not available", event)
+      return
+    }
+    gmRequest({
+      method,
+      url,
+      headers: headers || {},
+      data: body,
+      timeout: timeout || 3e4,
+      onload(response) {
+        console.log(
+          "[UTags Extension] HTTP request successful: ".concat(response.status)
+        )
+        const responseHeaders = {}
+        if (response.responseHeaders) {
+          const headerLines = response.responseHeaders.split("\r\n")
+          for (const line of headerLines) {
+            const [key, value] = line.split(": ")
+            if (key && value) {
+              responseHeaders[key.toLowerCase()] = value
+            }
+          }
+        }
+        sendHttpResponse(
+          id,
+          {
+            ok: response.status >= 200 && response.status < 300,
+            status: response.status,
+            statusText: response.statusText,
+            headers: responseHeaders,
+            body: response.responseText,
+          },
+          event
+        )
+      },
+      onerror(error) {
+        console.error("[UTags Extension] HTTP request failed:", error)
+        sendHttpError(
+          id,
+          error && typeof error.statusText === "string"
+            ? error.statusText
+            : "Network error",
+          event,
+          error
+        )
+      },
+      ontimeout() {
+        console.error("[UTags Extension] HTTP request timeout")
+        sendHttpError(id, "Request timeout", event)
+      },
+    })
+  }
+  function sendHttpResponse(requestId, responseData, event) {
+    const responseMessage = {
+      type: "HTTP_RESPONSE",
+      source: "utags-extension",
+      id: requestId,
+      payload: responseData,
+    }
+    if (event.source) {
+      event.source.postMessage(responseMessage, { targetOrigin: event.origin })
+    }
+  }
+  function sendHttpError(requestId, error, event, details) {
+    const errorMessage = {
+      type: "HTTP_ERROR",
+      source: "utags-extension",
+      id: requestId,
+      payload: {
+        error,
+        details,
+      },
+    }
+    if (event.source) {
+      event.source.postMessage(errorMessage, { targetOrigin: event.origin })
+    }
+  }
+  function handlePing(message, event) {
+    console.log("[UTags Extension] Received ping, sending pong")
+    const pongMessage = {
+      type: "PONG",
+      source: "utags-extension",
+      id: message.id,
+    }
+    if (event.source) {
+      event.source.postMessage(pongMessage, { targetOrigin: event.origin })
+    }
+  }
+  function messageListener(event) {
+    if (event.origin !== globalThis.location.origin) {
+      return
+    }
+    const message = event.data
+    try {
+      if (
+        !message ||
+        typeof message !== "object" ||
+        !message.type ||
+        !message.id
+      ) {
+        return
+      }
+      if (message.source !== "utags-webapp") {
+        return
+      }
+      console.log("[UTags Extension] Received message:", message.type)
+      switch (message.type) {
+        case "PING": {
+          handlePing(message, event)
+          break
+        }
+        case "HTTP_REQUEST": {
+          handleHttpRequest(message, event)
+          break
+        }
+        default: {
+          console.log(
+            "[UTags Extension] Unknown message type: ".concat(message.type)
+          )
+        }
+      }
+    } catch (error) {
+      console.error("[UTags Extension] Error handling message:", error)
+      if (message && message.id) {
+        sendHttpError(
+          message.id,
+          error instanceof Error ? error.message : String(error),
+          event,
+          {
+            context: "messageListener",
+            messageType: message.type,
+          }
+        )
+      }
+    }
+  }
+  function setupWebappBridge() {
+    window.addEventListener("message", messageListener)
+    console.log("[UTags Extension] ready for HTTP proxy requests")
   }
   var default_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
@@ -8221,6 +8383,7 @@
     if (!getSettingsValue("enableCurrentSite_".concat(host2))) {
       return
     }
+    setupWebappBridge()
     await initStorage()
     setTimeout(outputData, 1)
     onSettingsChange()
