@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.17.1
+// @version              0.17.4
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -59,7 +59,9 @@
 // @match                https://ngabbs.com/*
 // @match                https://www.dlsite.com/*
 // @match                https://keylol.com/*
+// @match                https://kemono.cr/*
 // @match                https://kemono.su/*
+// @match                https://coomer.st/*
 // @match                https://coomer.su/*
 // @match                https://nekohouse.su/*
 // @match                https://rule34video.com/*
@@ -68,9 +70,8 @@
 // @match                https://bbs.tampermonkey.net.cn/*
 // @match                https://discuss.flarum.org/*
 // @match                https://discuss.flarum.org.cn/*
+// @match                https://yuanliao.info/*
 // @match                https://www.nodeloc.com/*
-// @match                https://freesmth.net/*
-// @match                https://freesmth.uk/*
 // @match                https://veryfb.com/*
 // @match                https://www.nodeseek.com/*
 // @match                https://*.inoreader.com/*
@@ -103,8 +104,6 @@
 //// ** downloadURL https://scriptcat.org/scripts/code/2784/%F0%9F%8F%B7%EF%B8%8F+UTags+-+Add+usertags+to+links.user.js                     ////
 //// * https://github.com/utags/utags                                                                                                       ////
 //// ** downloadURL https://github.com/utags/utags/raw/main/build/userscript-prod/utags.user.js                                             ////
-//// * https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96                                                                ////
-//// ** downloadURL https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96/raw/utags.user.js                                 ////
 ////                                                                                                                                        ////
 ////                                                                                                                                        ////
 ////                         Extension Version                                                                                              ////
@@ -5520,7 +5519,7 @@
     }
     return {
       matches:
-        /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com/,
+        /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -6303,7 +6302,7 @@
     }
     return {
       matches:
-        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
+        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|yuanliao\.info|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -7270,7 +7269,7 @@
       return void 0
     }
     return {
-      matches: /kemono\.su|coomer\.su|nekohouse\.su/,
+      matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (hrefAttr.startsWith("#")) {
