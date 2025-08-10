@@ -74,7 +74,7 @@ export default (() => {
 
   return {
     matches:
-      /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com/,
+      /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com/,
     preProcess() {
       setVisitedAvailable(true)
     },

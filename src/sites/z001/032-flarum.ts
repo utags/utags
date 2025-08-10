@@ -58,7 +58,7 @@ export default (() => {
 
   return {
     matches:
-      /discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
+      /discuss\.flarum\.org|discuss\.flarum\.org\.cn|yuanliao\.info|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
     preProcess() {
       setVisitedAvailable(true)
     },

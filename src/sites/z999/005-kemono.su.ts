@@ -18,7 +18,7 @@ export default (() => {
   }
 
   return {
-    matches: /kemono\.su|coomer\.su|nekohouse\.su/,
+    matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
     validate(element: HTMLAnchorElement) {
       const hrefAttr = getAttribute(element, "href")
 

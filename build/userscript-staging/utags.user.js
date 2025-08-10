@@ -59,7 +59,9 @@
 // @match                https://ngabbs.com/*
 // @match                https://www.dlsite.com/*
 // @match                https://keylol.com/*
+// @match                https://kemono.cr/*
 // @match                https://kemono.su/*
+// @match                https://coomer.st/*
 // @match                https://coomer.su/*
 // @match                https://nekohouse.su/*
 // @match                https://rule34video.com/*
@@ -68,9 +70,8 @@
 // @match                https://bbs.tampermonkey.net.cn/*
 // @match                https://discuss.flarum.org/*
 // @match                https://discuss.flarum.org.cn/*
+// @match                https://yuanliao.info/*
 // @match                https://www.nodeloc.com/*
-// @match                https://freesmth.net/*
-// @match                https://freesmth.uk/*
 // @match                https://veryfb.com/*
 // @match                https://www.nodeseek.com/*
 // @match                https://*.inoreader.com/*
@@ -103,8 +104,6 @@
 //// ** downloadURL https://scriptcat.org/scripts/code/2784/%F0%9F%8F%B7%EF%B8%8F+UTags+-+Add+usertags+to+links.user.js                     ////
 //// * https://github.com/utags/utags                                                                                                       ////
 //// ** downloadURL https://github.com/utags/utags/raw/main/build/userscript-prod/utags.user.js                                             ////
-//// * https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96                                                                ////
-//// ** downloadURL https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96/raw/utags.user.js                                 ////
 ////                                                                                                                                        ////
 ////                                                                                                                                        ////
 ////                         Extension Version                                                                                              ////
@@ -5520,7 +5519,7 @@
     }
     return {
       matches:
-        /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com/,
+        /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -6303,7 +6302,7 @@
     }
     return {
       matches:
-        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
+        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|yuanliao\.info|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -7270,7 +7269,7 @@
       return void 0
     }
     return {
-      matches: /kemono\.su|coomer\.su|nekohouse\.su/,
+      matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (hrefAttr.startsWith("#")) {
