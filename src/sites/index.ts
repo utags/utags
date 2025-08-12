@@ -45,6 +45,10 @@ import flarum from "./z001/032-flarum"
 import nodeseek_com from "./z001/033-nodeseek.com"
 import inoreader_com from "./z001/034-inoreader.com"
 import zhipin_com from "./z001/035-zhipin.com"
+import twitch_tv from "./z001/036-twitch.tv"
+import yamibo_com from "./z001/037-yamibo.com"
+import flickr_com from "./z001/038-flickr.com"
+import ruanyifeng_com from "./z001/039-ruanyifeng.com"
 import pornhub from "./z999/001-pornhub.com"
 import ehentai from "./z999/002-e-hentai.org"
 import panda_chaika_moe from "./z999/003-panda.chaika.moe"
@@ -103,6 +107,10 @@ const sites: Site[] = [
   nodeseek_com,
   inoreader_com,
   zhipin_com,
+  twitch_tv,
+  yamibo_com,
+  flickr_com,
+  ruanyifeng_com,
   pornhub,
   ehentai,
   panda_chaika_moe,

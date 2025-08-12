@@ -108,6 +108,7 @@
       {
         "files": "src/sites/**/*.ts",
         "rules": {
+          "@typescript-eslint/naming-convention": 0,
           "n/file-extension-in-import": 0
         }
       }

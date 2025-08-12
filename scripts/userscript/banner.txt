@@ -78,6 +78,10 @@
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*
 // @match                https://www.zhipin.com/*
+// @match                https://*.twitch.tv/*
+// @match                https://*.yamibo.com/*
+// @match                https://*.flickr.com/*
+// @match                https://*.ruanyifeng.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

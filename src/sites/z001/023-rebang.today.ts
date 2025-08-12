@@ -4,7 +4,6 @@ import styleText from "data-text:./023-rebang.today.scss"
 import defaultSite from "../default"
 
 export default (() => {
-  /* eslint-disable @typescript-eslint/naming-convention */
   const nodeNameMap = {
     知乎: "zhihu",
     微博: "weibo",
@@ -50,7 +49,6 @@ export default (() => {
     InfoQ: "infoq",
     CSDN: "csdn",
   }
-  /* eslint-enable @typescript-eslint/naming-convention */
 
   return {
     matches: /rebang\.today/,

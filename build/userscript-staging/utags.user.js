@@ -78,6 +78,10 @@
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*
 // @match                https://www.zhipin.com/*
+// @match                https://*.twitch.tv/*
+// @match                https://*.yamibo.com/*
+// @match                https://*.flickr.com/*
+// @match                https://*.ruanyifeng.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
@@ -6849,6 +6853,601 @@
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
+  var twitch_tv_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-test-selector=ChannelLink][data-utags_fit_content="1"]{max-width:fit-content !important;display:flex}'
+  var twitch_tv_default2 = (() => {
+    const prefix3 = location.origin + "/"
+    const getUserProfileUrl = (url, exact = false) => {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (/^(directory|videos)/.test(href2)) {
+          return void 0
+        }
+        if (exact) {
+          if (/^\w+$/.test(href2)) {
+            return prefix3 + href2.replace(/^(\w+).*/, "$1")
+          }
+        } else if (/^\w+/.test(href2)) {
+          return prefix3 + href2.replace(/^(\w+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getVideoUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^videos\/\d+([?#].*)?$/.test(href2)) {
+            return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+          }
+        } else if (/^videos\/\d+/.test(href2)) {
+          return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getCategoryUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
+            return (
+              prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+            )
+          }
+        } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
+          return prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getTagUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
+            return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+          }
+        } else if (/^tag\/[^/?#]+?/.test(href2)) {
+          return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /twitch\.tv/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        '.tw-tower [data-a-target^="video-tower-card-"]',
+        ".tw-transition-group .tw-transition",
+      ],
+      conditionNodesSelectors: [
+        '.tw-tower [data-a-target^="video-tower-card-"] a',
+        ".tw-transition-group .tw-transition a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const titleElement = $(
+            'p[data-a-target="preview-card-channel-link"] p',
+            element
+          )
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "user", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "video", title }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".top-nav__overflow-menu",
+        //
+      ],
+      validMediaSelectors: [],
+      addExtraMatchedNodes(matchedNodesSet) {
+        const isDarkMode = hasClass(doc.documentElement, "tw-root--theme-dark")
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getVideoUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $('[data-a-target="stream-title"]')
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "video" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        for (const element of $$(
+          '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
+        )) {
+          const id = element.dataset.aUser
+          const title = element.textContent.trim()
+          if (id && title) {
+            key = prefix3 + id.toLowerCase()
+            const meta = { type: "user", title }
+            element.utags = { key, meta }
+            element.dataset.utags = element.dataset.utags || ""
+            element.dataset.utags_node_type = "link"
+            matchedNodesSet.add(element)
+          }
+        }
+      },
+      getStyle: () => twitch_tv_default,
+    }
+  })()
+  var yamibo_com_default =
+    ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
+  var yamibo_com_default2 = (() => {
+    const prefix3 = "https://bbs.yamibo.com/"
+    function getCanonicalUrl2(url) {
+      if (url.startsWith(prefix3)) {
+        let href2 = getUserProfileUrl(url, true)
+        if (href2) {
+          return href2
+        }
+        href2 = getPostUrl(url)
+        if (href2) {
+          return href2
+        }
+      }
+      return url
+    }
+    function getUserProfileUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        url = deleteUrlParameters(url, "do")
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^\?\d+(#.*)?$/.test(href2)) {
+            return (
+              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
+            return (
+              prefix3 +
+              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
+            return (
+              prefix3 +
+              href2.replace(
+                /^home\.php\?mod=space&uid=(\d+).*/,
+                "home.php?mod=space&uid=$1"
+              )
+            )
+          }
+        } else if (/^u\/[\w.-]+/.test(href2)) {
+          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getPostUrl(url) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
+          )
+        }
+        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(
+              /^forum\.php\?mod=redirect&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(
+              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /yamibo\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        //
+        "#threadlist table tbody",
+        "#postlist .comiis_vrx",
+      ],
+      conditionNodesSelectors: [
+        //
+        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
+        '#threadlist table tbody a[href^="thread-"]',
+        '#threadlist table tbody a[href^="space-uid-"]',
+        "#postlist .comiis_vrx .authi a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const title2 = element.textContent.trim()
+          if (!title2) {
+            return false
+          }
+          if (
+            /^\d+$/.test(title2) &&
+            element.parentElement.parentElement.textContent.includes(
+              "\u79EF\u5206"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "user" } : { type: "user", title: title2 }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl(href)
+        if (key) {
+          const title2 = element.textContent.trim()
+          if (!title2) {
+            return false
+          }
+          if (
+            title2 === "New" ||
+            title2 === "\u7F6E\u9876" ||
+            /^\d+$/.test(title2) ||
+            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title2)
+          ) {
+            return false
+          }
+          if ($('span[title^="20"]', element)) {
+            return false
+          }
+          if (
+            element.parentElement.textContent.includes(
+              "\u6700\u540E\u56DE\u590D\u4E8E"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "post" } : { type: "post", title: title2 }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          return true
+        }
+        const title = element.textContent.trim()
+        if (!title) {
+          return false
+        }
+        if (
+          title === "New" ||
+          title === "\u7F6E\u9876" ||
+          /^\d+$/.test(title)
+        ) {
+          return false
+        }
+        return true
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        "#hd",
+        ".oyheader",
+        "#scrolltop",
+        "#fd_page_bottom",
+        "#visitedforums",
+        "#pt",
+        ".tps",
+        ".pgbtn",
+        ".pgs",
+        "#f_pst",
+        'a[href*="member.php?mod=logging"]',
+        'a[href*="member.php?mod=register"]',
+        'a[href*="login/oauth/"]',
+        'a[href*="mod=spacecp&ac=usergroup"]',
+        'a[href*="home.php?mod=spacecp"]',
+        'a[href*="goto=lastpost#lastpost"]',
+        'a[onclick*="copyThreadUrl"]',
+        "#gadmin_menu",
+        "#guser_menu",
+        "#gupgrade_menu",
+        "#gmy_menu",
+        ".showmenu",
+        "ul.tb.cl",
+        ".comiis_irbox_tit",
+        "#thread_types",
+        "#threadlist .th",
+        "#filter_special_menu",
+        'a[title="RSS"]',
+        ".fa_fav",
+        ".p_pop",
+        ".comiis_topinfo",
+        ".bm .bm_h .kmfz",
+        "td.num a",
+        "td.plc .pi",
+        "td.plc .po.hin",
+        "td.pls .tns",
+        "ul.comiis_o",
+        'a[onclick*="showMenu"]',
+        'a[onclick*="showWindow"]',
+        ".toplist_7ree",
+        "nav",
+        ".btn",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "user" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("#thread_subject")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "post" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => yamibo_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var flickr_com_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .photo-list-view a[href^="/photos/"][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) [data-component=JustifiedPhotoLayout] a[href^="/photos/"][data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) .subview-modal .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}'
+  var flickr_com_default2 = /* @__PURE__ */ (() => {
+    const CANONICAL_BASE_URL = "https://www.flickr.com/"
+    const FLICKR_DOMAIN_REGEX = /^https?:\/\/flickr\.com/
+    const USER_PROFILE_EXACT_REGEX = /^(photos|people)\/[\w-@]+\/$/
+    const USER_PROFILE_REGEX = /^(photos|people)\/[\w-@]+\//
+    const USER_PROFILE_EXTRACT_REGEX = /^((photos|people)\/[\w-@]+\/).*/
+    function getCanonicalUrl2(url) {
+      if (FLICKR_DOMAIN_REGEX.test(url)) {
+        return url.replace(FLICKR_DOMAIN_REGEX, CANONICAL_BASE_URL.slice(0, -1))
+      }
+      return url
+    }
+    function getUserProfileUrl(url, exact = false) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (!normalizedUrl.startsWith(CANONICAL_BASE_URL)) {
+        return void 0
+      }
+      const pathSegment = normalizedUrl.slice(CANONICAL_BASE_URL.length)
+      const targetRegex = exact ? USER_PROFILE_EXACT_REGEX : USER_PROFILE_REGEX
+      if (targetRegex.test(pathSegment)) {
+        const match = USER_PROFILE_EXTRACT_REGEX.exec(pathSegment)
+        return match ? CANONICAL_BASE_URL + match[1] : void 0
+      }
+      return void 0
+    }
+    return {
+      matches: /flickr\.com/,
+      listNodesSelectors: [],
+      conditionNodesSelectors: [],
+      validate(element) {
+        const href = getCanonicalUrl2(element.href)
+        if (!href.startsWith(CANONICAL_BASE_URL)) {
+          return true
+        }
+        const key = getUserProfileUrl(href, true)
+        if (key) {
+          const titleElement = $(
+            'p[data-a-target="preview-card-channel-link"] p',
+            element
+          )
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "user", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".global-nav",
+        "#global-nav",
+        ".gn-link span",
+        "footer",
+        '[role="navigation"]',
+        '[aria-label="Tabs"]',
+        "footer .lang-switcher",
+        ".gift-pro-link",
+        ".pagination-view",
+        ".Paginator",
+        ".navigate-target",
+        ".more-link",
+        ".view-more-link",
+        ".view-all",
+        ".droparound.menu",
+        ".user-account-card-droparound",
+        ".person-card-view .links.secondary",
+        ".photo-sidebar-toggle-view",
+        ".attribution-info .username",
+        ".photo-license-info",
+        '[href*="upgrade/pro"]',
+        '[href*="/login"]',
+        '[href*="/logout"]',
+        '[href*="/sign-up"]',
+        '[href$="/relationship/"]',
+        "h5.tag-list-header",
+        ".cookie-banner-view",
+        ".cookie-banner-message",
+        "span.edit_relationship",
+        ".tag-section-header",
+        ".nav-links",
+        ".photo-list-album-view",
+        ".contact-list-num",
+        ".contact-list-table th",
+        'a[href*="utm_source=flickr&utm_medium=affiliate"]',
+        ".since-link",
+        ".butt",
+        ".add-topic",
+        ".groups-members",
+        'a[data-track="groupDiscussionTopicReplyCountClick"]',
+        ".pro-badge-new",
+        ".pro-badge-legacy",
+      ],
+      getStyle: () => flickr_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var ruanyifeng_com_default = ""
+  var ruanyifeng_com_default2 = /* @__PURE__ */ (() => {
+    const CANONICAL_BASE_URL = "https://www.ruanyifeng.com/"
+    const BLOG_POST_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html/
+    const BLOG_POST_EXACT_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html$/
+    function getCanonicalUrl2(url) {
+      if (/^https?:\/\/ruanyifeng\.com/.test(url)) {
+        return url.replace(
+          /^https?:\/\/ruanyifeng\.com/,
+          CANONICAL_BASE_URL.slice(0, -1)
+        )
+      }
+      if (url.startsWith("http://www.ruanyifeng.com")) {
+        return url.replace(
+          "http://www.ruanyifeng.com",
+          CANONICAL_BASE_URL.slice(0, -1)
+        )
+      }
+      return url
+    }
+    function getPostUrl(url, exact = false) {
+      const canonicalUrl = getCanonicalUrl2(url)
+      if (!canonicalUrl.startsWith(CANONICAL_BASE_URL)) {
+        return void 0
+      }
+      const pathPart = canonicalUrl
+        .slice(CANONICAL_BASE_URL.length)
+        .toLowerCase()
+      const pattern = exact ? BLOG_POST_EXACT_PATTERN : BLOG_POST_PATTERN
+      if (pattern.test(pathPart)) {
+        const match = /^(blog\/\d{4}\/\d{2}\/[^/]+\.html)/.exec(pathPart)
+        return match ? CANONICAL_BASE_URL + match[1] : void 0
+      }
+      return void 0
+    }
+    return {
+      matches: /ruanyifeng\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: ["ul li.module-list-item", "#related_entries ul li"],
+      conditionNodesSelectors: [
+        "ul li.module-list-item a",
+        "#related_entries ul li a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (
+          !href.startsWith(CANONICAL_BASE_URL) &&
+          !href.startsWith(location.origin)
+        ) {
+          return true
+        }
+        const key = getPostUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          const meta = { title, type: "post" }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".asset-more-link",
+        ".asset-meta",
+        ".comment-footer-inner",
+        "#latest-comments",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        const key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("h1#page-title")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "post" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => ruanyifeng_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
   var pornhub_com_default =
     ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
   var pornhub_com_default2 = (() => {
@@ -7509,6 +8108,10 @@
     nodeseek_com_default2,
     inoreader_com_default2,
     zhipin_com_default2,
+    twitch_tv_default2,
+    yamibo_com_default2,
+    flickr_com_default2,
+    ruanyifeng_com_default2,
     pornhub_com_default2,
     e_hentai_org_default2,
     panda_chaika_moe_default2,
