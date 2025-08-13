@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.17.4
+// @version              0.18.6
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
