@@ -110,6 +110,11 @@ export default (() => {
           return false
         }
 
+        const titleLowerCase = title.toLowerCase()
+        if (titleLowerCase.startsWith("more")) {
+          return false
+        }
+
         if (element.closest('[data-a-target="preview-card-image-link"]')) {
           return false
         }
@@ -122,13 +127,30 @@ export default (() => {
         return true
       }
 
+      const title = getTrimmedTitle(element)
+
+      if (!title) {
+        return false
+      }
+
+      const titleLowerCase = title.toLowerCase()
+      if (
+        titleLowerCase.startsWith("more") ||
+        /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
+        /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(titleLowerCase)
+      ) {
+        return false
+      }
+
       return true
     },
     // refer: https://github.com/utags/utags/issues/70
     excludeSelectors: [
       ".global-nav",
       "#global-nav",
+      ".logo a",
       ".gn-link span",
+      ".gn-link",
       "footer",
       '[role="navigation"]',
       '[aria-label="Tabs"]',
@@ -151,6 +173,10 @@ export default (() => {
       '[href*="/logout"]',
       '[href*="/sign-up"]',
       '[href$="/relationship/"]',
+      '[href$="?editAvatar"]',
+      '[href="/recent.gne"]',
+      '[href^="/search/"]',
+      ".sn-avatar",
       "h5.tag-list-header",
       ".cookie-banner-view",
       ".cookie-banner-message",
@@ -162,6 +188,22 @@ export default (() => {
       // Profiles
       ".contact-list-num",
       ".contact-list-table th",
+      ".bio-infos-container .archives-link",
+      '[href*="/ignore.gne"]',
+      ".context-list .context-item.link",
+      ".metadata-container .followers",
+      ".LinksNew a",
+      ".contact-list-header",
+      "#Feeds",
+      ".Butt",
+      ".tabs",
+      ".refresh-suggestions-container",
+      ".suggestions .stats",
+      ".jump-list-container",
+      '.tag-list-zeus a[href$="/edit/"]',
+      '.tag-list-zeus a[href$="/delete/"]',
+      ".scTopCrumbShareBreadcrumbs",
+      ".vsComments",
       // AD
       'a[href*="utm_source=flickr&utm_medium=affiliate"]',
       // groups
@@ -172,6 +214,12 @@ export default (() => {
       'a[data-track="groupDiscussionTopicReplyCountClick"]',
       ".pro-badge-new",
       ".pro-badge-legacy",
+      // https://www.flickr.com/help/forum/en-us/
+      'a[href*="?change_lang="]',
+      ".forumSearch form",
+      ".TopicListing small a",
+      "#DiscussTopic .Said small a",
+      ".TopicReply .Said small a",
     ],
     getStyle: () => styleText,
     getCanonicalUrl,
