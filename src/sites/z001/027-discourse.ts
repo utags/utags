@@ -270,7 +270,7 @@ export default (() => {
       const isDarkMode =
         doc.documentElement.dataset.themeType === "dark" ||
         // linux.do
-        $("header picture > source")?.media === "all"
+        ($("header picture > source") as HTMLLinkElement)?.media === "all"
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
 
       let key = getUserProfileUrl(location.href)
