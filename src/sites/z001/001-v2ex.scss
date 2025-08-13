@@ -69,4 +69,11 @@
       top: -9999px;
     }
   }
+
+  /* VXNA 列表 */
+  .xna-entry,
+  /* Planet 列表 */
+  .planet-post {
+    --utags-list-node-display: flex;
+  }
 }

@@ -64,6 +64,12 @@ export default (() => {
       '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
       // 帖子节点
       ".box .cell .topic_info .node",
+      // VXNA 作者
+      ".xna-source-author a",
+      // VXNA 博客
+      ".xna-entry-source a",
+      // planet site address
+      ".planet-site-address a",
       // 回复者
       '.box .cell strong a.dark[href*="/member/"]',
       // 回复内容标签
@@ -82,6 +88,8 @@ export default (() => {
       'a[href*="/member/"]',
       // 所有页面节点链接
       'a[href*="/go/"]',
+      // planet 链接
+      'a[href*="/planet/"]',
       // 所有外部链接
       'a[href^="https://"]:not([href*="v2ex.com"])',
       'a[href^="http://"]:not([href*="v2ex.com"])',
@@ -105,6 +113,8 @@ export default (() => {
       "a.count_livid",
       // v2ex 超级增强脚本添加的元素
       ".post-item a.post-content",
+      // planet 帖子时间
+      ".planet-post-time",
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       if (location.pathname.includes("/member/")) {
