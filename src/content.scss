@@ -554,7 +554,7 @@
 [data-utags_display-effect-of-the-visited-content="4"]
   [data-utags_list_node*=",:visited,"] {
   [data-utags_condition_node][data-utags_visited="1"] {
-    color: var(--utags-visited-title-color);
+    color: var(--utags-visited-title-color) !important;
   }
 }
 
