@@ -64,6 +64,10 @@ For now it works on
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -129,6 +133,12 @@ For now it works on
 
 ## Release Notes
 
+- 0.18.x
+  - Add the website Flickr
+  - Add the website Ruanyifeng
+  - Add the website Twitch
+  - Add the website Yamibo
+  - Support special tags on vxna and planet of v2ex.com
 - 0.17.1
   - Support data synchronization via GitHub and WebDAV
 - 0.16.0

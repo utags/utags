@@ -59,6 +59,10 @@
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - BOSS 直聘 ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- 百合会 ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -146,6 +150,12 @@
 
 ## 更新记录
 
+- 0.18.x
+  - 适配网站：Flickr
+  - 适配网站：阮一峰的网络日志
+  - 适配网站：Twitch
+  - 适配网站：百合会
+  - V2EX.com 的 vxna 和 planet 页面支持特殊标签效果，可屏蔽博客源
 - 0.17.1
   - 支持通过 GitHub, WebDAV 同步数据
 - 0.16.0
