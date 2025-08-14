@@ -256,6 +256,8 @@ export default (() => {
       ".nav.nav-pills",
       ".btn",
       ".custom-header-links",
+      // reply area and topic editor
+      '.reply-area[role="dialog"]',
       // chat
       ".chat-time",
     ],
