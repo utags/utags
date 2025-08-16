@@ -1,6 +1,7 @@
-import { $$ } from "browser-extension-utils"
+import { $, $$ } from "browser-extension-utils"
 import styleText from "data-text:./005-github.com.scss"
 
+import type { UtagsHTMLElement } from "../../types"
 import defaultSite from "../default"
 
 export default (() => {
@@ -115,6 +116,21 @@ export default (() => {
     return undefined
   }
 
+  function getFileUrl(href: string) {
+    if (href.startsWith(prefix)) {
+      const href2 = href.slice(19)
+
+      if (/^[\w-]+\/[\w-.]+\/(tree|blob)\/([^/]+\/)+[^/]+$/.test(href2)) {
+        const username = /^([\w-]+)/.exec(href2)![1]
+        if (username && !noneUsers.has(username)) {
+          return prefix + href2
+        }
+      }
+    }
+
+    return undefined
+  }
+
   return {
     matches: /github\.com/,
     listNodesSelectors: [],
@@ -164,6 +180,15 @@ export default (() => {
           return true
         }
 
+        key = getFileUrl(href)
+        if (key) {
+          const title = element.textContent!.trim()
+          const type = key.includes("/blob/") ? "file" : "dir"
+          const meta = { title, type }
+          element.utags = { key, meta }
+          return true
+        }
+
         return false
       }
 
@@ -182,11 +207,46 @@ export default (() => {
       ".js-github-dev-shortcut",
       ".js-github-dev-new-tab-shortcut",
       ".js-skip-to-content",
+      // Discussion
+      ".SegmentedControl-item",
+      // Code viewer
+      ".react-code-lines",
+      ".virtual-blame-wrapper",
     ],
     validMediaSelectors: [
       // Repo icon
       "svg.octicon-repo",
+      // Discussion poster and comment poster
+      '[data-hovercard-type="user"] img',
     ],
+    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
+      let key = getIssuesUrl(location.href)
+      if (key) {
+        const element = $('[data-testid="issue-header"] h1,.gh-header-show h1')
+        if (element) {
+          const title = element.textContent!.trim()
+          if (title) {
+            const meta = { title, type: "issue" }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+
+      key = getFileUrl(location.href)
+      if (key) {
+        const element = $("h1#file-name-id-wide")
+        if (element) {
+          const title = element.textContent!.trim()
+          if (title) {
+            const type = key.includes("/blob/") ? "file" : "dir"
+            const meta = { title, type }
+            element.utags = { key, meta }
+            matchedNodesSet.add(element)
+          }
+        }
+      }
+    },
     getStyle: () => styleText,
   }
 })()
