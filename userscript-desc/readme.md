@@ -143,6 +143,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
   - Add the website Twitch
   - Add the website Yamibo
   - Support special tags on vxna and planet of v2ex.com
+  - Support tagging GitHub files and folders
+  - Display tags next to GitHub issue titles
 - 0.17.1
   - Support data synchronization via GitHub and WebDAV
 - 0.16.0

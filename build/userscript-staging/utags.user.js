@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.18.9
+// @version              0.18.10
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -3605,7 +3605,7 @@
     }
   })()
   var github_com_default =
-    ':not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) [id=user-starred-repos] a[href^="/topics/"].flex-items-center+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}:not(#a):not(#b):not(#c) div[id=repo-title-component] strong[itemprop=name] a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-testid=issue-header] h1+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .gh-header-show h1[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) .gh-header-show h1+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important}:not(#a):not(#b):not(#c) #discussion_bucket .gh-header-show h1+.utags_ul_1{margin-top:-2px !important}:not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) [id=user-starred-repos] a[href^="/topics/"].flex-items-center+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}:not(#a):not(#b):not(#c) div[id=repo-title-component] strong[itemprop=name] a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
   var github_com_default2 = (() => {
     const noneUsers = /* @__PURE__ */ new Set([
       "about",
@@ -3702,6 +3702,18 @@
       }
       return void 0
     }
+    function getFileUrl(href) {
+      if (href.startsWith(prefix3)) {
+        const href2 = href.slice(19)
+        if (/^[\w-]+\/[\w-.]+\/(tree|blob)\/([^/]+\/)+[^/]+$/.test(href2)) {
+          const username = /^([\w-]+)/.exec(href2)[1]
+          if (username && !noneUsers.has(username)) {
+            return prefix3 + href2
+          }
+        }
+      }
+      return void 0
+    }
     return {
       matches: /github\.com/,
       listNodesSelectors: [],
@@ -3744,6 +3756,14 @@
             element.utags = { key, meta }
             return true
           }
+          key = getFileUrl(href)
+          if (key) {
+            const title = element.textContent.trim()
+            const type = key.includes("/blob/") ? "file" : "dir"
+            const meta = { title, type }
+            element.utags = { key, meta }
+            return true
+          }
           return false
         }
         return true
@@ -3759,8 +3779,43 @@
         ".js-github-dev-shortcut",
         ".js-github-dev-new-tab-shortcut",
         ".js-skip-to-content",
+        ".SegmentedControl-item",
+        ".react-code-lines",
+        ".virtual-blame-wrapper",
       ],
-      validMediaSelectors: ["svg.octicon-repo"],
+      validMediaSelectors: [
+        "svg.octicon-repo",
+        '[data-hovercard-type="user"] img',
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getIssuesUrl(location.href)
+        if (key) {
+          const element = $(
+            '[data-testid="issue-header"] h1,.gh-header-show h1'
+          )
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "issue" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getFileUrl(location.href)
+        if (key) {
+          const element = $("h1#file-name-id-wide")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const type = key.includes("/blob/") ? "file" : "dir"
+              const meta = { title, type }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+      },
       getStyle: () => github_com_default,
     }
   })()

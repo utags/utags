@@ -156,6 +156,8 @@
   - 适配网站：Twitch
   - 适配网站：百合会
   - V2EX.com 的 vxna 和 planet 页面支持特殊标签效果，可屏蔽博客源
+  - 支持为 GitHub 文件和文件夹添加标签
+  - 在 GitHub issue 标题旁显示标签
 - 0.17.1
   - 支持通过 GitHub, WebDAV 同步数据
 - 0.16.0
