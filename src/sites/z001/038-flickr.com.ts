@@ -16,6 +16,9 @@ export default (() => {
   const USER_PROFILE_EXACT_REGEX = /^(photos|people)\/[\w-@]+\/$/
   const USER_PROFILE_REGEX = /^(photos|people)\/[\w-@]+\//
   const USER_PROFILE_EXTRACT_REGEX = /^((photos|people)\/[\w-@]+\/).*/
+  const GROUP_EXACT_REGEX = /^(groups)\/[\w-]+\/$/
+  const GROUP_REGEX = /^(groups)\/[\w-]+\//
+  const GROUP_EXTRACT_REGEX = /^((groups)\/[\w-]+\/).*/
 
   /**
    * Normalize URL to canonical format
@@ -49,6 +52,30 @@ export default (() => {
 
     if (targetRegex.test(pathSegment)) {
       const match = USER_PROFILE_EXTRACT_REGEX.exec(pathSegment)
+      return match ? CANONICAL_BASE_URL + match[1] : undefined
+    }
+
+    return undefined
+  }
+
+  /**
+   * Extract user profile URL from a given URL
+   * @param url - The URL to process
+   * @param exact - Whether to match exact profile URLs only (ending with /)
+   * @returns User profile URL or undefined if not a valid profile URL
+   */
+  function getGroupUrl(url: string, exact = false): string | undefined {
+    const normalizedUrl = getCanonicalUrl(url)
+
+    if (!normalizedUrl.startsWith(CANONICAL_BASE_URL)) {
+      return undefined
+    }
+
+    const pathSegment = normalizedUrl.slice(CANONICAL_BASE_URL.length)
+    const targetRegex = exact ? GROUP_EXACT_REGEX : GROUP_REGEX
+
+    if (targetRegex.test(pathSegment)) {
+      const match = GROUP_EXTRACT_REGEX.exec(pathSegment)
       return match ? CANONICAL_BASE_URL + match[1] : undefined
     }
 
@@ -136,6 +163,7 @@ export default (() => {
       const titleLowerCase = title.toLowerCase()
       if (
         titleLowerCase.startsWith("more") ||
+        titleLowerCase.startsWith("edit") ||
         /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
         /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(titleLowerCase)
       ) {
@@ -176,6 +204,7 @@ export default (() => {
       '[href$="?editAvatar"]',
       '[href="/recent.gne"]',
       '[href^="/search/"]',
+      '[href*="/groups_join.gne"]',
       ".sn-avatar",
       "h5.tag-list-header",
       ".cookie-banner-view",
@@ -224,7 +253,50 @@ export default (() => {
       ".TopicListing small a",
       "#DiscussTopic .Said small a",
       ".TopicReply .Said small a",
+      // groups (deprecated view)
+      ".group-blast-zeus",
+      ".hide-link",
+      '[data-track="join-group"]',
+      ".set-desc.group-desc .short a",
+      "#feeds-xml a",
+      ".slideshow-bottom a",
     ],
+    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+      let key = getUserProfileUrl(location.href)
+      // if (key) {
+      //   // profile header
+      //   const element =
+      //     $(".user-profile-names .username") ||
+      //     $(
+      //       ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+      //     )
+      //   if (element) {
+      //     const title = element.textContent!.trim()
+      //     if (title) {
+      //       const meta = { title, type: "user" }
+      //       element.utags = { key, meta }
+      //       matchedNodesSet.add(element)
+      //     }
+      //   }
+      // }
+
+      key = getGroupUrl(location.href)
+      if (key) {
+        const element = $("h1.group-title")
+        const titleElement = $("h1.group-title .group-title-holder")
+          ?.childNodes[0]
+        if (element && titleElement) {
+          const title = titleElement.textContent!.trim()
+          if (title) {
+            const meta = { title, type: "group" }
+            element.utags = { key, meta }
+            element.dataset.utags_node_type = "link"
+            matchedNodesSet.add(element)
+            markElementWhetherVisited(key, element)
+          }
+        }
+      }
+    },
     getStyle: () => styleText,
     getCanonicalUrl,
   }
