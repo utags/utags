@@ -1,5 +1,5 @@
 import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./002-e-hentai.org.scss"
+import styleText from "data-text:./002-e-hentxx.org.scss"
 
 import type { UserTagMeta, UtagsHTMLElement } from "../../types"
 import { getFirstHeadElement } from "../../utils"
