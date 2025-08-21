@@ -1,44 +1,44 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from 'vitest'
 
-import type { BookmarkTagsAndMetadata } from "../types/bookmarks.js"
-import { normalizeBookmarkData, sortBookmarks } from "./index.js"
+import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
+import { normalizeBookmarkData, sortBookmarks } from './index.js'
 
 type BookmarkItem = [string, BookmarkTagsAndMetadata]
 
-describe("sortBookmarks", () => {
-  it("should sort bookmarks by created date in descending order", () => {
+describe('sortBookmarks', () => {
+  it('should sort bookmarks by created date in descending order', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://example1.com",
+        'https://example1.com',
         {
-          tags: ["tag1"],
+          tags: ['tag1'],
           meta: {
-            title: "Example 1",
+            title: 'Example 1',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://example2.com",
+        'https://example2.com',
         {
-          tags: ["tag2"],
+          tags: ['tag2'],
           meta: {
-            title: "Example 2",
+            title: 'Example 2',
             created: 3000,
             updated: 3000,
           },
         },
       ],
       [
-        "https://example3.com",
+        'https://example3.com',
         {
-          tags: ["tag3"],
+          tags: ['tag3'],
           meta: {
-            title: "Example 3",
+            title: 'Example 3',
             created: 2000,
             updated: 2000,
           },
@@ -50,33 +50,33 @@ describe("sortBookmarks", () => {
 
     expect(sorted).toEqual([
       [
-        "https://example2.com",
+        'https://example2.com',
         {
-          tags: ["tag2"],
+          tags: ['tag2'],
           meta: {
-            title: "Example 2",
+            title: 'Example 2',
             created: 3000,
             updated: 3000,
           },
         },
       ],
       [
-        "https://example3.com",
+        'https://example3.com',
         {
-          tags: ["tag3"],
+          tags: ['tag3'],
           meta: {
-            title: "Example 3",
+            title: 'Example 3',
             created: 2000,
             updated: 2000,
           },
         },
       ],
       [
-        "https://example1.com",
+        'https://example1.com',
         {
-          tags: ["tag1"],
+          tags: ['tag1'],
           meta: {
-            title: "Example 1",
+            title: 'Example 1',
             created: 1000,
             updated: 1000,
           },
@@ -85,36 +85,36 @@ describe("sortBookmarks", () => {
     ])
   })
 
-  it("should sort by URL alphabetically when created dates are equal", () => {
+  it('should sort by URL alphabetically when created dates are equal', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://zebra.com",
+        'https://zebra.com',
         {
-          tags: ["animal"],
+          tags: ['animal'],
           meta: {
-            title: "Zebra",
+            title: 'Zebra',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://apple.com",
+        'https://apple.com',
         {
-          tags: ["fruit"],
+          tags: ['fruit'],
           meta: {
-            title: "Apple",
+            title: 'Apple',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://banana.com",
+        'https://banana.com',
         {
-          tags: ["fruit"],
+          tags: ['fruit'],
           meta: {
-            title: "Banana",
+            title: 'Banana',
             created: 1000,
             updated: 1000,
           },
@@ -126,33 +126,33 @@ describe("sortBookmarks", () => {
 
     expect(sorted).toEqual([
       [
-        "https://apple.com",
+        'https://apple.com',
         {
-          tags: ["fruit"],
+          tags: ['fruit'],
           meta: {
-            title: "Apple",
+            title: 'Apple',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://banana.com",
+        'https://banana.com',
         {
-          tags: ["fruit"],
+          tags: ['fruit'],
           meta: {
-            title: "Banana",
+            title: 'Banana',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://zebra.com",
+        'https://zebra.com',
         {
-          tags: ["animal"],
+          tags: ['animal'],
           meta: {
-            title: "Zebra",
+            title: 'Zebra',
             created: 1000,
             updated: 1000,
           },
@@ -161,20 +161,20 @@ describe("sortBookmarks", () => {
     ])
   })
 
-  it("should handle empty array", () => {
+  it('should handle empty array', () => {
     const bookmarks: BookmarkItem[] = []
     const sorted = sortBookmarks(bookmarks)
     expect(sorted).toEqual([])
   })
 
-  it("should handle single bookmark", () => {
+  it('should handle single bookmark', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://single.com",
+        'https://single.com',
         {
-          tags: ["single"],
+          tags: ['single'],
           meta: {
-            title: "Single",
+            title: 'Single',
             created: 1000,
             updated: 1000,
           },
@@ -186,25 +186,25 @@ describe("sortBookmarks", () => {
     expect(sorted).toEqual(bookmarks)
   })
 
-  it("should not mutate the original array", () => {
+  it('should not mutate the original array', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://example1.com",
+        'https://example1.com',
         {
-          tags: ["tag1"],
+          tags: ['tag1'],
           meta: {
-            title: "Example 1",
+            title: 'Example 1',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://example2.com",
+        'https://example2.com',
         {
-          tags: ["tag2"],
+          tags: ['tag2'],
           meta: {
-            title: "Example 2",
+            title: 'Example 2',
             created: 2000,
             updated: 2000,
           },
@@ -219,39 +219,39 @@ describe("sortBookmarks", () => {
     expect(bookmarks).toEqual(originalOrder)
     // Sorted array should be different
     expect(sorted).not.toBe(bookmarks)
-    expect(sorted[0][0]).toBe("https://example2.com")
+    expect(sorted[0][0]).toBe('https://example2.com')
   })
 
-  it("should handle zero timestamps", () => {
+  it('should handle zero timestamps', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://zero1.com",
+        'https://zero1.com',
         {
-          tags: ["zero"],
+          tags: ['zero'],
           meta: {
-            title: "Zero 1",
+            title: 'Zero 1',
             created: 0,
             updated: 0,
           },
         },
       ],
       [
-        "https://zero2.com",
+        'https://zero2.com',
         {
-          tags: ["zero"],
+          tags: ['zero'],
           meta: {
-            title: "Zero 2",
+            title: 'Zero 2',
             created: 0,
             updated: 0,
           },
         },
       ],
       [
-        "https://nonzero.com",
+        'https://nonzero.com',
         {
-          tags: ["nonzero"],
+          tags: ['nonzero'],
           meta: {
-            title: "Non Zero",
+            title: 'Non Zero',
             created: 1000,
             updated: 1000,
           },
@@ -262,42 +262,42 @@ describe("sortBookmarks", () => {
     const sorted = sortBookmarks(bookmarks)
 
     // Non-zero timestamp should come first
-    expect(sorted[0][0]).toBe("https://nonzero.com")
+    expect(sorted[0][0]).toBe('https://nonzero.com')
     // Zero timestamps should be sorted alphabetically by URL
-    expect(sorted[1][0]).toBe("https://zero1.com")
-    expect(sorted[2][0]).toBe("https://zero2.com")
+    expect(sorted[1][0]).toBe('https://zero1.com')
+    expect(sorted[2][0]).toBe('https://zero2.com')
   })
 
-  it("should handle negative timestamps", () => {
+  it('should handle negative timestamps', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://negative.com",
+        'https://negative.com',
         {
-          tags: ["negative"],
+          tags: ['negative'],
           meta: {
-            title: "Negative",
+            title: 'Negative',
             created: -1000,
             updated: -1000,
           },
         },
       ],
       [
-        "https://positive.com",
+        'https://positive.com',
         {
-          tags: ["positive"],
+          tags: ['positive'],
           meta: {
-            title: "Positive",
+            title: 'Positive',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://zero.com",
+        'https://zero.com',
         {
-          tags: ["zero"],
+          tags: ['zero'],
           meta: {
-            title: "Zero",
+            title: 'Zero',
             created: 0,
             updated: 0,
           },
@@ -308,30 +308,30 @@ describe("sortBookmarks", () => {
     const sorted = sortBookmarks(bookmarks)
 
     // Should be sorted in descending order: positive > zero > negative
-    expect(sorted[0][0]).toBe("https://positive.com")
-    expect(sorted[1][0]).toBe("https://zero.com")
-    expect(sorted[2][0]).toBe("https://negative.com")
+    expect(sorted[0][0]).toBe('https://positive.com')
+    expect(sorted[1][0]).toBe('https://zero.com')
+    expect(sorted[2][0]).toBe('https://negative.com')
   })
 
-  it("should handle large timestamp values", () => {
+  it('should handle large timestamp values', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://large1.com",
+        'https://large1.com',
         {
-          tags: ["large"],
+          tags: ['large'],
           meta: {
-            title: "Large 1",
+            title: 'Large 1',
             created: Number.MAX_SAFE_INTEGER,
             updated: Number.MAX_SAFE_INTEGER,
           },
         },
       ],
       [
-        "https://large2.com",
+        'https://large2.com',
         {
-          tags: ["large"],
+          tags: ['large'],
           meta: {
-            title: "Large 2",
+            title: 'Large 2',
             created: Number.MAX_SAFE_INTEGER - 1,
             updated: Number.MAX_SAFE_INTEGER - 1,
           },
@@ -342,40 +342,40 @@ describe("sortBookmarks", () => {
     const sorted = sortBookmarks(bookmarks)
 
     // Larger timestamp should come first
-    expect(sorted[0][0]).toBe("https://large1.com")
-    expect(sorted[1][0]).toBe("https://large2.com")
+    expect(sorted[0][0]).toBe('https://large1.com')
+    expect(sorted[1][0]).toBe('https://large2.com')
   })
 
-  it("should handle complex URL sorting with special characters", () => {
+  it('should handle complex URL sorting with special characters', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://example.com/path?param=value",
+        'https://example.com/path?param=value',
         {
-          tags: ["complex"],
+          tags: ['complex'],
           meta: {
-            title: "Complex URL",
+            title: 'Complex URL',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://example.com/path",
+        'https://example.com/path',
         {
-          tags: ["simple"],
+          tags: ['simple'],
           meta: {
-            title: "Simple URL",
+            title: 'Simple URL',
             created: 1000,
             updated: 1000,
           },
         },
       ],
       [
-        "https://example.com/path-with-dashes",
+        'https://example.com/path-with-dashes',
         {
-          tags: ["dashes"],
+          tags: ['dashes'],
           meta: {
-            title: "Dashes URL",
+            title: 'Dashes URL',
             created: 1000,
             updated: 1000,
           },
@@ -386,17 +386,17 @@ describe("sortBookmarks", () => {
     const sorted = sortBookmarks(bookmarks)
 
     // Should be sorted alphabetically by URL when timestamps are equal
-    expect(sorted[0][0]).toBe("https://example.com/path")
-    expect(sorted[1][0]).toBe("https://example.com/path-with-dashes")
-    expect(sorted[2][0]).toBe("https://example.com/path?param=value")
+    expect(sorted[0][0]).toBe('https://example.com/path')
+    expect(sorted[1][0]).toBe('https://example.com/path-with-dashes')
+    expect(sorted[2][0]).toBe('https://example.com/path?param=value')
   })
 
-  it("should handle bookmarks with different metadata structures", () => {
+  it('should handle bookmarks with different metadata structures', () => {
     const bookmarks: BookmarkItem[] = [
       [
-        "https://minimal.com",
+        'https://minimal.com',
         {
-          tags: ["minimal"],
+          tags: ['minimal'],
           meta: {
             created: 2000,
             updated: 2000,
@@ -404,15 +404,15 @@ describe("sortBookmarks", () => {
         },
       ],
       [
-        "https://full.com",
+        'https://full.com',
         {
-          tags: ["full", "complete"],
+          tags: ['full', 'complete'],
           meta: {
-            title: "Full Metadata",
-            description: "Complete bookmark with all fields",
+            title: 'Full Metadata',
+            description: 'Complete bookmark with all fields',
             created: 1000,
             updated: 1500,
-            favicon: "https://full.com/favicon.ico",
+            favicon: 'https://full.com/favicon.ico',
           },
         },
       ],
@@ -421,68 +421,68 @@ describe("sortBookmarks", () => {
     const sorted = sortBookmarks(bookmarks)
 
     // Should sort by created timestamp regardless of other metadata
-    expect(sorted[0][0]).toBe("https://minimal.com")
-    expect(sorted[1][0]).toBe("https://full.com")
+    expect(sorted[0][0]).toBe('https://minimal.com')
+    expect(sorted[1][0]).toBe('https://full.com')
   })
 })
 
-describe("normalizeBookmarkData", () => {
-  describe("primitive values", () => {
-    it("should return null as is", () => {
+describe('normalizeBookmarkData', () => {
+  describe('primitive values', () => {
+    it('should return null as is', () => {
       expect(normalizeBookmarkData(null)).toBe(null)
     })
 
-    it("should return undefined as is", () => {
+    it('should return undefined as is', () => {
       // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
       expect(normalizeBookmarkData(undefined)).toBe(undefined)
     })
 
-    it("should return string as is", () => {
-      const str = "test string"
+    it('should return string as is', () => {
+      const str = 'test string'
       expect(normalizeBookmarkData(str)).toBe(str)
     })
 
-    it("should return number as is", () => {
+    it('should return number as is', () => {
       const num = 42
       expect(normalizeBookmarkData(num)).toBe(num)
     })
 
-    it("should return boolean as is", () => {
+    it('should return boolean as is', () => {
       expect(normalizeBookmarkData(true)).toBe(true)
       expect(normalizeBookmarkData(false)).toBe(false)
     })
   })
 
-  describe("arrays", () => {
-    it("should handle empty array", () => {
+  describe('arrays', () => {
+    it('should handle empty array', () => {
       expect(normalizeBookmarkData([])).toEqual([])
     })
 
-    it("should process array of primitives", () => {
-      const arr = [1, "test", true, null]
-      expect(normalizeBookmarkData(arr)).toEqual([1, "test", true, null])
+    it('should process array of primitives', () => {
+      const arr = [1, 'test', true, null]
+      expect(normalizeBookmarkData(arr)).toEqual([1, 'test', true, null])
     })
 
-    it("should recursively process nested arrays", () => {
+    it('should recursively process nested arrays', () => {
       const nestedArr = [1, [2, [3, 4]], 5]
       expect(normalizeBookmarkData(nestedArr)).toEqual([1, [2, [3, 4]], 5])
     })
 
-    it("should process array containing objects with meta", () => {
+    it('should process array containing objects with meta', () => {
       const arr = [
         {
           meta: {
-            title: "Test",
+            title: 'Test',
             created: 1_234_567_890,
-            description: "A test bookmark",
+            description: 'A test bookmark',
           },
         },
       ]
       const expected = [
         {
           meta: {
-            description: "A test bookmark",
-            title: "Test",
+            description: 'A test bookmark',
+            title: 'Test',
             created: 1_234_567_890,
           },
         },
@@ -493,30 +493,30 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("objects without meta", () => {
-    it("should handle empty object", () => {
+  describe('objects without meta', () => {
+    it('should handle empty object', () => {
       expect(normalizeBookmarkData({})).toEqual({})
     })
 
-    it("should preserve object structure without meta property", () => {
+    it('should preserve object structure without meta property', () => {
       const obj = {
-        name: "test",
+        name: 'test',
         value: 123,
         nested: {
-          prop: "value",
+          prop: 'value',
         },
       }
       expect(normalizeBookmarkData(obj)).toEqual(obj)
     })
 
-    it("should recursively process nested objects", () => {
+    it('should recursively process nested objects', () => {
       const obj = {
         level1: {
           level2: {
             level3: {
               meta: {
                 created: 1_234_567_890,
-                title: "Deep nested",
+                title: 'Deep nested',
               },
             },
           },
@@ -527,7 +527,7 @@ describe("normalizeBookmarkData", () => {
           level2: {
             level3: {
               meta: {
-                title: "Deep nested",
+                title: 'Deep nested',
                 created: 1_234_567_890,
               },
             },
@@ -540,82 +540,22 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("objects with meta property", () => {
-    it("should sort meta properties with created at the end", () => {
+  describe('objects with meta property', () => {
+    it('should sort meta properties with created at the end', () => {
       const obj = {
         meta: {
           created: 1_234_567_890,
           updated: 1_234_567_890,
-          title: "Test Bookmark",
-          description: "A test bookmark",
-          author: "Test Author",
+          title: 'Test Bookmark',
+          description: 'A test bookmark',
+          author: 'Test Author',
         },
       }
       const expected = {
         meta: {
-          author: "Test Author",
-          description: "A test bookmark",
-          title: "Test Bookmark",
-          updated: 1_234_567_890,
-          created: 1_234_567_890,
-        },
-      }
-      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
-        JSON.stringify(expected)
-      )
-    })
-
-    it("should handle meta with only created property", () => {
-      const obj = {
-        meta: {
-          created: 1_234_567_890,
-        },
-      }
-      const expected = {
-        meta: {
-          created: 1_234_567_890,
-        },
-      }
-      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
-        JSON.stringify(expected)
-      )
-    })
-
-    it("should handle meta without created property", () => {
-      const obj = {
-        meta: {
-          title: "Test",
-          description: "Description",
-          author: "Author",
-        },
-      }
-      const expected = {
-        meta: {
-          author: "Author",
-          description: "Description",
-          title: "Test",
-        },
-      }
-      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
-        JSON.stringify(expected)
-      )
-    })
-
-    it("should handle meta with special characters in property names", () => {
-      const obj = {
-        meta: {
-          "special-prop": "value1",
-          another_prop: "value2",
-          "123numeric": "value3",
-          created: 1_234_567_890,
-          updated: 1_234_567_890,
-        },
-      }
-      const expected = {
-        meta: {
-          "123numeric": "value3",
-          another_prop: "value2",
-          "special-prop": "value1",
+          author: 'Test Author',
+          description: 'A test bookmark',
+          title: 'Test Bookmark',
           updated: 1_234_567_890,
           created: 1_234_567_890,
         },
@@ -625,25 +565,85 @@ describe("normalizeBookmarkData", () => {
       )
     })
 
-    it("should handle meta with nested objects and arrays", () => {
+    it('should handle meta with only created property', () => {
       const obj = {
         meta: {
-          tags: ["tag1", "tag2"],
+          created: 1_234_567_890,
+        },
+      }
+      const expected = {
+        meta: {
+          created: 1_234_567_890,
+        },
+      }
+      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
+        JSON.stringify(expected)
+      )
+    })
+
+    it('should handle meta without created property', () => {
+      const obj = {
+        meta: {
+          title: 'Test',
+          description: 'Description',
+          author: 'Author',
+        },
+      }
+      const expected = {
+        meta: {
+          author: 'Author',
+          description: 'Description',
+          title: 'Test',
+        },
+      }
+      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
+        JSON.stringify(expected)
+      )
+    })
+
+    it('should handle meta with special characters in property names', () => {
+      const obj = {
+        meta: {
+          'special-prop': 'value1',
+          another_prop: 'value2',
+          '123numeric': 'value3',
+          created: 1_234_567_890,
+          updated: 1_234_567_890,
+        },
+      }
+      const expected = {
+        meta: {
+          '123numeric': 'value3',
+          another_prop: 'value2',
+          'special-prop': 'value1',
+          updated: 1_234_567_890,
+          created: 1_234_567_890,
+        },
+      }
+      expect(JSON.stringify(normalizeBookmarkData(obj))).toBe(
+        JSON.stringify(expected)
+      )
+    })
+
+    it('should handle meta with nested objects and arrays', () => {
+      const obj = {
+        meta: {
+          tags: ['tag1', 'tag2'],
           nested: {
-            prop: "value",
+            prop: 'value',
           },
           created: 1_234_567_890,
           updated: 1_234_567_890,
-          title: "Complex Meta",
+          title: 'Complex Meta',
         },
       }
       const expected = {
         meta: {
           nested: {
-            prop: "value",
+            prop: 'value',
           },
-          tags: ["tag1", "tag2"],
-          title: "Complex Meta",
+          tags: ['tag1', 'tag2'],
+          title: 'Complex Meta',
           updated: 1_234_567_890,
           created: 1_234_567_890,
         },
@@ -654,29 +654,29 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("edge cases for meta property", () => {
-    it("should handle null meta", () => {
+  describe('edge cases for meta property', () => {
+    it('should handle null meta', () => {
       const obj = {
         meta: null,
       }
       expect(normalizeBookmarkData(obj)).toEqual({ meta: null })
     })
 
-    it("should handle undefined meta", () => {
+    it('should handle undefined meta', () => {
       const obj = {
         meta: undefined,
       }
       expect(normalizeBookmarkData(obj)).toEqual({ meta: undefined })
     })
 
-    it("should handle non-object meta", () => {
+    it('should handle non-object meta', () => {
       const obj = {
-        meta: "not an object",
+        meta: 'not an object',
       }
-      expect(normalizeBookmarkData(obj)).toEqual({ meta: "not an object" })
+      expect(normalizeBookmarkData(obj)).toEqual({ meta: 'not an object' })
     })
 
-    it("should handle empty meta object", () => {
+    it('should handle empty meta object', () => {
       const obj = {
         meta: {},
       }
@@ -684,30 +684,30 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("complex bookmark data structures", () => {
-    it("should handle typical bookmark entry format", () => {
+  describe('complex bookmark data structures', () => {
+    it('should handle typical bookmark entry format', () => {
       const bookmarkEntry: [string, BookmarkTagsAndMetadata] = [
-        "https://example.com",
+        'https://example.com',
         {
-          tags: ["web", "example"],
+          tags: ['web', 'example'],
           meta: {
-            title: "Example Website",
+            title: 'Example Website',
             created: 1_234_567_890,
             updated: 1_234_567_890,
-            description: "An example website",
-            author: "Example Author",
+            description: 'An example website',
+            author: 'Example Author',
           },
         },
       ]
 
       const expected: [string, BookmarkTagsAndMetadata] = [
-        "https://example.com",
+        'https://example.com',
         {
-          tags: ["web", "example"],
+          tags: ['web', 'example'],
           meta: {
-            author: "Example Author",
-            description: "An example website",
-            title: "Example Website",
+            author: 'Example Author',
+            description: 'An example website',
+            title: 'Example Website',
             updated: 1_234_567_890,
             created: 1_234_567_890,
           },
@@ -719,41 +719,41 @@ describe("normalizeBookmarkData", () => {
       )
     })
 
-    it("should handle bookmark map structure", () => {
+    it('should handle bookmark map structure', () => {
       const bookmarkMap = {
-        "https://example1.com": {
-          tags: ["tag1"],
+        'https://example1.com': {
+          tags: ['tag1'],
           meta: {
             created: 1_234_567_890,
             updated: 1_234_567_890,
-            title: "Example 1",
+            title: 'Example 1',
           },
         },
-        "https://example2.com": {
-          tags: ["tag2"],
+        'https://example2.com': {
+          tags: ['tag2'],
           meta: {
-            title: "Example 2",
+            title: 'Example 2',
             created: 1_234_567_891,
             updated: 1_234_567_891,
-            description: "Second example",
+            description: 'Second example',
           },
         },
       }
 
       const expected = {
-        "https://example1.com": {
-          tags: ["tag1"],
+        'https://example1.com': {
+          tags: ['tag1'],
           meta: {
-            title: "Example 1",
+            title: 'Example 1',
             updated: 1_234_567_890,
             created: 1_234_567_890,
           },
         },
-        "https://example2.com": {
-          tags: ["tag2"],
+        'https://example2.com': {
+          tags: ['tag2'],
           meta: {
-            description: "Second example",
-            title: "Example 2",
+            description: 'Second example',
+            title: 'Example 2',
             updated: 1_234_567_891,
             created: 1_234_567_891,
           },
@@ -765,19 +765,19 @@ describe("normalizeBookmarkData", () => {
       )
     })
 
-    it("should handle deeply nested bookmark structures", () => {
+    it('should handle deeply nested bookmark structures', () => {
       const complexStructure = {
         bookmarks: {
           folder1: {
             items: [
               {
-                url: "https://example.com",
+                url: 'https://example.com',
                 data: {
                   meta: {
                     created: 1_234_567_890,
                     updated: 1_234_567_890,
-                    title: "Nested Example",
-                    category: "test",
+                    title: 'Nested Example',
+                    category: 'test',
                   },
                 },
               },
@@ -791,11 +791,11 @@ describe("normalizeBookmarkData", () => {
           folder1: {
             items: [
               {
-                url: "https://example.com",
+                url: 'https://example.com',
                 data: {
                   meta: {
-                    category: "test",
-                    title: "Nested Example",
+                    category: 'test',
+                    title: 'Nested Example',
                     updated: 1_234_567_890,
                     created: 1_234_567_890,
                   },
@@ -812,16 +812,16 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("data immutability", () => {
-    it("should not mutate the original data", () => {
+  describe('data immutability', () => {
+    it('should not mutate the original data', () => {
       const original = {
         meta: {
           created: 1_234_567_890,
           updated: 1_234_567_890,
-          title: "Original",
-          description: "Original description",
+          title: 'Original',
+          description: 'Original description',
         },
-        other: "property",
+        other: 'property',
       }
 
       const originalCopy = structuredClone(original)
@@ -835,14 +835,14 @@ describe("normalizeBookmarkData", () => {
       expect(result.meta).not.toBe(original.meta)
     })
 
-    it("should not mutate nested arrays", () => {
+    it('should not mutate nested arrays', () => {
       const original = {
         items: [
           {
             meta: {
               created: 1_234_567_890,
               updated: 1_234_567_890,
-              title: "Item 1",
+              title: 'Item 1',
             },
           },
         ],
@@ -857,8 +857,8 @@ describe("normalizeBookmarkData", () => {
     })
   })
 
-  describe("performance considerations", () => {
-    it("should handle large datasets efficiently", () => {
+  describe('performance considerations', () => {
+    it('should handle large datasets efficiently', () => {
       const largeDataset = {
         bookmarks: Array.from({ length: 1000 }, (_, i) => ({
           url: `https://example${i}.com`,
@@ -880,10 +880,10 @@ describe("normalizeBookmarkData", () => {
       expect(end - start).toBeLessThan(100)
 
       // Verify first and last items are properly sorted
-      expect(result.bookmarks[0].meta.category).toBe("category0")
+      expect(result.bookmarks[0].meta.category).toBe('category0')
       expect(result.bookmarks[0].meta.created).toBe(1_234_567_890)
       expect(result.bookmarks[0].meta.updated).toBe(1_234_567_890)
-      expect(result.bookmarks[999].meta.category).toBe("category9")
+      expect(result.bookmarks[999].meta.category).toBe('category9')
       expect(result.bookmarks[999].meta.created).toBe(1_234_568_889)
       expect(result.bookmarks[999].meta.updated).toBe(1_234_568_889)
     })

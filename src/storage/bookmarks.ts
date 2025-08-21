@@ -2,16 +2,16 @@ import {
   addValueChangeListener,
   getValue,
   setValue,
-} from "browser-extension-storage"
-import { isUrl, uniq } from "browser-extension-utils"
-import { normalizeCreated, normalizeUpdated } from "utags-utils"
+} from 'browser-extension-storage'
+import { isUrl, uniq } from 'browser-extension-utils'
+import { normalizeCreated, normalizeUpdated } from 'utags-utils'
 
 import type {
   BookmarkMetadata,
   BookmarksData,
   BookmarkTagsAndMetadata,
-} from "../types/bookmarks.js"
-import { addRecentTags } from "./tags.js"
+} from '../types/bookmarks.js'
+import { addRecentTags } from './tags.js'
 
 /**
  * The bookmarks store.
@@ -101,11 +101,11 @@ type BookmarksStore = BookmarksStoreV3
  * Current extension version and database configuration
  * TODO: Read version from package.json
  */
-export const currentExtensionVersion = "0.14.2"
+export const currentExtensionVersion = '0.14.2'
 export const currentDatabaseVersion = 3
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const DELETED_BOOKMARK_TAG = "._DELETED_"
-const storageKey = "extension.utags.urlmap"
+export const DELETED_BOOKMARK_TAG = '._DELETED_'
+const storageKey = 'extension.utags.urlmap'
 
 /** Cache for URL map data to improve performance */
 let cachedUrlMap: BookmarksData = {}
@@ -260,7 +260,7 @@ export async function saveBookmark(
         existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
         existingData.deletedMeta = {
           deleted: now,
-          actionType: "DELETE",
+          actionType: 'DELETE',
         }
       }
     }
@@ -306,7 +306,7 @@ export function addTagsValueChangeListener(
  * TODO: Add confirmation dialog and implement reload count tracking to prevent infinite reloads
  */
 async function reload() {
-  console.log("Current extension is outdated, page reload required")
+  console.log('Current extension is outdated, page reload required')
   location.reload()
 }
 
@@ -325,7 +325,7 @@ function isValidKey(key: string): boolean {
  * @returns boolean indicating if value is a valid tags array
  */
 function isValidTags(tags: unknown): boolean {
-  return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
+  return Array.isArray(tags) && tags.every((tag) => typeof tag === 'string')
 }
 
 /**
@@ -369,13 +369,13 @@ function filterDeleted(data: BookmarksData): BookmarksData {
  * @param bookmarksStore V2 format bookmark store
  */
 async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
-  console.log("Starting migration from V2 to V3")
+  console.log('Starting migration from V2 to V3')
   const now = Date.now()
   let minCreated = now
   const bookmarksStoreNew: BookmarksStoreV3 = createEmptyBookmarksStore()
 
   for (const key in bookmarksStore) {
-    if (key === "meta") {
+    if (key === 'meta') {
       continue // Skip meta field
     }
 
@@ -385,7 +385,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
     }
 
     const bookmarkV2 = bookmarksStore[key] as TagsAndMeta
-    if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
+    if (!bookmarkV2 || typeof bookmarkV2 !== 'object') {
       console.warn(
         `Migration: Invalid value for key ${key}: ${String(bookmarkV2)}`
       )
@@ -400,10 +400,10 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
     }
 
     // Validate metadata fields
-    if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
+    if (bookmarkV2.meta && typeof bookmarkV2.meta === 'object') {
       if (
         bookmarkV2.meta.title !== undefined &&
-        typeof bookmarkV2.meta.title !== "string"
+        typeof bookmarkV2.meta.title !== 'string'
       ) {
         console.warn(
           `Migration: Invalid title type for key ${key}: ${typeof bookmarkV2.meta.title}`
@@ -413,7 +413,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
 
       if (
         bookmarkV2.meta.description !== undefined &&
-        typeof bookmarkV2.meta.description !== "string"
+        typeof bookmarkV2.meta.description !== 'string'
       ) {
         console.warn(
           `Migration: Invalid description type for key ${key}: ${typeof bookmarkV2.meta.description}`
@@ -464,7 +464,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
 
   bookmarksStoreNew.meta.created = minCreated
   await persistBookmarksStore(bookmarksStoreNew)
-  console.log("Migration to V3 completed successfully")
+  console.log('Migration to V3 completed successfully')
 }
 
 /**
@@ -483,12 +483,12 @@ async function migrateV3_fixV0_13_0TimestampBug(
 ) {
   const oldMeta = bookmarksStore.meta
   const oldData = bookmarksStore.data
-  if (oldMeta.extensionVersion !== "0.13.0") {
+  if (oldMeta.extensionVersion !== '0.13.0') {
     return
   }
 
   console.log(
-    "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
+    'Starting migration from extension v0.13.0 to v' + currentExtensionVersion
   )
   const now = Date.now()
   const bookmarksStoreNew: BookmarksStoreV3 = createEmptyBookmarksStore()
@@ -504,7 +504,7 @@ async function migrateV3_fixV0_13_0TimestampBug(
     }
 
     const bookmarkOld = oldData[key]
-    if (!bookmarkOld || typeof bookmarkOld !== "object") {
+    if (!bookmarkOld || typeof bookmarkOld !== 'object') {
       console.warn(
         `Migration: Invalid value for key ${key}: ${String(bookmarkOld)}`
       )
@@ -542,7 +542,7 @@ async function migrateV3_fixV0_13_0TimestampBug(
 
   bookmarksStoreNew.meta.created = oldMeta.created
   await persistBookmarksStore(bookmarksStoreNew)
-  console.log("Migration to V3 completed successfully")
+  console.log('Migration to V3 completed successfully')
 }
 
 /**
@@ -550,7 +550,7 @@ async function migrateV3_fixV0_13_0TimestampBug(
  * @param meta Metadata containing version information
  * @returns boolean indicating version compatibility
  */
-async function checkVersion(meta: BookmarksStore["meta"]) {
+async function checkVersion(meta: BookmarksStore['meta']) {
   if (meta.extensionVersion !== currentExtensionVersion) {
     console.warn(
       `Version mismatch - Previous: ${meta.extensionVersion}, Current: ${currentExtensionVersion}`
@@ -597,7 +597,7 @@ export async function initBookmarksStore(): Promise<void> {
     return
   }
 
-  if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
+  if (meta.databaseVersion === 3 && meta.extensionVersion === '0.13.0') {
     await migrateV3_fixV0_13_0TimestampBug(bookmarksStore)
     // Reload data after migration
     await initBookmarksStore()
@@ -610,13 +610,13 @@ export async function initBookmarksStore(): Promise<void> {
     throw new Error(errorMessage)
   }
 
-  console.log("Bookmarks store initialized")
+  console.log('Bookmarks store initialized')
 
   if (!addTagsValueChangeListenerInitialized) {
     addTagsValueChangeListenerInitialized = true
     // When data is updated in other tabs, clear cache and check version
     addTagsValueChangeListener(async () => {
-      console.log("Data updated in other tab, clearing cache")
+      console.log('Data updated in other tab, clearing cache')
       cachedUrlMap = {}
       await initBookmarksStore()
     })

@@ -1,7 +1,7 @@
-import { vi } from "vitest"
+import { vi } from 'vitest'
 
 // Define settings types
-type SettingsKey = "pinnedTags" | "emojiTags"
+type SettingsKey = 'pinnedTags' | 'emojiTags'
 type SettingsValue = string
 type SettingsData = Partial<Record<SettingsKey, SettingsValue>>
 
@@ -10,7 +10,7 @@ const mockSettingsStorage: SettingsData = {}
 
 export default function mockBrowserExtensionSettings() {
   // Mock browser-extension-settings module
-  vi.mock("browser-extension-settings", () => ({
+  vi.mock('browser-extension-settings', () => ({
     getSettingsValue: vi
       .fn()
       .mockImplementation(

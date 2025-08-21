@@ -1,17 +1,17 @@
-import { $, $$, doc } from "browser-extension-utils"
-import styleText from "data-text:./038-flickr.com.scss"
-import { getTrimmedTitle } from "utags-utils"
+import { $, $$, doc } from 'browser-extension-utils'
+import styleText from 'data-text:./038-flickr.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
-} from "../../modules/visited"
-import type { UserTagMeta, UtagsHTMLElement } from "../../types"
+} from '../../modules/visited'
+import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 
 export default (() => {
   // Constants
-  const CANONICAL_BASE_URL = "https://www.flickr.com/"
+  const CANONICAL_BASE_URL = 'https://www.flickr.com/'
   const FLICKR_DOMAIN_REGEX = /^https?:\/\/flickr\.com/
   const USER_PROFILE_EXACT_REGEX = /^(photos|people)\/[\w-@]+\/$/
   const USER_PROFILE_REGEX = /^(photos|people)\/[\w-@]+\//
@@ -138,7 +138,7 @@ export default (() => {
         }
 
         const titleLowerCase = title.toLowerCase()
-        if (titleLowerCase.startsWith("more")) {
+        if (titleLowerCase.startsWith('more')) {
           return false
         }
 
@@ -146,10 +146,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -162,8 +162,8 @@ export default (() => {
 
       const titleLowerCase = title.toLowerCase()
       if (
-        titleLowerCase.startsWith("more") ||
-        titleLowerCase.startsWith("edit") ||
+        titleLowerCase.startsWith('more') ||
+        titleLowerCase.startsWith('edit') ||
         /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
         /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(titleLowerCase)
       ) {
@@ -174,28 +174,28 @@ export default (() => {
     },
     // refer: https://github.com/utags/utags/issues/70
     excludeSelectors: [
-      ".global-nav",
-      "#global-nav",
-      ".logo a",
-      ".gn-link span",
-      ".gn-link",
-      "footer",
+      '.global-nav',
+      '#global-nav',
+      '.logo a',
+      '.gn-link span',
+      '.gn-link',
+      'footer',
       '[role="navigation"]',
       '[aria-label="Tabs"]',
-      "footer .lang-switcher",
-      ".gift-pro-link",
-      ".pagination-view",
-      ".Paginator",
-      ".navigate-target",
-      ".more-link",
-      ".view-more-link",
-      ".view-all",
-      ".droparound.menu",
-      ".user-account-card-droparound",
-      ".person-card-view .links.secondary",
-      ".photo-sidebar-toggle-view",
-      ".attribution-info .username",
-      ".photo-license-info",
+      'footer .lang-switcher',
+      '.gift-pro-link',
+      '.pagination-view',
+      '.Paginator',
+      '.navigate-target',
+      '.more-link',
+      '.view-more-link',
+      '.view-all',
+      '.droparound.menu',
+      '.user-account-card-droparound',
+      '.person-card-view .links.secondary',
+      '.photo-sidebar-toggle-view',
+      '.attribution-info .username',
+      '.photo-license-info',
       '[href*="upgrade/pro"]',
       '[href*="/login"]',
       '[href*="/logout"]',
@@ -205,61 +205,61 @@ export default (() => {
       '[href="/recent.gne"]',
       '[href^="/search/"]',
       '[href*="/groups_join.gne"]',
-      ".sn-avatar",
-      "h5.tag-list-header",
-      ".cookie-banner-view",
-      ".cookie-banner-message",
-      "span.edit_relationship",
-      ".tag-section-header",
-      ".nav-links",
+      '.sn-avatar',
+      'h5.tag-list-header',
+      '.cookie-banner-view',
+      '.cookie-banner-message',
+      'span.edit_relationship',
+      '.tag-section-header',
+      '.nav-links',
       // Albums
-      ".photo-list-album-view",
+      '.photo-list-album-view',
       // Profiles
-      ".contact-list-num",
-      ".contact-list-table th",
-      ".bio-infos-container .archives-link",
+      '.contact-list-num',
+      '.contact-list-table th',
+      '.bio-infos-container .archives-link',
       '[href*="/ignore.gne"]',
-      ".context-list .context-item.link",
-      ".metadata-container .followers",
+      '.context-list .context-item.link',
+      '.metadata-container .followers',
       ".LinksNew span a[data-track='ContactsSubnav-photos_of_contacts']",
       ".LinksNew a[data-track='ContactsSubnav-send_invites']",
       ".LinksNewP [data-track='ContactsSubnav-add_contacts']",
       "[href^='/people'][href$='/ignore/']",
-      "#personmenu_button_bar .candy_menu #person_menu_you_div a.block",
-      ".contact-list-header",
-      "#Feeds",
-      ".Butt",
-      ".tabs",
-      ".refresh-suggestions-container",
-      ".suggestions .stats",
-      ".jump-list-container",
+      '#personmenu_button_bar .candy_menu #person_menu_you_div a.block',
+      '.contact-list-header',
+      '#Feeds',
+      '.Butt',
+      '.tabs',
+      '.refresh-suggestions-container',
+      '.suggestions .stats',
+      '.jump-list-container',
       '.tag-list-zeus a[href$="/edit/"]',
       '.tag-list-zeus a[href$="/delete/"]',
-      ".scTopCrumbShareBreadcrumbs",
-      ".vsComments",
+      '.scTopCrumbShareBreadcrumbs',
+      '.vsComments',
       // AD
       'a[href*="utm_source=flickr&utm_medium=affiliate"]',
       // groups
-      ".since-link",
-      ".butt",
-      ".add-topic",
-      ".groups-members",
+      '.since-link',
+      '.butt',
+      '.add-topic',
+      '.groups-members',
       'a[data-track="groupDiscussionTopicReplyCountClick"]',
-      ".pro-badge-new",
-      ".pro-badge-legacy",
+      '.pro-badge-new',
+      '.pro-badge-legacy',
       // https://www.flickr.com/help/forum/en-us/
       'a[href*="?change_lang="]',
-      ".forumSearch form",
-      ".TopicListing small a",
-      "#DiscussTopic .Said small a",
-      ".TopicReply .Said small a",
+      '.forumSearch form',
+      '.TopicListing small a',
+      '#DiscussTopic .Said small a',
+      '.TopicReply .Said small a',
       // groups (deprecated view)
-      ".group-blast-zeus",
-      ".hide-link",
+      '.group-blast-zeus',
+      '.hide-link',
       '[data-track="join-group"]',
-      ".set-desc.group-desc .short a",
-      "#feeds-xml a",
-      ".slideshow-bottom a",
+      '.set-desc.group-desc .short a',
+      '#feeds-xml a',
+      '.slideshow-bottom a',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getUserProfileUrl(location.href)
@@ -282,15 +282,15 @@ export default (() => {
 
       key = getGroupUrl(location.href)
       if (key) {
-        const element = $("h1.group-title")
-        const titleElement = $("h1.group-title .group-title-holder")
+        const element = $('h1.group-title')
+        const titleElement = $('h1.group-title .group-title-holder')
           ?.childNodes[0]
         if (element && titleElement) {
           const title = titleElement.textContent!.trim()
           if (title) {
-            const meta = { title, type: "group" }
+            const meta = { title, type: 'group' }
             element.utags = { key, meta }
-            element.dataset.utags_node_type = "link"
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }

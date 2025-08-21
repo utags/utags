@@ -1,4 +1,4 @@
-import { showSettings } from "browser-extension-settings"
+import { showSettings } from 'browser-extension-settings'
 import {
   $,
   $$,
@@ -8,19 +8,19 @@ import {
   doc,
   removeClass,
   removeEventListener,
-} from "browser-extension-utils"
-import { splitTags } from "utags-utils"
+} from 'browser-extension-utils'
+import { splitTags } from 'utags-utils'
 
-import createModal from "../components/modal"
-import createTag from "../components/tag"
-import { i } from "../messages"
+import createModal from '../components/modal'
+import createTag from '../components/tag'
+import { i } from '../messages'
 import {
   getEmojiTags,
   getMostUsedTags,
   getPinnedTags,
   getRecentAddedTags,
-} from "../storage/tags"
-import { copyText, sortTags } from "../utils"
+} from '../storage/tags'
+import { copyText, sortTags } from '../utils'
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
@@ -31,7 +31,7 @@ let currentTags = new Set<string>()
 
 function onSelect(selected: string, input: HTMLInputElement) {
   if (selected) {
-    input.value = ""
+    input.value = ''
 
     const tags = splitTags(selected)
     for (const tag of tags) {
@@ -53,13 +53,13 @@ function removeTag(tag: string | undefined) {
 
 function updateLists(container?: HTMLElement) {
   displayedTags = new Set()
-  const ul1 = $(".utags_modal_content ul.utags_current_tags", container)
+  const ul1 = $('.utags_modal_content ul.utags_current_tags', container)
   if (ul1) {
     updateCurrentTagList(ul1)
   }
 
   const ul = $(
-    ".utags_modal_content ul.utags_select_list.utags_pined_list",
+    '.utags_modal_content ul.utags_select_list.utags_pined_list',
     container
   )
   if (ul) {
@@ -67,7 +67,7 @@ function updateLists(container?: HTMLElement) {
   }
 
   const ul4 = $(
-    ".utags_modal_content ul.utags_select_list.utags_emoji_list",
+    '.utags_modal_content ul.utags_select_list.utags_emoji_list',
     container
   )
   if (ul4) {
@@ -75,7 +75,7 @@ function updateLists(container?: HTMLElement) {
   }
 
   const ul2 = $(
-    ".utags_modal_content ul.utags_select_list.utags_most_used",
+    '.utags_modal_content ul.utags_select_list.utags_most_used',
     container
   )
   if (ul2) {
@@ -83,7 +83,7 @@ function updateLists(container?: HTMLElement) {
   }
 
   const ul3 = $(
-    ".utags_modal_content ul.utags_select_list.utags_recent_added",
+    '.utags_modal_content ul.utags_select_list.utags_recent_added',
     container
   )
   if (ul3) {
@@ -96,7 +96,7 @@ function updateCandidateTagList(
   candidateTags: string[],
   limitSize?: number
 ) {
-  ul.textContent = ""
+  ul.textContent = ''
 
   let index = 0
   for (const text of candidateTags) {
@@ -106,10 +106,10 @@ function updateCandidateTagList(
 
     displayedTags.add(text)
 
-    const li = addElement(ul, "li", {
+    const li = addElement(ul, 'li', {
       // class: index === 0 ? "utags_active" : "",
     })
-    addElement(li, "span", {
+    addElement(li, 'span', {
       textContent: text,
     })
     index++
@@ -138,12 +138,12 @@ function getPreviousList(parentElement: HTMLElement) {
 }
 
 function updateCurrentTagList(ul: HTMLElement) {
-  ul.textContent = ""
+  ul.textContent = ''
 
   const sortedTags = sortTags([...currentTags], emojiTags)
   for (const tag of sortedTags) {
     displayedTags.add(tag)
-    const li = addElement(ul, "li")
+    const li = addElement(ul, 'li')
     const a = createTag(tag, { isEmoji: emojiTags.includes(tag), noLink: true })
     li.append(a)
   }
@@ -154,22 +154,22 @@ function updateCurrentTagList(ul: HTMLElement) {
  */
 function removeAllActive(type?: number) {
   if (type !== 2) {
-    const selector = ".utags_modal_content ul.utags_select_list .utags_active"
+    const selector = '.utags_modal_content ul.utags_select_list .utags_active'
     for (const li of $$(selector)) {
-      removeClass(li, "utags_active")
+      removeClass(li, 'utags_active')
     }
   }
 
   if (type !== 1) {
-    const selector = ".utags_modal_content ul.utags_select_list .utags_active2"
+    const selector = '.utags_modal_content ul.utags_select_list .utags_active2'
     for (const li of $$(selector)) {
-      removeClass(li, "utags_active2")
+      removeClass(li, 'utags_active2')
     }
   }
 }
 
 async function copyCurrentTags(input: HTMLInputElement) {
-  const value = sortTags([...currentTags], emojiTags).join(", ")
+  const value = sortTags([...currentTags], emojiTags).join(', ')
   await copyText(value)
   input.value = value
   input.focus()
@@ -188,30 +188,30 @@ function createPromptView(
   // eslint-disable-next-line @typescript-eslint/ban-types
   resolve: (value: string | null) => void
 ) {
-  const modal = createModal({ class: "utags_prompt" })
+  const modal = createModal({ class: 'utags_prompt' })
   const content = modal.getContentElement()
-  value = value || ""
+  value = value || ''
 
-  addElement(content, "span", {
-    class: "utags_title",
+  addElement(content, 'span', {
+    class: 'utags_title',
     textContent: message,
   })
 
-  const currentTagsWrapper = addElement(content, "div", {
-    class: "utags_current_tags_wrapper",
+  const currentTagsWrapper = addElement(content, 'div', {
+    class: 'utags_current_tags_wrapper',
   })
-  addElement(currentTagsWrapper, "span", {
-    textContent: "",
-    style: "display: none;",
-    "data-utags": "",
+  addElement(currentTagsWrapper, 'span', {
+    textContent: '',
+    style: 'display: none;',
+    'data-utags': '',
   })
-  addElement(currentTagsWrapper, "ul", {
-    class: "utags_current_tags utags_ul",
+  addElement(currentTagsWrapper, 'ul', {
+    class: 'utags_current_tags utags_ul',
   })
 
-  const input = addElement(content, "input", {
-    type: "text",
-    placeholder: "foo, bar",
+  const input = addElement(content, 'input', {
+    type: 'text',
+    placeholder: 'foo, bar',
     onblur(event: FocusEvent) {
       // console.log(event.relatedTarget)
       // relatedTarget is null when Escape key pressed
@@ -234,43 +234,43 @@ function createPromptView(
     input.select()
   })
 
-  addElement(currentTagsWrapper, "button", {
-    type: "button",
-    class: "utags_button_copy",
-    textContent: i("prompt.copy"),
+  addElement(currentTagsWrapper, 'button', {
+    type: 'button',
+    class: 'utags_button_copy',
+    textContent: i('prompt.copy'),
     async onclick() {
       await copyCurrentTags(input)
     },
   })
 
-  const listWrapper = addElement(content, "div", {
-    class: "utags_list_wrapper",
+  const listWrapper = addElement(content, 'div', {
+    class: 'utags_list_wrapper',
   })
 
-  addElement(listWrapper, "ul", {
-    class: "utags_select_list utags_pined_list",
-    "data-utags_list_name": i("prompt.pinnedTags"),
+  addElement(listWrapper, 'ul', {
+    class: 'utags_select_list utags_pined_list',
+    'data-utags_list_name': i('prompt.pinnedTags'),
   })
 
-  addElement(listWrapper, "ul", {
-    class: "utags_select_list utags_most_used",
-    "data-utags_list_name": i("prompt.mostUsedTags"),
+  addElement(listWrapper, 'ul', {
+    class: 'utags_select_list utags_most_used',
+    'data-utags_list_name': i('prompt.mostUsedTags'),
   })
 
-  addElement(listWrapper, "ul", {
-    class: "utags_select_list utags_recent_added",
-    "data-utags_list_name": i("prompt.recentAddedTags"),
+  addElement(listWrapper, 'ul', {
+    class: 'utags_select_list utags_recent_added',
+    'data-utags_list_name': i('prompt.recentAddedTags'),
   })
 
-  addElement(listWrapper, "ul", {
-    class: "utags_select_list utags_emoji_list",
-    "data-utags_list_name": i("prompt.emojiTags"),
+  addElement(listWrapper, 'ul', {
+    class: 'utags_select_list utags_emoji_list',
+    'data-utags_list_name': i('prompt.emojiTags'),
   })
 
   updateLists(content)
 
-  const buttonWrapper = addElement(content, "div", {
-    class: "utags_buttons_wrapper",
+  const buttonWrapper = addElement(content, 'div', {
+    class: 'utags_buttons_wrapper',
   })
   let closed = false
   const closeModal = (value?: string | undefined) => {
@@ -279,11 +279,11 @@ function createPromptView(
     }
 
     closed = true
-    removeEventListener(input, "keydown", keydonwHandler, true)
-    removeEventListener(doc, "keydown", keydonwHandler, true)
-    removeEventListener(doc, "mousedown", mousedownHandler, true)
-    removeEventListener(doc, "click", clickHandler, true)
-    removeEventListener(doc, "mouseover", mouseoverHandler, true)
+    removeEventListener(input, 'keydown', keydonwHandler, true)
+    removeEventListener(doc, 'keydown', keydonwHandler, true)
+    removeEventListener(doc, 'mousedown', mousedownHandler, true)
+    removeEventListener(doc, 'click', clickHandler, true)
+    removeEventListener(doc, 'mouseover', mouseoverHandler, true)
     // use setTimeout to resolve Safari issue
     // modal.remove()
     setTimeout(() => {
@@ -294,20 +294,20 @@ function createPromptView(
   }
 
   const okHandler = () => {
-    closeModal(Array.from(currentTags).join(","))
+    closeModal(Array.from(currentTags).join(','))
   }
 
-  addElement(buttonWrapper, "button", {
-    type: "button",
-    textContent: i("prompt.cancel"),
+  addElement(buttonWrapper, 'button', {
+    type: 'button',
+    textContent: i('prompt.cancel'),
     onclick() {
       closeModal()
     },
   })
-  addElement(buttonWrapper, "button", {
-    type: "button",
-    class: "utags_primary",
-    textContent: i("prompt.ok"),
+  addElement(buttonWrapper, 'button', {
+    type: 'button',
+    class: 'utags_primary',
+    textContent: i('prompt.ok'),
     onclick() {
       onSelect(input.value.trim(), input)
       okHandler()
@@ -316,21 +316,21 @@ function createPromptView(
 
   const keydonwHandler = (event: KeyboardEvent) => {
     // console.log(event, event.target)
-    if (event.defaultPrevented || !$(".utags_modal_content")) {
+    if (event.defaultPrevented || !$('.utags_modal_content')) {
       return // 如果事件已经在进行中，则不做任何事。
     }
 
-    let current = $(".utags_modal_content ul.utags_select_list .utags_active")
+    let current = $('.utags_modal_content ul.utags_select_list .utags_active')
 
     switch (event.key) {
-      case "Escape": {
+      case 'Escape': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         closeModal()
         break
       }
 
-      case "Enter": {
+      case 'Enter': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
@@ -346,65 +346,65 @@ function createPromptView(
         break
       }
 
-      case "Tab": {
+      case 'Tab': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
         break
       }
 
-      case "ArrowDown": {
+      case 'ArrowDown': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
         current = $(
-          ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
         if (current) {
           const next = current.nextElementSibling as HTMLElement
           if (next) {
-            next.scrollIntoView({ block: "end" })
+            next.scrollIntoView({ block: 'end' })
             removeAllActive()
-            addClass(next, "utags_active")
+            addClass(next, 'utags_active')
           }
         } else {
           // set first item as active
-          const next = $(".utags_modal_content ul.utags_select_list li")
+          const next = $('.utags_modal_content ul.utags_select_list li')
           if (next) {
-            next.scrollIntoView({ block: "end" })
+            next.scrollIntoView({ block: 'end' })
             removeAllActive()
-            addClass(next, "utags_active")
+            addClass(next, 'utags_active')
           }
         }
 
         break
       }
 
-      case "ArrowUp": {
+      case 'ArrowUp': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
         current = $(
-          ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
         if (current) {
           const previous = current.previousElementSibling as HTMLElement
           if (previous) {
-            previous.scrollIntoView({ block: "end" })
+            previous.scrollIntoView({ block: 'end' })
             removeAllActive()
-            addClass(previous, "utags_active")
+            addClass(previous, 'utags_active')
           }
         }
 
         break
       }
 
-      case "ArrowLeft": {
+      case 'ArrowLeft': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
         current = $(
-          ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
         if (current) {
           const parentElement = current.parentElement!
@@ -417,20 +417,20 @@ function createPromptView(
             removeAllActive()
             const newIndex = Math.min(parentPrevious.children.length - 1, index)
             const next = parentPrevious.children[newIndex] as HTMLElement
-            next.scrollIntoView({ block: "end" })
-            addClass(next, "utags_active")
+            next.scrollIntoView({ block: 'end' })
+            addClass(next, 'utags_active')
           }
         }
 
         break
       }
 
-      case "ArrowRight": {
+      case 'ArrowRight': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         input.focus()
         current = $(
-          ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
         if (current) {
           const parentElement = current.parentElement!
@@ -443,8 +443,8 @@ function createPromptView(
             removeAllActive()
             const newIndex = Math.min(parentNext.children.length - 1, index)
             const next = parentNext.children[newIndex] as HTMLElement
-            next.scrollIntoView({ block: "end" })
-            addClass(next, "utags_active")
+            next.scrollIntoView({ block: 'end' })
+            addClass(next, 'utags_active')
           }
         }
 
@@ -458,12 +458,12 @@ function createPromptView(
     }
   }
 
-  addEventListener(input, "keydown", keydonwHandler, true)
-  addEventListener(doc, "keydown", keydonwHandler, true)
+  addEventListener(input, 'keydown', keydonwHandler, true)
+  addEventListener(doc, 'keydown', keydonwHandler, true)
 
   const mousedownHandler = (event: Event) => {
     // console.log(event, event.target)
-    if (event.defaultPrevented || !$(".utags_modal_content")) {
+    if (event.defaultPrevented || !$('.utags_modal_content')) {
       return // 如果事件已经在进行中，则不做任何事。
     }
 
@@ -473,7 +473,7 @@ function createPromptView(
       return
     }
 
-    if (target.closest(".utags_modal_content")) {
+    if (target.closest('.utags_modal_content')) {
       if (target === input) {
         return
       }
@@ -487,10 +487,10 @@ function createPromptView(
     }
   }
 
-  addEventListener(doc, "mousedown", mousedownHandler, true)
+  addEventListener(doc, 'mousedown', mousedownHandler, true)
 
   const clickHandler = (event: PointerEvent) => {
-    if (event.defaultPrevented || !$(".utags_modal_content")) {
+    if (event.defaultPrevented || !$('.utags_modal_content')) {
       return // 如果事件已经在进行中，则不做任何事。
     }
 
@@ -501,19 +501,19 @@ function createPromptView(
     }
 
     if (
-      !target.closest(".utags_modal_content button") &&
-      !target.closest(".utags_modal_content .utags_footer a")
+      !target.closest('.utags_modal_content button') &&
+      !target.closest('.utags_modal_content .utags_footer a')
     ) {
       stopEventPropagation(event)
     }
 
-    if (target.closest(".utags_modal_content")) {
+    if (target.closest('.utags_modal_content')) {
       input.focus()
-      if (target.closest(".utags_modal_content ul.utags_select_list li")) {
+      if (target.closest('.utags_modal_content ul.utags_select_list li')) {
         onSelect(target.textContent!, input)
       }
 
-      if (target.closest(".utags_modal_content ul.utags_current_tags li a")) {
+      if (target.closest('.utags_modal_content ul.utags_current_tags li a')) {
         removeTag(target.dataset.utags_tag)
       }
     } else {
@@ -521,34 +521,34 @@ function createPromptView(
     }
   }
 
-  addEventListener(doc, "click", clickHandler, true)
+  addEventListener(doc, 'click', clickHandler, true)
 
   const mouseoverHandler = (event: Event) => {
     const target = event.target as HTMLElement
-    if (!target?.closest(".utags_modal_content")) {
+    if (!target?.closest('.utags_modal_content')) {
       return
     }
 
-    const li = target.closest("ul.utags_select_list li") as
+    const li = target.closest('ul.utags_select_list li') as
       | HTMLElement
       | undefined
     if (li) {
       removeAllActive()
-      addClass(li, "utags_active2")
+      addClass(li, 'utags_active2')
     } else {
       removeAllActive(2)
     }
   }
 
-  addEventListener(doc, "mousemove", mouseoverHandler, true)
+  addEventListener(doc, 'mousemove', mouseoverHandler, true)
 
-  const footer = addElement(content, "div", {
-    class: "utags_footer",
+  const footer = addElement(content, 'div', {
+    class: 'utags_footer',
   })
 
-  addElement(footer, "a", {
-    class: "utags_link_settings",
-    textContent: i("prompt.settings"),
+  addElement(footer, 'a', {
+    class: 'utags_link_settings',
+    textContent: i('prompt.settings'),
     async onclick() {
       closeModal()
       setTimeout(showSettings, 1)

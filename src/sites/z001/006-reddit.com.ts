@@ -1,10 +1,10 @@
-import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./006-reddit.com.scss"
+import { $, $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./006-reddit.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.reddit.com/"
+  const prefix = 'https://www.reddit.com/'
 
   function getCanonicalUrl(url: string) {
     if (url.startsWith(prefix)) {
@@ -34,14 +34,14 @@ export default (() => {
         if (/^(user|u)\/[\w-]+\/?([?#].*)?$/.test(href2)) {
           return (
             prefix +
-            "user/" +
-            href2.replace(/^(user|u)\/([\w-]+).*/, "$2") +
-            "/"
+            'user/' +
+            href2.replace(/^(user|u)\/([\w-]+).*/, '$2') +
+            '/'
           )
         }
       } else if (/^(user|u)\/[\w-]+/.test(href2)) {
         return (
-          prefix + "user/" + href2.replace(/^(user|u)\/([\w-]+).*/, "$2") + "/"
+          prefix + 'user/' + href2.replace(/^(user|u)\/([\w-]+).*/, '$2') + '/'
         )
       }
     }
@@ -54,10 +54,10 @@ export default (() => {
       const href2 = url.slice(prefix.length)
       if (exact) {
         if (/^r\/\w+\/?(#.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(r\/\w+).*/, "$1") + "/"
+          return prefix + href2.replace(/^(r\/\w+).*/, '$1') + '/'
         }
       } else if (/^r\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(r\/\w+).*/, "$1") + "/"
+        return prefix + href2.replace(/^(r\/\w+).*/, '$1') + '/'
       }
     }
 
@@ -71,15 +71,15 @@ export default (() => {
         if (/^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)$/.test(href2)) {
           return (
             prefix +
-            href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, "$1") +
-            "/"
+            href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, '$1') +
+            '/'
           )
         }
       } else if (/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/.test(href2)) {
         return (
           prefix +
-          href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, "$1") +
-          "/"
+          href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, '$1') +
+          '/'
         )
       }
     }
@@ -90,16 +90,16 @@ export default (() => {
   return {
     matches: /reddit\.com/,
     listNodesSelectors: [
-      "shreddit-feed article",
-      "shreddit-feed shreddit-ad-post",
-      "shreddit-comment",
+      'shreddit-feed article',
+      'shreddit-feed shreddit-ad-post',
+      'shreddit-comment',
     ],
     conditionNodesSelectors: [
       'shreddit-feed article a[data-testid="subreddit-name"]',
       'shreddit-feed article a[slot="title"]',
       'shreddit-feed article [slot="authorName"] a',
-      "shreddit-feed shreddit-ad-post a",
-      "shreddit-comment faceplate-hovercard a",
+      'shreddit-feed shreddit-ad-post a',
+      'shreddit-comment faceplate-hovercard a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -107,7 +107,7 @@ export default (() => {
         return true
       }
 
-      if ($("time,faceplate-number", element)) {
+      if ($('time,faceplate-number', element)) {
         return false
       }
 
@@ -118,10 +118,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -133,10 +133,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "community", title }
+        const meta = { type: 'community', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -148,10 +148,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "comments", title }
+        const meta = { type: 'comments', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -161,7 +161,7 @@ export default (() => {
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
       'a[data-testid="comment_author_icon"]',
-      "#shreddit-skip-link",
+      '#shreddit-skip-link',
       // text body of discussion in the list
       'a[slot="text-body"]',
       'a[slot="full-post-link"]',
@@ -176,18 +176,18 @@ export default (() => {
         const title = element.textContent!.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
-          const meta = { title, type: "user" }
+          const meta = { title, type: 'user' }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
       }
 
-      element = $(".w-full h1")
+      element = $('.w-full h1')
       if (element) {
         const title = element.textContent!.trim()
         const key = getCommunityUrl(location.href)
         if (title && key) {
-          const meta = { title, type: "community" }
+          const meta = { title, type: 'community' }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
@@ -198,7 +198,7 @@ export default (() => {
         const title = element.textContent!.trim()
         const key = getCommentsUrl(location.href, true)
         if (title && key) {
-          const meta = { title, type: "comments" }
+          const meta = { title, type: 'comments' }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }
@@ -212,7 +212,7 @@ export default (() => {
     [data-utags_list_node*=",屏蔽,"],
     [data-utags_list_node*=",不再显示,"],
     [data-utags_list_node*=",block,"]`)) {
-          element.setAttribute("collapsed", "")
+          element.setAttribute('collapsed', '')
         }
       }, 1000)
     },

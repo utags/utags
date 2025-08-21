@@ -1,21 +1,21 @@
-import { $, $$, hasClass } from "browser-extension-utils"
-import styleText from "data-text:./021-douyin.com.scss"
+import { $, $$, hasClass } from 'browser-extension-utils'
+import styleText from 'data-text:./021-douyin.com.scss'
 
-import { getFirstHeadElement } from "../../utils"
-import defaultSite from "../default"
+import { getFirstHeadElement } from '../../utils'
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.douyin.com/"
+  const prefix = 'https://www.douyin.com/'
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(23)
       if (exact) {
         if (/^user\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(user\/[\w-]+).*/, "$1")
+          return prefix + href2.replace(/^(user\/[\w-]+).*/, '$1')
         }
       } else if (/^user\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/^(user\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/^(user\/[\w-]+).*/, '$1')
       }
     }
 
@@ -26,7 +26,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(23)
       if (/^video\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(video\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(video\/\w+).*/, '$1')
       }
     }
 
@@ -37,7 +37,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(23)
       if (/^note\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(note\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(note\/\w+).*/, '$1')
       }
     }
 
@@ -49,27 +49,27 @@ export default (() => {
     validate(element: HTMLAnchorElement) {
       const href = element.href
 
-      if (!href.includes("www.douyin.com")) {
+      if (!href.includes('www.douyin.com')) {
         return true
       }
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const meta = { type: "user" }
+        const meta = { type: 'user' }
         element.utags = { key, meta }
         return true
       }
 
       key = getVideoUrl(href)
       if (key) {
-        const meta = { type: "video" }
+        const meta = { type: 'video' }
         element.utags = { key, meta }
         return true
       }
 
       key = getNoteUrl(href)
       if (key) {
-        const meta = { type: "post" }
+        const meta = { type: 'post' }
         element.utags = { key, meta }
         return true
       }
@@ -88,11 +88,11 @@ export default (() => {
       let key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
-        const element = getFirstHeadElement("h1")
+        const element = getFirstHeadElement('h1')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -102,14 +102,14 @@ export default (() => {
       key = getVideoUrl(location.href)
       if (key) {
         // post title
-        const element = getFirstHeadElement("h1")
+        const element = getFirstHeadElement('h1')
         if (element) {
           const title = element.textContent!.trim()
           const target = element.parentElement!.parentElement!
           if (title) {
-            const meta = { title, type: "video" }
+            const meta = { title, type: 'video' }
             target.utags = { key, meta }
-            target.dataset.utags_node_type = "link"
+            target.dataset.utags_node_type = 'link'
             matchedNodesSet.add(target)
           }
         }
@@ -118,11 +118,11 @@ export default (() => {
       key = getNoteUrl(location.href)
       if (key) {
         // post title
-        const element = getFirstHeadElement("h1")
+        const element = getFirstHeadElement('h1')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "post" }
+            const meta = { title, type: 'post' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

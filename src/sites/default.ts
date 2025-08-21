@@ -1,11 +1,11 @@
-import styleText from "data-text:./default.scss"
+import styleText from 'data-text:./default.scss'
 
-import { deleteUrlParameters } from "../utils"
+import { deleteUrlParameters } from '../utils'
 
 export default (() => {
   return {
     matches: /.*/,
-    matchedNodesSelectors: ["a[href]:not(.utags_text_tag)"],
+    matchedNodesSelectors: ['a[href]:not(.utags_text_tag)'],
     validate(element: HTMLElement) {
       return true
     },
@@ -20,9 +20,9 @@ export default (() => {
     getCanonicalUrl: (url: string) =>
       deleteUrlParameters(url, [
         // common useless parameters
-        "utm_campaign",
-        "utm_source",
-        "utm_medium",
+        'utm_campaign',
+        'utm_source',
+        'utm_medium',
       ]),
     getStyle: () => styleText,
   }

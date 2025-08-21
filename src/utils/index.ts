@@ -1,30 +1,30 @@
-import { $$, createElement } from "browser-extension-utils"
+import { $$, createElement } from 'browser-extension-utils'
 
-import type { BookmarkTagsAndMetadata } from "../types/bookmarks.js"
+import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
 // eslint-disable-next-line n/prefer-global/process
-export const isChromeExtension = process.env.PLASMO_TARGET === "chrome-mv3"
+export const isChromeExtension = process.env.PLASMO_TARGET === 'chrome-mv3'
 // eslint-disable-next-line n/prefer-global/process
-export const isFirefoxExtension = process.env.PLASMO_TARGET === "firefox-mv2"
+export const isFirefoxExtension = process.env.PLASMO_TARGET === 'firefox-mv2'
 export const isExtension = isChromeExtension || isFirefoxExtension
 // @ts-expect-error `scripts/common.mjs` handle it
 // eslint-disable-next-line n/prefer-global/process
-export const isUserscript = process.env.PLASMO_TARGET === "userscript"
+export const isUserscript = process.env.PLASMO_TARGET === 'userscript'
 // eslint-disable-next-line n/prefer-global/process
-export const isProduction = process.env.PLASMO_TAG === "prod"
+export const isProduction = process.env.PLASMO_TAG === 'prod'
 
 export function cloneWithoutUtags(element: HTMLElement) {
   const newElement = element.cloneNode(true) as HTMLElement
-  for (const utag of $$(".utags_ul", newElement)) {
+  for (const utag of $$('.utags_ul', newElement)) {
     utag.remove()
   }
 
   return newElement
 }
 
-export function getFirstHeadElement(tagName = "h1") {
+export function getFirstHeadElement(tagName = 'h1') {
   for (const element of $$(tagName)) {
-    if (element.closest(".browser_extension_settings_container")) {
+    if (element.closest('.browser_extension_settings_container')) {
       continue
     }
 
@@ -55,7 +55,7 @@ export function sortTags(tags: string[], privilegedTags: string[]) {
 }
 
 export function filterTags(tags: string[], removed: string[] | string) {
-  if (typeof removed === "string") {
+  if (typeof removed === 'string') {
     removed = [removed]
   }
 
@@ -69,11 +69,11 @@ export function filterTags(tags: string[], removed: string[] | string) {
 }
 
 export async function copyText(data: string) {
-  const textArea = createElement("textarea", {
-    style: "position: absolute; left: -100%;",
-    contentEditable: "true",
+  const textArea = createElement('textarea', {
+    style: 'position: absolute; left: -100%;',
+    contentEditable: 'true',
   }) as HTMLTextAreaElement
-  textArea.value = data.replaceAll("\u00A0", " ")
+  textArea.value = data.replaceAll('\u00A0', ' ')
 
   document.body.append(textArea)
   textArea.select()
@@ -87,7 +87,7 @@ export function deleteUrlParameters(
   excepts?: string[]
 ) {
   const url = new URL(urlString)
-  if (keys === "*") {
+  if (keys === '*') {
     if (excepts && excepts.length > 0) {
       const parameters = new URLSearchParams(url.search)
       keys = []
@@ -97,12 +97,12 @@ export function deleteUrlParameters(
         }
       }
     } else {
-      url.search = ""
+      url.search = ''
       return url.toString()
     }
   }
 
-  if (typeof keys === "string") {
+  if (typeof keys === 'string') {
     keys = [keys]
   }
 
@@ -111,7 +111,7 @@ export function deleteUrlParameters(
     parameters.delete(key)
   }
 
-  url.search = parameters.size === 0 ? "" : "?" + parameters.toString()
+  url.search = parameters.size === 0 ? '' : '?' + parameters.toString()
   return url.toString()
 }
 
@@ -133,7 +133,7 @@ export function getUrlParameters(
 ) {
   const url = new URL(urlString)
 
-  if (typeof keys === "string") {
+  if (typeof keys === 'string') {
     keys = [keys]
   }
 
@@ -197,9 +197,9 @@ export function sortBookmarks(bookmarks: BookmarkItem[]): BookmarkItem[] {
  * @returns Sorted meta object with created property at the end
  */
 function sortMetaProperties(
-  meta: BookmarkTagsAndMetadata["meta"]
-): BookmarkTagsAndMetadata["meta"] {
-  if (!meta || typeof meta !== "object") {
+  meta: BookmarkTagsAndMetadata['meta']
+): BookmarkTagsAndMetadata['meta'] {
+  if (!meta || typeof meta !== 'object') {
     return meta
   }
 
@@ -208,9 +208,9 @@ function sortMetaProperties(
   const entries = Object.entries(meta)
 
   // Separate created from other properties for more efficient processing
-  const createdEntry = entries.find(([key]) => key === "created")
+  const createdEntry = entries.find(([key]) => key === 'created')
   const otherEntries = entries
-    .filter(([key]) => key !== "created")
+    .filter(([key]) => key !== 'created')
     .sort(([a], [b]) => a.localeCompare(b))
 
   // Add sorted properties first
@@ -223,7 +223,7 @@ function sortMetaProperties(
     sortedMeta[createdEntry[0]] = createdEntry[1]
   }
 
-  return sortedMeta as BookmarkTagsAndMetadata["meta"]
+  return sortedMeta as BookmarkTagsAndMetadata['meta']
 }
 
 /**
@@ -233,8 +233,8 @@ function sortMetaProperties(
  */
 function isMetaObject(
   value: unknown
-): value is BookmarkTagsAndMetadata["meta"] {
-  return value !== null && typeof value === "object"
+): value is BookmarkTagsAndMetadata['meta'] {
+  return value !== null && typeof value === 'object'
 }
 
 /**
@@ -247,8 +247,8 @@ function isBookmarkTagsAndMetadata(
 ): value is BookmarkTagsAndMetadata {
   return (
     value !== null &&
-    typeof value === "object" &&
-    "tags" in value &&
+    typeof value === 'object' &&
+    'tags' in value &&
     Array.isArray((value as BookmarkTagsAndMetadata).tags)
   )
 }
@@ -292,12 +292,12 @@ export function normalizeBookmarkData<T>(data: T): T {
   }
 
   // Handle objects (excluding null which is already handled)
-  if (typeof data === "object") {
+  if (typeof data === 'object') {
     const result: Record<string, unknown> = {}
 
     for (const [key, value] of Object.entries(data)) {
       result[key] =
-        key === "meta" && isMetaObject(value)
+        key === 'meta' && isMetaObject(value)
           ? sortMetaProperties(value)
           : normalizeBookmarkData(value)
     }

@@ -1,16 +1,16 @@
-import { $, $$, doc, hasClass } from "browser-extension-utils"
-import styleText from "data-text:./036-twitch.tv.scss"
-import { getTrimmedTitle } from "utags-utils"
+import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import styleText from 'data-text:./036-twitch.tv.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
-} from "../../modules/visited"
-import type { UserTagMeta, UtagsHTMLElement } from "../../types"
+} from '../../modules/visited'
+import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 
 export default (() => {
-  const prefix = location.origin + "/"
+  const prefix = location.origin + '/'
 
   const getUserProfileUrl = (url: string, exact = false) => {
     if (url.startsWith(prefix)) {
@@ -21,10 +21,10 @@ export default (() => {
 
       if (exact) {
         if (/^\w+$/.test(href2)) {
-          return prefix + href2.replace(/^(\w+).*/, "$1")
+          return prefix + href2.replace(/^(\w+).*/, '$1')
         }
       } else if (/^\w+/.test(href2)) {
-        return prefix + href2.replace(/^(\w+).*/, "$1")
+        return prefix + href2.replace(/^(\w+).*/, '$1')
       }
     }
 
@@ -36,10 +36,10 @@ export default (() => {
       const href2 = url.slice(prefix.length).toLowerCase()
       if (exact) {
         if (/^videos\/\d+([?#].*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(videos\/\d+).*/, "$1")
+          return prefix + href2.replace(/^(videos\/\d+).*/, '$1')
         }
       } else if (/^videos\/\d+/.test(href2)) {
-        return prefix + href2.replace(/^(videos\/\d+).*/, "$1")
+        return prefix + href2.replace(/^(videos\/\d+).*/, '$1')
       }
     }
 
@@ -51,10 +51,10 @@ export default (() => {
       const href2 = url.slice(prefix.length).toLowerCase()
       if (exact) {
         if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+          return prefix + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, '$1')
         }
       } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
-        return prefix + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+        return prefix + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, '$1')
       }
     }
 
@@ -66,10 +66,10 @@ export default (() => {
       const href2 = url.slice(prefix.length).toLowerCase()
       if (exact) {
         if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+          return prefix + href2.replace(/^(tag\/[^/?#]+).*/, '$1')
         }
       } else if (/^tag\/[^/?#]+?/.test(href2)) {
-        return prefix + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+        return prefix + href2.replace(/^(tag\/[^/?#]+).*/, '$1')
       }
     }
 
@@ -84,12 +84,12 @@ export default (() => {
     listNodesSelectors: [
       // videos
       '.tw-tower [data-a-target^="video-tower-card-"]',
-      ".tw-transition-group .tw-transition",
+      '.tw-transition-group .tw-transition',
     ],
     conditionNodesSelectors: [
       // videos
       '.tw-tower [data-a-target^="video-tower-card-"] a',
-      ".tw-transition-group .tw-transition a",
+      '.tw-transition-group .tw-transition a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -114,10 +114,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         // if (element.closest(".topic-body .names a")) {
         //   element.dataset.utags_position_selector = ".topic-body .names"
@@ -142,11 +142,11 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "video", title }
+        const meta = { type: 'video', title }
         element.utags = { key, meta }
         markElementWhetherVisited(key, element)
 
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -184,7 +184,7 @@ export default (() => {
       return true
     },
     excludeSelectors: [
-      ".top-nav__overflow-menu",
+      '.top-nav__overflow-menu',
       //
     ],
     validMediaSelectors: [
@@ -196,8 +196,8 @@ export default (() => {
       // '[data-a-target="preview-card-image-link"]'
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const isDarkMode = hasClass(doc.documentElement, "tw-root--theme-dark")
-      doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+      const isDarkMode = hasClass(doc.documentElement, 'tw-root--theme-dark')
+      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
 
       let key = getVideoUrl(location.href)
       if (key) {
@@ -207,7 +207,7 @@ export default (() => {
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "video" }
+            const meta = { title, type: 'video' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
@@ -223,11 +223,11 @@ export default (() => {
         const title = element.textContent!.trim()
         if (id && title) {
           key = prefix + id.toLowerCase()
-          const meta = { type: "user", title }
+          const meta = { type: 'user', title }
 
           element.utags = { key, meta }
-          element.dataset.utags = element.dataset.utags || ""
-          element.dataset.utags_node_type = "link"
+          element.dataset.utags = element.dataset.utags || ''
+          element.dataset.utags_node_type = 'link'
 
           matchedNodesSet.add(element)
         }

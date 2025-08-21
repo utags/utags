@@ -1,6 +1,6 @@
-import styleText from "data-text:./015-52pojie.cn.scss"
+import styleText from 'data-text:./015-52pojie.cn.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   return {
@@ -14,11 +14,11 @@ export default (() => {
     ],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "#hd",
-      "#pt",
-      "#pgt",
+      '#hd',
+      '#pt',
+      '#pgt',
       // 右边工具栏
-      "#jz52top",
+      '#jz52top',
     ],
     getStyle: () => styleText,
   }

@@ -1,6 +1,6 @@
-import { getSettingsValue } from "browser-extension-settings"
+import { getSettingsValue } from 'browser-extension-settings'
 
-let prefix = location.origin + "/"
+let prefix = location.origin + '/'
 const host = location.host
 let useVisitedFunction = false
 let displayMark = false
@@ -23,7 +23,7 @@ export function onSettingsChange() {
   useVisitedFunction = getSettingsValue(`useVisitedFunction_${host}`) as boolean
   displayMark =
     (getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) as string) !==
-    "0"
+    '0'
 }
 
 function getVisitedLinks(): string[] {
@@ -32,14 +32,14 @@ function getVisitedLinks(): string[] {
   }
 
   return (
-    (JSON.parse(localStorage.getItem("utags_visited") || "[]") as string[]) ||
+    (JSON.parse(localStorage.getItem('utags_visited') || '[]') as string[]) ||
     []
   )
 }
 
 function saveVisitedLinks(newVisitedLinks: string[]) {
   if (useVisitedFunction) {
-    localStorage.setItem("utags_visited", JSON.stringify(newVisitedLinks))
+    localStorage.setItem('utags_visited', JSON.stringify(newVisitedLinks))
   }
 }
 
@@ -52,7 +52,7 @@ function convertKey(url: string) {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const TAG_VISITED = ":visited"
+export const TAG_VISITED = ':visited'
 
 export function addVisited(key: string) {
   // Only add it once each time the page is loaded.
@@ -93,8 +93,8 @@ export function isVisited(key: string) {
 
 export function markElementWhetherVisited(key: string, element: HTMLElement) {
   if (isVisited(key)) {
-    element.dataset.utags_visited = "1"
-  } else if (element.dataset.utags_visited === "1") {
+    element.dataset.utags_visited = '1'
+  } else if (element.dataset.utags_visited === '1') {
     delete element.dataset.utags_visited
   }
 }

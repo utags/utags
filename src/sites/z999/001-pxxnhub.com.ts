@@ -1,12 +1,12 @@
-import { $, $$, getAttribute } from "browser-extension-utils"
-import styleText from "data-text:./001-pxxnhub.com.scss"
+import { $, $$, getAttribute } from 'browser-extension-utils'
+import styleText from 'data-text:./001-pxxnhub.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   // 'or'
   // eslint-disable-next-line no-restricted-globals
-  const xx = atob("b3I=")
+  const xx = atob('b3I=')
   // magix to define pxxnhub.com
   const hostname = `p${xx}nhub.com`
   const prefix = `https://www.${hostname}/`
@@ -18,10 +18,10 @@ export default (() => {
 
       if (exact) {
         if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+          return prefix + href2.replace(/(^(model|users)\/[\w-]+).*/, '$1')
         }
       } else if (/^(model|users)\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(^(model|users)\/[\w-]+).*/, '$1')
       }
     }
 
@@ -35,10 +35,10 @@ export default (() => {
 
       if (exact) {
         if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+          return prefix + href2.replace(/(^channels\/[\w-]+).*/, '$1')
         }
       } else if (/^channels\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(^channels\/[\w-]+).*/, '$1')
       }
     }
 
@@ -51,7 +51,7 @@ export default (() => {
       const href2 = href.slice(index)
 
       if (/^view_video.php\?viewkey=\w+/.test(href2)) {
-        return prefix + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
+        return prefix + href2.replace(/(view_video.php\?viewkey=\w+).*/, '$1')
       }
     }
 
@@ -62,8 +62,8 @@ export default (() => {
     // magix to match pxxnhub.com
     matches: /p[ro_][r_]nhub\.com/,
     validate(element: HTMLAnchorElement) {
-      const hrefAttr = getAttribute(element, "href")
-      if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
+      const hrefAttr = getAttribute(element, 'href')
+      if (!hrefAttr || hrefAttr === 'null' || hrefAttr === '#') {
         return false
       }
 
@@ -71,14 +71,14 @@ export default (() => {
 
       let key = getChannelUrl(href, true)
       if (key) {
-        const meta = { type: "channel" }
+        const meta = { type: 'channel' }
         element.utags = { key, meta }
         return true
       }
 
       key = getUserProfileUrl(href, true)
       if (key) {
-        const meta = { type: "user" }
+        const meta = { type: 'user' }
         element.utags = { key, meta }
         return true
       }
@@ -86,12 +86,12 @@ export default (() => {
       key = getVideoUrl(href)
       if (key) {
         let title: string | undefined
-        const titleElement = $("#video-title", element)
+        const titleElement = $('#video-title', element)
         if (titleElement) {
           title = titleElement.textContent!
         }
 
-        const meta = title ? { title, type: "video" } : { type: "video" }
+        const meta = title ? { title, type: 'video' } : { type: 'video' }
         element.utags = { key, meta }
 
         return true
@@ -101,28 +101,28 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".networkBarWrapper",
-      "#headerWrapper",
-      "#headerMenuContainer",
-      "#mainMenuProfile",
-      "#mainMenuAmateurModelProfile",
-      "#countryRedirectMessage",
-      "aside#leftMenu",
-      ".profileSubNav",
-      ".subFilterList",
-      ".greyButton",
-      ".orangeButton",
+      '.networkBarWrapper',
+      '#headerWrapper',
+      '#headerMenuContainer',
+      '#mainMenuProfile',
+      '#mainMenuAmateurModelProfile',
+      '#countryRedirectMessage',
+      'aside#leftMenu',
+      '.profileSubNav',
+      '.subFilterList',
+      '.greyButton',
+      '.orangeButton',
       `${xx}xxxxx`,
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
-        const element = $(".name h1")
+        const element = $('.name h1')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -132,11 +132,11 @@ export default (() => {
       key = getChannelUrl(location.href)
       if (key) {
         // video title or shorts title
-        const element = $(".title h1")
-        if (element && !$("a", element)) {
+        const element = $('.title h1')
+        if (element && !$('a', element)) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "channel" }
+            const meta = { title, type: 'channel' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -146,11 +146,11 @@ export default (() => {
       key = getVideoUrl(location.href)
       if (key) {
         // video title or shorts title
-        const element = $("h1.title")
+        const element = $('h1.title')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "video" }
+            const meta = { title, type: 'video' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

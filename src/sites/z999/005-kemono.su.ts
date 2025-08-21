@@ -1,16 +1,16 @@
-import { $, getAttribute, hasClass } from "browser-extension-utils"
-import styleText from "data-text:./005-kemono.su.scss"
+import { $, getAttribute, hasClass } from 'browser-extension-utils'
+import styleText from 'data-text:./005-kemono.su.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = location.origin + "/"
+  const prefix = location.origin + '/'
 
   function getPostUrl(url: string) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (/^\w+\/user\/\w+\/post\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(\w+\/user\/\w+\/post\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(\w+\/user\/\w+\/post\/\w+).*/, '$1')
       }
     }
 
@@ -20,10 +20,10 @@ export default (() => {
   return {
     matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
     validate(element: HTMLAnchorElement) {
-      const hrefAttr = getAttribute(element, "href")
+      const hrefAttr = getAttribute(element, 'href')
 
       // Comments
-      if (hrefAttr.startsWith("#")) {
+      if (hrefAttr.startsWith('#')) {
         return false
       }
 
@@ -34,43 +34,43 @@ export default (() => {
       }
 
       if (
-        hasClass(element, "user-card") ||
-        hasClass(element, "user-header__avatar") ||
-        element.closest(".post-card")
+        hasClass(element, 'user-card') ||
+        hasClass(element, 'user-header__avatar') ||
+        element.closest('.post-card')
       ) {
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
       }
 
       return true
     },
     validMediaSelectors: [
-      ".user-header .user-header__avatar",
-      ".user-header .user-header__profile",
-      ".user-card",
-      ".post-card__image",
-      ".post-card",
+      '.user-header .user-header__avatar',
+      '.user-header .user-header__profile',
+      '.user-card',
+      '.post-card__image',
+      '.post-card',
     ],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".global-sidebar",
-      ".paginator",
-      ".post__nav-links",
-      ".scrape__nav-links",
-      ".tabs",
-      ".user-header__actions",
-      ".posts-board__sidebar",
-      "#add-new-link",
+      '.global-sidebar',
+      '.paginator',
+      '.post__nav-links',
+      '.scrape__nav-links',
+      '.tabs',
+      '.user-header__actions',
+      '.posts-board__sidebar',
+      '#add-new-link',
       'a[href^="/authentication/"]',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const key = getPostUrl(location.href)
       if (key) {
         // post title
-        const element = $("h1.post__title,h1.scrape__title")
+        const element = $('h1.post__title,h1.scrape__title')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "post" }
+            const meta = { title, type: 'post' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

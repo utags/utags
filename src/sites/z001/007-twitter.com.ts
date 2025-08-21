@@ -1,9 +1,9 @@
-import { $$, setStyle } from "browser-extension-utils"
-import styleText from "data-text:./007-twitter.com.scss"
+import { $$, setStyle } from 'browser-extension-utils'
+import styleText from 'data-text:./007-twitter.com.scss'
 
 export default (() => {
-  const prefix = "https://x.com/"
-  const prefix2 = "https://twitter.com/"
+  const prefix = 'https://x.com/'
+  const prefix2 = 'https://twitter.com/'
 
   return {
     matches: /x\.com|twitter\.com/,
@@ -27,16 +27,16 @@ export default (() => {
             return false
           }
 
-          const textContent = element.textContent || ""
-          if (!textContent.startsWith("@")) {
+          const textContent = element.textContent || ''
+          if (!textContent.startsWith('@')) {
             return false
           }
           // console.log(href2)
 
           const parent = element.parentElement!
-          setStyle(parent, { zIndex: "1" })
+          setStyle(parent, { zIndex: '1' })
 
-          const meta = { type: "user" }
+          const meta = { type: 'user' }
           element.utags = { meta }
 
           return true
@@ -50,12 +50,12 @@ export default (() => {
       const elements = $$('[data-testid="UserName"] span')
       for (const element of elements) {
         const title = element.textContent!.trim()
-        if (!title || !title.startsWith("@")) {
+        if (!title || !title.startsWith('@')) {
           continue
         }
 
         const key = prefix + title.slice(1)
-        const meta = { title, type: "user" }
+        const meta = { title, type: 'user' }
         element.utags = { key, meta }
         matchedNodesSet.add(element)
       }

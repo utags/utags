@@ -13,7 +13,7 @@ type HttpRequestPayload = {
 }
 
 type HttpRequestMessage = {
-  type: "HTTP_REQUEST"
+  type: 'HTTP_REQUEST'
   id: string
   payload: HttpRequestPayload
 }
@@ -45,15 +45,15 @@ type HttpResponse = HttpSuccessResponse | HttpErrorResponse
 
 type StorageData = Record<string, number>
 
-console.log("UTags HTTP Proxy extension background script loaded")
+console.log('UTags HTTP Proxy extension background script loaded')
 
 // Storage keys
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const STORAGE_KEYS = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  REQUEST_COUNT: "utags_request_count",
+  REQUEST_COUNT: 'utags_request_count',
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  LAST_ACTIVITY: "utags_last_activity",
+  LAST_ACTIVITY: 'utags_last_activity',
 } as const
 
 /**
@@ -74,7 +74,7 @@ async function updateStatistics() {
     )
   } catch (error) {
     console.error(
-      "[UTags Extension Background] Error updating statistics:",
+      '[UTags Extension Background] Error updating statistics:',
       error
     )
   }
@@ -139,9 +139,9 @@ async function handleHttpRequest(
   } catch (error) {
     console.error(`[UTags Extension Background] HTTP request failed:`, error)
 
-    let errorMessage = "Network error"
-    if (error.name === "AbortError") {
-      errorMessage = "Request timeout"
+    let errorMessage = 'Network error'
+    if (error.name === 'AbortError') {
+      errorMessage = 'Request timeout'
     } else if (error.message) {
       errorMessage = error.message as string
     }
@@ -169,7 +169,7 @@ chrome.runtime.onMessage.addListener(
   ) => {
     console.log(`[UTags Extension Background] Received message:`, message.type)
 
-    if (message.type === "HTTP_REQUEST") {
+    if (message.type === 'HTTP_REQUEST') {
       // Handle HTTP request asynchronously
       handleHttpRequest(message)
         .then((response) => {
@@ -177,12 +177,12 @@ chrome.runtime.onMessage.addListener(
         })
         .catch((error: unknown) => {
           console.error(
-            "[UTags Extension Background] Error handling HTTP request:",
+            '[UTags Extension Background] Error handling HTTP request:',
             error
           )
           sendResponse({
             success: false,
-            error: "Internal extension error",
+            error: 'Internal extension error',
             details: error as Error,
           })
         })
@@ -195,7 +195,7 @@ chrome.runtime.onMessage.addListener(
     console.log(
       `[UTags Extension Background] Unknown message type: ${message.type as string}`
     )
-    sendResponse({ success: false, error: "Unknown message type" })
+    sendResponse({ success: false, error: 'Unknown message type' })
   }
 )
 
@@ -205,14 +205,14 @@ chrome.runtime.onMessage.addListener(
 chrome.runtime.onInstalled.addListener(
   (details: chrome.runtime.InstalledDetails) => {
     console.log(
-      "[UTags Extension Background] Extension installed/updated:",
+      '[UTags Extension Background] Extension installed/updated:',
       details.reason
     )
 
-    if (details.reason === "install") {
-      console.log("[UTags Extension Background] First time installation")
-    } else if (details.reason === "update") {
-      console.log("[UTags Extension Background] Extension updated")
+    if (details.reason === 'install') {
+      console.log('[UTags Extension Background] First time installation')
+    } else if (details.reason === 'update') {
+      console.log('[UTags Extension Background] Extension updated')
     }
   }
 )
@@ -221,7 +221,7 @@ chrome.runtime.onInstalled.addListener(
  * Extension startup handler
  */
 chrome.runtime.onStartup.addListener(() => {
-  console.log("[UTags Extension Background] Extension started")
+  console.log('[UTags Extension Background] Extension started')
 })
 
-console.log("[UTags Extension Background] Background script ready")
+console.log('[UTags Extension Background] Background script ready')

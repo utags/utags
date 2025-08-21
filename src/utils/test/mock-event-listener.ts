@@ -1,4 +1,4 @@
-import { vi } from "vitest"
+import { vi } from 'vitest'
 
 /**
  * Creates mock event listener functions with a callback to track handlers.

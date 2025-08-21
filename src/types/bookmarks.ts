@@ -225,9 +225,9 @@ export type BookmarkListItemProps = {
  * This helps in understanding the context of the deletion, especially for undo operations or analytics.
  */
 export type DeleteActionType =
-  | "DELETE" // Standard deletion action initiated by the user.
-  | "IMPORT" // Bookmark was part of an import process and might have been marked for deletion based on import rules.
-  | "SYNC" // Deletion occurred as a result of a synchronization process with another data source.
-  | "BATCH_DELETE_BOOKMARKS" // Bookmark was deleted as part of a batch operation to remove multiple bookmarks.
-  | "BATCH_REMOVE_TAGS" // Bookmark was (soft) deleted because all its tags were removed in a batch operation.
-  | "LAST_TAG_REMOVED" // Bookmark was (soft) deleted because its last remaining tag was removed.
+  | 'DELETE' // Standard deletion action initiated by the user.
+  | 'IMPORT' // Bookmark was part of an import process and might have been marked for deletion based on import rules.
+  | 'SYNC' // Deletion occurred as a result of a synchronization process with another data source.
+  | 'BATCH_DELETE_BOOKMARKS' // Bookmark was deleted as part of a batch operation to remove multiple bookmarks.
+  | 'BATCH_REMOVE_TAGS' // Bookmark was (soft) deleted because all its tags were removed in a batch operation.
+  | 'LAST_TAG_REMOVED' // Bookmark was (soft) deleted because its last remaining tag was removed.

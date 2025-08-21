@@ -1,21 +1,21 @@
-import { $, $$, getAttribute } from "browser-extension-utils"
-import styleText from "data-text:./012-youtube.com.scss"
+import { $, $$, getAttribute } from 'browser-extension-utils'
+import styleText from 'data-text:./012-youtube.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.youtube.com/"
-  const prefix2 = "https://m.youtube.com/"
+  const prefix = 'https://www.youtube.com/'
+  const prefix2 = 'https://m.youtube.com/'
 
   function getUserProfileUrl(href: string) {
     if (href.startsWith(prefix) || href.startsWith(prefix2)) {
       const href2 = href.startsWith(prefix2) ? href.slice(22) : href.slice(24)
       if (/^@[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(^@[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(^@[\w-]+).*/, '$1')
       }
 
       if (/^channel\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(^channel\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(^channel\/[\w-]+).*/, '$1')
       }
     }
 
@@ -25,16 +25,16 @@ export default (() => {
   function getVideoUrl(href: string) {
     if (href.startsWith(prefix) || href.startsWith(prefix2)) {
       const href2 = href.startsWith(prefix2) ? href.slice(22) : href.slice(24)
-      if (href2.includes("&lc=")) {
+      if (href2.includes('&lc=')) {
         return undefined
       }
 
       if (/^watch\?v=[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(watch\?v=[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(watch\?v=[\w-]+).*/, '$1')
       }
 
       if (/^shorts\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/(^shorts\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/(^shorts\/[\w-]+).*/, '$1')
       }
     }
 
@@ -44,8 +44,8 @@ export default (() => {
   return {
     matches: /youtube\.com/,
     validate(element: HTMLAnchorElement) {
-      const hrefAttr = getAttribute(element, "href")
-      if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
+      const hrefAttr = getAttribute(element, 'href')
+      if (!hrefAttr || hrefAttr === 'null' || hrefAttr === '#') {
         return false
       }
 
@@ -56,7 +56,7 @@ export default (() => {
           // console.log(pathname)
 
           const key = prefix + pathname.slice(1)
-          const meta = { type: "user" }
+          const meta = { type: 'user' }
           element.utags = { key, meta }
 
           return true
@@ -66,7 +66,7 @@ export default (() => {
           // console.log(pathname, element)
 
           const key = prefix + pathname.slice(1)
-          const meta = { type: "channel" }
+          const meta = { type: 'channel' }
           element.utags = { key, meta }
 
           return true
@@ -75,12 +75,12 @@ export default (() => {
         const key = getVideoUrl(href)
         if (key) {
           let title: string | undefined
-          const titleElement = $("#video-title", element)
+          const titleElement = $('#video-title', element)
           if (titleElement) {
             title = titleElement.textContent!
           }
 
-          const meta = title ? { title, type: "video" } : { type: "video" }
+          const meta = title ? { title, type: 'video' } : { type: 'video' }
           element.utags = { key, meta }
 
           return true
@@ -95,7 +95,7 @@ export default (() => {
       if (key) {
         // profile header
         const element = $(
-          "#inner-header-container #container.ytd-channel-name #text"
+          '#inner-header-container #container.ytd-channel-name #text'
         )
         if (element) {
           const title = element.textContent!.trim()
@@ -111,12 +111,12 @@ export default (() => {
       if (key) {
         // video title or shorts title
         const element = $(
-          "#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title"
+          '#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title'
         )
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "video" }
+            const meta = { title, type: 'video' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

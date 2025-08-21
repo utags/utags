@@ -1,11 +1,11 @@
-import { $, $$ } from "browser-extension-utils"
+import { $, $$ } from 'browser-extension-utils'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   function cloneComment(element: HTMLElement) {
     const newElement = element.cloneNode(true) as HTMLElement
-    for (const node of $$(".reply", newElement)) {
+    for (const node of $$('.reply', newElement)) {
       node.remove()
     }
 
@@ -14,15 +14,15 @@ export default (() => {
 
   return {
     matches: /news\.ycombinator\.com/,
-    listNodesSelectors: [".script-list li", ".discussion-list-container"],
+    listNodesSelectors: ['.script-list li', '.discussion-list-container'],
     conditionNodesSelectors: [],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".pagetop",
-      ".morelink",
-      ".hnpast",
-      ".clicky",
-      ".navs > a",
+      '.pagetop',
+      '.morelink',
+      '.hnpast',
+      '.clicky',
+      '.navs > a',
       'a[href^="login"]',
       'a[href^="logout"]',
       'a[href^="forgot"]',
@@ -37,29 +37,29 @@ export default (() => {
       '.subline > a[href^="item"]',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      if (location.pathname === "/item") {
+      if (location.pathname === '/item') {
         // comments
-        const comments = $$(".comment-tree .comtr[id]")
+        const comments = $$('.comment-tree .comtr[id]')
         for (const comment of comments) {
-          const commentText = $(".commtext", comment)
-          const target = $(".age a", comment) as HTMLAnchorElement
+          const commentText = $('.commtext', comment)
+          const target = $('.age a', comment) as HTMLAnchorElement
           if (commentText && target) {
             const key = target.href
             const title = cloneComment(commentText).textContent
             if (key && title) {
-              const meta = { title, type: "comment" }
+              const meta = { title, type: 'comment' }
               target.utags = { key, meta }
               matchedNodesSet.add(target)
             }
           }
         }
 
-        const fatitem = $(".fatitem")
+        const fatitem = $('.fatitem')
         if (fatitem) {
-          const titleElement = $(".titleline a", fatitem)
-          const commentText = titleElement || $(".commtext", fatitem)
-          const type = titleElement ? "topic" : "comment"
-          const target = $(".age a", fatitem) as HTMLAnchorElement
+          const titleElement = $('.titleline a', fatitem)
+          const commentText = titleElement || $('.commtext', fatitem)
+          const type = titleElement ? 'topic' : 'comment'
+          const target = $('.age a', fatitem) as HTMLAnchorElement
           if (commentText && target) {
             const key = target.href
             const title = cloneComment(commentText).textContent
@@ -70,17 +70,17 @@ export default (() => {
             }
           }
         }
-      } else if (location.pathname === "/newcomments") {
+      } else if (location.pathname === '/newcomments') {
         // comments
-        const comments = $$(".athing[id]")
+        const comments = $$('.athing[id]')
         for (const comment of comments) {
-          const commentText = $(".commtext", comment)
-          const target = $(".age a", comment) as HTMLAnchorElement
+          const commentText = $('.commtext', comment)
+          const target = $('.age a', comment) as HTMLAnchorElement
           if (commentText && target) {
             const key = target.href
             const title = cloneComment(commentText).textContent
             if (key && title) {
-              const meta = { title, type: "comment" }
+              const meta = { title, type: 'comment' }
               target.utags = { key, meta }
               matchedNodesSet.add(target)
             }
@@ -88,17 +88,17 @@ export default (() => {
         }
       } else {
         // topics
-        const topics = $$(".athing[id]")
+        const topics = $$('.athing[id]')
         for (const topic of topics) {
-          const titleElement = $(".titleline a", topic)
+          const titleElement = $('.titleline a', topic)
           const subtext = topic.nextElementSibling as HTMLElement
           if (subtext) {
-            const target = $(".age a", subtext) as HTMLAnchorElement
+            const target = $('.age a', subtext) as HTMLAnchorElement
             if (titleElement && target) {
               const key = target.href
               const title = titleElement.textContent
               if (key && title) {
-                const meta = { title, type: "topic" }
+                const meta = { title, type: 'topic' }
                 target.utags = { key, meta }
                 matchedNodesSet.add(target)
               }

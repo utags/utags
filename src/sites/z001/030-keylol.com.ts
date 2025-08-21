@@ -1,10 +1,10 @@
-import { $$ } from "browser-extension-utils"
-import styleText from "data-text:./030-keylol.com.scss"
+import { $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./030-keylol.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = location.origin + "/"
+  const prefix = location.origin + '/'
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
@@ -13,14 +13,14 @@ export default (() => {
         // https://keylol.com/?1234567
         if (/^\?\d+(#.*)?$/.test(href2)) {
           return (
-            prefix + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            prefix + href2.replace(/^\?(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
 
         // https://keylol.com/suid-1234567
         if (/^suid-\d+(#.*)?$/.test(href2)) {
           return (
-            prefix + href2.replace(/^suid-(\d+).*/, "home.php?mod=space&uid=$1")
+            prefix + href2.replace(/^suid-(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
 
@@ -30,12 +30,12 @@ export default (() => {
             prefix +
             href2.replace(
               /^home\.php\?mod=space&uid=(\d+).*/,
-              "home.php?mod=space&uid=$1"
+              'home.php?mod=space&uid=$1'
             )
           )
         }
       } else if (/^u\/[\w.-]+/.test(href2)) {
-        return prefix + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        return prefix + href2.replace(/^(u\/[\w.-]+).*/, '$1')
       }
     }
 
@@ -59,10 +59,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
         return true
       }
 
@@ -70,12 +70,12 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "nav",
-      "header",
-      "#pgt",
-      "#fd_page_bottom",
-      "#visitedforums",
-      "#pt",
+      'nav',
+      'header',
+      '#pgt',
+      '#fd_page_bottom',
+      '#visitedforums',
+      '#pt',
     ],
     getStyle: () => styleText,
   }

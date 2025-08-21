@@ -12,15 +12,15 @@ type HttpRequestPayload = {
 }
 
 type HttpRequestMessage = {
-  type: "HTTP_REQUEST"
-  source: "utags-webapp"
+  type: 'HTTP_REQUEST'
+  source: 'utags-webapp'
   id: string
   payload: HttpRequestPayload
 }
 
 type PingMessage = {
-  type: "PING"
-  source: "utags-webapp"
+  type: 'PING'
+  source: 'utags-webapp'
   id: string
 }
 
@@ -35,15 +35,15 @@ type HttpResponseData = {
 }
 
 type HttpResponseMessage = {
-  type: "HTTP_RESPONSE"
-  source: "utags-extension"
+  type: 'HTTP_RESPONSE'
+  source: 'utags-extension'
   id: string
   payload: HttpResponseData
 }
 
 type HttpErrorMessage = {
-  type: "HTTP_ERROR"
-  source: "utags-extension"
+  type: 'HTTP_ERROR'
+  source: 'utags-extension'
   id: string
   payload: {
     error: string
@@ -52,8 +52,8 @@ type HttpErrorMessage = {
 }
 
 type PongMessage = {
-  type: "PONG"
-  source: "utags-extension"
+  type: 'PONG'
+  source: 'utags-extension'
   id: string
 }
 
@@ -107,9 +107,9 @@ function handleHttpRequest(
 ): void {
   if (
     // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "chrome-mv3" ||
+    process.env.PLASMO_TARGET === 'chrome-mv3' ||
     // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "firefox-mv2"
+    process.env.PLASMO_TARGET === 'firefox-mv2'
   ) {
     handleHttpRequestExtension(message, event)
   } else {
@@ -134,7 +134,7 @@ function handleHttpRequestExtension(
   // Forward request to background script
   chrome.runtime
     .sendMessage({
-      type: "HTTP_REQUEST",
+      type: 'HTTP_REQUEST',
       id,
       payload,
     })
@@ -147,10 +147,10 @@ function handleHttpRequestExtension(
     })
     .catch((error: unknown) => {
       console.error(
-        "[UTags Extension] Error communicating with background script:",
+        '[UTags Extension] Error communicating with background script:',
         error
       )
-      sendHttpError(id, "Extension communication error", event, error)
+      sendHttpError(id, 'Extension communication error', event, error)
     })
 }
 
@@ -172,7 +172,7 @@ function handleHttpRequestUserscript(
   const gmRequest = GM?.xmlHttpRequest || GM_xmlhttpRequest
 
   if (!gmRequest) {
-    sendHttpError(id, "GM.xmlHttpRequest not available", event)
+    sendHttpError(id, 'GM.xmlHttpRequest not available', event)
     return
   }
 
@@ -190,9 +190,9 @@ function handleHttpRequestUserscript(
       // Parse response headers
       const responseHeaders: Record<string, string> = {}
       if (response.responseHeaders) {
-        const headerLines = response.responseHeaders.split("\r\n")
+        const headerLines = response.responseHeaders.split('\r\n')
         for (const line of headerLines) {
-          const [key, value] = line.split(": ")
+          const [key, value] = line.split(': ')
           if (key && value) {
             responseHeaders[key.toLowerCase()] = value
           }
@@ -215,16 +215,16 @@ function handleHttpRequestUserscript(
       console.error(`[UTags Extension] HTTP request failed:`, error)
       sendHttpError(
         id,
-        error && typeof error.statusText === "string"
+        error && typeof error.statusText === 'string'
           ? (error.statusText as string)
-          : "Network error",
+          : 'Network error',
         event,
         error
       )
     },
     ontimeout() {
       console.error(`[UTags Extension] HTTP request timeout`)
-      sendHttpError(id, "Request timeout", event)
+      sendHttpError(id, 'Request timeout', event)
     },
   })
 }
@@ -241,8 +241,8 @@ function sendHttpResponse(
   event: MessageEvent
 ): void {
   const responseMessage: HttpResponseMessage = {
-    type: "HTTP_RESPONSE",
-    source: "utags-extension",
+    type: 'HTTP_RESPONSE',
+    source: 'utags-extension',
     id: requestId,
     payload: responseData,
   }
@@ -266,8 +266,8 @@ function sendHttpError(
   details?: any
 ): void {
   const errorMessage: HttpErrorMessage = {
-    type: "HTTP_ERROR",
-    source: "utags-extension",
+    type: 'HTTP_ERROR',
+    source: 'utags-extension',
     id: requestId,
     payload: {
       error,
@@ -287,11 +287,11 @@ function sendHttpError(
  * @param {MessageEvent} event - The message event
  */
 function handlePing(message: PingMessage, event: MessageEvent): void {
-  console.log("[UTags Extension] Received ping, sending pong")
+  console.log('[UTags Extension] Received ping, sending pong')
 
   const pongMessage: PongMessage = {
-    type: "PONG",
-    source: "utags-extension",
+    type: 'PONG',
+    source: 'utags-extension',
     id: message.id,
   }
 
@@ -317,7 +317,7 @@ function messageListener(event: MessageEvent): void {
     // Validate message structure
     if (
       !message ||
-      typeof message !== "object" ||
+      typeof message !== 'object' ||
       !message.type ||
       !message.id
     ) {
@@ -325,19 +325,19 @@ function messageListener(event: MessageEvent): void {
     }
 
     // Only handle messages from webapp
-    if (message.source !== "utags-webapp") {
+    if (message.source !== 'utags-webapp') {
       return
     }
 
     console.log(`[UTags Extension] Received message:`, message.type)
 
     switch (message.type) {
-      case "PING": {
+      case 'PING': {
         handlePing(message, event)
         break
       }
 
-      case "HTTP_REQUEST": {
+      case 'HTTP_REQUEST': {
         handleHttpRequest(message, event)
         break
       }
@@ -349,7 +349,7 @@ function messageListener(event: MessageEvent): void {
       }
     }
   } catch (error) {
-    console.error("[UTags Extension] Error handling message:", error)
+    console.error('[UTags Extension] Error handling message:', error)
     // Send error response if we have a valid message with ID
     if (message && message.id) {
       sendHttpError(
@@ -357,7 +357,7 @@ function messageListener(event: MessageEvent): void {
         error instanceof Error ? error.message : String(error),
         event,
         {
-          context: "messageListener",
+          context: 'messageListener',
           messageType: message.type,
         }
       )
@@ -367,9 +367,9 @@ function messageListener(event: MessageEvent): void {
 
 export function setupWebappBridge(): void {
   // Setup message listener
-  window.addEventListener("message", messageListener)
+  window.addEventListener('message', messageListener)
   // Announce extension availability
-  console.log("[UTags Extension] ready for HTTP proxy requests")
+  console.log('[UTags Extension] ready for HTTP proxy requests')
 }
 
 // Optional: Send a ready signal to webapp

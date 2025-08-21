@@ -1,17 +1,17 @@
-import { $, $$, doc } from "browser-extension-utils"
-import styleText from "data-text:./039-ruanyifeng.com.scss"
-import { getTrimmedTitle } from "utags-utils"
+import { $, $$, doc } from 'browser-extension-utils'
+import styleText from 'data-text:./039-ruanyifeng.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
-} from "../../modules/visited"
-import type { UserTagMeta, UtagsHTMLElement } from "../../types"
+} from '../../modules/visited'
+import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 
 export default (() => {
   // Constants
-  const CANONICAL_BASE_URL = "https://www.ruanyifeng.com/"
+  const CANONICAL_BASE_URL = 'https://www.ruanyifeng.com/'
   const BLOG_POST_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html/
   const BLOG_POST_EXACT_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html$/
 
@@ -30,9 +30,9 @@ export default (() => {
     }
 
     // Handle HTTP www version
-    if (url.startsWith("http://www.ruanyifeng.com")) {
+    if (url.startsWith('http://www.ruanyifeng.com')) {
       return url.replace(
-        "http://www.ruanyifeng.com",
+        'http://www.ruanyifeng.com',
         CANONICAL_BASE_URL.slice(0, -1)
       )
     }
@@ -72,15 +72,15 @@ export default (() => {
     },
     listNodesSelectors: [
       // blog title
-      "ul li.module-list-item",
+      'ul li.module-list-item',
       // related posts
-      "#related_entries ul li",
+      '#related_entries ul li',
     ],
     conditionNodesSelectors: [
       // blog title
-      "ul li.module-list-item a",
+      'ul li.module-list-item a',
       // related posts
-      "#related_entries ul li a",
+      '#related_entries ul li a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -100,11 +100,11 @@ export default (() => {
           return false
         }
 
-        const meta = { title, type: "post" }
+        const meta = { title, type: 'post' }
         element.utags = { key, meta }
         markElementWhetherVisited(key, element)
 
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -112,20 +112,20 @@ export default (() => {
       return true
     },
     excludeSelectors: [
-      ".asset-more-link",
-      ".asset-meta",
-      ".comment-footer-inner",
-      "#latest-comments",
+      '.asset-more-link',
+      '.asset-meta',
+      '.comment-footer-inner',
+      '#latest-comments',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
       const key = getPostUrl(location.href)
       if (key) {
         addVisited(key)
-        const element = $("h1#page-title")
+        const element = $('h1#page-title')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "post" }
+            const meta = { title, type: 'post' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)

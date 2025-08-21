@@ -2,21 +2,21 @@ import {
   addValueChangeListener,
   getValue,
   setValue,
-} from "browser-extension-storage"
-import { parseInt10 } from "browser-extension-utils"
+} from 'browser-extension-storage'
+import { parseInt10 } from 'browser-extension-utils'
 
-import { deserializeBookmarks, serializeBookmarks } from "../storage/bookmarks"
-import { isProduction, isUserscript } from "../utils"
+import { deserializeBookmarks, serializeBookmarks } from '../storage/bookmarks'
+import { isProduction, isUserscript } from '../utils'
 
 // Message types for communication with the webapp
 type MessageType =
-  | "PING"
-  | "DISCOVER_UTAGS_TARGETS"
-  | "GET_AUTH_STATUS"
-  | "GET_REMOTE_METADATA"
-  | "DOWNLOAD_DATA"
-  | "UPLOAD_DATA"
-type AuthStatus = "authenticated" | "unauthenticated" | "error"
+  | 'PING'
+  | 'DISCOVER_UTAGS_TARGETS'
+  | 'GET_AUTH_STATUS'
+  | 'GET_REMOTE_METADATA'
+  | 'DOWNLOAD_DATA'
+  | 'UPLOAD_DATA'
+type AuthStatus = 'authenticated' | 'unauthenticated' | 'error'
 
 export type SyncMetadata = {
   timestamp: number
@@ -36,7 +36,7 @@ type MessagePayloadMap = {
 }
 
 type ResponsePayloadMap = {
-  PING: { status: "PONG" }
+  PING: { status: 'PONG' }
   DISCOVER_UTAGS_TARGETS: { extensionId: string; extensionName?: string }
   GET_AUTH_STATUS: { status: AuthStatus }
   GET_REMOTE_METADATA: { metadata: SyncMetadata | undefined }
@@ -46,7 +46,7 @@ type ResponsePayloadMap = {
 
 type BrowserExtensionMessage<T extends MessageType> = {
   type: T
-  source: "utags-webapp"
+  source: 'utags-webapp'
   id: string
   targetExtensionId: string
   payload?: MessagePayloadMap[T]
@@ -54,7 +54,7 @@ type BrowserExtensionMessage<T extends MessageType> = {
 
 type BrowserExtensionResponse<T extends MessageType> = {
   type: T
-  source: "utags-extension"
+  source: 'utags-extension'
   id: string
   extensionId: string
   payload?: ResponsePayloadMap[T]
@@ -63,29 +63,29 @@ type BrowserExtensionResponse<T extends MessageType> = {
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-const SCRIPT_NAME = "[UTags Extension Sync Adapter]"
+const SCRIPT_NAME = '[UTags Extension Sync Adapter]'
 
 let MY_EXTENSION_ID: string | undefined // Example ID, should be unique per script/extension
 let MY_EXTENSION_NAME: string | undefined
 // SYNC_MESSAGE_TYPE is used by the adapter to filter messages, but the mock primarily looks at event.data.type for actions.
 // const SYNC_MESSAGE_TYPE = 'UTAGS_SYNC_MESSAGE'; // Matches BrowserExtensionSyncAdapter's internal constant, not directly used for action dispatch here.
 
-const STORAGE_KEY_EXTENSION_ID = "extension.utags.extension_id"
-const SYNC_STORAGE_KEY_DATA = "utags_mock_sync_data"
+const STORAGE_KEY_EXTENSION_ID = 'extension.utags.extension_id'
+const SYNC_STORAGE_KEY_DATA = 'utags_mock_sync_data'
 
-const SYNC_STORAGE_KEY_METADATA = "extension.utags.sync_metadata"
+const SYNC_STORAGE_KEY_METADATA = 'extension.utags.sync_metadata'
 // Constants for message types and sources
 
-const SOURCE_WEBAPP = "utags-webapp"
-const SOURCE_EXTENSION = "utags-extension"
-const PING_MESSAGE_TYPE = "PING"
-const PONG_MESSAGE_TYPE = "PONG"
-const DISCOVER_MESSAGE_TYPE = "DISCOVER_UTAGS_TARGETS"
-const DISCOVERY_RESPONSE_TYPE = "DISCOVERY_RESPONSE"
-const GET_REMOTE_METADATA_MESSAGE_TYPE = "GET_REMOTE_METADATA"
-const DOWNLOAD_MESSAGE_TYPE = "DOWNLOAD_DATA"
-const UPLOAD_MESSAGE_TYPE = "UPLOAD_DATA"
-const GET_AUTH_STATUS_MESSAGE_TYPE = "GET_AUTH_STATUS"
+const SOURCE_WEBAPP = 'utags-webapp'
+const SOURCE_EXTENSION = 'utags-extension'
+const PING_MESSAGE_TYPE = 'PING'
+const PONG_MESSAGE_TYPE = 'PONG'
+const DISCOVER_MESSAGE_TYPE = 'DISCOVER_UTAGS_TARGETS'
+const DISCOVERY_RESPONSE_TYPE = 'DISCOVERY_RESPONSE'
+const GET_REMOTE_METADATA_MESSAGE_TYPE = 'GET_REMOTE_METADATA'
+const DOWNLOAD_MESSAGE_TYPE = 'DOWNLOAD_DATA'
+const UPLOAD_MESSAGE_TYPE = 'UPLOAD_DATA'
+const GET_AUTH_STATUS_MESSAGE_TYPE = 'GET_AUTH_STATUS'
 /* eslint-enable @typescript-eslint/naming-convention */
 
 /**
@@ -105,7 +105,7 @@ async function saveData(data: string): Promise<void> {
 async function loadData(): Promise<string> {
   // const data = await getValue(SYNC_STORAGE_KEY_DATA)
   const data = await serializeBookmarks()
-  return data || ""
+  return data || ''
 }
 
 /**
@@ -141,7 +141,7 @@ async function loadMetadata(): Promise<SyncMetadata | undefined> {
 function getVersionNumber(metadata: SyncMetadata | undefined): number {
   const version =
     metadata && metadata.version
-      ? parseInt10(metadata.version.replace("v", ""), 0)
+      ? parseInt10(metadata.version.replace('v', ''), 0)
       : 0
   return Math.max(version, 0)
 }
@@ -166,7 +166,7 @@ function isValidMessage(event: MessageEvent): boolean {
     return false
   }
 
-  if (!event.source || typeof event.source.postMessage !== "function") {
+  if (!event.source || typeof event.source.postMessage !== 'function') {
     return false
   }
 
@@ -175,14 +175,14 @@ function isValidMessage(event: MessageEvent): boolean {
   // Validate message structure (must match BrowserExtensionMessage format from the adapter)
   if (
     !message ||
-    typeof message !== "object" ||
+    typeof message !== 'object' ||
     message.source !== SOURCE_WEBAPP || // Check source
     !message.id || // Check for id
     (message.targetExtensionId !== MY_EXTENSION_ID &&
-      message.targetExtensionId !== "*") || // Allow broadcast messages
+      message.targetExtensionId !== '*') || // Allow broadcast messages
     // Ignore messages not intended for this script
     !message.type || // Check for type (which is the action)
-    typeof message.type !== "string" ||
+    typeof message.type !== 'string' ||
     ![
       PING_MESSAGE_TYPE,
       DISCOVER_MESSAGE_TYPE,
@@ -201,7 +201,7 @@ function isValidMessage(event: MessageEvent): boolean {
 
 const messageHandler = async (event: MessageEvent) => {
   if (!MY_EXTENSION_ID) {
-    console.error("MY_EXTENSION_ID not initialized")
+    console.error('MY_EXTENSION_ID not initialized')
     return
   }
 
@@ -252,7 +252,7 @@ const messageHandler = async (event: MessageEvent) => {
 
       case GET_AUTH_STATUS_MESSAGE_TYPE: {
         // Adapter expects an AuthStatus string
-        responsePayload = { status: "authenticated" }
+        responsePayload = { status: 'authenticated' }
         console.log(
           `${SCRIPT_NAME} Auth status requested. Responding:`,
           responsePayload
@@ -281,8 +281,8 @@ const messageHandler = async (event: MessageEvent) => {
       }
 
       case UPLOAD_MESSAGE_TYPE: {
-        if (!payload || typeof (payload as any).data !== "string") {
-          throw new Error("UPLOAD_DATA: Invalid payload")
+        if (!payload || typeof (payload as any).data !== 'string') {
+          throw new Error('UPLOAD_DATA: Invalid payload')
         }
 
         // Adapter sends expectedRemoteMeta as 'metadata' in the payload
@@ -294,16 +294,16 @@ const messageHandler = async (event: MessageEvent) => {
             expectedMeta.timestamp !== remoteMetadata.timestamp
           ) {
             throw new Error(
-              "Conflict: Expected remote metadata does not match current remote metadata."
+              'Conflict: Expected remote metadata does not match current remote metadata.'
             )
           }
         } else if (expectedMeta && !remoteMetadata) {
           throw new Error(
-            "Conflict: Expected remote metadata, but no remote data found."
+            'Conflict: Expected remote metadata, but no remote data found.'
           )
         } else if (!expectedMeta && remoteMetadata) {
           throw new Error(
-            "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
+            'Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification.'
           )
         }
 
@@ -339,9 +339,9 @@ const messageHandler = async (event: MessageEvent) => {
 }
 
 async function initExtensionId(): Promise<void> {
-  const type = isUserscript ? "Userscript" : "Extension"
+  const type = isUserscript ? 'Userscript' : 'Extension'
   // eslint-disable-next-line n/prefer-global/process
-  const tag = isProduction ? "" : ` - ${process.env.PLASMO_TAG!.toUpperCase()}`
+  const tag = isProduction ? '' : ` - ${process.env.PLASMO_TAG!.toUpperCase()}`
 
   let storedId: string | undefined = (await getValue(
     STORAGE_KEY_EXTENSION_ID
@@ -355,7 +355,7 @@ async function initExtensionId(): Promise<void> {
   MY_EXTENSION_ID = storedId
   MY_EXTENSION_NAME = `UTags ${type}${tag}`
   // MY_EXTENSION_ID = 'utags-extension'
-  console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
+  console.log('initExtensionId', MY_EXTENSION_ID, MY_EXTENSION_NAME)
 }
 
 /**
@@ -363,7 +363,7 @@ async function initExtensionId(): Promise<void> {
  */
 export function destroySyncAdapter(): void {
   MY_EXTENSION_ID = undefined
-  window.removeEventListener("message", messageHandler)
+  window.removeEventListener('message', messageHandler)
 }
 
 export async function initSyncAdapter(): Promise<void> {
@@ -371,7 +371,7 @@ export async function initSyncAdapter(): Promise<void> {
 
   await initExtensionId()
   // Listen for messages from the web app
-  window.addEventListener("message", messageHandler)
+  window.addEventListener('message', messageHandler)
 
   console.log(`${SCRIPT_NAME} initialized.`)
 }

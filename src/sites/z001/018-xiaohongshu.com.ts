@@ -1,21 +1,21 @@
-import { $, $$, hasClass } from "browser-extension-utils"
-import styleText from "data-text:./018-xiaohongshu.com.scss"
+import { $, $$, hasClass } from 'browser-extension-utils'
+import styleText from 'data-text:./018-xiaohongshu.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.xiaohongshu.com/"
+  const prefix = 'https://www.xiaohongshu.com/'
 
   function getCanonicalUrl(url: string) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       // https://www.xiaohongshu.com/search_result?keyword=abcd&type=54&source=web_note_detail_r10
-      if (href2.startsWith("search_result") && href2.includes("keyword")) {
+      if (href2.startsWith('search_result') && href2.includes('keyword')) {
         return (
           prefix +
-          "search_result/?" +
-          href2.replace(/.*?(keyword=[^&]*).*/, "$1") +
-          "&type=54"
+          'search_result/?' +
+          href2.replace(/.*?(keyword=[^&]*).*/, '$1') +
+          '&type=54'
         )
       }
     }
@@ -28,10 +28,10 @@ export default (() => {
       const href2 = url.slice(28)
       if (exact) {
         if (/^user\/profile\/\w+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+          return prefix + href2.replace(/^(user\/profile\/\w+).*/, '$1')
         }
       } else if (/^user\/profile\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(user\/profile\/\w+).*/, '$1')
       }
     }
 
@@ -43,20 +43,20 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(28)
       if (/^explore\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(explore\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(explore\/\w+).*/, '$1')
       }
 
       if (/^user\/profile\/\w+\/\w+/.test(href2)) {
         return (
           prefix +
-          "explore/" +
-          href2.replace(/^user\/profile\/\w+\/(\w+).*/, "$1")
+          'explore/' +
+          href2.replace(/^user\/profile\/\w+\/(\w+).*/, '$1')
         )
       }
 
       if (/^search_result\/\w+/.test(href2)) {
         return (
-          prefix + "explore/" + href2.replace(/^search_result\/(\w+).*/, "$1")
+          prefix + 'explore/' + href2.replace(/^search_result\/(\w+).*/, '$1')
         )
       }
     }
@@ -67,16 +67,16 @@ export default (() => {
   return {
     matches: /www\.xiaohongshu\.com/,
     listNodesSelectors: [
-      ".feeds-container section",
+      '.feeds-container section',
       // replies
-      ".comment-item",
+      '.comment-item',
     ],
     conditionNodesSelectors: [
       // author
-      ".feeds-container section .author-wrapper .author",
-      ".feeds-container section .cover",
+      '.feeds-container section .author-wrapper .author',
+      '.feeds-container section .cover',
       // replies
-      ".comment-item .author-wrapper .author a",
+      '.comment-item .author-wrapper .author a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -88,7 +88,7 @@ export default (() => {
       let key = getUserProfileUrl(href, true)
       if (key) {
         const titleElement =
-          (hasClass(element, "name") ? element : $(".name", element)) || element
+          (hasClass(element, 'name') ? element : $('.name', element)) || element
         let title: string | undefined
         if (titleElement) {
           title = titleElement.textContent!.trim()
@@ -98,21 +98,21 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
 
       key = getPostUrl(href)
       if (key) {
-        const meta = { type: "post" }
+        const meta = { type: 'post' }
 
-        if (hasClass(element, "cover")) {
+        if (hasClass(element, 'cover')) {
           const sibling = element.nextElementSibling as HTMLElement
-          if (sibling && hasClass(sibling, "footer")) {
-            const titleElement = $(".title span", sibling)
+          if (sibling && hasClass(sibling, 'footer')) {
+            const titleElement = $('.title span', sibling)
             if (titleElement) {
               const title = titleElement.textContent!.trim()
               if (title) {
@@ -121,7 +121,7 @@ export default (() => {
             }
 
             // 没有标题的笔记
-            element.dataset.utags = element.dataset.utags || ""
+            element.dataset.utags = element.dataset.utags || ''
           }
         }
 
@@ -133,22 +133,22 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".side-bar",
-      ".dropdown-nav",
-      ".dropdown-container",
-      ".interaction-info",
+      '.side-bar',
+      '.dropdown-nav',
+      '.dropdown-container',
+      '.interaction-info',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
-        const element = $(".user-info .user-name")
+        const element = $('.user-info .user-name')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
-            element.dataset.utags_node_type = "link"
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }
         }
@@ -157,11 +157,11 @@ export default (() => {
       key = getPostUrl(location.href)
       if (key) {
         // post title
-        const element = $(".note-content .title")
+        const element = $('.note-content .title')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "post" }
+            const meta = { title, type: 'post' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

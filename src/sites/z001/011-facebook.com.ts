@@ -1,21 +1,21 @@
-import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./011-facebook.com.scss"
+import { $, $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./011-facebook.com.scss'
 
-import { getFirstHeadElement, getUrlParameters } from "../../utils"
-import defaultSite from "../default"
+import { getFirstHeadElement, getUrlParameters } from '../../utils'
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = location.origin + "/"
+  const prefix = location.origin + '/'
 
   function getUserProfileUrl(href: string, exact = false) {
     if (href.startsWith(prefix)) {
       const href2 = href.slice(prefix.length).toLowerCase()
       // https://www.facebook.com/profile.php?id=123456789
-      if (href2.startsWith("profile.php")) {
-        const parameters = getUrlParameters(href, ["id", "sk"])
+      if (href2.startsWith('profile.php')) {
+        const parameters = getUrlParameters(href, ['id', 'sk'])
         if (parameters.id && !parameters.sk) {
           return (
-            "https://www.facebook.com/profile.php?id=" +
+            'https://www.facebook.com/profile.php?id=' +
             (parameters.id as string)
           )
         }
@@ -23,27 +23,27 @@ export default (() => {
       // https://www.facebook.com/123456789/ => https://www.facebook.com/profile.php?id=123456789
       else if (/^\d+\/?([?#].*)?$/.test(href2)) {
         return (
-          "https://www.facebook.com/profile.php?id=" +
-          href2.replace(/^(\d+).*/, "$1")
+          'https://www.facebook.com/profile.php?id=' +
+          href2.replace(/^(\d+).*/, '$1')
         )
       }
       // https://www.facebook.com/messages/t/123456789/ => https://www.facebook.com/profile.php?id=123456789
       else if (/^messages\/t\/\d+\/?([?#].*)?$/.test(href2)) {
         return (
-          "https://www.facebook.com/profile.php?id=" +
-          href2.replace(/^messages\/t\/(\d+).*/, "$1")
+          'https://www.facebook.com/profile.php?id=' +
+          href2.replace(/^messages\/t\/(\d+).*/, '$1')
         )
       }
       // https://www.facebook.com/friends/requests/?profile_id=123456789 => https://www.facebook.com/profile.php?id=123456789
       // https://www.facebook.com/friends/suggestions/?profile_id=123456789 => https://www.facebook.com/profile.php?id=123456789
       else if (
-        href2.startsWith("friends/requests/?profile_id=") ||
-        href2.startsWith("friends/suggestions/?profile_id=")
+        href2.startsWith('friends/requests/?profile_id=') ||
+        href2.startsWith('friends/suggestions/?profile_id=')
       ) {
-        const parameters = getUrlParameters(href, ["profile_id"])
+        const parameters = getUrlParameters(href, ['profile_id'])
         if (parameters.profile_id) {
           return (
-            "https://www.facebook.com/profile.php?id=" +
+            'https://www.facebook.com/profile.php?id=' +
             (parameters.profile_id as string)
           )
         }
@@ -56,7 +56,7 @@ export default (() => {
           href2
         )
       ) {
-        return "https://www.facebook.com/" + href2.replace(/(^[\w.]+).*/, "$1")
+        return 'https://www.facebook.com/' + href2.replace(/(^[\w.]+).*/, '$1')
       }
     }
 
@@ -69,9 +69,9 @@ export default (() => {
       const href = element.href
 
       if (
-        !href.startsWith("https://www.facebook.com/") &&
-        !href.startsWith("https://m.facebook.com/") &&
-        !href.startsWith("https://l.facebook.com/")
+        !href.startsWith('https://www.facebook.com/') &&
+        !href.startsWith('https://m.facebook.com/') &&
+        !href.startsWith('https://l.facebook.com/')
       ) {
         return true
       }
@@ -83,13 +83,13 @@ export default (() => {
           return false
         }
 
-        if ($("svg,img", element)) {
-          element.dataset.utags_flag = "username_with_avatar"
+        if ($('svg,img', element)) {
+          element.dataset.utags_flag = 'username_with_avatar'
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -109,7 +109,7 @@ export default (() => {
         const title = element.textContent!.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
-          const meta = { title, type: "user" }
+          const meta = { title, type: 'user' }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }

@@ -1,4 +1,4 @@
-import { getSettingsValue, initSettings } from "browser-extension-settings"
+import { getSettingsValue, initSettings } from 'browser-extension-settings'
 import {
   $,
   $$,
@@ -17,40 +17,40 @@ import {
   setStyle,
   throttle,
   uniq,
-} from "browser-extension-utils"
-import styleText from "data-text:./content.scss"
-import type { PlasmoCSConfig } from "plasmo"
+} from 'browser-extension-utils'
+import styleText from 'data-text:./content.scss'
+import type { PlasmoCSConfig } from 'plasmo'
 
-import createTag from "./components/tag"
-import { i } from "./messages"
-import { registerDebuggingHotkey } from "./modules/debugging"
-import { outputData } from "./modules/export-import"
+import createTag from './components/tag'
+import { i } from './messages'
+import { registerDebuggingHotkey } from './modules/debugging'
+import { outputData } from './modules/export-import'
 import {
   bindDocumentEvents,
   bindWindowEvents,
   hideAllUtagsInArea,
-} from "./modules/global-events"
-import { destroySyncAdapter, initSyncAdapter } from "./modules/sync-adapter"
+} from './modules/global-events'
+import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import {
   isAvailableOnCurrentSite,
   TAG_VISITED,
   onSettingsChange as visitedOnSettingsChange,
-} from "./modules/visited"
-import { setupWebappBridge } from "./modules/webapp-bridge"
-import { getConditionNodes, getListNodes, matchedNodes } from "./sites/index"
+} from './modules/visited'
+import { setupWebappBridge } from './modules/webapp-bridge'
+import { getConditionNodes, getListNodes, matchedNodes } from './sites/index'
 import {
   addTagsValueChangeListener,
   getCachedUrlMap,
   getTags,
   initBookmarksStore,
-} from "./storage/bookmarks"
-import { getEmojiTags } from "./storage/tags"
-import type { UserTag, UserTagMeta } from "./types"
+} from './storage/bookmarks'
+import { getEmojiTags } from './storage/tags'
+import type { UserTag, UserTagMeta } from './types'
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  run_at: "document_start",
-  matches: ["https://*/*", "http://*/*"],
+  run_at: 'document_start',
+  matches: ['https://*/*', 'http://*/*'],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   all_frames: false,
 }
@@ -59,61 +59,61 @@ let emojiTags: string[]
 const host = location.host
 
 const isEnabledByDefault = () => {
-  if (host.includes("www.bilibili.com")) {
+  if (host.includes('www.bilibili.com')) {
     return false
   }
 
   return true
 }
 
-const isTagManager = location.href.includes("utags.pipecraft.net/tags/")
+const isTagManager = location.href.includes('utags.pipecraft.net/tags/')
 
 let groupNumber = 1
 
 const settingsTable = {
   [`enableCurrentSite_${host}`]: {
-    title: i("settings.enableCurrentSite"),
+    title: i('settings.enableCurrentSite'),
     defaultValue: isEnabledByDefault(),
   },
 
   showHidedItems: {
-    title: i("settings.showHidedItems"),
+    title: i('settings.showHidedItems'),
     defaultValue: false,
     group: ++groupNumber,
   },
   noOpacityEffect: {
-    title: i("settings.noOpacityEffect"),
+    title: i('settings.noOpacityEffect'),
     defaultValue: false,
     group: groupNumber,
   },
 
   [`useVisitedFunction_${host}`]: {
-    title: i("settings.useVisitedFunction"),
+    title: i('settings.useVisitedFunction'),
     defaultValue: false,
     group: ++groupNumber,
   },
   [`displayEffectOfTheVisitedContent_${host}`]: {
-    title: i("settings.displayEffectOfTheVisitedContent"),
-    type: "select",
+    title: i('settings.displayEffectOfTheVisitedContent'),
+    type: 'select',
     // 默认值：中
-    defaultValue: "2",
+    defaultValue: '2',
     options: {
-      [i("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
-      [i("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
-      [i("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
-      [i("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
-      [i("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+      [i('settings.displayEffectOfTheVisitedContent.recordingonly')]: '0',
+      [i('settings.displayEffectOfTheVisitedContent.showtagonly')]: '1',
+      [i('settings.displayEffectOfTheVisitedContent.changecolor')]: '4',
+      [i('settings.displayEffectOfTheVisitedContent.translucent')]: '2',
+      [i('settings.displayEffectOfTheVisitedContent.hide')]: '3',
     },
     group: groupNumber,
   },
 
   pinnedTagsTitle: {
-    title: i("settings.pinnedTags"),
-    type: "action",
+    title: i('settings.pinnedTags'),
+    type: 'action',
     async onclick() {
       const input = $('textarea[data-key="pinnedTags"]') as HTMLInputElement
       if (input) {
-        input.scrollIntoView({ block: "start" })
+        input.scrollIntoView({ block: 'start' })
         input.selectionStart = input.value.length
         input.selectionEnd = input.value.length
         input.focus()
@@ -122,19 +122,19 @@ const settingsTable = {
     group: ++groupNumber,
   },
   pinnedTags: {
-    title: i("settings.pinnedTags"),
-    defaultValue: i("settings.pinnedTagsDefaultValue"),
-    placeholder: i("settings.pinnedTagsPlaceholder"),
-    type: "textarea",
+    title: i('settings.pinnedTags'),
+    defaultValue: i('settings.pinnedTagsDefaultValue'),
+    placeholder: i('settings.pinnedTagsPlaceholder'),
+    type: 'textarea',
     group: groupNumber,
   },
   emojiTagsTitle: {
-    title: i("settings.emojiTags"),
-    type: "action",
+    title: i('settings.emojiTags'),
+    type: 'action',
     async onclick() {
       const input = $('textarea[data-key="emojiTags"]') as HTMLInputElement
       if (input) {
-        input.scrollIntoView({ block: "start" })
+        input.scrollIntoView({ block: 'start' })
         input.selectionStart = input.value.length
         input.selectionEnd = input.value.length
         input.focus()
@@ -143,30 +143,30 @@ const settingsTable = {
     group: groupNumber,
   },
   emojiTags: {
-    title: i("settings.emojiTags"),
+    title: i('settings.emojiTags'),
     defaultValue:
-      "👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌",
-    placeholder: "👍, 👎",
-    type: "textarea",
+      '👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
+    placeholder: '👍, 👎',
+    type: 'textarea',
     group: groupNumber,
   },
 
   customStyle: {
-    title: i("settings.customStyle"),
+    title: i('settings.customStyle'),
     defaultValue: false,
     group: ++groupNumber,
   },
   customStyleValue: {
-    title: "Custom style value",
-    defaultValue: i("settings.customStyleDefaultValue"),
-    placeholder: i("settings.customStyleDefaultValue"),
-    type: "textarea",
+    title: 'Custom style value',
+    defaultValue: i('settings.customStyleDefaultValue'),
+    placeholder: i('settings.customStyleDefaultValue'),
+    type: 'textarea',
     group: groupNumber,
   },
   customStyleTip: {
-    title: i("settings.customStyleExamples"),
-    type: "tip",
-    tipContent: i("settings.customStyleExamplesContent"),
+    title: i('settings.customStyleExamples'),
+    type: 'tip',
+    tipContent: i('settings.customStyleExamplesContent'),
     group: groupNumber,
   },
 
@@ -176,84 +176,84 @@ const settingsTable = {
     group: ++groupNumber,
   },
   [`customStyleValue_${host}`]: {
-    title: "Custom style value",
-    defaultValue: "",
-    placeholder: i("settings.customStyleDefaultValue"),
-    type: "textarea",
+    title: 'Custom style value',
+    defaultValue: '',
+    placeholder: i('settings.customStyleDefaultValue'),
+    type: 'textarea',
     group: groupNumber,
   },
 
   useSimplePrompt: {
-    title: i("settings.useSimplePrompt"),
+    title: i('settings.useSimplePrompt'),
     defaultValue: false,
     group: ++groupNumber,
   },
 
   openTagsPage: {
-    title: i("settings.openTagsPage"),
-    type: "externalLink",
-    url: "https://utags.link/",
+    title: i('settings.openTagsPage'),
+    type: 'externalLink',
+    url: 'https://utags.link/',
     group: ++groupNumber,
   },
   openDataPage: {
-    title: i("settings.openDataPage"),
-    type: "externalLink",
-    url: "https://utags.link/",
+    title: i('settings.openDataPage'),
+    type: 'externalLink',
+    url: 'https://utags.link/',
     group: groupNumber,
   },
 }
 
 const addUtagsStyle = () => {
   const style = addStyle(styleText)
-  style.id = "utags_style"
+  style.id = 'utags_style'
 }
 
 function updateCustomStyle() {
   const customStyleValue =
-    (getSettingsValue("customStyleValue") as string) || ""
-  if (getSettingsValue("customStyle") && customStyleValue) {
-    if ($("#utags_custom_style")) {
-      $("#utags_custom_style")!.textContent = customStyleValue
+    (getSettingsValue('customStyleValue') as string) || ''
+  if (getSettingsValue('customStyle') && customStyleValue) {
+    if ($('#utags_custom_style')) {
+      $('#utags_custom_style')!.textContent = customStyleValue
     } else {
-      addElement("style", {
-        id: "utags_custom_style",
+      addElement('style', {
+        id: 'utags_custom_style',
         textContent: customStyleValue,
       })
-      if ($("#utags_custom_style_2")) {
-        $("#utags_custom_style_2")!.remove()
+      if ($('#utags_custom_style_2')) {
+        $('#utags_custom_style_2')!.remove()
       }
     }
-  } else if ($("#utags_custom_style")) {
-    $("#utags_custom_style")!.remove()
+  } else if ($('#utags_custom_style')) {
+    $('#utags_custom_style')!.remove()
   }
 
   const customStyleValue2 =
-    (getSettingsValue(`customStyleValue_${host}`) as string) || ""
+    (getSettingsValue(`customStyleValue_${host}`) as string) || ''
   if (getSettingsValue(`customStyle_${host}`) && customStyleValue2) {
-    if ($("#utags_custom_style_2")) {
-      $("#utags_custom_style_2")!.textContent = customStyleValue2
+    if ($('#utags_custom_style_2')) {
+      $('#utags_custom_style_2')!.textContent = customStyleValue2
     } else {
-      addElement("style", {
-        id: "utags_custom_style_2",
+      addElement('style', {
+        id: 'utags_custom_style_2',
         textContent: customStyleValue2,
       })
     }
-  } else if ($("#utags_custom_style_2")) {
-    $("#utags_custom_style_2")!.remove()
+  } else if ($('#utags_custom_style_2')) {
+    $('#utags_custom_style_2')!.remove()
   }
 }
 
 function onSettingsChange() {
-  if (getSettingsValue("showHidedItems")) {
-    addClass(doc.documentElement, "utags_no_hide")
+  if (getSettingsValue('showHidedItems')) {
+    addClass(doc.documentElement, 'utags_no_hide')
   } else {
-    removeClass(doc.documentElement, "utags_no_hide")
+    removeClass(doc.documentElement, 'utags_no_hide')
   }
 
-  if (getSettingsValue("noOpacityEffect")) {
-    addClass(doc.documentElement, "utags_no_opacity_effect")
+  if (getSettingsValue('noOpacityEffect')) {
+    addClass(doc.documentElement, 'utags_no_opacity_effect')
   } else {
-    removeClass(doc.documentElement, "utags_no_opacity_effect")
+    removeClass(doc.documentElement, 'utags_no_opacity_effect')
   }
 
   doc.documentElement.dataset.utags_displayEffectOfTheVisitedContent =
@@ -264,17 +264,17 @@ function onSettingsChange() {
     displayTagsThrottled()
     updateCustomStyle()
   } else {
-    doc.documentElement.dataset.utags = "off"
-    if ($("#utags_custom_style")) {
-      $("#utags_custom_style")!.remove()
+    doc.documentElement.dataset.utags = 'off'
+    if ($('#utags_custom_style')) {
+      $('#utags_custom_style')!.remove()
     }
 
-    if ($("#utags_custom_style_2")) {
-      $("#utags_custom_style_2")!.remove()
+    if ($('#utags_custom_style_2')) {
+      $('#utags_custom_style_2')!.remove()
     }
 
-    if ($("#utags_site_style")) {
-      $("#utags_site_style")!.remove()
+    if ($('#utags_site_style')) {
+      $('#utags_site_style')!.remove()
     }
   }
 }
@@ -293,10 +293,10 @@ function appendTagsToPage(
   meta: UserTagMeta | undefined
 ) {
   const utagsUl = element.nextSibling as HTMLElement
-  if (hasClass(utagsUl, "utags_ul")) {
+  if (hasClass(utagsUl, 'utags_ul')) {
     if (
-      element.dataset.utags === tags.join(",") &&
-      key === getAttribute(utagsUl, "data-utags_key")
+      element.dataset.utags === tags.join(',') &&
+      key === getAttribute(utagsUl, 'data-utags_key')
     ) {
       return
     }
@@ -306,26 +306,26 @@ function appendTagsToPage(
 
   // On some websites, using the `UL` tag will affect the selectors of the original website.
   // For example: https://www.zhipin.com/
-  const tagName = element.dataset.utags_ul_type === "ol" ? "ol" : "ul"
+  const tagName = element.dataset.utags_ul_type === 'ol' ? 'ol' : 'ul'
   const ul = createElement(tagName, {
-    class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
-    "data-utags_key": key,
+    class: tags.length === 0 ? 'utags_ul utags_ul_0' : 'utags_ul utags_ul_1',
+    'data-utags_key': key,
   })
-  let li = createElement("li")
+  let li = createElement('li')
 
-  const a = createElement("button", {
-    type: "button",
+  const a = createElement('button', {
+    type: 'button',
     // href: "",
     // tabindex: "0",
-    title: "Add tags",
-    "data-utags_tag": "🏷️",
-    "data-utags_key": key,
-    "data-utags_tags": tags.join(", "),
-    "data-utags_meta": meta ? JSON.stringify(meta) : "",
+    title: 'Add tags',
+    'data-utags_tag': '🏷️',
+    'data-utags_key': key,
+    'data-utags_tags': tags.join(', '),
+    'data-utags_meta': meta ? JSON.stringify(meta) : '',
     class:
       tags.length === 0
-        ? "utags_text_tag utags_captain_tag"
-        : "utags_text_tag utags_captain_tag2",
+        ? 'utags_text_tag utags_captain_tag'
+        : 'utags_text_tag utags_captain_tag2',
   })
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">
 <path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
@@ -338,7 +338,7 @@ function appendTagsToPage(
   ul.append(li)
 
   for (const tag of tags) {
-    li = createElement("li")
+    li = createElement('li')
     const a = createTag(tag, {
       isEmoji: emojiTags.includes(tag),
       noLink: isTagManager,
@@ -349,13 +349,13 @@ function appendTagsToPage(
   }
 
   element.after(ul)
-  element.dataset.utags = tags.join(",")
+  element.dataset.utags = tags.join(',')
   /* Fix v2ex polish start */
   // 为了防止阻塞渲染页面，延迟执行
   setTimeout(() => {
     const style = getComputedStyle(element)
     const zIndex = style.zIndex
-    if (zIndex && zIndex !== "auto") {
+    if (zIndex && zIndex !== 'auto') {
       setStyle(ul, { zIndex })
     }
   }, 200)
@@ -370,10 +370,10 @@ function appendTagsToPage(
  * Fix mp.weixin.qq.com issue, 有推荐阅读, 往期推荐内容时，utags_ul 和子元素的 class 都会被清空。https://github.com/utags/utags/issues/29
  */
 function cleanUnusedUtags() {
-  const utagsUlList = $$(".utags_ul,ul[data-utags_key],ol[data-utags_key]")
+  const utagsUlList = $$('.utags_ul,ul[data-utags_key],ol[data-utags_key]')
   for (const utagsUl of utagsUlList) {
     const element = utagsUl.previousSibling as HTMLElement
-    if (element && getAttribute(element, "data-utags") !== null) {
+    if (element && getAttribute(element, 'data-utags') !== null) {
       continue
     }
 
@@ -383,7 +383,7 @@ function cleanUnusedUtags() {
 
 async function displayTags() {
   if (start) {
-    console.error("start of displayTags", Date.now() - start)
+    console.error('start of displayTags', Date.now() - start)
   }
 
   emojiTags = await getEmojiTags()
@@ -392,17 +392,17 @@ async function displayTags() {
   const listNodes = getListNodes()
   for (const node of listNodes) {
     // Flag list nodes first
-    node.dataset.utags_list_node = ""
+    node.dataset.utags_list_node = ''
   }
 
   if (start) {
-    console.error("before matchedNodes", Date.now() - start)
+    console.error('before matchedNodes', Date.now() - start)
   }
 
   // Display tags for matched components on matched pages
   const nodes = matchedNodes()
   if (start) {
-    console.error("after matchedNodes", Date.now() - start, nodes.length)
+    console.error('after matchedNodes', Date.now() - start, nodes.length)
   }
 
   await getCachedUrlMap()
@@ -421,7 +421,7 @@ async function displayTags() {
     const object = getTags(key)
 
     const tags: string[] = (object.tags || []).slice()
-    if (node.dataset.utags_visited === "1") {
+    if (node.dataset.utags_visited === '1') {
       tags.push(TAG_VISITED)
     }
 
@@ -433,26 +433,26 @@ async function displayTags() {
   }
 
   if (start) {
-    console.error("after appendTagsToPage", Date.now() - start)
+    console.error('after appendTagsToPage', Date.now() - start)
   }
 
   const conditionNodes = getConditionNodes()
   for (const node of conditionNodes) {
-    if (getAttribute(node, "data-utags") !== null) {
+    if (getAttribute(node, 'data-utags') !== null) {
       // Flag condition nodes
-      node.dataset.utags_condition_node = ""
+      node.dataset.utags_condition_node = ''
     }
   }
 
   for (const node of listNodes) {
-    const conditionNodes = $$("[data-utags_condition_node]", node)
+    const conditionNodes = $$('[data-utags_condition_node]', node)
     const tagsArray: string[] = []
     for (const node2 of conditionNodes) {
       if (!node2.dataset.utags) {
         continue
       }
 
-      if (node2.closest("[data-utags_list_node]") !== node) {
+      if (node2.closest('[data-utags_list_node]') !== node) {
         // Nested list node
         continue
       }
@@ -461,17 +461,17 @@ async function displayTags() {
     }
 
     if (tagsArray.length === 1) {
-      node.dataset.utags_list_node = "," + tagsArray[0] + ","
+      node.dataset.utags_list_node = ',' + tagsArray[0] + ','
     } else if (tagsArray.length > 1) {
       node.dataset.utags_list_node =
-        "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
+        ',' + uniq(tagsArray.join(',').split(',')).join(',') + ','
     }
   }
 
   cleanUnusedUtags()
 
   if (start) {
-    console.error("end of displayTags", Date.now() - start)
+    console.error('end of displayTags', Date.now() - start)
   }
 }
 
@@ -512,8 +512,8 @@ function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
     const node = nodeList[i]
     if (
       validNodeNames[node.nodeName] &&
-      !hasClass(node as HTMLElement, "utags_ul") &&
-      !hasClass(node as HTMLElement, "utags_modal")
+      !hasClass(node as HTMLElement, 'utags_ul') &&
+      !hasClass(node as HTMLElement, 'utags_modal')
     ) {
       return true
     }
@@ -530,7 +530,7 @@ function getOutermostOffsetParent(
     !(element1 instanceof HTMLElement) ||
     !(element2 instanceof HTMLElement)
   ) {
-    throw new TypeError("Both arguments must be valid HTMLElements.")
+    throw new TypeError('Both arguments must be valid HTMLElements.')
   }
 
   const offsetParent1 = element1.offsetParent as HTMLElement
@@ -585,7 +585,7 @@ function getMaxOffsetLeft(
 
 function updateTagPosition(element: HTMLElement) {
   const utags = element.nextElementSibling as HTMLElement
-  if (!utags || !hasClass(utags, "utags_ul")) {
+  if (!utags || !hasClass(utags, 'utags_ul')) {
     return
   }
 
@@ -594,7 +594,7 @@ function updateTagPosition(element: HTMLElement) {
   }
 
   const style = getComputedStyle(utags)
-  if (style.position !== "absolute") {
+  if (style.position !== 'absolute') {
     return
   }
 
@@ -605,10 +605,10 @@ function updateTagPosition(element: HTMLElement) {
       element
   }
 
-  element.dataset.utags_fit_content = "1"
+  element.dataset.utags_fit_content = '1'
 
   // 22 is the size of captain tag
-  const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
+  const utagsSizeFix = hasClass(utags, 'utags_ul_0') ? 22 : 0
 
   const offsetParent =
     element.offsetParent === utags.offsetParent
@@ -659,67 +659,67 @@ function updateTagPosition(element: HTMLElement) {
 
   switch (objectPosition) {
     // left-center
-    case "-100% 50%": {
+    case '-100% 50%': {
       utags.style.left =
-        Math.max(offset.left - utags.clientWidth - utagsSizeFix, 0) + "px"
+        Math.max(offset.left - utags.clientWidth - utagsSizeFix, 0) + 'px'
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
           utags.clientHeight -
           utagsSizeFix) /
           2 +
-        "px"
+        'px'
       break
     }
 
     // left-top
-    case "0% -100%": {
-      utags.style.left = offset.left + "px"
-      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
+    case '0% -100%': {
+      utags.style.left = offset.left + 'px'
+      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + 'px'
       break
     }
 
     // left-top
-    case "0% 0%": {
-      utags.style.left = offset.left + "px"
-      utags.style.top = offset.top + "px"
+    case '0% 0%': {
+      utags.style.left = offset.left + 'px'
+      utags.style.top = offset.top + 'px'
       break
     }
 
     // left-bottom
-    case "0% 100%": {
-      utags.style.left = offset.left + "px"
+    case '0% 100%': {
+      utags.style.left = offset.left + 'px'
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
         utags.clientHeight -
         utagsSizeFix +
-        "px"
+        'px'
       break
     }
 
     // left-bottom, out of element box
-    case "0% 200%": {
-      utags.style.left = offset.left + "px"
+    case '0% 200%': {
+      utags.style.left = offset.left + 'px'
       utags.style.top =
-        offset.top + (element.clientHeight || element.offsetHeight) + "px"
+        offset.top + (element.clientHeight || element.offsetHeight) + 'px'
       break
     }
 
     // right-top
-    case "100% -100%": {
+    case '100% -100%': {
       utags.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
         utagsSizeFix +
-        "px"
-      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
+        'px'
+      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + 'px'
       break
     }
 
     // right-top
-    case "100% 0%": {
+    case '100% 0%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
@@ -732,13 +732,13 @@ function updateTagPosition(element: HTMLElement) {
         Math.min(
           offset.left + offsetLeft,
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
-      utags.style.top = offset.top + "px"
+        ) + 'px'
+      utags.style.top = offset.top + 'px'
       break
     }
 
     // right-center
-    case "100% 50%": {
+    case '100% 50%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
@@ -751,19 +751,19 @@ function updateTagPosition(element: HTMLElement) {
         Math.min(
           offset.left + offsetLeft,
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
+        ) + 'px'
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
           utags.clientHeight -
           utagsSizeFix) /
           2 +
-        "px"
+        'px'
       break
     }
 
     // right-bottom
-    case "100% 100%": {
+    case '100% 100%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
@@ -776,70 +776,70 @@ function updateTagPosition(element: HTMLElement) {
         Math.min(
           offset.left + offsetLeft,
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
+        ) + 'px'
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
         utags.clientHeight -
         utagsSizeFix +
-        "px"
+        'px'
       break
     }
 
     // right-bottom, out of element box
-    case "100% 200%": {
+    case '100% 200%': {
       utags.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
         utags.clientWidth -
         utagsSizeFix +
-        "px"
+        'px'
       utags.style.top =
-        offset.top + (element.clientHeight || element.offsetHeight) + "px"
+        offset.top + (element.clientHeight || element.offsetHeight) + 'px'
       break
     }
 
     // right-top, out of element box
-    case "200% 0%": {
+    case '200% 0%': {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
-      utags.style.top = offset.top + "px"
+        ) + 'px'
+      utags.style.top = offset.top + 'px'
       break
     }
 
     // right-center, out of element box
-    case "200% 50%": {
+    case '200% 50%': {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
+        ) + 'px'
       utags.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
           utags.clientHeight -
           utagsSizeFix) /
           2 +
-        "px"
+        'px'
       break
     }
 
     // right-bottom, out of element box
-    case "200% 100%": {
+    case '200% 100%': {
       utags.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
           getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
-        ) + "px"
+        ) + 'px'
       utags.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
         utags.clientHeight -
         utagsSizeFix +
-        "px"
+        'px'
       break
     }
 
@@ -848,20 +848,20 @@ function updateTagPosition(element: HTMLElement) {
     }
   }
 
-  element.dataset.utags_fit_content = "0"
+  element.dataset.utags_fit_content = '0'
 }
 
 async function main() {
   addUtagsStyle()
 
   await initSettings({
-    id: "utags",
-    title: i("settings.title"),
+    id: 'utags',
+    title: i('settings.title'),
     footer: `
-    <p>${i("settings.information")}</p>
+    <p>${i('settings.information')}</p>
     <p>
     <a href="https://github.com/utags/utags/issues" target="_blank">
-    ${i("settings.report")}
+    ${i('settings.report')}
     </a></p>
     <p>Made with ❤️ by
     <a href="https://www.pipecraft.net/" target="_blank">
@@ -876,8 +876,8 @@ async function main() {
       let item = $(`[data-key="useVisitedFunction_${host}"]`, settingsMainView)
 
       if (!isAvailableOnCurrentSite() && item) {
-        item.style.display = "none"
-        item.parentElement!.style.display = "none"
+        item.style.display = 'none'
+        item.parentElement!.style.display = 'none'
       }
 
       item = $(
@@ -886,21 +886,21 @@ async function main() {
       )
       if (item) {
         item.style.display = getSettingsValue(`useVisitedFunction_${host}`)
-          ? "flex"
-          : "none"
+          ? 'flex'
+          : 'none'
       }
 
       item = $(`[data-key="customStyleValue"]`, settingsMainView)
       if (item) {
         // FIXME: data-key should on the parent element of textarea
         item.parentElement!.style.display = getSettingsValue(`customStyle`)
-          ? "block"
-          : "none"
+          ? 'block'
+          : 'none'
       }
 
       item = $(`.bes_tip`, settingsMainView)
       if (item) {
-        item.style.display = getSettingsValue(`customStyle`) ? "block" : "none"
+        item.style.display = getSettingsValue(`customStyle`) ? 'block' : 'none'
       }
 
       item = $(`[data-key="customStyleValue_${host}"]`, settingsMainView)
@@ -909,8 +909,8 @@ async function main() {
         item.parentElement!.style.display = getSettingsValue(
           `customStyle_${host}`
         )
-          ? "block"
-          : "none"
+          ? 'block'
+          : 'none'
       }
     },
   })
@@ -930,7 +930,7 @@ async function main() {
 
   await displayTags()
 
-  addEventListener(doc, "visibilitychange", async () => {
+  addEventListener(doc, 'visibilitychange', async () => {
     if (!doc.hidden) {
       await displayTags()
     }
@@ -960,11 +960,11 @@ async function main() {
       displayTagsThrottled()
     }
 
-    if ($("#vimiumHintMarkerContainer")) {
-      addClass(doc.body, "utags_show_all")
-      addClass(doc.documentElement, "utags_vimium_hint")
-    } else if (hasClass(doc.documentElement, "utags_vimium_hint")) {
-      removeClass(doc.documentElement, "utags_vimium_hint")
+    if ($('#vimiumHintMarkerContainer')) {
+      addClass(doc.body, 'utags_show_all')
+      addClass(doc.documentElement, 'utags_vimium_hint')
+    } else if (hasClass(doc.documentElement, 'utags_vimium_hint')) {
+      removeClass(doc.documentElement, 'utags_vimium_hint')
       hideAllUtagsInArea()
     }
   })
@@ -974,11 +974,11 @@ async function main() {
   })
 
   // To fix issues on reddit, add mouseover event
-  addEventListener(doc, "mouseover", (event: Event) => {
+  addEventListener(doc, 'mouseover', (event: Event) => {
     const target = event.target as HTMLElement
     if (
       target &&
-      (target.tagName === "A" || target.dataset.utags !== undefined)
+      (target.tagName === 'A' || target.dataset.utags !== undefined)
     ) {
       displayTagsThrottled()
     }

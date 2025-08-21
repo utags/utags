@@ -1,20 +1,20 @@
-import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./014-tiktok.com.scss"
+import { $, $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./014-tiktok.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.tiktok.com/"
+  const prefix = 'https://www.tiktok.com/'
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(23)
       if (exact) {
         if (/^@[\w.-]+([?#].*)?$/.test(href2)) {
-          return prefix + href2.replace(/(^@[\w.-]+).*/, "$1")
+          return prefix + href2.replace(/(^@[\w.-]+).*/, '$1')
         }
       } else if (/^@[\w.-]+/.test(href2)) {
-        return prefix + href2.replace(/(^@[\w.-]+).*/, "$1")
+        return prefix + href2.replace(/(^@[\w.-]+).*/, '$1')
       }
     }
 
@@ -24,9 +24,9 @@ export default (() => {
   return {
     matches: /tiktok\.com/,
     listNodesSelectors: [
-      ".css-ulyotp-DivCommentContentContainer",
-      ".css-1gstnae-DivCommentItemWrapper",
-      ".css-x6y88p-DivItemContainerV2",
+      '.css-ulyotp-DivCommentContentContainer',
+      '.css-1gstnae-DivCommentItemWrapper',
+      '.css-x6y88p-DivItemContainerV2',
     ],
     conditionNodesSelectors: [
       '.css-ulyotp-DivCommentContentContainer a[href^="/@"]',
@@ -50,7 +50,7 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
         // element.dataset.utags = element.dataset.utags || ""
@@ -62,7 +62,7 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".avatar-anchor",
+      '.avatar-anchor',
       '[data-e2e*="avatar"]',
       '[data-e2e="user-card-nickname"]',
     ],
@@ -77,7 +77,7 @@ export default (() => {
         const title = element.textContent!.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
-          const meta = { title, type: "user" }
+          const meta = { title, type: 'user' }
           element.utags = { key, meta }
           matchedNodesSet.add(element)
         }

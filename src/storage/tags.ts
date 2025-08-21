@@ -1,22 +1,22 @@
-import { getSettingsValue } from "browser-extension-settings"
+import { getSettingsValue } from 'browser-extension-settings'
 import {
   addValueChangeListener,
   getValue,
   setValue,
-} from "browser-extension-storage"
-import { splitTags } from "utags-utils"
+} from 'browser-extension-storage'
+import { splitTags } from 'utags-utils'
 
-import type { RecentTag } from "../types.js"
+import type { RecentTag } from '../types.js'
 
 /**
  * Storage keys for different tag collections
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
+const STORAGE_KEY_RECENT_TAGS = 'extension.utags.recenttags'
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
+const STORAGE_KEY_MOST_USED_TAGS = 'extension.utags.mostusedtags'
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
+const STORAGE_KEY_RECENT_ADDED_TAGS = 'extension.utags.recentaddedtags'
 
 /**
  * Calculates a weighted score based on current timestamp
@@ -170,7 +170,7 @@ export async function getRecentAddedTags(): Promise<string[]> {
  * @returns Array of pinned tag strings
  */
 export async function getPinnedTags(): Promise<string[]> {
-  return splitTags((getSettingsValue("pinnedTags") as string) || "")
+  return splitTags((getSettingsValue('pinnedTags') as string) || '')
 }
 
 /**
@@ -178,5 +178,5 @@ export async function getPinnedTags(): Promise<string[]> {
  * @returns Array of emoji tag strings
  */
 export async function getEmojiTags(): Promise<string[]> {
-  return splitTags((getSettingsValue("emojiTags") as string) || "")
+  return splitTags((getSettingsValue('emojiTags') as string) || '')
 }

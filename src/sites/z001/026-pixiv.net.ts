@@ -1,22 +1,22 @@
-import { $ } from "browser-extension-utils"
-import styleText from "data-text:./026-pixiv.net.scss"
+import { $ } from 'browser-extension-utils'
+import styleText from 'data-text:./026-pixiv.net.scss'
 
 export default (() => {
-  const prefix = "https://www.pixiv.net/"
+  const prefix = 'https://www.pixiv.net/'
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       let href2 = url.slice(22)
-      if (href2.startsWith("en/")) {
+      if (href2.startsWith('en/')) {
         href2 = href2.slice(3)
       }
 
       if (exact) {
         if (/^users\/\d+([?#].*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(users\/\d+).*/, "$1")
+          return prefix + href2.replace(/^(users\/\d+).*/, '$1')
         }
       } else if (/^users\/\d+/.test(href2)) {
-        return prefix + href2.replace(/^(users\/\d+).*/, "$1")
+        return prefix + href2.replace(/^(users\/\d+).*/, '$1')
       }
     }
 
@@ -28,7 +28,7 @@ export default (() => {
     validate(element: HTMLAnchorElement) {
       const href = element.href
 
-      if (!href.includes("www.pixiv.net")) {
+      if (!href.includes('www.pixiv.net')) {
         return true
       }
 
@@ -44,10 +44,10 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "user", title }
+        const meta = { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
 
         return true
       }
@@ -65,11 +65,11 @@ export default (() => {
       const key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
-        const element = $("h1")
+        const element = $('h1')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
