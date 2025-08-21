@@ -1,5 +1,5 @@
 import { $, $$, getAttribute } from "browser-extension-utils"
-import styleText from "data-text:./001-pornhub.com.scss"
+import styleText from "data-text:./001-pxxnhub.com.scss"
 
 import defaultSite from "../default"
 
