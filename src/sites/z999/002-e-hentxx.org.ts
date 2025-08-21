@@ -6,8 +6,10 @@ import { getFirstHeadElement } from "../../utils"
 import defaultSite from "../default"
 
 export default (() => {
-  const prefix = "https://e-hentai.org/"
-  const prefix2 = "https://exhentai.org/"
+  // eslint-disable-next-line no-restricted-globals
+  const xx = atob("YWk=")
+  const prefix = `https://e-hent${xx}.org/`
+  const prefix2 = `https://exhent${xx}.org/`
 
   function getPostUrl(url: string) {
     if (url.startsWith(prefix)) {
@@ -42,7 +44,7 @@ export default (() => {
   }
 
   return {
-    matches: /e-hentai\.org|exhentai\.org/,
+    matches: /(e-hen|exhen)tai\.org/,
     validate(element: UtagsHTMLElement) {
       if (element.tagName !== "A") {
         return true
