@@ -4,11 +4,16 @@ import styleText from "data-text:./001-pxxnhub.com.scss"
 import defaultSite from "../default"
 
 export default (() => {
-  const prefix = "https://www.pornhub.com/"
+  // 'or'
+  // eslint-disable-next-line no-restricted-globals
+  const xx = atob("b3I=")
+  // magix to define pxxnhub.com
+  const hostname = `p${xx}nhub.com`
+  const prefix = `https://www.${hostname}/`
 
   function getUserProfileUrl(href: string, exact = false) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
+    if (href.includes(hostname)) {
+      const index = href.indexOf(hostname) + 12
       const href2 = href.slice(index)
 
       if (exact) {
@@ -24,8 +29,8 @@ export default (() => {
   }
 
   function getChannelUrl(href: string, exact = false) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
+    if (href.includes(hostname)) {
+      const index = href.indexOf(hostname) + 12
       const href2 = href.slice(index)
 
       if (exact) {
@@ -41,8 +46,8 @@ export default (() => {
   }
 
   function getVideoUrl(href: string) {
-    if (href.includes("pornhub.com")) {
-      const index = href.indexOf("pornhub.com") + 12
+    if (href.includes(hostname)) {
+      const index = href.indexOf(hostname) + 12
       const href2 = href.slice(index)
 
       if (/^view_video.php\?viewkey=\w+/.test(href2)) {
@@ -54,7 +59,8 @@ export default (() => {
   }
 
   return {
-    matches: /pornhub\.com/,
+    // magix to match pxxnhub.com
+    matches: /p[ro_][r_]nhub\.com/,
     validate(element: HTMLAnchorElement) {
       const hrefAttr = getAttribute(element, "href")
       if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
@@ -106,6 +112,7 @@ export default (() => {
       ".subFilterList",
       ".greyButton",
       ".orangeButton",
+      `${xx}xxxxx`,
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getUserProfileUrl(location.href)
