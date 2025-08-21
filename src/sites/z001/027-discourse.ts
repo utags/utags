@@ -232,6 +232,7 @@ export default (() => {
     excludeSelectors: [
       ".topic-map",
       ".names .second",
+      ".names .user-group",
       ".post-activity",
       ".topic-last-activity",
       ".topic-item-stats .activity",
