@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## uTags v0.19 Release Notes
+
+- Optimize data sync logic, solve data inconsistency problem
+- Update dmm.co.jp site support
+
 ## uTags v0.18 Release Notes
 
 ### 🌐 New Website Support

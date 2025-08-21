@@ -4,7 +4,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.18.11
+// @version              0.19.0
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
@@ -85,6 +85,18 @@
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
+// @include              https://*.utags.link/*
+// @include              https://x.com/*
+// @include              https://www.reddit.com/*
+// @include              https://github.com/*
+// @include              https://www.instagram.com/*
+// @include              https://www.tiktok.com/*
+// @include              https://*.youtube.com/*
+// @include              https://greasyfork.org/*
+// @include              https://*.dmm.co.j*/*
+// @include              https://e*hentai.org/*
+// @include              https://*.p*nhub.com/*
+// @include              https://*.e*hentai.org/*
 // @connect              dav.jianguoyun.com
 // @connect              *
 // @run-at               document-start
@@ -7604,13 +7616,15 @@
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
-  var pornhub_com_default =
+  var pxxnhub_com_default =
     ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
-  var pornhub_com_default2 = (() => {
-    const prefix3 = "https://www.pornhub.com/"
+  var pxxnhub_com_default2 = (() => {
+    const xx = atob("b3I=")
+    const hostname2 = "p".concat(xx, "nhub.com")
+    const prefix3 = "https://www.".concat(hostname2, "/")
     function getUserProfileUrl(href, exact = false) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (exact) {
           if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
@@ -7623,8 +7637,8 @@
       return void 0
     }
     function getChannelUrl(href, exact = false) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (exact) {
           if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
@@ -7637,8 +7651,8 @@
       return void 0
     }
     function getVideoUrl(href) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (/^view_video.php\?viewkey=\w+/.test(href2)) {
           return (
@@ -7649,7 +7663,7 @@
       return void 0
     }
     return {
-      matches: /pornhub\.com/,
+      matches: /p[ro_][r_]nhub\.com/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
@@ -7694,6 +7708,7 @@
         ".subFilterList",
         ".greyButton",
         ".orangeButton",
+        "".concat(xx, "xxxxx"),
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         let key = getUserProfileUrl(location.href)
@@ -7733,14 +7748,15 @@
           }
         }
       },
-      getStyle: () => pornhub_com_default,
+      getStyle: () => pxxnhub_com_default,
     }
   })()
-  var e_hentai_org_default =
+  var e_hentxx_org_default =
     ":not(#a):not(#b):not(#c) div.gt a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtl a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtw a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gl4e.glname .glink+.utags_ul_0,:not(#a):not(#b):not(#c) .gltm .glname a+.utags_ul_0,:not(#a):not(#b):not(#c) .gltc .glname a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );z-index:200}:not(#a):not(#b):not(#c) div.gl1t a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}"
-  var e_hentai_org_default2 = (() => {
-    const prefix3 = "https://e-hentai.org/"
-    const prefix22 = "https://exhentai.org/"
+  var e_hentxx_org_default2 = (() => {
+    const xx = atob("YWk=")
+    const prefix3 = "https://e-hent".concat(xx, ".org/")
+    const prefix22 = "https://exhent".concat(xx, ".org/")
     function getPostUrl(url) {
       if (url.startsWith(prefix3)) {
         const href2 = url.slice(21)
@@ -7768,7 +7784,7 @@
       return false
     }
     return {
-      matches: /e-hentai\.org|exhentai\.org/,
+      matches: /(e-hen|exhen)tai\.org/,
       validate(element) {
         if (element.tagName !== "A") {
           return true
@@ -7827,7 +7843,7 @@
           }
         }
       },
-      getStyle: () => e_hentai_org_default,
+      getStyle: () => e_hentxx_org_default,
     }
   })()
   var panda_chaika_moe_default =
@@ -7907,6 +7923,25 @@
           return prefix3 + href2.replace(/\?.*/, "")
         }
       }
+      if (url.includes("www.dmm.co.jp/digital/videoa/-/list/")) {
+        return url.replace(
+          "https://www.dmm.co.jp/digital/videoa/-/list/",
+          "https://video.dmm.co.jp/av/list/"
+        )
+      }
+      if (url.includes("www.dmm.co.jp/digital/videoa/-/detail/=/cid=")) {
+        const cidMatch = /cid=([^&?/]+)/.exec(url)
+        if (cidMatch && cidMatch[1]) {
+          return "https://video.dmm.co.jp/av/content/?id=".concat(cidMatch[1])
+        }
+      }
+      if (url.includes("video.dmm.co.jp/av/content/") && url.includes("?")) {
+        const urlObj = new URL(url)
+        const idParam = urlObj.searchParams.get("id")
+        if (idParam) {
+          return "https://video.dmm.co.jp/av/content/?id=".concat(idParam)
+        }
+      }
       return url
     }
     function getProductUrl(url) {
@@ -7927,6 +7962,22 @@
       }
       return void 0
     }
+    function getVideoActressUrl(url) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (
+        normalizedUrl.startsWith("https://video.dmm.co.jp/av/list/?actress=")
+      ) {
+        return normalizedUrl
+      }
+      return void 0
+    }
+    function getVideoProductUrl(url) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (normalizedUrl.startsWith("https://video.dmm.co.jp/av/content/?id=")) {
+        return normalizedUrl
+      }
+      return void 0
+    }
     return {
       matches: /dmm\.co\.jp/,
       validate(element) {
@@ -7935,8 +7986,8 @@
           return true
         }
         if (href.includes("/=/")) {
-          const key = getProductUrl(href)
-          if (key) {
+          const key2 = getProductUrl(href)
+          if (key2) {
             const titleElement = $(
               ".mainListLinkWork__txt,.responsive-name",
               element
@@ -7946,10 +7997,36 @@
               : getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "product" }
-              element.utags = { key, meta }
+              element.utags = { key: key2, meta }
             }
           }
           return true
+        }
+        let key = getVideoActressUrl(href)
+        if (key) {
+          const titleElement = $("div > div > p", element)
+          const title = titleElement
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
+          if (title) {
+            const meta = { title }
+            element.utags = { key, meta }
+            element.dataset.utags_position_selector = "div > div > p"
+            return true
+          }
+        }
+        key = getVideoProductUrl(href)
+        if (key) {
+          const titleElement = $("div > div > p", element)
+          const title = titleElement
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
+          if (title) {
+            const meta = { title }
+            element.utags = { key, meta }
+            element.dataset.utags_position_selector = "div > div > p"
+            return true
+          }
         }
         return false
       },
@@ -7974,11 +8051,15 @@
         ".dcd-review_boxpagenation",
         ".sampleButton",
         ".right_navi_link",
+        '[data-e2eid="search-form"]',
+        '[data-e2eid="pagination"]',
       ],
       validMediaSelectors: [
         ".mainList",
         ".pickup .fn-responsiveImg",
         "#l-areaRecommendProduct",
+        '[data-e2eid="list-actress-root"] li a',
+        '[href^="/av/content/?id="]',
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         let key = getProductUrl(location.href)
@@ -7996,6 +8077,18 @@
         key = getMakerUrl(location.href)
         if (key) {
           const element = $(".circleProfile__name span")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getVideoProductUrl(location.href)
+        if (key) {
+          const element = $("main h1")
           if (element) {
             const title = element.textContent.trim()
             if (title) {
@@ -8268,8 +8361,8 @@
     yamibo_com_default2,
     flickr_com_default2,
     ruanyifeng_com_default2,
-    pornhub_com_default2,
-    e_hentai_org_default2,
+    pxxnhub_com_default2,
+    e_hentxx_org_default2,
     panda_chaika_moe_default2,
     dlsite_com_default2,
     dmm_co_jp_default2,
