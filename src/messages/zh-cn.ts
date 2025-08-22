@@ -57,7 +57,7 @@ body {
   --utags-text-tag-background-color: orange;
 }
 
-data-utags_list_node*=",bar,"] {
+[data-utags_list_node*=",bar,"] {
   /* 列表中含有 'bar' 标签的条目的背景色 */
   background-color: aqua;
 }

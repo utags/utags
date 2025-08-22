@@ -1,10 +1,10 @@
-# UTags – добавление пользовательских меток к ссылкам
+# UTags – добавление пользовательских тегов к ссылкам
 
-Добавляйте **пользовательские метки** или **заметки** к таким ссылкам, как пользователи, сообщения и видео. Например, метки можно добавлять к пользователям или сообщениям на форуме, что облегчает их идентификацию или блокировку их сообщений и ответов. Работает на X («Твиттер»), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv и множестве других сайтов.
+Добавляйте **пользовательские теги** или **заметки** к таким ссылкам, как пользователи, сообщения и видео. Например, теги можно добавлять к пользователям или сообщениям на форуме, что облегчает их идентификацию или блокировку их сообщений и ответов. Работает на X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv и множестве других сайтов.
 
-**UTags** = **пользовательские метки**. **Пользовательский скрипт**: **пользовательский стиль** позволяют пользователям настраивать функциональность и стиль сайта, **пользовательские метки** – настраивать метки (ярлыки) для сайта.
+**UTags** = **пользовательские теги**. **Пользовательские скрипты** и **пользовательские стили** позволяют пользователям настраивать функциональность и внешний вид сайта, **пользовательские теги** – настраивать теги (ярлыки) для сайта.
 
-For now it works on
+В настоящее время поддерживаются следующие сайты:
 
 - V2EX ([www.v2ex.com](https://www.v2ex.com/))
 - Greasy Fork ([greasyfork.org](https://greasyfork.org/) и [sleazyfork.org](https://sleazyfork.org/))
@@ -50,6 +50,7 @@ For now it works on
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
 - Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- uTools Community ([yuanliao.info](https://yuanliao.info/))
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
@@ -59,9 +60,13 @@ For now it works on
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
-- И многие другие. Нажмите [здесь](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), чтобы добавить больше сайтов.
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- И многие другие. Нажмите [здесь](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), чтобы предложить добавление новых сайтов.
 
-Кроме того, из-за правил публикации Greasy Fork следующим сайтам нужно вручную добавить правило `user matches` в настройки скрипта.
+Кроме того, из-за правил публикации Greasy Fork для следующих сайтов необходимо вручную добавить правило `user matches` в настройки скрипта:
 
 - PornHub ([pornhub.com](https://www.pornhub.com/))
 - e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
@@ -69,16 +74,16 @@ For now it works on
 
 ![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
-## Применение
+## Использование
 
-- Наведите курсор на название публикации или имя пользователя, и рядом появится значок метки 🏷️, нажмите на него, чтобы добавить метки
+- Наведите курсор на название публикации или имя пользователя, и рядом появится значок тега 🏷️, нажмите на него, чтобы добавить теги
 
-- Несколько меток разделяются запятыми
+- Несколько тегов разделяются запятыми
 
-- Метки можно добавлять к заголовкам публикаций, именам пользователей и категориям
+- Теги можно добавлять к заголовкам публикаций, именам пользователей и категориям
   ![скриншоты](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
 
-- Некоторые специальные метки имеют особые эффекты, такие как «игнор», «кликбейт», «реклама», «блок», «скрыто» и т.д.
+- Некоторые специальные теги имеют особые эффекты, такие как «ignore», «clickbait», «promotion», «block», «hide» и т.д.
   ![скриншоты](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
 ## Скриншоты
@@ -115,13 +120,13 @@ For now it works on
 
 ## Особенности
 
-- Вы можете напрямую добавлять метки к просматриваемой странице, и страница не будет перезагружаться, когда вы сохраните метку
-- Метки можно добавлять к заголовкам публикаций, именам пользователей и категориям
-- Поддерживает расширение Vimium, нажмите клавишу f по значку метки для появления маркера-подсказки, вы сможете быстро добавлять метки
-- На странице [списка меток](https://utags.pipecraft.net/tags/) вы можете увидеть отмеченных пользователей и публикации, отсортированные по порядку обновления
-- Поддерживает [экспорт и импорт данных](https://utags.pipecraft.net/data/)
-- Автоматическая отметка просмотренных публикаций. Вы можете отображать просмотренный контент полупрозрачно или скрывать его. Эту функцию нужно вручную включить на странице настроек. По умолчанию она отключена. В настоящее время она применима только к сайту `linux.do`.
-- Совместимость со следующими менеджерами пользовательских скриптов
+- Вы можете напрямую добавлять теги к просматриваемой странице, и страница не будет перезагружаться при сохранении тега
+- Теги можно добавлять к заголовкам публикаций, именам пользователей и категориям
+- Поддерживает расширение Vimium: нажмите клавишу f на значке тега для появления маркера-подсказки, что позволяет быстро добавлять теги
+- На странице [списка тегов](https://utags.link/) вы можете просмотреть отмеченных пользователей и публикации, отсортированные по времени обновления
+- Поддерживает [экспорт и импорт данных](https://utags.link/)
+- Автоматическая отметка просмотренных публикаций. Вы можете отображать просмотренный контент полупрозрачно или скрывать его. Эту функцию необходимо вручную включить на странице настроек. По умолчанию она отключена. В настоящее время применима только к сайтам `linux.do` и `v2ex.com`
+- Совместимость со следующими менеджерами пользовательских скриптов:
   - Tampermonkey (рекомендуется)
   - Violentmonkey
   - Greasemonkey
@@ -133,181 +138,195 @@ For now it works on
 
 ## Журнал обновлений
 
+- 0.18.x
+  - Добавлена поддержка сайта Flickr
+  - Добавлена поддержка сайта Ruanyifeng
+  - Добавлена поддержка сайта Twitch
+  - Добавлена поддержка сайта Yamibo
+  - Поддержка специальных тегов на vxna и planet сайта v2ex.com
+  - Поддержка тегирования файлов и папок GitHub
+  - Отображение тегов рядом с заголовками GitHub issues
+- 0.17.1
+  - Поддержка синхронизации данных через GitHub и WebDAV
+- 0.16.0
+  - Реализовано мягкое удаление закладок
+- 0.15.0
+  - Интеграция с новым веб-приложением ([https://utags.link](https://utags.link))
 - 0.12.11
-  - Remove the limit on the number of settable emoji tags
+  - Убрано ограничение на количество устанавливаемых emoji-тегов
 - 0.12.10
-  - On BOSS Zhipin, you can mark companies and job positions and leave remarks. For instance, adding tags like "block" or "hide" allows you to hide uninterested companies and job positions.
-  - Make UTags support the website www.zhipin.com
+  - На BOSS Zhipin можно отмечать компании и вакансии, оставлять заметки. Например, добавление тегов "block" или "hide" позволяет скрывать неинтересные компании и вакансии
+  - Добавлена поддержка сайта www.zhipin.com
 - 0.12.9
-  - Make UTags support the website www.zhipin.com
+  - Добавлена поддержка сайта www.zhipin.com
 - 0.12.5
-  - Enhance the mobile experience of Discourse
-  - Make UTags support the website kater.me and bbs.viva-la-vita.org
+  - Улучшен мобильный интерфейс Discourse
+  - Добавлена поддержка сайтов kater.me и bbs.viva-la-vita.org
 - 0.12.4
-  - Make UTags support the website www.inoreader.com
+  - Добавлена поддержка сайта www.inoreader.com
 - 0.12.3
-  - Make UTags support the website www.nodeseek.com
+  - Добавлена поддержка сайта www.nodeseek.com
 - 0.12.2
-  - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
+  - Добавлена поддержка сайтов на базе flarum, включая discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
 - 0.12.1
-  - Make UTags support the website bbs.tampermonkey.net.cn
-  - Add the official installation URLs for userscripts as well as the URLs of extension stores.
-  - Enable browsing content tagging on V2EX
-  - Display the enable button on websites that support browsing content tagging
+  - Добавлена поддержка сайта bbs.tampermonkey.net.cn
+  - Добавлены официальные URL для установки пользовательских скриптов и URL магазинов расширений
+  - Включена возможность тегирования просматриваемого контента на V2EX
+  - Отображается кнопка включения на сайтах, поддерживающих тегирование просматриваемого контента
 - 0.12.0
-  - Enable applying custom style
+  - Включена возможность применения пользовательских стилей
 - 0.11.1
-  - Add an option for change the title color for the browsed content
+  - Добавлена опция изменения цвета заголовка для просмотренного контента
 - 0.11.0
-  - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
-  - Display the "Settings" button in the tag input interface
+  - Автоматическая отметка просмотренных публикаций. Можно отображать просмотренный контент полупрозрачно или скрывать его. Эта функция должна быть вручную включена на странице настроек. По умолчанию отключена. В настоящее время применима только к сайту `linux.do`
+  - Отображается кнопка "Настройки" в интерфейсе ввода тегов
 - 0.10.7
-  - Enhance add tags on X (Twitter). Filtering tweet and comments with special tags.
+  - Улучшено добавление тегов в X (Twitter). Фильтрация твитов и комментариев с помощью специальных тегов
 - 0.10.6
-  - Apply utags to community.wanikani.com
+  - Добавлена поддержка community.wanikani.com
 - 0.10.4
-  - Apply utags to rule34video.com, rule34gen.com
+  - Добавлена поддержка rule34video.com, rule34gen.com
 - 0.10.3
-  - Enable add tags to communities, posts and users on Reddit. Filtering posts and comments with special tags.
-  - Enable add tags to videos and users on TikTok. Filtering videos and replies with special tags.
+  - Включена возможность добавления тегов к сообществам, публикациям и пользователям на Reddit. Фильтрация публикаций и комментариев с помощью специальных тегов
+  - Включена возможность добавления тегов к видео и пользователям на TikTok. Фильтрация видео и ответов с помощью специальных тегов
 - 0.10.1
-  - Enable add tags to notes and users on RedNote(xiaohongshu). Filtering notes and replies with special tags.
-  - Improve performance
+  - Включена возможность добавления тегов к заметкам и пользователям на RedNote(xiaohongshu). Фильтрация заметок и ответов с помощью специальных тегов
+  - Улучшена производительность
 - 0.9.11
-  - Enable add tags to posts, categories and tags on linux.do and other discourse sites. Filtering posts and replies with special tags.
+  - Включена возможность добавления тегов к публикациям, категориям и тегам на linux.do и других сайтах discourse. Фильтрация публикаций и ответов с помощью специальных тегов
 - 0.9.10
-  - Apply utags to dlsite.com
-  - Apply utags to dmm.co.jp
-  - Apply utags to kemono.su
-  - Apply utags to coomer.su
-  - Apply utags to keylol.com
+  - Добавлена поддержка dlsite.com
+  - Добавлена поддержка dmm.co.jp
+  - Добавлена поддержка kemono.su
+  - Добавлена поддержка coomer.su
+  - Добавлена поддержка keylol.com
 - 0.9.9
-  - Apply utags to www.pixiv.net
-  - Apply utags to linux.do
-  - Apply utags to meta.appinn.net
-  - Apply utags to NGA
+  - Добавлена поддержка www.pixiv.net
+  - Добавлена поддержка linux.do
+  - Добавлена поддержка meta.appinn.net
+  - Добавлена поддержка NGA
 - 0.9.8
   - twitter.com -> x.com
-  - fix github.com, threads.net, e-hentai.org issues
+  - Исправлены проблемы с github.com, threads.net, e-hentai.org
 - 0.9.5
-  - Add emoji tags 👍
-  - Increase the size of the list of candidate tags
-  - Enable the select/find feature on the tag management page
-  - Use CSS custom properties to define the width of the text tag border
+  - Добавлены emoji-теги 👍
+  - Увеличен размер списка кандидатов тегов
+  - Включена функция выбора/поиска на странице управления тегами
+  - Использование CSS custom properties для определения ширины границы текстового тега
 - 0.9.4
-  - Update selectors for GitHub, now can add tags to issues, pulls and discussions
-  - Define utags font-size and icon size with CSS custom properties
+  - Обновлены селекторы для GitHub, теперь можно добавлять теги к issues, pull requests и обсуждениям
+  - Определение размера шрифта utags и размера иконок с помощью CSS custom properties
 - 0.9.3
-  - Update selectors and style
-  - Apply utags to douban.com
-  - Apply utags to myanimelist.net
-  - Change the injection moment to 'document_start'
+  - Обновлены селекторы и стили
+  - Добавлена поддержка douban.com
+  - Добавлена поддержка myanimelist.net
+  - Изменен момент внедрения на 'document_start'
 - 0.9.1
-  - Add the copy button in the prompt UI
+  - Добавлена кнопка копирования в интерфейсе подсказок
 - 0.9.0
-  - Use advanced tag input prompt UI
-  - Define utags ul styles with css custom properties
+  - Использование расширенного интерфейса ввода тегов
+  - Определение стилей utags ul с помощью css custom properties
 - 0.8.10
-  - Apply utags to rebang.today
+  - Добавлена поддержка rebang.today
 - 0.8.9
-  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
+  - Обновлены стили и правила сопоставления для bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com
 - 0.8.8
-  - Apply utags to podcasts.google.com
-  - Apply utags to douyin.com
-  - Apply utags to sspai.com
+  - Добавлена поддержка podcasts.google.com
+  - Добавлена поддержка douyin.com
+  - Добавлена поддержка sspai.com
 - 0.8.7
-  - Apply utags to weibo.com, weibo.cn
-  - Apply utags to pornhub.com
+  - Добавлена поддержка weibo.com, weibo.cn
+  - Добавлена поддержка pornhub.com
 - 0.8.6
-  - Apply utags to xiaohongshu.com
+  - Добавлена поддержка xiaohongshu.com
 - 0.8.5
-  - Apply utags to zhihu.com
+  - Добавлена поддержка zhihu.com
 - 0.8.4
-  - Fix a bug on YouTube, compare keys when reusing utags elements
-  - Update youtube selectors and style
+  - Исправлена ошибка на YouTube, сравнение ключей при повторном использовании элементов utags
+  - Обновлены селекторы и стили youtube
 - 0.8.0
-  - Implement multi-language support, currently supports English and Chinese
+  - Реализована поддержка нескольких языков, в настоящее время поддерживаются английский и китайский
 - 0.7.7
-  - Update instagram.com, threads.net
-  - Improve performance, update tags when document is not hidden
+  - Обновлены instagram.com, threads.net
+  - Улучшена производительность, обновление тегов когда документ не скрыт
 - 0.7.6
-  - use svg element instead of background-image with data: url to fix CSP issue
-  - (v2ex): handle cited replies generated by ve2x.rep userscript
+  - Использование svg элемента вместо background-image с data: url для исправления проблемы CSP
+  - (v2ex): обработка цитируемых ответов, созданных пользовательским скриптом ve2x.rep
 - 0.7.5
-  - Handle default site rules for chrome extension and firefox addon
-  - Add option to enable/disable utags on current site
-  - Update bilibili, github selectors
+  - Обработка правил сайтов по умолчанию для расширения chrome и дополнения firefox
+  - Добавлена опция включения/отключения utags на текущем сайте
+  - Обновлены селекторы bilibili, github
 - 0.7.3
-  - Update bilibili selectors
-  - Update merging logic
+  - Обновлены селекторы bilibili
+  - Обновлена логика слияния
 - 0.7.2
-  - Apply utags to 52pojie.cn
-  - Apply utags to juejin.cn
+  - Добавлена поддержка 52pojie.cn
+  - Добавлена поддержка juejin.cn
 - 0.7.1
-  - Apply utags to tiktok.com
-  - Apply utags to bilibili.com
-  - Apply utags to youtube.com
-  - Apply utags to facebook.com
+  - Добавлена поддержка tiktok.com
+  - Добавлена поддержка bilibili.com
+  - Добавлена поддержка youtube.com
+  - Добавлена поддержка facebook.com
 - 0.7.0
-  - Apply utags to threads.net
-  - Apply utags to instagram.com
-  - Apply utags to mp.weixin.qq.com
+  - Добавлена поддержка threads.net
+  - Добавлена поддержка instagram.com
+  - Добавлена поддержка mp.weixin.qq.com
 - 0.6.7
-  - Apply utags to twitter.com
+  - Добавлена поддержка twitter.com
 - 0.6.6
-  - \[github\] Match username in issues, PRs and commits
-  - Prevent utags elements from being remade when the tags have not changed
+  - [github] Сопоставление имени пользователя в issues, PR и коммитах
+  - Предотвращение пересоздания элементов utags когда теги не изменились
 - 0.6.5
-  - Apply utags to reddit.com
+  - Добавлена поддержка reddit.com
 - 0.6.4
-  - Apply utags to github.com
+  - Добавлена поддержка github.com
 - 0.6.3
-  - Apply utags to lobste.rs
-  - Move focus on utags elements through the TAB key
-  - Show utags with vimium hint marker on Firefox
+  - Добавлена поддержка lobste.rs
+  - Перемещение фокуса на элементы utags с помощью клавиши TAB
+  - Отображение utags с маркером подсказки vimium в Firefox
 - 0.6.0
-  - Apply utags to hacker news (news.ycombinator.com)
+  - Добавлена поддержка hacker news (news.ycombinator.com)
 - 0.5.2
-  - Improve performance
-  - Prevent tag content from being copied together when copying HTML text
+  - Улучшена производительность
+  - Предотвращение копирования содержимого тегов вместе при копировании HTML-текста
 - 0.5.1
-  - \[V2EX\] 调整主题页主题标签的显示位置
-  - \[V2EX\] 允许给回复添加标签
+  - [V2EX] Настройка позиции отображения тегов темы на странице темы
+  - [V2EX] Разрешение добавления тегов к ответам
 - 0.5.0
-  - Apply utags to greasyfork.org and sleazyfork.org
-  - \[V2EX\] 允许给所有外部链接添加标签
+  - Добавлена поддержка greasyfork.org и sleazyfork.org
+  - [V2EX] Разрешение добавления тегов ко всем внешним ссылкам
 - 0.4.5
-  - Cancel the delay effect of showing the tag button when clicking on the blank area
-  - When the same area is clicked continuously, hide the tag button
+  - Отмена эффекта задержки показа кнопки тега при клике на пустую область
+  - При непрерывном клике на одну и ту же область скрытие кнопки тега
 - 0.4.1
-  - Update tag icons and styles
+  - Обновлены иконки и стили тегов
 - 0.4.0
-  - Support mobile devices
+  - Поддержка мобильных устройств
 - 0.3.1
-  - Improve accessibility, fix v2ex 超级增强 issues
+  - Улучшена доступность, исправлены проблемы с v2ex 超级增强
 - 0.3.0
-  - 修复楼中楼回复模式时，隐藏或半透明效果影响整个楼的问题
+  - Исправлена проблема влияния эффекта скрытия или полупрозрачности на весь блок в режиме вложенных ответов
 - 0.2.1
-  - Add links to tags page and data import/export page in settings
+  - Добавлены ссылки на страницу тегов и страницу импорта/экспорта данных в настройках
 - 0.2.0
-  - Enable setting whether to show hidden items and whether to disable opacity effects
+  - Включена настройка отображения скрытых элементов и отключения эффектов прозрачности
 - 0.1.10
-  - Compatible with script managers such as Violentmonkey, Greasemonkey(Firefox), Userscripts(Safari)
+  - Совместимость с менеджерами скриптов, такими как Violentmonkey, Greasemonkey(Firefox), Userscripts(Safari)
 - 0.1.5
-  - Add more special tags, such as 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
-  - Update www.v2ex.com matching rules to support more pages
+  - Добавлено больше специальных тегов, таких как clickbait, promotion, boring, ignore, read, hide, hidden, no more display, hot, favorite, follow, read later
+  - Обновлены правила сопоставления www.v2ex.com для поддержки большего количества страниц
 - 0.1.4
-  - Enable add tags to node links of www.v2ex.com
+  - Включена возможность добавления тегов к ссылкам узлов www.v2ex.com
 - 0.1.2
-  - Solve the issue that the Firefox browser does not support the special functions of tags such as 'sb' and 'block'
+  - Решена проблема, когда браузер Firefox не поддерживает специальные функции тегов, таких как 'sb' и 'block'
 - 0.1.0
-  - Refactor code based on [Plasmo](https://www.plasmo.com/). Browser extensions are also available.
+  - Рефакторинг кода на основе [Plasmo](https://www.plasmo.com/). Также доступны расширения браузера
 - 0.0.2
-  - Various domain names of www.v2ex.com are supported
-  - Added [data import/export page](https://utags.pipecraft.net/data/)
+  - Поддерживаются различные доменные имена www.v2ex.com
+  - Добавлена [страница импорта/экспорта данных](https://utags.pipecraft.net/data/)
 - 0.0.1
-  - Support [www.v2ex.com](https://www.v2ex.com/) site, add or display tags on member or post links
-  - Added [list page](https://utags.pipecraft.net/tags/) with tagged links
+  - Поддержка сайта [www.v2ex.com](https://www.v2ex.com/), добавление или отображение тегов на ссылках участников или публикаций
+  - Добавлена [страница списка](https://utags.pipecraft.net/tags/) с помеченными ссылками
 
 ## Лицензия
 
@@ -315,4 +334,5 @@ For now it works on
 
 ## >\_
 
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

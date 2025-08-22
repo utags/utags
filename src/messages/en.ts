@@ -57,7 +57,7 @@ body {
   --utags-text-tag-background-color: orange;
 }
 
-data-utags_list_node*=",bar,"] {
+[data-utags_list_node*=",bar,"] {
   /* The background color of the entries
   in the list that contain the 'bar' tag */
   background-color: aqua;
