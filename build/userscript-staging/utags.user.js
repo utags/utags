@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name                 🏷️ UTags - Add usertags to links - staging
 // @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签 - staging
+// @name:ru              🏷️ UTags - Добавление пользовательских тегов к ссылкам - staging
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.0
+// @version              0.19.1
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
+// @description:ru       Это очень полезный инструмент для добавления пользовательских тегов и заметок к ссылкам пользователей, публикаций и видео. Например, можно добавлять теги к пользователям или публикациям на форуме, что облегчает их идентификацию или блокировку их сообщений и ответов. Поддерживает V2EX, X, Reddit, Greasy Fork, GitHub, Bilibili, Douyin, Xiaohongshu, Zhihu, Juejin, Douban, 52pojie, pixiv, LINUX DO, APPINN, NGA, BOSS Zhipin и многие другие сайты.
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
@@ -1299,7 +1301,7 @@
       "/* Custom style */\nbody {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: red;\n  /* Tag background color */\n  --utags-text-tag-background-color: red;\n}\n\n/* The tag style for the tag with the label 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: orange;\n  /* Tag background color */\n  --utags-text-tag-background-color: orange;\n}",
     "settings.customStyleExamples": "Examples",
     "settings.customStyleExamplesContent":
-      '<p>Custom style examples</p>\n  <p>\n  <pre>/* Custom style */\nbody {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: red;\n  /* Tag background color */\n  --utags-text-tag-background-color: red;\n}\n\n/* The tag style for the tag with the label \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: orange;\n  /* Tag background color */\n  --utags-text-tag-background-color: orange;\n}\n\ndata-utags_list_node*=",bar,"] {\n  /* The background color of the entries\n  in the list that contain the \'bar\' tag */\n  background-color: aqua;\n}\n\nbody {\n  /* The title color of viewed posts */\n  --utags-visited-title-color: red;\n}\n\n/* Dark mode */\n[data-utags_darkmode="1"] body {\n  /* The title color of viewed posts */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">More examples</a></p>\n  ',
+      '<p>Custom style examples</p>\n  <p>\n  <pre>/* Custom style */\nbody {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: red;\n  /* Tag background color */\n  --utags-text-tag-background-color: red;\n}\n\n/* The tag style for the tag with the label \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Tag text color */\n  --utags-text-tag-color: white;\n  /* Tag border color */\n  --utags-text-tag-border-color: orange;\n  /* Tag background color */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* The background color of the entries\n  in the list that contain the \'bar\' tag */\n  background-color: aqua;\n}\n\nbody {\n  /* The title color of viewed posts */\n  --utags-visited-title-color: red;\n}\n\n/* Dark mode */\n[data-utags_darkmode="1"] body {\n  /* The title color of viewed posts */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">More examples</a></p>\n  ',
     "settings.useSimplePrompt": "Use simple prompt method to add tags",
     "settings.openTagsPage": "Open the tag list page",
     "settings.openDataPage": "Open the import data/export data page",
@@ -1320,6 +1322,72 @@
   }
   var en_default2 = messages3
   var messages4 = {
+    "settings.enableCurrentSite":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C UTags \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0441\u0430\u0439\u0442\u0435",
+    "settings.showHidedItems":
+      "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0441\u043A\u0440\u044B\u0442\u044B\u0435 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B (\u0441 \u0442\u0435\u0433\u0430\u043C\u0438 \xABblock\xBB, \xABhide\xBB)",
+    "settings.noOpacityEffect":
+      "\u0423\u0431\u0440\u0430\u0442\u044C \u044D\u0444\u0444\u0435\u043A\u0442 \u043F\u043E\u043B\u0443\u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u0438 (\u0441 \u0442\u0435\u0433\u0430\u043C\u0438 \xABignore\xBB, \xABclickbait\xBB, \xABpromotion\xBB)",
+    "settings.useVisitedFunction":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0444\u0443\u043D\u043A\u0446\u0438\u044E \u043E\u0442\u043C\u0435\u0442\u043A\u0438 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u043D\u043E\u0433\u043E \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0430 \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0441\u0430\u0439\u0442\u0435",
+    "settings.displayEffectOfTheVisitedContent":
+      "\u042D\u0444\u0444\u0435\u043A\u0442 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u043D\u043E\u0433\u043E \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0430",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "\u0422\u043E\u043B\u044C\u043A\u043E \u0441\u043E\u0445\u0440\u0430\u043D\u044F\u0442\u044C \u0437\u0430\u043F\u0438\u0441\u0438, \u043D\u0435 \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043E\u0442\u043C\u0435\u0442\u043A\u0438",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "\u0422\u043E\u043B\u044C\u043A\u043E \u043F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u043E\u0442\u043C\u0435\u0442\u043A\u0438",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0446\u0432\u0435\u0442 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u0430",
+    "settings.displayEffectOfTheVisitedContent.translucent":
+      "\u041F\u043E\u043B\u0443\u043F\u0440\u043E\u0437\u0440\u0430\u0447\u043D\u043E\u0441\u0442\u044C",
+    "settings.displayEffectOfTheVisitedContent.hide":
+      "\u0421\u043A\u0440\u044B\u0442\u044C",
+    "settings.pinnedTags":
+      "\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u0442\u0435\u0433\u0438 \u0434\u043B\u044F \u0437\u0430\u043A\u0440\u0435\u043F\u043B\u0435\u043D\u0438\u044F, \u0440\u0430\u0437\u0434\u0435\u043B\u044F\u044F \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438",
+    "settings.pinnedTagsDefaultValue":
+      "block, hide, ignore, clickbait, promotion",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "\u0414\u043E\u0431\u0430\u0432\u044C\u0442\u0435 \u044D\u043C\u043E\u0434\u0437\u0438-\u0442\u0435\u0433\u0438, \u0440\u0430\u0437\u0434\u0435\u043B\u044F\u044F \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438",
+    "settings.customStyle":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0441\u0442\u0438\u043B\u0438 \u0434\u043B\u044F \u0432\u0441\u0435\u0445 \u0441\u0430\u0439\u0442\u043E\u0432",
+    "settings.customStyleCurrentSite":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0441\u0442\u0438\u043B\u0438 \u0434\u043B\u044F \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u0441\u0430\u0439\u0442\u0430",
+    "settings.customStyleDefaultValue":
+      '/* \u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0441\u0442\u0438\u043B\u0438 */\nbody {\n  /* \u0426\u0432\u0435\u0442 \u0442\u0435\u043A\u0441\u0442\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-color: white;\n  /* \u0426\u0432\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u044B \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-border-color: red;\n  /* \u0426\u0432\u0435\u0442 \u0444\u043E\u043D\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u0421\u0442\u0438\u043B\u044C \u0434\u043B\u044F \u0442\u0435\u0433\u0430 \u0441 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C \xABTEST\xBB */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u0426\u0432\u0435\u0442 \u0442\u0435\u043A\u0441\u0442\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-color: white;\n  /* \u0426\u0432\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u044B \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-border-color: orange;\n  /* \u0426\u0432\u0435\u0442 \u0444\u043E\u043D\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-background-color: orange;\n}',
+    "settings.customStyleExamples":
+      "\u041F\u0440\u0438\u043C\u0435\u0440\u044B",
+    "settings.customStyleExamplesContent":
+      '<p>\u041F\u0440\u0438\u043C\u0435\u0440\u044B \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0441\u0442\u0438\u043B\u0435\u0439</p>\n  <p>\n  <pre>/* \u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0441\u0442\u0438\u043B\u0438 */\nbody {\n  /* \u0426\u0432\u0435\u0442 \u0442\u0435\u043A\u0441\u0442\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-color: white;\n  /* \u0426\u0432\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u044B \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-border-color: red;\n  /* \u0426\u0432\u0435\u0442 \u0444\u043E\u043D\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u0421\u0442\u0438\u043B\u044C \u0434\u043B\u044F \u0442\u0435\u0433\u0430 \u0441 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435\u043C \xABTEST\xBB */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u0426\u0432\u0435\u0442 \u0442\u0435\u043A\u0441\u0442\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-color: white;\n  /* \u0426\u0432\u0435\u0442 \u0433\u0440\u0430\u043D\u0438\u0446\u044B \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-border-color: orange;\n  /* \u0426\u0432\u0435\u0442 \u0444\u043E\u043D\u0430 \u0442\u0435\u0433\u0430 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \u0426\u0432\u0435\u0442 \u0444\u043E\u043D\u0430 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u043E\u0432 \u0441\u043F\u0438\u0441\u043A\u0430,\n  \u0441\u043E\u0434\u0435\u0440\u0436\u0430\u0449\u0438\u0445 \u0442\u0435\u0433 \xABbar\xBB */\n  background-color: aqua;\n}\n\nbody {\n  /* \u0426\u0432\u0435\u0442 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u043E\u0432 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u0438\u0441\u0435\u0439 */\n  --utags-visited-title-color: red;\n}\n\n/* \u0422\u0451\u043C\u043D\u0430\u044F \u0442\u0435\u043C\u0430 */\n[data-utags_darkmode="1"] body {\n  /* \u0426\u0432\u0435\u0442 \u0437\u0430\u0433\u043E\u043B\u043E\u0432\u043A\u043E\u0432 \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0435\u043D\u043D\u044B\u0445 \u0437\u0430\u043F\u0438\u0441\u0435\u0439 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u0411\u043E\u043B\u044C\u0448\u0435 \u043F\u0440\u0438\u043C\u0435\u0440\u043E\u0432</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u043F\u0440\u043E\u0441\u0442\u043E\u0439 \u0441\u043F\u043E\u0441\u043E\u0431 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u0442\u0435\u0433\u043E\u0432",
+    "settings.openTagsPage":
+      "\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u043F\u0438\u0441\u043E\u043A \u0442\u0435\u0433\u043E\u0432",
+    "settings.openDataPage":
+      "\u042D\u043A\u0441\u043F\u043E\u0440\u0442/\u0438\u043C\u043F\u043E\u0440\u0442 \u0434\u0430\u043D\u043D\u044B\u0445",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags \u2013 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0442\u0435\u0433\u043E\u0432 \u043A \u0441\u0441\u044B\u043B\u043A\u0430\u043C",
+    "settings.information":
+      "\u041F\u043E\u0441\u043B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A \u043F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0434\u043B\u044F \u043F\u0440\u0438\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439",
+    "settings.report":
+      "\u0421\u043E\u043E\u0431\u0449\u0438\u0442\u044C \u043E \u043F\u0440\u043E\u0431\u043B\u0435\u043C\u0435...",
+    "prompt.addTags":
+      "[UTags] \u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u0442\u0435\u0433\u0438, \u0440\u0430\u0437\u0434\u0435\u043B\u044F\u044F \u0438\u0445 \u0437\u0430\u043F\u044F\u0442\u044B\u043C\u0438",
+    "prompt.pinnedTags":
+      "\u0417\u0430\u043A\u0440\u0435\u043F\u043B\u0451\u043D\u043D\u044B\u0435",
+    "prompt.mostUsedTags":
+      "\u0427\u0430\u0441\u0442\u043E \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C\u044B\u0435",
+    "prompt.recentAddedTags":
+      "\u041D\u0435\u0434\u0430\u0432\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435",
+    "prompt.emojiTags": "\u042D\u043C\u043E\u0434\u0437\u0438",
+    "prompt.copy":
+      "\u041A\u043E\u043F\u0438\u0440\u043E\u0432\u0430\u0442\u044C",
+    "prompt.cancel": "\u041E\u0442\u043C\u0435\u043D\u0430",
+    "prompt.ok": "\u041E\u041A",
+    "prompt.settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
+  }
+  var ru_default = messages4
+  var messages5 = {
     "settings.enableCurrentSite":
       "\u5728\u5F53\u524D\u7F51\u7AD9\u542F\u7528\u5C0F\u9C7C\u6807\u7B7E",
     "settings.showHidedItems":
@@ -1354,7 +1422,7 @@
       "/* \u81EA\u5B9A\u4E49\u6837\u5F0F */\nbody {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6807\u7B7E\u4E3A 'TEST' \u7684\u6807\u7B7E\u6837\u5F0F */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: orange;\n}",
     "settings.customStyleExamples": "\u793A\u4F8B",
     "settings.customStyleExamplesContent":
-      '<p>\u81EA\u5B9A\u4E49\u6837\u5F0F\u793A\u4F8B</p>\n  <p>\n  <pre>/* \u81EA\u5B9A\u4E49\u6837\u5F0F */\nbody {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6807\u7B7E\u4E3A \'TEST\' \u7684\u6807\u7B7E\u6837\u5F0F */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: orange;\n}\n\ndata-utags_list_node*=",bar,"] {\n  /* \u5217\u8868\u4E2D\u542B\u6709 \'bar\' \u6807\u7B7E\u7684\u6761\u76EE\u7684\u80CC\u666F\u8272 */\n  background-color: aqua;\n}\n\nbody {\n  /* \u6D4F\u89C8\u8FC7\u7684\u5E16\u5B50\u7684\u6807\u9898\u989C\u8272 */\n  --utags-visited-title-color: red;\n}\n\n/* \u6DF1\u8272\u6A21\u5F0F */\n[data-utags_darkmode="1"] body {\n  /* \u6D4F\u89C8\u8FC7\u7684\u5E16\u5B50\u7684\u6807\u9898\u989C\u8272 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u66F4\u591A\u793A\u4F8B</a></p>\n  ',
+      '<p>\u81EA\u5B9A\u4E49\u6837\u5F0F\u793A\u4F8B</p>\n  <p>\n  <pre>/* \u81EA\u5B9A\u4E49\u6837\u5F0F */\nbody {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6807\u7B7E\u4E3A \'TEST\' \u7684\u6807\u7B7E\u6837\u5F0F */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u6807\u7B7E\u6587\u5B57\u989C\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6807\u7B7E\u8FB9\u6846\u989C\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6807\u7B7E\u80CC\u666F\u989C\u8272 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \u5217\u8868\u4E2D\u542B\u6709 \'bar\' \u6807\u7B7E\u7684\u6761\u76EE\u7684\u80CC\u666F\u8272 */\n  background-color: aqua;\n}\n\nbody {\n  /* \u6D4F\u89C8\u8FC7\u7684\u5E16\u5B50\u7684\u6807\u9898\u989C\u8272 */\n  --utags-visited-title-color: red;\n}\n\n/* \u6DF1\u8272\u6A21\u5F0F */\n[data-utags_darkmode="1"] body {\n  /* \u6D4F\u89C8\u8FC7\u7684\u5E16\u5B50\u7684\u6807\u9898\u989C\u8272 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u66F4\u591A\u793A\u4F8B</a></p>\n  ',
     "settings.useSimplePrompt":
       "\u4F7F\u7528\u7B80\u5355\u65B9\u5F0F\u6DFB\u52A0\u6807\u7B7E",
     "settings.openTagsPage": "\u6807\u7B7E\u5217\u8868",
@@ -1376,10 +1444,11 @@
     "prompt.ok": "\u786E\u8BA4",
     "prompt.settings": "\u8BBE\u7F6E",
   }
-  var zh_cn_default2 = messages4
+  var zh_cn_default2 = messages5
   var i2 = initI18n({
     "en,en-US": en_default2,
     "zh,zh-CN": zh_cn_default2,
+    "ru,ru-RU": ru_default,
   })
   var MIN_VALID_TIMESTAMP = 631152e6
   var MAX_VALID_TIMESTAMP = 9999999999999
@@ -5713,6 +5782,7 @@
       excludeSelectors: [
         ".topic-map",
         ".names .second",
+        ".names .user-group",
         ".post-activity",
         ".topic-last-activity",
         ".topic-item-stats .activity",
