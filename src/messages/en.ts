@@ -92,6 +92,7 @@ body {
   'prompt.cancel': 'Cancel',
   'prompt.ok': 'OK',
   'prompt.settings': 'Settings',
+  'prompt.addTagsToCurrentPage': 'Add tags to current page',
 }
 
 export default messages

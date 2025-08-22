@@ -374,6 +374,19 @@ export function matchedNodes() {
     currentSite.addExtraMatchedNodes(matchedNodesSet)
   }
 
+  const currentPageLink = $('#utags_current_page_link') as UtagsHTMLElement
+  if (currentPageLink) {
+    const key = getCanonicalUrl(location.href)
+    if (key) {
+      const title = getTrimmedTitle(currentPageLink)
+      currentPageLink.utags = {
+        key,
+        meta: title ? { title } : {},
+      }
+      matchedNodesSet.add(currentPageLink)
+    }
+  }
+
   // 添加 data-utags_primary_link 属性强制允许使用 utags
   // const array = $$("[data-utags_primary_link]") as HTMLAnchorElement[]
   // for (const element of array) {

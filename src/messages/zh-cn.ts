@@ -91,6 +91,7 @@ body {
   'prompt.cancel': '取消',
   'prompt.ok': '确认',
   'prompt.settings': '设置',
+  'prompt.addTagsToCurrentPage': '为当前网页添加标签',
 }
 
 export default messages

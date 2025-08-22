@@ -388,7 +388,10 @@
     }
   }
 
-  ul.utags_current_tags {
+  :not(#utags_should_has_higher_specificity):not(
+      #utags_should_has_higher_specificity
+    )
+    ul.utags_current_tags {
     list-style-type: none;
     margin: 0;
     padding: 0 0 10px 0 !important;
@@ -477,6 +480,45 @@
         font-family: var(--utags-text-tag-font-family) !important;
         font-size: 12px;
         line-height: 1;
+      }
+    }
+  }
+
+  #utags_current_page_link_container {
+    position: absolute;
+    top: -100px;
+    right: 100px;
+    z-index: 1000;
+    background-color: #bdbdbd;
+    padding: 4px 8px;
+    border-radius: 4px;
+
+    a {
+      display: inline;
+
+      & + {
+        .utags_ul_01 {
+          /* right-center */
+          object-position: 200% 50%;
+          --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+          --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+          --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+          --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+          --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+          --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+          --utags-captain-tag-background-color: var(
+            --utags-captain-tag-background-color-overlap
+          );
+        }
+
+        .utags_ul_11 {
+          object-position: 0% 200%;
+          position: absolute;
+          top: -9999px;
+          z-index: 100;
+          margin-top: 18px !important;
+          margin-left: 0px !important;
+        }
       }
     }
   }

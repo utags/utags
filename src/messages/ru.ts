@@ -92,6 +92,7 @@ body {
   'prompt.cancel': 'Отмена',
   'prompt.ok': 'ОК',
   'prompt.settings': 'Настройки',
+  'prompt.addTagsToCurrentPage': 'Добавить теги к текущей странице',
 }
 
 export default messages

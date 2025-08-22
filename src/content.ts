@@ -12,6 +12,7 @@ import {
   getAttribute,
   getOffsetPosition,
   hasClass,
+  registerMenuCommand,
   removeClass,
   runWhenHeadExists,
   setStyle,
@@ -284,6 +285,62 @@ let start = 0
 
 if (start) {
   start = Date.now()
+}
+
+/**
+ * Append a link to the current page at the end of the document body
+ * @returns A cleanup function that removes the appended link
+ */
+function appendCurrentPageLink(): () => void {
+  const containerId = 'utags_current_page_link_container'
+
+  // Check if container already exists
+  const existingContainer = $('#' + containerId)
+  if (existingContainer) {
+    return () => {
+      if (existingContainer.parentNode) {
+        existingContainer.remove()
+      }
+    }
+  }
+
+  // Create the container div
+  const containerElement = document.createElement('div')
+  containerElement.id = containerId
+
+  // Create the anchor element
+  const linkElement = document.createElement('a')
+  linkElement.href = location.href
+  linkElement.textContent = document.title
+  linkElement.id = 'utags_current_page_link'
+
+  // Append link to container
+  containerElement.append(linkElement)
+
+  // Append container to the end of document body
+  document.body.append(containerElement)
+
+  // Return cleanup function
+  return () => {
+    if (containerElement.parentNode) {
+      containerElement.remove()
+    }
+  }
+}
+
+function showCurrentPageLinkUtagsPrompt() {
+  const cleanUp = appendCurrentPageLink()
+  setTimeout(() => {
+    const element = $('#utags_current_page_link + ul.utags_ul button')!
+    if (element) {
+      element.click()
+    } else {
+      showCurrentPageLinkUtagsPrompt()
+    }
+  }, 10)
+  setTimeout(() => {
+    cleanUp()
+  }, 3000)
 }
 
 function appendTagsToPage(
@@ -918,6 +975,21 @@ async function main() {
   if (!getSettingsValue(`enableCurrentSite_${host}`)) {
     return
   }
+
+  registerMenuCommand(
+    '🏷️ ' + i('prompt.addTagsToCurrentPage'),
+    () => {
+      showCurrentPageLinkUtagsPrompt()
+    },
+    'u'
+  )
+  // registerMenuCommand(
+  //   '⭐ ' +'收藏当前网页',
+  //   () => {
+  //     showCurrentPageLinkUtagsPrompt()
+  //   },
+  //   'u'
+  // )
 
   setupWebappBridge()
 
