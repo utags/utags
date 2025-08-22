@@ -7,6 +7,7 @@
 - Optimize data sync logic, solve data inconsistency problem
 - Update dmm.co.jp site support
 - Add Russian language support
+- Add menu command to tag current page
 
 ## uTags v0.18 Release Notes
 
