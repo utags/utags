@@ -39,8 +39,8 @@
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol 其乐 ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.su](https://kemono.su/))
-- Coomer ([coomer.su](https://coomer.su/))
+- Kemono ([kemono.cr](https://kemono.cr/))
+- Coomer ([coomer.st](https://coomer.st/))
 - Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
@@ -55,8 +55,8 @@
 - 油猴中文网 ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
 - Flarum 中文社区 ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- uTools 社区 ([yuanliao.info](https://yuanliao.info/))
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
-- 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
 - 生如夏花论坛 ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
@@ -64,6 +64,10 @@
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - BOSS 直聘 ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- 百合会 ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
@@ -118,10 +122,10 @@
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
 - 不仅可以给用户打标签，还可以给帖子和节点打标签
-- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 在[标签列表](https://utags.link/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
+- 支持[数据导出、导入](https://utags.link/)
+- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do`, `v2ex.com` 等部分网站。
 
 ### 彩蛋
 
@@ -131,6 +135,20 @@
 
 ## 更新记录
 
+- 0.18.x
+  - 适配网站：Flickr
+  - 适配网站：阮一峰的网络日志
+  - 适配网站：Twitch
+  - 适配网站：百合会
+  - V2EX.com 的 vxna 和 planet 页面支持特殊标签效果，可屏蔽博客源
+  - 支持为 GitHub 文件和文件夹添加标签
+  - 在 GitHub issue 标题旁显示标签
+- 0.17.1
+  - 支持通过 GitHub, WebDAV 同步数据
+- 0.16.0
+  - 实现书签的软删除功能
+- 0.15.0
+  - 与新版 webapp ([https://utags.link](https://utags.link)) 集成
 - 0.12.11
   - 取消对可设置的 emoji 标签数量的限制
 - 0.12.10
@@ -303,73 +321,6 @@
 - [列表页](https://utags.pipecraft.net/tags/)显示用户头像
 - 展示其他用户们的标签内容
 - 显示在哪个页面添加的标签
-- 多设备数据同步
-
-## Development
-
-This extension/userscript is built from [Browser Extension Starter and Userscript Starter](https://github.com/utags/browser-extension-starter)
-
-## Features
-
-- One codebase for Chrome extesions, Firefox addons, Userscripts, Bookmarklets and simple JavaScript modules
-- Live-reload and React HMR
-- [Plasmo](https://www.plasmo.com/) - The Browser Extension Framework
-- [esbuild](https://esbuild.github.io/) - Bundler
-- React
-- TypeScript
-- [Prettier](https://github.com/prettier/prettier) - Code Formatter
-- [XO](https://github.com/xojs/xo) - JavaScript/TypeScript linter
-
-## Showcases
-
-- [🏷️ UTags - Add usertags to links](https://github.com/utags/utags) - Allow users to add custom tags to links.
-- [🔗 Links Helper](https://github.com/utags/links-helper) - Open external links in a new tab, open internal links matching the specified rules in a new tab, convert text to hyperlinks, convert image links to image tags, parse Markdown style links and image tags, parse BBCode style links and image tags
-
-## How To Make A New Extension
-
-1. Fork [this starter repo](https://github.com/utags/browser-extension-starter), and rename repo to your extension name
-
-2. Clone your repo
-
-3. Install dependencies
-
-```bash
-pnpm install
-# or
-npm install
-```
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
 
 ## License
 
@@ -378,4 +329,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 ## >\_
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

@@ -1,20 +1,20 @@
-import { $, $$, isVisible } from "browser-extension-utils"
-import styleText from "data-text:./022-podcasts.google.com.scss"
+import { $, $$, isVisible } from 'browser-extension-utils'
+import styleText from 'data-text:./022-podcasts.google.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://podcasts.google.com/"
+  const prefix = 'https://podcasts.google.com/'
 
   function getEpisodeUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(28)
       if (exact) {
         if (/^feed\/\w+\/episode\/\w+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+          return prefix + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, '$1')
         }
       } else if (/^feed\/\w+\/episode\/\w+/.test(href2)) {
-        return prefix + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, '$1')
       }
     }
 
@@ -25,7 +25,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(28)
       if (/^feed\/\w+(\?.*)?$/.test(href2)) {
-        return prefix + href2.replace(/^(feed\/\w+).*/, "$1")
+        return prefix + href2.replace(/^(feed\/\w+).*/, '$1')
       }
     }
 
@@ -52,18 +52,18 @@ export default (() => {
     matches: /podcasts\.google\.com/,
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "header",
-      "gm-coplanar-drawer",
+      'header',
+      'gm-coplanar-drawer',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getEpisodeUrl(location.href)
       if (key) {
         // episode title
-        const element = $("h5")
+        const element = $('h5')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "episode" }
+            const meta = { title, type: 'episode' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -72,17 +72,17 @@ export default (() => {
 
       key = getFeedUrl(location.href)
       if (key) {
-        for (const container of $$("[data-encoded-feed]")) {
+        for (const container of $$('[data-encoded-feed]')) {
           if (isVisible(container)) {
             // feed title
             const element = $(
-              "div:first-child > div:first-child > div:first-child > div:first-child",
+              'div:first-child > div:first-child > div:first-child > div:first-child',
               container
             )
             if (element) {
               const title = element.textContent!.trim()
               if (title) {
-                const meta = { title, type: "feed" }
+                const meta = { title, type: 'feed' }
                 element.utags = { key, meta }
                 matchedNodesSet.add(element)
               }
@@ -99,10 +99,10 @@ export default (() => {
         )
         if (key && titleElement) {
           const title = titleElement.textContent!
-          const meta = { title, type: "episode" }
+          const meta = { title, type: 'episode' }
 
           titleElement.utags = { key, meta }
-          titleElement.dataset.utags_node_type = "link"
+          titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }
       }
@@ -115,13 +115,13 @@ export default (() => {
         }
 
         const key = getFeedUrl(element.href)
-        const titleElement = $("div > div", element)
+        const titleElement = $('div > div', element)
         if (titleElement) {
           const title = titleElement.textContent!
-          const meta = { title, type: "feed" }
+          const meta = { title, type: 'feed' }
 
           titleElement.utags = { key, meta }
-          titleElement.dataset.utags_node_type = "link"
+          titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }
       }

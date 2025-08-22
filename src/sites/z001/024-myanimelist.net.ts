@@ -1,6 +1,6 @@
-import styleText from "data-text:./024-myanimelist.net.scss"
+import styleText from 'data-text:./024-myanimelist.net.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   return {
@@ -9,11 +9,11 @@ export default (() => {
     conditionNodesSelectors: [],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "#headerSmall",
-      "#menu",
-      "#nav",
-      ".header",
-      "#status-menu",
+      '#headerSmall',
+      '#menu',
+      '#nav',
+      '.header',
+      '#status-menu',
       'a[href^="/sns/register/"]',
       'a[href^="/logout"]',
       'a[href*="/membership?"]',

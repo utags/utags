@@ -37,8 +37,8 @@
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol 其乐 ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.su](https://kemono.su/))
-- Coomer ([coomer.su](https://coomer.su/))
+- Kemono ([kemono.cr](https://kemono.cr/))
+- Coomer ([coomer.st](https://coomer.st/))
 - Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
@@ -50,8 +50,8 @@
 - 油猴中文网 ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
 - Flarum 中文社区 ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- uTools 社区 ([yuanliao.info](https://yuanliao.info/))
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
-- 自由水木社区 ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
 - 生如夏花论坛 ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
@@ -59,6 +59,10 @@
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - BOSS 直聘 ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- 百合会 ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。
@@ -117,10 +121,10 @@
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
 - 不仅可以给用户打标签，还可以给帖子（主题）和节点打标签
-- 在[标签列表](https://utags.pipecraft.net/tags/)页面，可以看到有标签的用户和帖子，按更新顺序排序
+- 在[标签列表](https://utags.link/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
-- 支持[数据导出、导入](https://utags.pipecraft.net/data/)
-- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do` 网站。
+- 支持[数据导出、导入](https://utags.link/)
+- 自动标记浏览过的帖子，支持半透明展示或隐藏已浏览内容。功能需在设置页面手动开启，默认处于关闭状态，当前仅适用于 `linux.do`, `v2ex.com` 等部分网站。
 - 兼容以下用户脚本管理器
   - Tampermonkey (推荐)
   - Violentmonkey
@@ -141,12 +145,25 @@
 - 支持自定义网站规则
 - 支持自定义标签样式
 - 展示其他用户们的标签内容
-- 多设备数据同步
 
 更多内容请访问 [https://github.com/utags/utags](https://github.com/utags/utags)
 
 ## 更新记录
 
+- 0.18.x
+  - 适配网站：Flickr
+  - 适配网站：阮一峰的网络日志
+  - 适配网站：Twitch
+  - 适配网站：百合会
+  - V2EX.com 的 vxna 和 planet 页面支持特殊标签效果，可屏蔽博客源
+  - 支持为 GitHub 文件和文件夹添加标签
+  - 在 GitHub issue 标题旁显示标签
+- 0.17.1
+  - 支持通过 GitHub, WebDAV 同步数据
+- 0.16.0
+  - 实现书签的软删除功能
+- 0.15.0
+  - 与新版 webapp ([https://utags.link](https://utags.link)) 集成
 - 0.12.11
   - 取消对可设置的 emoji 标签数量的限制
 - 0.12.10
@@ -334,4 +351,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 ## >\_
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

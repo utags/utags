@@ -1,14 +1,14 @@
-import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./009-instagram.com.scss"
+import { $, $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./009-instagram.com.scss'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   return {
     matches: /instagram\.com/,
     validate(element: HTMLAnchorElement) {
       const href = element.href
-      if (href.startsWith("https://www.instagram.com/")) {
+      if (href.startsWith('https://www.instagram.com/')) {
         // Remove "https://www.instagram.com/"
         const href2 = href.slice(26)
         if (/^[\w.]+\/$/.test(href2)) {
@@ -17,11 +17,11 @@ export default (() => {
             return false
           }
 
-          if ($("div span", element)) {
-            element.dataset.utags_node_type = "notag_relative"
+          if ($('div span', element)) {
+            element.dataset.utags_node_type = 'notag_relative'
           }
 
-          const meta = { type: "user" }
+          const meta = { type: 'user' }
           element.utags = { meta }
 
           return true

@@ -39,8 +39,8 @@ For now it works on
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.su](https://kemono.su/))
-- Coomer ([coomer.su](https://coomer.su/))
+- Kemono ([kemono.cr](https://kemono.cr/))
+- Coomer ([coomer.st](https://coomer.st/))
 - Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
@@ -55,8 +55,8 @@ For now it works on
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
 - Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- uTools Community ([yuanliao.info](https://yuanliao.info/))
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
-- Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
 - Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
@@ -64,6 +64,10 @@ For now it works on
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation
@@ -123,12 +127,26 @@ For now it works on
 - You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
 - Tags can be added to post titles, usernames, and categories
 - Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
-- On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
-- Support [data export and import](https://utags.pipecraft.net/data/)
-- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
+- On the [tag list](https://utags.link/) page, you can see tagged users and posts, sorted by update order
+- Support [data export and import](https://utags.link/)
+- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do` and `v2ex.com`.
 
 ## Release Notes
 
+- 0.18.x
+  - Add the website Flickr
+  - Add the website Ruanyifeng
+  - Add the website Twitch
+  - Add the website Yamibo
+  - Support special tags on vxna and planet of v2ex.com
+  - Support tagging GitHub files and folders
+  - Display tags next to GitHub issue titles
+- 0.17.1
+  - Support data synchronization via GitHub and WebDAV
+- 0.16.0
+  - Implement soft delete for bookmarks
+- 0.15.0
+  - Integration with the new webapp ([https://utags.link](https://utags.link))
 - 0.12.11
   - Remove the limit on the number of settable emoji tags
 - 0.12.10
@@ -292,72 +310,6 @@ For now it works on
   - 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
 - [See more](release-notes/readme.md)
 
-## Development
-
-This extension/userscript is built from [Browser Extension Starter and Userscript Starter](https://github.com/utags/browser-extension-starter)
-
-## Features
-
-- One codebase for Chrome extesions, Firefox addons, Userscripts, Bookmarklets and simple JavaScript modules
-- Live-reload and React HMR
-- [Plasmo](https://www.plasmo.com/) - The Browser Extension Framework
-- [esbuild](https://esbuild.github.io/) - Bundler
-- React
-- TypeScript
-- [Prettier](https://github.com/prettier/prettier) - Code Formatter
-- [XO](https://github.com/xojs/xo) - JavaScript/TypeScript linter
-
-## Showcases
-
-- [🏷️ UTags - Add usertags to links](https://github.com/utags/utags) - Allow users to add custom tags to links.
-- [🔗 Links Helper](https://github.com/utags/links-helper) - Open external links in a new tab, open internal links matching the specified rules in a new tab, convert text to hyperlinks, convert image links to image tags, parse Markdown style links and image tags, parse BBCode style links and image tags
-
-## How To Make A New Extension
-
-1. Fork [this starter repo](https://github.com/utags/browser-extension-starter), and rename repo to your extension name
-
-2. Clone your repo
-
-3. Install dependencies
-
-```bash
-pnpm install
-# or
-npm install
-```
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-pnpm dev
-# or
-npm run dev
-```
-
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
-
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
-
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
-
-## Making production build
-
-Run the following:
-
-```bash
-pnpm build
-# or
-npm run build
-```
-
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
-
 ## License
 
 Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
@@ -365,4 +317,4 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 ## >\_
 
 [![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

@@ -1,19 +1,19 @@
-import { $, $$ } from "browser-extension-utils"
+import { $, $$ } from 'browser-extension-utils'
 
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.zhihu.com/"
+  const prefix = 'https://www.zhihu.com/'
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(22)
       if (exact) {
         if (/^people\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(people\/[\w-]+).*/, "$1")
+          return prefix + href2.replace(/^(people\/[\w-]+).*/, '$1')
         }
       } else if (/^people\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/^(people\/[\w-]+).*/, "$1")
+        return prefix + href2.replace(/^(people\/[\w-]+).*/, '$1')
       }
     }
 
@@ -23,26 +23,26 @@ export default (() => {
   return {
     matches: /zhihu\.com/,
     validate(element: HTMLAnchorElement) {
-      if ($(".avatar", element)) {
+      if ($('.avatar', element)) {
         return false
       }
 
       const href = element.href
 
-      if (!href.includes("zhihu.com")) {
+      if (!href.includes('zhihu.com')) {
         return true
       }
 
-      if (href.startsWith(prefix + "people/")) {
+      if (href.startsWith(prefix + 'people/')) {
         const key = getUserProfileUrl(href, true)
         if (key) {
-          const titleElement = $(".name", element)
+          const titleElement = $('.name', element)
           let title: string | undefined
           if (titleElement) {
             title = titleElement.textContent!
           }
 
-          const meta = { type: "user" }
+          const meta = { type: 'user' }
           if (title) {
             meta.title = title
           }
@@ -58,19 +58,19 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      ".NumberBoard",
-      ".ProfileMain-tabs",
-      ".Profile-lightList",
+      '.NumberBoard',
+      '.ProfileMain-tabs',
+      '.Profile-lightList',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
-        const element = $("h1.ProfileHeader-title .ProfileHeader-name")
+        const element = $('h1.ProfileHeader-title .ProfileHeader-name')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

@@ -1,16 +1,16 @@
-import { $, $$ } from "browser-extension-utils"
-import styleText from "data-text:./031-tampermonkey.net.cn.scss"
+import { $, $$ } from 'browser-extension-utils'
+import styleText from 'data-text:./031-tampermonkey.net.cn.scss'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
-} from "../../modules/visited"
-import { deleteUrlParameters } from "../../utils"
-import defaultSite from "../default"
+} from '../../modules/visited'
+import { deleteUrlParameters } from '../../utils'
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://bbs.tampermonkey.net.cn/"
+  const prefix = 'https://bbs.tampermonkey.net.cn/'
 
   function getCanonicalUrl(url: string) {
     if (url.startsWith(prefix)) {
@@ -30,13 +30,13 @@ export default (() => {
 
   function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
-      url = deleteUrlParameters(url, "do")
+      url = deleteUrlParameters(url, 'do')
       const href2 = url.slice(prefix.length).toLowerCase()
       if (exact) {
         // https://bbs.tampermonkey.net.cn/?1234567
         if (/^\?\d+(#.*)?$/.test(href2)) {
           return (
-            prefix + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            prefix + href2.replace(/^\?(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
 
@@ -44,7 +44,7 @@ export default (() => {
         if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
           return (
             prefix +
-            href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
+            href2.replace(/^space-uid-(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
 
@@ -54,12 +54,12 @@ export default (() => {
             prefix +
             href2.replace(
               /^home\.php\?mod=space&uid=(\d+).*/,
-              "home.php?mod=space&uid=$1"
+              'home.php?mod=space&uid=$1'
             )
           )
         }
       } else if (/^u\/[\w.-]+/.test(href2)) {
-        return prefix + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        return prefix + href2.replace(/^(u\/[\w.-]+).*/, '$1')
       }
     }
 
@@ -74,7 +74,7 @@ export default (() => {
       if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
         return (
           prefix +
-          href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
+          href2.replace(/^thread-(\d+).*/, 'forum.php?mod=viewthread&tid=$1')
         )
       }
 
@@ -84,7 +84,7 @@ export default (() => {
           prefix +
           href2.replace(
             /^forum\.php\?mod=redirect&tid=(\d+).*/,
-            "forum.php?mod=viewthread&tid=$1"
+            'forum.php?mod=viewthread&tid=$1'
           )
         )
       }
@@ -95,7 +95,7 @@ export default (() => {
           prefix +
           href2.replace(
             /^forum\.php\?mod=viewthread&tid=(\d+).*/,
-            "forum.php?mod=viewthread&tid=$1"
+            'forum.php?mod=viewthread&tid=$1'
           )
         )
       }
@@ -112,14 +112,14 @@ export default (() => {
     },
     listNodesSelectors: [
       //
-      "#threadlist table tbody",
-      "#postlist .comiis_vrx",
+      '#threadlist table tbody',
+      '#postlist .comiis_vrx',
     ],
     conditionNodesSelectors: [
       //
-      "#threadlist table tbody h2 a",
-      "#threadlist table tbody .km_user a",
-      "#postlist .comiis_vrx .authi a",
+      '#threadlist table tbody h2 a',
+      '#threadlist table tbody .km_user a',
+      '#postlist .comiis_vrx .authi a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -136,7 +136,7 @@ export default (() => {
         }
 
         if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title)) {
-          const titleElement = $("#uhd h2")
+          const titleElement = $('#uhd h2')
           if (titleElement) {
             title = titleElement.textContent!.trim()
           }
@@ -144,15 +144,15 @@ export default (() => {
 
         if (
           /^\d+$/.test(title) &&
-          element.parentElement!.parentElement!.textContent!.includes("积分")
+          element.parentElement!.parentElement!.textContent!.includes('积分')
         ) {
           return false
         }
 
-        const meta = href === title ? { type: "user" } : { type: "user", title }
+        const meta = href === title ? { type: 'user' } : { type: 'user', title }
 
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
         return true
       }
 
@@ -164,8 +164,8 @@ export default (() => {
         }
 
         if (
-          title === "New" ||
-          title === "置顶" ||
+          title === 'New' ||
+          title === '置顶' ||
           /^\d+$/.test(title) ||
           /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title)
         ) {
@@ -177,11 +177,11 @@ export default (() => {
           return false
         }
 
-        if (element.parentElement!.textContent!.includes("最后回复于")) {
+        if (element.parentElement!.textContent!.includes('最后回复于')) {
           return false
         }
 
-        const meta = href === title ? { type: "post" } : { type: "post", title }
+        const meta = href === title ? { type: 'post' } : { type: 'post', title }
 
         element.utags = { key, meta }
         markElementWhetherVisited(key, element)
@@ -194,7 +194,7 @@ export default (() => {
         return false
       }
 
-      if (title === "New" || title === "置顶" || /^\d+$/.test(title)) {
+      if (title === 'New' || title === '置顶' || /^\d+$/.test(title)) {
         return false
       }
 
@@ -202,59 +202,59 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "#hd",
-      ".comiis_pgs",
-      "#scrolltop",
-      "#fd_page_bottom",
-      "#visitedforums",
-      "#pt",
-      ".tps",
-      ".pgbtn",
-      ".pgs",
-      "#f_pst",
+      '#hd',
+      '.comiis_pgs',
+      '#scrolltop',
+      '#fd_page_bottom',
+      '#visitedforums',
+      '#pt',
+      '.tps',
+      '.pgbtn',
+      '.pgs',
+      '#f_pst',
       'a[href*="member.php?mod=logging"]',
       'a[href*="member.php?mod=register"]',
       'a[href*="login/oauth/"]',
       'a[href*="mod=spacecp&ac=usergroup"]',
       'a[href*="home.php?mod=spacecp"]',
-      "#gadmin_menu",
-      "#guser_menu",
-      "#gupgrade_menu",
-      "#gmy_menu",
-      ".showmenu",
+      '#gadmin_menu',
+      '#guser_menu',
+      '#gupgrade_menu',
+      '#gmy_menu',
+      '.showmenu',
       // Tabs
-      "ul.tb.cl",
-      ".comiis_irbox_tit",
-      "#thread_types",
-      "#filter_special_menu",
+      'ul.tb.cl',
+      '.comiis_irbox_tit',
+      '#thread_types',
+      '#filter_special_menu',
       'a[title="RSS"]',
-      ".fa_fav",
-      ".p_pop",
-      ".comiis_topinfo",
-      ".bm .bm_h .kmfz",
-      "td.num a",
-      "td.plc .pi",
-      "td.plc .po.hin",
-      "td.pls .tns",
-      "ul.comiis_o",
+      '.fa_fav',
+      '.p_pop',
+      '.comiis_topinfo',
+      '.bm .bm_h .kmfz',
+      'td.num a',
+      'td.plc .pi',
+      'td.plc .po.hin',
+      'td.pls .tns',
+      'ul.comiis_o',
       'a[onclick*="showMenu"]',
       'a[onclick*="showWindow"]',
       // 换行问题 CSS 搞不定
-      ".toplist_7ree",
+      '.toplist_7ree',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getUserProfileUrl(location.href)
       if (key) {
         // profile header
         const element =
-          $(".user-profile-names .username") ||
+          $('.user-profile-names .username') ||
           $(
-            ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
           )
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "user" }
+            const meta = { title, type: 'user' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -265,11 +265,11 @@ export default (() => {
       if (key) {
         addVisited(key)
 
-        const element = $("#thread_subject")
+        const element = $('#thread_subject')
         if (element) {
           const title = element.textContent!.trim()
           if (title) {
-            const meta = { title, type: "post" }
+            const meta = { title, type: 'post' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }

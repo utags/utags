@@ -1,6 +1,6 @@
+import fs from "node:fs"
 import bookmarkleter from "bookmarkleter"
 import * as esbuild from "esbuild"
-import fs from "node:fs"
 
 import { getBuildOptions } from "../common.mjs"
 

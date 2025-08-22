@@ -1,6 +1,11 @@
-import { createElement, doc } from "browser-extension-utils"
+import { createElement, doc } from 'browser-extension-utils'
 
-import { getUrlMap, mergeData } from "../storage/index"
+import { getUrlMap } from '../storage/bookmarks'
+import { normalizeBookmarkData, sortBookmarks } from '../utils/index.js'
+
+const mergeData = async () => {
+  return { numberOfLinks: 0, numberOfTags: 0 }
+}
 
 export async function outputData() {
   if (
@@ -8,33 +13,36 @@ export async function outputData() {
   ) {
     const urlMap = await getUrlMap()
 
-    const textarea = createElement("textarea")
-    textarea.id = "utags_output"
-    textarea.setAttribute("style", "display:none")
+    const textarea = createElement('textarea') as HTMLTextAreaElement
+    textarea.id = 'utags_output'
+    textarea.setAttribute('style', 'display:none')
     textarea.value = JSON.stringify(urlMap)
     doc.body.append(textarea)
 
-    textarea.addEventListener("click", async () => {
-      if (textarea.dataset.utags_type === "export") {
+    textarea.addEventListener('click', async () => {
+      if (textarea.dataset.utags_type === 'export') {
         const urlMap = await getUrlMap()
-        textarea.value = JSON.stringify(urlMap)
-        textarea.dataset.utags_type = "export_done"
+
+        const sortedBookmarks = Object.fromEntries(
+          normalizeBookmarkData(sortBookmarks(Object.entries(urlMap)))
+        )
+
+        textarea.value = JSON.stringify(sortedBookmarks)
+        textarea.dataset.utags_type = 'export_done'
         // Triger change event
         textarea.click()
-      } else if (textarea.dataset.utags_type === "import") {
-        const data = textarea.value as string
+      } else if (textarea.dataset.utags_type === 'import') {
+        const data = textarea.value
         try {
-          const result = await mergeData(
-            JSON.parse(data) as Record<string, unknown>
-          )
+          const result = await mergeData()
           textarea.value = JSON.stringify(result)
-          textarea.dataset.utags_type = "import_done"
+          textarea.dataset.utags_type = 'import_done'
           // Triger change event
           textarea.click()
         } catch (error) {
           console.error(error)
           textarea.value = JSON.stringify(error)
-          textarea.dataset.utags_type = "import_failed"
+          textarea.dataset.utags_type = 'import_failed'
           // Triger change event
           textarea.click()
         }

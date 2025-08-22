@@ -1,25 +1,25 @@
-import { $, $$, doc, hasClass } from "browser-extension-utils"
-import styleText from "data-text:./035-zhipin.com.scss"
-import { getTrimmedTitle } from "utags-utils"
+import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import styleText from 'data-text:./035-zhipin.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
-} from "../../modules/visited"
+} from '../../modules/visited'
 import type {
   UserTagMeta,
   UtagsHTMLAnchorElement,
   UtagsHTMLElement,
-} from "../../types"
-import defaultSite from "../default"
+} from '../../types'
+import defaultSite from '../default'
 
 export default (() => {
-  const prefix = "https://www.zhipin.com/"
+  const prefix = 'https://www.zhipin.com/'
 
   function getCanonicalUrl(url: string) {
     if (url.includes(prefix)) {
-      return url.replace(/[?#].*/, "")
+      return url.replace(/[?#].*/, '')
     }
 
     return url
@@ -48,7 +48,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (/^gongsi\/[\w-~]+\.html/.test(href2)) {
-        return prefix + href2.replace(/^(gongsi\/[\w-~]+\.html).*/, "$1")
+        return prefix + href2.replace(/^(gongsi\/[\w-~]+\.html).*/, '$1')
       }
     }
 
@@ -59,7 +59,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (/^job_detail\/[\w-~]+\.html/.test(href2)) {
-        return prefix + href2.replace(/^(job_detail\/[\w-~]+\.html).*/, "$1")
+        return prefix + href2.replace(/^(job_detail\/[\w-~]+\.html).*/, '$1')
       }
     }
 
@@ -70,99 +70,99 @@ export default (() => {
     matches: /www\.zhipin\.com/,
     listNodesSelectors: [
       // 首页 > 精选职位/热招职位
-      ".common-tab-box ul li",
+      '.common-tab-box ul li',
       // 首页 > 热门企业
-      ".hot-company-wrapper ul li",
-      ".hot-company-wrapper ul li .company-job-list li",
+      '.hot-company-wrapper ul li',
+      '.hot-company-wrapper ul li .company-job-list li',
 
       // 推荐职位 https://www.zhipin.com/web/geek/job-recommend
-      ".job-recommend-result .job-card-wrap",
+      '.job-recommend-result .job-card-wrap',
 
       // 搜索页面 https://www.zhipin.com/web/geek/job?query=
-      ".search-job-result .job-card-wrapper",
+      '.search-job-result .job-card-wrapper',
 
       // 看过的职位
-      ".history-job-list li",
+      '.history-job-list li',
 
       // 公司搜索页 https://www.zhipin.com/gongsi/_zzz_c101010100/
-      ".company-search ul li",
+      '.company-search ul li',
 
       // 公司详细页 https://www.zhipin.com/gongsi/xxxxxxxxxx.html
-      ".company-hotjob  ul li",
+      '.company-hotjob  ul li',
 
       // 公司职位列表页 https://www.zhipin.com/gongsi/job/xxxxxxxxxx.html
-      ".page-company-position ul.position-job-list li",
+      '.page-company-position ul.position-job-list li',
 
       // 公司职位列表页 > 精选职位
-      "ul.similar-job-list li",
+      'ul.similar-job-list li',
 
       // 职位详细页底部精选职位/看过该职位的人还看了 https://www.zhipin.com/gongsi/job/xxxxxxxxxx.html
-      "ul.look-job-list li",
+      'ul.look-job-list li',
     ],
     conditionNodesSelectors: [
       // 职位
-      ".common-tab-box ul li .sub-li a.job-info",
+      '.common-tab-box ul li .sub-li a.job-info',
       // 公司
-      ".common-tab-box ul li .sub-li-bottom a.user-info",
+      '.common-tab-box ul li .sub-li-bottom a.user-info',
 
       // 公司
-      ".hot-company-wrapper ul li .company-info-top",
+      '.hot-company-wrapper ul li .company-info-top',
       // 职位
-      ".hot-company-wrapper ul li .company-job-list li a.job-info",
-
-      // 职位
-      ".job-recommend-result .job-card-wrap .job-info .job-title a.job-name",
-      // 公司
-      ".job-recommend-result .job-card-wrap .job-card-footer .boss-info",
+      '.hot-company-wrapper ul li .company-job-list li a.job-info',
 
       // 职位
-      ".search-job-result .job-card-wrapper a.job-card-left",
+      '.job-recommend-result .job-card-wrap .job-info .job-title a.job-name',
       // 公司
-      ".search-job-result .job-card-wrapper .job-card-right .company-name a",
+      '.job-recommend-result .job-card-wrap .job-card-footer .boss-info',
 
       // 职位
-      ".history-job-list li a",
+      '.search-job-result .job-card-wrapper a.job-card-left',
+      // 公司
+      '.search-job-result .job-card-wrapper .job-card-right .company-name a',
+
+      // 职位
+      '.history-job-list li a',
 
       // 公司
-      ".company-search ul li a.company-info",
+      '.company-search ul li a.company-info',
       // 职位 -> 公司搜索结果的职位是随机的，不该作为判断条件
       // ".company-search ul li a.about-info",
 
       // 职位
-      ".company-hotjob  ul li > a",
+      '.company-hotjob  ul li > a',
 
       // 职位
-      ".page-company-position ul.position-job-list li .job-title .job-name",
+      '.page-company-position ul.position-job-list li .job-title .job-name',
 
       // 职位
-      "ul.similar-job-list li a.job-info",
-      "ul.similar-job-list li > a",
+      'ul.similar-job-list li a.job-info',
+      'ul.similar-job-list li > a',
       // 公司
-      "ul.similar-job-list li .company-info a.company-logo",
-      "ul.similar-job-list li .similar-job-attr span.similar-job-company[data-url]",
+      'ul.similar-job-list li .company-info a.company-logo',
+      'ul.similar-job-list li .similar-job-attr span.similar-job-company[data-url]',
 
       // 职位
-      "ul.look-job-list li > a",
+      'ul.look-job-list li > a',
       // 公司
-      "ul.look-job-list li .info-company div[data-url]",
+      'ul.look-job-list li .info-company div[data-url]',
     ],
     matchedNodesSelectors: [
       ...defaultSite.matchedNodesSelectors,
       // 没有 A 标签的公司名
-      ".info-company div[data-url]",
+      '.info-company div[data-url]',
       // 相似职位, 没有 A 标签的公司名
-      ".similar-job-list .similar-job-company[data-url]",
+      '.similar-job-list .similar-job-company[data-url]',
     ],
     preProcess() {
       setVisitedAvailable(true)
 
       for (const element of $$(
-        ".info-company div[data-url],.similar-job-list .similar-job-company[data-url]"
+        '.info-company div[data-url],.similar-job-list .similar-job-company[data-url]'
       ) as UtagsHTMLElement[]) {
         if (element.dataset.url) {
           element.href =
-            location.origin + element.dataset.url.replace("/job/", "/")
-          element.dataset.utags_node_type = "link"
+            location.origin + element.dataset.url.replace('/job/', '/')
+          element.dataset.utags_node_type = 'link'
         }
       }
     },
@@ -177,8 +177,8 @@ export default (() => {
         return true
       }
 
-      if (element.closest(".common-tab-box")) {
-        element.dataset.utags_ul_type = "ol"
+      if (element.closest('.common-tab-box')) {
+        element.dataset.utags_ul_type = 'ol'
       }
 
       let key = getCompanyUrl(href)
@@ -188,7 +188,7 @@ export default (() => {
         // .card-desc .title -> https://www.zhipin.com/rank/b2800/
         // h4 -> https://www.zhipin.com/gongsi/_zzz_c101010100/
         const titleElement = $(
-          ".name,.company-info-top h3,.card-desc .title,h4",
+          '.name,.company-info-top h3,.card-desc .title,h4',
           element
         )
         const title = getTrimmedTitle(titleElement || element)
@@ -196,13 +196,13 @@ export default (() => {
           return false
         }
 
-        const meta = { type: "company", title }
+        const meta = { type: 'company', title }
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
-        if (element.closest(".sub-li-bottom a.user-info")) {
-          element.dataset.utags_position_selector = "a > p"
-        } else if (element.closest(".company-search a.company-info")) {
-          element.dataset.utags_position_selector = "h4"
+        element.dataset.utags = element.dataset.utags || ''
+        if (element.closest('.sub-li-bottom a.user-info')) {
+          element.dataset.utags_position_selector = 'a > p'
+        } else if (element.closest('.company-search a.company-info')) {
+          element.dataset.utags_position_selector = 'h4'
         }
 
         return true
@@ -212,7 +212,7 @@ export default (() => {
       if (key) {
         // a.about-info u.h -> https://www.zhipin.com/gongsi/_zzz_c101010100/
         const titleElement = $(
-          ".job-title .job-name,.job-info-top,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h",
+          '.job-title .job-name,.job-info-top,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h',
           element
         )
         let title = getTrimmedTitle(titleElement || element)
@@ -220,12 +220,12 @@ export default (() => {
           return false
         }
 
-        title = title.replace(" 在线 ", "")
-        const meta = { type: "job-detail", title }
+        title = title.replace(' 在线 ', '')
+        const meta = { type: 'job-detail', title }
         element.utags = { key, meta }
-        element.dataset.utags = element.dataset.utags || ""
+        element.dataset.utags = element.dataset.utags || ''
         element.dataset.utags_position_selector =
-          ".job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h"
+          '.job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h'
 
         markElementWhetherVisited(key, element)
 
@@ -236,50 +236,50 @@ export default (() => {
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "#header",
+      '#header',
       // 查看全部
-      ".look-all",
+      '.look-all',
       // 查看更多信息
-      ".more-job-btn",
+      '.more-job-btn',
       // 查看更多职位
-      ".look-more",
+      '.look-more',
       // 查看全部n个职位
-      ".all-jobs-hot",
+      '.all-jobs-hot',
       // 查看所有职位
-      ".view-more",
+      '.view-more',
       // 查看所有职位
-      ".link-more",
+      '.link-more',
       // 更多相似职位
-      "h3:not(.company-name):not(.name)",
+      'h3:not(.company-name):not(.name)',
       // 职位对比
-      ".compare-btn",
+      '.compare-btn',
       // 职位对比
-      ".job_pk",
+      '.job_pk',
       // 热门职位
-      ".search-hot",
+      '.search-hot',
       // 筛选
-      ".filter-box",
-      ".sign-form",
-      ".login-card-wrapper",
-      ".login-entry-page",
-      ".btn",
-      ".footer-icon",
-      ".company-tab",
-      ".school-type-box",
-      ".search-condition-wrapper",
-      ".filter-select-box",
+      '.filter-box',
+      '.sign-form',
+      '.login-card-wrapper',
+      '.login-entry-page',
+      '.btn',
+      '.footer-icon',
+      '.company-tab',
+      '.school-type-box',
+      '.search-condition-wrapper',
+      '.filter-select-box',
       'a[href*="/web/geek/job"]',
       // 分页
-      ".page",
+      '.page',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       let key = getCompanyUrl(location.href)
       if (key) {
-        const element = $(".company-banner h1")
+        const element = $('.company-banner h1')
         if (element) {
           const title = element.childNodes[0].textContent!.trim()
           if (title) {
-            const meta = { title, type: "company" }
+            const meta = { title, type: 'company' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
           }
@@ -290,22 +290,22 @@ export default (() => {
       if (key) {
         addVisited(key)
 
-        let element = $(".job-banner .info-primary .name")
+        let element = $('.job-banner .info-primary .name')
         if (element) {
           const title = getTrimmedTitle(element)
           if (title) {
-            const meta = { title, type: "job-detail" }
+            const meta = { title, type: 'job-detail' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }
         }
 
-        element = $(".smallbanner .company-info .name")
+        element = $('.smallbanner .company-info .name')
         if (element) {
           const title = getTrimmedTitle(element)
           if (title) {
-            const meta = { title, type: "job-detail" }
+            const meta = { title, type: 'job-detail' }
             element.utags = { key, meta }
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
@@ -314,8 +314,8 @@ export default (() => {
       }
     },
     postProcess() {
-      const isDarkMode = hasClass(doc.body, "theme_dark")
-      doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+      const isDarkMode = hasClass(doc.body, 'theme_dark')
+      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
     },
     getStyle: () => styleText,
     getCanonicalUrl,

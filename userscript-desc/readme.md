@@ -37,8 +37,8 @@ For now it works on
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.su](https://kemono.su/))
-- Coomer ([coomer.su](https://coomer.su/))
+- Kemono ([kemono.cr](https://kemono.cr/))
+- Coomer ([coomer.st](https://coomer.st/))
 - Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
@@ -50,8 +50,8 @@ For now it works on
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
 - Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
+- uTools Community ([yuanliao.info](https://yuanliao.info/))
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
-- Freesmth ([freesmth.net](https://freesmth.net/)), ([freesmth.uk](https://freesmth.uk/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
 - Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
@@ -59,6 +59,10 @@ For now it works on
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
+- Twitch ([www.twitch.tv](https://www.twitch.tv/))
+- Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
+- Flickr ([www.flickr.com](https://www.flickr.com/))
+- Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.
@@ -118,9 +122,9 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 - You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
 - Tags can be added to post titles, usernames, and categories
 - Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
-- On the [tag list](https://utags.pipecraft.net/tags/) page, you can see tagged users and posts, sorted by update order
-- Support [data export and import](https://utags.pipecraft.net/data/)
-- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
+- On the [tag list](https://utags.link/) page, you can see tagged users and posts, sorted by update order
+- Support [data export and import](https://utags.link/)
+- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do` and `v2ex.com`.
 - Compatible with the following userscript managers
   - Tampermonkey (recommend)
   - Violentmonkey
@@ -133,6 +137,20 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.18.x
+  - Add the website Flickr
+  - Add the website Ruanyifeng
+  - Add the website Twitch
+  - Add the website Yamibo
+  - Support special tags on vxna and planet of v2ex.com
+  - Support tagging GitHub files and folders
+  - Display tags next to GitHub issue titles
+- 0.17.1
+  - Support data synchronization via GitHub and WebDAV
+- 0.16.0
+  - Implement soft delete for bookmarks
+- 0.15.0
+  - Integration with the new webapp ([https://utags.link](https://utags.link))
 - 0.12.11
   - Remove the limit on the number of settable emoji tags
 - 0.12.10
@@ -315,4 +333,5 @@ Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [M
 
 ## >\_
 
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.pipecraft.net)
+[![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
+[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)

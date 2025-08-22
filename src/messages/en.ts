@@ -1,21 +1,21 @@
 const messages = {
-  "settings.enableCurrentSite": "Enable UTags on the current website",
-  "settings.showHidedItems": "Show hidden items (tags with 'block', 'hide')",
-  "settings.noOpacityEffect": "No opacity mask effect (tags with 'ignore', 'clickbait', 'promotion')",
-  "settings.useVisitedFunction": "Enable browsing content tagging on the current website",
-  "settings.displayEffectOfTheVisitedContent": "The display effect of the browsed content",
-  "settings.displayEffectOfTheVisitedContent.recordingonly": "Save records only, no mark display",
-  "settings.displayEffectOfTheVisitedContent.showtagonly": "Only display marks",
-  "settings.displayEffectOfTheVisitedContent.changecolor": "Change the title color",
-  "settings.displayEffectOfTheVisitedContent.translucent": "Translucent",
-  "settings.displayEffectOfTheVisitedContent.hide": "Hide",
-  "settings.pinnedTags": "Add the tags you want to pin, separated by commas.",
-  "settings.pinnedTagsDefaultValue": "block, hide, ignore, clickbait, promotion",
-  "settings.pinnedTagsPlaceholder": "foo, bar",
-  "settings.emojiTags": "Add the emoji tags, separated by commas",
-  "settings.customStyle": "Enable custom style for all websites",
-  "settings.customStyleCurrentSite": "Enable custom style for the current website",
-  "settings.customStyleDefaultValue": `/* Custom style */
+  'settings.enableCurrentSite': 'Enable UTags on the current website',
+  'settings.showHidedItems': "Show hidden items (tags with 'block', 'hide')",
+  'settings.noOpacityEffect': "No opacity mask effect (tags with 'ignore', 'clickbait', 'promotion')",
+  'settings.useVisitedFunction': 'Enable browsing content tagging on the current website',
+  'settings.displayEffectOfTheVisitedContent': 'The display effect of the browsed content',
+  'settings.displayEffectOfTheVisitedContent.recordingonly': 'Save records only, no mark display',
+  'settings.displayEffectOfTheVisitedContent.showtagonly': 'Only display marks',
+  'settings.displayEffectOfTheVisitedContent.changecolor': 'Change the title color',
+  'settings.displayEffectOfTheVisitedContent.translucent': 'Translucent',
+  'settings.displayEffectOfTheVisitedContent.hide': 'Hide',
+  'settings.pinnedTags': 'Add the tags you want to pin, separated by commas.',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
+  'settings.pinnedTagsPlaceholder': 'foo, bar',
+  'settings.emojiTags': 'Add the emoji tags, separated by commas',
+  'settings.customStyle': 'Enable custom style for all websites',
+  'settings.customStyleCurrentSite': 'Enable custom style for the current website',
+  'settings.customStyleDefaultValue': `/* Custom style */
 body {
   /* Tag text color */
   --utags-text-tag-color: white;
@@ -34,8 +34,8 @@ body {
   /* Tag background color */
   --utags-text-tag-background-color: orange;
 }`,
-  "settings.customStyleExamples": "Examples",
-  "settings.customStyleExamplesContent": `<p>Custom style examples</p>
+  'settings.customStyleExamples': 'Examples',
+  'settings.customStyleExamplesContent': `<p>Custom style examples</p>
   <p>
   <pre>/* Custom style */
 body {
@@ -77,21 +77,21 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">More examples</a></p>
   `,
-  "settings.useSimplePrompt": "Use simple prompt method to add tags",
-  "settings.openTagsPage": "Open the tag list page",
-  "settings.openDataPage": "Open the import data/export data page",
-  "settings.title": "🏷️ UTags - Add usertags to links",
-  "settings.information": "After changing the settings, reload the page to take effect",
-  "settings.report": "Report and Issue...",
-  "prompt.addTags": "[UTags] Please enter tags, multiple tags are separated by commas",
-  "prompt.pinnedTags": "Pinned",
-  "prompt.mostUsedTags": "Recently commonly used",
-  "prompt.recentAddedTags": "Newly added",
-  "prompt.emojiTags": "Emoji",
-  "prompt.copy": "Copy",
-  "prompt.cancel": "Cancel",
-  "prompt.ok": "OK",
-  "prompt.settings": "Settings",
+  'settings.useSimplePrompt': 'Use simple prompt method to add tags',
+  'settings.openTagsPage': 'Open the tag list page',
+  'settings.openDataPage': 'Open the import data/export data page',
+  'settings.title': '🏷️ UTags - Add usertags to links',
+  'settings.information': 'After changing the settings, reload the page to take effect',
+  'settings.report': 'Report and Issue...',
+  'prompt.addTags': '[UTags] Please enter tags, multiple tags are separated by commas',
+  'prompt.pinnedTags': 'Pinned',
+  'prompt.mostUsedTags': 'Recently commonly used',
+  'prompt.recentAddedTags': 'Newly added',
+  'prompt.emojiTags': 'Emoji',
+  'prompt.copy': 'Copy',
+  'prompt.cancel': 'Cancel',
+  'prompt.ok': 'OK',
+  'prompt.settings': 'Settings',
 }
 
 export default messages

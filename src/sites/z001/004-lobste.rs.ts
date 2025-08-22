@@ -1,4 +1,4 @@
-import defaultSite from "../default"
+import defaultSite from '../default'
 
 export default (() => {
   return {
@@ -7,14 +7,14 @@ export default (() => {
     conditionNodesSelectors: [],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
-      "#nav",
-      "#header",
-      "#subnav",
-      ".mobile_comments",
-      ".description_present",
-      ".morelink",
-      ".user_tree",
-      ".dropdown_parent",
+      '#nav',
+      '#header',
+      '#subnav',
+      '.mobile_comments',
+      '.description_present',
+      '.morelink',
+      '.user_tree',
+      '.dropdown_parent',
       'a[href^="/login"]',
       'a[href^="/logout"]',
       'a[href^="/u#"]',

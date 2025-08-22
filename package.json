@@ -2,7 +2,7 @@
   "name": "utags",
   "displayName": "UTags - Add usertags to links",
   "displayName:zh-CN": "小鱼标签 (UTags) - 为链接添加用户标签",
-  "version": "0.12.11",
+  "version": "0.19.0",
   "description": "Add custom tags or notes to links such as users, posts and videos. It works on X, Facebook, Youtube, TikTok, Reddit and many sites.",
   "description_userscript": "Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.",
   "description_userscript:zh-CN": "这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。",
@@ -27,35 +27,43 @@
     "staging:userscript": "node scripts/userscript/build.mjs --staging && pnpm prettier --log-level warn --write build/userscript-staging/ && http-server build/userscript-staging/ -o",
     "build": "run-s build:*",
     "build:chrome": "plasmo build && node scripts/chrome/update-manifest.mjs",
-    "build:firefox": "plasmo build --target=firefox-mv2 && node scripts/firefox/update-manifest.mjs",
+    "build:firefox": "plasmo build --target=firefox-mv2 && node scripts/firefox/update-manifest.mjs && addons-linter build/firefox-mv2-prod/",
     "build:userscript": "node scripts/userscript/build.mjs && pnpm prettier --log-level warn --write build/userscript-prod/",
     "package": "run-s package:*",
     "package:chrome": "plasmo package",
-    "package:firefox": "plasmo package --target=firefox-mv2"
+    "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip",
+    "test": "vitest --run",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
     "browser-extension-i18n": "^0.0.6",
     "browser-extension-settings": "^0.5.6",
     "browser-extension-storage": "^0.1.2",
-    "browser-extension-utils": "^0.1.19",
-    "plasmo": "^0.90.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "utags-utils": "^0.0.3"
+    "browser-extension-utils": "^0.2.0",
+    "plasmo": "^0.90.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "utags-utils": "^0.3.2"
   },
   "devDependencies": {
-    "@plasmohq/prettier-plugin-sort-imports": "^3.6.4",
-    "@types/chrome": "^0.0.309",
-    "@types/node": "^22.13.10",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@types/chrome": "^0.0.329",
+    "@types/node": "^24.0.10",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "addons-linter": "^7.16.0",
     "bookmarkleter": "^1.1.0",
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.5",
     "http-server": "^14.1.1",
+    "jsdom": "^26.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.5.3",
-    "sass": "^1.67.0",
-    "typescript": "^5.2.2",
+    "prettier": "^3.6.2",
+    "sass": "^1.89.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
     "xo": "^0.60.0"
   },
   "manifest": {
@@ -67,6 +75,7 @@
     "space": 2,
     "prettier": true,
     "globals": [
+      "GM",
       "document"
     ],
     "envs": [
@@ -91,13 +100,21 @@
         }
       },
       {
+        "files": "src/**/*.test.ts",
+        "rules": {
+          "@typescript-eslint/naming-convention": 0
+        }
+      },
+      {
         "files": "src/sites/**/*.ts",
         "rules": {
+          "@typescript-eslint/naming-convention": 0,
           "n/file-extension-in-import": 0
         }
       }
     ],
     "ignores": [
+      "src/storage/index.ts",
       "build/**/*"
     ]
   },

@@ -1,4 +1,66 @@
 :not(#a):not(#b):not(#c) {
+  /* default */
+  * + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  /* Issues */
+  [data-testid="issue-header"] {
+    h1 {
+      + .utags_ul_1 {
+        object-position: 0% 200%;
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: -8px !important;
+      }
+    }
+  }
+
+  /* Pull request */
+  .gh-header-show {
+    h1 {
+      &[data-utags_fit_content="1"] {
+        max-width: fit-content !important;
+      }
+
+      + .utags_ul_1 {
+        object-position: 0% 200%;
+        position: absolute;
+        top: -9999px;
+        z-index: 100;
+        margin-top: -6px !important;
+      }
+    }
+  }
+
+  /* Discussion post */
+  #discussion_bucket .gh-header-show {
+    h1 {
+      + .utags_ul_1 {
+        margin-top: -2px !important;
+      }
+    }
+  }
+
+  /* Legacy codes - before 0.18.0 */
   .search-title,
   /* https://github.com/topics */
   .d-flex.flex-justify-between a[href^="/topics/"] +,

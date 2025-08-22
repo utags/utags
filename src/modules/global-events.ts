@@ -1,4 +1,4 @@
-import { getSettingsValue } from "browser-extension-settings"
+import { getSettingsValue } from 'browser-extension-settings'
 import {
   $,
   $$,
@@ -8,23 +8,24 @@ import {
   extendHistoryApi,
   isTouchScreen,
   removeClass,
-} from "browser-extension-utils"
-import { splitTags } from "utags-utils"
+} from 'browser-extension-utils'
+import { splitTags } from 'utags-utils'
 
-import { i } from "../messages"
-import { getEmojiTags, saveTags } from "../storage"
-import { type NullOrUndefined, type UserTag, type UserTagMeta } from "../types"
-import { filterTags, sortTags } from "../utils"
-import { advancedPrompt } from "./advanced-tag-manager"
-import { simplePrompt } from "./simple-tag-manger"
-import { TAG_VISITED, addVisited, removeVisited } from "./visited"
+import { i } from '../messages'
+import { saveTags } from '../storage/bookmarks'
+import { getEmojiTags } from '../storage/tags'
+import { type NullOrUndefined, type UserTag, type UserTagMeta } from '../types'
+import { filterTags, sortTags } from '../utils'
+import { advancedPrompt } from './advanced-tag-manager'
+import { simplePrompt } from './simple-tag-manger'
+import { addVisited, removeVisited, TAG_VISITED } from './visited'
 
 const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
 let isPromptShown = false
 
 export function hideAllUtagsInArea(target?: HTMLElement | undefined) {
-  const element = $(".utags_show_all")
+  const element = $('.utags_show_all')
   if (!element) {
     return
   }
@@ -37,12 +38,12 @@ export function hideAllUtagsInArea(target?: HTMLElement | undefined) {
     lastShownArea = undefined
   }
 
-  for (const element of $$(".utags_show_all")) {
+  for (const element of $$('.utags_show_all')) {
     // Cancel delay effect
-    addClass(element, "utags_hide_all")
-    removeClass(element, "utags_show_all")
+    addClass(element, 'utags_hide_all')
+    removeClass(element, 'utags_show_all')
     setTimeout(() => {
-      removeClass(element, "utags_hide_all")
+      removeClass(element, 'utags_hide_all')
     })
   }
 }
@@ -52,10 +53,10 @@ function showAllUtagsInArea(element: HTMLElement | undefined) {
     return false
   }
 
-  const utags = $$(".utags_ul", element)
+  const utags = $$('.utags_ul', element)
   // console.log("showAllUtagsInArea", utags.length, element)
   if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
-    addClass(element, "utags_show_all")
+    addClass(element, 'utags_show_all')
     return true
   }
 
@@ -81,8 +82,8 @@ function findElementToShowAllUtags(target: HTMLElement) {
     const style = getComputedStyle(target)
 
     if (
-      style.position === "fixed" ||
-      style.position === "sticky" ||
+      style.position === 'fixed' ||
+      style.position === 'sticky' ||
       /^(BODY|TABLE|UL|OL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
     ) {
       break
@@ -119,7 +120,7 @@ function findElementToShowAllUtags(target: HTMLElement) {
 }
 
 export function bindDocumentEvents() {
-  const eventType = isTouchScreen() ? "touchstart" : "click"
+  const eventType = isTouchScreen() ? 'touchstart' : 'click'
 
   addEventListener(
     doc,
@@ -130,15 +131,15 @@ export function bindDocumentEvents() {
         return
       }
 
-      if (target.closest(".utags_prompt")) {
+      if (target.closest('.utags_prompt')) {
         return
       }
 
-      if (target.closest(".utags_ul")) {
+      if (target.closest('.utags_ul')) {
         const captainTag = target.closest(
-          ".utags_captain_tag,.utags_captain_tag2"
+          '.utags_captain_tag,.utags_captain_tag2'
         ) as HTMLElement | undefined
-        const textTag = target.closest(".utags_text_tag") as
+        const textTag = target.closest('.utags_text_tag') as
           | HTMLElement
           | undefined
         if (captainTag) {
@@ -154,14 +155,14 @@ export function bindDocumentEvents() {
 
           setTimeout(async () => {
             const key = captainTag.dataset.utags_key
-            const tags = captainTag.dataset.utags_tags || ""
+            const tags = captainTag.dataset.utags_tags || ''
             const meta: UserTagMeta | undefined = captainTag.dataset.utags_meta
               ? (JSON.parse(captainTag.dataset.utags_meta) as UserTagMeta)
               : undefined
-            const myPrompt = getSettingsValue("useSimplePrompt")
+            const myPrompt = getSettingsValue('useSimplePrompt')
               ? simplePrompt
               : advancedPrompt
-            const newTags = (await myPrompt(i("prompt.addTags"), tags)) as
+            const newTags = (await myPrompt(i('prompt.addTags'), tags)) as
               | string
               | NullOrUndefined
 
@@ -210,13 +211,13 @@ export function bindDocumentEvents() {
 
   addEventListener(
     doc,
-    "keydown",
+    'keydown',
     (event: KeyboardEvent) => {
       if (event.defaultPrevented) {
         return // 如果事件已经在进行中，则不做任何事。
       }
 
-      if (event.key === "Escape" && $(".utags_show_all")) {
+      if (event.key === 'Escape' && $('.utags_show_all')) {
         // 按“ESC”键时要做的事。
         hideAllUtagsInArea()
         // 取消默认动作，从而避免处理两次。
@@ -228,11 +229,11 @@ export function bindDocumentEvents() {
 
   addEventListener(
     doc,
-    "mousedown",
+    'mousedown',
     (event: MouseEvent) => {
       const target = event.target as HTMLElement
 
-      if (target?.closest(".utags_ul")) {
+      if (target?.closest('.utags_ul')) {
         event.preventDefault()
         event.stopPropagation()
         event.stopImmediatePropagation()
@@ -242,11 +243,11 @@ export function bindDocumentEvents() {
   )
   addEventListener(
     doc,
-    "mouseup",
+    'mouseup',
     (event: MouseEvent) => {
       const target = event.target as HTMLElement
 
-      if (target?.closest(".utags_ul")) {
+      if (target?.closest('.utags_ul')) {
         event.preventDefault()
         event.stopPropagation()
         event.stopImmediatePropagation()
@@ -262,7 +263,7 @@ function extendHistoryApi2() {
     const url2 = location.href
     if (url !== url2) {
       url = url2
-      globalThis.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event('locationchange'))
     }
   }, 100)
 }
@@ -277,7 +278,7 @@ export function bindWindowEvents() {
   // Firefox extension: X
   extendHistoryApi2()
 
-  addEventListener(globalThis, "locationchange", function () {
+  addEventListener(globalThis, 'locationchange', function () {
     hideAllUtagsInArea()
   })
 }

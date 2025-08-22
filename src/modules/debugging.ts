@@ -2,7 +2,7 @@ import {
   addEventListener,
   doc,
   removeEventListener,
-} from "browser-extension-utils"
+} from 'browser-extension-utils'
 
 function printNodeInfo(element: HTMLElement) {
   console.log(element)
@@ -40,21 +40,21 @@ function clickHandler(event: Event) {
   event.stopPropagation()
   event.stopImmediatePropagation()
 
-  console.log(">>>>>>>>>>>>>>>>>")
+  console.log('>>>>>>>>>>>>>>>>>')
   printNodeInfo(target)
-  console.log("<<<<<<<<<<<<<<<<<")
+  console.log('<<<<<<<<<<<<<<<<<')
 }
 
 function startDebuggingMode() {
-  console.log("start debugging mode")
+  console.log('start debugging mode')
 
-  addEventListener(doc, "click", clickHandler, true)
+  addEventListener(doc, 'click', clickHandler, true)
 }
 
 function stopDebuggingMode() {
-  console.log("stop debugging mode")
+  console.log('stop debugging mode')
 
-  removeEventListener(doc, "click", clickHandler, true)
+  removeEventListener(doc, 'click', clickHandler, true)
 }
 
 let intervalId: NodeJS.Timeout
@@ -64,21 +64,21 @@ function startAutoShowAllUtags() {
     return
   }
 
-  console.log("startAutoShowAllUtags")
-  document.body.classList.add("utags_show_all")
+  console.log('startAutoShowAllUtags')
+  document.body.classList.add('utags_show_all')
   intervalId = setInterval(() => {
-    document.body.classList.add("utags_show_all")
+    document.body.classList.add('utags_show_all')
   }, 5000)
 }
 
 function stopAutoShowAllUtags() {
-  console.log("stopAutoShowAllUtags")
+  console.log('stopAutoShowAllUtags')
   clearInterval(intervalId)
-  document.body.classList.remove("utags_show_all")
+  document.body.classList.remove('utags_show_all')
 }
 
 function startDelayedDebugger() {
-  console.log("start debugger after 5 seconds")
+  console.log('start debugger after 5 seconds')
   setTimeout(() => {
     // eslint-disable-next-line no-debugger
     debugger
@@ -87,7 +87,7 @@ function startDelayedDebugger() {
 
 let isDebuggingMode = false
 let isAutoShowAllUtagsMode = false
-let lastKey = ""
+let lastKey = ''
 let keydownCount = 0
 
 export function registerDebuggingHotkey() {
@@ -95,9 +95,9 @@ export function registerDebuggingHotkey() {
   isAutoShowAllUtagsMode = true
   addEventListener(
     doc,
-    "keydown",
+    'keydown',
     (event: KeyboardEvent) => {
-      if (event.key === "F1" || event.key === "F2" || event.key === "F3") {
+      if (event.key === 'F1' || event.key === 'F2' || event.key === 'F3') {
         if (event.key === lastKey) {
           keydownCount++
         } else {
@@ -116,7 +116,7 @@ export function registerDebuggingHotkey() {
 
         if (keydownCount >= 3) {
           switch (event.key) {
-            case "F1": {
+            case 'F1': {
               if (isDebuggingMode) {
                 keydownCount = 0
                 isDebuggingMode = false
@@ -130,7 +130,7 @@ export function registerDebuggingHotkey() {
               break
             }
 
-            case "F2": {
+            case 'F2': {
               if (isAutoShowAllUtagsMode) {
                 keydownCount = 0
                 isAutoShowAllUtagsMode = false
@@ -144,7 +144,7 @@ export function registerDebuggingHotkey() {
               break
             }
 
-            case "F3": {
+            case 'F3': {
               startDelayedDebugger()
 
               break

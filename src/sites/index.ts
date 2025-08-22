@@ -5,52 +5,56 @@ import {
   getAttribute,
   isUrl,
   uniq,
-} from "browser-extension-utils"
-import { getTrimmedTitle, trimTitle } from "utags-utils"
+} from 'browser-extension-utils'
+import { getTrimmedTitle, trimTitle } from 'utags-utils'
 
-import type { UserTag, UserTagMeta, UtagsHTMLElement } from "../types"
-import defaultSite from "./default"
-import v2ex from "./z001/001-v2ex"
-import greasyforkOrg from "./z001/002-greasyfork.org"
-import hackerNews from "./z001/003-news.ycombinator.com"
-import lobsters from "./z001/004-lobste.rs"
-import github from "./z001/005-github.com"
-import reddit from "./z001/006-reddit.com"
-import twitter from "./z001/007-twitter.com"
-import weixin from "./z001/008-mp.weixin.qq.com"
-import instagram from "./z001/009-instagram.com"
-import threads from "./z001/010-threads.net"
-import facebook from "./z001/011-facebook.com"
-import youtube from "./z001/012-youtube.com"
-import bilibili from "./z001/013-bilibili.com"
-import tiktok from "./z001/014-tiktok.com"
-import _52pojie from "./z001/015-52pojie.cn"
-import juejin from "./z001/016-juejin.cn"
-import zhihu from "./z001/017-zhihu.com"
-import xiaohongshu from "./z001/018-xiaohongshu.com"
-import weibo from "./z001/019-weibo.com"
-import sspai from "./z001/020-sspai.com"
-import douyin from "./z001/021-douyin.com"
-import podcasts_google_com from "./z001/022-podcasts.google.com"
-import rebang_today from "./z001/023-rebang.today"
-import myanimelist_net from "./z001/024-myanimelist.net"
-import douban from "./z001/025-douban.com"
-import pixiv from "./z001/026-pixiv.net"
-import discourse from "./z001/027-discourse"
-import nga from "./z001/028-nga.cn"
-import dlsite_com from "./z001/029-dlsite.com"
-import keylol_com from "./z001/030-keylol.com"
-import tampermonkey_net_cn from "./z001/031-tampermonkey.net.cn"
-import flarum from "./z001/032-flarum"
-import nodeseek_com from "./z001/033-nodeseek.com"
-import inoreader_com from "./z001/034-inoreader.com"
-import zhipin_com from "./z001/035-zhipin.com"
-import pornhub from "./z999/001-pornhub.com"
-import ehentai from "./z999/002-e-hentai.org"
-import panda_chaika_moe from "./z999/003-panda.chaika.moe"
-import dmm_co_jp from "./z999/004-dmm.co.jp"
-import kemono_su from "./z999/005-kemono.su"
-import rule34video_com from "./z999/006-rule34video.com"
+import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
+import defaultSite from './default'
+import v2ex from './z001/001-v2ex'
+import greasyforkOrg from './z001/002-greasyfork.org'
+import hackerNews from './z001/003-news.ycombinator.com'
+import lobsters from './z001/004-lobste.rs'
+import github from './z001/005-github.com'
+import reddit from './z001/006-reddit.com'
+import twitter from './z001/007-twitter.com'
+import weixin from './z001/008-mp.weixin.qq.com'
+import instagram from './z001/009-instagram.com'
+import threads from './z001/010-threads.net'
+import facebook from './z001/011-facebook.com'
+import youtube from './z001/012-youtube.com'
+import bilibili from './z001/013-bilibili.com'
+import tiktok from './z001/014-tiktok.com'
+import _52pojie from './z001/015-52pojie.cn'
+import juejin from './z001/016-juejin.cn'
+import zhihu from './z001/017-zhihu.com'
+import xiaohongshu from './z001/018-xiaohongshu.com'
+import weibo from './z001/019-weibo.com'
+import sspai from './z001/020-sspai.com'
+import douyin from './z001/021-douyin.com'
+import podcasts_google_com from './z001/022-podcasts.google.com'
+import rebang_today from './z001/023-rebang.today'
+import myanimelist_net from './z001/024-myanimelist.net'
+import douban from './z001/025-douban.com'
+import pixiv from './z001/026-pixiv.net'
+import discourse from './z001/027-discourse'
+import nga from './z001/028-nga.cn'
+import dlsite_com from './z001/029-dlsite.com'
+import keylol_com from './z001/030-keylol.com'
+import tampermonkey_net_cn from './z001/031-tampermonkey.net.cn'
+import flarum from './z001/032-flarum'
+import nodeseek_com from './z001/033-nodeseek.com'
+import inoreader_com from './z001/034-inoreader.com'
+import zhipin_com from './z001/035-zhipin.com'
+import twitch_tv from './z001/036-twitch.tv'
+import yamibo_com from './z001/037-yamibo.com'
+import flickr_com from './z001/038-flickr.com'
+import ruanyifeng_com from './z001/039-ruanyifeng.com'
+import pxxnhub from './z999/001-pxxnhub.com'
+import ehentxx from './z999/002-e-hentxx.org'
+import panda_chaika_moe from './z999/003-panda.chaika.moe'
+import dmm_co_jp from './z999/004-dmm.co.jp'
+import kemono_su from './z999/005-kemono.su'
+import rule34video_com from './z999/006-rule34video.com'
 
 type Site = {
   matches: RegExp
@@ -103,8 +107,12 @@ const sites: Site[] = [
   nodeseek_com,
   inoreader_com,
   zhipin_com,
-  pornhub,
-  ehentai,
+  twitch_tv,
+  yamibo_com,
+  flickr_com,
+  ruanyifeng_com,
+  pxxnhub,
+  ehentxx,
   panda_chaika_moe,
   dlsite_com,
   dmm_co_jp,
@@ -114,7 +122,7 @@ const sites: Site[] = [
 
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
-  .filter((v) => typeof v === "function")
+  .filter((v) => typeof v === 'function')
 
 function siteForExtensions(hostname: string): Site {
   const allowSites = [
@@ -140,9 +148,9 @@ function matchedSite(hostname: string) {
 
   if (
     // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "chrome-mv3" ||
+    process.env.PLASMO_TARGET === 'chrome-mv3' ||
     // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === "firefox-mv2"
+    process.env.PLASMO_TARGET === 'firefox-mv2'
   ) {
     return siteForExtensions(hostname)
   }
@@ -151,7 +159,7 @@ function matchedSite(hostname: string) {
 }
 
 function joinSelectors(selectors: string[] | undefined) {
-  return selectors ? selectors.join(",") : undefined
+  return selectors ? selectors.join(',') : undefined
 }
 
 const hostname = location.hostname
@@ -174,7 +182,7 @@ const validMediaSelector = joinSelectors(currentSite.validMediaSelectors)
 
 const validateFunction = currentSite.validate || defaultSite.validate
 const mappingFunction =
-  typeof currentSite.map === "function" ? currentSite.map : undefined
+  typeof currentSite.map === 'function' ? currentSite.map : undefined
 
 // console.log([
 //   currentSite,
@@ -186,16 +194,16 @@ const mappingFunction =
 // ])
 
 export function getListNodes() {
-  if (typeof currentSite.preProcess === "function") {
+  if (typeof currentSite.preProcess === 'function') {
     currentSite.preProcess()
   }
 
-  if (typeof currentSite.getStyle === "function" && !$("#utags_site_style")) {
+  if (typeof currentSite.getStyle === 'function' && !$('#utags_site_style')) {
     const styleText = currentSite.getStyle()
     if (styleText) {
-      addElement("style", {
+      addElement('style', {
         textContent: styleText,
-        id: "utags_site_style",
+        id: 'utags_site_style',
       })
     }
   }
@@ -227,25 +235,25 @@ const preValidate = (element: HTMLElement) => {
     return false
   }
 
-  if (element.tagName === "A") {
-    let href = getAttribute(element, "href")
+  if (element.tagName === 'A') {
+    let href = getAttribute(element, 'href')
     if (!href) {
       return false
     }
 
     href = href.trim()
-    if (href.length === 0 || href === "#") {
+    if (href.length === 0 || href === '#') {
       return false
     }
 
     const protocol = (element as HTMLAnchorElement).protocol
-    if (protocol !== "http:" && protocol !== "https:") {
+    if (protocol !== 'http:' && protocol !== 'https:') {
       return false
     }
   }
 
   if (
-    element.closest(".utags_text_tag,.browser_extension_settings_container,a a")
+    element.closest('.utags_text_tag,.browser_extension_settings_container,a a')
   ) {
     return false
   }
@@ -362,7 +370,7 @@ export function matchedNodes() {
 
   addMatchedNodes(matchedNodesSet)
 
-  if (typeof currentSite.addExtraMatchedNodes === "function") {
+  if (typeof currentSite.addExtraMatchedNodes === 'function') {
     currentSite.addExtraMatchedNodes(matchedNodesSet)
   }
 
@@ -383,7 +391,7 @@ export function matchedNodes() {
   //   matchedNodesSet.add(element)
   // }
 
-  if (typeof currentSite.postProcess === "function") {
+  if (typeof currentSite.postProcess === 'function') {
     currentSite.postProcess()
   }
 

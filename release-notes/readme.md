@@ -2,6 +2,32 @@
 
 > English | [中文](zh-CN.md)
 
+## uTags v0.19 Release Notes
+
+- Optimize data sync logic, solve data inconsistency problem
+- Update dmm.co.jp site support
+
+## uTags v0.18 Release Notes
+
+### 🌐 New Website Support
+
+- **Twitch** (twitch.tv) - Tag management for streaming platform
+- **Yamibo** (bbs.yamibo.com) - Forum content tagging
+- **Flickr** (flickr.com) - Photo sharing platform tag functionality
+- **Ruan YiFeng's Blog** (ruanyifeng.com) - Tech blog tag management
+
+### ✨ Core Feature Enhancements
+
+#### V2EX Platform Optimization
+
+- Support for special tag functionality on **VXNA** and **Planet** pages
+- Effectively filter out uninteresting blog sources to improve browsing experience
+
+#### GitHub Ecosystem Deep Integration
+
+- **File Management**: Support for tagging GitHub files and folders, building personal favorites
+- **Issue Enhancements**: Display relevant tags next to issue titles on detail pages
+
 ## 0.9.5
 
 - Add emoji tags 👍

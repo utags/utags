@@ -4,12 +4,16 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.12.11
+// @version              0.19.0
 // @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 // @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
+// @match                https://*.utags.link/*
+// @match                https://*.utags.top/*
+// @match                https://*.utags.plus/*
+// @match                https://*.utags.vip/*
 // @match                https://x.com/*
 // @match                https://twitter.com/*
 // @match                https://github.com/*
@@ -55,7 +59,9 @@
 // @match                https://ngabbs.com/*
 // @match                https://www.dlsite.com/*
 // @match                https://keylol.com/*
+// @match                https://kemono.cr/*
 // @match                https://kemono.su/*
+// @match                https://coomer.st/*
 // @match                https://coomer.su/*
 // @match                https://nekohouse.su/*
 // @match                https://rule34video.com/*
@@ -64,18 +70,35 @@
 // @match                https://bbs.tampermonkey.net.cn/*
 // @match                https://discuss.flarum.org/*
 // @match                https://discuss.flarum.org.cn/*
+// @match                https://yuanliao.info/*
 // @match                https://www.nodeloc.com/*
-// @match                https://freesmth.net/*
-// @match                https://freesmth.uk/*
 // @match                https://veryfb.com/*
 // @match                https://www.nodeseek.com/*
 // @match                https://*.inoreader.com/*
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*
 // @match                https://www.zhipin.com/*
+// @match                https://*.twitch.tv/*
+// @match                https://*.yamibo.com/*
+// @match                https://*.flickr.com/*
+// @match                https://*.ruanyifeng.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
+// @include              https://*.utags.link/*
+// @include              https://x.com/*
+// @include              https://www.reddit.com/*
+// @include              https://github.com/*
+// @include              https://www.instagram.com/*
+// @include              https://www.tiktok.com/*
+// @include              https://*.youtube.com/*
+// @include              https://greasyfork.org/*
+// @include              https://*.dmm.co.j*/*
+// @include              https://e*hentai.org/*
+// @include              https://*.p*nhub.com/*
+// @include              https://*.e*hentai.org/*
+// @connect              dav.jianguoyun.com
+// @connect              *
 // @run-at               document-start
 // @grant                GM.getValue
 // @grant                GM.setValue
@@ -83,6 +106,8 @@
 // @grant                GM_removeValueChangeListener
 // @grant                GM_addElement
 // @grant                GM.registerMenuCommand
+// @grant                GM.xmlHttpRequest
+// @grant                GM_xmlhttpRequest
 // ==/UserScript==
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,8 +120,6 @@
 //// ** downloadURL https://scriptcat.org/scripts/code/2784/%F0%9F%8F%B7%EF%B8%8F+UTags+-+Add+usertags+to+links.user.js                     ////
 //// * https://github.com/utags/utags                                                                                                       ////
 //// ** downloadURL https://github.com/utags/utags/raw/main/build/userscript-prod/utags.user.js                                             ////
-//// * https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96                                                                ////
-//// ** downloadURL https://gist.github.com/PipecraftNet/38d90a567ff04660f2a1b5430af9ae96/raw/utags.user.js                                 ////
 ////                                                                                                                                        ////
 ////                                                                                                                                        ////
 ////                         Extension Version                                                                                              ////
@@ -108,6 +131,43 @@
 //
 ;(() => {
   "use strict"
+  var __defProp = Object.defineProperty
+  var __defProps = Object.defineProperties
+  var __getOwnPropDescs = Object.getOwnPropertyDescriptors
+  var __getOwnPropSymbols = Object.getOwnPropertySymbols
+  var __hasOwnProp = Object.prototype.hasOwnProperty
+  var __propIsEnum = Object.prototype.propertyIsEnumerable
+  var __defNormalProp = (obj, key, value) =>
+    key in obj
+      ? __defProp(obj, key, {
+          enumerable: true,
+          configurable: true,
+          writable: true,
+          value,
+        })
+      : (obj[key] = value)
+  var __spreadValues = (a, b) => {
+    for (var prop in b || (b = {}))
+      if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop])
+    if (__getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(b)) {
+        if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop])
+      }
+    return a
+  }
+  var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b))
+  var __objRest = (source, exclude) => {
+    var target = {}
+    for (var prop in source)
+      if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+        target[prop] = source[prop]
+    if (source != null && __getOwnPropSymbols)
+      for (var prop of __getOwnPropSymbols(source)) {
+        if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+          target[prop] = source[prop]
+      }
+    return target
+  }
   var listeners = {}
   var getValue = async (key) => {
     const value = await GM.getValue(key)
@@ -153,12 +213,13 @@
     }
   }
   var doc = document
-  var win = window
+  var win = globalThis
   var uniq = (array) => [...new Set(array)]
   if (typeof String.prototype.replaceAll !== "function") {
     String.prototype.replaceAll = String.prototype.replace
   }
-  var $ = (selectors, element) => (element || doc).querySelector(selectors)
+  var $ = (selectors, element) =>
+    (element || doc).querySelector(selectors) || void 0
   var $$ = (selectors, element) => [
     ...(element || doc).querySelectorAll(selectors),
   ]
@@ -220,7 +281,7 @@
     }
   }
   var getAttribute = (element, name) =>
-    element && element.getAttribute ? element.getAttribute(name) : null
+    element && element.getAttribute ? element.getAttribute(name) : void 0
   var setAttribute = (element, name, value) =>
     element && element.setAttribute ? element.setAttribute(name, value) : void 0
   var setAttributes = (element, attributes) => {
@@ -313,16 +374,16 @@
     const replaceState = history.replaceState
     history.pushState = function () {
       pushState.apply(history, arguments)
-      window.dispatchEvent(new Event("pushstate"))
-      window.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event("pushstate"))
+      globalThis.dispatchEvent(new Event("locationchange"))
     }
     history.replaceState = function () {
       replaceState.apply(history, arguments)
-      window.dispatchEvent(new Event("replacestate"))
-      window.dispatchEvent(new Event("locationchange"))
+      globalThis.dispatchEvent(new Event("replacestate"))
+      globalThis.dispatchEvent(new Event("locationchange"))
     }
-    window.addEventListener("popstate", function () {
-      window.dispatchEvent(new Event("locationchange"))
+    globalThis.addEventListener("popstate", function () {
+      globalThis.dispatchEvent(new Event("locationchange"))
     })
   }
   var getOffsetPosition = (element, referElement) => {
@@ -463,7 +524,7 @@
   var addStyle = (styleText) =>
     addElement2(null, "style", { textContent: styleText })
   var registerMenuCommand = (name, callback, accessKey) => {
-    if (window !== top) {
+    if (globalThis !== top) {
       return
     }
     if (typeof GM.registerMenuCommand !== "function") {
@@ -1187,7 +1248,7 @@
     handleShowSettingsUrl()
   }
   var content_default =
-    '#TOFIX_uFEFF{display:block}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul:not(.utags_ul)[data-utags_key],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ol:not(.utags_ul)[data-utags_key]{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity)[data-utags=off] .utags_ul{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline-flex !important;flex-direction:row !important;flex-wrap:wrap !important;align-content:flex-start;justify-content:flex-start;overflow:visible;white-space:normal;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important;max-width:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:unset !important;border:none !important;padding:0 !important;margin:0 !important;vertical-align:top !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:var(--utags-text-tag-font-size) !important;font-family:var(--utags-text-tag-font-family) !important;letter-spacing:0 !important;line-height:1 !important;height:unset !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;cursor:pointer;z-index:0;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag:link{cursor:pointer}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:var(--utags-text-tag-font-size);line-height:1;height:unset;width:unset;max-width:var(--utags-text-tag-max-width);white-space:var(--utags-text-tag-white-space);overflow:hidden;text-overflow:ellipsis;border-radius:unset;border:unset;background:unset;margin:unset;padding:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::after{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]{height:var(--utags-visited-tag-size) !important;width:var(--utags-visited-tag-size) !important;border-radius:var(--utags-visited-tag-size) !important;--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);--utags-text-tag-border-width: 0px;margin-left:2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_emoji_tag{--utags-text-tag-background-color: var( --utags-emoji-tag-background-color );--utags-text-tag-font-size: var(--utags-emoji-tag-font-size);--utags-text-tag-font-family: var(--utags-emoji-tag-font-family);--utags-text-tag-border-width: var(--utags-emoji-tag-border-width);--utags-text-tag-border-color: var(--utags-emoji-tag-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{width:var(--utags-captain-tag-size) !important;height:var(--utags-captain-tag-size) !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset) !important;position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li{position:relative !important;height:var(--utags-captain-tag-size) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding-top:5vh;background-color:hsla(0,0%,100%,.1);z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:94%;max-height:100%;overflow:hidden;overflow:auto;color:#000;background-color:#fff;border-radius:5px;padding:14px;margin:0 auto;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:var(--utags-text-tag-font-family) !important;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;margin:0;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{outline:0;border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt .utags_link_settings{font-size:12px;text-decoration:underline;cursor:pointer;color:#374151}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper .utags_button_copy{cursor:pointer;font-size:10px;line-height:1;height:18px;padding:0 6px;border-radius:2px;color:var(--utags-action-button-text-color);background-color:var(--utags-action-button-bg-color);border:1px solid var(--utags-action-button-border-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty+button{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag[data-utags_tag=":visited"]:hover{--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);opacity:.3}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between;max-height:200px;overflow-y:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);position:sticky;top:0;display:block;font-size:12px;font-weight:600;text-align:left;padding:0 2px 0 8px;cursor:default;background-color:#f8fafe}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{box-sizing:border-box;cursor:pointer;font-size:12px;height:16px;display:flex;align-items:center;padding:0 2px 0 8px;margin:0;max-width:150px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--utags-text-tag-font-family) !important;font-size:12px;line-height:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key=customStyleValue]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key^=customStyleValue_]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8BFB,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:99.99% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag2{color:#ff0 !important}[data-utags_display-effect-of-the-visited-content="4"] [data-utags_list_node*=",:visited,"] [data-utags_condition_node][data-utags_visited="1"]{color:var(--utags-visited-title-color)}[data-utags_display-effect-of-the-visited-content="2"] [data-utags_list_node*=",:visited,"]{opacity:var(--utags-visited-opacity)}[data-utags_display-effect-of-the-visited-content="3"] [data-utags_list_node*=",:visited,"]{opacity:5%;display:none}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}textarea[data-key=emojiTags]{font-family:var(--utags-text-tag-font-family)}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-captain-tag-size: 14px;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-text-tag-font-size: 10px;--utags-text-tag-border-width: 1px;--utags-text-tag-max-width: 90px;--utags-text-tag-white-space: nowrap;--utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-emoji-tag-border-color: #fff0;--utags-emoji-tag-background-color: #fff0;--utags-emoji-tag-font-size: 12px;--utags-emoji-tag-border-width: 0;--utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-visited-tag-background-color: #bdbdbd;--utags-visited-tag-size: 11px;--utags-visited-title-color: #aaa;--utags-visited-opacity: 10%;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply-5: block;--utags-notag-ul-height-5: 0;--utags-notag-ul-width-5: 0;--utags-notag-ul-position-5: absolute;--utags-notag-ul-top-5: -9999px;--utags-notag-captain-tag-top-5: 0;--utags-notag-captain-tag-left-5: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}[data-utags_darkmode="1"]{--utags-visited-title-color: #666}'
+    '#TOFIX_uFEFF{display:block}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul:not(.utags_ul)[data-utags_key],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ol:not(.utags_ul)[data-utags_key]{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity)[data-utags=off] .utags_ul{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline-flex !important;flex-direction:row !important;flex-wrap:wrap !important;align-content:flex-start;justify-content:flex-start;overflow:visible;white-space:normal;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important;max-width:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:unset !important;border:none !important;padding:0 !important;margin:0 !important;vertical-align:top !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag{box-sizing:border-box !important;display:block !important;border:var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:var(--utags-text-tag-font-size) !important;font-family:var(--utags-text-tag-font-family) !important;letter-spacing:0 !important;line-height:1 !important;height:unset !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;cursor:pointer;z-index:0;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag:link{cursor:pointer}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:var(--utags-text-tag-font-size);line-height:1;height:unset;width:unset;max-width:var(--utags-text-tag-max-width);white-space:var(--utags-text-tag-white-space);overflow:hidden;text-overflow:ellipsis;border-radius:unset;border:unset;background:unset;margin:unset;padding:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::after{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]{height:var(--utags-visited-tag-size) !important;width:var(--utags-visited-tag-size) !important;border-radius:var(--utags-visited-tag-size) !important;--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);--utags-text-tag-border-width: 0px;margin-left:2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_emoji_tag{--utags-text-tag-background-color: var( --utags-emoji-tag-background-color );--utags-text-tag-font-size: var(--utags-emoji-tag-font-size);--utags-text-tag-font-family: var(--utags-emoji-tag-font-family);--utags-text-tag-border-width: var(--utags-emoji-tag-border-width);--utags-text-tag-border-color: var(--utags-emoji-tag-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2{width:var(--utags-captain-tag-size) !important;height:var(--utags-captain-tag-size) !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset) !important;position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li{position:relative !important;height:var(--utags-captain-tag-size) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding-top:5vh;background-color:hsla(0,0%,100%,.1);z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:94%;max-height:100%;overflow:hidden;overflow:auto;color:#000;background-color:#fff;border-radius:5px;padding:14px;margin:0 auto;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:var(--utags-text-tag-font-family) !important;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;margin:0;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{outline:0;border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt .utags_link_settings{font-size:12px;text-decoration:underline;cursor:pointer;color:#374151}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper .utags_button_copy{cursor:pointer;font-size:10px;line-height:1;height:18px;padding:0 6px;border-radius:2px;color:var(--utags-action-button-text-color);background-color:var(--utags-action-button-bg-color);border:1px solid var(--utags-action-button-border-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty+button{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag[data-utags_tag=":visited"]:hover{--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);opacity:.3}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between;max-height:200px;overflow-y:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);position:sticky;top:0;display:block;font-size:12px;font-weight:600;text-align:left;padding:0 2px 0 8px;cursor:default;background-color:#f8fafe}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{box-sizing:border-box;cursor:pointer;font-size:12px;height:16px;display:flex;align-items:center;padding:0 2px 0 8px;margin:0;max-width:150px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--utags-text-tag-font-family) !important;font-size:12px;line-height:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key=customStyleValue]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key^=customStyleValue_]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]{transition:opacity .1s ease-in}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8BFB,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag2{color:#ff0 !important}[data-utags_display-effect-of-the-visited-content="4"] [data-utags_list_node*=",:visited,"] [data-utags_condition_node][data-utags_visited="1"]{color:var(--utags-visited-title-color) !important}[data-utags_display-effect-of-the-visited-content="2"] [data-utags_list_node*=",:visited,"]{opacity:var(--utags-visited-opacity)}[data-utags_display-effect-of-the-visited-content="3"] [data-utags_list_node*=",:visited,"]{opacity:5%;display:none}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}textarea[data-key=emojiTags]{font-family:var(--utags-text-tag-font-family)}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-captain-tag-size: 14px;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-text-tag-font-size: 10px;--utags-text-tag-border-width: 1px;--utags-text-tag-max-width: 90px;--utags-text-tag-white-space: nowrap;--utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-emoji-tag-border-color: #fff0;--utags-emoji-tag-background-color: #fff0;--utags-emoji-tag-font-size: 12px;--utags-emoji-tag-border-width: 0;--utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-visited-tag-background-color: #bdbdbd;--utags-visited-tag-size: 11px;--utags-visited-title-color: #aaa;--utags-visited-opacity: 10%;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply-5: block;--utags-notag-ul-height-5: 0;--utags-notag-ul-width-5: 0;--utags-notag-ul-position-5: absolute;--utags-notag-ul-top-5: -9999px;--utags-notag-captain-tag-top-5: 0;--utags-notag-captain-tag-left-5: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}[data-utags_darkmode="1"]{--utags-visited-title-color: #666}'
   function createTag(tagName, options) {
     const a = createElement("a", {
       title: tagName,
@@ -1203,7 +1264,7 @@
     if (!options.noLink) {
       a.setAttribute(
         "href",
-        "https://utags.pipecraft.net/tags/#" + encodeURIComponent(tagName)
+        "https://utags.link/#" + encodeURIComponent(tagName)
       )
       a.setAttribute("target", "_blank")
     }
@@ -1253,7 +1314,7 @@
     "prompt.recentAddedTags": "Newly added",
     "prompt.emojiTags": "Emoji",
     "prompt.copy": "Copy",
-    "prompt.cancel": "Cancle",
+    "prompt.cancel": "Cancel",
     "prompt.ok": "OK",
     "prompt.settings": "Settings",
   }
@@ -1320,8 +1381,36 @@
     "en,en-US": en_default2,
     "zh,zh-CN": zh_cn_default2,
   })
+  var MIN_VALID_TIMESTAMP = 631152e6
+  var MAX_VALID_TIMESTAMP = 9999999999999
+  function isValidDate(date) {
+    return (
+      typeof date === "number" &&
+      date > MIN_VALID_TIMESTAMP &&
+      date < MAX_VALID_TIMESTAMP
+    )
+  }
+  function normalizeCreated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const minValidDate = Math.min(
+      isCreatedValid ? created : Infinity,
+      isUpdatedValid ? updated : Infinity
+    )
+    return Number.isFinite(minValidDate) ? minValidDate : defaultDate
+  }
+  function normalizeUpdated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const maxValidDate = Math.max(
+      isCreatedValid ? created : 0,
+      isUpdatedValid ? updated : 0
+    )
+    return maxValidDate || defaultDate
+  }
   function trimTitle(title) {
-    return title ? title.replaceAll(/\s+/gm, " ").trim() : ""
+    if (!title) return ""
+    return title.replaceAll(/\s+/gm, " ").trim()
   }
   function getTrimmedTitle(element) {
     return trimTitle(element.textContent)
@@ -1330,127 +1419,114 @@
     if (!text) {
       return []
     }
+    let inputText
+    if (Array.isArray(text)) {
+      inputText = text.join(",")
+    } else if (text instanceof Set) {
+      inputText = [...text].join(",")
+    } else {
+      inputText = text
+    }
+    if (!inputText.trim()) {
+      return []
+    }
     return [
       ...new Set(
-        text
-          .replaceAll(/[\n\r\t\s]+/g, " ")
-          .split(/[,，]/)
+        inputText
+          .replaceAll(
+            /[ \t\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+/g,
+            " "
+          )
+          .split(/[,，\n\r]+/)
           .map((tag) => tag.trim())
           .filter(Boolean)
       ),
     ]
   }
-  var extensionVersion = "0.8.0"
-  var databaseVersion = 2
-  var storageKey2 = "extension.utags.urlmap"
-  var storageKeyRecentTags = "extension.utags.recenttags"
-  var storageKeyMostUsedTags = "extension.utags.mostusedtags"
-  var storageKeyRecentAddedTags = "extension.utags.recentaddedtags"
-  var cachedUrlMap
-  async function getUrlMap() {
-    return (await getValue(storageKey2)) || {}
-  }
-  async function getUrlMapVesion1() {
-    return getValue("plugin.utags.tags.v1")
-  }
-  async function getCachedUrlMap() {
-    if (!cachedUrlMap) {
-      cachedUrlMap = await getUrlMap()
-    }
-    return cachedUrlMap
-  }
-  function getTags(key) {
-    return (cachedUrlMap && cachedUrlMap[key]) || { tags: [] }
-  }
-  async function saveTags(key, tags, meta) {
-    const urlMap = await getUrlMap()
-    urlMap.meta = Object.assign({}, urlMap.meta, {
-      extensionVersion,
-      databaseVersion,
-    })
-    const newTags = mergeTags(tags, [])
-    let oldTags = []
-    if (newTags.length === 0) {
-      delete urlMap[key]
-    } else {
-      const now = Date.now()
-      const data = urlMap[key] || {}
-      oldTags = data.tags
-      const newMeta = Object.assign({}, data.meta, meta, {
-        updated: now,
-      })
-      newMeta.created = newMeta.created || now
-      urlMap[key] = {
-        tags: newTags,
-        meta: newMeta,
-      }
-    }
-    await setValue(storageKey2, urlMap)
-    await addRecentTags(newTags, oldTags)
-  }
+  var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
+  var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
+  var STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
   function getScore(weight = 1) {
     return (Math.floor(Date.now() / 1e3) / 1e9) * weight
   }
+  var isUpdating = false
+  var updateQueue = []
   async function addRecentTags(newTags, oldTags) {
-    if (newTags.length === 0) {
-      return
+    if (newTags.length === 0) return
+    if (isUpdating) {
+      return new Promise((resolve) => {
+        updateQueue.push({ newTags, oldTags })
+        resolve()
+      })
     }
-    newTags =
-      oldTags && oldTags.length > 0
-        ? newTags.filter((v) => !oldTags.includes(v))
-        : newTags
-    if (newTags.length > 0) {
-      const recentTags = (await getValue(storageKeyRecentTags)) || []
-      const score = getScore()
-      for (const tag of newTags) {
-        recentTags.push({
-          tag,
-          score,
-        })
+    isUpdating = true
+    try {
+      await processTagUpdate(newTags, oldTags)
+      while (updateQueue.length > 0) {
+        const nextUpdate = updateQueue.shift()
+        if (nextUpdate) {
+          await processTagUpdate(nextUpdate.newTags, nextUpdate.oldTags)
+        }
       }
-      if (recentTags.length > 1e3) {
-        recentTags.splice(0, 100)
-      }
-      await setValue(storageKeyRecentTags, recentTags)
-      await generateMostUsedAndRecentAddedTags(recentTags)
+    } finally {
+      isUpdating = false
     }
   }
+  async function processTagUpdate(newTags, oldTags) {
+    const uniqueNewTags =
+      (oldTags == null ? void 0 : oldTags.length) > 0
+        ? newTags.filter((tag) => tag && !oldTags.includes(tag))
+        : newTags.filter(Boolean)
+    if (uniqueNewTags.length === 0) return
+    const recentTags = (await getValue(STORAGE_KEY_RECENT_TAGS)) || []
+    const score = getScore()
+    for (const tag of uniqueNewTags) {
+      recentTags.push({ tag, score })
+    }
+    if (recentTags.length > 1e3) {
+      recentTags.splice(0, 100)
+    }
+    await setValue(STORAGE_KEY_RECENT_TAGS, recentTags)
+    await generateMostUsedAndRecentAddedTags(recentTags)
+  }
   async function generateMostUsedAndRecentAddedTags(recentTags) {
-    const mostUsed = {}
+    const tagScores = {}
     for (const recentTag of recentTags) {
       if (!recentTag.tag) {
         continue
       }
-      if (mostUsed[recentTag.tag]) {
-        mostUsed[recentTag.tag].score += recentTag.score
-      } else if (recentTag.tag) {
-        mostUsed[recentTag.tag] = {
+      if (tagScores[recentTag.tag]) {
+        tagScores[recentTag.tag].score += recentTag.score
+      } else {
+        tagScores[recentTag.tag] = {
           tag: recentTag.tag,
           score: recentTag.score,
         }
       }
     }
-    const mostUsedTags2 = Object.values(mostUsed)
-      .filter((v) => v.score > getScore(1.5))
-      .sort((a, b) => {
-        return b.score - a.score
-      })
-      .map((v) => v.tag)
+    const mostUsedTags2 = Object.values(tagScores)
+      .filter((tag) => tag.score > getScore(1.5))
+      .sort((a, b) => b.score - a.score)
+      .map((tag) => tag.tag)
       .slice(0, 200)
-    const uniqSet = /* @__PURE__ */ new Set()
-    const recentAddedTags2 = recentTags
-      .map((v) => v.tag)
-      .reverse()
-      .filter((v) => v && !uniqSet.has(v) && uniqSet.add(v))
-      .slice(0, 200)
-    await setValue(storageKeyMostUsedTags, mostUsedTags2)
-    await setValue(storageKeyRecentAddedTags, recentAddedTags2)
+    const recentAddedTags2 = Array.from(
+      new Set(
+        recentTags
+          .map((tag) => tag.tag)
+          .reverse()
+          .filter(Boolean)
+      )
+    ).slice(0, 200)
+    await Promise.all([
+      setValue(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags2),
+      setValue(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags2),
+    ])
   }
   async function getMostUsedTags() {
-    return (await getValue(storageKeyMostUsedTags)) || []
+    return (await getValue(STORAGE_KEY_MOST_USED_TAGS)) || []
   }
   async function getRecentAddedTags() {
-    return (await getValue(storageKeyRecentAddedTags)) || []
+    return (await getValue(STORAGE_KEY_RECENT_ADDED_TAGS)) || []
   }
   async function getPinnedTags() {
     return splitTags(getSettingsValue("pinnedTags") || "")
@@ -1458,219 +1534,367 @@
   async function getEmojiTags() {
     return splitTags(getSettingsValue("emojiTags") || "")
   }
+  var currentExtensionVersion = "0.14.2"
+  var currentDatabaseVersion = 3
+  var DELETED_BOOKMARK_TAG = "._DELETED_"
+  var storageKey2 = "extension.utags.urlmap"
+  var cachedUrlMap = {}
+  var addTagsValueChangeListenerInitialized = false
+  function createEmptyBookmarksStore() {
+    const store = {
+      data: {},
+      meta: {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+        created: Date.now(),
+        updated: Date.now(),
+      },
+    }
+    return store
+  }
+  async function getBookmarksStore() {
+    const bookmarksStore =
+      (await getValue(storageKey2)) || createEmptyBookmarksStore()
+    if (!bookmarksStore.data) {
+      bookmarksStore.data = {}
+    }
+    if (!bookmarksStore.meta) {
+      bookmarksStore.meta = createEmptyBookmarksStore().meta
+    }
+    cachedUrlMap = filterDeleted(bookmarksStore.data)
+    return bookmarksStore
+  }
+  async function serializeBookmarks() {
+    const bookmarksStore = await getBookmarksStore()
+    return JSON.stringify(bookmarksStore)
+  }
+  async function persistBookmarksStore(bookmarksStore) {
+    await setValue(storageKey2, bookmarksStore)
+    cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
+  }
+  async function deserializeBookmarks(data) {
+    const bookmarksStore = data ? JSON.parse(data) : void 0
+    await persistBookmarksStore(bookmarksStore)
+  }
+  async function getUrlMap() {
+    const bookmarksStore = await getBookmarksStore()
+    return bookmarksStore.data
+  }
+  async function getCachedUrlMap() {
+    return cachedUrlMap
+  }
+  function getBookmark(key) {
+    return (
+      cachedUrlMap[key] || {
+        tags: [],
+        meta: { created: 0, updated: 0 },
+      }
+    )
+  }
+  var getTags = getBookmark
+  async function saveBookmark(key, tags, meta) {
+    var _a, _b
+    const now = Date.now()
+    const bookmarksStore = await getBookmarksStore()
+    const urlMap = bookmarksStore.data
+    bookmarksStore.meta = __spreadProps(
+      __spreadValues({}, bookmarksStore.meta),
+      {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+        updated: now,
+      }
+    )
+    const newTags = mergeTags(tags, [])
+    let oldTags = []
+    if (!isValidKey(key)) {
+      delete urlMap[key]
+    } else if (newTags.length === 0) {
+      const existingData = urlMap[key]
+      if (existingData) {
+        oldTags = existingData.tags || []
+        if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
+          existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
+          existingData.deletedMeta = {
+            deleted: now,
+            actionType: "DELETE",
+          }
+        }
+      }
+    } else {
+      const existingData = urlMap[key] || {}
+      oldTags = existingData.tags || []
+      const newMeta = __spreadProps(
+        __spreadValues(__spreadValues({}, existingData.meta), meta),
+        {
+          created: normalizeCreated(
+            (_a = existingData.meta) == null ? void 0 : _a.created,
+            (_b = existingData.meta) == null ? void 0 : _b.updated,
+            now
+          ),
+          updated: now,
+        }
+      )
+      urlMap[key] = {
+        tags: newTags,
+        meta: newMeta,
+      }
+    }
+    await persistBookmarksStore(bookmarksStore)
+    await addRecentTags(newTags, oldTags)
+  }
+  var saveTags = saveBookmark
   function addTagsValueChangeListener(func) {
     addValueChangeListener(storageKey2, func)
   }
-  addTagsValueChangeListener(async () => {
-    cachedUrlMap = void 0
-    await checkVersion()
-  })
   async function reload() {
-    console.log("Current extionsion is outdated, need reload page")
-    const urlMap = await getUrlMap()
-    urlMap.meta = urlMap.meta || {}
-    await setValue(storageKey2, urlMap)
+    console.log("Current extension is outdated, page reload required")
     location.reload()
   }
-  async function checkVersion() {
-    cachedUrlMap = await getUrlMap()
-    const meta = cachedUrlMap.meta || {}
-    if (meta.extensionVersion !== extensionVersion) {
-      console.log(
-        "Previous extension version:",
-        meta.extensionVersion,
-        "current extension version:",
-        extensionVersion
-      )
-      if (meta.extensionVersion > extensionVersion) {
+  function isValidKey(key) {
+    return isUrl(key)
+  }
+  function isValidTags(tags) {
+    return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
+  }
+  function mergeTags(tags, tags2) {
+    const array1 = tags || []
+    const array2 = tags2 || []
+    return uniq(
+      array1
+        .concat(array2)
+        .map((tag) => (tag ? String(tag).trim() : tag))
+        .filter(Boolean)
+    )
+  }
+  function filterDeleted(data) {
+    const filteredData = {}
+    for (const [key, bookmark] of Object.entries(data)) {
+      if (bookmark.tags && !bookmark.tags.includes(DELETED_BOOKMARK_TAG)) {
+        filteredData[key] = bookmark
       }
     }
-    if (meta.databaseVersion !== databaseVersion) {
-      console.log(
-        "Previous database version:",
-        meta.databaseVersion,
-        "current database version:",
-        databaseVersion
+    return filteredData
+  }
+  async function migrateV2toV3(bookmarksStore) {
+    var _a, _b, _c
+    console.log("Starting migration from V2 to V3")
+    const now = Date.now()
+    let minCreated = now
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in bookmarksStore) {
+      if (key === "meta") {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkV2 = bookmarksStore[key]
+      if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2))
+        )
+        continue
+      }
+      if (!bookmarkV2.tags || !isValidTags(bookmarkV2.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2.tags))
+        )
+        continue
+      }
+      if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
+        if (
+          bookmarkV2.meta.title !== void 0 &&
+          typeof bookmarkV2.meta.title !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid title type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.title)
+          )
+          delete bookmarkV2.meta.title
+        }
+        if (
+          bookmarkV2.meta.description !== void 0 &&
+          typeof bookmarkV2.meta.description !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid description type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.description)
+          )
+          delete bookmarkV2.meta.description
+        }
+        const created = Number(bookmarkV2.meta.created)
+        if (Number.isNaN(created) || created < 0) {
+          console.warn(
+            "Migration: Invalid created timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.created)
+          )
+          delete bookmarkV2.meta.created
+        }
+        const updated = Number(bookmarkV2.meta.updated)
+        if (Number.isNaN(updated) || updated < 0) {
+          console.warn(
+            "Migration: Invalid updated timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.updated)
+          )
+          delete bookmarkV2.meta.updated
+        }
+      }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkV2.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkV2.meta) == null ? void 0 : _b.updated,
+        now
       )
-      if (meta.databaseVersion > databaseVersion) {
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkV2.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      const meta = __spreadProps(__spreadValues({}, bookmarkV2.meta), {
+        created: normalizedCreated,
+        updated: normalizedUpdated,
+      })
+      const bookmarkV3 = {
+        tags: bookmarkV2.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkV3
+      minCreated = Math.min(minCreated, normalizedCreated)
+    }
+    bookmarksStoreNew.meta.created = minCreated
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.log("Migration to V3 completed successfully")
+  }
+  async function migrateV3_fixV0_13_0TimestampBug(bookmarksStore) {
+    var _a, _b, _c
+    const oldMeta = bookmarksStore.meta
+    const oldData = bookmarksStore.data
+    if (oldMeta.extensionVersion !== "0.13.0") {
+      return
+    }
+    console.log(
+      "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
+    )
+    const now = Date.now()
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in oldData) {
+      if (!Object.hasOwn(oldData, key)) {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkOld = oldData[key]
+      if (!bookmarkOld || typeof bookmarkOld !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld))
+        )
+        continue
+      }
+      if (!bookmarkOld.tags || !isValidTags(bookmarkOld.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld.tags))
+        )
+        continue
+      }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkOld.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkOld.meta) == null ? void 0 : _b.updated,
+        now
+      )
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkOld.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      const meta = __spreadProps(__spreadValues({}, bookmarkOld.meta), {
+        created: normalizedCreated,
+        updated: normalizedUpdated,
+      })
+      const bookmarkNew = {
+        tags: bookmarkOld.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkNew
+    }
+    bookmarksStoreNew.meta.created = oldMeta.created
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.log("Migration to V3 completed successfully")
+  }
+  async function checkVersion(meta) {
+    if (meta.extensionVersion !== currentExtensionVersion) {
+      console.warn(
+        "Version mismatch - Previous: "
+          .concat(meta.extensionVersion, ", Current: ")
+          .concat(currentExtensionVersion)
+      )
+      if (meta.extensionVersion > currentExtensionVersion) {
+      }
+    }
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      console.warn(
+        "Database version mismatch - Previous: "
+          .concat(meta.databaseVersion, ", Current: ")
+          .concat(currentDatabaseVersion)
+      )
+      if (meta.databaseVersion > currentDatabaseVersion) {
         await reload()
         return false
       }
     }
     return true
   }
-  function isValidKey(key) {
-    return isUrl(key)
-  }
-  function isValidTags(tags) {
-    return Array.isArray(tags)
-  }
-  function mergeTags(tags, tags2) {
-    tags = tags || []
-    tags2 = tags2 || []
-    return uniq(
-      tags
-        .concat(tags2)
-        .map((v) => (v ? String(v).trim() : v))
-        .filter(Boolean)
-    )
-  }
-  async function migrationData(urlMap) {
-    console.log("Before migration", JSON.stringify(urlMap))
-    const meta = urlMap.meta || {}
-    const now = Date.now()
-    const meta2 = { created: now, updated: now }
-    if (!meta.databaseVersion) {
-      meta.databaseVersion = 1
-    }
-    if (meta.databaseVersion === 1) {
-      for (const key in urlMap) {
-        if (!Object.hasOwn(urlMap, key)) {
-          continue
-        }
-        if (!isValidKey(key)) {
-          continue
-        }
-        const tags = urlMap[key]
-        if (!isValidTags(tags)) {
-          throw new Error("Invaid data format.")
-        }
-        const newTags = mergeTags(tags, [])
-        if (newTags.length > 0) {
-          urlMap[key] = { tags: newTags, meta: meta2 }
-        } else {
-          delete urlMap[key]
-        }
-      }
-      meta.databaseVersion = 2
-    }
-    if (meta.databaseVersion === 2) {
-    }
-    urlMap.meta = meta
-    console.log("After migration", JSON.stringify(urlMap))
-    return urlMap
-  }
-  async function mergeData(urlMapNew) {
-    if (typeof urlMapNew !== "object") {
-      throw new TypeError("Invalid data format")
-    }
-    let numberOfLinks = 0
-    let numberOfTags = 0
-    const urlMap = await getUrlMap()
-    if (
-      !urlMapNew.meta ||
-      urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion
-    ) {
-      urlMapNew = await migrationData(urlMapNew)
-    }
-    if (urlMapNew.meta.databaseVersion !== urlMap.meta.databaseVersion) {
-      throw new Error("Invalid database version")
-    }
-    for (const key in urlMapNew) {
-      if (!Object.hasOwn(urlMapNew, key)) {
-        continue
-      }
-      if (!isValidKey(key)) {
-        continue
-      }
-      const tags = urlMapNew[key].tags || []
-      const meta = urlMapNew[key].meta || {}
-      if (!isValidTags(tags)) {
-        throw new Error("Invaid data format.")
-      }
-      const orgData = urlMap[key] || { tags: [] }
-      const orgTags = orgData.tags || []
-      const newTags = mergeTags(orgTags, tags)
-      const now = Date.now()
-      if (newTags.length > 0) {
-        const orgMeta = orgData.meta || {}
-        const created = Math.min(orgMeta.created || now, meta.created || now)
-        const updated = Math.max(
-          orgMeta.updated || 0,
-          meta.updated || 0,
-          created
-        )
-        const newMata = Object.assign({}, orgMeta, meta, { created, updated })
-        urlMap[key] = Object.assign({}, orgData, {
-          tags: newTags,
-          meta: newMata,
-        })
-        numberOfTags += Math.max(newTags.length - orgTags.length, 0)
-        if (orgTags.length === 0) {
-          numberOfLinks++
-        }
-      } else {
-        delete urlMap[key]
-      }
-    }
-    await setValue(storageKey2, urlMap)
-    console.log(
-      "\u6570\u636E\u5DF2\u6210\u529F\u5BFC\u5165\uFF0C\u65B0\u589E "
-        .concat(numberOfLinks, " \u6761\u94FE\u63A5\uFF0C\u65B0\u589E ")
-        .concat(numberOfTags, " \u6761\u6807\u7B7E\u3002")
-    )
-    return { numberOfLinks, numberOfTags }
-  }
-  async function migration() {
-    const result = await checkVersion()
-    if (!result) {
+  async function initBookmarksStore() {
+    cachedUrlMap = {}
+    const bookmarksStore = await getBookmarksStore()
+    const meta = bookmarksStore.meta
+    const isVersionCompatible = await checkVersion(meta)
+    if (!isVersionCompatible) {
       return
     }
-    cachedUrlMap = await getUrlMap()
-    const meta = cachedUrlMap.meta || {}
-    if (meta.databaseVersion !== databaseVersion) {
-      meta.databaseVersion = meta.databaseVersion || 1
-      if (meta.databaseVersion < databaseVersion) {
-        console.log("Migration start")
-        await saveTags("any", [])
-        console.log("Migration done")
-      }
+    if (meta.databaseVersion === 2) {
+      await migrateV2toV3(bookmarksStore)
+      await initBookmarksStore()
+      return
     }
-    const urlMapVer1 = await getUrlMapVesion1()
-    if (urlMapVer1) {
-      console.log(
-        "Migration start: database version 1 to database version",
-        databaseVersion
-      )
-      const result2 = await mergeData(urlMapVer1)
-      if (result2) {
-        await setValue("plugin.utags.tags.v1", null)
-      }
+    if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
+      await migrateV3_fixV0_13_0TimestampBug(bookmarksStore)
+      await initBookmarksStore()
+      return
     }
-  }
-  async function outputData() {
-    if (
-      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
-    ) {
-      const urlMap = await getUrlMap()
-      const textarea = createElement("textarea")
-      textarea.id = "utags_output"
-      textarea.setAttribute("style", "display:none")
-      textarea.value = JSON.stringify(urlMap)
-      doc.body.append(textarea)
-      textarea.addEventListener("click", async () => {
-        if (textarea.dataset.utags_type === "export") {
-          const urlMap2 = await getUrlMap()
-          textarea.value = JSON.stringify(urlMap2)
-          textarea.dataset.utags_type = "export_done"
-          textarea.click()
-        } else if (textarea.dataset.utags_type === "import") {
-          const data = textarea.value
-          try {
-            const result = await mergeData(JSON.parse(data))
-            textarea.value = JSON.stringify(result)
-            textarea.dataset.utags_type = "import_done"
-            textarea.click()
-          } catch (error) {
-            console.error(error)
-            textarea.value = JSON.stringify(error)
-            textarea.dataset.utags_type = "import_failed"
-            textarea.click()
-          }
-        }
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      const errorMessage = "Database version mismatch - Previous: "
+        .concat(meta.databaseVersion, ", Current: ")
+        .concat(currentDatabaseVersion)
+      console.error(errorMessage)
+      throw new Error(errorMessage)
+    }
+    console.log("Bookmarks store initialized")
+    if (!addTagsValueChangeListenerInitialized) {
+      addTagsValueChangeListenerInitialized = true
+      addTagsValueChangeListener(async () => {
+        console.log("Data updated in other tab, clearing cache")
+        cachedUrlMap = {}
+        await initBookmarksStore()
       })
     }
   }
+  var isUserscript = true
+  var isProduction = true
   function getFirstHeadElement(tagName = "h1") {
     for (const element of $$(tagName)) {
       if (element.closest(".browser_extension_settings_container")) {
@@ -1763,6 +1987,122 @@
       }
     }
     return result
+  }
+  function sortBookmarks(bookmarks) {
+    return [...bookmarks].sort((a, b) => {
+      const createdA = a[1].meta.created
+      const createdB = b[1].meta.created
+      if (createdB === createdA) {
+        return a[0].localeCompare(b[0])
+      }
+      return createdB - createdA
+    })
+  }
+  function sortMetaProperties(meta) {
+    if (!meta || typeof meta !== "object") {
+      return meta
+    }
+    const sortedMeta = {}
+    const entries = Object.entries(meta)
+    const createdEntry = entries.find(([key]) => key === "created")
+    const otherEntries = entries
+      .filter(([key]) => key !== "created")
+      .sort(([a], [b]) => a.localeCompare(b))
+    for (const [key, value] of otherEntries) {
+      sortedMeta[key] = value
+    }
+    if (createdEntry) {
+      sortedMeta[createdEntry[0]] = createdEntry[1]
+    }
+    return sortedMeta
+  }
+  function isMetaObject(value) {
+    return value !== null && typeof value === "object"
+  }
+  function isBookmarkTagsAndMetadata(value) {
+    return (
+      value !== null &&
+      typeof value === "object" &&
+      "tags" in value &&
+      Array.isArray(value.tags)
+    )
+  }
+  function sortBookmarkProperties(value) {
+    const _a = value,
+      { tags, meta } = _a,
+      rest = __objRest(_a, ["tags", "meta"])
+    return __spreadProps(
+      __spreadValues(
+        {
+          tags,
+        },
+        rest
+      ),
+      {
+        meta,
+      }
+    )
+  }
+  function normalizeBookmarkData(data) {
+    if (data === null || data === void 0) {
+      return data
+    }
+    if (Array.isArray(data)) {
+      return data.map((item) => normalizeBookmarkData(item))
+    }
+    if (typeof data === "object") {
+      const result = {}
+      for (const [key, value] of Object.entries(data)) {
+        result[key] =
+          key === "meta" && isMetaObject(value)
+            ? sortMetaProperties(value)
+            : normalizeBookmarkData(value)
+      }
+      if (isBookmarkTagsAndMetadata(result)) {
+        return sortBookmarkProperties(result)
+      }
+      return result
+    }
+    return data
+  }
+  var mergeData = async () => {
+    return { numberOfLinks: 0, numberOfTags: 0 }
+  }
+  async function outputData() {
+    if (
+      /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ) {
+      const urlMap = await getUrlMap()
+      const textarea = createElement("textarea")
+      textarea.id = "utags_output"
+      textarea.setAttribute("style", "display:none")
+      textarea.value = JSON.stringify(urlMap)
+      doc.body.append(textarea)
+      textarea.addEventListener("click", async () => {
+        if (textarea.dataset.utags_type === "export") {
+          const urlMap2 = await getUrlMap()
+          const sortedBookmarks = Object.fromEntries(
+            normalizeBookmarkData(sortBookmarks(Object.entries(urlMap2)))
+          )
+          textarea.value = JSON.stringify(sortedBookmarks)
+          textarea.dataset.utags_type = "export_done"
+          textarea.click()
+        } else if (textarea.dataset.utags_type === "import") {
+          const data = textarea.value
+          try {
+            const result = await mergeData()
+            textarea.value = JSON.stringify(result)
+            textarea.dataset.utags_type = "import_done"
+            textarea.click()
+          } catch (error) {
+            console.error(error)
+            textarea.value = JSON.stringify(error)
+            textarea.dataset.utags_type = "import_failed"
+            textarea.click()
+          }
+        }
+      })
+    }
   }
   function createModal(attributes) {
     const div = createElement("div", {
@@ -2513,6 +2853,381 @@
       hideAllUtagsInArea()
     })
   }
+  var SCRIPT_NAME = "[UTags Extension Sync Adapter]"
+  var MY_EXTENSION_ID
+  var MY_EXTENSION_NAME
+  var STORAGE_KEY_EXTENSION_ID = "extension.utags.extension_id"
+  var SYNC_STORAGE_KEY_METADATA = "extension.utags.sync_metadata"
+  var SOURCE_WEBAPP = "utags-webapp"
+  var SOURCE_EXTENSION = "utags-extension"
+  var PING_MESSAGE_TYPE = "PING"
+  var PONG_MESSAGE_TYPE = "PONG"
+  var DISCOVER_MESSAGE_TYPE = "DISCOVER_UTAGS_TARGETS"
+  var DISCOVERY_RESPONSE_TYPE = "DISCOVERY_RESPONSE"
+  var GET_REMOTE_METADATA_MESSAGE_TYPE = "GET_REMOTE_METADATA"
+  var DOWNLOAD_MESSAGE_TYPE = "DOWNLOAD_DATA"
+  var UPLOAD_MESSAGE_TYPE = "UPLOAD_DATA"
+  var GET_AUTH_STATUS_MESSAGE_TYPE = "GET_AUTH_STATUS"
+  async function saveData(data) {
+    await deserializeBookmarks(data)
+  }
+  async function loadData() {
+    const data = await serializeBookmarks()
+    return data || ""
+  }
+  async function saveMetadata(metadata) {
+    await setValue(SYNC_STORAGE_KEY_METADATA, metadata)
+  }
+  async function loadMetadata() {
+    return await getValue(SYNC_STORAGE_KEY_METADATA)
+  }
+  function getVersionNumber(metadata) {
+    const version =
+      metadata && metadata.version
+        ? parseInt10(metadata.version.replace("v", ""), 0)
+        : 0
+    return Math.max(version, 0)
+  }
+  function isValidMessage(event) {
+    if (event.origin !== location.origin) {
+      return false
+    }
+    if (
+      !/^((.*\.)?utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
+        location.hostname
+      )
+    ) {
+      return false
+    }
+    if (!event.source || typeof event.source.postMessage !== "function") {
+      return false
+    }
+    const message = event.data
+    if (
+      !message ||
+      typeof message !== "object" ||
+      message.source !== SOURCE_WEBAPP || // Check source
+      !message.id || // Check for id
+      (message.targetExtensionId !== MY_EXTENSION_ID &&
+        message.targetExtensionId !== "*") || // Allow broadcast messages
+      !message.type || // Check for type (which is the action)
+      typeof message.type !== "string" ||
+      ![
+        PING_MESSAGE_TYPE,
+        DISCOVER_MESSAGE_TYPE,
+        GET_AUTH_STATUS_MESSAGE_TYPE,
+        GET_REMOTE_METADATA_MESSAGE_TYPE,
+        DOWNLOAD_MESSAGE_TYPE,
+        UPLOAD_MESSAGE_TYPE,
+      ].includes(message.type)
+    ) {
+      return false
+    }
+    return true
+  }
+  var messageHandler = async (event) => {
+    if (!MY_EXTENSION_ID) {
+      console.error("MY_EXTENSION_ID not initialized")
+      return
+    }
+    if (!isValidMessage(event)) {
+      return
+    }
+    const message = event.data
+    console.log("".concat(SCRIPT_NAME, " Received message:"), message)
+    let responsePayload
+    let error
+    const actionType = message.type
+    const payload = message.payload
+    const id = message.id
+    try {
+      const remoteMetadata = await loadMetadata()
+      switch (actionType) {
+        case DISCOVER_MESSAGE_TYPE: {
+          responsePayload = {
+            extensionId: MY_EXTENSION_ID,
+            extensionName: MY_EXTENSION_NAME,
+          }
+          event.source.postMessage(
+            {
+              source: SOURCE_EXTENSION,
+              type: DISCOVERY_RESPONSE_TYPE,
+              id,
+              extensionId: MY_EXTENSION_ID,
+              payload: responsePayload,
+            },
+            event.origin
+          )
+          console.log(
+            "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
+          )
+          return
+        }
+        case PING_MESSAGE_TYPE: {
+          responsePayload = { status: PONG_MESSAGE_TYPE }
+          console.log(
+            "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
+          )
+          break
+        }
+        case GET_AUTH_STATUS_MESSAGE_TYPE: {
+          responsePayload = { status: "authenticated" }
+          console.log(
+            "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case GET_REMOTE_METADATA_MESSAGE_TYPE: {
+          responsePayload = { metadata: remoteMetadata }
+          console.log(
+            "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case DOWNLOAD_MESSAGE_TYPE: {
+          const data = await loadData()
+          responsePayload = { data, remoteMeta: remoteMetadata }
+          console.log(
+            "".concat(SCRIPT_NAME, " Data requested. Responding:"),
+            responsePayload
+          )
+          break
+        }
+        case UPLOAD_MESSAGE_TYPE: {
+          if (!payload || typeof payload.data !== "string") {
+            throw new Error("UPLOAD_DATA: Invalid payload")
+          }
+          const expectedMeta = payload.metadata
+          if (expectedMeta && remoteMetadata) {
+            if (
+              expectedMeta.version !== remoteMetadata.version ||
+              expectedMeta.timestamp !== remoteMetadata.timestamp
+            ) {
+              throw new Error(
+                "Conflict: Expected remote metadata does not match current remote metadata."
+              )
+            }
+          } else if (expectedMeta && !remoteMetadata) {
+            throw new Error(
+              "Conflict: Expected remote metadata, but no remote data found."
+            )
+          } else if (!expectedMeta && remoteMetadata) {
+            throw new Error(
+              "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
+            )
+          }
+          const newTimestamp = Date.now()
+          const oldVersionNumber = getVersionNumber(remoteMetadata)
+          const newVersion = "v".concat(oldVersionNumber + 1)
+          const newMeta = { timestamp: newTimestamp, version: newVersion }
+          await saveData(payload.data)
+          await saveMetadata(newMeta)
+          responsePayload = { metadata: newMeta }
+          console.log(
+            "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
+            newMeta
+          )
+          break
+        }
+      }
+    } catch (error_) {
+      error = error_ instanceof Error ? error_.message : String(error_)
+      console.log("".concat(SCRIPT_NAME, " Error processing message:"), error_)
+    }
+    const response = {
+      type: actionType,
+      source: SOURCE_EXTENSION,
+      id,
+      extensionId: MY_EXTENSION_ID,
+      payload: responsePayload,
+      error,
+    }
+    event.source.postMessage(response, event.origin)
+  }
+  async function initExtensionId() {
+    const type = isUserscript ? "Userscript" : "Extension"
+    const tag = isProduction ? "" : " - ".concat("prod".toUpperCase())
+    let storedId = await getValue(STORAGE_KEY_EXTENSION_ID)
+    if (!storedId) {
+      storedId = "utags-"
+        .concat(type.toLowerCase(), "-")
+        .concat(crypto.randomUUID())
+      await setValue(STORAGE_KEY_EXTENSION_ID, storedId)
+    }
+    MY_EXTENSION_ID = storedId
+    MY_EXTENSION_NAME = "UTags ".concat(type).concat(tag)
+    console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
+  }
+  function destroySyncAdapter() {
+    MY_EXTENSION_ID = void 0
+    window.removeEventListener("message", messageHandler)
+  }
+  async function initSyncAdapter() {
+    destroySyncAdapter()
+    await initExtensionId()
+    window.addEventListener("message", messageHandler)
+    console.log("".concat(SCRIPT_NAME, " initialized."))
+  }
+  function handleHttpRequest(message, event) {
+    if (false) {
+      handleHttpRequestExtension(message, event)
+    } else {
+      handleHttpRequestUserscript(message, event)
+    }
+  }
+  function handleHttpRequestUserscript(message, event) {
+    const { id, payload } = message
+    const { method, url, headers, body, timeout } = payload
+    console.log(
+      "[UTags Extension] Processing HTTP request: "
+        .concat(method, " ")
+        .concat(url)
+    )
+    const gmRequest =
+      (GM == null ? void 0 : GM.xmlHttpRequest) || GM_xmlhttpRequest
+    if (!gmRequest) {
+      sendHttpError(id, "GM.xmlHttpRequest not available", event)
+      return
+    }
+    gmRequest({
+      method,
+      url,
+      headers: headers || {},
+      data: body,
+      timeout: timeout || 3e4,
+      onload(response) {
+        console.log(
+          "[UTags Extension] HTTP request successful: ".concat(response.status)
+        )
+        const responseHeaders = {}
+        if (response.responseHeaders) {
+          const headerLines = response.responseHeaders.split("\r\n")
+          for (const line of headerLines) {
+            const [key, value] = line.split(": ")
+            if (key && value) {
+              responseHeaders[key.toLowerCase()] = value
+            }
+          }
+        }
+        sendHttpResponse(
+          id,
+          {
+            ok: response.status >= 200 && response.status < 300,
+            status: response.status,
+            statusText: response.statusText,
+            headers: responseHeaders,
+            body: response.responseText,
+          },
+          event
+        )
+      },
+      onerror(error) {
+        console.error("[UTags Extension] HTTP request failed:", error)
+        sendHttpError(
+          id,
+          error && typeof error.statusText === "string"
+            ? error.statusText
+            : "Network error",
+          event,
+          error
+        )
+      },
+      ontimeout() {
+        console.error("[UTags Extension] HTTP request timeout")
+        sendHttpError(id, "Request timeout", event)
+      },
+    })
+  }
+  function sendHttpResponse(requestId, responseData, event) {
+    const responseMessage = {
+      type: "HTTP_RESPONSE",
+      source: "utags-extension",
+      id: requestId,
+      payload: responseData,
+    }
+    if (event.source) {
+      event.source.postMessage(responseMessage, { targetOrigin: event.origin })
+    }
+  }
+  function sendHttpError(requestId, error, event, details) {
+    const errorMessage = {
+      type: "HTTP_ERROR",
+      source: "utags-extension",
+      id: requestId,
+      payload: {
+        error,
+        details,
+      },
+    }
+    if (event.source) {
+      event.source.postMessage(errorMessage, { targetOrigin: event.origin })
+    }
+  }
+  function handlePing(message, event) {
+    console.log("[UTags Extension] Received ping, sending pong")
+    const pongMessage = {
+      type: "PONG",
+      source: "utags-extension",
+      id: message.id,
+    }
+    if (event.source) {
+      event.source.postMessage(pongMessage, { targetOrigin: event.origin })
+    }
+  }
+  function messageListener(event) {
+    if (event.origin !== globalThis.location.origin) {
+      return
+    }
+    const message = event.data
+    try {
+      if (
+        !message ||
+        typeof message !== "object" ||
+        !message.type ||
+        !message.id
+      ) {
+        return
+      }
+      if (message.source !== "utags-webapp") {
+        return
+      }
+      console.log("[UTags Extension] Received message:", message.type)
+      switch (message.type) {
+        case "PING": {
+          handlePing(message, event)
+          break
+        }
+        case "HTTP_REQUEST": {
+          handleHttpRequest(message, event)
+          break
+        }
+        default: {
+          console.log(
+            "[UTags Extension] Unknown message type: ".concat(message.type)
+          )
+        }
+      }
+    } catch (error) {
+      console.error("[UTags Extension] Error handling message:", error)
+      if (message && message.id) {
+        sendHttpError(
+          message.id,
+          error instanceof Error ? error.message : String(error),
+          event,
+          {
+            context: "messageListener",
+            messageType: message.type,
+          }
+        )
+      }
+    }
+  }
+  function setupWebappBridge() {
+    window.addEventListener("message", messageListener)
+    console.log("[UTags Extension] ready for HTTP proxy requests")
+  }
   var default_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
   var default_default2 = /* @__PURE__ */ (() => {
@@ -2529,7 +3244,7 @@
     }
   })()
   var v2ex_default =
-    ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .header h1+.utags_ul_0+.votes{margin-left:24px}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}'
+    ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .header h1+.utags_ul_0+.votes{margin-left:24px}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .xna-entry,:not(#a):not(#b):not(#c) .planet-post{--utags-list-node-display: flex}'
   var v2ex_default2 = (() => {
     function getCanonicalUrl2(url) {
       if (url.startsWith("https://links.pipecraft")) {
@@ -2566,6 +3281,9 @@
         ".item_hot_topic_title a",
         '.box .cell .topic_info strong:first-of-type a[href*="/member/"]',
         ".box .cell .topic_info .node",
+        ".xna-source-author a",
+        ".xna-entry-source a",
+        ".planet-site-address a",
         '.box .cell strong a.dark[href*="/member/"]',
         ".box .cell .ago a",
         ".box .cell .fade.small a",
@@ -2576,6 +3294,7 @@
         'a[href*="/t/"]',
         'a[href*="/member/"]',
         'a[href*="/go/"]',
+        'a[href*="/planet/"]',
         'a[href^="https://"]:not([href*="v2ex.com"])',
         'a[href^="http://"]:not([href*="v2ex.com"])',
         ".box .cell .fr .tag",
@@ -2590,6 +3309,7 @@
         "a.page_normal,a.page_current",
         "a.count_livid",
         ".post-item a.post-content",
+        ".planet-post-time",
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         if (location.pathname.includes("/member/")) {
@@ -2897,7 +3617,7 @@
     }
   })()
   var github_com_default =
-    ':not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) [id=user-starred-repos] a[href^="/topics/"].flex-items-center+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}:not(#a):not(#b):not(#c) div[id=repo-title-component] strong[itemprop=name] a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-testid=issue-header] h1+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .gh-header-show h1[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) .gh-header-show h1+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important}:not(#a):not(#b):not(#c) #discussion_bucket .gh-header-show h1+.utags_ul_1{margin-top:-2px !important}:not(#a):not(#b):not(#c) .search-title .utags_ul_0,:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0,:not(#a):not(#b):not(#c) [id=user-starred-repos] a[href^="/topics/"].flex-items-center+.utags_ul_0,:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .search-title .utags_ul_0{--utags-notag-captain-tag-top: -10px}:not(#a):not(#b):not(#c) .d-flex.flex-justify-between a[href^="/topics/"]+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) .d-md-flex.flex-justify-between a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: 20px;--utags-notag-captain-tag-left: 76px}:not(#a):not(#b):not(#c) ul.f4 a[href^="/topics/"].d-flex+.utags_ul_0{--utags-notag-captain-tag-top: -24px;--utags-notag-captain-tag-left: -2px}:not(#a):not(#b):not(#c) div[id=repo-title-component] strong[itemprop=name] a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
   var github_com_default2 = (() => {
     const noneUsers = /* @__PURE__ */ new Set([
       "about",
@@ -2994,6 +3714,18 @@
       }
       return void 0
     }
+    function getFileUrl(href) {
+      if (href.startsWith(prefix3)) {
+        const href2 = href.slice(19)
+        if (/^[\w-]+\/[\w-.]+\/(tree|blob)\/([^/]+\/)+[^/]+$/.test(href2)) {
+          const username = /^([\w-]+)/.exec(href2)[1]
+          if (username && !noneUsers.has(username)) {
+            return prefix3 + href2
+          }
+        }
+      }
+      return void 0
+    }
     return {
       matches: /github\.com/,
       listNodesSelectors: [],
@@ -3036,6 +3768,14 @@
             element.utags = { key, meta }
             return true
           }
+          key = getFileUrl(href)
+          if (key) {
+            const title = element.textContent.trim()
+            const type = key.includes("/blob/") ? "file" : "dir"
+            const meta = { title, type }
+            element.utags = { key, meta }
+            return true
+          }
           return false
         }
         return true
@@ -3051,8 +3791,43 @@
         ".js-github-dev-shortcut",
         ".js-github-dev-new-tab-shortcut",
         ".js-skip-to-content",
+        ".SegmentedControl-item",
+        ".react-code-lines",
+        ".virtual-blame-wrapper",
       ],
-      validMediaSelectors: ["svg.octicon-repo"],
+      validMediaSelectors: [
+        "svg.octicon-repo",
+        '[data-hovercard-type="user"] img',
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getIssuesUrl(location.href)
+        if (key) {
+          const element = $(
+            '[data-testid="issue-header"] h1,.gh-header-show h1'
+          )
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "issue" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getFileUrl(location.href)
+        if (key) {
+          const element = $("h1#file-name-id-wide")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const type = key.includes("/blob/") ? "file" : "dir"
+              const meta = { title, type }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+      },
       getStyle: () => github_com_default,
     }
   })()
@@ -4761,7 +5536,7 @@
     }
   })()
   var discourse_default =
-    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_0{--utags-notag-captain-tag-top: 1px}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:-2px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{object-position:100% 200%;position:absolute;top:-9999px;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag=inline]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:8px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:5px !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"]{max-width:max-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1,:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}:not(#a):not(#b):not(#c) .post-links-container .post-links .track-link[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_0{object-position:200% 0%;margin-top:6px !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-left:16px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-container{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-14px !important}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 6px}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_1{position:absolute;top:-9999px;margin-top:10px !important}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_0,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_1,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-menu .results{position:relative}:not(#a):not(#b):not(#c) .search-menu .results .search-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -14px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .leaderboard .winner{padding-bottom:50px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -56px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-56px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"]{display:inline-flex !important;width:fit-content !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .notification a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-6px !important;margin-left:42px !important}:not(#a):not(#b):not(#c) [data-utags_list_node]:last-of-type{display:var(--utags-list-node-display) !important}:not(#a):not(#b):not(#c) .user-menu.revamped .menu-tabs-container{z-index:91;background-color:var(--secondary)}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 14px;--utags-notag-captain-tag-left: -8px}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:18px !important;margin-left:-4px !important;max-width:58px !important}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}'
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_0{--utags-notag-captain-tag-top: 1px}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:-2px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{object-position:100% 200%;position:absolute;top:-9999px;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag=inline]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:8px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:5px !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"]{max-width:max-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1,:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}:not(#a):not(#b):not(#c) .post-links-container .post-links .track-link[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_0{object-position:200% 0%;margin-top:6px !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-left:16px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-container{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-14px !important}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 6px}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_1{position:absolute;top:-9999px;margin-top:10px !important}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_0,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_1,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .leaderboard .winner{padding-bottom:50px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -56px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-56px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"]{display:inline-flex !important;width:fit-content !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .notification a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-6px !important;margin-left:42px !important}:not(#a):not(#b):not(#c) [data-utags_list_node]:last-of-type{display:var(--utags-list-node-display) !important}:not(#a):not(#b):not(#c) .user-menu.revamped .menu-tabs-container{z-index:91;background-color:var(--secondary)}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 14px;--utags-notag-captain-tag-left: -8px}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:18px !important;margin-left:-4px !important;max-width:58px !important}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}'
   var discourse_default2 = (() => {
     const prefix3 = location.origin + "/"
     const getUserProfileUrl = (url, exact = false) => {
@@ -4820,7 +5595,7 @@
     }
     return {
       matches:
-        /meta\.discourse\.org|linux\.do|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com/,
+        /meta\.discourse\.org|^linux\.do$|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -4961,6 +5736,7 @@
         ".nav.nav-pills",
         ".btn",
         ".custom-header-links",
+        '.reply-area[role="dialog"]',
         ".chat-time",
       ],
       validMediaSelectors: [
@@ -5603,7 +6379,7 @@
     }
     return {
       matches:
-        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|www\.nodeloc\.com|freesmth\.net|freesmth\.uk|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
+        /discuss\.flarum\.org|discuss\.flarum\.org\.cn|yuanliao\.info|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
       preProcess() {
         setVisitedAvailable(true)
       },
@@ -6150,13 +6926,705 @@
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
-  var pornhub_com_default =
+  var twitch_tv_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-test-selector=ChannelLink][data-utags_fit_content="1"]{max-width:fit-content !important;display:flex}'
+  var twitch_tv_default2 = (() => {
+    const prefix3 = location.origin + "/"
+    const getUserProfileUrl = (url, exact = false) => {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (/^(directory|videos)/.test(href2)) {
+          return void 0
+        }
+        if (exact) {
+          if (/^\w+$/.test(href2)) {
+            return prefix3 + href2.replace(/^(\w+).*/, "$1")
+          }
+        } else if (/^\w+/.test(href2)) {
+          return prefix3 + href2.replace(/^(\w+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getVideoUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^videos\/\d+([?#].*)?$/.test(href2)) {
+            return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+          }
+        } else if (/^videos\/\d+/.test(href2)) {
+          return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getCategoryUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
+            return (
+              prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+            )
+          }
+        } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
+          return prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getTagUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
+            return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+          }
+        } else if (/^tag\/[^/?#]+?/.test(href2)) {
+          return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /twitch\.tv/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        '.tw-tower [data-a-target^="video-tower-card-"]',
+        ".tw-transition-group .tw-transition",
+      ],
+      conditionNodesSelectors: [
+        '.tw-tower [data-a-target^="video-tower-card-"] a',
+        ".tw-transition-group .tw-transition a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const titleElement = $(
+            'p[data-a-target="preview-card-channel-link"] p',
+            element
+          )
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "user", title }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "video", title }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".top-nav__overflow-menu",
+        //
+      ],
+      validMediaSelectors: [],
+      addExtraMatchedNodes(matchedNodesSet) {
+        const isDarkMode = hasClass(doc.documentElement, "tw-root--theme-dark")
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getVideoUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $('[data-a-target="stream-title"]')
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "video" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        for (const element of $$(
+          '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
+        )) {
+          const id = element.dataset.aUser
+          const title = element.textContent.trim()
+          if (id && title) {
+            key = prefix3 + id.toLowerCase()
+            const meta = { type: "user", title }
+            element.utags = { key, meta }
+            element.dataset.utags = element.dataset.utags || ""
+            element.dataset.utags_node_type = "link"
+            matchedNodesSet.add(element)
+          }
+        }
+      },
+      getStyle: () => twitch_tv_default,
+    }
+  })()
+  var yamibo_com_default =
+    ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
+  var yamibo_com_default2 = (() => {
+    const prefix3 = "https://bbs.yamibo.com/"
+    function getCanonicalUrl2(url) {
+      if (url.startsWith(prefix3)) {
+        let href2 = getUserProfileUrl(url, true)
+        if (href2) {
+          return href2
+        }
+        href2 = getPostUrl(url)
+        if (href2) {
+          return href2
+        }
+      }
+      return url
+    }
+    function getUserProfileUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        url = deleteUrlParameters(url, "do")
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^\?\d+(#.*)?$/.test(href2)) {
+            return (
+              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
+            return (
+              prefix3 +
+              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
+            return (
+              prefix3 +
+              href2.replace(
+                /^home\.php\?mod=space&uid=(\d+).*/,
+                "home.php?mod=space&uid=$1"
+              )
+            )
+          }
+        } else if (/^u\/[\w.-]+/.test(href2)) {
+          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getPostUrl(url) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
+          )
+        }
+        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(
+              /^forum\.php\?mod=redirect&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(
+              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /yamibo\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        //
+        "#threadlist table tbody",
+        "#postlist .comiis_vrx",
+      ],
+      conditionNodesSelectors: [
+        //
+        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
+        '#threadlist table tbody a[href^="thread-"]',
+        '#threadlist table tbody a[href^="space-uid-"]',
+        "#postlist .comiis_vrx .authi a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const title2 = element.textContent.trim()
+          if (!title2) {
+            return false
+          }
+          if (
+            /^\d+$/.test(title2) &&
+            element.parentElement.parentElement.textContent.includes(
+              "\u79EF\u5206"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "user" } : { type: "user", title: title2 }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl(href)
+        if (key) {
+          const title2 = element.textContent.trim()
+          if (!title2) {
+            return false
+          }
+          if (
+            title2 === "New" ||
+            title2 === "\u7F6E\u9876" ||
+            /^\d+$/.test(title2) ||
+            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title2)
+          ) {
+            return false
+          }
+          if ($('span[title^="20"]', element)) {
+            return false
+          }
+          if (
+            element.parentElement.textContent.includes(
+              "\u6700\u540E\u56DE\u590D\u4E8E"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "post" } : { type: "post", title: title2 }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          return true
+        }
+        const title = element.textContent.trim()
+        if (!title) {
+          return false
+        }
+        if (
+          title === "New" ||
+          title === "\u7F6E\u9876" ||
+          /^\d+$/.test(title)
+        ) {
+          return false
+        }
+        return true
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        "#hd",
+        ".oyheader",
+        "#scrolltop",
+        "#fd_page_bottom",
+        "#visitedforums",
+        "#pt",
+        ".tps",
+        ".pgbtn",
+        ".pgs",
+        "#f_pst",
+        'a[href*="member.php?mod=logging"]',
+        'a[href*="member.php?mod=register"]',
+        'a[href*="login/oauth/"]',
+        'a[href*="mod=spacecp&ac=usergroup"]',
+        'a[href*="home.php?mod=spacecp"]',
+        'a[href*="goto=lastpost#lastpost"]',
+        'a[onclick*="copyThreadUrl"]',
+        "#gadmin_menu",
+        "#guser_menu",
+        "#gupgrade_menu",
+        "#gmy_menu",
+        ".showmenu",
+        "ul.tb.cl",
+        ".comiis_irbox_tit",
+        "#thread_types",
+        "#threadlist .th",
+        "#filter_special_menu",
+        'a[title="RSS"]',
+        ".fa_fav",
+        ".p_pop",
+        ".comiis_topinfo",
+        ".bm .bm_h .kmfz",
+        "td.num a",
+        "td.plc .pi",
+        "td.plc .po.hin",
+        "td.pls .tns",
+        "ul.comiis_o",
+        'a[onclick*="showMenu"]',
+        'a[onclick*="showWindow"]',
+        ".toplist_7ree",
+        "nav",
+        ".btn",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "user" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("#thread_subject")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "post" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => yamibo_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var flickr_com_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .photo-list-view a[href^="/photos/"][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) [data-component=JustifiedPhotoLayout] a[href^="/photos/"][data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) .subview-modal .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}'
+  var flickr_com_default2 = /* @__PURE__ */ (() => {
+    const CANONICAL_BASE_URL = "https://www.flickr.com/"
+    const FLICKR_DOMAIN_REGEX = /^https?:\/\/flickr\.com/
+    const USER_PROFILE_EXACT_REGEX = /^(photos|people)\/[\w-@]+\/$/
+    const USER_PROFILE_REGEX = /^(photos|people)\/[\w-@]+\//
+    const USER_PROFILE_EXTRACT_REGEX = /^((photos|people)\/[\w-@]+\/).*/
+    const GROUP_EXACT_REGEX = /^(groups)\/[\w-]+\/$/
+    const GROUP_REGEX = /^(groups)\/[\w-]+\//
+    const GROUP_EXTRACT_REGEX = /^((groups)\/[\w-]+\/).*/
+    function getCanonicalUrl2(url) {
+      if (FLICKR_DOMAIN_REGEX.test(url)) {
+        return url.replace(FLICKR_DOMAIN_REGEX, CANONICAL_BASE_URL.slice(0, -1))
+      }
+      return url
+    }
+    function getUserProfileUrl(url, exact = false) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (!normalizedUrl.startsWith(CANONICAL_BASE_URL)) {
+        return void 0
+      }
+      const pathSegment = normalizedUrl.slice(CANONICAL_BASE_URL.length)
+      const targetRegex = exact ? USER_PROFILE_EXACT_REGEX : USER_PROFILE_REGEX
+      if (targetRegex.test(pathSegment)) {
+        const match = USER_PROFILE_EXTRACT_REGEX.exec(pathSegment)
+        return match ? CANONICAL_BASE_URL + match[1] : void 0
+      }
+      return void 0
+    }
+    function getGroupUrl(url, exact = false) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (!normalizedUrl.startsWith(CANONICAL_BASE_URL)) {
+        return void 0
+      }
+      const pathSegment = normalizedUrl.slice(CANONICAL_BASE_URL.length)
+      const targetRegex = exact ? GROUP_EXACT_REGEX : GROUP_REGEX
+      if (targetRegex.test(pathSegment)) {
+        const match = GROUP_EXTRACT_REGEX.exec(pathSegment)
+        return match ? CANONICAL_BASE_URL + match[1] : void 0
+      }
+      return void 0
+    }
+    return {
+      matches: /flickr\.com/,
+      listNodesSelectors: [],
+      conditionNodesSelectors: [],
+      validate(element) {
+        const href = getCanonicalUrl2(element.href)
+        if (!href.startsWith(CANONICAL_BASE_URL)) {
+          return true
+        }
+        const key = getUserProfileUrl(href, true)
+        if (key) {
+          const titleElement = $(
+            'p[data-a-target="preview-card-channel-link"] p',
+            element
+          )
+          const title2 = getTrimmedTitle(titleElement || element)
+          if (!title2) {
+            return false
+          }
+          const titleLowerCase2 = title2.toLowerCase()
+          if (titleLowerCase2.startsWith("more")) {
+            return false
+          }
+          if (element.closest('[data-a-target="preview-card-image-link"]')) {
+            return false
+          }
+          const meta = { type: "user", title: title2 }
+          element.utags = { key, meta }
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        const title = getTrimmedTitle(element)
+        if (!title) {
+          return false
+        }
+        const titleLowerCase = title.toLowerCase()
+        if (
+          titleLowerCase.startsWith("more") ||
+          titleLowerCase.startsWith("edit") ||
+          /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
+          /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(
+            titleLowerCase
+          )
+        ) {
+          return false
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".global-nav",
+        "#global-nav",
+        ".logo a",
+        ".gn-link span",
+        ".gn-link",
+        "footer",
+        '[role="navigation"]',
+        '[aria-label="Tabs"]',
+        "footer .lang-switcher",
+        ".gift-pro-link",
+        ".pagination-view",
+        ".Paginator",
+        ".navigate-target",
+        ".more-link",
+        ".view-more-link",
+        ".view-all",
+        ".droparound.menu",
+        ".user-account-card-droparound",
+        ".person-card-view .links.secondary",
+        ".photo-sidebar-toggle-view",
+        ".attribution-info .username",
+        ".photo-license-info",
+        '[href*="upgrade/pro"]',
+        '[href*="/login"]',
+        '[href*="/logout"]',
+        '[href*="/sign-up"]',
+        '[href$="/relationship/"]',
+        '[href$="?editAvatar"]',
+        '[href="/recent.gne"]',
+        '[href^="/search/"]',
+        '[href*="/groups_join.gne"]',
+        ".sn-avatar",
+        "h5.tag-list-header",
+        ".cookie-banner-view",
+        ".cookie-banner-message",
+        "span.edit_relationship",
+        ".tag-section-header",
+        ".nav-links",
+        ".photo-list-album-view",
+        ".contact-list-num",
+        ".contact-list-table th",
+        ".bio-infos-container .archives-link",
+        '[href*="/ignore.gne"]',
+        ".context-list .context-item.link",
+        ".metadata-container .followers",
+        ".LinksNew span a[data-track='ContactsSubnav-photos_of_contacts']",
+        ".LinksNew a[data-track='ContactsSubnav-send_invites']",
+        ".LinksNewP [data-track='ContactsSubnav-add_contacts']",
+        "[href^='/people'][href$='/ignore/']",
+        "#personmenu_button_bar .candy_menu #person_menu_you_div a.block",
+        ".contact-list-header",
+        "#Feeds",
+        ".Butt",
+        ".tabs",
+        ".refresh-suggestions-container",
+        ".suggestions .stats",
+        ".jump-list-container",
+        '.tag-list-zeus a[href$="/edit/"]',
+        '.tag-list-zeus a[href$="/delete/"]',
+        ".scTopCrumbShareBreadcrumbs",
+        ".vsComments",
+        'a[href*="utm_source=flickr&utm_medium=affiliate"]',
+        ".since-link",
+        ".butt",
+        ".add-topic",
+        ".groups-members",
+        'a[data-track="groupDiscussionTopicReplyCountClick"]',
+        ".pro-badge-new",
+        ".pro-badge-legacy",
+        'a[href*="?change_lang="]',
+        ".forumSearch form",
+        ".TopicListing small a",
+        "#DiscussTopic .Said small a",
+        ".TopicReply .Said small a",
+        ".group-blast-zeus",
+        ".hide-link",
+        '[data-track="join-group"]',
+        ".set-desc.group-desc .short a",
+        "#feeds-xml a",
+        ".slideshow-bottom a",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        var _a
+        let key = getUserProfileUrl(location.href)
+        key = getGroupUrl(location.href)
+        if (key) {
+          const element = $("h1.group-title")
+          const titleElement =
+            (_a = $("h1.group-title .group-title-holder")) == null
+              ? void 0
+              : _a.childNodes[0]
+          if (element && titleElement) {
+            const title = titleElement.textContent.trim()
+            if (title) {
+              const meta = { title, type: "group" }
+              element.utags = { key, meta }
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => flickr_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var ruanyifeng_com_default = ""
+  var ruanyifeng_com_default2 = /* @__PURE__ */ (() => {
+    const CANONICAL_BASE_URL = "https://www.ruanyifeng.com/"
+    const BLOG_POST_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html/
+    const BLOG_POST_EXACT_PATTERN = /^blog\/\d{4}\/\d{2}\/[^/]+\.html$/
+    function getCanonicalUrl2(url) {
+      if (/^https?:\/\/ruanyifeng\.com/.test(url)) {
+        return url.replace(
+          /^https?:\/\/ruanyifeng\.com/,
+          CANONICAL_BASE_URL.slice(0, -1)
+        )
+      }
+      if (url.startsWith("http://www.ruanyifeng.com")) {
+        return url.replace(
+          "http://www.ruanyifeng.com",
+          CANONICAL_BASE_URL.slice(0, -1)
+        )
+      }
+      return url
+    }
+    function getPostUrl(url, exact = false) {
+      const canonicalUrl = getCanonicalUrl2(url)
+      if (!canonicalUrl.startsWith(CANONICAL_BASE_URL)) {
+        return void 0
+      }
+      const pathPart = canonicalUrl
+        .slice(CANONICAL_BASE_URL.length)
+        .toLowerCase()
+      const pattern = exact ? BLOG_POST_EXACT_PATTERN : BLOG_POST_PATTERN
+      if (pattern.test(pathPart)) {
+        const match = /^(blog\/\d{4}\/\d{2}\/[^/]+\.html)/.exec(pathPart)
+        return match ? CANONICAL_BASE_URL + match[1] : void 0
+      }
+      return void 0
+    }
+    return {
+      matches: /ruanyifeng\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: ["ul li.module-list-item", "#related_entries ul li"],
+      conditionNodesSelectors: [
+        "ul li.module-list-item a",
+        "#related_entries ul li a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (
+          !href.startsWith(CANONICAL_BASE_URL) &&
+          !href.startsWith(location.origin)
+        ) {
+          return true
+        }
+        const key = getPostUrl(href)
+        if (key) {
+          const title = element.textContent.trim()
+          if (!title) {
+            return false
+          }
+          const meta = { title, type: "post" }
+          element.utags = { key, meta }
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".asset-more-link",
+        ".asset-meta",
+        ".comment-footer-inner",
+        "#latest-comments",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        const key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("h1#page-title")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title, type: "post" }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => ruanyifeng_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var pxxnhub_com_default =
     ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
-  var pornhub_com_default2 = (() => {
-    const prefix3 = "https://www.pornhub.com/"
+  var pxxnhub_com_default2 = (() => {
+    const xx = atob("b3I=")
+    const hostname2 = "p".concat(xx, "nhub.com")
+    const prefix3 = "https://www.".concat(hostname2, "/")
     function getUserProfileUrl(href, exact = false) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (exact) {
           if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
@@ -6169,8 +7637,8 @@
       return void 0
     }
     function getChannelUrl(href, exact = false) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (exact) {
           if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
@@ -6183,8 +7651,8 @@
       return void 0
     }
     function getVideoUrl(href) {
-      if (href.includes("pornhub.com")) {
-        const index = href.indexOf("pornhub.com") + 12
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (/^view_video.php\?viewkey=\w+/.test(href2)) {
           return (
@@ -6195,7 +7663,7 @@
       return void 0
     }
     return {
-      matches: /pornhub\.com/,
+      matches: /p[ro_][r_]nhub\.com/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
@@ -6240,6 +7708,7 @@
         ".subFilterList",
         ".greyButton",
         ".orangeButton",
+        "".concat(xx, "xxxxx"),
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         let key = getUserProfileUrl(location.href)
@@ -6279,14 +7748,15 @@
           }
         }
       },
-      getStyle: () => pornhub_com_default,
+      getStyle: () => pxxnhub_com_default,
     }
   })()
-  var e_hentai_org_default =
+  var e_hentxx_org_default =
     ":not(#a):not(#b):not(#c) div.gt a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtl a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtw a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gl4e.glname .glink+.utags_ul_0,:not(#a):not(#b):not(#c) .gltm .glname a+.utags_ul_0,:not(#a):not(#b):not(#c) .gltc .glname a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );z-index:200}:not(#a):not(#b):not(#c) div.gl1t a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}"
-  var e_hentai_org_default2 = (() => {
-    const prefix3 = "https://e-hentai.org/"
-    const prefix22 = "https://exhentai.org/"
+  var e_hentxx_org_default2 = (() => {
+    const xx = atob("YWk=")
+    const prefix3 = "https://e-hent".concat(xx, ".org/")
+    const prefix22 = "https://exhent".concat(xx, ".org/")
     function getPostUrl(url) {
       if (url.startsWith(prefix3)) {
         const href2 = url.slice(21)
@@ -6314,7 +7784,7 @@
       return false
     }
     return {
-      matches: /e-hentai\.org|exhentai\.org/,
+      matches: /(e-hen|exhen)tai\.org/,
       validate(element) {
         if (element.tagName !== "A") {
           return true
@@ -6373,7 +7843,7 @@
           }
         }
       },
-      getStyle: () => e_hentai_org_default,
+      getStyle: () => e_hentxx_org_default,
     }
   })()
   var panda_chaika_moe_default =
@@ -6453,6 +7923,25 @@
           return prefix3 + href2.replace(/\?.*/, "")
         }
       }
+      if (url.includes("www.dmm.co.jp/digital/videoa/-/list/")) {
+        return url.replace(
+          "https://www.dmm.co.jp/digital/videoa/-/list/",
+          "https://video.dmm.co.jp/av/list/"
+        )
+      }
+      if (url.includes("www.dmm.co.jp/digital/videoa/-/detail/=/cid=")) {
+        const cidMatch = /cid=([^&?/]+)/.exec(url)
+        if (cidMatch && cidMatch[1]) {
+          return "https://video.dmm.co.jp/av/content/?id=".concat(cidMatch[1])
+        }
+      }
+      if (url.includes("video.dmm.co.jp/av/content/") && url.includes("?")) {
+        const urlObj = new URL(url)
+        const idParam = urlObj.searchParams.get("id")
+        if (idParam) {
+          return "https://video.dmm.co.jp/av/content/?id=".concat(idParam)
+        }
+      }
       return url
     }
     function getProductUrl(url) {
@@ -6473,6 +7962,22 @@
       }
       return void 0
     }
+    function getVideoActressUrl(url) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (
+        normalizedUrl.startsWith("https://video.dmm.co.jp/av/list/?actress=")
+      ) {
+        return normalizedUrl
+      }
+      return void 0
+    }
+    function getVideoProductUrl(url) {
+      const normalizedUrl = getCanonicalUrl2(url)
+      if (normalizedUrl.startsWith("https://video.dmm.co.jp/av/content/?id=")) {
+        return normalizedUrl
+      }
+      return void 0
+    }
     return {
       matches: /dmm\.co\.jp/,
       validate(element) {
@@ -6481,8 +7986,8 @@
           return true
         }
         if (href.includes("/=/")) {
-          const key = getProductUrl(href)
-          if (key) {
+          const key2 = getProductUrl(href)
+          if (key2) {
             const titleElement = $(
               ".mainListLinkWork__txt,.responsive-name",
               element
@@ -6492,10 +7997,36 @@
               : getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "product" }
-              element.utags = { key, meta }
+              element.utags = { key: key2, meta }
             }
           }
           return true
+        }
+        let key = getVideoActressUrl(href)
+        if (key) {
+          const titleElement = $("div > div > p", element)
+          const title = titleElement
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
+          if (title) {
+            const meta = { title }
+            element.utags = { key, meta }
+            element.dataset.utags_position_selector = "div > div > p"
+            return true
+          }
+        }
+        key = getVideoProductUrl(href)
+        if (key) {
+          const titleElement = $("div > div > p", element)
+          const title = titleElement
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
+          if (title) {
+            const meta = { title }
+            element.utags = { key, meta }
+            element.dataset.utags_position_selector = "div > div > p"
+            return true
+          }
         }
         return false
       },
@@ -6520,11 +8051,15 @@
         ".dcd-review_boxpagenation",
         ".sampleButton",
         ".right_navi_link",
+        '[data-e2eid="search-form"]',
+        '[data-e2eid="pagination"]',
       ],
       validMediaSelectors: [
         ".mainList",
         ".pickup .fn-responsiveImg",
         "#l-areaRecommendProduct",
+        '[data-e2eid="list-actress-root"] li a',
+        '[href^="/av/content/?id="]',
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         let key = getProductUrl(location.href)
@@ -6542,6 +8077,18 @@
         key = getMakerUrl(location.href)
         if (key) {
           const element = $(".circleProfile__name span")
+          if (element) {
+            const title = element.textContent.trim()
+            if (title) {
+              const meta = { title }
+              element.utags = { key, meta }
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getVideoProductUrl(location.href)
+        if (key) {
+          const element = $("main h1")
           if (element) {
             const title = element.textContent.trim()
             if (title) {
@@ -6570,7 +8117,7 @@
       return void 0
     }
     return {
-      matches: /kemono\.su|coomer\.su|nekohouse\.su/,
+      matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (hrefAttr.startsWith("#")) {
@@ -6810,8 +8357,12 @@
     nodeseek_com_default2,
     inoreader_com_default2,
     zhipin_com_default2,
-    pornhub_com_default2,
-    e_hentai_org_default2,
+    twitch_tv_default2,
+    yamibo_com_default2,
+    flickr_com_default2,
+    ruanyifeng_com_default2,
+    pxxnhub_com_default2,
+    e_hentxx_org_default2,
     panda_chaika_moe_default2,
     dlsite_com_default2,
     dmm_co_jp_default2,
@@ -6998,7 +8549,7 @@
   }
   var config = {
     run_at: "document_start",
-    matches: ["https://*/*"],
+    matches: ["https://*/*", "http://*/*"],
     all_frames: false,
   }
   var emojiTags2
@@ -7125,13 +8676,13 @@
     openTagsPage: {
       title: i2("settings.openTagsPage"),
       type: "externalLink",
-      url: "https://utags.pipecraft.net/tags/",
+      url: "https://utags.link/",
       group: ++groupNumber,
     },
     openDataPage: {
       title: i2("settings.openDataPage"),
       type: "externalLink",
-      url: "https://utags.pipecraft.net/data/",
+      url: "https://utags.link/",
       group: groupNumber,
     },
   }
@@ -7340,7 +8891,8 @@
   }
   var displayTagsThrottled = throttle(displayTags, 500)
   async function initStorage() {
-    await migration()
+    await initBookmarksStore()
+    await initSyncAdapter()
     addTagsValueChangeListener(() => {
       if (!doc.hidden) {
         setTimeout(displayTags)
@@ -7682,6 +9234,7 @@
     if (!getSettingsValue("enableCurrentSite_".concat(host2))) {
       return
     }
+    setupWebappBridge()
     await initStorage()
     setTimeout(outputData, 1)
     onSettingsChange()

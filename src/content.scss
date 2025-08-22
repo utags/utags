@@ -3,8 +3,8 @@
 }
 
 :not(#utags_should_has_higher_specificity):not(
-    #utags_should_has_higher_specificity
-  ) {
+  #utags_should_has_higher_specificity
+) {
   /* fix mp.weixin.qq.com issue. https://github.com/utags/utags/issues/29 */
   ul,
   ol {
@@ -488,6 +488,13 @@
     height: 250px;
   }
 
+  [data-utags_list_node] {
+    /* 在 opacity 100% 与 opacity 小于 100% 的元素之间移动时，鼠标移到边缘时会剧烈闪烁。*/
+    /* 改成 99.99% 不闪烁，但在某些场合影响层叠效果。 */
+    /* 增加延迟，可以使它不闪烁 */
+    transition: opacity 0.1s ease-in;
+  }
+
   [data-utags_list_node*=",标题党,"],
   [data-utags_list_node*=",推广,"],
   [data-utags_list_node*=",无聊,"],
@@ -532,8 +539,7 @@
   }
 
   [data-utags_list_node]:hover {
-    /* 如果设置为 100% ，鼠标移到边缘时会剧烈闪烁 */
-    opacity: 99.99% !important;
+    opacity: 100% !important;
   }
 
   /* For debugging */
@@ -548,7 +554,7 @@
 [data-utags_display-effect-of-the-visited-content="4"]
   [data-utags_list_node*=",:visited,"] {
   [data-utags_condition_node][data-utags_visited="1"] {
-    color: var(--utags-visited-title-color);
+    color: var(--utags-visited-title-color) !important;
   }
 }
 
