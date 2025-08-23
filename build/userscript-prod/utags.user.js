@@ -1,14 +1,34 @@
 // ==UserScript==
 // @name                 🏷️ UTags - Add usertags to links
 // @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签
+// @name:zh-HK           🏷️ 小魚標籤 (UTags) - 為連結添加用戶標籤
+// @name:zh-TW           🏷️ 小魚標籤 (UTags) - 為連結新增使用者標籤
+// @name:ja              🏷️ 小魚タグ (UTags) - リンクにユーザータグを追加
+// @name:ko              🏷️ UTags - 링크에 사용자 태그 추가
+// @name:de              🏷️ UTags - Benutzer-Tags zu Links hinzufügen
+// @name:fr              🏷️ UTags - Ajouter des tags utilisateur aux liens
+// @name:es              🏷️ UTags - Agregar etiquetas de usuario a los enlaces
+// @name:it              🏷️ UTags - Aggiungi tag utente ai collegamenti
+// @name:pt              🏷️ UTags - Adicionar tags de usuário aos links
+// @name:vi              🏷️ UTags - Thêm tag người dùng vào liên kết
 // @name:ru              🏷️ UTags - Добавление пользовательских тегов к ссылкам
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.4
-// @description          Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
-// @description:zh-CN    这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS直聘等网站。
-// @description:ru       Это очень полезный инструмент для добавления пользовательских тегов и заметок к ссылкам пользователей, публикаций и видео. Например, можно добавлять теги к пользователям или публикациям на форуме, что облегчает их идентификацию или блокировку их сообщений и ответов. Поддерживает V2EX, X, Reddit, Greasy Fork, GitHub, Bilibili, Douyin, Xiaohongshu, Zhihu, Juejin, Douban, 52pojie, pixiv, LINUX DO, APPINN, NGA, BOSS Zhipin и многие другие сайты.
+// @version              0.19.5
+// @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
+// @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
+// @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
+// @description:zh-TW    為網頁上的使用者、貼文、影片新增自訂標籤和備註，讓你的瀏覽體驗更加個人化和高效。輕鬆識別使用者、整理內容、過濾無關資訊。支援 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
+// @description:ja       ウェブ上のユーザー、投稿、動画にカスタムタグやメモを追加して、ブラウジング体験を向上させましょう。コンテンツの整理、ユーザーの識別、不要な投稿のフィルタリングに最適です。X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch など 100+ の人気サイトをサポートしています。
+// @description:ko       웹상의 사용자, 게시물, 동영상에 사용자 정의 태그와 메모를 추가하여 브라우징 경험을 향상시키세요. 콘텐츠 정리, 사용자 식별, 원하지 않는 게시물 필터링에 완벽합니다. X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch 등 100개 이상의 인기 웹사이트를 지원합니다.
+// @description:de       Verbessern Sie Ihr Browsing-Erlebnis, indem Sie benutzerdefinierte Tags und Notizen zu Benutzern, Beiträgen und Videos im Web hinzufügen. Perfekt zum Organisieren von Inhalten, Identifizieren von Benutzern und Filtern unerwünschter Beiträge. Unterstützt über 100 beliebte Websites, darunter X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch und viele mehr.
+// @description:fr       Améliorez votre expérience de navigation en ajoutant des tags personnalisés et des notes aux utilisateurs, publications et vidéos sur le web. Parfait pour organiser le contenu, identifier les utilisateurs et filtrer les publications indésirables. Prend en charge plus de 100 sites web populaires, notamment X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch et bien d'autres.
+// @description:es       Mejora tu experiencia de navegación agregando etiquetas personalizadas y notas a usuarios, publicaciones y videos en la web. Perfecto para organizar contenido, identificar usuarios y filtrar publicaciones no deseadas. Compatible con más de 100 sitios web populares, incluyendo X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch y muchos más.
+// @description:it       Migliora la tua esperienza di navigazione aggiungendo tag personalizzati e note a utenti, post e video sul web. Perfetto per organizzare contenuti, identificare utenti e filtrare post indesiderati. Supporta oltre 100 siti web popolari, tra cui X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch e molti altri.
+// @description:pt       Melhore sua experiência de navegação adicionando tags personalizadas e notas a usuários, posts e vídeos na web. Perfeito para organizar conteúdo, identificar usuários e filtrar posts indesejados. Suporta mais de 100 sites populares, incluindo X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch e muitos outros.
+// @description:vi       Nâng cao trải nghiệm duyệt web của bạn bằng cách thêm thẻ tùy chỉnh và ghi chú cho người dùng, bài đăng và video trên web. Hoàn hảo để tổ chức nội dung, nhận dạng người dùng và lọc các bài đăng không mong muốn. Hỗ trợ hơn 100 trang web phổ biến bao gồm X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch và nhiều trang khác.
+// @description:ru       Улучшите свой опыт просмотра веб-страниц, добавляя пользовательские теги и заметки к пользователям, публикациям и видео. Идеально подходит для организации контента, идентификации пользователей и фильтрации нежелательных постов. Поддерживает 100+ популярных сайтов, включая X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch и многие другие.
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
@@ -169,6 +189,101 @@
           target[prop] = source[prop]
       }
     return target
+  }
+  var availableLocales = ["en"]
+  var regexCache = /* @__PURE__ */ new Map()
+  function initAvailableLocales(array) {
+    availableLocales = array
+      .map((locale2) => locale2.trim().toLowerCase())
+      .filter(Boolean)
+  }
+  function isLocale(locale2) {
+    return locale2 ? availableLocales.includes(locale2.toLowerCase()) : false
+  }
+  function extractLocaleFromNavigator() {
+    if (typeof navigator === "undefined") {
+      return void 0
+    }
+    const languages = navigator.languages || [navigator.language]
+    for (const language of languages) {
+      const normalizedLang = language.toLowerCase()
+      const baseLang = normalizedLang.split("-")[0]
+      if (isLocale(normalizedLang)) {
+        return normalizedLang
+      }
+      if (baseLang && isLocale(baseLang)) {
+        return baseLang
+      }
+    }
+    return void 0
+  }
+  function getParameterRegex(index) {
+    const pattern = "\\{".concat(index, "\\}")
+    if (!regexCache.has(pattern)) {
+      regexCache.set(pattern, new RegExp(pattern, "g"))
+    }
+    return regexCache.get(pattern)
+  }
+  function initI18n(messageMaps, language) {
+    const validLanguage =
+      typeof language === "string" && language.trim() ? language.trim() : void 0
+    const targetLanguage = (validLanguage || getPrefferedLocale()).toLowerCase()
+    const baseLanguage = targetLanguage.split("-")[0]
+    const { mergedMessages } = resolveMessageMaps(
+      messageMaps,
+      targetLanguage,
+      baseLanguage
+    )
+    return function (key, ...parameters) {
+      const text = mergedMessages[key] || key
+      return parameters.length > 0 && text !== key
+        ? interpolateParameters(text, parameters)
+        : text
+    }
+  }
+  function resolveMessageMaps(messageMaps, targetLanguage, baseLanguage) {
+    const normalizedMaps = Object.fromEntries(
+      Object.entries(messageMaps).map(([locale2, messages27]) => [
+        locale2.toLowerCase(),
+        messages27,
+      ])
+    )
+    let mergedMessages = {}
+    const englishMessages = normalizedMaps.en || normalizedMaps["en-us"] || {}
+    mergedMessages = __spreadValues({}, englishMessages)
+    if (
+      isLocale(baseLanguage) &&
+      normalizedMaps[baseLanguage] &&
+      baseLanguage !== "en" &&
+      baseLanguage !== "en-us"
+    ) {
+      mergedMessages = __spreadValues(
+        __spreadValues({}, mergedMessages),
+        normalizedMaps[baseLanguage]
+      )
+    }
+    if (
+      isLocale(targetLanguage) &&
+      normalizedMaps[targetLanguage] &&
+      targetLanguage !== baseLanguage
+    ) {
+      mergedMessages = __spreadValues(
+        __spreadValues({}, mergedMessages),
+        normalizedMaps[targetLanguage]
+      )
+    }
+    return { mergedMessages }
+  }
+  function interpolateParameters(text, parameters) {
+    let result = text
+    for (const [i3, parameter] of parameters.entries()) {
+      const regex = getParameterRegex(i3 + 1)
+      result = result.replace(regex, String(parameter))
+    }
+    return result
+  }
+  function getPrefferedLocale() {
+    return extractLocaleFromNavigator() || "en"
   }
   var listeners = {}
   var getValue = async (key) => {
@@ -455,18 +570,6 @@
     }
     func()
   }
-  var runWhenDomReady = (func) => {
-    if (doc.readyState === "interactive" || doc.readyState === "complete") {
-      return func()
-    }
-    const handler = () => {
-      if (doc.readyState === "interactive" || doc.readyState === "complete") {
-        func()
-        removeEventListener(doc, "readystatechange", handler)
-      }
-    }
-    addEventListener(doc, "readystatechange", handler)
-  }
   var isVisible = (element) => {
     if (typeof element.checkVisibility === "function") {
       return element.checkVisibility()
@@ -564,61 +667,12 @@
     div.append(createSwitch(options))
     return div
   }
-  var besVersion = 55
-  var openButton =
-    '<svg viewBox="0 0 60.2601318359375 84.8134765625" version="1.1" xmlns="http://www.w3.org/2000/svg" class=" glyph-box" style="height: 9.62969px; width: 6.84191px;"><g transform="matrix(1 0 0 1 -6.194965820312518 77.63671875)"><path d="M66.4551-35.2539C66.4551-36.4746 65.9668-37.5977 65.0391-38.4766L26.3672-76.3672C25.4883-77.1973 24.4141-77.6367 23.1445-77.6367C20.6543-77.6367 18.7012-75.7324 18.7012-73.1934C18.7012-71.9727 19.1895-70.8496 19.9707-70.0195L55.5176-35.2539L19.9707-0.488281C19.1895 0.341797 18.7012 1.41602 18.7012 2.68555C18.7012 5.22461 20.6543 7.12891 23.1445 7.12891C24.4141 7.12891 25.4883 6.68945 26.3672 5.81055L65.0391-32.0312C65.9668-32.959 66.4551-34.0332 66.4551-35.2539Z"></path></g></svg>'
-  var openInNewTabButton =
-    '<svg viewBox="0 0 72.127685546875 72.2177734375" version="1.1" xmlns="http://www.w3.org/2000/svg" class=" glyph-box" style="height: 8.19958px; width: 8.18935px;"><g transform="matrix(1 0 0 1 -12.451127929687573 71.3388671875)"><path d="M84.5703-17.334L84.5215-66.4551C84.5215-69.2383 82.7148-71.1914 79.7852-71.1914L30.6641-71.1914C27.9297-71.1914 26.0742-69.0918 26.0742-66.748C26.0742-64.4043 28.1738-62.4023 30.4688-62.4023L47.4609-62.4023L71.2891-63.1836L62.207-55.2246L13.8184-6.73828C12.9395-5.85938 12.4512-4.73633 12.4512-3.66211C12.4512-1.31836 14.5508 0.878906 16.9922 0.878906C18.1152 0.878906 19.1895 0.488281 20.0684-0.439453L68.5547-48.877L76.6113-58.0078L75.7324-35.2051L75.7324-17.1387C75.7324-14.8438 77.7344-12.6953 80.127-12.6953C82.4707-12.6953 84.5703-14.6973 84.5703-17.334Z"></path></g></svg>'
-  var settingButton =
-    '<svg viewBox="0 0 16 16" version="1.1">\n<path d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z"></path>\n</svg>'
-  function initI18n(messageMaps, language) {
-    language = (language || navigator.language).toLowerCase()
-    const language2 = language.slice(0, 2)
-    let messagesDefault
-    let messagesLocal
-    for (const entry of Object.entries(messageMaps)) {
-      const langs = new Set(
-        entry[0]
-          .toLowerCase()
-          .split(",")
-          .map((v) => v.trim())
-      )
-      const value = entry[1]
-      if (langs.has(language)) {
-        messagesLocal = value
-      }
-      if (langs.has(language2) && !messagesLocal) {
-        messagesLocal = value
-      }
-      if (langs.has("en")) {
-        messagesDefault = value
-      }
-      if (langs.has("en-us") && !messagesDefault) {
-        messagesDefault = value
-      }
-    }
-    if (!messagesLocal) {
-      messagesLocal = {}
-    }
-    if (!messagesDefault || messagesDefault === messagesLocal) {
-      messagesDefault = {}
-    }
-    return function (key, ...parameters) {
-      let text = messagesLocal[key] || messagesDefault[key] || key
-      if (parameters && parameters.length > 0 && text !== key) {
-        for (let i3 = 0; i3 < parameters.length; i3++) {
-          text = text.replaceAll(
-            new RegExp("\\{".concat(i3 + 1, "\\}"), "g"),
-            String(parameters[i3])
-          )
-        }
-      }
-      return text
-    }
-  }
+  var besVersion = 62
   var messages = {
     "settings.title": "Settings",
     "settings.otherExtensions": "Other Extensions",
+    "settings.locale": "Language",
+    "settings.systemLanguage": "System Language",
     "settings.displaySettingsButtonInSideMenu":
       "Display Settings Button in Side Menu",
     "settings.menu.settings": "\u2699\uFE0F Settings",
@@ -637,8 +691,10 @@
   var messages2 = {
     "settings.title": "\u8BBE\u7F6E",
     "settings.otherExtensions": "\u5176\u4ED6\u6269\u5C55",
+    "settings.locale": "\u8BED\u8A00",
+    "settings.systemLanguage": "\u7CFB\u7EDF\u8BED\u8A00",
     "settings.displaySettingsButtonInSideMenu":
-      "\u5728\u4FA7\u8FB9\u680F\u83DC\u5355\u4E2D\u663E\u793A\u8BBE\u7F6E\u6309\u94AE",
+      "\u5728\u4FA7\u8FB9\u83DC\u5355\u4E2D\u663E\u793A\u8BBE\u7F6E\u6309\u94AE",
     "settings.menu.settings": "\u2699\uFE0F \u8BBE\u7F6E",
     "settings.extensions.utags.title":
       "\u{1F3F7}\uFE0F \u5C0F\u9C7C\u6807\u7B7E (UTags) - \u4E3A\u94FE\u63A5\u6DFB\u52A0\u7528\u6237\u6807\u7B7E",
@@ -654,10 +710,312 @@
       "\u66F4\u591A\u6709\u8DA3\u7684\u811A\u672C",
   }
   var zh_cn_default = messages2
-  var i = initI18n({
-    "en,en-US": en_default,
-    "zh,zh-CN": zh_cn_default,
-  })
+  var messages3 = {
+    "settings.title": "\u8A2D\u5B9A",
+    "settings.otherExtensions": "\u5176\u4ED6\u64F4\u5145\u529F\u80FD",
+    "settings.locale": "\u8A9E\u8A00",
+    "settings.systemLanguage": "\u7CFB\u7D71\u8A9E\u8A00",
+    "settings.displaySettingsButtonInSideMenu":
+      "\u5728\u5074\u908A\u9078\u55AE\u4E2D\u986F\u793A\u8A2D\u5B9A\u6309\u9215",
+    "settings.menu.settings": "\u2699\uFE0F \u8A2D\u5B9A",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F \u5C0F\u9B5A\u6A19\u7C64 (UTags) - \u70BA\u9023\u7D50\u6DFB\u52A0\u7528\u6236\u6A19\u7C64",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} \u9023\u7D50\u52A9\u624B",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX \u6975\u7C21\u98A8\u683C",
+    "settings.extensions.replace-ugly-avatars.title":
+      "\u8CDC\u4F60\u500B\u982D\u50CF\u5427",
+    "settings.extensions.more-by-pipecraft.title":
+      "\u66F4\u591A\u6709\u8DA3\u7684\u8173\u672C",
+  }
+  var zh_hk_default = messages3
+  var messages4 = {
+    "settings.title": "\u8A2D\u5B9A",
+    "settings.otherExtensions": "\u5176\u4ED6\u64F4\u5145\u529F\u80FD",
+    "settings.locale": "\u8A9E\u8A00",
+    "settings.systemLanguage": "\u7CFB\u7D71\u8A9E\u8A00",
+    "settings.displaySettingsButtonInSideMenu":
+      "\u5728\u5074\u908A\u9078\u55AE\u4E2D\u986F\u793A\u8A2D\u5B9A\u6309\u9215",
+    "settings.menu.settings": "\u2699\uFE0F \u8A2D\u5B9A",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F \u5C0F\u9B5A\u6A19\u7C64 (UTags) - \u70BA\u9023\u7D50\u65B0\u589E\u4F7F\u7528\u8005\u6A19\u7C64",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} \u9023\u7D50\u52A9\u624B",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX \u6975\u7C21\u98A8\u683C",
+    "settings.extensions.replace-ugly-avatars.title":
+      "\u66FF\u63DB\u919C\u964B\u7684\u982D\u50CF",
+    "settings.extensions.more-by-pipecraft.title":
+      "\u66F4\u591A\u6709\u8DA3\u7684\u8173\u672C",
+  }
+  var zh_tw_default = messages4
+  var messages5 = {
+    "settings.title": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
+    "settings.otherExtensions":
+      "\u0414\u0440\u0443\u0433\u0438\u0435 \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F",
+    "settings.locale": "\u042F\u0437\u044B\u043A",
+    "settings.systemLanguage":
+      "\u0421\u0438\u0441\u0442\u0435\u043C\u043D\u044B\u0439 \u044F\u0437\u044B\u043A",
+    "settings.displaySettingsButtonInSideMenu":
+      "\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043A\u043D\u043E\u043F\u043A\u0443 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A \u0432 \u0431\u043E\u043A\u043E\u0432\u043E\u043C \u043C\u0435\u043D\u044E",
+    "settings.menu.settings":
+      "\u2699\uFE0F \u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0442\u0435\u0433\u0438 \u043A \u0441\u0441\u044B\u043B\u043A\u0430\u043C",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} \u041F\u043E\u043C\u043E\u0449\u043D\u0438\u043A \u0441\u0441\u044B\u043B\u043E\u043A",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX \u041C\u0438\u043D\u0438\u043C\u0430\u043B\u0438\u0441\u0442\u0438\u0447\u043D\u044B\u0439 \u0441\u0442\u0438\u043B\u044C",
+    "settings.extensions.replace-ugly-avatars.title":
+      "\u0417\u0430\u043C\u0435\u043D\u0438\u0442\u044C \u043D\u0435\u043A\u0440\u0430\u0441\u0438\u0432\u044B\u0435 \u0430\u0432\u0430\u0442\u0430\u0440\u044B",
+    "settings.extensions.more-by-pipecraft.title":
+      "\u041D\u0430\u0439\u0442\u0438 \u0431\u043E\u043B\u044C\u0448\u0435 \u043F\u043E\u043B\u0435\u0437\u043D\u044B\u0445 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0441\u043A\u0440\u0438\u043F\u0442\u043E\u0432",
+  }
+  var ru_default = messages5
+  var messages6 = {
+    "settings.title": "\uC124\uC815",
+    "settings.otherExtensions":
+      "\uAE30\uD0C0 \uD655\uC7A5 \uD504\uB85C\uADF8\uB7A8",
+    "settings.locale": "\uC5B8\uC5B4",
+    "settings.systemLanguage": "\uC2DC\uC2A4\uD15C \uC5B8\uC5B4",
+    "settings.displaySettingsButtonInSideMenu":
+      "\uC0AC\uC774\uB4DC \uBA54\uB274\uC5D0 \uC124\uC815 \uBC84\uD2BC \uD45C\uC2DC",
+    "settings.menu.settings": "\u2699\uFE0F \uC124\uC815",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - \uB9C1\uD06C\uC5D0 \uC0AC\uC6A9\uC790 \uD0DC\uADF8 \uCD94\uAC00",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} \uB9C1\uD06C \uB3C4\uC6B0\uBBF8",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX \uBBF8\uB2C8\uBA40 \uC2A4\uD0C0\uC77C",
+    "settings.extensions.replace-ugly-avatars.title":
+      "\uBABB\uC0DD\uAE34 \uC544\uBC14\uD0C0 \uAD50\uCCB4",
+    "settings.extensions.more-by-pipecraft.title":
+      "\uB354 \uC720\uC6A9\uD55C \uC0AC\uC6A9\uC790 \uC2A4\uD06C\uB9BD\uD2B8 \uCC3E\uAE30",
+  }
+  var ko_default = messages6
+  var messages7 = {
+    "settings.title": "\u8A2D\u5B9A",
+    "settings.otherExtensions":
+      "\u305D\u306E\u4ED6\u306E\u62E1\u5F35\u6A5F\u80FD",
+    "settings.locale": "\u8A00\u8A9E",
+    "settings.systemLanguage": "\u30B7\u30B9\u30C6\u30E0\u8A00\u8A9E",
+    "settings.displaySettingsButtonInSideMenu":
+      "\u30B5\u30A4\u30C9\u30E1\u30CB\u30E5\u30FC\u306B\u8A2D\u5B9A\u30DC\u30BF\u30F3\u3092\u8868\u793A",
+    "settings.menu.settings": "\u2699\uFE0F \u8A2D\u5B9A",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - \u30EA\u30F3\u30AF\u306B\u30E6\u30FC\u30B6\u30FC\u30BF\u30B0\u3092\u8FFD\u52A0",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} \u30EA\u30F3\u30AF\u30D8\u30EB\u30D1\u30FC",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX \u30DF\u30CB\u30DE\u30EB\u30B9\u30BF\u30A4\u30EB",
+    "settings.extensions.replace-ugly-avatars.title":
+      "\u919C\u3044\u30A2\u30D0\u30BF\u30FC\u3092\u7F6E\u304D\u63DB\u3048\u308B",
+    "settings.extensions.more-by-pipecraft.title":
+      "\u3088\u308A\u4FBF\u5229\u306A\u30E6\u30FC\u30B6\u30FC\u30B9\u30AF\u30EA\u30D7\u30C8\u3092\u898B\u3064\u3051\u308B",
+  }
+  var ja_default = messages7
+  var messages8 = {
+    "settings.title": "Param\xE8tres",
+    "settings.otherExtensions": "Autres extensions",
+    "settings.locale": "Langue",
+    "settings.systemLanguage": "Langue du syst\xE8me",
+    "settings.displaySettingsButtonInSideMenu":
+      "Afficher le bouton de param\xE8tres dans le menu lat\xE9ral",
+    "settings.menu.settings": "\u2699\uFE0F Param\xE8tres",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Ajouter des balises utilisateur aux liens",
+    "settings.extensions.links-helper.title": "\u{1F517} Assistant de liens",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title": "v2ex.min - Style minimaliste V2EX",
+    "settings.extensions.replace-ugly-avatars.title":
+      "Remplacer les avatars laids",
+    "settings.extensions.more-by-pipecraft.title":
+      "Trouver plus de scripts utilisateur utiles",
+  }
+  var fr_default = messages8
+  var messages9 = {
+    "settings.title": "Einstellungen",
+    "settings.otherExtensions": "Andere Erweiterungen",
+    "settings.locale": "Sprache",
+    "settings.systemLanguage": "Systemsprache",
+    "settings.displaySettingsButtonInSideMenu":
+      "Einstellungsschaltfl\xE4che im Seitenmen\xFC anzeigen",
+    "settings.menu.settings": "\u2699\uFE0F Einstellungen",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Benutzer-Tags zu Links hinzuf\xFCgen",
+    "settings.extensions.links-helper.title": "\u{1F517} Link-Assistent",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - V2EX Minimalistischer Stil",
+    "settings.extensions.replace-ugly-avatars.title":
+      "H\xE4ssliche Avatare ersetzen",
+    "settings.extensions.more-by-pipecraft.title":
+      "Weitere n\xFCtzliche Benutzerskripte finden",
+  }
+  var de_default = messages9
+  var messages10 = {
+    "settings.title": "Impostazioni",
+    "settings.otherExtensions": "Altre estensioni",
+    "settings.locale": "Lingua",
+    "settings.systemLanguage": "Lingua del sistema",
+    "settings.displaySettingsButtonInSideMenu":
+      "Mostra pulsante impostazioni nel menu laterale",
+    "settings.menu.settings": "\u2699\uFE0F Impostazioni",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Aggiungi tag utente ai collegamenti",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} Assistente collegamenti",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title": "v2ex.min - Stile minimalista V2EX",
+    "settings.extensions.replace-ugly-avatars.title":
+      "Sostituisci avatar brutti",
+    "settings.extensions.more-by-pipecraft.title":
+      "Trova pi\xF9 script utente utili",
+  }
+  var it_default = messages10
+  var messages11 = {
+    "settings.title": "Configuraci\xF3n",
+    "settings.otherExtensions": "Otras extensiones",
+    "settings.locale": "Idioma",
+    "settings.systemLanguage": "Idioma del sistema",
+    "settings.displaySettingsButtonInSideMenu":
+      "Mostrar bot\xF3n de configuraci\xF3n en el men\xFA lateral",
+    "settings.menu.settings": "\u2699\uFE0F Configuraci\xF3n",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Agregar etiquetas de usuario a los enlaces",
+    "settings.extensions.links-helper.title": "\u{1F517} Asistente de enlaces",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title": "v2ex.min - Estilo minimalista V2EX",
+    "settings.extensions.replace-ugly-avatars.title":
+      "Reemplazar avatares feos",
+    "settings.extensions.more-by-pipecraft.title":
+      "Encontrar m\xE1s scripts de usuario \xFAtiles",
+  }
+  var es_default = messages11
+  var messages12 = {
+    "settings.title": "Configura\xE7\xF5es",
+    "settings.otherExtensions": "Outras extens\xF5es",
+    "settings.locale": "Idioma",
+    "settings.systemLanguage": "Idioma do sistema",
+    "settings.displaySettingsButtonInSideMenu":
+      "Exibir bot\xE3o de configura\xE7\xF5es no menu lateral",
+    "settings.menu.settings": "\u2699\uFE0F Configura\xE7\xF5es",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Adicionar tags de usu\xE1rio aos links",
+    "settings.extensions.links-helper.title": "\u{1F517} Assistente de links",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title": "v2ex.min - Estilo minimalista V2EX",
+    "settings.extensions.replace-ugly-avatars.title":
+      "Substituir avatares feios",
+    "settings.extensions.more-by-pipecraft.title":
+      "Encontrar mais scripts de usu\xE1rio \xFAteis",
+  }
+  var pt_default = messages12
+  var messages13 = {
+    "settings.title": "C\xE0i \u0111\u1EB7t",
+    "settings.otherExtensions": "Ti\u1EC7n \xEDch m\u1EDF r\u1ED9ng kh\xE1c",
+    "settings.locale": "Ng\xF4n ng\u1EEF",
+    "settings.systemLanguage": "Ng\xF4n ng\u1EEF h\u1EC7 th\u1ED1ng",
+    "settings.displaySettingsButtonInSideMenu":
+      "Hi\u1EC3n th\u1ECB n\xFAt c\xE0i \u0111\u1EB7t trong menu b\xEAn",
+    "settings.menu.settings": "\u2699\uFE0F C\xE0i \u0111\u1EB7t",
+    "settings.extensions.utags.title":
+      "\u{1F3F7}\uFE0F UTags - Th\xEAm th\u1EBB ng\u01B0\u1EDDi d\xF9ng v\xE0o li\xEAn k\u1EBFt",
+    "settings.extensions.links-helper.title":
+      "\u{1F517} Tr\u1EE3 l\xFD li\xEAn k\u1EBFt",
+    "settings.extensions.v2ex.rep.title":
+      "V2EX.REP - \u4E13\u6CE8\u63D0\u5347 V2EX \u4E3B\u9898\u56DE\u590D\u6D4F\u89C8\u4F53\u9A8C",
+    "settings.extensions.v2ex.min.title":
+      "v2ex.min - Phong c\xE1ch t\u1ED1i gi\u1EA3n V2EX",
+    "settings.extensions.replace-ugly-avatars.title":
+      "Thay th\u1EBF avatar x\u1EA5u",
+    "settings.extensions.more-by-pipecraft.title":
+      "T\xECm th\xEAm script ng\u01B0\u1EDDi d\xF9ng h\u1EEFu \xEDch",
+  }
+  var vi_default = messages13
+  var localeMap = {
+    en: en_default,
+    "en-us": en_default,
+    zh: zh_cn_default,
+    "zh-cn": zh_cn_default,
+    "zh-hk": zh_hk_default,
+    "zh-tw": zh_tw_default,
+    ru: ru_default,
+    "ru-ru": ru_default,
+    ko: ko_default,
+    "ko-kr": ko_default,
+    ja: ja_default,
+    "ja-jp": ja_default,
+    fr: fr_default,
+    "fr-fr": fr_default,
+    de: de_default,
+    "de-de": de_default,
+    it: it_default,
+    "it-it": it_default,
+    es: es_default,
+    "es-es": es_default,
+    pt: pt_default,
+    "pt-pt": pt_default,
+    "pt-br": pt_default,
+    vi: vi_default,
+    "vi-vn": vi_default,
+  }
+  var localeNames = {
+    en: "English",
+    "en-us": "English (US)",
+    zh: "\u4E2D\u6587",
+    "zh-cn": "\u4E2D\u6587 (\u7B80\u4F53)",
+    "zh-hk": "\u4E2D\u6587 (\u9999\u6E2F)",
+    "zh-tw": "\u4E2D\u6587 (\u53F0\u7063)",
+    ru: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+    "ru-ru": "\u0420\u0443\u0441\u0441\u043A\u0438\u0439",
+    ko: "\uD55C\uAD6D\uC5B4",
+    "ko-kr": "\uD55C\uAD6D\uC5B4",
+    ja: "\u65E5\u672C\u8A9E",
+    "ja-jp": "\u65E5\u672C\u8A9E",
+    fr: "Fran\xE7ais",
+    "fr-fr": "Fran\xE7ais",
+    de: "Deutsch",
+    "de-de": "Deutsch",
+    it: "Italiano",
+    "it-it": "Italiano",
+    es: "Espa\xF1ol",
+    "es-es": "Espa\xF1ol",
+    pt: "Portugu\xEAs",
+    "pt-pt": "Portugu\xEAs",
+    "pt-br": "Portugu\xEAs (Brasil)",
+    vi: "Ti\u1EBFng Vi\u1EC7t",
+    "vi-vn": "Ti\u1EBFng Vi\u1EC7t",
+  }
+  var locales = Object.keys(localeMap)
+  initAvailableLocales(locales)
+  console.log("[settings] prefferedLocale:", getPrefferedLocale())
+  var i = initI18n(localeMap, getPrefferedLocale())
+  function resetI18n(locale2) {
+    console.log(
+      "[settings] prefferedLocale:",
+      getPrefferedLocale(),
+      "locale:",
+      locale2
+    )
+    i = initI18n(localeMap, locale2 || getPrefferedLocale())
+  }
   var lang = navigator.language
   var locale
   if (lang === "zh-TW" || lang === "zh-HK") {
@@ -716,137 +1074,6 @@
       url: "https://greasyfork.org/".concat(locale, "/users/1030884-pipecraft"),
     },
   ]
-  var getInstalledExtesionList = () => {
-    return $(".extension_list_container .installed_extension_list")
-  }
-  var getRelatedExtesionList = () => {
-    return $(".extension_list_container .related_extension_list")
-  }
-  var isInstalledExtension = (id) => {
-    const list = getInstalledExtesionList()
-    if (!list) {
-      return false
-    }
-    const installed = $('[data-extension-id="'.concat(id, '"]'), list)
-    return Boolean(installed)
-  }
-  var addCurrentExtension = (extension) => {
-    const list = getInstalledExtesionList()
-    if (!list) {
-      return
-    }
-    if (isInstalledExtension(extension.id)) {
-      return
-    }
-    const element = createInstalledExtension(extension)
-    list.append(element)
-    const list2 = getRelatedExtesionList()
-    if (list2) {
-      updateRelatedExtensions(list2)
-    }
-  }
-  var activeExtension = (id) => {
-    const list = getInstalledExtesionList()
-    if (!list) {
-      return false
-    }
-    for (const element of $$(".active", list)) {
-      removeClass(element, "active")
-    }
-    const installed = $('[data-extension-id="'.concat(id, '"]'), list)
-    if (installed) {
-      addClass(installed, "active")
-    }
-  }
-  var activeExtensionList = () => {
-    const extensionListContainer = $(".extension_list_container")
-    if (extensionListContainer) {
-      addClass(extensionListContainer, "bes_active")
-    }
-  }
-  var deactiveExtensionList = () => {
-    const extensionListContainer = $(".extension_list_container")
-    if (extensionListContainer) {
-      removeClass(extensionListContainer, "bes_active")
-    }
-  }
-  var createInstalledExtension = (installedExtension) => {
-    const div = createElement("div", {
-      class: "installed_extension",
-      "data-extension-id": installedExtension.id,
-    })
-    const a = addElement2(div, "a", {
-      onclick: installedExtension.onclick,
-    })
-    addElement2(a, "span", {
-      textContent: installedExtension.title,
-    })
-    const svg = addElement2(a, "svg")
-    svg.outerHTML = createHTML(openButton)
-    return div
-  }
-  var updateRelatedExtensions = (container) => {
-    const relatedExtensionElements = $$("[data-extension-id]", container)
-    if (relatedExtensionElements.length > 0) {
-      for (const relatedExtensionElement of relatedExtensionElements) {
-        if (
-          isInstalledExtension(
-            relatedExtensionElement.dataset.extensionId || "noid"
-          )
-        ) {
-          relatedExtensionElement.remove()
-        }
-      }
-    } else {
-      container.innerHTML = createHTML("")
-    }
-    for (const relatedExtension of relatedExtensions) {
-      if (
-        isInstalledExtension(relatedExtension.id) ||
-        $('[data-extension-id="'.concat(relatedExtension.id, '"]'), container)
-      ) {
-        continue
-      }
-      if ($$("[data-extension-id]", container).length >= 4) {
-        return
-      }
-      const div4 = addElement2(container, "div", {
-        class: "related_extension",
-        "data-extension-id": relatedExtension.id,
-      })
-      const a = addElement2(div4, "a", {
-        href: relatedExtension.url,
-        target: "_blank",
-      })
-      addElement2(a, "span", {
-        textContent: relatedExtension.title,
-      })
-      const svg = addElement2(a, "svg")
-      svg.outerHTML = createHTML(openInNewTabButton)
-    }
-  }
-  function createExtensionList(installedExtensions) {
-    const div = createElement("div", {
-      class: "extension_list_container thin_scrollbar",
-    })
-    addElement2(div, "h1", { textContent: i("settings.title") })
-    const div2 = addElement2(div, "div", {
-      class: "installed_extension_list",
-    })
-    for (const installedExtension of installedExtensions) {
-      if (isInstalledExtension(installedExtension.id)) {
-        continue
-      }
-      const element = createInstalledExtension(installedExtension)
-      div2.append(element)
-    }
-    addElement2(div, "h2", { textContent: i("settings.otherExtensions") })
-    const div3 = addElement2(div, "div", {
-      class: "related_extension_list",
-    })
-    updateRelatedExtensions(div3)
-    return div
-  }
   var prefix = "browser_extension_settings_"
   var randomId = String(Math.round(Math.random() * 1e4))
   var settingsContainerId = prefix + "container_" + randomId
@@ -887,6 +1114,20 @@
     }
     removeEventListener(document, "click", onDocumentClick, true)
     removeEventListener(document, "keydown", onDocumentKeyDown, true)
+  }
+  function destroySettings() {
+    closeModal()
+    const settingsContainer = getSettingsContainer()
+    if (settingsContainer) {
+      settingsContainer.remove()
+    }
+  }
+  function isSettingsShown() {
+    const settingsContainer = getSettingsContainer()
+    if (settingsContainer) {
+      return settingsContainer.style.display === "block"
+    }
+    return false
   }
   var onDocumentClick = (event) => {
     const target = event.target
@@ -994,18 +1235,6 @@
       })
     )
   }
-  function initExtensionList() {
-    const wrapper = getSettingsWrapper()
-    if (!$(".extension_list_container", wrapper)) {
-      const list = createExtensionList([])
-      wrapper.append(list)
-    }
-    addCurrentExtension({
-      id: settingsOptions.id,
-      title: settingsOptions.title,
-      onclick: showSettings,
-    })
-  }
   function createSettingsElement() {
     let settingsMain = getSettingsElement()
     if (!settingsMain) {
@@ -1016,13 +1245,6 @@
       settingsMain = addElement2(wrapper, "div", {
         id: settingsElementId,
         class: "".concat(prefix, "main thin_scrollbar"),
-      })
-      addElement2(settingsMain, "a", {
-        textContent: "Settings",
-        class: "navigation_go_previous",
-        onclick() {
-          activeExtensionList()
-        },
       })
       if (settingsOptions.title) {
         addElement2(settingsMain, "h2", { textContent: settingsOptions.title })
@@ -1150,6 +1372,9 @@
               })
               break
             }
+            default: {
+              break
+            }
           }
         }
       }
@@ -1164,56 +1389,30 @@
     }
     return settingsMain
   }
-  function addSideMenu() {
-    if (!getSettingsValue("displaySettingsButtonInSideMenu")) {
-      return
-    }
-    const menu =
-      $("#browser_extension_side_menu") ||
-      addElement2(doc.body, "div", {
-        id: "browser_extension_side_menu",
-        "data-bes-version": besVersion,
-      })
-    const button = $("button[data-bes-version]", menu)
-    if (button) {
-      const theVersion = parseInt10(button.dataset.besVersion, 0)
-      if (theVersion >= besVersion) {
-        return
-      }
-      button.remove()
-    }
-    addElement2(menu, "button", {
-      type: "button",
-      "data-bes-version": besVersion,
-      title: i("settings.menu.settings"),
-      onclick() {
-        setTimeout(showSettings, 1)
-      },
-      innerHTML: settingButton,
-    })
-  }
-  function addCommonSettings(settingsTable3) {
+  function addCommonSettings(settingsTable2) {
     let maxGroup = 0
-    for (const key in settingsTable3) {
-      if (Object.hasOwn(settingsTable3, key)) {
-        const item = settingsTable3[key]
+    for (const key in settingsTable2) {
+      if (Object.hasOwn(settingsTable2, key)) {
+        const item = settingsTable2[key]
         const group = item.group || 1
         if (group > maxGroup) {
           maxGroup = group
         }
       }
     }
-    settingsTable3.displaySettingsButtonInSideMenu = {
-      title: i("settings.displaySettingsButtonInSideMenu"),
-      defaultValue: !(
-        typeof GM === "object" && typeof GM.registerMenuCommand === "function"
-      ),
-      group: maxGroup + 1,
+    settingsTable2.locale = {
+      title: i("settings.locale"),
+      type: "select",
+      defaultValue: "",
+      options: {},
+      group: ++maxGroup,
     }
   }
   function handleShowSettingsUrl() {
-    if (location.hash === "#bes-show-settings") {
+    const hashString = "#!show-settings-".concat(settingsOptions.id)
+    if (location.hash === hashString) {
       setTimeout(showSettings, 100)
+      history.replaceState({}, "", location.href.replace(hashString, ""))
     }
   }
   async function showSettings() {
@@ -1223,28 +1422,58 @@
     settingsContainer.style.display = "block"
     addEventListener(document, "click", onDocumentClick, true)
     addEventListener(document, "keydown", onDocumentKeyDown, true)
-    activeExtension(settingsOptions.id)
-    deactiveExtensionList()
   }
-  var initSettings = async (options) => {
+  var lastLocale
+  var resetSettingsUI = (optionsProvider) => {
+    lastLocale = getSettingsValue("locale") || getPrefferedLocale()
+    resetI18n(lastLocale)
+    const options = optionsProvider()
     settingsOptions = options
     settingsTable = options.settingsTable || {}
     addCommonSettings(settingsTable)
+    const availableLocales3 = options.availableLocales
+    if (availableLocales3 == null ? void 0 : availableLocales3.length) {
+      initAvailableLocales(availableLocales3)
+      const localeSelect = settingsTable.locale
+      localeSelect.options = {
+        [i("settings.systemLanguage")]: "",
+      }
+      for (const locale2 of availableLocales3) {
+        const lowerCaseLocale = locale2.toLowerCase()
+        const displayName = localeNames[lowerCaseLocale] || locale2
+        localeSelect.options[displayName] = locale2
+      }
+    }
+  }
+  var initSettings = async (optionsProvider) => {
     addValueChangeListener(storageKey, async () => {
       settings = await getSettings()
       await updateOptions()
-      addSideMenu()
-      if (typeof options.onValueChange === "function") {
-        options.onValueChange()
+      const newLocale = getSettingsValue("locale") || getPrefferedLocale()
+      console.log("lastLocale:", lastLocale, "newLocale:", newLocale)
+      if (lastLocale !== newLocale) {
+        const isShown = isSettingsShown()
+        destroySettings()
+        resetI18n(newLocale)
+        lastLocale = newLocale
+        setTimeout(() => {
+          resetSettingsUI(optionsProvider)
+        }, 50)
+        if (isShown) {
+          setTimeout(showSettings, 100)
+        }
+      }
+      if (typeof settingsOptions.onValueChange === "function") {
+        settingsOptions.onValueChange()
       }
     })
     settings = await getSettings()
+    resetSettingsUI(optionsProvider)
+    setTimeout(() => {
+      resetSettingsUI(optionsProvider)
+    }, 50)
     runWhenHeadExists(() => {
       addStyle(getSettingsStyle())
-    })
-    runWhenDomReady(() => {
-      initExtensionList()
-      addSideMenu()
     })
     registerMenuCommand(i("settings.menu.settings"), showSettings, "o")
     handleShowSettingsUrl()
@@ -1272,7 +1501,63 @@
     }
     return a
   }
-  var messages3 = {
+  var messages14 = {
+    "settings.enableCurrentSite": "UTags auf der aktuellen Website aktivieren",
+    "settings.showHidedItems":
+      "Versteckte Elemente anzeigen (Inhalte mit 'block', 'hide', 'verstecken' Tags)",
+    "settings.noOpacityEffect":
+      "Transparenz-Effekt entfernen (Inhalte mit 'sb', 'ignorieren', 'Clickbait' Tags)",
+    "settings.useVisitedFunction":
+      "Browsing-Inhalts-Tagging auf der aktuellen Website aktivieren",
+    "settings.displayEffectOfTheVisitedContent":
+      "Anzeigeeffekt f\xFCr besuchte Inhalte",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Nur Aufzeichnungen speichern, keine Markierung anzeigen",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Nur Markierung anzeigen",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Titelfarbe \xE4ndern",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Durchscheinend",
+    "settings.displayEffectOfTheVisitedContent.hide": "Verstecken",
+    "settings.pinnedTags":
+      "F\xFCgen Sie die Tags hinzu, die Sie anheften m\xF6chten, getrennt durch Kommas",
+    "settings.pinnedTagsDefaultValue":
+      "Favoriten, block, sb, blockieren, verstecken, gelesen, ignorieren, Clickbait, Werbung, folgen",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "F\xFCgen Sie Emoji-Tags hinzu, getrennt durch Kommas",
+    "settings.customStyle":
+      "Benutzerdefinierten Stil f\xFCr alle Websites aktivieren",
+    "settings.customStyleCurrentSite":
+      "Benutzerdefinierten Stil f\xFCr die aktuelle Website aktivieren",
+    "settings.customStyleDefaultValue":
+      "/* Benutzerdefinierter Stil */\nbody {\n  /* Tag-Textfarbe */\n  --utags-text-tag-color: white;\n  /* Tag-Rahmenfarbe */\n  --utags-text-tag-border-color: red;\n  /* Tag-Hintergrundfarbe */\n  --utags-text-tag-background-color: red;\n}\n\n/* Tag-Stil f\xFCr das Label 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Tag-Textfarbe */\n  --utags-text-tag-color: white;\n  /* Tag-Rahmenfarbe */\n  --utags-text-tag-border-color: orange;\n  /* Tag-Hintergrundfarbe */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "Beispiele",
+    "settings.customStyleExamplesContent":
+      '<p>Beispiele f\xFCr benutzerdefinierten Stil</p>\n  <p>\n  <pre>/* Benutzerdefinierter Stil */\nbody {\n  /* Tag-Textfarbe */\n  --utags-text-tag-color: white;\n  /* Tag-Rahmenfarbe */\n  --utags-text-tag-border-color: red;\n  /* Tag-Hintergrundfarbe */\n  --utags-text-tag-background-color: red;\n}\n\n/* Tag-Stil f\xFCr das Label \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Tag-Textfarbe */\n  --utags-text-tag-color: white;\n  /* Tag-Rahmenfarbe */\n  --utags-text-tag-border-color: orange;\n  /* Tag-Hintergrundfarbe */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* Hintergrundfarbe der Eintr\xE4ge in der Liste, die das \'bar\' Tag enthalten */\n  background-color: aqua;\n}\n\nbody {\n  /* Titelfarbe besuchter Beitr\xE4ge */\n  --utags-visited-title-color: red;\n}\n\n/* Dunkler Modus */\n[data-utags_darkmode="1"] body {\n  /* Titelfarbe besuchter Beitr\xE4ge */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Weitere Beispiele</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "Einfache Methode zum Hinzuf\xFCgen von Tags verwenden",
+    "settings.openTagsPage": "Tag-Liste",
+    "settings.openDataPage": "Daten exportieren/importieren",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Benutzer-Tags zu Links hinzuf\xFCgen",
+    "settings.information":
+      "Nach dem \xC4ndern der Einstellungen laden Sie die Seite neu, damit sie wirksam werden",
+    "settings.report": "Problem melden",
+    "prompt.addTags":
+      "[UTags] Bitte geben Sie Tags ein, mehrere Tags werden durch Kommas getrennt",
+    "prompt.pinnedTags": "Angeheftet",
+    "prompt.mostUsedTags": "K\xFCrzlich h\xE4ufig verwendet",
+    "prompt.recentAddedTags": "Neu hinzugef\xFCgt",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Kopieren",
+    "prompt.cancel": "Abbrechen",
+    "prompt.ok": "Best\xE4tigen",
+    "prompt.settings": "Einstellungen",
+    "prompt.addTagsToCurrentPage": "Tags zur aktuellen Seite hinzuf\xFCgen",
+  }
+  var de_default2 = messages14
+  var messages15 = {
     "settings.enableCurrentSite": "Enable UTags on the current website",
     "settings.showHidedItems": "Show hidden items (tags with 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -1321,8 +1606,344 @@
     "prompt.settings": "Settings",
     "prompt.addTagsToCurrentPage": "Add tags to current page",
   }
-  var en_default2 = messages3
-  var messages4 = {
+  var en_default2 = messages15
+  var messages16 = {
+    "settings.enableCurrentSite": "Habilitar UTags en el sitio web actual",
+    "settings.showHidedItems":
+      "Mostrar elementos ocultos (contenido con etiquetas 'block', 'hide', 'ocultar')",
+    "settings.noOpacityEffect":
+      "Eliminar efecto de transparencia (contenido con etiquetas 'sb', 'ignorar', 'clickbait')",
+    "settings.useVisitedFunction":
+      "Habilitar funci\xF3n de etiquetado de contenido de navegaci\xF3n en el sitio web actual",
+    "settings.displayEffectOfTheVisitedContent":
+      "Efecto de visualizaci\xF3n del contenido visitado",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Solo guardar registros, no mostrar marca",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Solo mostrar marca",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Cambiar color del t\xEDtulo",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Transl\xFAcido",
+    "settings.displayEffectOfTheVisitedContent.hide": "Ocultar",
+    "settings.pinnedTags":
+      "Agregue las etiquetas que desea fijar, separadas por comas",
+    "settings.pinnedTagsDefaultValue":
+      "favoritos, block, sb, bloquear, ocultar, le\xEDdo, ignorar, clickbait, publicidad, seguir",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags": "Agregue etiquetas emoji, separadas por comas",
+    "settings.customStyle":
+      "Habilitar estilo personalizado para todos los sitios web",
+    "settings.customStyleCurrentSite":
+      "Habilitar estilo personalizado para el sitio web actual",
+    "settings.customStyleDefaultValue":
+      "/* Estilo personalizado */\nbody {\n  /* Color del texto de la etiqueta */\n  --utags-text-tag-color: white;\n  /* Color del borde de la etiqueta */\n  --utags-text-tag-border-color: red;\n  /* Color de fondo de la etiqueta */\n  --utags-text-tag-background-color: red;\n}\n\n/* Estilo de etiqueta para la etiqueta 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Color del texto de la etiqueta */\n  --utags-text-tag-color: white;\n  /* Color del borde de la etiqueta */\n  --utags-text-tag-border-color: orange;\n  /* Color de fondo de la etiqueta */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "Ejemplos",
+    "settings.customStyleExamplesContent":
+      '<p>Ejemplos de estilo personalizado</p>\n  <p>\n  <pre>/* Estilo personalizado */\nbody {\n  /* Color del texto de la etiqueta */\n  --utags-text-tag-color: white;\n  /* Color del borde de la etiqueta */\n  --utags-text-tag-border-color: red;\n  /* Color de fondo de la etiqueta */\n  --utags-text-tag-background-color: red;\n}\n\n/* Estilo de etiqueta para la etiqueta \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Color del texto de la etiqueta */\n  --utags-text-tag-color: white;\n  /* Color del borde de la etiqueta */\n  --utags-text-tag-border-color: orange;\n  /* Color de fondo de la etiqueta */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* Color de fondo de las entradas en la lista que contienen la etiqueta \'bar\' */\n  background-color: aqua;\n}\n\nbody {\n  /* Color del t\xEDtulo de las publicaciones visitadas */\n  --utags-visited-title-color: red;\n}\n\n/* Modo oscuro */\n[data-utags_darkmode="1"] body {\n  /* Color del t\xEDtulo de las publicaciones visitadas */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">M\xE1s ejemplos</a></p>\n  ',
+    "settings.useSimplePrompt": "Usar m\xE9todo simple para agregar etiquetas",
+    "settings.openTagsPage": "Lista de etiquetas",
+    "settings.openDataPage": "Exportar/Importar datos",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Agregar etiquetas de usuario a los enlaces",
+    "settings.information":
+      "Despu\xE9s de cambiar la configuraci\xF3n, recargue la p\xE1gina para que surta efecto",
+    "settings.report": "Reportar problema",
+    "prompt.addTags":
+      "[UTags] Por favor ingrese etiquetas, m\xFAltiples etiquetas est\xE1n separadas por comas",
+    "prompt.pinnedTags": "Fijado",
+    "prompt.mostUsedTags": "Recientemente usado frecuentemente",
+    "prompt.recentAddedTags": "Reci\xE9n agregado",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Copiar",
+    "prompt.cancel": "Cancelar",
+    "prompt.ok": "Confirmar",
+    "prompt.settings": "Configuraci\xF3n",
+    "prompt.addTagsToCurrentPage": "Agregar etiquetas a la p\xE1gina actual",
+  }
+  var es_default2 = messages16
+  var messages17 = {
+    "settings.enableCurrentSite": "Activer UTags sur le site web actuel",
+    "settings.showHidedItems":
+      "Afficher les \xE9l\xE9ments masqu\xE9s (contenu avec les tags 'block', 'hide', 'masquer')",
+    "settings.noOpacityEffect":
+      "Supprimer l'effet de transparence (contenu avec les tags 'sb', 'ignorer', 'pi\xE8ge \xE0 clics')",
+    "settings.useVisitedFunction":
+      "Activer la fonction de marquage du contenu de navigation sur le site web actuel",
+    "settings.displayEffectOfTheVisitedContent":
+      "Effet d'affichage du contenu visit\xE9",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Enregistrer uniquement, ne pas afficher de marque",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Afficher uniquement la marque",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Changer la couleur du titre",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Translucide",
+    "settings.displayEffectOfTheVisitedContent.hide": "Masquer",
+    "settings.pinnedTags":
+      "Ajoutez les tags que vous souhaitez \xE9pingler, s\xE9par\xE9s par des virgules",
+    "settings.pinnedTagsDefaultValue":
+      "favoris, block, sb, bloquer, masquer, lu, ignorer, pi\xE8ge \xE0 clics, publicit\xE9, suivre",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "Ajoutez les tags emoji, s\xE9par\xE9s par des virgules",
+    "settings.customStyle":
+      "Activer le style personnalis\xE9 pour tous les sites web",
+    "settings.customStyleCurrentSite":
+      "Activer le style personnalis\xE9 pour le site web actuel",
+    "settings.customStyleDefaultValue":
+      "/* Style personnalis\xE9 */\nbody {\n  /* Couleur du texte du tag */\n  --utags-text-tag-color: white;\n  /* Couleur de la bordure du tag */\n  --utags-text-tag-border-color: red;\n  /* Couleur de l'arri\xE8re-plan du tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Style du tag pour le label 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Couleur du texte du tag */\n  --utags-text-tag-color: white;\n  /* Couleur de la bordure du tag */\n  --utags-text-tag-border-color: orange;\n  /* Couleur de l'arri\xE8re-plan du tag */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "Exemples",
+    "settings.customStyleExamplesContent":
+      "<p>Exemples de style personnalis\xE9</p>\n  <p>\n  <pre>/* Style personnalis\xE9 */\nbody {\n  /* Couleur du texte du tag */\n  --utags-text-tag-color: white;\n  /* Couleur de la bordure du tag */\n  --utags-text-tag-border-color: red;\n  /* Couleur de l'arri\xE8re-plan du tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Style du tag pour le label 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Couleur du texte du tag */\n  --utags-text-tag-color: white;\n  /* Couleur de la bordure du tag */\n  --utags-text-tag-border-color: orange;\n  /* Couleur de l'arri\xE8re-plan du tag */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=\",bar,\"] {\n  /* Couleur d'arri\xE8re-plan des entr\xE9es de la liste contenant le tag 'bar' */\n  background-color: aqua;\n}\n\nbody {\n  /* Couleur du titre des publications visit\xE9es */\n  --utags-visited-title-color: red;\n}\n\n/* Mode sombre */\n[data-utags_darkmode=\"1\"] body {\n  /* Couleur du titre des publications visit\xE9es */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href=\"https://github.com/utags/utags/tree/main/custom-style-examples\">Plus d'exemples</a></p>\n  ",
+    "settings.useSimplePrompt":
+      "Utiliser une m\xE9thode simple pour ajouter des tags",
+    "settings.openTagsPage": "Liste des tags",
+    "settings.openDataPage": "Exporter/Importer des donn\xE9es",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Ajouter des tags utilisateur aux liens",
+    "settings.information":
+      "Apr\xE8s avoir modifi\xE9 les param\xE8tres, rechargez la page pour qu'ils prennent effet",
+    "settings.report": "Signaler un probl\xE8me",
+    "prompt.addTags":
+      "[UTags] Veuillez saisir des tags, plusieurs tags sont s\xE9par\xE9s par des virgules",
+    "prompt.pinnedTags": "\xC9pingl\xE9",
+    "prompt.mostUsedTags": "R\xE9cemment utilis\xE9s fr\xE9quemment",
+    "prompt.recentAddedTags": "Nouvellement ajout\xE9",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Copier",
+    "prompt.cancel": "Annuler",
+    "prompt.ok": "Confirmer",
+    "prompt.settings": "Param\xE8tres",
+    "prompt.addTagsToCurrentPage": "Ajouter des tags \xE0 la page actuelle",
+  }
+  var fr_default2 = messages17
+  var messages18 = {
+    "settings.enableCurrentSite": "Abilita UTags sul sito web attuale",
+    "settings.showHidedItems":
+      "Mostra elementi nascosti (contenuto con tag 'block', 'hide', 'nascondere')",
+    "settings.noOpacityEffect":
+      "Rimuovi effetto trasparenza (contenuto con tag 'sb', 'ignorare', 'clickbait')",
+    "settings.useVisitedFunction":
+      "Abilita funzione di tagging del contenuto di navigazione sul sito web attuale",
+    "settings.displayEffectOfTheVisitedContent":
+      "Effetto di visualizzazione del contenuto visitato",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Salva solo registrazioni, non mostrare segno",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Mostra solo segno",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Cambia colore del titolo",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Traslucido",
+    "settings.displayEffectOfTheVisitedContent.hide": "Nascondere",
+    "settings.pinnedTags":
+      "Aggiungi i tag che vuoi fissare, separati da virgole",
+    "settings.pinnedTagsDefaultValue":
+      "preferiti, block, sb, bloccare, nascondere, letto, ignorare, clickbait, pubblicit\xE0, seguire",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags": "Aggiungi tag emoji, separati da virgole",
+    "settings.customStyle": "Abilita stile personalizzato per tutti i siti web",
+    "settings.customStyleCurrentSite":
+      "Abilita stile personalizzato per il sito web attuale",
+    "settings.customStyleDefaultValue":
+      "/* Stile personalizzato */\nbody {\n  /* Colore del testo del tag */\n  --utags-text-tag-color: white;\n  /* Colore del bordo del tag */\n  --utags-text-tag-border-color: red;\n  /* Colore di sfondo del tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Stile del tag per l'etichetta 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Colore del testo del tag */\n  --utags-text-tag-color: white;\n  /* Colore del bordo del tag */\n  --utags-text-tag-border-color: orange;\n  /* Colore di sfondo del tag */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "Esempi",
+    "settings.customStyleExamplesContent":
+      '<p>Esempi di stile personalizzato</p>\n  <p>\n  <pre>/* Stile personalizzato */\nbody {\n  /* Colore del testo del tag */\n  --utags-text-tag-color: white;\n  /* Colore del bordo del tag */\n  --utags-text-tag-border-color: red;\n  /* Colore di sfondo del tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Stile del tag per l\'etichetta \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Colore del testo del tag */\n  --utags-text-tag-color: white;\n  /* Colore del bordo del tag */\n  --utags-text-tag-border-color: orange;\n  /* Colore di sfondo del tag */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* Colore di sfondo delle voci nell\'elenco che contengono il tag \'bar\' */\n  background-color: aqua;\n}\n\nbody {\n  /* Colore del titolo dei post visitati */\n  --utags-visited-title-color: red;\n}\n\n/* Modalit\xE0 scura */\n[data-utags_darkmode="1"] body {\n  /* Colore del titolo dei post visitati */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Altri esempi</a></p>\n  ',
+    "settings.useSimplePrompt": "Usa metodo semplice per aggiungere tag",
+    "settings.openTagsPage": "Elenco tag",
+    "settings.openDataPage": "Esporta/Importa dati",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Aggiungi tag utente ai collegamenti",
+    "settings.information":
+      "Dopo aver modificato le impostazioni, ricarica la pagina perch\xE9 abbiano effetto",
+    "settings.report": "Segnala problema",
+    "prompt.addTags":
+      "[UTags] Inserisci tag, pi\xF9 tag sono separati da virgole",
+    "prompt.pinnedTags": "Fissato",
+    "prompt.mostUsedTags": "Recentemente usato frequentemente",
+    "prompt.recentAddedTags": "Appena aggiunto",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Copia",
+    "prompt.cancel": "Annulla",
+    "prompt.ok": "Conferma",
+    "prompt.settings": "Impostazioni",
+    "prompt.addTagsToCurrentPage": "Aggiungi tag alla pagina attuale",
+  }
+  var it_default2 = messages18
+  var messages19 = {
+    "settings.enableCurrentSite":
+      "\u73FE\u5728\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067UTags\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.showHidedItems":
+      "\u975E\u8868\u793A\u306E\u30A2\u30A4\u30C6\u30E0\u3092\u8868\u793A\u3059\u308B\uFF08'block'\u3001'hide'\u3001'\u96A0\u3059'\u306A\u3069\u306E\u30BF\u30B0\u304C\u4ED8\u3044\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\uFF09",
+    "settings.noOpacityEffect":
+      "\u900F\u660E\u5EA6\u52B9\u679C\u3092\u7121\u52B9\u306B\u3059\u308B\uFF08'sb'\u3001'\u7121\u8996'\u3001'\u91E3\u308A\u30BF\u30A4\u30C8\u30EB'\u306A\u3069\u306E\u30BF\u30B0\u304C\u4ED8\u3044\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\uFF09",
+    "settings.useVisitedFunction":
+      "\u73FE\u5728\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067\u95B2\u89A7\u30B3\u30F3\u30C6\u30F3\u30C4\u306E\u30BF\u30B0\u6A5F\u80FD\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.displayEffectOfTheVisitedContent":
+      "\u95B2\u89A7\u6E08\u307F\u30B3\u30F3\u30C6\u30F3\u30C4\u306E\u8868\u793A\u52B9\u679C",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "\u8A18\u9332\u306E\u307F\u4FDD\u5B58\u3001\u30DE\u30FC\u30AF\u306F\u8868\u793A\u3057\u306A\u3044",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "\u30DE\u30FC\u30AF\u306E\u307F\u8868\u793A",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "\u30BF\u30A4\u30C8\u30EB\u306E\u8272\u3092\u5909\u66F4",
+    "settings.displayEffectOfTheVisitedContent.translucent":
+      "\u534A\u900F\u660E",
+    "settings.displayEffectOfTheVisitedContent.hide": "\u975E\u8868\u793A",
+    "settings.pinnedTags":
+      "\u30D4\u30F3\u7559\u3081\u3057\u305F\u3044\u30BF\u30B0\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044",
+    "settings.pinnedTagsDefaultValue":
+      "\u304A\u6C17\u306B\u5165\u308A, block, sb, \u30D6\u30ED\u30C3\u30AF, \u975E\u8868\u793A, \u65E2\u8AAD, \u7121\u8996, \u91E3\u308A\u30BF\u30A4\u30C8\u30EB, \u5BA3\u4F1D, \u30D5\u30A9\u30ED\u30FC",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "\u7D75\u6587\u5B57\u30BF\u30B0\u3092\u30AB\u30F3\u30DE\u533A\u5207\u308A\u3067\u8FFD\u52A0\u3057\u3066\u304F\u3060\u3055\u3044",
+    "settings.customStyle":
+      "\u3059\u3079\u3066\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067\u30AB\u30B9\u30BF\u30E0\u30B9\u30BF\u30A4\u30EB\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.customStyleCurrentSite":
+      "\u73FE\u5728\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067\u30AB\u30B9\u30BF\u30E0\u30B9\u30BF\u30A4\u30EB\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.customStyleDefaultValue":
+      "/* \u30AB\u30B9\u30BF\u30E0\u30B9\u30BF\u30A4\u30EB */\nbody {\n  /* \u30BF\u30B0\u306E\u30C6\u30AD\u30B9\u30C8\u8272 */\n  --utags-text-tag-color: white;\n  /* \u30BF\u30B0\u306E\u5883\u754C\u7DDA\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u30BF\u30B0\u306E\u80CC\u666F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* 'TEST'\u30E9\u30D9\u30EB\u306E\u30BF\u30B0\u30B9\u30BF\u30A4\u30EB */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* \u30BF\u30B0\u306E\u30C6\u30AD\u30B9\u30C8\u8272 */\n  --utags-text-tag-color: white;\n  /* \u30BF\u30B0\u306E\u5883\u754C\u7DDA\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u30BF\u30B0\u306E\u80CC\u666F\u8272 */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "\u4F8B",
+    "settings.customStyleExamplesContent":
+      '<p>\u30AB\u30B9\u30BF\u30E0\u30B9\u30BF\u30A4\u30EB\u306E\u4F8B</p>\n  <p>\n  <pre>/* \u30AB\u30B9\u30BF\u30E0\u30B9\u30BF\u30A4\u30EB */\nbody {\n  /* \u30BF\u30B0\u306E\u30C6\u30AD\u30B9\u30C8\u8272 */\n  --utags-text-tag-color: white;\n  /* \u30BF\u30B0\u306E\u5883\u754C\u7DDA\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u30BF\u30B0\u306E\u80CC\u666F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \'TEST\'\u30E9\u30D9\u30EB\u306E\u30BF\u30B0\u30B9\u30BF\u30A4\u30EB */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u30BF\u30B0\u306E\u30C6\u30AD\u30B9\u30C8\u8272 */\n  --utags-text-tag-color: white;\n  /* \u30BF\u30B0\u306E\u5883\u754C\u7DDA\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u30BF\u30B0\u306E\u80CC\u666F\u8272 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \u30EA\u30B9\u30C8\u5185\u306E\'bar\'\u30BF\u30B0\u3092\u542B\u3080\u9805\u76EE\u306E\u80CC\u666F\u8272 */\n  background-color: aqua;\n}\n\nbody {\n  /* \u95B2\u89A7\u6E08\u307F\u6295\u7A3F\u306E\u30BF\u30A4\u30C8\u30EB\u8272 */\n  --utags-visited-title-color: red;\n}\n\n/* \u30C0\u30FC\u30AF\u30E2\u30FC\u30C9 */\n[data-utags_darkmode="1"] body {\n  /* \u95B2\u89A7\u6E08\u307F\u6295\u7A3F\u306E\u30BF\u30A4\u30C8\u30EB\u8272 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u305D\u306E\u4ED6\u306E\u4F8B</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "\u30B7\u30F3\u30D7\u30EB\u306A\u65B9\u6CD5\u3067\u30BF\u30B0\u3092\u8FFD\u52A0\u3059\u308B",
+    "settings.openTagsPage": "\u30BF\u30B0\u30EA\u30B9\u30C8",
+    "settings.openDataPage":
+      "\u30C7\u30FC\u30BF\u306E\u30A8\u30AF\u30B9\u30DD\u30FC\u30C8/\u30A4\u30F3\u30DD\u30FC\u30C8",
+    "settings.title":
+      "\u{1F3F7}\uFE0F \u5C0F\u9B5A\u30BF\u30B0 (UTags) - \u30EA\u30F3\u30AF\u306B\u30E6\u30FC\u30B6\u30FC\u30BF\u30B0\u3092\u8FFD\u52A0",
+    "settings.information":
+      "\u8A2D\u5B9A\u3092\u5909\u66F4\u3057\u305F\u5F8C\u3001\u30DA\u30FC\u30B8\u3092\u518D\u8AAD\u307F\u8FBC\u307F\u3059\u308B\u3068\u6709\u52B9\u306B\u306A\u308A\u307E\u3059",
+    "settings.report": "\u554F\u984C\u3092\u5831\u544A",
+    "prompt.addTags":
+      "[UTags] \u30BF\u30B0\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044\u3002\u8907\u6570\u306E\u30BF\u30B0\u306F\u30AB\u30F3\u30DE\u3067\u533A\u5207\u3063\u3066\u304F\u3060\u3055\u3044",
+    "prompt.pinnedTags": "\u30D4\u30F3\u7559\u3081",
+    "prompt.mostUsedTags": "\u6700\u8FD1\u3088\u304F\u4F7F\u7528",
+    "prompt.recentAddedTags": "\u6700\u65B0\u8FFD\u52A0",
+    "prompt.emojiTags": "\u7D75\u6587\u5B57",
+    "prompt.copy": "\u30B3\u30D4\u30FC",
+    "prompt.cancel": "\u30AD\u30E3\u30F3\u30BB\u30EB",
+    "prompt.ok": "\u78BA\u8A8D",
+    "prompt.settings": "\u8A2D\u5B9A",
+    "prompt.addTagsToCurrentPage":
+      "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306B\u30BF\u30B0\u3092\u8FFD\u52A0",
+  }
+  var ja_default2 = messages19
+  var messages20 = {
+    "settings.enableCurrentSite":
+      "\uD604\uC7AC \uC6F9\uC0AC\uC774\uD2B8\uC5D0\uC11C UTags \uD65C\uC131\uD654",
+    "settings.showHidedItems":
+      "\uC228\uACA8\uC9C4 \uD56D\uBAA9 \uD45C\uC2DC ('block', 'hide', '\uC228\uAE40' \uB4F1\uC758 \uD0DC\uADF8\uAC00 \uC788\uB294 \uCF58\uD150\uCE20)",
+    "settings.noOpacityEffect":
+      "\uD22C\uBA85\uB3C4 \uD6A8\uACFC \uC81C\uAC70 ('sb', '\uBB34\uC2DC', '\uB09A\uC2DC\uC81C\uBAA9' \uB4F1\uC758 \uD0DC\uADF8\uAC00 \uC788\uB294 \uCF58\uD150\uCE20)",
+    "settings.useVisitedFunction":
+      "\uD604\uC7AC \uC6F9\uC0AC\uC774\uD2B8\uC5D0\uC11C \uBE0C\uB77C\uC6B0\uC9D5 \uCF58\uD150\uCE20 \uD0DC\uADF8 \uAE30\uB2A5 \uD65C\uC131\uD654",
+    "settings.displayEffectOfTheVisitedContent":
+      "\uBC29\uBB38\uD55C \uCF58\uD150\uCE20\uC758 \uD45C\uC2DC \uD6A8\uACFC",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "\uAE30\uB85D\uB9CC \uC800\uC7A5, \uB9C8\uD06C \uD45C\uC2DC \uC548\uD568",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "\uB9C8\uD06C\uB9CC \uD45C\uC2DC",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "\uC81C\uBAA9 \uC0C9\uC0C1 \uBCC0\uACBD",
+    "settings.displayEffectOfTheVisitedContent.translucent":
+      "\uBC18\uD22C\uBA85",
+    "settings.displayEffectOfTheVisitedContent.hide": "\uC228\uAE40",
+    "settings.pinnedTags":
+      "\uACE0\uC815\uD560 \uD0DC\uADF8\uB97C \uC27C\uD45C\uB85C \uAD6C\uBD84\uD558\uC5EC \uCD94\uAC00\uD558\uC138\uC694",
+    "settings.pinnedTagsDefaultValue":
+      "\uC990\uACA8\uCC3E\uAE30, block, sb, \uCC28\uB2E8, \uC228\uAE40, \uC77D\uC74C, \uBB34\uC2DC, \uB09A\uC2DC\uC81C\uBAA9, \uAD11\uACE0, \uD314\uB85C\uC6B0",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "\uC774\uBAA8\uC9C0 \uD0DC\uADF8\uB97C \uC27C\uD45C\uB85C \uAD6C\uBD84\uD558\uC5EC \uCD94\uAC00\uD558\uC138\uC694",
+    "settings.customStyle":
+      "\uBAA8\uB4E0 \uC6F9\uC0AC\uC774\uD2B8\uC5D0\uC11C \uC0AC\uC6A9\uC790 \uC815\uC758 \uC2A4\uD0C0\uC77C \uD65C\uC131\uD654",
+    "settings.customStyleCurrentSite":
+      "\uD604\uC7AC \uC6F9\uC0AC\uC774\uD2B8\uC5D0\uC11C \uC0AC\uC6A9\uC790 \uC815\uC758 \uC2A4\uD0C0\uC77C \uD65C\uC131\uD654",
+    "settings.customStyleDefaultValue":
+      "/* \uC0AC\uC6A9\uC790 \uC815\uC758 \uC2A4\uD0C0\uC77C */\nbody {\n  /* \uD0DC\uADF8 \uD14D\uC2A4\uD2B8 \uC0C9\uC0C1 */\n  --utags-text-tag-color: white;\n  /* \uD0DC\uADF8 \uD14C\uB450\uB9AC \uC0C9\uC0C1 */\n  --utags-text-tag-border-color: red;\n  /* \uD0DC\uADF8 \uBC30\uACBD \uC0C9\uC0C1 */\n  --utags-text-tag-background-color: red;\n}\n\n/* 'TEST' \uB77C\uBCA8\uC758 \uD0DC\uADF8 \uC2A4\uD0C0\uC77C */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* \uD0DC\uADF8 \uD14D\uC2A4\uD2B8 \uC0C9\uC0C1 */\n  --utags-text-tag-color: white;\n  /* \uD0DC\uADF8 \uD14C\uB450\uB9AC \uC0C9\uC0C1 */\n  --utags-text-tag-border-color: orange;\n  /* \uD0DC\uADF8 \uBC30\uACBD \uC0C9\uC0C1 */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "\uC608\uC2DC",
+    "settings.customStyleExamplesContent":
+      '<p>\uC0AC\uC6A9\uC790 \uC815\uC758 \uC2A4\uD0C0\uC77C \uC608\uC2DC</p>\n  <p>\n  <pre>/* \uC0AC\uC6A9\uC790 \uC815\uC758 \uC2A4\uD0C0\uC77C */\nbody {\n  /* \uD0DC\uADF8 \uD14D\uC2A4\uD2B8 \uC0C9\uC0C1 */\n  --utags-text-tag-color: white;\n  /* \uD0DC\uADF8 \uD14C\uB450\uB9AC \uC0C9\uC0C1 */\n  --utags-text-tag-border-color: red;\n  /* \uD0DC\uADF8 \uBC30\uACBD \uC0C9\uC0C1 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \'TEST\' \uB77C\uBCA8\uC758 \uD0DC\uADF8 \uC2A4\uD0C0\uC77C */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \uD0DC\uADF8 \uD14D\uC2A4\uD2B8 \uC0C9\uC0C1 */\n  --utags-text-tag-color: white;\n  /* \uD0DC\uADF8 \uD14C\uB450\uB9AC \uC0C9\uC0C1 */\n  --utags-text-tag-border-color: orange;\n  /* \uD0DC\uADF8 \uBC30\uACBD \uC0C9\uC0C1 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \uBAA9\uB85D\uC5D0\uC11C \'bar\' \uD0DC\uADF8\uB97C \uD3EC\uD568\uD55C \uD56D\uBAA9\uC758 \uBC30\uACBD\uC0C9 */\n  background-color: aqua;\n}\n\nbody {\n  /* \uBC29\uBB38\uD55C \uAC8C\uC2DC\uBB3C\uC758 \uC81C\uBAA9 \uC0C9\uC0C1 */\n  --utags-visited-title-color: red;\n}\n\n/* \uB2E4\uD06C \uBAA8\uB4DC */\n[data-utags_darkmode="1"] body {\n  /* \uBC29\uBB38\uD55C \uAC8C\uC2DC\uBB3C\uC758 \uC81C\uBAA9 \uC0C9\uC0C1 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\uB354 \uB9CE\uC740 \uC608\uC2DC</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "\uAC04\uB2E8\uD55C \uBC29\uBC95\uC73C\uB85C \uD0DC\uADF8 \uCD94\uAC00",
+    "settings.openTagsPage": "\uD0DC\uADF8 \uBAA9\uB85D",
+    "settings.openDataPage":
+      "\uB370\uC774\uD130 \uB0B4\uBCF4\uB0B4\uAE30/\uAC00\uC838\uC624\uAE30",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - \uB9C1\uD06C\uC5D0 \uC0AC\uC6A9\uC790 \uD0DC\uADF8 \uCD94\uAC00",
+    "settings.information":
+      "\uC124\uC815\uC744 \uBCC0\uACBD\uD55C \uD6C4 \uD398\uC774\uC9C0\uB97C \uC0C8\uB85C\uACE0\uCE68\uD558\uBA74 \uC801\uC6A9\uB429\uB2C8\uB2E4",
+    "settings.report": "\uBB38\uC81C \uC2E0\uACE0",
+    "prompt.addTags":
+      "[UTags] \uD0DC\uADF8\uB97C \uC785\uB825\uD558\uC138\uC694. \uC5EC\uB7EC \uD0DC\uADF8\uB294 \uC27C\uD45C\uB85C \uAD6C\uBD84\uD558\uC138\uC694",
+    "prompt.pinnedTags": "\uACE0\uC815",
+    "prompt.mostUsedTags": "\uCD5C\uADFC \uC790\uC8FC \uC0AC\uC6A9",
+    "prompt.recentAddedTags": "\uCD5C\uADFC \uCD94\uAC00",
+    "prompt.emojiTags": "\uC774\uBAA8\uC9C0",
+    "prompt.copy": "\uBCF5\uC0AC",
+    "prompt.cancel": "\uCDE8\uC18C",
+    "prompt.ok": "\uD655\uC778",
+    "prompt.settings": "\uC124\uC815",
+    "prompt.addTagsToCurrentPage":
+      "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0 \uD0DC\uADF8 \uCD94\uAC00",
+  }
+  var ko_default2 = messages20
+  var messages21 = {
+    "settings.enableCurrentSite": "Ativar UTags no site atual",
+    "settings.showHidedItems":
+      "Mostrar itens ocultos (conte\xFAdo com tags 'block', 'hide', 'ocultar')",
+    "settings.noOpacityEffect":
+      "Remover efeito de transpar\xEAncia (conte\xFAdo com tags 'sb', 'ignorar', 'clickbait')",
+    "settings.useVisitedFunction":
+      "Ativar fun\xE7\xE3o de marca\xE7\xE3o de conte\xFAdo de navega\xE7\xE3o no site atual",
+    "settings.displayEffectOfTheVisitedContent":
+      "Efeito de exibi\xE7\xE3o do conte\xFAdo visitado",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Salvar apenas registros, n\xE3o mostrar marca",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Mostrar apenas marca",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Alterar cor do t\xEDtulo",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Transl\xFAcido",
+    "settings.displayEffectOfTheVisitedContent.hide": "Ocultar",
+    "settings.pinnedTags":
+      "Adicione as tags que deseja fixar, separadas por v\xEDrgulas",
+    "settings.pinnedTagsDefaultValue":
+      "favoritos, block, sb, bloquear, ocultar, lido, ignorar, clickbait, publicidade, seguir",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags": "Adicione tags emoji, separadas por v\xEDrgulas",
+    "settings.customStyle": "Ativar estilo personalizado para todos os sites",
+    "settings.customStyleCurrentSite":
+      "Ativar estilo personalizado para o site atual",
+    "settings.customStyleDefaultValue":
+      "/* Estilo personalizado */\nbody {\n  /* Cor do texto da tag */\n  --utags-text-tag-color: white;\n  /* Cor da borda da tag */\n  --utags-text-tag-border-color: red;\n  /* Cor de fundo da tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Estilo da tag para o r\xF3tulo 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* Cor do texto da tag */\n  --utags-text-tag-color: white;\n  /* Cor da borda da tag */\n  --utags-text-tag-border-color: orange;\n  /* Cor de fundo da tag */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "Exemplos",
+    "settings.customStyleExamplesContent":
+      '<p>Exemplos de estilo personalizado</p>\n  <p>\n  <pre>/* Estilo personalizado */\nbody {\n  /* Cor do texto da tag */\n  --utags-text-tag-color: white;\n  /* Cor da borda da tag */\n  --utags-text-tag-border-color: red;\n  /* Cor de fundo da tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Estilo da tag para o r\xF3tulo \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* Cor do texto da tag */\n  --utags-text-tag-color: white;\n  /* Cor da borda da tag */\n  --utags-text-tag-border-color: orange;\n  /* Cor de fundo da tag */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* Cor de fundo das entradas na lista que cont\xEAm a tag \'bar\' */\n  background-color: aqua;\n}\n\nbody {\n  /* Cor do t\xEDtulo das postagens visitadas */\n  --utags-visited-title-color: red;\n}\n\n/* Modo escuro */\n[data-utags_darkmode="1"] body {\n  /* Cor do t\xEDtulo das postagens visitadas */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Mais exemplos</a></p>\n  ',
+    "settings.useSimplePrompt": "Usar m\xE9todo simples para adicionar tags",
+    "settings.openTagsPage": "Lista de tags",
+    "settings.openDataPage": "Exportar/Importar dados",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Adicionar tags de usu\xE1rio aos links",
+    "settings.information":
+      "Ap\xF3s alterar as configura\xE7\xF5es, recarregue a p\xE1gina para que tenham efeito",
+    "settings.report": "Relatar problema",
+    "prompt.addTags":
+      "[UTags] Por favor, insira tags, m\xFAltiplas tags s\xE3o separadas por v\xEDrgulas",
+    "prompt.pinnedTags": "Fixado",
+    "prompt.mostUsedTags": "Recentemente usado com frequ\xEAncia",
+    "prompt.recentAddedTags": "Rec\xE9m-adicionado",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Copiar",
+    "prompt.cancel": "Cancelar",
+    "prompt.ok": "Confirmar",
+    "prompt.settings": "Configura\xE7\xF5es",
+    "prompt.addTagsToCurrentPage": "Adicionar tags \xE0 p\xE1gina atual",
+  }
+  var pt_default2 = messages21
+  var messages22 = {
     "settings.enableCurrentSite":
       "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C UTags \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0441\u0430\u0439\u0442\u0435",
     "settings.showHidedItems":
@@ -1367,7 +1988,7 @@
     "settings.openDataPage":
       "\u042D\u043A\u0441\u043F\u043E\u0440\u0442/\u0438\u043C\u043F\u043E\u0440\u0442 \u0434\u0430\u043D\u043D\u044B\u0445",
     "settings.title":
-      "\u{1F3F7}\uFE0F UTags \u2013 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0445 \u0442\u0435\u0433\u043E\u0432 \u043A \u0441\u0441\u044B\u043B\u043A\u0430\u043C",
+      "\u{1F3F7}\uFE0F UTags - \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u0442\u0435\u0433\u0438 \u043A \u0441\u0441\u044B\u043B\u043A\u0430\u043C",
     "settings.information":
       "\u041F\u043E\u0441\u043B\u0435 \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043A \u043F\u0435\u0440\u0435\u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0434\u043B\u044F \u043F\u0440\u0438\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u0439",
     "settings.report":
@@ -1389,8 +2010,67 @@
     "prompt.addTagsToCurrentPage":
       "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433\u0438 \u043A \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
   }
-  var ru_default = messages4
-  var messages5 = {
+  var ru_default2 = messages22
+  var messages23 = {
+    "settings.enableCurrentSite":
+      "K\xEDch ho\u1EA1t UTags tr\xEAn trang web hi\u1EC7n t\u1EA1i",
+    "settings.showHidedItems":
+      "Hi\u1EC3n th\u1ECB c\xE1c m\u1EE5c b\u1ECB \u1EA9n (n\u1ED9i dung c\xF3 tag 'block', 'hide', '\u1EA9n')",
+    "settings.noOpacityEffect":
+      "Lo\u1EA1i b\u1ECF hi\u1EC7u \u1EE9ng trong su\u1ED1t (n\u1ED9i dung c\xF3 tag 'sb', 'b\u1ECF qua', 'clickbait')",
+    "settings.useVisitedFunction":
+      "K\xEDch ho\u1EA1t ch\u1EE9c n\u0103ng g\u1EAFn tag n\u1ED9i dung \u0111i\u1EC1u h\u01B0\u1EDBng tr\xEAn trang web hi\u1EC7n t\u1EA1i",
+    "settings.displayEffectOfTheVisitedContent":
+      "Hi\u1EC7u \u1EE9ng hi\u1EC3n th\u1ECB n\u1ED9i dung \u0111\xE3 xem",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "Ch\u1EC9 l\u01B0u b\u1EA3n ghi, kh\xF4ng hi\u1EC3n th\u1ECB d\u1EA5u hi\u1EC7u",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "Ch\u1EC9 hi\u1EC3n th\u1ECB d\u1EA5u hi\u1EC7u",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "Thay \u0111\u1ED5i m\xE0u ti\xEAu \u0111\u1EC1",
+    "settings.displayEffectOfTheVisitedContent.translucent": "Trong su\u1ED1t",
+    "settings.displayEffectOfTheVisitedContent.hide": "\u1EA8n",
+    "settings.pinnedTags":
+      "Th\xEAm c\xE1c tag b\u1EA1n mu\u1ED1n ghim, ph\xE2n c\xE1ch b\u1EB1ng d\u1EA5u ph\u1EA9y",
+    "settings.pinnedTagsDefaultValue":
+      "y\xEAu th\xEDch, block, sb, ch\u1EB7n, \u1EA9n, \u0111\xE3 \u0111\u1ECDc, b\u1ECF qua, clickbait, qu\u1EA3ng c\xE1o, theo d\xF5i",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "Th\xEAm tag emoji, ph\xE2n c\xE1ch b\u1EB1ng d\u1EA5u ph\u1EA9y",
+    "settings.customStyle":
+      "K\xEDch ho\u1EA1t ki\u1EC3u t\xF9y ch\u1EC9nh cho t\u1EA5t c\u1EA3 trang web",
+    "settings.customStyleCurrentSite":
+      "K\xEDch ho\u1EA1t ki\u1EC3u t\xF9y ch\u1EC9nh cho trang web hi\u1EC7n t\u1EA1i",
+    "settings.customStyleDefaultValue":
+      "/* Ki\u1EC3u t\xF9y ch\u1EC9nh */\nbody {\n  /* M\xE0u v\u0103n b\u1EA3n c\u1EE7a tag */\n  --utags-text-tag-color: white;\n  /* M\xE0u vi\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-border-color: red;\n  /* M\xE0u n\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Ki\u1EC3u tag cho nh\xE3n 'TEST' */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* M\xE0u v\u0103n b\u1EA3n c\u1EE7a tag */\n  --utags-text-tag-color: white;\n  /* M\xE0u vi\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-border-color: orange;\n  /* M\xE0u n\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "V\xED d\u1EE5",
+    "settings.customStyleExamplesContent":
+      '<p>V\xED d\u1EE5 v\u1EC1 ki\u1EC3u t\xF9y ch\u1EC9nh</p>\n  <p>\n  <pre>/* Ki\u1EC3u t\xF9y ch\u1EC9nh */\nbody {\n  /* M\xE0u v\u0103n b\u1EA3n c\u1EE7a tag */\n  --utags-text-tag-color: white;\n  /* M\xE0u vi\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-border-color: red;\n  /* M\xE0u n\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-background-color: red;\n}\n\n/* Ki\u1EC3u tag cho nh\xE3n \'TEST\' */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* M\xE0u v\u0103n b\u1EA3n c\u1EE7a tag */\n  --utags-text-tag-color: white;\n  /* M\xE0u vi\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-border-color: orange;\n  /* M\xE0u n\u1EC1n c\u1EE7a tag */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* M\xE0u n\u1EC1n c\u1EE7a c\xE1c m\u1EE5c trong danh s\xE1ch ch\u1EE9a tag \'bar\' */\n  background-color: aqua;\n}\n\nbody {\n  /* M\xE0u ti\xEAu \u0111\u1EC1 c\u1EE7a b\xE0i vi\u1EBFt \u0111\xE3 xem */\n  --utags-visited-title-color: red;\n}\n\n/* Ch\u1EBF \u0111\u1ED9 t\u1ED1i */\n[data-utags_darkmode="1"] body {\n  /* M\xE0u ti\xEAu \u0111\u1EC1 c\u1EE7a b\xE0i vi\u1EBFt \u0111\xE3 xem */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Th\xEAm v\xED d\u1EE5</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "S\u1EED d\u1EE5ng ph\u01B0\u01A1ng ph\xE1p \u0111\u01A1n gi\u1EA3n \u0111\u1EC3 th\xEAm tag",
+    "settings.openTagsPage": "Danh s\xE1ch tag",
+    "settings.openDataPage": "Xu\u1EA5t/Nh\u1EADp d\u1EEF li\u1EC7u",
+    "settings.title":
+      "\u{1F3F7}\uFE0F UTags - Th\xEAm tag ng\u01B0\u1EDDi d\xF9ng v\xE0o li\xEAn k\u1EBFt",
+    "settings.information":
+      "Sau khi thay \u0111\u1ED5i c\xE0i \u0111\u1EB7t, h\xE3y t\u1EA3i l\u1EA1i trang \u0111\u1EC3 c\xF3 hi\u1EC7u l\u1EF1c",
+    "settings.report": "B\xE1o c\xE1o v\u1EA5n \u0111\u1EC1",
+    "prompt.addTags":
+      "[UTags] Vui l\xF2ng nh\u1EADp tag, nhi\u1EC1u tag \u0111\u01B0\u1EE3c ph\xE2n c\xE1ch b\u1EB1ng d\u1EA5u ph\u1EA9y",
+    "prompt.pinnedTags": "\u0110\xE3 ghim",
+    "prompt.mostUsedTags":
+      "G\u1EA7n \u0111\xE2y s\u1EED d\u1EE5ng th\u01B0\u1EDDng xuy\xEAn",
+    "prompt.recentAddedTags": "V\u1EEBa th\xEAm",
+    "prompt.emojiTags": "Emoji",
+    "prompt.copy": "Sao ch\xE9p",
+    "prompt.cancel": "H\u1EE7y",
+    "prompt.ok": "X\xE1c nh\u1EADn",
+    "prompt.settings": "C\xE0i \u0111\u1EB7t",
+    "prompt.addTagsToCurrentPage":
+      "Th\xEAm tag v\xE0o trang hi\u1EC7n t\u1EA1i",
+  }
+  var vi_default2 = messages23
+  var messages24 = {
     "settings.enableCurrentSite":
       "\u5728\u5F53\u524D\u7F51\u7AD9\u542F\u7528\u5C0F\u9C7C\u6807\u7B7E",
     "settings.showHidedItems":
@@ -1449,12 +2129,173 @@
     "prompt.addTagsToCurrentPage":
       "\u4E3A\u5F53\u524D\u7F51\u9875\u6DFB\u52A0\u6807\u7B7E",
   }
-  var zh_cn_default2 = messages5
-  var i2 = initI18n({
-    "en,en-US": en_default2,
-    "zh,zh-CN": zh_cn_default2,
-    "ru,ru-RU": ru_default,
-  })
+  var zh_cn_default2 = messages24
+  var messages25 = {
+    "settings.enableCurrentSite":
+      "\u5728\u7576\u524D\u7DB2\u7AD9\u555F\u7528\u5C0F\u9B5A\u6A19\u7C64",
+    "settings.showHidedItems":
+      "\u986F\u793A\u88AB\u96B1\u85CF\u7684\u5167\u5BB9 (\u6DFB\u52A0\u4E86 'block', 'hide', '\u96B1\u85CF'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
+    "settings.noOpacityEffect":
+      "\u53BB\u9664\u534A\u900F\u660E\u6548\u679C (\u6DFB\u52A0\u4E86 'sb', '\u5FFD\u7565', '\u6A19\u984C\u9EE8'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
+    "settings.useVisitedFunction":
+      "\u5728\u7576\u524D\u7DB2\u7AD9\u555F\u7528\u700F\u89BD\u5167\u5BB9\u6A19\u8A18\u529F\u80FD",
+    "settings.displayEffectOfTheVisitedContent":
+      "\u7576\u524D\u7DB2\u7AD9\u7684\u5DF2\u700F\u89BD\u5167\u5BB9\u7684\u5C55\u793A\u6548\u679C",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "\u53EA\u4FDD\u5B58\u8A18\u9304\uFF0C\u4E0D\u986F\u793A\u6A19\u8A18",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "\u53EA\u986F\u793A\u6A19\u8A18",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "\u66F4\u6539\u6A19\u984C\u984F\u8272",
+    "settings.displayEffectOfTheVisitedContent.translucent":
+      "\u534A\u900F\u660E",
+    "settings.displayEffectOfTheVisitedContent.hide": "\u96B1\u85CF",
+    "settings.pinnedTags":
+      "\u5728\u4E0B\u9762\u6DFB\u52A0\u8981\u7F6E\u9802\u7684\u6A19\u7C64\uFF0C\u4EE5\u9017\u865F\u5206\u9694",
+    "settings.pinnedTagsDefaultValue":
+      "\u6536\u85CF, block, sb, \u5C4F\u853D, \u96B1\u85CF, \u5DF2\u95B1, \u5FFD\u7565, \u6A19\u984C\u9EE8, \u63A8\u5EE3, \u95DC\u6CE8",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "\u5728\u4E0B\u9762\u6DFB\u52A0\u8868\u60C5\u7B26\u865F\u6A19\u7C64\uFF0C\u4EE5\u9017\u865F\u5206\u9694",
+    "settings.customStyle": "\u555F\u7528\u5168\u57DF\u81EA\u8A02\u6A23\u5F0F",
+    "settings.customStyleCurrentSite":
+      "\u555F\u7528\u7576\u524D\u7DB2\u7AD9\u7684\u81EA\u8A02\u6A23\u5F0F",
+    "settings.customStyleDefaultValue":
+      "/* \u81EA\u8A02\u6A23\u5F0F */\nbody {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6A19\u7C64\u70BA 'TEST' \u7684\u6A19\u7C64\u6A23\u5F0F */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "\u793A\u4F8B",
+    "settings.customStyleExamplesContent":
+      '<p>\u81EA\u8A02\u6A23\u5F0F\u793A\u4F8B</p>\n  <p>\n  <pre>/* \u81EA\u8A02\u6A23\u5F0F */\nbody {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6A19\u7C64\u70BA \'TEST\' \u7684\u6A19\u7C64\u6A23\u5F0F */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \u5217\u8868\u4E2D\u542B\u6709 \'bar\' \u6A19\u7C64\u7684\u689D\u76EE\u7684\u80CC\u666F\u8272 */\n  background-color: aqua;\n}\n\nbody {\n  /* \u700F\u89BD\u904E\u7684\u5E16\u5B50\u7684\u6A19\u984C\u984F\u8272 */\n  --utags-visited-title-color: red;\n}\n\n/* \u6DF1\u8272\u6A21\u5F0F */\n[data-utags_darkmode="1"] body {\n  /* \u700F\u89BD\u904E\u7684\u5E16\u5B50\u7684\u6A19\u984C\u984F\u8272 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u66F4\u591A\u793A\u4F8B</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "\u4F7F\u7528\u7C21\u55AE\u65B9\u5F0F\u6DFB\u52A0\u6A19\u7C64",
+    "settings.openTagsPage": "\u6A19\u7C64\u5217\u8868",
+    "settings.openDataPage":
+      "\u532F\u51FA\u8CC7\u6599/\u532F\u5165\u8CC7\u6599",
+    "settings.title":
+      "\u{1F3F7}\uFE0F \u5C0F\u9B5A\u6A19\u7C64 (UTags) - \u70BA\u9023\u7D50\u6DFB\u52A0\u7528\u6236\u6A19\u7C64",
+    "settings.information":
+      "\u66F4\u6539\u8A2D\u5B9A\u5F8C\uFF0C\u91CD\u65B0\u8F09\u5165\u9801\u9762\u5373\u53EF\u751F\u6548",
+    "settings.report": "\u56DE\u994B\u554F\u984C",
+    "prompt.addTags":
+      "[UTags] \u8ACB\u8F38\u5165\u6A19\u7C64\uFF0C\u591A\u500B\u6A19\u7C64\u4EE5\u9017\u865F\u5206\u9694",
+    "prompt.pinnedTags": "\u7F6E\u9802",
+    "prompt.mostUsedTags": "\u6700\u8FD1\u5E38\u7528",
+    "prompt.recentAddedTags": "\u6700\u65B0\u6DFB\u52A0",
+    "prompt.emojiTags": "\u7B26\u865F",
+    "prompt.copy": "\u8907\u88FD",
+    "prompt.cancel": "\u53D6\u6D88",
+    "prompt.ok": "\u78BA\u8A8D",
+    "prompt.settings": "\u8A2D\u5B9A",
+    "prompt.addTagsToCurrentPage":
+      "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0\u6A19\u7C64",
+  }
+  var zh_hk_default2 = messages25
+  var messages26 = {
+    "settings.enableCurrentSite":
+      "\u5728\u76EE\u524D\u7DB2\u7AD9\u555F\u7528\u5C0F\u9B5A\u6A19\u7C64",
+    "settings.showHidedItems":
+      "\u986F\u793A\u88AB\u96B1\u85CF\u7684\u5167\u5BB9 (\u65B0\u589E\u4E86 'block', 'hide', '\u96B1\u85CF'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
+    "settings.noOpacityEffect":
+      "\u79FB\u9664\u534A\u900F\u660E\u6548\u679C (\u65B0\u589E\u4E86 'sb', '\u5FFD\u7565', '\u6A19\u984C\u9EE8'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
+    "settings.useVisitedFunction":
+      "\u5728\u76EE\u524D\u7DB2\u7AD9\u555F\u7528\u700F\u89BD\u5167\u5BB9\u6A19\u8A18\u529F\u80FD",
+    "settings.displayEffectOfTheVisitedContent":
+      "\u76EE\u524D\u7DB2\u7AD9\u7684\u5DF2\u700F\u89BD\u5167\u5BB9\u7684\u986F\u793A\u6548\u679C",
+    "settings.displayEffectOfTheVisitedContent.recordingonly":
+      "\u50C5\u5132\u5B58\u8A18\u9304\uFF0C\u4E0D\u986F\u793A\u6A19\u8A18",
+    "settings.displayEffectOfTheVisitedContent.showtagonly":
+      "\u50C5\u986F\u793A\u6A19\u8A18",
+    "settings.displayEffectOfTheVisitedContent.changecolor":
+      "\u8B8A\u66F4\u6A19\u984C\u984F\u8272",
+    "settings.displayEffectOfTheVisitedContent.translucent":
+      "\u534A\u900F\u660E",
+    "settings.displayEffectOfTheVisitedContent.hide": "\u96B1\u85CF",
+    "settings.pinnedTags":
+      "\u5728\u4E0B\u65B9\u65B0\u589E\u8981\u7F6E\u9802\u7684\u6A19\u7C64\uFF0C\u4EE5\u9017\u865F\u5206\u9694",
+    "settings.pinnedTagsDefaultValue":
+      "\u6536\u85CF, block, sb, \u5C01\u9396, \u96B1\u85CF, \u5DF2\u8B80, \u5FFD\u7565, \u6A19\u984C\u9EE8, \u63A8\u5EE3, \u95DC\u6CE8",
+    "settings.pinnedTagsPlaceholder": "foo, bar",
+    "settings.emojiTags":
+      "\u5728\u4E0B\u65B9\u65B0\u589E\u8868\u60C5\u7B26\u865F\u6A19\u7C64\uFF0C\u4EE5\u9017\u865F\u5206\u9694",
+    "settings.customStyle": "\u555F\u7528\u5168\u57DF\u81EA\u8A02\u6A23\u5F0F",
+    "settings.customStyleCurrentSite":
+      "\u555F\u7528\u76EE\u524D\u7DB2\u7AD9\u7684\u81EA\u8A02\u6A23\u5F0F",
+    "settings.customStyleDefaultValue":
+      "/* \u81EA\u8A02\u6A23\u5F0F */\nbody {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6A19\u7C64\u70BA 'TEST' \u7684\u6A19\u7C64\u6A23\u5F0F */\n.utags_text_tag[data-utags_tag=\"TEST\"] {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: orange;\n}",
+    "settings.customStyleExamples": "\u7BC4\u4F8B",
+    "settings.customStyleExamplesContent":
+      '<p>\u81EA\u8A02\u6A23\u5F0F\u7BC4\u4F8B</p>\n  <p>\n  <pre>/* \u81EA\u8A02\u6A23\u5F0F */\nbody {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: red;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: red;\n}\n\n/* \u6A19\u7C64\u70BA \'TEST\' \u7684\u6A19\u7C64\u6A23\u5F0F */\n.utags_text_tag[data-utags_tag="TEST"] {\n  /* \u6A19\u7C64\u6587\u5B57\u984F\u8272 */\n  --utags-text-tag-color: white;\n  /* \u6A19\u7C64\u908A\u6846\u984F\u8272 */\n  --utags-text-tag-border-color: orange;\n  /* \u6A19\u7C64\u80CC\u666F\u984F\u8272 */\n  --utags-text-tag-background-color: orange;\n}\n\n[data-utags_list_node*=",bar,"] {\n  /* \u6E05\u55AE\u4E2D\u542B\u6709 \'bar\' \u6A19\u7C64\u7684\u9805\u76EE\u7684\u80CC\u666F\u8272 */\n  background-color: aqua;\n}\n\nbody {\n  /* \u700F\u89BD\u904E\u7684\u8CBC\u6587\u7684\u6A19\u984C\u984F\u8272 */\n  --utags-visited-title-color: red;\n}\n\n/* \u6DF1\u8272\u6A21\u5F0F */\n[data-utags_darkmode="1"] body {\n  /* \u700F\u89BD\u904E\u7684\u8CBC\u6587\u7684\u6A19\u984C\u984F\u8272 */\n  --utags-visited-title-color: yellow;\n}\n</pre>\n  </p>\n  <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">\u66F4\u591A\u7BC4\u4F8B</a></p>\n  ',
+    "settings.useSimplePrompt":
+      "\u4F7F\u7528\u7C21\u55AE\u65B9\u5F0F\u65B0\u589E\u6A19\u7C64",
+    "settings.openTagsPage": "\u6A19\u7C64\u6E05\u55AE",
+    "settings.openDataPage":
+      "\u532F\u51FA\u8CC7\u6599/\u532F\u5165\u8CC7\u6599",
+    "settings.title":
+      "\u{1F3F7}\uFE0F \u5C0F\u9B5A\u6A19\u7C64 (UTags) - \u70BA\u9023\u7D50\u65B0\u589E\u4F7F\u7528\u8005\u6A19\u7C64",
+    "settings.information":
+      "\u8B8A\u66F4\u8A2D\u5B9A\u5F8C\uFF0C\u91CD\u65B0\u8F09\u5165\u9801\u9762\u5373\u53EF\u751F\u6548",
+    "settings.report": "\u56DE\u5831\u554F\u984C",
+    "prompt.addTags":
+      "[UTags] \u8ACB\u8F38\u5165\u6A19\u7C64\uFF0C\u591A\u500B\u6A19\u7C64\u4EE5\u9017\u865F\u5206\u9694",
+    "prompt.pinnedTags": "\u7F6E\u9802",
+    "prompt.mostUsedTags": "\u6700\u8FD1\u5E38\u7528",
+    "prompt.recentAddedTags": "\u6700\u65B0\u65B0\u589E",
+    "prompt.emojiTags": "\u7B26\u865F",
+    "prompt.copy": "\u8907\u88FD",
+    "prompt.cancel": "\u53D6\u6D88",
+    "prompt.ok": "\u78BA\u8A8D",
+    "prompt.settings": "\u8A2D\u5B9A",
+    "prompt.addTagsToCurrentPage":
+      "\u70BA\u76EE\u524D\u7DB2\u9801\u65B0\u589E\u6A19\u7C64",
+  }
+  var zh_tw_default2 = messages26
+  var availableLocales2 =
+    /** @type {const} */
+    [
+      "en",
+      "zh",
+      "zh-hk",
+      "zh-tw",
+      "ja",
+      "ko",
+      "de",
+      "fr",
+      "es",
+      "it",
+      "pt",
+      "ru",
+      "vi",
+    ]
+  initAvailableLocales(availableLocales2)
+  console.log("[utags] prefferedLocale:", getPrefferedLocale())
+  var localeMap2 = {
+    zh: zh_cn_default2,
+    "zh-cn": zh_cn_default2,
+    en: en_default2,
+    ru: ru_default2,
+    "zh-hk": zh_hk_default2,
+    "zh-tw": zh_tw_default2,
+    ja: ja_default2,
+    ko: ko_default2,
+    de: de_default2,
+    fr: fr_default2,
+    es: es_default2,
+    it: it_default2,
+    pt: pt_default2,
+    vi: vi_default2,
+  }
+  var i2 = initI18n(localeMap2, getPrefferedLocale())
+  function resetI18n2(locale2) {
+    console.log(
+      "[utags] prefferedLocale:",
+      getPrefferedLocale(),
+      "locale:",
+      locale2
+    )
+    i2 = initI18n(localeMap2, locale2 || getPrefferedLocale())
+  }
+  function getAvailableLocales() {
+    return availableLocales2
+  }
   var MIN_VALID_TIMESTAMP = 631152e6
   var MAX_VALID_TIMESTAMP = 9999999999999
   function isValidDate(date) {
@@ -8648,130 +9489,132 @@
     return true
   }
   var isTagManager = location.href.includes("utags.pipecraft.net/tags/")
-  var groupNumber = 1
-  var settingsTable2 = {
-    ["enableCurrentSite_".concat(host2)]: {
-      title: i2("settings.enableCurrentSite"),
-      defaultValue: isEnabledByDefault(),
-    },
-    showHidedItems: {
-      title: i2("settings.showHidedItems"),
-      defaultValue: false,
-      group: ++groupNumber,
-    },
-    noOpacityEffect: {
-      title: i2("settings.noOpacityEffect"),
-      defaultValue: false,
-      group: groupNumber,
-    },
-    ["useVisitedFunction_".concat(host2)]: {
-      title: i2("settings.useVisitedFunction"),
-      defaultValue: false,
-      group: ++groupNumber,
-    },
-    ["displayEffectOfTheVisitedContent_".concat(host2)]: {
-      title: i2("settings.displayEffectOfTheVisitedContent"),
-      type: "select",
-      defaultValue: "2",
-      options: {
-        [i2("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
-        [i2("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
-        [i2("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
-        [i2("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
-        [i2("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+  var getSettingsTable = () => {
+    let groupNumber = 1
+    return {
+      ["enableCurrentSite_".concat(host2)]: {
+        title: i2("settings.enableCurrentSite"),
+        defaultValue: isEnabledByDefault(),
       },
-      group: groupNumber,
-    },
-    pinnedTagsTitle: {
-      title: i2("settings.pinnedTags"),
-      type: "action",
-      async onclick() {
-        const input = $('textarea[data-key="pinnedTags"]')
-        if (input) {
-          input.scrollIntoView({ block: "start" })
-          input.selectionStart = input.value.length
-          input.selectionEnd = input.value.length
-          input.focus()
-        }
+      showHidedItems: {
+        title: i2("settings.showHidedItems"),
+        defaultValue: false,
+        group: ++groupNumber,
       },
-      group: ++groupNumber,
-    },
-    pinnedTags: {
-      title: i2("settings.pinnedTags"),
-      defaultValue: i2("settings.pinnedTagsDefaultValue"),
-      placeholder: i2("settings.pinnedTagsPlaceholder"),
-      type: "textarea",
-      group: groupNumber,
-    },
-    emojiTagsTitle: {
-      title: i2("settings.emojiTags"),
-      type: "action",
-      async onclick() {
-        const input = $('textarea[data-key="emojiTags"]')
-        if (input) {
-          input.scrollIntoView({ block: "start" })
-          input.selectionStart = input.value.length
-          input.selectionEnd = input.value.length
-          input.focus()
-        }
+      noOpacityEffect: {
+        title: i2("settings.noOpacityEffect"),
+        defaultValue: false,
+        group: groupNumber,
       },
-      group: groupNumber,
-    },
-    emojiTags: {
-      title: i2("settings.emojiTags"),
-      defaultValue:
-        "\u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
-      placeholder: "\u{1F44D}, \u{1F44E}",
-      type: "textarea",
-      group: groupNumber,
-    },
-    customStyle: {
-      title: i2("settings.customStyle"),
-      defaultValue: false,
-      group: ++groupNumber,
-    },
-    customStyleValue: {
-      title: "Custom style value",
-      defaultValue: i2("settings.customStyleDefaultValue"),
-      placeholder: i2("settings.customStyleDefaultValue"),
-      type: "textarea",
-      group: groupNumber,
-    },
-    customStyleTip: {
-      title: i2("settings.customStyleExamples"),
-      type: "tip",
-      tipContent: i2("settings.customStyleExamplesContent"),
-      group: groupNumber,
-    },
-    ["customStyle_".concat(host2)]: {
-      title: i2("settings.customStyleCurrentSite"),
-      defaultValue: false,
-      group: ++groupNumber,
-    },
-    ["customStyleValue_".concat(host2)]: {
-      title: "Custom style value",
-      defaultValue: "",
-      placeholder: i2("settings.customStyleDefaultValue"),
-      type: "textarea",
-      group: groupNumber,
-    },
-    useSimplePrompt: {
-      title: i2("settings.useSimplePrompt"),
-      defaultValue: false,
-      group: ++groupNumber,
-    },
-    openTagsPage: {
-      title: i2("settings.openTagsPage"),
-      type: "externalLink",
-      url: "https://utags.link/",
-      group: ++groupNumber,
-    },
-    openDataPage: {
-      title: i2("settings.openDataPage"),
-      type: "externalLink",
-      url: "https://utags.link/",
-      group: groupNumber,
-    },
+      ["useVisitedFunction_".concat(host2)]: {
+        title: i2("settings.useVisitedFunction"),
+        defaultValue: false,
+        group: ++groupNumber,
+      },
+      ["displayEffectOfTheVisitedContent_".concat(host2)]: {
+        title: i2("settings.displayEffectOfTheVisitedContent"),
+        type: "select",
+        defaultValue: "2",
+        options: {
+          [i2("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
+          [i2("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
+          [i2("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
+          [i2("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
+          [i2("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+        },
+        group: groupNumber,
+      },
+      pinnedTagsTitle: {
+        title: i2("settings.pinnedTags"),
+        type: "action",
+        async onclick() {
+          const input = $('textarea[data-key="pinnedTags"]')
+          if (input) {
+            input.scrollIntoView({ block: "start" })
+            input.selectionStart = input.value.length
+            input.selectionEnd = input.value.length
+            input.focus()
+          }
+        },
+        group: ++groupNumber,
+      },
+      pinnedTags: {
+        title: i2("settings.pinnedTags"),
+        defaultValue: i2("settings.pinnedTagsDefaultValue"),
+        placeholder: i2("settings.pinnedTagsPlaceholder"),
+        type: "textarea",
+        group: groupNumber,
+      },
+      emojiTagsTitle: {
+        title: i2("settings.emojiTags"),
+        type: "action",
+        async onclick() {
+          const input = $('textarea[data-key="emojiTags"]')
+          if (input) {
+            input.scrollIntoView({ block: "start" })
+            input.selectionStart = input.value.length
+            input.selectionEnd = input.value.length
+            input.focus()
+          }
+        },
+        group: groupNumber,
+      },
+      emojiTags: {
+        title: i2("settings.emojiTags"),
+        defaultValue:
+          "\u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
+        placeholder: "\u{1F44D}, \u{1F44E}",
+        type: "textarea",
+        group: groupNumber,
+      },
+      customStyle: {
+        title: i2("settings.customStyle"),
+        defaultValue: false,
+        group: ++groupNumber,
+      },
+      customStyleValue: {
+        title: "Custom style value",
+        defaultValue: i2("settings.customStyleDefaultValue"),
+        placeholder: i2("settings.customStyleDefaultValue"),
+        type: "textarea",
+        group: groupNumber,
+      },
+      customStyleTip: {
+        title: i2("settings.customStyleExamples"),
+        type: "tip",
+        tipContent: i2("settings.customStyleExamplesContent"),
+        group: groupNumber,
+      },
+      ["customStyle_".concat(host2)]: {
+        title: i2("settings.customStyleCurrentSite"),
+        defaultValue: false,
+        group: ++groupNumber,
+      },
+      ["customStyleValue_".concat(host2)]: {
+        title: "Custom style value",
+        defaultValue: "",
+        placeholder: i2("settings.customStyleDefaultValue"),
+        type: "textarea",
+        group: groupNumber,
+      },
+      useSimplePrompt: {
+        title: i2("settings.useSimplePrompt"),
+        defaultValue: false,
+        group: ++groupNumber,
+      },
+      openTagsPage: {
+        title: i2("settings.openTagsPage"),
+        type: "externalLink",
+        url: "https://utags.link/",
+        group: ++groupNumber,
+      },
+      openDataPage: {
+        title: i2("settings.openDataPage"),
+        type: "externalLink",
+        url: "https://utags.link/",
+        group: groupNumber,
+      },
+    }
   }
   var addUtagsStyle = () => {
     const style = addStyle(content_default)
@@ -8810,6 +9653,8 @@
     }
   }
   function onSettingsChange2() {
+    const locale2 = getSettingsValue("locale") || getPrefferedLocale()
+    resetI18n2(locale2)
     if (getSettingsValue("showHidedItems")) {
       addClass(doc.documentElement, "utags_no_hide")
     } else {
@@ -9294,71 +10139,80 @@
   }
   async function main() {
     addUtagsStyle()
-    await initSettings({
-      id: "utags",
-      title: i2("settings.title"),
-      footer: "\n    <p>"
-        .concat(
-          i2("settings.information"),
-          '</p>\n    <p>\n    <a href="https://github.com/utags/utags/issues" target="_blank">\n    '
-        )
-        .concat(
-          i2("settings.report"),
-          '\n    </a></p>\n    <p>Made with \u2764\uFE0F by\n    <a href="https://www.pipecraft.net/" target="_blank">\n      Pipecraft\n    </a></p>'
-        ),
-      settingsTable: settingsTable2,
-      async onValueChange() {
-        onSettingsChange()
-        onSettingsChange2()
-      },
-      onViewUpdate(settingsMainView) {
-        let item = $(
-          '[data-key="useVisitedFunction_'.concat(host2, '"]'),
-          settingsMainView
-        )
-        if (!isAvailableOnCurrentSite() && item) {
-          item.style.display = "none"
-          item.parentElement.style.display = "none"
-        }
-        item = $(
-          '[data-key="displayEffectOfTheVisitedContent_'.concat(host2, '"]'),
-          settingsMainView
-        )
-        if (item) {
-          item.style.display = getSettingsValue(
-            "useVisitedFunction_".concat(host2)
+    await initSettings(() => {
+      const settingsTable2 = getSettingsTable()
+      return {
+        id: "utags",
+        title: i2("settings.title"),
+        footer: "\n    <p>"
+          .concat(
+            i2("settings.information"),
+            '</p>\n    <p>\n    <a href="https://github.com/utags/utags/issues" target="_blank">\n    '
           )
-            ? "flex"
-            : "none"
-        }
-        item = $('[data-key="customStyleValue"]', settingsMainView)
-        if (item) {
-          item.parentElement.style.display = getSettingsValue("customStyle")
-            ? "block"
-            : "none"
-        }
-        item = $(".bes_tip", settingsMainView)
-        if (item) {
-          item.style.display = getSettingsValue("customStyle")
-            ? "block"
-            : "none"
-        }
-        item = $(
-          '[data-key="customStyleValue_'.concat(host2, '"]'),
-          settingsMainView
-        )
-        if (item) {
-          item.parentElement.style.display = getSettingsValue(
-            "customStyle_".concat(host2)
+          .concat(
+            i2("settings.report"),
+            '\n    </a></p>\n    <p>Made with \u2764\uFE0F by\n    <a href="https://www.pipecraft.net/" target="_blank">\n      Pipecraft\n    </a></p>'
+          ),
+        settingsTable: settingsTable2,
+        availableLocales: getAvailableLocales(),
+        async onValueChange() {
+          onSettingsChange()
+          onSettingsChange2()
+        },
+        onViewUpdate(settingsMainView) {
+          let item = $(
+            '[data-key="useVisitedFunction_'.concat(host2, '"]'),
+            settingsMainView
           )
-            ? "block"
-            : "none"
-        }
-      },
+          if (!isAvailableOnCurrentSite() && item) {
+            item.style.display = "none"
+            item.parentElement.style.display = "none"
+          }
+          item = $(
+            '[data-key="displayEffectOfTheVisitedContent_'.concat(host2, '"]'),
+            settingsMainView
+          )
+          if (item) {
+            item.style.display = getSettingsValue(
+              "useVisitedFunction_".concat(host2)
+            )
+              ? "flex"
+              : "none"
+          }
+          item = $('[data-key="customStyleValue"]', settingsMainView)
+          if (item) {
+            item.parentElement.style.display = getSettingsValue("customStyle")
+              ? "block"
+              : "none"
+          }
+          item = $(".bes_tip", settingsMainView)
+          if (item) {
+            item.style.display = getSettingsValue("customStyle")
+              ? "block"
+              : "none"
+          }
+          item = $(
+            '[data-key="customStyleValue_'.concat(host2, '"]'),
+            settingsMainView
+          )
+          if (item) {
+            item.parentElement.style.display = getSettingsValue(
+              "customStyle_".concat(host2)
+            )
+              ? "block"
+              : "none"
+          }
+        },
+      }
     })
     if (!getSettingsValue("enableCurrentSite_".concat(host2))) {
       return
     }
+    setupWebappBridge()
+    await initStorage()
+    setTimeout(outputData, 1)
+    onSettingsChange()
+    onSettingsChange2()
     registerMenuCommand(
       "\u{1F3F7}\uFE0F " + i2("prompt.addTagsToCurrentPage"),
       () => {
@@ -9366,11 +10220,6 @@
       },
       "u"
     )
-    setupWebappBridge()
-    await initStorage()
-    setTimeout(outputData, 1)
-    onSettingsChange()
-    onSettingsChange2()
     await displayTags()
     addEventListener(doc, "visibilitychange", async () => {
       if (!doc.hidden) {
