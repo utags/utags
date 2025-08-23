@@ -10,6 +10,7 @@
 // @name:es              🏷️ {displayName:es}
 // @name:it              🏷️ {displayName:it}
 // @name:pt              🏷️ {displayName:pt}
+// @name:pt-BR           🏷️ {displayName:pt}
 // @name:vi              🏷️ {displayName:vi}
 // @name:ru              🏷️ {displayName:ru}
 // @namespace            {namespace}
@@ -27,6 +28,7 @@
 // @description:es       {description_userscript:es}
 // @description:it       {description_userscript:it}
 // @description:pt       {description_userscript:pt}
+// @description:pt-BR    {description_userscript:pt}
 // @description:vi       {description_userscript:vi}
 // @description:ru       {description_userscript:ru}
 // @icon                 {icon}
