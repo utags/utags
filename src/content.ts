@@ -1,4 +1,9 @@
-import { getSettingsValue, initSettings } from 'browser-extension-settings'
+import { getPrefferedLocale } from 'browser-extension-i18n'
+import {
+  getSettingsValue,
+  initSettings,
+  type SettingsTable,
+} from 'browser-extension-settings'
 import {
   $,
   $$,
@@ -23,7 +28,7 @@ import styleText from 'data-text:./content.scss'
 import type { PlasmoCSConfig } from 'plasmo'
 
 import createTag from './components/tag'
-import { i } from './messages'
+import { getAvailableLocales, i, resetI18n } from './messages'
 import { registerDebuggingHotkey } from './modules/debugging'
 import { outputData } from './modules/export-import'
 import {
@@ -69,139 +74,141 @@ const isEnabledByDefault = () => {
 
 const isTagManager = location.href.includes('utags.pipecraft.net/tags/')
 
-let groupNumber = 1
+const getSettingsTable: SettingsTable = () => {
+  let groupNumber = 1
 
-const settingsTable = {
-  [`enableCurrentSite_${host}`]: {
-    title: i('settings.enableCurrentSite'),
-    defaultValue: isEnabledByDefault(),
-  },
-
-  showHidedItems: {
-    title: i('settings.showHidedItems'),
-    defaultValue: false,
-    group: ++groupNumber,
-  },
-  noOpacityEffect: {
-    title: i('settings.noOpacityEffect'),
-    defaultValue: false,
-    group: groupNumber,
-  },
-
-  [`useVisitedFunction_${host}`]: {
-    title: i('settings.useVisitedFunction'),
-    defaultValue: false,
-    group: ++groupNumber,
-  },
-  [`displayEffectOfTheVisitedContent_${host}`]: {
-    title: i('settings.displayEffectOfTheVisitedContent'),
-    type: 'select',
-    // 默认值：中
-    defaultValue: '2',
-    options: {
-      [i('settings.displayEffectOfTheVisitedContent.recordingonly')]: '0',
-      [i('settings.displayEffectOfTheVisitedContent.showtagonly')]: '1',
-      [i('settings.displayEffectOfTheVisitedContent.changecolor')]: '4',
-      [i('settings.displayEffectOfTheVisitedContent.translucent')]: '2',
-      [i('settings.displayEffectOfTheVisitedContent.hide')]: '3',
+  return {
+    [`enableCurrentSite_${host}`]: {
+      title: i('settings.enableCurrentSite'),
+      defaultValue: isEnabledByDefault(),
     },
-    group: groupNumber,
-  },
 
-  pinnedTagsTitle: {
-    title: i('settings.pinnedTags'),
-    type: 'action',
-    async onclick() {
-      const input = $('textarea[data-key="pinnedTags"]') as HTMLInputElement
-      if (input) {
-        input.scrollIntoView({ block: 'start' })
-        input.selectionStart = input.value.length
-        input.selectionEnd = input.value.length
-        input.focus()
-      }
+    showHidedItems: {
+      title: i('settings.showHidedItems'),
+      defaultValue: false,
+      group: ++groupNumber,
     },
-    group: ++groupNumber,
-  },
-  pinnedTags: {
-    title: i('settings.pinnedTags'),
-    defaultValue: i('settings.pinnedTagsDefaultValue'),
-    placeholder: i('settings.pinnedTagsPlaceholder'),
-    type: 'textarea',
-    group: groupNumber,
-  },
-  emojiTagsTitle: {
-    title: i('settings.emojiTags'),
-    type: 'action',
-    async onclick() {
-      const input = $('textarea[data-key="emojiTags"]') as HTMLInputElement
-      if (input) {
-        input.scrollIntoView({ block: 'start' })
-        input.selectionStart = input.value.length
-        input.selectionEnd = input.value.length
-        input.focus()
-      }
+    noOpacityEffect: {
+      title: i('settings.noOpacityEffect'),
+      defaultValue: false,
+      group: groupNumber,
     },
-    group: groupNumber,
-  },
-  emojiTags: {
-    title: i('settings.emojiTags'),
-    defaultValue:
-      '👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
-    placeholder: '👍, 👎',
-    type: 'textarea',
-    group: groupNumber,
-  },
 
-  customStyle: {
-    title: i('settings.customStyle'),
-    defaultValue: false,
-    group: ++groupNumber,
-  },
-  customStyleValue: {
-    title: 'Custom style value',
-    defaultValue: i('settings.customStyleDefaultValue'),
-    placeholder: i('settings.customStyleDefaultValue'),
-    type: 'textarea',
-    group: groupNumber,
-  },
-  customStyleTip: {
-    title: i('settings.customStyleExamples'),
-    type: 'tip',
-    tipContent: i('settings.customStyleExamplesContent'),
-    group: groupNumber,
-  },
+    [`useVisitedFunction_${host}`]: {
+      title: i('settings.useVisitedFunction'),
+      defaultValue: false,
+      group: ++groupNumber,
+    },
+    [`displayEffectOfTheVisitedContent_${host}`]: {
+      title: i('settings.displayEffectOfTheVisitedContent'),
+      type: 'select',
+      // 默认值：中
+      defaultValue: '2',
+      options: {
+        [i('settings.displayEffectOfTheVisitedContent.recordingonly')]: '0',
+        [i('settings.displayEffectOfTheVisitedContent.showtagonly')]: '1',
+        [i('settings.displayEffectOfTheVisitedContent.changecolor')]: '4',
+        [i('settings.displayEffectOfTheVisitedContent.translucent')]: '2',
+        [i('settings.displayEffectOfTheVisitedContent.hide')]: '3',
+      },
+      group: groupNumber,
+    },
 
-  [`customStyle_${host}`]: {
-    title: i(`settings.customStyleCurrentSite`),
-    defaultValue: false,
-    group: ++groupNumber,
-  },
-  [`customStyleValue_${host}`]: {
-    title: 'Custom style value',
-    defaultValue: '',
-    placeholder: i('settings.customStyleDefaultValue'),
-    type: 'textarea',
-    group: groupNumber,
-  },
+    pinnedTagsTitle: {
+      title: i('settings.pinnedTags'),
+      type: 'action',
+      async onclick() {
+        const input = $('textarea[data-key="pinnedTags"]') as HTMLInputElement
+        if (input) {
+          input.scrollIntoView({ block: 'start' })
+          input.selectionStart = input.value.length
+          input.selectionEnd = input.value.length
+          input.focus()
+        }
+      },
+      group: ++groupNumber,
+    },
+    pinnedTags: {
+      title: i('settings.pinnedTags'),
+      defaultValue: i('settings.pinnedTagsDefaultValue'),
+      placeholder: i('settings.pinnedTagsPlaceholder'),
+      type: 'textarea',
+      group: groupNumber,
+    },
+    emojiTagsTitle: {
+      title: i('settings.emojiTags'),
+      type: 'action',
+      async onclick() {
+        const input = $('textarea[data-key="emojiTags"]') as HTMLInputElement
+        if (input) {
+          input.scrollIntoView({ block: 'start' })
+          input.selectionStart = input.value.length
+          input.selectionEnd = input.value.length
+          input.focus()
+        }
+      },
+      group: groupNumber,
+    },
+    emojiTags: {
+      title: i('settings.emojiTags'),
+      defaultValue:
+        '👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
+      placeholder: '👍, 👎',
+      type: 'textarea',
+      group: groupNumber,
+    },
 
-  useSimplePrompt: {
-    title: i('settings.useSimplePrompt'),
-    defaultValue: false,
-    group: ++groupNumber,
-  },
+    customStyle: {
+      title: i('settings.customStyle'),
+      defaultValue: false,
+      group: ++groupNumber,
+    },
+    customStyleValue: {
+      title: 'Custom style value',
+      defaultValue: i('settings.customStyleDefaultValue'),
+      placeholder: i('settings.customStyleDefaultValue'),
+      type: 'textarea',
+      group: groupNumber,
+    },
+    customStyleTip: {
+      title: i('settings.customStyleExamples'),
+      type: 'tip',
+      tipContent: i('settings.customStyleExamplesContent'),
+      group: groupNumber,
+    },
 
-  openTagsPage: {
-    title: i('settings.openTagsPage'),
-    type: 'externalLink',
-    url: 'https://utags.link/',
-    group: ++groupNumber,
-  },
-  openDataPage: {
-    title: i('settings.openDataPage'),
-    type: 'externalLink',
-    url: 'https://utags.link/',
-    group: groupNumber,
-  },
+    [`customStyle_${host}`]: {
+      title: i(`settings.customStyleCurrentSite`),
+      defaultValue: false,
+      group: ++groupNumber,
+    },
+    [`customStyleValue_${host}`]: {
+      title: 'Custom style value',
+      defaultValue: '',
+      placeholder: i('settings.customStyleDefaultValue'),
+      type: 'textarea',
+      group: groupNumber,
+    },
+
+    useSimplePrompt: {
+      title: i('settings.useSimplePrompt'),
+      defaultValue: false,
+      group: ++groupNumber,
+    },
+
+    openTagsPage: {
+      title: i('settings.openTagsPage'),
+      type: 'externalLink',
+      url: 'https://utags.link/',
+      group: ++groupNumber,
+    },
+    openDataPage: {
+      title: i('settings.openDataPage'),
+      type: 'externalLink',
+      url: 'https://utags.link/',
+      group: groupNumber,
+    },
+  }
 }
 
 const addUtagsStyle = () => {
@@ -245,6 +252,10 @@ function updateCustomStyle() {
 }
 
 function onSettingsChange() {
+  const locale =
+    (getSettingsValue('locale') as string | undefined) || getPrefferedLocale()
+  resetI18n(locale)
+
   if (getSettingsValue('showHidedItems')) {
     addClass(doc.documentElement, 'utags_no_hide')
   } else {
@@ -911,10 +922,12 @@ function updateTagPosition(element: HTMLElement) {
 async function main() {
   addUtagsStyle()
 
-  await initSettings({
-    id: 'utags',
-    title: i('settings.title'),
-    footer: `
+  await initSettings(() => {
+    const settingsTable = getSettingsTable()
+    return {
+      id: 'utags',
+      title: i('settings.title'),
+      footer: `
     <p>${i('settings.information')}</p>
     <p>
     <a href="https://github.com/utags/utags/issues" target="_blank">
@@ -924,57 +937,73 @@ async function main() {
     <a href="https://www.pipecraft.net/" target="_blank">
       Pipecraft
     </a></p>`,
-    settingsTable,
-    async onValueChange() {
-      visitedOnSettingsChange()
-      onSettingsChange()
-    },
-    onViewUpdate(settingsMainView) {
-      let item = $(`[data-key="useVisitedFunction_${host}"]`, settingsMainView)
-
-      if (!isAvailableOnCurrentSite() && item) {
-        item.style.display = 'none'
-        item.parentElement!.style.display = 'none'
-      }
-
-      item = $(
-        `[data-key="displayEffectOfTheVisitedContent_${host}"]`,
-        settingsMainView
-      )
-      if (item) {
-        item.style.display = getSettingsValue(`useVisitedFunction_${host}`)
-          ? 'flex'
-          : 'none'
-      }
-
-      item = $(`[data-key="customStyleValue"]`, settingsMainView)
-      if (item) {
-        // FIXME: data-key should on the parent element of textarea
-        item.parentElement!.style.display = getSettingsValue(`customStyle`)
-          ? 'block'
-          : 'none'
-      }
-
-      item = $(`.bes_tip`, settingsMainView)
-      if (item) {
-        item.style.display = getSettingsValue(`customStyle`) ? 'block' : 'none'
-      }
-
-      item = $(`[data-key="customStyleValue_${host}"]`, settingsMainView)
-      if (item) {
-        // FIXME: data-key should on the parent element of textarea
-        item.parentElement!.style.display = getSettingsValue(
-          `customStyle_${host}`
+      settingsTable,
+      availableLocales: getAvailableLocales(),
+      async onValueChange() {
+        visitedOnSettingsChange()
+        onSettingsChange()
+      },
+      onViewUpdate(settingsMainView) {
+        let item = $(
+          `[data-key="useVisitedFunction_${host}"]`,
+          settingsMainView
         )
-          ? 'block'
-          : 'none'
-      }
-    },
+
+        if (!isAvailableOnCurrentSite() && item) {
+          item.style.display = 'none'
+          item.parentElement!.style.display = 'none'
+        }
+
+        item = $(
+          `[data-key="displayEffectOfTheVisitedContent_${host}"]`,
+          settingsMainView
+        )
+        if (item) {
+          item.style.display = getSettingsValue(`useVisitedFunction_${host}`)
+            ? 'flex'
+            : 'none'
+        }
+
+        item = $(`[data-key="customStyleValue"]`, settingsMainView)
+        if (item) {
+          // FIXME: data-key should on the parent element of textarea
+          item.parentElement!.style.display = getSettingsValue(`customStyle`)
+            ? 'block'
+            : 'none'
+        }
+
+        item = $(`.bes_tip`, settingsMainView)
+        if (item) {
+          item.style.display = getSettingsValue(`customStyle`)
+            ? 'block'
+            : 'none'
+        }
+
+        item = $(`[data-key="customStyleValue_${host}"]`, settingsMainView)
+        if (item) {
+          // FIXME: data-key should on the parent element of textarea
+          item.parentElement!.style.display = getSettingsValue(
+            `customStyle_${host}`
+          )
+            ? 'block'
+            : 'none'
+        }
+      },
+    }
   })
 
   if (!getSettingsValue(`enableCurrentSite_${host}`)) {
     return
   }
+
+  setupWebappBridge()
+
+  await initStorage()
+
+  setTimeout(outputData, 1)
+
+  visitedOnSettingsChange()
+  onSettingsChange()
 
   registerMenuCommand(
     '🏷️ ' + i('prompt.addTagsToCurrentPage'),
@@ -990,15 +1019,6 @@ async function main() {
   //   },
   //   'u'
   // )
-
-  setupWebappBridge()
-
-  await initStorage()
-
-  setTimeout(outputData, 1)
-
-  visitedOnSettingsChange()
-  onSettingsChange()
 
   await displayTags()
 

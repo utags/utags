@@ -6,7 +6,8 @@
 
 - Optimize data sync logic, solve data inconsistency problem
 - Update dmm.co.jp site support
-- Add Russian language support
+- Add language switching functionality
+- Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
 - Add menu command to tag current page
 
 ## uTags v0.18 Release Notes

@@ -137,6 +137,12 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Release Notes
 
+- 0.19.x
+  - Optimize data sync logic, solve data inconsistency problem
+  - Update dmm.co.jp site support
+  - Add language switching functionality
+  - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
+  - Add menu command to tag current page
 - 0.18.x
   - Add the website Flickr
   - Add the website Ruanyifeng

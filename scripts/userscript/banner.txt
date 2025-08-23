@@ -1,6 +1,16 @@
 // ==UserScript==
 // @name                 🏷️ {displayName}
 // @name:zh-CN           🏷️ {displayName:zh-CN}
+// @name:zh-HK           🏷️ {displayName:zh-HK}
+// @name:zh-TW           🏷️ {displayName:zh-TW}
+// @name:ja              🏷️ {displayName:ja}
+// @name:ko              🏷️ {displayName:ko}
+// @name:de              🏷️ {displayName:de}
+// @name:fr              🏷️ {displayName:fr}
+// @name:es              🏷️ {displayName:es}
+// @name:it              🏷️ {displayName:it}
+// @name:pt              🏷️ {displayName:pt}
+// @name:vi              🏷️ {displayName:vi}
 // @name:ru              🏷️ {displayName:ru}
 // @namespace            {namespace}
 // @homepageURL          {homepage}
@@ -8,6 +18,16 @@
 // @version              {version}
 // @description          {description_userscript}
 // @description:zh-CN    {description_userscript:zh-CN}
+// @description:zh-HK    {description_userscript:zh-HK}
+// @description:zh-TW    {description_userscript:zh-TW}
+// @description:ja       {description_userscript:ja}
+// @description:ko       {description_userscript:ko}
+// @description:de       {description_userscript:de}
+// @description:fr       {description_userscript:fr}
+// @description:es       {description_userscript:es}
+// @description:it       {description_userscript:it}
+// @description:pt       {description_userscript:pt}
+// @description:vi       {description_userscript:vi}
 // @description:ru       {description_userscript:ru}
 // @icon                 {icon}
 // @author               {author}
