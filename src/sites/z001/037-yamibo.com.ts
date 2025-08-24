@@ -135,14 +135,14 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
 
         if (
           /^\d+$/.test(title) &&
-          element.parentElement!.parentElement!.textContent!.includes('积分')
+          element.parentElement!.parentElement!.textContent.includes('积分')
         ) {
           return false
         }
@@ -156,7 +156,7 @@ export default (() => {
 
       key = getPostUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -175,7 +175,7 @@ export default (() => {
           return false
         }
 
-        if (element.parentElement!.textContent!.includes('最后回复于')) {
+        if (element.parentElement!.textContent.includes('最后回复于')) {
           return false
         }
 
@@ -187,7 +187,7 @@ export default (() => {
         return true
       }
 
-      const title = element.textContent!.trim()
+      const title = element.textContent.trim()
       if (!title) {
         return false
       }
@@ -256,7 +256,7 @@ export default (() => {
             '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
           )
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -271,7 +271,7 @@ export default (() => {
 
         const element = $('#thread_subject')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

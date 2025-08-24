@@ -91,7 +91,7 @@ export default (() => {
           (hasClass(element, 'name') ? element : $('.name', element)) || element
         let title: string | undefined
         if (titleElement) {
-          title = titleElement.textContent!.trim()
+          title = titleElement.textContent.trim()
         }
 
         if (!title) {
@@ -114,7 +114,7 @@ export default (() => {
           if (sibling && hasClass(sibling, 'footer')) {
             const titleElement = $('.title span', sibling)
             if (titleElement) {
-              const title = titleElement.textContent!.trim()
+              const title = titleElement.textContent.trim()
               if (title) {
                 meta.title = title
               }
@@ -144,7 +144,7 @@ export default (() => {
         // profile header
         const element = $('.user-info .user-name')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -159,7 +159,7 @@ export default (() => {
         // post title
         const element = $('.note-content .title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

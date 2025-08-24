@@ -169,7 +169,7 @@ export default (() => {
               agoElement.append(newAgoElement)
             }
 
-            const floorNo = parseInt10(floorNoElement.textContent!, 1)
+            const floorNo = parseInt10(floorNoElement.textContent, 1)
             const pageNo = Math.floor((floorNo - 1) / 100) + 1
             const key =
               getCanonicalUrl('https://www.v2ex.com' + location.pathname) +
@@ -227,7 +227,7 @@ export default (() => {
           const key = getCanonicalUrl(
             'https://www.v2ex.com' + location.pathname
           )
-          const title = header.textContent!.replaceAll(/\s+/g, ' ').trim()
+          const title = header.textContent.replaceAll(/\s+/g, ' ').trim()
           const meta = { title, type: 'node' }
           header.utags = { key, meta }
           matchedNodesSet.add(header)
@@ -241,7 +241,7 @@ export default (() => {
           const key = getCanonicalUrl(
             'https://www.v2ex.com' + location.pathname
           )
-          const title = header.textContent!.replaceAll(/\s+/g, ' ').trim()
+          const title = header.textContent.replaceAll(/\s+/g, ' ').trim()
           const meta = { title, type: 'tag' }
           header.utags = { key, meta }
           header.dataset.utags_flag = 'tag_page'

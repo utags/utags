@@ -56,7 +56,7 @@ export default (() => {
         )
       ) {
         const key = getProductUrl(element.href)
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
 
         if (!key || !title) {
           return
@@ -137,7 +137,7 @@ export default (() => {
         // post title
         const element = $('h1#work_name')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
@@ -152,7 +152,7 @@ export default (() => {
         // post title
         const element = $('.prof_maker_name')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }

@@ -162,7 +162,7 @@ export default (() => {
 
       key = getPostUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
 
         if (
           element.closest('.mobile-view .topic-list a[data-user-card]') &&
@@ -199,7 +199,7 @@ export default (() => {
 
       key = getCategoryUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -217,7 +217,7 @@ export default (() => {
 
       key = getTagUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -297,7 +297,7 @@ export default (() => {
             '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
           ) as UtagsHTMLElement)
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }

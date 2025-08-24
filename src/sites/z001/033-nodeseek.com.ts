@@ -84,7 +84,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
 
         if (!title) {
           return false
@@ -99,7 +99,7 @@ export default (() => {
 
       key = getPostUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title || /^#\d+$/.test(title)) {
           return false
         }
@@ -113,7 +113,7 @@ export default (() => {
 
       key = getCategoryUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -153,7 +153,7 @@ export default (() => {
         // profile header
         const element = $('h1.username')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }

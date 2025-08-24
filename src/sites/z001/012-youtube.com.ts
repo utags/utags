@@ -98,7 +98,7 @@ export default (() => {
           '#inner-header-container #container.ytd-channel-name #text'
         )
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
@@ -114,7 +114,7 @@ export default (() => {
           '#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title'
         )
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'video' }
             element.utags = { key, meta }

@@ -190,7 +190,7 @@ export default (() => {
         // post title
         const element = $('h1.productTitle__txt')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
@@ -204,7 +204,7 @@ export default (() => {
         // post title
         const element = $('.circleProfile__name span')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }
@@ -218,7 +218,7 @@ export default (() => {
         // post title
         const element = $('main h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title }
             element.utags = { key, meta }

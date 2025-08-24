@@ -61,7 +61,7 @@ export default (() => {
         // profile header
         const element = $('h1.username')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -79,8 +79,8 @@ export default (() => {
           if (key) {
             const titleElement = $('.name', element)
             const title = titleElement
-              ? titleElement.textContent!
-              : element.textContent!
+              ? titleElement.textContent
+              : element.textContent
 
             if (title) {
               const meta = { title, type: 'user' }

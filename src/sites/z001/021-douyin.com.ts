@@ -90,7 +90,7 @@ export default (() => {
         // profile header
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -104,7 +104,7 @@ export default (() => {
         // post title
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           const target = element.parentElement!.parentElement!
           if (title) {
             const meta = { title, type: 'video' }
@@ -120,7 +120,7 @@ export default (() => {
         // post title
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

@@ -120,7 +120,7 @@ export default (() => {
         // profile header
         const element = $('.name h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -134,7 +134,7 @@ export default (() => {
         // video title or shorts title
         const element = $('.title h1')
         if (element && !$('a', element)) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'channel' }
             element.utags = { key, meta }
@@ -148,7 +148,7 @@ export default (() => {
         // video title or shorts title
         const element = $('h1.title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'video' }
             element.utags = { key, meta }

@@ -68,7 +68,7 @@ export default (() => {
         // post title
         const element = $('h1.post__title,h1.scrape__title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

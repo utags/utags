@@ -34,7 +34,7 @@ export default (() => {
 
       const key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!
+        const title = element.textContent
         if (
           !title ||
           /プロフィールを見る|View Profile|프로필 보기|查看个人资料|查看個人資料|ホーム|Home|홈|主页|首頁/.test(
@@ -67,7 +67,7 @@ export default (() => {
         // profile header
         const element = $('h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }

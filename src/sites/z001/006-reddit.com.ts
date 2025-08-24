@@ -113,7 +113,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -128,7 +128,7 @@ export default (() => {
 
       key = getCommunityUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -143,7 +143,7 @@ export default (() => {
 
       key = getCommentsUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -173,7 +173,7 @@ export default (() => {
       // profile header
       let element = $('[data-testid="profile-main"] .w-full p')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }
@@ -184,7 +184,7 @@ export default (() => {
 
       element = $('.w-full h1')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getCommunityUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'community' }
@@ -195,7 +195,7 @@ export default (() => {
 
       element = $('h1[slot="title"]')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getCommentsUrl(location.href, true)
         if (title && key) {
           const meta = { title, type: 'comments' }

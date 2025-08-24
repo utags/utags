@@ -102,7 +102,7 @@ export default (() => {
         // post title
         const element = getFirstHeadElement() as UtagsHTMLElement
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

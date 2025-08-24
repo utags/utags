@@ -45,7 +45,7 @@ export default (() => {
       // profile header
       const element = $('h1+div>div>span,h2+div>div>span')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key && key === 'https://www.threads.net/@' + title) {
           const meta = { title, type: 'user' }

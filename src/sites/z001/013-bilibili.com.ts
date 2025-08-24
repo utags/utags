@@ -78,7 +78,7 @@ export default (() => {
           return false
         }
 
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = prefix2 + userId
         const meta = { title, type: 'user' }
         element.utags = { key, meta }
@@ -126,7 +126,7 @@ export default (() => {
         if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
           if (key) {
-            let title = element.textContent!.trim()
+            let title = element.textContent.trim()
             if (title) {
               title = title.replace(/^@/, '')
               const meta = { title, type: 'user' }
@@ -144,7 +144,7 @@ export default (() => {
         // profile header
         const element = $('#h-name,.m-space-info .name')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: 'user' }
@@ -157,7 +157,7 @@ export default (() => {
       // video title
       const element = $('h1.video-title,h1.title-text')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getVideoUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'video' }
@@ -172,7 +172,7 @@ export default (() => {
       for (const element of elements4) {
         const key = getVideoUrl(element.href)
         if (key) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           const target =
             element.parentElement!.tagName === 'H3'
               ? element.parentElement!

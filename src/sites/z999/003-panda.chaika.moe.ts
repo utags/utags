@@ -37,7 +37,7 @@ export default (() => {
         // post title
         const element = $('h5')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }
@@ -50,7 +50,7 @@ export default (() => {
         const key = element.href
         const titleElement = $('.cover-title', element)
         if (titleElement) {
-          const title = titleElement.textContent!
+          const title = titleElement.textContent
           const meta = { title, type: 'post' }
 
           titleElement.utags = { key, meta }
@@ -65,7 +65,7 @@ export default (() => {
         const key = element.href
         const titleElement = $('h5', element.parentElement!.parentElement!)
         if (titleElement) {
-          const title = titleElement.textContent!
+          const title = titleElement.textContent
           const meta = { title, type: 'post' }
 
           titleElement.utags = { key, meta }

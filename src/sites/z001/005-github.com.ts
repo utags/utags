@@ -162,7 +162,7 @@ export default (() => {
 
         key = getTopicsUrl(href)
         if (key) {
-          const text = element.textContent!.trim()
+          const text = element.textContent.trim()
           if (text === '#') {
             return false
           }
@@ -182,7 +182,7 @@ export default (() => {
 
         key = getFileUrl(href)
         if (key) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           const type = key.includes('/blob/') ? 'file' : 'dir'
           const meta = { title, type }
           element.utags = { key, meta }
@@ -224,7 +224,7 @@ export default (() => {
       if (key) {
         const element = $('[data-testid="issue-header"] h1,.gh-header-show h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'issue' }
             element.utags = { key, meta }
@@ -237,7 +237,7 @@ export default (() => {
       if (key) {
         const element = $('h1#file-name-id-wide')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const type = key.includes('/blob/') ? 'file' : 'dir'
             const meta = { title, type }

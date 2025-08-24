@@ -84,7 +84,7 @@ export default (() => {
         // post title
         const element = $('.article-header .title')
         if (element && !element.closest('.pai_title')) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }
@@ -100,7 +100,7 @@ export default (() => {
           '.user_content .user__info__card .ss__user__card__nickname'
         )
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }

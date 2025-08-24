@@ -49,7 +49,7 @@ export default (() => {
       // profile header
       const elements = $$('[data-testid="UserName"] span')
       for (const element of elements) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title || !title.startsWith('@')) {
           continue
         }

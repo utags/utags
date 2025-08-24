@@ -336,7 +336,7 @@ function createPromptView(
         input.focus()
 
         if (current) {
-          onSelect(current.textContent!, input)
+          onSelect(current.textContent, input)
         } else if (input.value.trim()) {
           onSelect(input.value.trim(), input)
         } else {
@@ -510,7 +510,7 @@ function createPromptView(
     if (target.closest('.utags_modal_content')) {
       input.focus()
       if (target.closest('.utags_modal_content ul.utags_select_list li')) {
-        onSelect(target.textContent!, input)
+        onSelect(target.textContent, input)
       }
 
       if (target.closest('.utags_modal_content ul.utags_current_tags li a')) {

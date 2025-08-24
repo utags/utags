@@ -61,7 +61,7 @@ export default (() => {
         // episode title
         const element = $('h5')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'episode' }
             element.utags = { key, meta }
@@ -80,7 +80,7 @@ export default (() => {
               container
             )
             if (element) {
-              const title = element.textContent!.trim()
+              const title = element.textContent.trim()
               if (title) {
                 const meta = { title, type: 'feed' }
                 element.utags = { key, meta }
@@ -98,7 +98,7 @@ export default (() => {
           element
         )
         if (key && titleElement) {
-          const title = titleElement.textContent!
+          const title = titleElement.textContent
           const meta = { title, type: 'episode' }
 
           titleElement.utags = { key, meta }
@@ -117,7 +117,7 @@ export default (() => {
         const key = getFeedUrl(element.href)
         const titleElement = $('div > div', element)
         if (titleElement) {
-          const title = titleElement.textContent!
+          const title = titleElement.textContent
           const meta = { title, type: 'feed' }
 
           titleElement.utags = { key, meta }

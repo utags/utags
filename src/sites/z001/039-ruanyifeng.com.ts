@@ -94,7 +94,7 @@ export default (() => {
 
       const key = getPostUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
 
         if (!title) {
           return false
@@ -123,7 +123,7 @@ export default (() => {
         addVisited(key)
         const element = $('h1#page-title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }

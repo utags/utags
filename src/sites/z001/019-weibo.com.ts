@@ -85,7 +85,7 @@ export default (() => {
           '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
         )
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }

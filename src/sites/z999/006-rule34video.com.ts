@@ -82,8 +82,8 @@ export default (() => {
       if (key) {
         const titleElement = $('.thumb_title', element)
         const title = titleElement
-          ? titleElement.textContent!.trim()
-          : element.textContent!.trim()
+          ? titleElement.textContent.trim()
+          : element.textContent.trim()
 
         if (!title) {
           return false
@@ -122,7 +122,7 @@ export default (() => {
         // title
         const element = $('.brand_inform .title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'model' }
             element.utags = { key, meta }
@@ -136,7 +136,7 @@ export default (() => {
         // title
         const element = $('.channel_logo .title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -150,7 +150,7 @@ export default (() => {
         // title
         const element = $('.brand_inform .title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'category' }
             element.utags = { key, meta }
@@ -164,7 +164,7 @@ export default (() => {
         // title
         const element = $('h1.title_video')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'video' }
             element.utags = { key, meta }

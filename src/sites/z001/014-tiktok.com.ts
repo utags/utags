@@ -43,8 +43,8 @@ export default (() => {
       if (key) {
         const titleElement = $('h3,[data-e2e="browse-username"]', element)
         const title = titleElement
-          ? titleElement.textContent!.trim()
-          : element.textContent!.trim()
+          ? titleElement.textContent.trim()
+          : element.textContent.trim()
 
         if (!title) {
           return false
@@ -74,7 +74,7 @@ export default (() => {
       // profile header
       const element = $('h1[data-e2e="user-title"]')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }

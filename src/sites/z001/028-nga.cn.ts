@@ -28,7 +28,7 @@ export default (() => {
 
       const key = getUserProfileUrl(href)
       if (key) {
-        const title = element.textContent!
+        const title = element.textContent
         if (!title) {
           return false
         }
@@ -56,11 +56,11 @@ export default (() => {
           '#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label'
         )
         if (label) {
-          const title = label.textContent!.trim()
+          const title = label.textContent.trim()
           if (title === '用 户 名') {
             const element = label.nextElementSibling as HTMLElement
             if (element) {
-              const title = element.textContent!.trim()
+              const title = element.textContent.trim()
               if (title) {
                 const meta = { title, type: 'user' }
                 element.utags = { key, meta }

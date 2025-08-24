@@ -74,7 +74,7 @@ const isEnabledByDefault = () => {
 
 const isTagManager = location.href.includes('utags.pipecraft.net/tags/')
 
-const getSettingsTable: SettingsTable = () => {
+const getSettingsTable = (): SettingsTable => {
   let groupNumber = 1
 
   return {
@@ -944,7 +944,7 @@ async function main() {
         onSettingsChange()
       },
       onViewUpdate(settingsMainView) {
-        let item = $(
+        let item: HTMLElement | undefined = $(
           `[data-key="useVisitedFunction_${host}"]`,
           settingsMainView
         )

@@ -22,7 +22,7 @@ export default (() => {
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const element = $('h1.rich_media_title')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (title) {
           const key = getCanonicalUrl(location.href)
           const meta = { title }

@@ -78,7 +78,7 @@ export default (() => {
 
       const key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -106,7 +106,7 @@ export default (() => {
       // profile header
       const element = getFirstHeadElement('div[role="main"] h1')
       if (element) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }

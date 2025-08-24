@@ -132,7 +132,7 @@ export default (() => {
 
       key = getVideoUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
 
         if (!title) {
           return false
@@ -205,7 +205,7 @@ export default (() => {
 
         const element = $('[data-a-target="stream-title"]')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'video' }
             element.utags = { key, meta }
@@ -220,7 +220,7 @@ export default (() => {
         '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
       )) {
         const id = element.dataset.aUser
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (id && title) {
           key = prefix + id.toLowerCase()
           const meta = { type: 'user', title }

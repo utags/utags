@@ -87,7 +87,7 @@ export default (() => {
       if (key) {
         // ".GroupList-UserList-user .username" => example.com/groups page
         const titleElement = $('.GroupList-UserList-user .username', element)
-        const title = (titleElement || element).textContent!.trim()
+        const title = (titleElement || element).textContent.trim()
 
         // if (!title) {
         //   return false
@@ -113,7 +113,7 @@ export default (() => {
         const titleElement =
           $('.DiscussionListItem-title', element) ||
           $('.TagTile-lastPostedDiscussion-title', element)
-        const title = (titleElement || element).textContent!.trim()
+        const title = (titleElement || element).textContent.trim()
         if (!title) {
           return false
         }
@@ -136,7 +136,7 @@ export default (() => {
 
       key = getTagUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -170,7 +170,7 @@ export default (() => {
 
         const element = $('.item-title h1')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'post' }
             element.utags = { key, meta }
@@ -185,7 +185,7 @@ export default (() => {
       if (key) {
         const element = $('h1.Hero-title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'tag' }
             element.utags = { key, meta }

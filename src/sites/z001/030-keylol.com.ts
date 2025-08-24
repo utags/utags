@@ -54,7 +54,7 @@ export default (() => {
 
       const key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent!
+        const title = element.textContent
         if (!title) {
           return false
         }

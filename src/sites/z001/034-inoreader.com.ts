@@ -52,7 +52,7 @@ export default (() => {
 
       const key = getArticleUrl(href)
       if (key) {
-        const title = element.textContent!.trim()
+        const title = element.textContent.trim()
         if (!title) {
           return false
         }
@@ -91,7 +91,7 @@ export default (() => {
       if (key) {
         const element = $('.article_full_contents div.article_title')
         if (element) {
-          const title = element.textContent!.trim()
+          const title = element.textContent.trim()
           if (title) {
             const meta = { title, type: 'article' }
             element.utags = { key, meta }
