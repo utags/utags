@@ -130,6 +130,7 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
   - Adición de funcionalidad de cambio de idioma
   - Soporte para más idiomas, incluyendo japonés, coreano, alemán, francés, español, italiano, portugués, ruso, vietnamita y chino tradicional
   - Adición de comando de menú para agregar etiquetas a la página actual
+  - Agregado soporte para etiquetas especiales de estrellas (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) con ordenación por prioridad
 - 0.18.x
   - Adición del sitio Flickr
   - Adición del sitio Ruanyifeng

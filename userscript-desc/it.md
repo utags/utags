@@ -130,6 +130,7 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
   - Aggiunta della funzionalità di cambio lingua
   - Supporto per più lingue, inclusi giapponese, coreano, tedesco, francese, spagnolo, italiano, portoghese, russo, vietnamita e cinese tradizionale
   - Aggiunta del comando menu per aggiungere tag alla pagina corrente
+  - Aggiunto supporto per tag speciali a stelle (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) con ordinamento per priorità
 - 0.18.x
   - Aggiunta del sito Flickr
   - Aggiunta del sito Ruanyifeng

@@ -126,6 +126,7 @@ For now it works on
   - Add language switching functionality
   - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
   - Add menu command to tag current page
+  - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
 - 0.18.x
   - Add the website Flickr
   - Add the website Ruanyifeng
