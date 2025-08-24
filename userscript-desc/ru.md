@@ -100,20 +100,6 @@
 
 ![скриншоты](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![скриншоты](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## Видеодемонстрация
 
 - 📺 YouTube: [демонстрация1](https://www.youtube.com/watch?v=WzUzBA5V91A) [демонстрация2](https://www.youtube.com/watch?v=zlNqk0nhLdI)

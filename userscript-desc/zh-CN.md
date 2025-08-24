@@ -99,20 +99,6 @@
 
 ![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## 视频版演示
 
 - 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
@@ -345,10 +331,6 @@
 - 0.0.1
   - 支持 [www.v2ex.com](https://www.v2ex.com/) 网站，可以在用户名或帖子旁边添加或显示标签
   - 可以查看添加过标签的链接的[列表页面](https://utags.pipecraft.net/tags/)
-
-## 用户脚本定制
-
-提供付费定制用户脚本服务。有兴趣请联系。(pipecraft.ybd9n📮simplelogin.com)
 
 ## License
 

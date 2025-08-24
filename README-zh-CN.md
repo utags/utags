@@ -80,11 +80,15 @@
 
 ## 使用方法
 
-- 鼠标移到帖子标题或用户名的上面，会显示 🏷️ 标签图标。
+- 鼠标移到帖子标题或用户名上面，旁边会出现标签 🏷️ 图标，点击图标添加标签
 
-- 点击 🏷️ 标签图标，输入标签，用逗号分开多个标签。
+- 多个标签用逗号分隔（半角逗号符号、全角逗号符号都可以）
 
-- 帖子标题，用户名都可以设置标签。
+- 帖子标题，用户名，节点都可以添加标签
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
+
+- 特殊标签有特殊效果，比如：sb, block, 标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读等
+  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
 
 ## 网页截图
 
@@ -99,20 +103,6 @@
 ![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
 
 ![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
 
 ## 视频演示
 

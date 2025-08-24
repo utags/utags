@@ -99,20 +99,6 @@ De plus, en raison des politiques publiques de Greasy Fork, vous devez ajouter m
 
 ![Capture d'écran](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![Capture d'écran](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## Démo vidéo
 
 - 📺 YouTube : [Démo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [Démo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)

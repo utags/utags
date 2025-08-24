@@ -99,20 +99,6 @@ In addition, due to the publishing rules of Greasy Fork, the following websites 
 
 ![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![screenshots](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![screenshots](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## Video Demos
 
 - 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)

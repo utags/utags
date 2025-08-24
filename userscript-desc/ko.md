@@ -99,20 +99,6 @@
 
 ![스크린샷](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![스크린샷](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## 비디오 데모
 
 - 📺 YouTube: [데모1](https://www.youtube.com/watch?v=WzUzBA5V91A) [데모2](https://www.youtube.com/watch?v=zlNqk0nhLdI)

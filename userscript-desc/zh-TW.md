@@ -99,20 +99,6 @@
 
 ![截圖](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
 
-![截圖](https://wsrv.nl/?url=imgur.com/download/RBpOdzL)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/byywcBy)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/YdilUsi)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/smU24o8)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/coLUFOj)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/vwtalwQ)
-
-![截圖](https://wsrv.nl/?url=imgur.com/download/SYbJxGe)
-
 ## 影片演示
 
 - 📺 YouTube: [Demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [Demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
