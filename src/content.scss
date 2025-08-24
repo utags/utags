@@ -538,7 +538,9 @@
   }
 
   [data-utags_list_node*=",标题党,"],
+  [data-utags_list_node*=",標題黨,"],
   [data-utags_list_node*=",推广,"],
+  [data-utags_list_node*=",推廣,"],
   [data-utags_list_node*=",无聊,"],
   [data-utags_list_node*=",忽略,"],
   [data-utags_list_node*=",ignore,"],
@@ -549,6 +551,8 @@
   }
 
   [data-utags_list_node*=",已阅,"],
+  [data-utags_list_node*=",已閱,"],
+  [data-utags_list_node*=",已讀,"],
   [data-utags_list_node*=",已读,"],
   [data-utags_list_node*=",新用户,"] {
     opacity: 50%;
@@ -556,7 +560,9 @@
 
   [data-utags_list_node*=",hide,"],
   [data-utags_list_node*=",隐藏,"],
+  [data-utags_list_node*=",隱藏,"],
   [data-utags_list_node*=",屏蔽,"],
+  [data-utags_list_node*=",封鎖,"],
   [data-utags_list_node*=",不再显示,"],
   [data-utags_list_node*=",block,"] {
     opacity: 5%;
@@ -567,6 +573,7 @@
   [data-utags_list_node*=",收藏,"],
   [data-utags_list_node*=",重要,"],
   [data-utags_list_node*=",关注,"],
+  [data-utags_list_node*=",關注,"],
   [data-utags_list_node*=",稍后阅读,"] {
     background-image: linear-gradient(to right, #ffffff00, #fefce8) !important;
     opacity: 100% !important;

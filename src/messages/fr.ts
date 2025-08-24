@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'Activer UTags sur le site web actuel',
-  'settings.showHidedItems': "Afficher les éléments masqués (contenu avec les tags 'block', 'hide', 'masquer')",
-  'settings.noOpacityEffect': "Supprimer l'effet de transparence (contenu avec les tags 'sb', 'ignorer', 'piège à clics')",
+  'settings.showHidedItems': "Afficher les éléments masqués (contenu marqué avec les tags 'block', 'hide')",
+  'settings.noOpacityEffect': "Supprimer l'effet de transparence (contenu marqué avec les tags 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Activer la fonction de marquage du contenu de navigation sur le site web actuel',
   'settings.displayEffectOfTheVisitedContent': "Effet d'affichage du contenu visité",
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Enregistrer uniquement, ne pas afficher de marque',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': 'Translucide',
   'settings.displayEffectOfTheVisitedContent.hide': 'Masquer',
   'settings.pinnedTags': 'Ajoutez les tags que vous souhaitez épingler, séparés par des virgules',
-  'settings.pinnedTagsDefaultValue': 'favoris, block, sb, bloquer, masquer, lu, ignorer, piège à clics, publicité, suivre',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': 'Ajoutez les tags emoji, séparés par des virgules',
   'settings.customStyle': 'Activer le style personnalisé pour tous les sites web',

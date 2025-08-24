@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '在當前網站啟用小魚標籤',
-  'settings.showHidedItems': "顯示被隱藏的內容 (添加了 'block', 'hide', '隱藏'等標籤的內容)",
-  'settings.noOpacityEffect': "去除半透明效果 (添加了 'sb', '忽略', '標題黨'等標籤的內容)",
+  'settings.showHidedItems': "顯示被隱藏的內容 (加上了 'block', 'hide', '隱藏'等標籤的內容)",
+  'settings.noOpacityEffect': "去除半透明效果 (加上了 'sb', '忽略', '標題黨'等標籤的內容)",
   'settings.useVisitedFunction': '在當前網站啟用瀏覽內容標記功能',
   'settings.displayEffectOfTheVisitedContent': '當前網站的已瀏覽內容的展示效果',
   'settings.displayEffectOfTheVisitedContent.recordingonly': '只保存記錄，不顯示標記',

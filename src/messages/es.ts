@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'Habilitar UTags en el sitio web actual',
-  'settings.showHidedItems': "Mostrar elementos ocultos (contenido con etiquetas 'block', 'hide', 'ocultar')",
-  'settings.noOpacityEffect': "Eliminar efecto de transparencia (contenido con etiquetas 'sb', 'ignorar', 'clickbait')",
+  'settings.showHidedItems': "Mostrar elementos ocultos (contenido etiquetado con 'block', 'hide')",
+  'settings.noOpacityEffect': "Eliminar efecto de transparencia (contenido etiquetado con 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Habilitar función de etiquetado de contenido de navegación en el sitio web actual',
   'settings.displayEffectOfTheVisitedContent': 'Efecto de visualización del contenido visitado',
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Solo guardar registros, no mostrar marca',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': 'Translúcido',
   'settings.displayEffectOfTheVisitedContent.hide': 'Ocultar',
   'settings.pinnedTags': 'Agregue las etiquetas que desea fijar, separadas por comas',
-  'settings.pinnedTagsDefaultValue': 'favoritos, block, sb, bloquear, ocultar, leído, ignorar, clickbait, publicidad, seguir',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': 'Agregue etiquetas emoji, separadas por comas',
   'settings.customStyle': 'Habilitar estilo personalizado para todos los sitios web',

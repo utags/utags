@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '현재 웹사이트에서 UTags 활성화',
-  'settings.showHidedItems': "숨겨진 항목 표시 ('block', 'hide', '숨김' 등의 태그가 있는 콘텐츠)",
-  'settings.noOpacityEffect': "투명도 효과 제거 ('sb', '무시', '낚시제목' 등의 태그가 있는 콘텐츠)",
+  'settings.showHidedItems': "숨겨진 항목 표시 ('block', 'hide' 태그가 지정된 콘텐츠)",
+  'settings.noOpacityEffect': "투명도 효과 제거 ('ignore', 'clickbait', 'promotion' 태그가 지정된 콘텐츠)",
   'settings.useVisitedFunction': '현재 웹사이트에서 브라우징 콘텐츠 태그 기능 활성화',
   'settings.displayEffectOfTheVisitedContent': '방문한 콘텐츠의 표시 효과',
   'settings.displayEffectOfTheVisitedContent.recordingonly': '기록만 저장, 마크 표시 안함',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': '반투명',
   'settings.displayEffectOfTheVisitedContent.hide': '숨김',
   'settings.pinnedTags': '고정할 태그를 쉼표로 구분하여 추가하세요',
-  'settings.pinnedTagsDefaultValue': '즐겨찾기, block, sb, 차단, 숨김, 읽음, 무시, 낚시제목, 광고, 팔로우',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': '이모지 태그를 쉼표로 구분하여 추가하세요',
   'settings.customStyle': '모든 웹사이트에서 사용자 정의 스타일 활성화',

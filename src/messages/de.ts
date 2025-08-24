@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'UTags auf der aktuellen Website aktivieren',
-  'settings.showHidedItems': "Versteckte Elemente anzeigen (Inhalte mit 'block', 'hide', 'verstecken' Tags)",
-  'settings.noOpacityEffect': "Transparenz-Effekt entfernen (Inhalte mit 'sb', 'ignorieren', 'Clickbait' Tags)",
+  'settings.showHidedItems': "Versteckte Elemente anzeigen (Inhalte mit 'block', 'hide' Tags markiert)",
+  'settings.noOpacityEffect': "Transparenz-Effekt entfernen (Inhalte mit 'ignore', 'clickbait', 'promotion' Tags markiert)",
   'settings.useVisitedFunction': 'Browsing-Inhalts-Tagging auf der aktuellen Website aktivieren',
   'settings.displayEffectOfTheVisitedContent': 'Anzeigeeffekt für besuchte Inhalte',
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Nur Aufzeichnungen speichern, keine Markierung anzeigen',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': 'Durchscheinend',
   'settings.displayEffectOfTheVisitedContent.hide': 'Verstecken',
   'settings.pinnedTags': 'Fügen Sie die Tags hinzu, die Sie anheften möchten, getrennt durch Kommas',
-  'settings.pinnedTagsDefaultValue': 'Favoriten, block, sb, blockieren, verstecken, gelesen, ignorieren, Clickbait, Werbung, folgen',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': 'Fügen Sie Emoji-Tags hinzu, getrennt durch Kommas',
   'settings.customStyle': 'Benutzerdefinierten Stil für alle Websites aktivieren',

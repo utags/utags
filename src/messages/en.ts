@@ -1,7 +1,7 @@
 const messages = {
   'settings.enableCurrentSite': 'Enable UTags on the current website',
-  'settings.showHidedItems': "Show hidden items (tags with 'block', 'hide')",
-  'settings.noOpacityEffect': "No opacity mask effect (tags with 'ignore', 'clickbait', 'promotion')",
+  'settings.showHidedItems': "Show hidden items (content tagged with 'block', 'hide')",
+  'settings.noOpacityEffect': "No opacity mask effect (content tagged with 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Enable browsing content tagging on the current website',
   'settings.displayEffectOfTheVisitedContent': 'The display effect of the browsed content',
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Save records only, no mark display',

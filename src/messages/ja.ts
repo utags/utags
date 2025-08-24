@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '現在のウェブサイトでUTagsを有効にする',
-  'settings.showHidedItems': "非表示のアイテムを表示する（'block'、'hide'、'隠す'などのタグが付いたコンテンツ）",
-  'settings.noOpacityEffect': "透明度効果を無効にする（'sb'、'無視'、'釣りタイトル'などのタグが付いたコンテンツ）",
+  'settings.showHidedItems': "非表示のアイテムを表示する（'block'、'hide'タグが付けられたコンテンツ）",
+  'settings.noOpacityEffect': "透明度効果を無効にする（'ignore'、'clickbait'、'promotion'タグが付けられたコンテンツ）",
   'settings.useVisitedFunction': '現在のウェブサイトで閲覧コンテンツのタグ機能を有効にする',
   'settings.displayEffectOfTheVisitedContent': '閲覧済みコンテンツの表示効果',
   'settings.displayEffectOfTheVisitedContent.recordingonly': '記録のみ保存、マークは表示しない',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': '半透明',
   'settings.displayEffectOfTheVisitedContent.hide': '非表示',
   'settings.pinnedTags': 'ピン留めしたいタグをカンマ区切りで追加してください',
-  'settings.pinnedTagsDefaultValue': 'お気に入り, block, sb, ブロック, 非表示, 既読, 無視, 釣りタイトル, 宣伝, フォロー',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': '絵文字タグをカンマ区切りで追加してください',
   'settings.customStyle': 'すべてのウェブサイトでカスタムスタイルを有効にする',

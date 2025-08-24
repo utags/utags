@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'Ativar UTags no site atual',
-  'settings.showHidedItems': "Mostrar itens ocultos (conteúdo com tags 'block', 'hide', 'ocultar')",
-  'settings.noOpacityEffect': "Remover efeito de transparência (conteúdo com tags 'sb', 'ignorar', 'clickbait')",
+  'settings.showHidedItems': "Mostrar itens ocultos (conteúdo marcado com tags 'block', 'hide')",
+  'settings.noOpacityEffect': "Remover efeito de transparência (conteúdo marcado com tags 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Ativar função de marcação de conteúdo de navegação no site atual',
   'settings.displayEffectOfTheVisitedContent': 'Efeito de exibição do conteúdo visitado',
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Salvar apenas registros, não mostrar marca',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': 'Translúcido',
   'settings.displayEffectOfTheVisitedContent.hide': 'Ocultar',
   'settings.pinnedTags': 'Adicione as tags que deseja fixar, separadas por vírgulas',
-  'settings.pinnedTagsDefaultValue': 'favoritos, block, sb, bloquear, ocultar, lido, ignorar, clickbait, publicidade, seguir',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': 'Adicione tags emoji, separadas por vírgulas',
   'settings.customStyle': 'Ativar estilo personalizado para todos os sites',

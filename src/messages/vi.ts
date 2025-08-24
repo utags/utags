@@ -1,7 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'Kích hoạt UTags trên trang web hiện tại',
-  'settings.showHidedItems': "Hiển thị các mục bị ẩn (nội dung có tag 'block', 'hide', 'ẩn')",
-  'settings.noOpacityEffect': "Loại bỏ hiệu ứng trong suốt (nội dung có tag 'sb', 'bỏ qua', 'clickbait')",
+  'settings.showHidedItems': "Hiển thị các mục bị ẩn (nội dung được gắn tag 'block', 'hide')",
+  'settings.noOpacityEffect': "Loại bỏ hiệu ứng trong suốt (nội dung được gắn tag 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Kích hoạt chức năng gắn tag nội dung điều hướng trên trang web hiện tại',
   'settings.displayEffectOfTheVisitedContent': 'Hiệu ứng hiển thị nội dung đã xem',
   'settings.displayEffectOfTheVisitedContent.recordingonly': 'Chỉ lưu bản ghi, không hiển thị dấu hiệu',
@@ -10,7 +10,7 @@ export const messages = {
   'settings.displayEffectOfTheVisitedContent.translucent': 'Trong suốt',
   'settings.displayEffectOfTheVisitedContent.hide': 'Ẩn',
   'settings.pinnedTags': 'Thêm các tag bạn muốn ghim, phân cách bằng dấu phẩy',
-  'settings.pinnedTagsDefaultValue': 'yêu thích, block, sb, chặn, ẩn, đã đọc, bỏ qua, clickbait, quảng cáo, theo dõi',
+  'settings.pinnedTagsDefaultValue': 'block, hide, ignore, clickbait, promotion',
   'settings.pinnedTagsPlaceholder': 'foo, bar',
   'settings.emojiTags': 'Thêm tag emoji, phân cách bằng dấu phẩy',
   'settings.customStyle': 'Kích hoạt kiểu tùy chỉnh cho tất cả trang web',
