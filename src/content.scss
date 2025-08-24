@@ -68,7 +68,10 @@
         content: none;
       }
     }
+  }
 
+  .utags_ul,
+  .utags_select_list {
     .utags_text_tag {
       box-sizing: border-box !important;
       display: block !important;
@@ -126,8 +129,13 @@
       &::after {
         display: none;
       }
+
+      &[data-utags_tag_selectable]::before {
+        display: none;
+      }
     }
 
+    /* Special tags start */
     .utags_text_tag[data-utags_tag=":visited"] {
       height: var(--utags-visited-tag-size) !important;
       width: var(--utags-visited-tag-size) !important;
@@ -153,6 +161,22 @@
       --utags-text-tag-border-width: var(--utags-emoji-tag-border-width);
       --utags-text-tag-border-color: var(--utags-emoji-tag-border-color);
     }
+
+    .utags_text_tag[data-utags_tag="★"],
+    .utags_text_tag[data-utags_tag="★★"],
+    .utags_text_tag[data-utags_tag="★★★"],
+    .utags_text_tag[data-utags_tag="☆"],
+    .utags_text_tag[data-utags_tag="☆☆"],
+    .utags_text_tag[data-utags_tag="☆☆☆"] {
+      --utags-text-tag-background-color: var(--utags-star-tag-background-color);
+      --utags-text-tag-font-size: var(--utags-star-tag-font-size);
+      --utags-text-tag-font-family: var(--utags-star-tag-font-family);
+      --utags-text-tag-border-width: var(--utags-star-tag-border-width);
+      --utags-text-tag-border-color: var(--utags-star-tag-border-color);
+      --utags-text-tag-color: var(--utags-star-tag-color);
+      padding: 0 2px !important;
+    }
+    /* Special tags end */
 
     .utags_captain_tag,
     .utags_captain_tag2 {
@@ -450,7 +474,7 @@
       font-size: 12px;
       font-weight: 600;
       text-align: left;
-      padding: 0 2px 0 8px;
+      padding: 0 8px 0 8px;
       cursor: default;
       background-color: #f8fafe;
     }
@@ -462,7 +486,7 @@
       height: 16px;
       display: flex;
       align-items: center;
-      padding: 0 2px 0 8px;
+      padding: 0 8px 0 8px;
       margin: 0;
       max-width: 150px;
       overflow: hidden;
@@ -480,6 +504,21 @@
         font-family: var(--utags-text-tag-font-family) !important;
         font-size: 12px;
         line-height: 1;
+      }
+    }
+
+    &.utags_emoji_list li span {
+      font-family: var(--utags-emoji-tag-font-family) !important;
+      line-height: unset !important;
+    }
+
+    .utags_text_tag {
+      border: none;
+      --utags-text-tag-color: #000;
+      --utags-text-tag-font-size: 12px;
+
+      &::before {
+        display: none !important;
       }
     }
   }
@@ -655,6 +694,16 @@ textarea[data-key="emojiTags"] {
   --utags-emoji-tag-font-size: 12px;
   --utags-emoji-tag-border-width: 0;
   --utags-emoji-tag-font-family:
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla",
+    "twemoji mozilla", "Segoe UI", "Noto Sans";
+  --utags-star-tag-color: #ffd700;
+  --utags-star-tag-border-color: #fff0;
+  --utags-star-tag-background-color: #fff0;
+  --utags-star-tag-font-size: 14px;
+  --utags-star-tag-border-width: 0;
+  --utags-star-tag-font-family:
+    "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif",
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla",
     "twemoji mozilla", "Segoe UI", "Noto Sans";

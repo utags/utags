@@ -4,7 +4,7 @@
 import { describe, expect, it } from 'vitest'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
-import { normalizeBookmarkData, sortBookmarks } from './index.js'
+import { normalizeBookmarkData, sortBookmarks, sortTags } from './index.js'
 
 type BookmarkItem = [string, BookmarkTagsAndMetadata]
 
@@ -886,6 +886,228 @@ describe('normalizeBookmarkData', () => {
       expect(result.bookmarks[999].meta.category).toBe('category9')
       expect(result.bookmarks[999].meta.created).toBe(1_234_568_889)
       expect(result.bookmarks[999].meta.updated).toBe(1_234_568_889)
+    })
+  })
+})
+
+describe('sortTags', () => {
+  describe('Star tags priority', () => {
+    it('should prioritize star tags in correct order', () => {
+      const tags = ['regular', '★', '★★★', '☆', '★★', '☆☆☆', '☆☆']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★★★', '★★', '★', '☆☆☆', '☆☆', '☆', 'regular'])
+    })
+
+    it('should handle only star tags', () => {
+      const tags = ['☆', '★★', '☆☆☆', '★★★', '★', '☆☆']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★★★', '★★', '★', '☆☆☆', '☆☆', '☆'])
+    })
+
+    it('should handle duplicate star tags', () => {
+      const tags = ['★', '★★', '★', '☆', '★★']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★★', '★★', '★', '★', '☆'])
+    })
+
+    it('should not match partial star patterns', () => {
+      const tags = ['★★★extra', 'prefix★★', '★ ★', '☆☆☆text', 'text☆']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      // All should be treated as regular tags and maintain original order
+      expect(result).toEqual([
+        '★★★extra',
+        'prefix★★',
+        '★ ★',
+        '☆☆☆text',
+        'text☆',
+      ])
+    })
+  })
+
+  describe('Privileged tags priority', () => {
+    it('should prioritize privileged tags after star tags', () => {
+      const tags = ['regular1', 'privileged1', '★', 'privileged2', 'regular2']
+      const privilegedTags = ['privileged1', 'privileged2']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual([
+        '★',
+        'privileged1',
+        'privileged2',
+        'regular1',
+        'regular2',
+      ])
+    })
+
+    it('should maintain order within privileged tags', () => {
+      const tags = ['privileged3', 'privileged1', 'privileged2']
+      const privilegedTags = ['privileged1', 'privileged2', 'privileged3']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['privileged3', 'privileged1', 'privileged2'])
+    })
+
+    it('should handle privileged tags that are also star tags', () => {
+      const tags = ['★★', 'privileged1', '★', 'regular']
+      const privilegedTags = ['★★', 'privileged1']
+      const result = sortTags(tags, privilegedTags)
+
+      // Star tags should still have highest priority, even if they're in privilegedTags
+      expect(result).toEqual(['★★', '★', 'privileged1', 'regular'])
+    })
+
+    it('should handle empty privileged tags array', () => {
+      const tags = ['regular1', '★', 'regular2']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★', 'regular1', 'regular2'])
+    })
+  })
+
+  describe('Regular tags', () => {
+    it('should maintain original order for regular tags', () => {
+      const tags = ['zebra', 'apple', 'banana']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['zebra', 'apple', 'banana'])
+    })
+
+    it('should place regular tags after star and privileged tags', () => {
+      const tags = ['regular1', '★', 'privileged1', 'regular2']
+      const privilegedTags = ['privileged1']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★', 'privileged1', 'regular1', 'regular2'])
+    })
+  })
+
+  describe('Edge cases', () => {
+    it('should handle empty tags array', () => {
+      const tags: string[] = []
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual([])
+    })
+
+    it('should handle single tag', () => {
+      const tags = ['single']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['single'])
+    })
+
+    it('should handle privileged tags not in tags array', () => {
+      const tags = ['tag1', 'tag2']
+      const privilegedTags = ['nonexistent1', 'nonexistent2']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['tag1', 'tag2'])
+    })
+
+    it('should handle tags with special characters', () => {
+      const tags = ['tag@#$', '★★', 'tag with spaces', 'tag-with-dashes']
+      const privilegedTags = ['tag with spaces']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual([
+        '★★',
+        'tag with spaces',
+        'tag@#$',
+        'tag-with-dashes',
+      ])
+    })
+
+    it('should handle unicode characters', () => {
+      const tags = ['标签1', '★', '🏷️', 'тег']
+      const privilegedTags = ['🏷️']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual(['★', '🏷️', '标签1', 'тег'])
+    })
+  })
+
+  describe('Complex scenarios', () => {
+    it('should handle all three priority levels together', () => {
+      const tags = [
+        'regular3',
+        '☆☆',
+        'privileged2',
+        '★★★',
+        'regular1',
+        'privileged1',
+        '★',
+        'regular2',
+        '☆☆☆',
+      ]
+      const privilegedTags = ['privileged1', 'privileged2']
+      const result = sortTags(tags, privilegedTags)
+
+      expect(result).toEqual([
+        '★★★',
+        '★',
+        '☆☆☆',
+        '☆☆',
+        'privileged2',
+        'privileged1',
+        'regular3',
+        'regular1',
+        'regular2',
+      ])
+    })
+
+    it('should handle large number of tags', () => {
+      const tags = [
+        ...Array.from({ length: 50 }, (_, i) => `regular${i}`),
+        '★★★',
+        '★★',
+        '★',
+        '☆☆☆',
+        '☆☆',
+        '☆',
+        'privileged1',
+        'privileged2',
+      ]
+      const privilegedTags = ['privileged1', 'privileged2']
+      const result = sortTags(tags, privilegedTags)
+
+      // Check that star tags come first
+      expect(result.slice(0, 6)).toEqual(['★★★', '★★', '★', '☆☆☆', '☆☆', '☆'])
+      // Check that privileged tags come next
+      expect(result.slice(6, 8)).toEqual(['privileged1', 'privileged2'])
+      // Check that regular tags come last and maintain order
+      expect(result.slice(8)).toEqual(
+        Array.from({ length: 50 }, (_, i) => `regular${i}`)
+      )
+    })
+
+    it('should be stable sort (maintain relative order for equal priority items)', () => {
+      const tags = ['b', 'a', 'c']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      // Should maintain original order since all are regular tags
+      expect(result).toEqual(['b', 'a', 'c'])
+    })
+
+    it('should handle mixed case and whitespace in star tags', () => {
+      const tags = [' ★★★ ', '★★★', 'STAR', '★ ★★']
+      const privilegedTags: string[] = []
+      const result = sortTags(tags, privilegedTags)
+
+      // Only exact match '★★★' should be treated as star tag
+      expect(result).toEqual(['★★★', ' ★★★ ', 'STAR', '★ ★★'])
     })
   })
 })

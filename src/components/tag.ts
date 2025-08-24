@@ -13,9 +13,10 @@ export default function createTag(
 
   if (options.enableSelect) {
     a.textContent = tagName
-  } else {
-    a.dataset.utags_tag = tagName
+    a.dataset.utags_tag_selectable = '1'
   }
+
+  a.dataset.utags_tag = tagName
 
   if (!options.noLink) {
     a.setAttribute('href', 'https://utags.link/#' + encodeURIComponent(tagName))

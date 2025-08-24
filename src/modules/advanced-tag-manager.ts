@@ -110,7 +110,9 @@ function updateCandidateTagList(
       // class: index === 0 ? "utags_active" : "",
     })
     addElement(li, 'span', {
+      class: 'utags_text_tag',
       textContent: text,
+      'data-utags_tag': text,
     })
     index++
     if (index >= (limitSize || 50)) {

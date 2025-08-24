@@ -34,23 +34,64 @@ export function getFirstHeadElement(tagName = 'h1') {
   return undefined
 }
 
+/**
+ * Sorts an array of tags based on predefined priority rules.
+ *
+ * Priority order (highest to lowest):
+ * 1. Star tags: ★★★ > ★★ > ★ > ☆☆☆ > ☆☆ > ☆
+ * 2. Privileged tags: Tags specified in the privilegedTags array
+ * 3. Regular tags: All other tags
+ *
+ * Tags with the same priority maintain their original relative order (stable sort).
+ *
+ * @param tags - Array of tag strings to be sorted
+ * @param privilegedTags - Array of tag strings that should be prioritized after star tags
+ * @returns A new sorted array of tags in priority order
+ *
+ * @example
+ * ```typescript
+ * const tags = ['regular', '★★', 'privileged', '★★★', 'another']
+ * const privileged = ['privileged']
+ * const sorted = sortTags(tags, privileged)
+ * // Result: ['★★★', '★★', 'privileged', 'regular', 'another']
+ * ```
+ */
 export function sortTags(tags: string[], privilegedTags: string[]) {
-  return tags.sort((a, b) => {
-    const pA = privilegedTags.includes(a)
-    const pB = privilegedTags.includes(b)
-    if (pA && pB) {
-      return 0
-    }
+  /**
+   * Calculate the priority value for a given tag.
+   * Higher numbers indicate higher priority in the sorting order.
+   *
+   * Priority mapping:
+   * - Star tags: 16 (★★★), 15 (★★), 14 (★), 13 (☆☆☆), 12 (☆☆), 11 (☆)
+   * - Privileged tags: 1
+   * - Regular tags: 0
+   *
+   * @param tag - The tag string to evaluate
+   * @returns Priority value as a number
+   */
+  function getTagPriority(tag: string): number {
+    // Star tags have the highest priority (exact match required)
+    if (tag === '★★★') return 16
+    if (tag === '★★') return 15
+    if (tag === '★') return 14
+    if (tag === '☆☆☆') return 13
+    if (tag === '☆☆') return 12
+    if (tag === '☆') return 11
 
-    if (pA) {
-      return -1
-    }
+    // Privileged tags have medium priority (only if not already a star tag)
+    if (privilegedTags.includes(tag)) return 1
 
-    if (pB) {
-      return 1
-    }
-
+    // Regular tags have the lowest priority
     return 0
+  }
+
+  // Sort tags by priority in descending order (highest priority first)
+  return tags.sort((a, b) => {
+    const priorityA = getTagPriority(a)
+    const priorityB = getTagPriority(b)
+
+    // Sort by priority value (descending), maintains original order for equal priorities
+    return priorityB - priorityA
   })
 }
 
