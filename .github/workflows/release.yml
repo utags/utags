@@ -1,0 +1,100 @@
+name: Create Release
+
+# Trigger the workflow when a new tag is pushed
+on:
+  push:
+    tags:
+      - "v*" # Triggers on version tags like v1.0.0, v2.1.3, etc.
+
+# Set permissions for the workflow
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Fetch all history for generating release notes
+
+      # Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: pnpm install
+
+      # Run tests
+      - name: Run tests
+        run: pnpm run test
+
+      # Build the project
+      - name: Build project
+        run: pnpm run build
+
+      # Package the build artifacts
+      - name: Package build artifacts
+        run: pnpm run package
+
+      # Generate release notes from recent commits
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          # Get the previous version tag (only tags starting with 'v')
+          PREVIOUS_TAG=$(git tag --sort=-version:refname --merged HEAD^ | grep '^v' | head -n 1 || echo "")
+
+          # Generate commit log since previous tag and filter important commits
+          if [ -n "$PREVIOUS_TAG" ]; then
+            ALL_COMMITS=$(git log --pretty=format:"%s (%h)" $PREVIOUS_TAG..HEAD)
+          else
+            ALL_COMMITS=$(git log --pretty=format:"%s (%h)" HEAD)
+          fi
+
+          # Filter commits to include only important ones (feat:, fix:, etc.)
+          FILTERED_COMMITS=$(echo "$ALL_COMMITS" | grep -E "^(feat|fix|perf|refactor|docs|build|ci|revert)(\([^)]+\))?:" || true)
+
+          # Format filtered commits
+          if [ -n "$FILTERED_COMMITS" ]; then
+            COMMITS=$(echo "$FILTERED_COMMITS" | sed 's/^/- /')
+          else
+            COMMITS="- No significant changes in this release"
+          fi
+
+          # Create release notes
+          RELEASE_NOTES="## What's Changed\n\n$COMMITS\n\n**Full Changelog**: https://github.com/${{ github.repository }}/compare/$PREVIOUS_TAG...${{ github.ref_name }}"
+
+          # Save to output
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo -e "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # Create GitHub Release with assets
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+          files: |
+            ./build/chrome-mv3-prod.zip
+            ./build/firefox-mv2-prod.zip
+            ./build/userscript-prod/utags.user.js
