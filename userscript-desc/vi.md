@@ -108,6 +108,7 @@ Ngoài ra, do chính sách công khai của Greasy Fork, bạn phải thêm th�
 - Thẻ có thể được thêm trực tiếp trong trang hiện đang xem, và lưu thẻ không làm trang tải lại
 - Thẻ có thể được thêm vào tiêu đề bài đăng, tên người dùng và danh mục
 - Hỗ trợ tiện ích mở rộng Vimium: nhấn phím "f" và các dấu hiệu gợi ý cũng sẽ được hiển thị trên biểu tượng thẻ để thêm thẻ nhanh chóng
+- **Quản lý bookmark hiện đại**: Truy cập [https://utags.link/](https://utags.link/) để trải nghiệm các tính năng quản lý bookmark tiên tiến. Để biết thông tin chi tiết về ứng dụng web, hãy tham khảo [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
 - Trong trang [Danh sách Thẻ](https://utags.link/) bạn có thể xem người dùng và bài đăng được gắn thẻ theo thứ tự cập nhật
 - Hỗ trợ [xuất và nhập dữ liệu](https://utags.link/)
 - Đánh dấu tự động các bài đăng đã đọc. Nội dung đã đọc có thể được hiển thị bán trong suốt hoặc ẩn. Chức năng này phải được kích hoạt thủ công trong trang cài đặt. Mặc định bị tắt. Hiện tại chỉ áp dụng cho các trang `linux.do` và `v2ex.com`

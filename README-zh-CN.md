@@ -112,6 +112,7 @@
 
 - 在浏览的页面可以直接添加标签，保存标签时不会刷新页面
 - 不仅可以给用户打标签，还可以给帖子和节点打标签
+- **现代化书签管理**：访问 [https://utags.link/](https://utags.link/) 体验先进的书签管理功能。关于 Web 应用的详细信息，请参考 [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
 - 在[标签列表](https://utags.link/)页面，可以看到有标签的用户和帖子，按更新顺序排序
 - 支持 Vimium 扩展，点击 'f' 键，标签图标按钮也会有提示，可以快速添加标签
 - 支持[数据导出、导入](https://utags.link/)

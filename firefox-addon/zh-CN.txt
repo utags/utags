@@ -1,0 +1,60 @@
+小鱼标签 (UTags) - 为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息，提升网络浏览的生产力。
+
+主要功能：
+- 为用户、帖子、视频和链接添加自定义标签
+- 使用特殊标签过滤和隐藏内容（屏蔽、忽略、隐藏）
+- 自动标记已浏览的内容
+- 支持标签数据的导出和导入
+- 现代化书签管理，访问 https://utags.link/ 体验网页版功能
+- 无缝支持 100+ 热门网站
+
+支持的网站包括：
+
+V2EX (www.v2ex.com)
+Greasy Fork (greasyfork.org and sleazyfork.org)
+Hacker News (news.ycombinator.com)
+Lobsters (lobste.rs)
+GitHub (github.com)
+Reddit (www.reddit.com)
+X(Twitter) (x.com / twitter.com)
+微信公众号 (mp.weixin.qq.com)
+Instagram (www.instagram.com)
+Threads (www.threads.net)
+Facebook (www.facebook.com)
+YouTube (www.youtube.com)
+B 站 Bilibili (www.bilibili.com)
+TikTok (www.tiktok.com)
+吾爱破解 (www.52pojie.cn)
+掘金 (juejin.cn)
+知乎 (zhihu.com)
+小红书 xiaohongshu (xiaohongshu.com)
+微博 (weibo.com, weibo.cn)
+少数派 (sspai.com)
+抖音 (douyin.com)
+Google Podcasts (podcasts.google.com)
+今日热榜 Rebang.Today (rebang.today)
+MyAnimeList (myanimelist.net)
+豆瓣 (douban.com)
+pixiv (www.pixiv.net)
+LINUX DO (linux.do)
+小众软件 (meta.appinn.net)
+NGA (bbs.nga.cn, nga.178.com, ngabbs.com)
+Keylol 其乐 (keylol.com)
+DLsite (www.dlsite.com)
+Kemono (kemono.su)
+Coomer (coomer.su)
+Nekohouse (nekohouse.su)
+Discourse (meta.discourse.org)
+Open AI (community.openai.com)
+Cloudflare (community.cloudflare.com)
+PornHub (pornhub.com)
+e-hentai (e-hentai.org), exhentai (exhentai.org)
+panda.chaika.moe panda.chaika.moe
+dmm.co.jp (www.dmm.co.jp)
+Rule34Video(Rule34) (rule34video.com)
+Rule34Generate(Rule34Gen) (rule34gen.com)
+等网站。如果希望添加更多网站，请点击这里。https://github.com/utags/utags/issues
+
+更多内容请访问
+- https://github.com/utags/utags
+- https://github.com/utags/utags-bookmarks

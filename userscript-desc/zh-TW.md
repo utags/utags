@@ -108,6 +108,7 @@
 - 標籤可以直接在當前瀏覽的頁面中添加，保存標籤不會導致頁面重新載入
 - 標籤可以添加到貼文標題、用戶名稱和分類
 - 支援 Vimium 擴充功能：按下 "f" 鍵，標籤圖示上也會顯示提示標記，以便快速添加標籤
+- **現代化書籤管理**：造訪 [https://utags.link/](https://utags.link/) 體驗先進的書籤管理功能。關於 Web 應用程式的詳細資訊，請參考 [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
 - 在[標籤列表](https://utags.link/)頁面中，您可以按更新順序查看已標記的用戶和貼文
 - 支援[資料匯出和匯入](https://utags.link/)
 - 自動標記已讀貼文。已讀內容可以顯示為半透明或隱藏。此功能需要在設定頁面中手動啟用。預設為關閉。目前僅適用於 `linux.do` 和 `v2ex.com` 網站

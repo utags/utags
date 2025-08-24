@@ -108,6 +108,7 @@ Inoltre, a causa delle politiche pubbliche di Greasy Fork, devi aggiungere manua
 - I tag possono essere aggiunti direttamente nella pagina attualmente visualizzata, e salvare i tag non causa il ricaricamento della pagina
 - I tag possono essere aggiunti ai titoli dei post, nomi utente e categorie
 - Supporto per l'estensione Vimium: premi il tasto "f" e verranno mostrati anche i marcatori di suggerimento sulle icone dei tag per aggiungere rapidamente i tag
+- **Gestione moderna dei segnalibri**: Visita [https://utags.link/](https://utags.link/) per sperimentare funzionalità avanzate di gestione dei segnalibri. Per informazioni dettagliate sull'applicazione web, consulta [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
 - Nella pagina [Lista Tag](https://utags.link/) puoi vedere utenti e post taggati in ordine di aggiornamento
 - Supporta [esportazione e importazione dati](https://utags.link/)
 - Marcatura automatica dei post letti. Il contenuto letto può essere mostrato semi-trasparente o nascosto. Questa funzione deve essere attivata manualmente nella pagina delle impostazioni. È disattivata per impostazione predefinita. Attualmente si applica solo ai siti `linux.do` e `v2ex.com`

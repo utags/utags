@@ -108,6 +108,7 @@ Além disso, devido às políticas públicas do Greasy Fork, você deve adiciona
 - As tags podem ser adicionadas diretamente na página atualmente visualizada, e salvar tags não causa recarregamento da página
 - As tags podem ser adicionadas a títulos de posts, nomes de usuário e categorias
 - Suporte para extensão Vimium: pressione a tecla "f" e marcadores de dica também serão mostrados nos ícones de tag para adicionar tags rapidamente
+- **Gestão moderna de marcadores**: Visite [https://utags.link/](https://utags.link/) para experimentar funcionalidades avançadas de gestão de marcadores. Para informações detalhadas sobre a aplicação web, consulte [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
 - Na página [Lista de Tags](https://utags.link/) você pode ver usuários e posts marcados em ordem de atualização
 - Suporta [exportação e importação de dados](https://utags.link/)
 - Marcação automática de posts lidos. O conteúdo lido pode ser mostrado semi-transparente ou oculto. Esta função deve ser ativada manualmente na página de configurações. Está desativada por padrão. Atualmente se aplica apenas aos sites `linux.do` e `v2ex.com`
