@@ -144,7 +144,7 @@ export default (() => {
           return false
         }
 
-        const meta = { type: 'user', title }
+        const meta = title ? { type: 'user', title } : { type: 'user' }
 
         element.utags = { key, meta }
         element.dataset.utags = element.dataset.utags || ''

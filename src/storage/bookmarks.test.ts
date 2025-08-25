@@ -1021,6 +1021,64 @@ describe('bookmarks', () => {
     expect(bookmark).toEqual({ tags: [], meta: { created: 0, updated: 0 } })
   })
 
+  test('should update updated2 field when deleting all tags', async () => {
+    const url = 'https://example.com'
+
+    await initBookmarksStore()
+    await saveBookmark(url, ['tag1'], { title: 'Test' })
+
+    // Verify first saveBookmark call
+    expect(setValue).toHaveBeenCalledWith('extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1'],
+          meta: expect.objectContaining({
+            created: initialTime,
+            updated: initialTime,
+          }) as unknown as BookmarkMetadata,
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: initialTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    vi.setSystemTime(secondCallTime)
+
+    // Delete all tags by providing empty array
+    await saveBookmark(url, [], {})
+
+    // Verify second saveBookmark call includes updated2 field
+    expect(setValue).toHaveBeenCalledWith('extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1', DELETED_BOOKMARK_TAG],
+          meta: expect.objectContaining({
+            created: initialTime,
+            updated: initialTime,
+            updated2: secondCallTime, // This should be set when deleting all tags
+          }) as unknown as BookmarkMetadata,
+          deletedMeta: expect.objectContaining({
+            deleted: secondCallTime,
+            actionType: 'DELETE',
+          }),
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: secondCallTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    const bookmark: BookmarkTagsAndMetadata = getBookmark(url)
+    expect(bookmark).toEqual({ tags: [], meta: { created: 0, updated: 0 } })
+  })
+
   test('should update existing bookmark metadata', async () => {
     vi.useFakeTimers()
     const updatedTime = new Date(2023, 0, 1, 12, 1).getTime() // 2023-01-01 12:01
@@ -1085,6 +1143,171 @@ describe('bookmarks', () => {
     )
 
     vi.useRealTimers()
+  })
+
+  test('should trim title whitespace when saving bookmark', async () => {
+    const url = 'https://example.com'
+    const metaWithWhitespace = { title: '  Test  \n Title  \n\t  ' }
+
+    await initBookmarksStore()
+    await saveBookmark(url, ['tag1'], metaWithWhitespace)
+
+    expect(setValue).toHaveBeenCalledWith('extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1'],
+          meta: expect.objectContaining({
+            title: 'Test Title', // Whitespace should be trimmed
+            created: initialTime,
+            updated: initialTime,
+          }) as unknown as BookmarkMetadata,
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: initialTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    const bookmark = getBookmark(url)
+    expect(bookmark.meta.title).toBe('Test Title')
+  })
+
+  test('should preserve existing title when new title is empty or whitespace', async () => {
+    const url = 'https://example.com'
+    const initialMeta = { title: 'Original Title' }
+
+    await initBookmarksStore()
+    await saveBookmark(url, ['tag1'], initialMeta)
+
+    vi.setSystemTime(secondCallTime)
+
+    // Try to update with empty title
+    await saveBookmark(url, ['tag1', 'tag2'], { title: '' })
+
+    // Verify setValue call sequence:
+    // First saveBookmark call triggers 4 setValue calls:
+    //   1. extension.utags.urlmap - stores bookmark data
+    //   2. extension.utags.recenttags - updates recent tags list
+    //   3. extension.utags.mostusedtags - updates most used tags list
+    //   4. extension.utags.recentaddedtags - updates recently added tags list
+    // Second saveBookmark call triggers 4 setValue calls too:
+    //   5. extension.utags.urlmap - updates bookmark data with new title
+    //   6. extension.utags.recenttags - updates recent tags list
+    //   7. extension.utags.mostusedtags - updates most used tags list
+    //   8. extension.utags.recentaddedtags - updates recently added tags list
+    expect(setValue).toHaveBeenNthCalledWith(5, 'extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1', 'tag2'],
+          meta: expect.objectContaining({
+            title: 'Original Title', // Should preserve original title
+            created: initialTime,
+            updated: secondCallTime,
+          }) as unknown as BookmarkMetadata,
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: secondCallTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    const bookmark = getBookmark(url)
+    expect(bookmark.meta.title).toBe('Original Title')
+  })
+
+  test('should preserve existing title when new title is only whitespace', async () => {
+    const url = 'https://example.com'
+    const initialMeta = { title: 'Original Title' }
+
+    await initBookmarksStore()
+    await saveBookmark(url, ['tag1'], initialMeta)
+
+    vi.setSystemTime(secondCallTime)
+
+    // Try to update with whitespace-only title
+    await saveBookmark(url, ['tag1', 'tag2'], { title: '   \n\t   ' })
+
+    // Verify setValue call sequence:
+    // First saveBookmark call triggers 4 setValue calls:
+    //   1. extension.utags.urlmap - stores bookmark data
+    //   2. extension.utags.recenttags - updates recent tags list
+    //   3. extension.utags.mostusedtags - updates most used tags list
+    //   4. extension.utags.recentaddedtags - updates recently added tags list
+    // Second saveBookmark call triggers 4 setValue calls too:
+    //   5. extension.utags.urlmap - updates bookmark data with new title
+    //   6. extension.utags.recenttags - updates recent tags list
+    //   7. extension.utags.mostusedtags - updates most used tags list
+    //   8. extension.utags.recentaddedtags - updates recently added tags list
+    expect(setValue).toHaveBeenNthCalledWith(5, 'extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1', 'tag2'],
+          meta: expect.objectContaining({
+            title: 'Original Title', // Should preserve original title
+            created: initialTime,
+            updated: secondCallTime,
+          }) as unknown as BookmarkMetadata,
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: secondCallTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    const bookmark = getBookmark(url)
+    expect(bookmark.meta.title).toBe('Original Title')
+  })
+
+  test('should set empty title when explicitly provided', async () => {
+    const url = 'https://example.com'
+
+    await initBookmarksStore()
+    // Save with empty title explicitly provided
+    await saveBookmark(url, ['tag1'], { title: '' })
+
+    const bookmark = getBookmark(url)
+    expect(bookmark.meta.title).toBe('')
+  })
+
+  test('should normalize multiple whitespace characters in title', async () => {
+    const url = 'https://example.com'
+    const metaWithMultipleSpaces = {
+      title: 'Test   Title\n\nWith    Multiple\t\tSpaces',
+    }
+
+    await initBookmarksStore()
+    await saveBookmark(url, ['tag1'], metaWithMultipleSpaces)
+
+    expect(setValue).toHaveBeenCalledWith('extension.utags.urlmap', {
+      data: {
+        [url]: {
+          tags: ['tag1'],
+          meta: expect.objectContaining({
+            title: 'Test Title With Multiple Spaces', // Multiple spaces should be normalized to single spaces
+            created: initialTime,
+            updated: initialTime,
+          }) as unknown as BookmarkMetadata,
+        },
+      },
+      meta: {
+        created: initialTime,
+        updated: initialTime,
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      },
+    })
+
+    const bookmark = getBookmark(url)
+    expect(bookmark.meta.title).toBe('Test Title With Multiple Spaces')
   })
 
   test('should handle value change listener for bookmark updates', async () => {
@@ -1593,6 +1816,7 @@ describe('bookmarks', () => {
         title: 'Example 1',
         created: initialTime,
         updated: initialTime,
+        updated2: secondCallTime,
       },
       deletedMeta: {
         deleted: secondCallTime,
@@ -1605,6 +1829,7 @@ describe('bookmarks', () => {
         title: 'Example 2',
         created: initialTime,
         updated: initialTime,
+        updated2: thirdCallTime,
       },
       deletedMeta: {
         deleted: thirdCallTime,

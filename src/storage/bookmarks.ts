@@ -4,7 +4,7 @@ import {
   setValue,
 } from 'browser-extension-storage'
 import { isUrl, uniq } from 'browser-extension-utils'
-import { normalizeCreated, normalizeUpdated } from 'utags-utils'
+import { normalizeCreated, normalizeUpdated, trimTitle } from 'utags-utils'
 
 import type {
   BookmarkMetadata,
@@ -258,6 +258,10 @@ export async function saveBookmark(
       oldTags = existingData.tags || []
       if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
         existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
+        existingData.meta = {
+          ...existingData.meta,
+          updated2: now,
+        }
         existingData.deletedMeta = {
           deleted: now,
           actionType: 'DELETE',
@@ -269,6 +273,7 @@ export async function saveBookmark(
     const existingData = urlMap[key] || {}
     oldTags = existingData.tags || []
 
+    const title = trimTitle(meta.title) || trimTitle(existingData.meta?.title)
     const newMeta: BookmarkMetadata = {
       ...existingData.meta,
       ...meta,
@@ -280,6 +285,10 @@ export async function saveBookmark(
         now
       ),
       updated: now,
+    }
+
+    if (title) {
+      newMeta.title = title
     }
 
     urlMap[key] = {
