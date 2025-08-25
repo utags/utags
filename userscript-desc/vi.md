@@ -125,6 +125,7 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 ## Ghi chú phát hành
 
 - 0.19.x
+  - Thêm Lệnh Menu Thẻ Nhanh: Cấu hình thẻ nhanh tùy chỉnh trong cài đặt và truy cập qua menu chuột phải với biểu tượng ➕/➖ để thêm/xóa thẻ
   - Tối ưu hóa logic đồng bộ dữ liệu, giải quyết vấn đề không nhất quán dữ liệu
   - Cập nhật hỗ trợ trang dmm.co.jp
   - Thêm chức năng chuyển đổi ngôn ngữ

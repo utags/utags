@@ -125,6 +125,7 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
 ## Note di rilascio
 
 - 0.19.x
+  - Aggiunta dei Comandi Menu Tag Rapidi: Configura tag rapidi personalizzati nelle impostazioni e accedi tramite menu clic destro con icone ➕/➖ per aggiungere/rimuovere tag
   - Ottimizzazione della logica di sincronizzazione dati, risoluzione di problemi di inconsistenza dati
   - Aggiornamento del supporto del sito dmm.co.jp
   - Aggiunta della funzionalità di cambio lingua

@@ -127,6 +127,7 @@ For now it works on
   - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
   - Add menu command to tag current page
   - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
+  - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access them via right-click menu with ➕/➖ icons for adding/removing tags
 - 0.18.x
   - Add the website Flickr
   - Add the website Ruanyifeng

@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.9
+// @version              0.19.10
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -192,6 +192,8 @@
       }
     return target
   }
+  var __publicField = (obj, key, value) =>
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value)
   var availableLocales = ["en"]
   var regexCache = /* @__PURE__ */ new Map()
   function initAvailableLocales(array) {
@@ -630,7 +632,7 @@
       : addElement
   var addStyle = (styleText) =>
     addElement2(null, "style", { textContent: styleText })
-  var registerMenuCommand = (name, callback, accessKey) => {
+  var registerMenuCommand = (name, callback, options) => {
     if (globalThis !== top) {
       return
     }
@@ -638,7 +640,7 @@
       console.warn("Do not support GM.registerMenuCommand!")
       return
     }
-    GM.registerMenuCommand(name, callback, accessKey)
+    return GM.registerMenuCommand(name, callback, options)
   }
   var style_default =
     '#browser_extension_settings_container{--browser-extension-settings-background-color: #f2f2f7;--browser-extension-settings-text-color: #444444;--browser-extension-settings-link-color: #217dfc;--sb-track-color: #00000000;--sb-thumb-color: #33334480;--sb-size: 2px;--font-family: "helvetica neue", "microsoft yahei", arial, sans-serif;position:fixed;top:10px;right:30px;max-height:90%;height:600px;overflow:hidden;display:none;z-index:100000;border-radius:5px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}#browser_extension_settings_container .browser_extension_settings_wrapper{display:flex;height:100%;overflow:hidden;background-color:var(--browser-extension-settings-background-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper h1,#browser_extension_settings_container .browser_extension_settings_wrapper h2{border:none;color:var(--browser-extension-settings-text-color);padding:0;font-family:var(--font-family);line-height:normal;letter-spacing:normal}#browser_extension_settings_container .browser_extension_settings_wrapper h1{font-size:26px;font-weight:800;margin:18px 0}#browser_extension_settings_container .browser_extension_settings_wrapper h2{font-size:18px;font-weight:600;margin:14px 0}#browser_extension_settings_container .browser_extension_settings_wrapper footer{display:flex;justify-content:center;flex-direction:column;font-size:11px;margin:10px auto 0px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper footer a{color:var(--browser-extension-settings-link-color) !important;font-family:var(--font-family);text-decoration:none;padding:0}#browser_extension_settings_container .browser_extension_settings_wrapper footer p{text-align:center;padding:0;margin:2px;line-height:13px;font-size:11px;color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous{color:var(--browser-extension-settings-link-color);cursor:pointer;display:none}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous::before{content:"< "}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container{overflow-x:auto;box-sizing:border-box;padding:10px 15px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div{background-color:#fff;font-size:14px;border-top:1px solid #ccc;padding:6px 15px 6px 15px}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited{display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-decoration:none;color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited:hover{text-decoration:none;color:var(--browser-extension-settings-text-color)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited span{margin-right:10px;line-height:24px;font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div.active,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div.active,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:hover{background-color:#e4e4e6}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div.active a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div.active a{cursor:default}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:first-of-type,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:first-of-type{border-top:none;border-top-right-radius:10px;border-top-left-radius:10px}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:last-of-type,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:last-of-type{border-bottom-right-radius:10px;border-bottom-left-radius:10px}#browser_extension_settings_container .thin_scrollbar{scrollbar-color:var(--sb-thumb-color) var(--sb-track-color);scrollbar-width:thin}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar{width:var(--sb-size)}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar-track{background:var(--sb-track-color);border-radius:10px}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar-thumb{background:var(--sb-thumb-color);border-radius:10px}#browser_extension_settings_main{min-width:250px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;padding:10px 15px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_main h2{text-align:center;margin:5px 0 0}#browser_extension_settings_main .option_groups{background-color:#fff;padding:6px 15px 6px 15px;border-radius:10px;display:flex;flex-direction:column;margin:10px 0 0}#browser_extension_settings_main .option_groups .action{font-size:14px;padding:6px 0 6px 0;color:var(--browser-extension-settings-link-color);cursor:pointer}#browser_extension_settings_main .bes_external_link{font-size:14px;padding:6px 0 6px 0}#browser_extension_settings_main .bes_external_link a,#browser_extension_settings_main .bes_external_link a:visited,#browser_extension_settings_main .bes_external_link a:hover{color:var(--browser-extension-settings-link-color);font-family:var(--font-family);text-decoration:none;cursor:pointer}#browser_extension_settings_main .option_groups textarea{font-size:12px;margin:10px 0 10px 0;height:100px;width:100%;border:1px solid #a9a9a9;border-radius:4px;box-sizing:border-box}#browser_extension_settings_main .switch_option,#browser_extension_settings_main .select_option{display:flex;justify-content:space-between;align-items:center;padding:6px 0 6px 0;font-size:14px}#browser_extension_settings_main .option_groups>*{border-top:1px solid #ccc}#browser_extension_settings_main .option_groups>*:first-child{border-top:none}#browser_extension_settings_main .bes_option>.bes_icon{width:24px;height:24px;margin-right:10px}#browser_extension_settings_main .bes_option>.bes_title{margin-right:10px;flex-grow:1}#browser_extension_settings_main .bes_option>.bes_select{box-sizing:border-box;background-color:#fff;height:24px;padding:0 2px 0 2px;margin:0;border-radius:6px;border:1px solid #ccc}#browser_extension_settings_main .option_groups .bes_tip{position:relative;margin:0;padding:0 15px 0 0;border:none;max-width:none;font-size:14px}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_anchor{cursor:help;text-decoration:underline}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_content{position:absolute;bottom:15px;left:0;background-color:#fff;color:var(--browser-extension-settings-text-color);text-align:left;padding:10px;display:none;border-radius:5px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_anchor:hover+.bes_tip_content,#browser_extension_settings_main .option_groups .bes_tip .bes_tip_content:hover{display:block}#browser_extension_settings_main .option_groups .bes_tip p,#browser_extension_settings_main .option_groups .bes_tip pre{margin:revert;padding:revert}#browser_extension_settings_main .option_groups .bes_tip pre{font-family:Consolas,panic sans,bitstream vera sans mono,Menlo,microsoft yahei,monospace;font-size:13px;letter-spacing:.015em;line-height:120%;white-space:pre;overflow:auto;background-color:#f5f5f5;word-break:normal;overflow-wrap:normal;padding:.5em;border:none}#browser_extension_settings_main .bes_switch_container{--button-width: 51px;--button-height: 24px;--toggle-diameter: 20px;--color-off: #e9e9eb;--color-on: #34c759;width:var(--button-width);height:var(--button-height);position:relative;padding:0;margin:0;flex:none;user-select:none}#browser_extension_settings_main input[type=checkbox]{opacity:0;width:0;height:0;position:absolute}#browser_extension_settings_main .bes_switch{width:100%;height:100%;display:block;background-color:var(--color-off);border-radius:calc(var(--button-height)/2);border:none;cursor:pointer;transition:all .2s ease-out}#browser_extension_settings_main .bes_switch::before{display:none}#browser_extension_settings_main .bes_slider{width:var(--toggle-diameter);height:var(--toggle-diameter);position:absolute;left:2px;top:calc(50% - var(--toggle-diameter)/2);border-radius:50%;background:#fff;box-shadow:0px 3px 8px rgba(0,0,0,.15),0px 3px 1px rgba(0,0,0,.06);transition:all .2s ease-out;cursor:pointer}#browser_extension_settings_main input[type=checkbox]:checked+.bes_switch{background-color:var(--color-on)}#browser_extension_settings_main input[type=checkbox]:checked+.bes_switch .bes_slider{left:calc(var(--button-width) - var(--toggle-diameter) - 2px)}#browser_extension_side_menu{min-height:80px;width:30px;opacity:0;position:fixed;top:80px;right:0;padding-top:20px;z-index:10000}#browser_extension_side_menu:hover{opacity:1}#browser_extension_side_menu button{cursor:pointer;width:24px;height:24px;padding:0;border:none;background-color:rgba(0,0,0,0);background-image:none}#browser_extension_side_menu button svg{width:24px;height:24px}#browser_extension_side_menu button:hover{opacity:70%}#browser_extension_side_menu button:active{opacity:100%}@media(max-width: 500px){#browser_extension_settings_container{right:10px}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous{display:block}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container{display:none}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container.bes_active{display:block}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container.bes_active+div{display:none}}'
@@ -1482,6 +1484,68 @@
   }
   var content_default =
     '#TOFIX_uFEFF{display:block}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul:not(.utags_ul)[data-utags_key],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ol:not(.utags_ul)[data-utags_key]{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity)[data-utags=off] .utags_ul{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline-flex !important;flex-direction:row !important;flex-wrap:wrap !important;align-content:flex-start;justify-content:flex-start;overflow:visible;white-space:normal;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important;max-width:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:unset !important;border:none !important;padding:0 !important;margin:0 !important;vertical-align:top !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag{box-sizing:border-box !important;display:block !important;border:var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:var(--utags-text-tag-font-size) !important;font-family:var(--utags-text-tag-font-family) !important;letter-spacing:0 !important;line-height:1 !important;height:unset !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;cursor:pointer;z-index:0;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag:link,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag:link{cursor:pointer}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:var(--utags-text-tag-font-size);line-height:1;height:unset;width:unset;max-width:var(--utags-text-tag-max-width);white-space:var(--utags-text-tag-white-space);overflow:hidden;text-overflow:ellipsis;border-radius:unset;border:unset;background:unset;margin:unset;padding:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::after,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::after{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]{height:var(--utags-visited-tag-size) !important;width:var(--utags-visited-tag-size) !important;border-radius:var(--utags-visited-tag-size) !important;--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);--utags-text-tag-border-width: 0px;margin-left:2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_emoji_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_emoji_tag{--utags-text-tag-background-color: var( --utags-emoji-tag-background-color );--utags-text-tag-font-size: var(--utags-emoji-tag-font-size);--utags-text-tag-font-family: var(--utags-emoji-tag-font-family);--utags-text-tag-border-width: var(--utags-emoji-tag-border-width);--utags-text-tag-border-color: var(--utags-emoji-tag-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606\u2606]{--utags-text-tag-background-color: var(--utags-star-tag-background-color);--utags-text-tag-font-size: var(--utags-star-tag-font-size);--utags-text-tag-font-family: var(--utags-star-tag-font-family);--utags-text-tag-border-width: var(--utags-star-tag-border-width);--utags-text-tag-border-color: var(--utags-star-tag-border-color);--utags-text-tag-color: var(--utags-star-tag-color);padding:0 2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2{width:var(--utags-captain-tag-size) !important;height:var(--utags-captain-tag-size) !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset) !important;position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0>li{position:relative !important;height:var(--utags-captain-tag-size) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) *:hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link])+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding-top:5vh;background-color:hsla(0,0%,100%,.1);z-index:200000}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:94%;max-height:100%;overflow:hidden;overflow:auto;color:#000;background-color:#fff;border-radius:5px;padding:14px;margin:0 auto;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:var(--utags-text-tag-font-family) !important;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;margin:0;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{outline:0;border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt .utags_link_settings{font-size:12px;text-decoration:underline;cursor:pointer;color:#374151}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper .utags_button_copy{cursor:pointer;font-size:10px;line-height:1;height:18px;padding:0 6px;border-radius:2px;color:var(--utags-action-button-text-color);background-color:var(--utags-action-button-bg-color);border:1px solid var(--utags-action-button-border-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty+button{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag[data-utags_tag=":visited"]:hover{--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);opacity:.3}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between;max-height:200px;overflow-y:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);position:sticky;top:0;display:block;font-size:12px;font-weight:600;text-align:left;padding:0 8px 0 8px;cursor:default;background-color:#f8fafe}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{box-sizing:border-box;cursor:pointer;font-size:12px;height:16px;display:flex;align-items:center;padding:0 8px 0 8px;margin:0;max-width:150px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--utags-text-tag-font-family) !important;font-size:12px;line-height:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list.utags_emoji_list li span{font-family:var(--utags-emoji-tag-font-family) !important;line-height:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list .utags_text_tag{border:none;--utags-text-tag-color: #000;--utags-text-tag-font-size: 12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list .utags_text_tag::before{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container{position:absolute;top:-100px;right:100px;z-index:1000;background-color:#bdbdbd;padding:4px 8px;border-radius:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a{display:inline}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_01{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_11{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key=customStyleValue]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key^=customStyleValue_]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]{transition:opacity .1s ease-in}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6A19\u984C\u9EE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5EE3,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u95B1,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8B80,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8BFB,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u96B1\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C01\u9396,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u95DC\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag2{color:#ff0 !important}[data-utags_display-effect-of-the-visited-content="4"] [data-utags_list_node*=",:visited,"] [data-utags_condition_node][data-utags_visited="1"]{color:var(--utags-visited-title-color) !important}[data-utags_display-effect-of-the-visited-content="2"] [data-utags_list_node*=",:visited,"]{opacity:var(--utags-visited-opacity)}[data-utags_display-effect-of-the-visited-content="3"] [data-utags_list_node*=",:visited,"]{opacity:5%;display:none}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}textarea[data-key=emojiTags]{font-family:var(--utags-text-tag-font-family)}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-captain-tag-size: 14px;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-text-tag-font-size: 10px;--utags-text-tag-border-width: 1px;--utags-text-tag-max-width: 90px;--utags-text-tag-white-space: nowrap;--utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-emoji-tag-border-color: #fff0;--utags-emoji-tag-background-color: #fff0;--utags-emoji-tag-font-size: 12px;--utags-emoji-tag-border-width: 0;--utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-star-tag-color: #ffd700;--utags-star-tag-border-color: #fff0;--utags-star-tag-background-color: #fff0;--utags-star-tag-font-size: 14px;--utags-star-tag-border-width: 0;--utags-star-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-visited-tag-background-color: #bdbdbd;--utags-visited-tag-size: 11px;--utags-visited-title-color: #aaa;--utags-visited-opacity: 10%;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply-5: block;--utags-notag-ul-height-5: 0;--utags-notag-ul-width-5: 0;--utags-notag-ul-position-5: absolute;--utags-notag-ul-top-5: -9999px;--utags-notag-captain-tag-top-5: 0;--utags-notag-captain-tag-left-5: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}[data-utags_darkmode="1"]{--utags-visited-title-color: #666}'
+  var MIN_VALID_TIMESTAMP = 631152e6
+  var MAX_VALID_TIMESTAMP = 9999999999999
+  function isValidDate(date) {
+    return (
+      typeof date === "number" &&
+      date > MIN_VALID_TIMESTAMP &&
+      date < MAX_VALID_TIMESTAMP
+    )
+  }
+  function normalizeCreated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const minValidDate = Math.min(
+      isCreatedValid ? created : Infinity,
+      isUpdatedValid ? updated : Infinity
+    )
+    return Number.isFinite(minValidDate) ? minValidDate : defaultDate
+  }
+  function normalizeUpdated(created, updated, defaultDate) {
+    const isCreatedValid = isValidDate(created)
+    const isUpdatedValid = isValidDate(updated)
+    const maxValidDate = Math.max(
+      isCreatedValid ? created : 0,
+      isUpdatedValid ? updated : 0
+    )
+    return maxValidDate || defaultDate
+  }
+  function trimTitle(title) {
+    if (!title) return ""
+    return title.replaceAll(/\s+/gm, " ").trim()
+  }
+  function getTrimmedTitle(element) {
+    return trimTitle(element.textContent)
+  }
+  function splitTags(text) {
+    if (!text) {
+      return []
+    }
+    let inputText
+    if (Array.isArray(text)) {
+      inputText = text.join(",")
+    } else if (text instanceof Set) {
+      inputText = [...text].join(",")
+    } else {
+      inputText = text
+    }
+    if (!inputText.trim()) {
+      return []
+    }
+    return [
+      ...new Set(
+        inputText
+          .replaceAll(
+            /[ \t\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+/g,
+            " "
+          )
+          .split(/[,，\n\r]+/)
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+      ),
+    ]
+  }
   function createTag(tagName, options) {
     const a = createElement("a", {
       title: tagName,
@@ -1556,7 +1620,12 @@
     "prompt.cancel": "Abbrechen",
     "prompt.ok": "Best\xE4tigen",
     "prompt.settings": "Einstellungen",
-    "prompt.addTagsToCurrentPage": "Tags zur aktuellen Seite hinzuf\xFCgen",
+    "menu.addTagsToCurrentPage": "Tags zur aktuellen Seite hinzuf\xFCgen",
+    "menu.modifyCurrentPageTags": "Tags der aktuellen Seite \xE4ndern",
+    "menu.addQuickTag": "{tag} Tag zur aktuellen Seite hinzuf\xFCgen",
+    "menu.removeQuickTag": "{tag} Tag von der aktuellen Seite entfernen",
+    "settings.quickTags": "Schnell-Tags",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var de_default2 = messages14
   var messages15 = {
@@ -1607,7 +1676,12 @@
     "prompt.cancel": "Cancel",
     "prompt.ok": "OK",
     "prompt.settings": "Settings",
-    "prompt.addTagsToCurrentPage": "Add tags to current page",
+    "menu.addTagsToCurrentPage": "Add tags to current page",
+    "menu.modifyCurrentPageTags": "Modify current page tags",
+    "menu.addQuickTag": "Add {tag} tag to current page",
+    "menu.removeQuickTag": "Remove {tag} tag from current page",
+    "settings.quickTags": "Quick Tags",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var en_default2 = messages15
   var messages16 = {
@@ -1661,7 +1735,12 @@
     "prompt.cancel": "Cancelar",
     "prompt.ok": "Confirmar",
     "prompt.settings": "Configuraci\xF3n",
-    "prompt.addTagsToCurrentPage": "Agregar etiquetas a la p\xE1gina actual",
+    "menu.addTagsToCurrentPage": "Agregar etiquetas a la p\xE1gina actual",
+    "menu.modifyCurrentPageTags": "Modificar etiquetas de la p\xE1gina actual",
+    "menu.addQuickTag": "Agregar etiqueta {tag} a la p\xE1gina actual",
+    "menu.removeQuickTag": "Eliminar etiqueta {tag} de la p\xE1gina actual",
+    "settings.quickTags": "Etiquetas R\xE1pidas",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var es_default2 = messages16
   var messages17 = {
@@ -1717,7 +1796,14 @@
     "prompt.cancel": "Annuler",
     "prompt.ok": "Confirmer",
     "prompt.settings": "Param\xE8tres",
-    "prompt.addTagsToCurrentPage": "Ajouter des tags \xE0 la page actuelle",
+    "menu.addTagsToCurrentPage":
+      "Ajouter des \xE9tiquettes \xE0 la page actuelle",
+    "menu.modifyCurrentPageTags":
+      "Modifier les \xE9tiquettes de la page actuelle",
+    "menu.addQuickTag": "Ajouter l'\xE9tiquette {tag} \xE0 la page actuelle",
+    "menu.removeQuickTag": "Supprimer l'\xE9tiquette {tag} de la page actuelle",
+    "settings.quickTags": "\xC9tiquettes Rapides",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var fr_default2 = messages17
   var messages18 = {
@@ -1770,7 +1856,12 @@
     "prompt.cancel": "Annulla",
     "prompt.ok": "Conferma",
     "prompt.settings": "Impostazioni",
-    "prompt.addTagsToCurrentPage": "Aggiungi tag alla pagina attuale",
+    "menu.addTagsToCurrentPage": "Aggiungi tag alla pagina corrente",
+    "menu.modifyCurrentPageTags": "Modifica tag della pagina corrente",
+    "menu.addQuickTag": "Aggiungi tag {tag} alla pagina corrente",
+    "menu.removeQuickTag": "Rimuovi tag {tag} dalla pagina corrente",
+    "settings.quickTags": "Tag Rapidi",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var it_default2 = messages18
   var messages19 = {
@@ -1829,8 +1920,16 @@
     "prompt.cancel": "\u30AD\u30E3\u30F3\u30BB\u30EB",
     "prompt.ok": "\u78BA\u8A8D",
     "prompt.settings": "\u8A2D\u5B9A",
-    "prompt.addTagsToCurrentPage":
+    "menu.addTagsToCurrentPage":
       "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306B\u30BF\u30B0\u3092\u8FFD\u52A0",
+    "menu.modifyCurrentPageTags":
+      "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306E\u30BF\u30B0\u3092\u5909\u66F4",
+    "menu.addQuickTag":
+      "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306B {tag} \u30BF\u30B0\u3092\u8FFD\u52A0",
+    "menu.removeQuickTag":
+      "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u304B\u3089 {tag} \u30BF\u30B0\u3092\u524A\u9664",
+    "settings.quickTags": "\u30AF\u30A4\u30C3\u30AF\u30BF\u30B0",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var ja_default2 = messages19
   var messages20 = {
@@ -1889,8 +1988,16 @@
     "prompt.cancel": "\uCDE8\uC18C",
     "prompt.ok": "\uD655\uC778",
     "prompt.settings": "\uC124\uC815",
-    "prompt.addTagsToCurrentPage":
+    "menu.addTagsToCurrentPage":
       "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0 \uD0DC\uADF8 \uCD94\uAC00",
+    "menu.modifyCurrentPageTags":
+      "\uD604\uC7AC \uD398\uC774\uC9C0 \uD0DC\uADF8 \uC218\uC815",
+    "menu.addQuickTag":
+      "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0 {tag} \uD0DC\uADF8 \uCD94\uAC00",
+    "menu.removeQuickTag":
+      "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0\uC11C {tag} \uD0DC\uADF8 \uC81C\uAC70",
+    "settings.quickTags": "\uBE60\uB978 \uD0DC\uADF8",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var ko_default2 = messages20
   var messages21 = {
@@ -1943,7 +2050,12 @@
     "prompt.cancel": "Cancelar",
     "prompt.ok": "Confirmar",
     "prompt.settings": "Configura\xE7\xF5es",
-    "prompt.addTagsToCurrentPage": "Adicionar tags \xE0 p\xE1gina atual",
+    "menu.addTagsToCurrentPage": "Adicionar tags \xE0 p\xE1gina atual",
+    "menu.modifyCurrentPageTags": "Modificar tags da p\xE1gina atual",
+    "menu.addQuickTag": "Adicionar tag {tag} \xE0 p\xE1gina atual",
+    "menu.removeQuickTag": "Remover tag {tag} da p\xE1gina atual",
+    "settings.quickTags": "Tags R\xE1pidas",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var pt_default2 = messages21
   var messages22 = {
@@ -2010,8 +2122,17 @@
     "prompt.cancel": "\u041E\u0442\u043C\u0435\u043D\u0430",
     "prompt.ok": "\u041E\u041A",
     "prompt.settings": "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438",
-    "prompt.addTagsToCurrentPage":
+    "menu.addTagsToCurrentPage":
       "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433\u0438 \u043A \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
+    "menu.modifyCurrentPageTags":
+      "\u0418\u0437\u043C\u0435\u043D\u0438\u0442\u044C \u0442\u0435\u0433\u0438 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
+    "menu.addQuickTag":
+      "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u043A \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
+    "menu.removeQuickTag":
+      "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
+    "settings.quickTags":
+      "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0422\u0435\u0433\u0438",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var ru_default2 = messages22
   var messages23 = {
@@ -2069,8 +2190,16 @@
     "prompt.cancel": "H\u1EE7y",
     "prompt.ok": "X\xE1c nh\u1EADn",
     "prompt.settings": "C\xE0i \u0111\u1EB7t",
-    "prompt.addTagsToCurrentPage":
-      "Th\xEAm tag v\xE0o trang hi\u1EC7n t\u1EA1i",
+    "menu.addTagsToCurrentPage":
+      "Th\xEAm th\u1EBB v\xE0o trang hi\u1EC7n t\u1EA1i",
+    "menu.modifyCurrentPageTags":
+      "S\u1EEDa \u0111\u1ED5i th\u1EBB trang hi\u1EC7n t\u1EA1i",
+    "menu.addQuickTag":
+      "Th\xEAm th\u1EBB {tag} v\xE0o trang hi\u1EC7n t\u1EA1i",
+    "menu.removeQuickTag":
+      "X\xF3a th\u1EBB {tag} kh\u1ECFi trang hi\u1EC7n t\u1EA1i",
+    "settings.quickTags": "Th\u1EBB Nhanh",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var vi_default2 = messages23
   var messages24 = {
@@ -2129,8 +2258,16 @@
     "prompt.cancel": "\u53D6\u6D88",
     "prompt.ok": "\u786E\u8BA4",
     "prompt.settings": "\u8BBE\u7F6E",
-    "prompt.addTagsToCurrentPage":
+    "menu.addTagsToCurrentPage":
       "\u4E3A\u5F53\u524D\u7F51\u9875\u6DFB\u52A0\u6807\u7B7E",
+    "menu.modifyCurrentPageTags":
+      "\u4FEE\u6539\u5F53\u524D\u7F51\u9875\u6807\u7B7E",
+    "menu.addQuickTag":
+      "\u4E3A\u5F53\u524D\u7F51\u9875\u6DFB\u52A0 {tag} \u6807\u7B7E",
+    "menu.removeQuickTag":
+      "\u5220\u9664\u5F53\u524D\u7F51\u9875\u7684 {tag} \u6807\u7B7E",
+    "settings.quickTags": "\u5FEB\u6377\u6807\u7B7E",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var zh_cn_default2 = messages24
   var messages25 = {
@@ -2188,8 +2325,16 @@
     "prompt.cancel": "\u53D6\u6D88",
     "prompt.ok": "\u78BA\u8A8D",
     "prompt.settings": "\u8A2D\u5B9A",
-    "prompt.addTagsToCurrentPage":
+    "menu.addTagsToCurrentPage":
       "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0\u6A19\u7C64",
+    "menu.modifyCurrentPageTags":
+      "\u4FEE\u6539\u7576\u524D\u7DB2\u9801\u6A19\u7C64",
+    "menu.addQuickTag":
+      "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
+    "menu.removeQuickTag":
+      "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var zh_hk_default2 = messages25
   var messages26 = {
@@ -2247,8 +2392,16 @@
     "prompt.cancel": "\u53D6\u6D88",
     "prompt.ok": "\u78BA\u8A8D",
     "prompt.settings": "\u8A2D\u5B9A",
-    "prompt.addTagsToCurrentPage":
-      "\u70BA\u76EE\u524D\u7DB2\u9801\u65B0\u589E\u6A19\u7C64",
+    "menu.addTagsToCurrentPage":
+      "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0\u6A19\u7C64",
+    "menu.modifyCurrentPageTags":
+      "\u4FEE\u6539\u7576\u524D\u7DB2\u9801\u6A19\u7C64",
+    "menu.addQuickTag":
+      "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
+    "menu.removeQuickTag":
+      "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
+    "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
   var zh_tw_default2 = messages26
   var availableLocales2 =
@@ -2298,68 +2451,6 @@
   }
   function getAvailableLocales() {
     return availableLocales2
-  }
-  var MIN_VALID_TIMESTAMP = 631152e6
-  var MAX_VALID_TIMESTAMP = 9999999999999
-  function isValidDate(date) {
-    return (
-      typeof date === "number" &&
-      date > MIN_VALID_TIMESTAMP &&
-      date < MAX_VALID_TIMESTAMP
-    )
-  }
-  function normalizeCreated(created, updated, defaultDate) {
-    const isCreatedValid = isValidDate(created)
-    const isUpdatedValid = isValidDate(updated)
-    const minValidDate = Math.min(
-      isCreatedValid ? created : Infinity,
-      isUpdatedValid ? updated : Infinity
-    )
-    return Number.isFinite(minValidDate) ? minValidDate : defaultDate
-  }
-  function normalizeUpdated(created, updated, defaultDate) {
-    const isCreatedValid = isValidDate(created)
-    const isUpdatedValid = isValidDate(updated)
-    const maxValidDate = Math.max(
-      isCreatedValid ? created : 0,
-      isUpdatedValid ? updated : 0
-    )
-    return maxValidDate || defaultDate
-  }
-  function trimTitle(title) {
-    if (!title) return ""
-    return title.replaceAll(/\s+/gm, " ").trim()
-  }
-  function getTrimmedTitle(element) {
-    return trimTitle(element.textContent)
-  }
-  function splitTags(text) {
-    if (!text) {
-      return []
-    }
-    let inputText
-    if (Array.isArray(text)) {
-      inputText = text.join(",")
-    } else if (text instanceof Set) {
-      inputText = [...text].join(",")
-    } else {
-      inputText = text
-    }
-    if (!inputText.trim()) {
-      return []
-    }
-    return [
-      ...new Set(
-        inputText
-          .replaceAll(
-            /[ \t\f\v\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]+/g,
-            " "
-          )
-          .split(/[,，\n\r]+/)
-          .map((tag) => tag.trim())
-          .filter(Boolean)
-      ),
-    ]
   }
   var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
   var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
@@ -3785,6 +3876,190 @@
     addEventListener(globalThis, "locationchange", function () {
       hideAllUtagsInArea()
     })
+  }
+  var MenuCommandManager = class {
+    /**
+     * Constructor for MenuCommandManager
+     * @param onClickHandler - Callback function to execute when menu command is clicked
+     * @param onQuickTagClickHandler - Callback function to execute when quick tag menu command is clicked
+     */
+    constructor(onClickHandler, onQuickTagClickHandler) {
+      this.onClickHandler = onClickHandler
+      this.onQuickTagClickHandler = onQuickTagClickHandler
+      __publicField(this, "state", {
+        isRegistering: false,
+        menuId: void 0,
+        lastTags: void 0,
+      })
+      __publicField(this, "quickTagStates", /* @__PURE__ */ new Map())
+    }
+    /**
+     * Register or update menu command with new tags
+     * @param tags - Optional array of tags to display in menu
+     */
+    async updateMenuCommand(tags) {
+      if (this.state.isRegistering) {
+        return
+      }
+      if (this.state.menuId && !this.hasTagsChanged(tags)) {
+        return
+      }
+      this.state.lastTags = tags
+      this.state.isRegistering = true
+      try {
+        const title = this.generateMenuTitle(tags)
+        if (this.state.menuId) {
+          const options = {
+            id: String(this.state.menuId),
+            accessKey: "u",
+          }
+          await registerMenuCommand(title, this.onClickHandler, options)
+        } else {
+          const options = {
+            accessKey: "u",
+          }
+          this.state.menuId = await registerMenuCommand(
+            title,
+            this.onClickHandler,
+            options
+          )
+        }
+      } catch (error) {
+        console.error("Failed to register menu command:", error)
+      } finally {
+        this.state.isRegistering = false
+      }
+    }
+    /**
+     * Get current menu command ID
+     * @returns Current menu ID or undefined
+     */
+    getMenuId() {
+      return this.state.menuId
+    }
+    /**
+     * Get current registration status
+     * @returns True if currently registering a menu command
+     */
+    isRegistering() {
+      return this.state.isRegistering
+    }
+    /**
+     * Update quick tag menu commands based on current tags and settings
+     * @param currentTags - Array of current page tags
+     */
+    async updateQuickTagMenuCommands(currentTags2 = []) {
+      const quickTagsValue = getSettingsValue("quickTags") || "\u2605"
+      const quickTags = splitTags(quickTagsValue)
+      for (const [tag, state] of this.quickTagStates.entries()) {
+        if (!quickTags.includes(tag)) {
+          this.quickTagStates.delete(tag)
+        }
+      }
+      for (const tag of quickTags) {
+        await this.updateQuickTagMenuCommand(tag, currentTags2)
+      }
+    }
+    /**
+     * Reset the menu command manager state
+     */
+    reset() {
+      this.state = {
+        isRegistering: false,
+        menuId: void 0,
+        lastTags: void 0,
+      }
+      this.quickTagStates.clear()
+    }
+    /**
+     * Generate menu command title based on tags
+     * @param tags - Array of tags to display in title
+     * @returns Formatted title string
+     */
+    generateMenuTitle(tags) {
+      if (tags && tags.length > 0) {
+        return (
+          "\u{1F3F7}\uFE0F " +
+          i2("menu.modifyCurrentPageTags") +
+          " #" +
+          tags.join(", ")
+        )
+      }
+      return "\u{1F3F7}\uFE0F " + i2("menu.addTagsToCurrentPage")
+    }
+    /**
+     * Generate quick tag menu command title
+     * @param tag - The quick tag
+     * @param hasTag - Whether current page has this tag
+     * @returns Formatted title string
+     */
+    generateQuickTagMenuTitle(tag, hasTag) {
+      if (hasTag) {
+        return "\u2796 " + i2("menu.removeQuickTag").replace("{tag}", tag)
+      }
+      return "\u2795 " + i2("menu.addQuickTag").replace("{tag}", tag)
+    }
+    /**
+     * Check if tags have changed since last update
+     * @param tags - Current tags array
+     * @returns True if tags are different from last update
+     */
+    hasTagsChanged(tags) {
+      var _a
+      const currentTagsString = (tags == null ? void 0 : tags.join(",")) || ""
+      const lastTagsString =
+        ((_a = this.state.lastTags) == null ? void 0 : _a.join(",")) || ""
+      return currentTagsString !== lastTagsString
+    }
+    /**
+     * Update a single quick tag menu command
+     * @param tag - The quick tag
+     * @param currentTags - Array of current page tags
+     */
+    async updateQuickTagMenuCommand(tag, currentTags2) {
+      const hasTag = currentTags2.includes(tag)
+      const existingState = this.quickTagStates.get(tag)
+      if (
+        (existingState == null ? void 0 : existingState.isRegistering) ||
+        (existingState && existingState.hasTag === hasTag)
+      ) {
+        return
+      }
+      const state = {
+        isRegistering: true,
+        menuId: existingState == null ? void 0 : existingState.menuId,
+        tag,
+        hasTag,
+      }
+      this.quickTagStates.set(tag, state)
+      try {
+        const title = this.generateQuickTagMenuTitle(tag, hasTag)
+        const clickHandler = () => {
+          this.onQuickTagClickHandler(tag, hasTag)
+        }
+        if (state.menuId) {
+          const options = {
+            id: String(state.menuId),
+          }
+          await registerMenuCommand(title, clickHandler, options)
+        } else {
+          const options = {}
+          state.menuId = await registerMenuCommand(title, clickHandler, options)
+        }
+        state.isRegistering = false
+        this.quickTagStates.set(tag, state)
+      } catch (error) {
+        console.error(
+          "Failed to register quick tag menu command for ".concat(tag, ":"),
+          error
+        )
+        state.isRegistering = false
+        this.quickTagStates.set(tag, state)
+      }
+    }
+  }
+  function createMenuCommandManager(onClickHandler, onQuickTagClickHandler) {
+    return new MenuCommandManager(onClickHandler, onQuickTagClickHandler)
   }
   var SCRIPT_NAME = "[UTags Extension Sync Adapter]"
   var MY_EXTENSION_ID
@@ -9585,6 +9860,27 @@
         type: "textarea",
         group: groupNumber,
       },
+      quickTagsTitle: {
+        title: i2("settings.quickTags"),
+        type: "action",
+        async onclick() {
+          const input = $('textarea[data-key="quickTags"]')
+          if (input) {
+            input.scrollIntoView({ block: "start" })
+            input.selectionStart = input.value.length
+            input.selectionEnd = input.value.length
+            input.focus()
+          }
+        },
+        group: ++groupNumber,
+      },
+      quickTags: {
+        title: i2("settings.quickTags"),
+        defaultValue: "\u2605, \u2764\uFE0F",
+        placeholder: i2("settings.quickTagsPlaceholder"),
+        type: "textarea",
+        group: groupNumber,
+      },
       customStyle: {
         title: i2("settings.customStyle"),
         defaultValue: false,
@@ -9730,19 +10026,46 @@
       }
     }
   }
-  function showCurrentPageLinkUtagsPrompt() {
+  function showCurrentPageLinkUtagsPrompt(tag, remove = false) {
     const cleanUp = appendCurrentPageLink()
     setTimeout(() => {
       const element = $("#utags_current_page_link + ul.utags_ul button")
       if (element) {
+        if (tag) {
+          const currentTags2 = splitTags(element.dataset.utags_tags)
+          if (remove) {
+            if (currentTags2.includes(tag)) {
+              element.dataset.utags_tags = currentTags2
+                .filter((t) => t !== tag)
+                .join(", ")
+            }
+          } else if (!currentTags2.includes(tag)) {
+            element.dataset.utags_tags = sortTags(
+              [...currentTags2, tag],
+              emojiTags2
+            ).join(", ")
+          }
+        }
         element.click()
       } else {
-        showCurrentPageLinkUtagsPrompt()
+        showCurrentPageLinkUtagsPrompt(tag, remove)
       }
     }, 10)
     setTimeout(() => {
       cleanUp()
     }, 3e3)
+  }
+  var menuCommandManager = createMenuCommandManager(
+    () => {
+      showCurrentPageLinkUtagsPrompt()
+    },
+    (tag, remove) => {
+      showCurrentPageLinkUtagsPrompt(tag, remove)
+    }
+  )
+  async function updateAddTagsToCurrentPageMenuCommand(tags) {
+    await menuCommandManager.updateMenuCommand(tags)
+    await menuCommandManager.updateQuickTagMenuCommands(tags)
   }
   function appendTagsToPage(element, key, tags, meta) {
     const utagsUl = element.nextSibling
@@ -9830,16 +10153,16 @@
       if (!utags) {
         continue
       }
-      const key = utags.key
-      if (!key) {
+      const key2 = utags.key
+      if (!key2) {
         continue
       }
-      const object = getTags(key)
+      const object = getTags(key2)
       const tags = (object.tags || []).slice()
       if (node.dataset.utags_visited === "1") {
         tags.push(TAG_VISITED)
       }
-      appendTagsToPage(node, key, tags, utags.meta)
+      appendTagsToPage(node, key2, tags, utags.meta)
       setTimeout(() => {
         updateTagPosition(node)
       })
@@ -9871,6 +10194,11 @@
         node.dataset.utags_list_node =
           "," + uniq(tagsArray.join(",").split(",")).join(",") + ","
       }
+    }
+    const key = getCanonicalUrl(location.href)
+    if (key) {
+      const object = getTags(key)
+      await updateAddTagsToCurrentPageMenuCommand(object.tags)
     }
     cleanUnusedUtags()
     if (start) {
@@ -10231,13 +10559,7 @@
     setTimeout(outputData, 1)
     onSettingsChange()
     onSettingsChange2()
-    registerMenuCommand(
-      "\u{1F3F7}\uFE0F " + i2("prompt.addTagsToCurrentPage"),
-      () => {
-        showCurrentPageLinkUtagsPrompt()
-      },
-      "u"
-    )
+    await updateAddTagsToCurrentPageMenuCommand()
     await displayTags()
     addEventListener(doc, "visibilitychange", async () => {
       if (!doc.hidden) {

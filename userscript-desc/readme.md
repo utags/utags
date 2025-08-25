@@ -125,6 +125,7 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 ## Release Notes
 
 - 0.19.x
+  - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access via right-click menu with ➕/➖ icons for adding/removing tags
   - Optimize data sync logic, solve data inconsistency problem
   - Update dmm.co.jp site support
   - Add language switching functionality

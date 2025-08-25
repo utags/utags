@@ -125,6 +125,7 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
 ## Versionshinweise
 
 - 0.19.x
+  - Hinzufügung von Schnell-Tag-Menübefehlen: Konfigurieren Sie benutzerdefinierte Schnell-Tags in den Einstellungen und greifen Sie über das Rechtsklick-Menü mit ➕/➖ Symbolen zum Hinzufügen/Entfernen von Tags darauf zu
   - Optimierung der Datensynchronisationslogik, Lösung von Dateninkonsistenzproblemen
   - Aktualisierung der dmm.co.jp Website-Unterstützung
   - Hinzufügung der Sprachumschaltfunktion
@@ -158,7 +159,7 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
 - 0.12.4
   - Hinzufügung der Unterstützung für die www.inoreader.com Website
 - 0.12.3
-  - Hinzufügung der Unterstützung für die www.nodeseek.com Website
+  - Hinzufügung der Unterstützung für www.nodeseek.com Website
 - 0.12.2
   - Hinzufügung der Unterstützung für flarum-basierte Websites (einschließlich discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com)
 - 0.12.1

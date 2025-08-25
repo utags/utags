@@ -9,6 +9,7 @@
 - Add language switching functionality
 - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
 - Add menu command to tag current page
+- Add quick tag menu commands for faster tag management - configure custom quick tags in settings and access them via right-click context menu with ➕/➖ icons
 - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
 
 ## uTags v0.18 Release Notes
