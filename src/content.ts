@@ -17,7 +17,6 @@ import {
   getAttribute,
   getOffsetPosition,
   hasClass,
-  registerMenuCommand,
   removeClass,
   runWhenHeadExists,
   setStyle,
@@ -26,6 +25,7 @@ import {
 } from 'browser-extension-utils'
 import styleText from 'data-text:./content.scss'
 import type { PlasmoCSConfig } from 'plasmo'
+import { splitTags } from 'utags-utils'
 
 import createTag from './components/tag'
 import { getAvailableLocales, i, resetI18n } from './messages'
@@ -36,6 +36,7 @@ import {
   bindWindowEvents,
   hideAllUtagsInArea,
 } from './modules/global-events'
+import { createMenuCommandManager } from './modules/menu-command-manager'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import {
   isAvailableOnCurrentSite,
@@ -43,7 +44,12 @@ import {
   onSettingsChange as visitedOnSettingsChange,
 } from './modules/visited'
 import { setupWebappBridge } from './modules/webapp-bridge'
-import { getConditionNodes, getListNodes, matchedNodes } from './sites/index'
+import {
+  getCanonicalUrl,
+  getConditionNodes,
+  getListNodes,
+  matchedNodes,
+} from './sites/index'
 import {
   addTagsValueChangeListener,
   getCachedUrlMap,
@@ -52,6 +58,7 @@ import {
 } from './storage/bookmarks'
 import { getEmojiTags } from './storage/tags'
 import type { UserTag, UserTagMeta } from './types'
+import { sortTags } from './utils'
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -154,6 +161,27 @@ const getSettingsTable = (): SettingsTable => {
       defaultValue:
         '★, ★★, ★★★, ☆, ☆☆, ☆☆☆, 👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
       placeholder: '👍, 👎',
+      type: 'textarea',
+      group: groupNumber,
+    },
+    quickTagsTitle: {
+      title: i('settings.quickTags'),
+      type: 'action',
+      async onclick() {
+        const input = $('textarea[data-key="quickTags"]') as HTMLInputElement
+        if (input) {
+          input.scrollIntoView({ block: 'start' })
+          input.selectionStart = input.value.length
+          input.selectionEnd = input.value.length
+          input.focus()
+        }
+      },
+      group: ++groupNumber,
+    },
+    quickTags: {
+      title: i('settings.quickTags'),
+      defaultValue: '★, ❤️',
+      placeholder: i('settings.quickTagsPlaceholder'),
       type: 'textarea',
       group: groupNumber,
     },
@@ -339,19 +367,54 @@ function appendCurrentPageLink(): () => void {
   }
 }
 
-function showCurrentPageLinkUtagsPrompt() {
+function showCurrentPageLinkUtagsPrompt(tag?: string, remove = false) {
   const cleanUp = appendCurrentPageLink()
   setTimeout(() => {
     const element = $('#utags_current_page_link + ul.utags_ul button')!
     if (element) {
+      if (tag) {
+        const currentTags = splitTags(element.dataset.utags_tags)
+        if (remove) {
+          if (currentTags.includes(tag)) {
+            element.dataset.utags_tags = currentTags
+              .filter((t) => t !== tag)
+              .join(', ')
+          }
+        } else if (!currentTags.includes(tag)) {
+          element.dataset.utags_tags = sortTags(
+            [...currentTags, tag],
+            emojiTags
+          ).join(', ')
+        }
+      }
+
       element.click()
     } else {
-      showCurrentPageLinkUtagsPrompt()
+      showCurrentPageLinkUtagsPrompt(tag, remove)
     }
   }, 10)
   setTimeout(() => {
     cleanUp()
   }, 3000)
+}
+
+// Initialize menu command manager
+const menuCommandManager = createMenuCommandManager(
+  () => {
+    showCurrentPageLinkUtagsPrompt()
+  },
+  (tag: string, remove: boolean) => {
+    showCurrentPageLinkUtagsPrompt(tag, remove)
+  }
+)
+
+/**
+ * Update menu command for adding tags to current page
+ * @param tags - Optional array of tags to display in menu
+ */
+async function updateAddTagsToCurrentPageMenuCommand(tags?: string[]) {
+  await menuCommandManager.updateMenuCommand(tags)
+  await menuCommandManager.updateQuickTagMenuCommands(tags)
 }
 
 function appendTagsToPage(
@@ -534,6 +597,13 @@ async function displayTags() {
       node.dataset.utags_list_node =
         ',' + uniq(tagsArray.join(',').split(',')).join(',') + ','
     }
+  }
+
+  // Update menu command
+  const key = getCanonicalUrl(location.href)
+  if (key) {
+    const object = getTags(key)
+    await updateAddTagsToCurrentPageMenuCommand(object.tags)
   }
 
   cleanUnusedUtags()
@@ -1005,13 +1075,8 @@ async function main() {
   visitedOnSettingsChange()
   onSettingsChange()
 
-  registerMenuCommand(
-    '🏷️ ' + i('prompt.addTagsToCurrentPage'),
-    () => {
-      showCurrentPageLinkUtagsPrompt()
-    },
-    'u'
-  )
+  await updateAddTagsToCurrentPageMenuCommand()
+
   // registerMenuCommand(
   //   '⭐ ' +'收藏当前网页',
   //   () => {

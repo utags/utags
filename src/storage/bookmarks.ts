@@ -273,7 +273,8 @@ export async function saveBookmark(
     const existingData = urlMap[key] || {}
     oldTags = existingData.tags || []
 
-    const title = trimTitle(meta.title) || trimTitle(existingData.meta?.title)
+    const title =
+      trimTitle(meta.title as string) || trimTitle(existingData.meta?.title)
     const newMeta: BookmarkMetadata = {
       ...existingData.meta,
       ...meta,

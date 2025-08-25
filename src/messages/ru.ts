@@ -92,7 +92,12 @@ body {
   'prompt.cancel': 'Отмена',
   'prompt.ok': 'ОК',
   'prompt.settings': 'Настройки',
-  'prompt.addTagsToCurrentPage': 'Добавить теги к текущей странице',
+  'menu.addTagsToCurrentPage': 'Добавить теги к текущей странице',
+  'menu.modifyCurrentPageTags': 'Изменить теги текущей страницы',
+  'menu.addQuickTag': 'Добавить тег {tag} к текущей странице',
+  'menu.removeQuickTag': 'Удалить тег {tag} с текущей страницы',
+  'settings.quickTags': 'Быстрые Теги',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

@@ -91,7 +91,12 @@ body {
   'prompt.cancel': '取消',
   'prompt.ok': '確認',
   'prompt.settings': '設定',
-  'prompt.addTagsToCurrentPage': '為當前網頁添加標籤',
+  'menu.addTagsToCurrentPage': '為當前網頁添加標籤',
+  'menu.modifyCurrentPageTags': '修改當前網頁標籤',
+  'menu.addQuickTag': '為當前網頁添加 {tag} 標籤',
+  'menu.removeQuickTag': '刪除當前網頁的 {tag} 標籤',
+  'settings.quickTags': '快捷標籤',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

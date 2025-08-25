@@ -91,7 +91,12 @@ body {
   'prompt.cancel': 'Annuler',
   'prompt.ok': 'Confirmer',
   'prompt.settings': 'Paramètres',
-  'prompt.addTagsToCurrentPage': 'Ajouter des tags à la page actuelle',
+  'menu.addTagsToCurrentPage': 'Ajouter des étiquettes à la page actuelle',
+  'menu.modifyCurrentPageTags': 'Modifier les étiquettes de la page actuelle',
+  'menu.addQuickTag': "Ajouter l'étiquette {tag} à la page actuelle",
+  'menu.removeQuickTag': "Supprimer l'étiquette {tag} de la page actuelle",
+  'settings.quickTags': 'Étiquettes Rapides',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

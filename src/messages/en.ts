@@ -92,7 +92,12 @@ body {
   'prompt.cancel': 'Cancel',
   'prompt.ok': 'OK',
   'prompt.settings': 'Settings',
-  'prompt.addTagsToCurrentPage': 'Add tags to current page',
+  'menu.addTagsToCurrentPage': 'Add tags to current page',
+  'menu.modifyCurrentPageTags': 'Modify current page tags',
+  'menu.addQuickTag': 'Add {tag} tag to current page',
+  'menu.removeQuickTag': 'Remove {tag} tag from current page',
+  'settings.quickTags': 'Quick Tags',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

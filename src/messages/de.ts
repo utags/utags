@@ -91,7 +91,12 @@ body {
   'prompt.cancel': 'Abbrechen',
   'prompt.ok': 'Bestätigen',
   'prompt.settings': 'Einstellungen',
-  'prompt.addTagsToCurrentPage': 'Tags zur aktuellen Seite hinzufügen',
+  'menu.addTagsToCurrentPage': 'Tags zur aktuellen Seite hinzufügen',
+  'menu.modifyCurrentPageTags': 'Tags der aktuellen Seite ändern',
+  'menu.addQuickTag': '{tag} Tag zur aktuellen Seite hinzufügen',
+  'menu.removeQuickTag': '{tag} Tag von der aktuellen Seite entfernen',
+  'settings.quickTags': 'Schnell-Tags',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

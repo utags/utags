@@ -91,7 +91,12 @@ body {
   'prompt.cancel': 'Hủy',
   'prompt.ok': 'Xác nhận',
   'prompt.settings': 'Cài đặt',
-  'prompt.addTagsToCurrentPage': 'Thêm tag vào trang hiện tại',
+  'menu.addTagsToCurrentPage': 'Thêm thẻ vào trang hiện tại',
+  'menu.modifyCurrentPageTags': 'Sửa đổi thẻ trang hiện tại',
+  'menu.addQuickTag': 'Thêm thẻ {tag} vào trang hiện tại',
+  'menu.removeQuickTag': 'Xóa thẻ {tag} khỏi trang hiện tại',
+  'settings.quickTags': 'Thẻ Nhanh',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

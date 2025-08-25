@@ -91,7 +91,12 @@ body {
   'prompt.cancel': '取消',
   'prompt.ok': '确认',
   'prompt.settings': '设置',
-  'prompt.addTagsToCurrentPage': '为当前网页添加标签',
+  'menu.addTagsToCurrentPage': '为当前网页添加标签',
+  'menu.modifyCurrentPageTags': '修改当前网页标签',
+  'menu.addQuickTag': '为当前网页添加 {tag} 标签',
+  'menu.removeQuickTag': '删除当前网页的 {tag} 标签',
+  'settings.quickTags': '快捷标签',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

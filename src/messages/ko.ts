@@ -91,7 +91,12 @@ body {
   'prompt.cancel': '취소',
   'prompt.ok': '확인',
   'prompt.settings': '설정',
-  'prompt.addTagsToCurrentPage': '현재 페이지에 태그 추가',
+  'menu.addTagsToCurrentPage': '현재 페이지에 태그 추가',
+  'menu.modifyCurrentPageTags': '현재 페이지 태그 수정',
+  'menu.addQuickTag': '현재 페이지에 {tag} 태그 추가',
+  'menu.removeQuickTag': '현재 페이지에서 {tag} 태그 제거',
+  'settings.quickTags': '빠른 태그',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

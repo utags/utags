@@ -91,7 +91,12 @@ body {
   'prompt.cancel': 'キャンセル',
   'prompt.ok': '確認',
   'prompt.settings': '設定',
-  'prompt.addTagsToCurrentPage': '現在のページにタグを追加',
+  'menu.addTagsToCurrentPage': '現在のページにタグを追加',
+  'menu.modifyCurrentPageTags': '現在のページのタグを変更',
+  'menu.addQuickTag': '現在のページに {tag} タグを追加',
+  'menu.removeQuickTag': '現在のページから {tag} タグを削除',
+  'settings.quickTags': 'クイックタグ',
+  'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }
 
 export default messages

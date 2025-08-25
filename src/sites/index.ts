@@ -215,7 +215,7 @@ export function getConditionNodes() {
   return conditionNodesSelector ? $$(conditionNodesSelector) : []
 }
 
-function getCanonicalUrl(url: string | undefined) {
+export function getCanonicalUrl(url: string | undefined) {
   if (!url) {
     return undefined
   }
