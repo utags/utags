@@ -1074,12 +1074,12 @@ async function main() {
 
   setupWebappBridge()
 
+  visitedOnSettingsChange()
+  onSettingsChange()
+
   await initStorage()
 
   setTimeout(outputData, 1)
-
-  visitedOnSettingsChange()
-  onSettingsChange()
 
   await updateAddTagsToCurrentPageMenuCommand()
 
