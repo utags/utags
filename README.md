@@ -128,6 +128,8 @@ For now it works on
   - Add menu command to tag current page
   - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
   - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access them via right-click menu with ➕/➖ icons for adding/removing tags
+  - Enable tag styling in tag input window
+  - Improve userscript availability detection and error handling in sync adapter
 - 0.18.x
   - Add the website Flickr
   - Add the website Ruanyifeng

@@ -132,6 +132,8 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
   - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
   - Add menu command to tag current page
   - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
+  - Enable tag styling in tag input window
+  - Improve userscript availability detection and error handling in sync adapter
 - 0.18.x
   - Add the website Flickr
   - Add the website Ruanyifeng

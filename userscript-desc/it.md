@@ -132,6 +132,8 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
   - Supporto per più lingue, inclusi giapponese, coreano, tedesco, francese, spagnolo, italiano, portoghese, russo, vietnamita e cinese tradizionale
   - Aggiunta del comando menu per aggiungere tag alla pagina corrente
   - Aggiunto supporto per tag speciali a stelle (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) con ordinamento per priorità
+  - Abilitare lo stile dei tag nella finestra di input dei tag
+  - Migliorare il rilevamento della disponibilità degli userscript e la gestione degli errori nell'adattatore di sincronizzazione
 - 0.18.x
   - Aggiunta del sito Flickr
   - Aggiunta del sito Ruanyifeng

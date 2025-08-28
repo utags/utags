@@ -132,6 +132,8 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
   - Support de plus de langues, incluant le japonais, le coréen, l'allemand, le français, l'espagnol, l'italien, le portugais, le russe, le vietnamien et le chinois traditionnel
   - Ajout d'une commande de menu pour ajouter des tags à la page actuelle
   - Ajout du support pour les tags étoiles spéciaux (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) avec tri par priorité
+  - Activer le style des tags dans la fenêtre de saisie des tags
+  - Améliorer la détection de disponibilité des userscripts et la gestion des erreurs dans l'adaptateur de synchronisation
 - 0.18.x
   - Ajout du site Flickr
   - Ajout du site Ruanyifeng

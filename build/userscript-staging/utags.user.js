@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.11
+// @version              0.19.12
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -122,6 +122,7 @@
 // @include              https://*.p*nhub.com/*
 // @include              https://*.e*hentai.org/*
 // @connect              dav.jianguoyun.com
+// @connect              localhost
 // @connect              *
 // @run-at               document-start
 // @grant                GM.getValue
@@ -4124,6 +4125,33 @@
   async function loadMetadata() {
     return await getValue(SYNC_STORAGE_KEY_METADATA)
   }
+  async function checkUserscriptAvailable() {
+    try {
+      if (typeof GM === "undefined" || !GM.xmlHttpRequest) {
+        return false
+      }
+      await new Promise((resolve, reject) => {
+        GM.xmlHttpRequest({
+          method: "GET",
+          url: "http://localhost/",
+          onload(response) {
+            resolve()
+          },
+          onerror(error) {
+            resolve()
+          },
+          ontimeout() {
+            resolve()
+          },
+          timeout: 3e3,
+        })
+      })
+      return true
+    } catch (error) {
+      console.warn("[UTags] Userscript may be disabled:", error)
+      return false
+    }
+  }
   function getVersionNumber(metadata) {
     const version =
       metadata && metadata.version
@@ -4178,9 +4206,33 @@
     }
     const message = event.data
     console.log("".concat(SCRIPT_NAME, " Received message:"), message)
+    const actionType = message.type
+    const shouldCheckUserscript =
+      isUserscript &&
+      actionType !== DISCOVER_MESSAGE_TYPE &&
+      actionType !== PING_MESSAGE_TYPE
+    if (shouldCheckUserscript) {
+      const isUserscriptAvailable = await checkUserscriptAvailable()
+      if (!isUserscriptAvailable) {
+        console.warn(
+          "".concat(
+            SCRIPT_NAME,
+            " Userscript not available, sending error response"
+          )
+        )
+        const errorResponse = {
+          type: message.type,
+          source: SOURCE_EXTENSION,
+          id: message.id,
+          extensionId: MY_EXTENSION_ID,
+          error: "Userscript not available or disabled",
+        }
+        event.source.postMessage(errorResponse, event.origin)
+        return
+      }
+    }
     let responsePayload
     let error
-    const actionType = message.type
     const payload = message.payload
     const id = message.id
     try {
@@ -10595,10 +10647,10 @@
       return
     }
     setupWebappBridge()
-    await initStorage()
-    setTimeout(outputData, 1)
     onSettingsChange()
     onSettingsChange2()
+    await initStorage()
+    setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
     await displayTags()
     addEventListener(doc, "visibilitychange", async () => {

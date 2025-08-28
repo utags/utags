@@ -132,6 +132,8 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
   - Hỗ trợ thêm nhiều ngôn ngữ, bao gồm tiếng Nhật, Hàn, Đức, Pháp, Tây Ban Nha, Ý, Bồ Đào Nha, Nga, Việt Nam và Trung Quốc phồn thể
   - Thêm lệnh menu để thêm thẻ vào trang hiện tại
   - Thêm hỗ trợ cho các thẻ sao đặc biệt (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) với tính năng sắp xếp theo độ ưu tiên
+  - Kích hoạt kiểu dáng thẻ trong cửa sổ nhập thẻ
+  - Cải thiện phát hiện tính khả dụng của userscript và xử lý lỗi trong bộ điều hợp đồng bộ
 - 0.18.x
   - Thêm trang Flickr
   - Thêm trang Ruanyifeng

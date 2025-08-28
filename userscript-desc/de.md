@@ -132,6 +132,8 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
   - Unterstützung für mehr Sprachen, einschließlich Japanisch, Koreanisch, Deutsch, Französisch, Spanisch, Italienisch, Portugiesisch, Russisch, Vietnamesisch und traditionelles Chinesisch
   - Hinzufügung eines Menübefehls zum Hinzufügen von Tags zur aktuellen Seite
   - Unterstützung für spezielle Stern-Tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) mit Prioritätssortierung hinzugefügt
+  - Tag-Styling im Tag-Eingabefenster aktivieren
+  - Verbesserung der Userscript-Verfügbarkeitserkennung und Fehlerbehandlung im Sync-Adapter
 - 0.18.x
   - Hinzufügung der Flickr-Website
   - Hinzufügung der Ruanyifeng-Website
