@@ -76,6 +76,7 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">その他の例</a></p>
   `,
+  'settings.enableTagStyleInPrompt': 'タグ入力ウィンドウでタグスタイルを有効にする',
   'settings.useSimplePrompt': 'シンプルな方法でタグを追加する',
   'settings.openTagsPage': 'タグリスト',
   'settings.openDataPage': 'データのエクスポート/インポート',

@@ -76,7 +76,8 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Thêm ví dụ</a></p>
   `,
-  'settings.useSimplePrompt': 'Sử dụng phương pháp đơn giản để thêm tag',
+  'settings.enableTagStyleInPrompt': 'Bật kiểu dáng thẻ trong cửa sổ nhập thẻ',
+  'settings.useSimplePrompt': 'Sử dụng phương pháp đơn giản để thêm thẻ',
   'settings.openTagsPage': 'Danh sách tag',
   'settings.openDataPage': 'Xuất/Nhập dữ liệu',
   'settings.title': '🏷️ UTags - Thêm tag người dùng vào liên kết',

@@ -469,6 +469,7 @@
     &::before {
       content: attr(data-utags_list_name);
       position: sticky;
+      z-index: 1;
       top: 0;
       display: block;
       font-size: 12px;
@@ -483,7 +484,7 @@
       box-sizing: border-box;
       cursor: pointer;
       font-size: 12px;
-      height: 16px;
+      height: 18px;
       display: flex;
       align-items: center;
       padding: 0 8px 0 8px;
@@ -513,12 +514,18 @@
     }
 
     .utags_text_tag {
-      border: none;
-      --utags-text-tag-color: #000;
-      --utags-text-tag-font-size: 12px;
-
       &::before {
         display: none !important;
+      }
+    }
+
+    &.utags_disable_tag_style {
+      .utags_text_tag {
+        --utags-text-tag-color: #000;
+        --utags-text-tag-border-width: 0;
+        --utags-text-tag-border-color: unset;
+        --utags-text-tag-background-color: #ffffff00 !important;
+        --utags-text-tag-font-size: 12px;
       }
     }
   }

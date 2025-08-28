@@ -77,6 +77,7 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">More examples</a></p>
   `,
+  'settings.enableTagStyleInPrompt': 'Enable tag styling in tag input window',
   'settings.useSimplePrompt': 'Use simple prompt method to add tags',
   'settings.openTagsPage': 'Open the tag list page',
   'settings.openDataPage': 'Open the import data/export data page',

@@ -76,6 +76,7 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">更多示例</a></p>
   `,
+  'settings.enableTagStyleInPrompt': '标签输入窗口启用标签样式',
   'settings.useSimplePrompt': '使用简单方式添加标签',
   'settings.openTagsPage': '标签列表',
   'settings.openDataPage': '导出数据/导入数据',

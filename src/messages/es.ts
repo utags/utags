@@ -76,6 +76,7 @@ body {
   </p>
   <p><a href="https://github.com/utags/utags/tree/main/custom-style-examples">Más ejemplos</a></p>
   `,
+  'settings.enableTagStyleInPrompt': 'Habilitar estilo de etiquetas en la ventana de entrada de etiquetas',
   'settings.useSimplePrompt': 'Usar método simple para agregar etiquetas',
   'settings.openTagsPage': 'Lista de etiquetas',
   'settings.openDataPage': 'Exportar/Importar datos',

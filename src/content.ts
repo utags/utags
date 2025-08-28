@@ -218,10 +218,16 @@ const getSettingsTable = (): SettingsTable => {
       group: groupNumber,
     },
 
+    enableTagStyleInPrompt: {
+      title: i('settings.enableTagStyleInPrompt'),
+      defaultValue: true,
+      group: ++groupNumber,
+    },
+
     useSimplePrompt: {
       title: i('settings.useSimplePrompt'),
       defaultValue: false,
-      group: ++groupNumber,
+      group: groupNumber,
     },
 
     openTagsPage: {

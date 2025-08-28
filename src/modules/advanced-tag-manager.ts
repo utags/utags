@@ -1,4 +1,4 @@
-import { showSettings } from 'browser-extension-settings'
+import { getSettingsValue, showSettings } from 'browser-extension-settings'
 import {
   $,
   $$,
@@ -28,8 +28,10 @@ let recentAddedTags: string[]
 let emojiTags: string[]
 let displayedTags = new Set()
 let currentTags = new Set<string>()
+let disableTagStyleInPrompt = false
 
-function onSelect(selected: string, input: HTMLInputElement) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+function onSelect(selected: string | null, input: HTMLInputElement) {
   if (selected) {
     input.value = ''
 
@@ -71,7 +73,7 @@ function updateLists(container?: HTMLElement) {
     container
   )
   if (ul4) {
-    updateCandidateTagList(ul4, emojiTags, 1000)
+    updateCandidateTagList(ul4, emojiTags, 1000, true)
   }
 
   const ul2 = $(
@@ -94,7 +96,8 @@ function updateLists(container?: HTMLElement) {
 function updateCandidateTagList(
   ul: HTMLElement,
   candidateTags: string[],
-  limitSize?: number
+  limitSize?: number,
+  isEmoji?: boolean
 ) {
   ul.textContent = ''
 
@@ -110,7 +113,7 @@ function updateCandidateTagList(
       // class: index === 0 ? "utags_active" : "",
     })
     addElement(li, 'span', {
-      class: 'utags_text_tag',
+      class: 'utags_text_tag' + (isEmoji ? ' utags_emoji_tag' : ''),
       textContent: text,
       'data-utags_tag': text,
     })
@@ -250,22 +253,30 @@ function createPromptView(
   })
 
   addElement(listWrapper, 'ul', {
-    class: 'utags_select_list utags_pined_list',
+    class:
+      'utags_select_list utags_pined_list' +
+      (disableTagStyleInPrompt ? ' utags_disable_tag_style' : ''),
     'data-utags_list_name': i('prompt.pinnedTags'),
   })
 
   addElement(listWrapper, 'ul', {
-    class: 'utags_select_list utags_most_used',
+    class:
+      'utags_select_list utags_most_used' +
+      (disableTagStyleInPrompt ? ' utags_disable_tag_style' : ''),
     'data-utags_list_name': i('prompt.mostUsedTags'),
   })
 
   addElement(listWrapper, 'ul', {
-    class: 'utags_select_list utags_recent_added',
+    class:
+      'utags_select_list utags_recent_added' +
+      (disableTagStyleInPrompt ? ' utags_disable_tag_style' : ''),
     'data-utags_list_name': i('prompt.recentAddedTags'),
   })
 
   addElement(listWrapper, 'ul', {
-    class: 'utags_select_list utags_emoji_list',
+    class:
+      'utags_select_list utags_emoji_list' +
+      (disableTagStyleInPrompt ? ' utags_disable_tag_style' : ''),
     'data-utags_list_name': i('prompt.emojiTags'),
   })
 
@@ -569,6 +580,9 @@ export async function advancedPrompt(
   recentAddedTags = await getRecentAddedTags()
   emojiTags = await getEmojiTags()
   currentTags = new Set(splitTags(value))
+  disableTagStyleInPrompt = !(getSettingsValue<boolean>(
+    'enableTagStyleInPrompt'
+  ) as boolean)
 
   return new Promise((resolve) => {
     createPromptView(message, value, resolve)

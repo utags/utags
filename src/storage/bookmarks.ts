@@ -231,7 +231,7 @@ export const getTags = getBookmark
 export async function saveBookmark(
   key: string,
   tags: string[],
-  meta: Record<string, any>
+  meta: Record<string, any> | undefined
 ): Promise<void> {
   const now = Date.now()
   const bookmarksStore = await getBookmarksStore()
@@ -274,7 +274,7 @@ export async function saveBookmark(
     oldTags = existingData.tags || []
 
     const title =
-      trimTitle(meta.title as string) || trimTitle(existingData.meta?.title)
+      trimTitle(meta?.title as string) || trimTitle(existingData.meta?.title)
     const newMeta: BookmarkMetadata = {
       ...existingData.meta,
       ...meta,
