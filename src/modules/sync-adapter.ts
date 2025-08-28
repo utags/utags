@@ -126,6 +126,43 @@ async function loadMetadata(): Promise<SyncMetadata | undefined> {
 }
 
 /**
+ * Check if userscript is currently available by testing GM.xmlHttpRequest
+ * @returns Promise<boolean> - true if userscript is available, false if script manager is disabled
+ */
+async function checkUserscriptAvailable(): Promise<boolean> {
+  try {
+    // Check if GM object exists
+    if (typeof GM === 'undefined' || !GM.xmlHttpRequest) {
+      return false
+    }
+
+    // Test GM.xmlHttpRequest availability by making a simple request
+    await new Promise<void>((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      ;(GM as any).xmlHttpRequest({
+        method: 'GET',
+        url: 'http://localhost/',
+        onload(response) {
+          resolve()
+        },
+        onerror(error) {
+          resolve()
+        },
+        ontimeout() {
+          resolve()
+        },
+        timeout: 3000, // 3 second timeout
+      })
+    })
+    return true
+  } catch (error) {
+    // If GM.xmlHttpRequest throws an exception, userscript might be disabled
+    console.warn('[UTags] Userscript may be disabled:', error)
+    return false
+  }
+}
+
+/**
  * Get the version number from metadata.
  *
  * @example
@@ -211,11 +248,36 @@ const messageHandler = async (event: MessageEvent) => {
 
   const message = event.data as BrowserExtensionMessage<MessageType>
   console.log(`${SCRIPT_NAME} Received message:`, message)
+  const actionType = message.type
+
+  // Skip userscript availability check for discovery and ping messages,
+  // or when not running in userscript environment
+  const shouldCheckUserscript =
+    isUserscript &&
+    actionType !== DISCOVER_MESSAGE_TYPE &&
+    actionType !== PING_MESSAGE_TYPE
+
+  if (shouldCheckUserscript) {
+    const isUserscriptAvailable = await checkUserscriptAvailable()
+    if (!isUserscriptAvailable) {
+      console.warn(
+        `${SCRIPT_NAME} Userscript not available, sending error response`
+      )
+      const errorResponse: BrowserExtensionResponse<MessageType> = {
+        type: message.type,
+        source: SOURCE_EXTENSION,
+        id: message.id,
+        extensionId: MY_EXTENSION_ID,
+        error: 'Userscript not available or disabled',
+      }
+      ;(event.source as Window).postMessage(errorResponse, event.origin)
+      return
+    }
+  }
 
   let responsePayload: ResponsePayloadMap[MessageType] | undefined
   let error: string | undefined
 
-  const actionType = message.type
   const payload = message.payload
   const id = message.id
   try {

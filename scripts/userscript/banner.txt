@@ -122,6 +122,7 @@
 // @include              https://*.p*nhub.com/*
 // @include              https://*.e*hentai.org/*
 // @connect              dav.jianguoyun.com
+// @connect              localhost
 // @connect              *
 // @run-at               document-start
 // ==/UserScript==
