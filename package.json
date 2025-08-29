@@ -1,0 +1,63 @@
+{
+  "name": "utags-monorepo",
+  "private": true,
+  "version": "0.19.13",
+  "packageManager": "pnpm@10.6.2",
+  "description": "monorepo for utags extension and webapp",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write . && npx prettier@2.8.8 --config .prettierrc-markdown.cjs --write '**/*.md'",
+    "lint": "run-s lint:*",
+    "lint:format": "pnpm -w run format",
+    "lint:code": "xo --fix",
+    "lint:type": "tsc --noemit",
+    "build": "run-s build:*",
+    "build:extension": "pnpm -r --filter ./packages/extension build",
+    "build:webapp": "pnpm -r --filter ./packages/webapp build",
+    "package": "run-s package:*",
+    "package:extension": "pnpm -r --filter ./packages/extension package",
+    "package:webapp": "pnpm -r --filter ./packages/webapp package",
+    "test": "vitest --run",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui --coverage.enabled=true",
+    "test:coverage": "vitest --coverage"
+  },
+  "author": "Pipecraft",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/utags/utags/issues"
+  },
+  "homepage": "https://github.com/utags/utags#readme",
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.6.2",
+    "@types/chrome": "^0.1.4",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "http-server": "^14.1.1",
+    "jsdom": "^26.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.6.2",
+    "prettier-plugin-svelte": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4",
+    "xo": "^0.60.0"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "sharp"
+    ],
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  }
+}

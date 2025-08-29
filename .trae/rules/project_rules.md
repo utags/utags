@@ -79,24 +79,28 @@ Throughout the process, ensure the use of the latest Svelte and Web development 
 ### PWA Implementation Specification
 
 1. **Core Requirements**:
+
    - Must provide complete Web App Manifest
    - Must register Service Worker
    - Must support HTTPS protocol
    - Must implement offline caching strategy
 
 2. **Caching Strategy**:
+
    - Static resources: CacheFirst + version control
    - API data: NetworkFirst + fallback cache
    - User-generated content: StaleWhileRevalidate
    - Static resource cache validity period of 30 days
 
 3. **Development Considerations**:
+
    - Service Worker file must be placed in the project root directory
    - Avoid caching overly large files in the Service Worker
    - Update cache version number with each new version release
    - Implement appropriate cache cleanup mechanisms
 
 4. **Testing Requirements**:
+
    - Verify core functionality availability in offline state
    - Test installation to home screen process
    - Check degradation handling under different network conditions
@@ -134,11 +138,13 @@ if ('serviceWorker' in navigator) {
 ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing internationalization within the UTags project. It offers type-safe message handling and seamless integration with Svelte and Vite.
 
 1. **Configuration**:
+
    - The core configuration resides in `project.inlang/settings.json`. This file defines source language, target languages, and necessary Inlang plugins.
    - The Vite plugin `@inlang/paraglide-js-adapter-vite` integrates ParaglideJS into the build process, enabling automatic compilation of messages and code generation.
      - Ensure `vite.config.ts` includes the Paraglide plugin, specifying the `project` path (to `project.inlang`) and `outdir` (e.g., `./src/lib/paraglide`).
 
 2. **Message Files**:
+
    - Translations are stored in JSON files located at `messages/{locale}.json` (e.g., `messages/en.json`, `messages/zh-CN.json`).
    - Messages should use the ICU Message Format to support complex translations, including plurals, gender, and interpolations.
    - Example `messages/en.json`:
@@ -160,6 +166,7 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
      ```
 
 3. **Code Generation**:
+
    - ParaglideJS compiles messages into type-safe JavaScript/TypeScript modules.
    - The generated files are typically placed in the `outdir` specified in `vite.config.ts` (e.g., `src/lib/paraglide`).
    - Key generated files include:
@@ -167,6 +174,7 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
      - `runtime.js` (or `.ts`): Provides runtime utilities for managing language state (e.g., `getLocale()`, `setLocale()`).
 
 4. **Usage in Svelte Components**:
+
    - Import generated messages and runtime functions into your Svelte components.
    - Utilize Svelte 5 Runes for reactive language state management.
 
@@ -223,21 +231,25 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
 ### General Rules
 
 1. **Naming Conventions**:
+
    - Components: PascalCase
    - Variables/Functions: camelCase
    - Constants: UPPER_SNAKE_CASE
 
 2. **Event Binding Standards**:
+
    - Use native DOM event binding syntax (e.g., onclick)
    - Prohibit using Svelte legacy on: event binding syntax
    - Event handler functions require explicit type declarations
 
 3. **Styling Standards**:
+
    - Prioritize Tailwind classes
    - Custom CSS only when Tailwind cannot meet requirements
    - Dark mode styles must explicitly declare `dark:` prefix
 
 4. **State Management**:
+
    - Component-level state: `$state`
    - Application-level state: `$derived` + custom stores
    - URL persistence: Filter conditions automatically sync to URL hash
@@ -250,10 +262,12 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
 ### Svelte 5 Event Handling Standards
 
 1. **Avoid using createEventDispatcher**:
+
    - `createEventDispatcher` is deprecated in Svelte 5
    - Prioritize using `$bindable` for two-way data binding
 
 2. **Component Communication Best Practices**:
+
    - For parent-child communication, use `$bindable` properties for two-way binding
    - For complex state management, use global state management (like custom stores)
    - For one-time events, use DOM events or callback functions
@@ -387,6 +401,7 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
 ## Navigation Item Style Specifications
 
 1. **Title Style**:
+
    - Use `flex w-full items-center gap-2 rounded-md px-2 py-1.5` base layout
    - Text style: `text-sm font-medium text-gray-700 dark:text-gray-200`
    - Hover effect: `hover:bg-gray-100 dark:hover:bg-gray-800`
@@ -428,16 +443,19 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
 ### Best Practices
 
 1. **Caching Strategy Selection**
+
    - Static resources: CacheFirst + version control
    - API data: NetworkFirst + fallback cache
    - User-generated content: StaleWhileRevalidate
 
 2. **Update Handling**
+
    - Use skipWaiting for automatic updates
    - Implement version notification UI
    - Force refresh for major updates
 
 3. **Offline Experience**
+
    - Provide meaningful offline page
    - Cache critical API responses
    - Implement background sync mechanism
@@ -535,6 +553,7 @@ Isolate special characters by nesting a `span` element to ensure correct parsing
 ## Documentation Maintenance
 
 1. **Update Timing**:
+
    - When technology stack is upgraded
    - When architecture undergoes major adjustments
    - When core features are added

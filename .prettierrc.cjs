@@ -23,16 +23,23 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['*.css', '*.scss', '*.yml', 'build/**/*', 'scripts/**/*'],
+      files: [
+        '*.css',
+        '*.scss',
+        '*.yml',
+        'packages/extension/build/**/*',
+        'packages/extension/scripts/**/*',
+      ],
       options: {
         singleQuote: false,
       },
     },
     {
-      files: 'src/messages/*.ts',
+      files: 'packages/extension/src/messages/*.ts',
       options: {
         printWidth: 9999,
       },
     },
+    { files: '*.json', options: { parser: 'json-stringify' } },
   ],
 }

@@ -13,4 +13,4 @@ tsconfig.tsbuildinfo
 ._*
 dist/*
 coverage/*
-src/paraglide/**
+**/src/paraglide/**
