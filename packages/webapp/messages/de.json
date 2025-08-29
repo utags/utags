@@ -1,0 +1,314 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "ADD_BOOKMARK_MODAL_TITLE": "Lesezeichen hinzufügen",
+  "AI_SUMMARY_BUTTON_TEXT": "KI-Zusammenfassung",
+  "ALL_BOOKMARKS": "Alle Lesezeichen",
+  "APP_TITLE": "UTags Lesezeichen",
+  "BATCH_TAG_ADD_MODAL_ERROR_ADD_FAILED": "Fehler beim Hinzufügen von Tags: {errorDetails}",
+  "BATCH_TAG_ADD_MODAL_ERROR_NO_BOOKMARKS_SELECTED": "Keine Lesezeichen ausgewählt",
+  "BATCH_TAG_ADD_MODAL_SELECTED_BOOKMARKS_COUNT": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} Lesezeichen ausgewählt",
+        "countPlural=other": "{count} Lesezeichen ausgewählt"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "{tagsCount} Tag erfolgreich zu {bookmarksCount} Lesezeichen hinzugefügt",
+        "bookmarksPlural=one, tagsPlural=other": "{tagsCount} Tags erfolgreich zu {bookmarksCount} Lesezeichen hinzugefügt",
+        "bookmarksPlural=other, tagsPlural=one": "{tagsCount} Tag erfolgreich zu {bookmarksCount} Lesezeichen hinzugefügt",
+        "bookmarksPlural=other, tagsPlural=other": "{tagsCount} Tags erfolgreich zu {bookmarksCount} Lesezeichen hinzugefügt"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_TITLE": "Tags stapelweise hinzufügen",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_NO_TAGS_SELECTED": "Bitte wählen Sie mindestens ein zu löschendes Tag aus",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_REMOVE_FAILED": "Fehler beim Entfernen von Tags: {errorDetails}",
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt",
+        "bookmarksPlural=one, tagsPlural=other": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt",
+        "bookmarksPlural=other, tagsPlural=one": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt",
+        "bookmarksPlural=other, tagsPlural=other": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt"
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE_WITH_DELETIONS": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "input deletedBookmarksCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural",
+        "local deletedBookmarksPlural = deletedBookmarksCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural",
+        "deletedBookmarksPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=one": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurde.",
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=other": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurden.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=one": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurde.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=other": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurden.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=one": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurde.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=other": "{tagsCount} Tag erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurden.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=one": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurde.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=other": "{tagsCount} Tags erfolgreich von {bookmarksCount} Lesezeichen entfernt, wodurch {deletedBookmarksCount} Lesezeichen gelöscht wurden."
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_HINT": "Hinweis: Verwenden Sie die Eingabetaste oder ein Komma, um mehrere Tags zu trennen. Tags werden nur entfernt, wenn alle eingegebenen Tags in einem Lesezeichen vorhanden sind. Wenn alle Tags entfernt werden, wird das Lesezeichen ebenfalls gelöscht.",
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_PLACEHOLDER": "Zu löschende Tags eingeben, Eingabetaste oder Komma drücken, um mehrere Tags hinzuzufügen",
+  "BATCH_TAG_REMOVE_MODAL_TITLE": "Tags stapelweise entfernen",
+  "BOOKMARKS_DELETED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Erfolgreich {count} Lesezeichen gelöscht.",
+        "countPlural=other": "Erfolgreich {count} Lesezeichen gelöscht."
+      }
+    }
+  ],
+  "BOOKMARKS_DELETION_NO_ITEMS": "Es wurden keine Lesezeichen gelöscht.",
+  "BOOKMARKS_RESTORED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} Lesezeichen erfolgreich wiederhergestellt.",
+        "countPlural=other": "{count} Lesezeichen erfolgreich wiederhergestellt."
+      }
+    }
+  ],
+  "BOOKMARKS_RESTORE_NO_ITEMS": "Es wurden keine Lesezeichen wiederhergestellt.",
+  "BOOKMARK_FORM_ALWAYS_SHOW_ADVANCED_LABEL": "Erweiterte Optionen immer anzeigen",
+  "BOOKMARK_FORM_COVER_IMAGE_LOAD_ERROR": "Titelbild konnte nicht geladen werden",
+  "BOOKMARK_FORM_COVER_IMAGE_PREVIEW_ALT": "Titelbild-Vorschau",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_LABEL": "Titelbild-URL:",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_PLACEHOLDER": "Titelbild-URL eingeben (optional)",
+  "BOOKMARK_FORM_DESCRIPTION_PLACEHOLDER": "Beschreibung eingeben (optional)",
+  "BOOKMARK_FORM_FAVICON_LOAD_ERROR": "Favicon-Bild konnte nicht geladen werden",
+  "BOOKMARK_FORM_FAVICON_PREVIEW_ALT": "Favicon-Vorschau",
+  "BOOKMARK_FORM_FAVICON_URL_LABEL": "Favicon-URL:",
+  "BOOKMARK_FORM_FAVICON_URL_PLACEHOLDER": "Favicon-URL eingeben (optional)",
+  "BOOKMARK_FORM_HIDE_ADVANCED_OPTIONS_BUTTON": "Erweiterte Optionen ausblenden",
+  "BOOKMARK_FORM_MERGE_CONFIRM": "Sind Sie sicher, dass Sie '{sourceUrl}' mit '{targetUrl}' zusammenführen möchten?",
+  "BOOKMARK_FORM_NOTE_PLACEHOLDER": "Notiz eingeben (optional)",
+  "BOOKMARK_FORM_SHOW_ADVANCED_OPTIONS_BUTTON": "Erweiterte Optionen anzeigen",
+  "BOOKMARK_FORM_TAGS_ERROR_EMPTY": "Mindestens ein Tag ist erforderlich. Verwenden Sie Kommas, um mehrere Tags zu trennen.",
+  "BOOKMARK_FORM_TITLE_PLACEHOLDER": "Titel eingeben (optional)",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_ADD_MODE": "Diese Lesezeichen-URL existiert bereits. Sie können das vorhandene Lesezeichen bearbeiten oder zu einer anderen URL wechseln.",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_EDIT_MODE": "Diese Lesezeichen-URL existiert bereits. Bitte führen Sie sie manuell zusammen und speichern Sie, oder wechseln Sie zu einer anderen URL.",
+  "BOOKMARK_FORM_URL_ERROR_INVALID": "Bitte geben Sie ein gültiges URL-Format ein (z.B. https://example.com)",
+  "BOOKMARK_FORM_URL_ERROR_NOT_FOUND_EDIT_MODE": "Lesezeichen nicht gefunden; es wurde möglicherweise gelöscht. Sie können Details eingeben, um es als neues Lesezeichen hinzuzufügen, oder aktualisieren und erneut versuchen.",
+  "BOOKMARK_ITEM_DATETIME_TOOLTIP": "Aktualisiert: {updatedTime}\nErstellt: {createdTime}",
+  "BOOKMARK_ITEM_UNTITLED": "Ohne Titel",
+  "BOOKMARK_LIST_BATCH_ADD_TAGS": "Tags hinzufügen",
+  "BOOKMARK_LIST_BATCH_EDIT_TAGS": "Tag-Namen bearbeiten",
+  "BOOKMARK_LIST_BATCH_REMOVE_TAGS": "Tags entfernen",
+  "BOOKMARK_LIST_COPY_TO_MY_BOOKMARKS": "In meine Lesezeichen kopieren",
+  "BOOKMARK_LIST_DELETE_BOOKMARKS": "Lesezeichen löschen",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_EXPAND": "oder klicken Sie auf 'Alle erweitern', um alle aktuellen Ergebnisse anzuzeigen.",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_FILTER": "Tipp: Verwenden Sie Filter, um Elemente schnell zu finden,",
+  "BOOKMARK_LIST_LOAD_INFO_MAIN": "Zeige die ersten {count} Lesezeichen 🔖",
+  "BOOKMARK_LIST_NO_MATCHING_BOOKMARKS": "Keine passenden Lesezeichen gefunden",
+  "BOOKMARK_LIST_PERMANENTLY_DELETE_BOOKMARKS": "Lesezeichen endgültig löschen",
+  "BOOKMARK_LIST_RESTORE_BOOKMARKS": "Lesezeichen wiederherstellen",
+  "BOOKMARK_LIST_SELECTED_COUNT": "Ausgewählt: {selectedCount} Elemente",
+  "BOOKMARK_LIST_SELECT_ALL": "Alle auswählen",
+  "COLLECTIONS_CREATE_ARIA_LABEL": "Neue Sammlung erstellen",
+  "COLLECTIONS_CREATE_MODAL_TITLE": "Neue Sammlung erstellen",
+  "COLLECTIONS_DELETE_CONFIRM_MESSAGE": "Möchten Sie diese Sammlung wirklich löschen?",
+  "COLLECTIONS_EDIT_MODAL_TITLE": "Sammlung bearbeiten",
+  "COLLECTIONS_MORE_ACTIONS_ARIA_LABEL": "Weitere Aktionen",
+  "COLLECTIONS_NAME_LABEL": "Sammlungsname:",
+  "COLLECTIONS_NAME_PLACEHOLDER": "Sammlungsname eingeben",
+  "COLLECTIONS_NAME_VALIDATION_ERROR": "Sammlungsname ist erforderlich",
+  "COLLECTIONS_PATH_LABEL": "Pfad:",
+  "COLLECTIONS_PATH_PLACEHOLDER": "Pfad eingeben (optional): work",
+  "COLLECTIONS_SAVE_MODAL_DESCRIPTION": "Speichern Sie die aktuellen Filterbedingungen als Sammlung, um beim nächsten Mal schnell darauf zugreifen zu können.",
+  "COLLECTIONS_TITLE": "Sammlungen",
+  "COMPOSITE_FILTERS_CLEAR_SEARCH_ARIA_LABEL": "Suchbegriffe löschen",
+  "COMPOSITE_FILTERS_DOMAIN_FILTER_TITLE": "Domain-Filter",
+  "COMPOSITE_FILTERS_RESET_BUTTON": "Filter zurücksetzen",
+  "COMPOSITE_FILTERS_TAG_FILTER_TITLE": "Tag-Filter",
+  "COMPOSITE_FILTERS_TITLE_LEVEL": "Filter #{level}",
+  "COMPOSITE_FILTERS_TOGGLE_MULTI_SELECT_TITLE": "Einzel-/Mehrfachauswahl umschalten",
+  "CONFIRM_MODAL_MESSAGE_BATCH_DELETE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Möchten Sie das ausgewählte {count} Lesezeichen wirklich löschen?",
+        "countPlural=other": "Möchten Sie die ausgewählten {count} Lesezeichen wirklich löschen?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_MESSAGE_BATCH_RESTORE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Möchten Sie dieses Lesezeichen wirklich wiederherstellen?",
+        "countPlural=other": "Möchten Sie wirklich {count} Lesezeichen wiederherstellen?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_TITLE_BATCH_DELETE_BOOKMARKS": "Lesezeichen stapelweise löschen",
+  "CONFIRM_MODAL_TITLE_BATCH_RESTORE_BOOKMARKS": "Massenwiederherstellung bestätigen",
+  "DELETED_BOOKMARKS": "Gelöschte Lesezeichen",
+  "DELETE_BUTTON_TEXT": "Löschen",
+  "EDIT_BOOKMARK_MODAL_TITLE": "Lesezeichen bearbeiten",
+  "EDIT_BUTTON_TEXT": "Bearbeiten",
+  "EXPAND_ALL_BUTTON_TEXT": "Alle erweitern",
+  "FAVORITES_TITLE": "Favoriten",
+  "FEATURE_COMING_SOON_ALERT": "Diese Funktion ist bald verfügbar, bleiben Sie dran!",
+  "FIELD_DESCRIPTION": "Beschreibung",
+  "FIELD_NOTE": "Notiz",
+  "FIELD_TAGS": "Tags",
+  "FIELD_TITLE": "Titel",
+  "HEADER_ADD_BUTTON_TOOLTIP": "Hinzufügen",
+  "HEADER_MENU_ADD_BOOKMARK": "Lesezeichen hinzufügen",
+  "HEADER_MENU_CREATE_COLLECTION": "Sammlung erstellen",
+  "HEADER_MENU_SAVE_CURRENT_FILTER": "Aktuellen Filter speichern",
+  "HEADER_SETTINGS_TOOLTIP": "Einstellungen",
+  "HEADER_SIDEBAR_POSITION_LEFT": "Links",
+  "HEADER_SIDEBAR_POSITION_RIGHT": "Rechts",
+  "HEADER_SORT_BY_TOOLTIP": "Sortieren nach",
+  "HEADER_THEME_SELECT_TOOLTIP": "Theme auswählen",
+  "HEADER_TOGGLE_NAVBAR_TOOLTIP": "Navigationsleiste umschalten",
+  "HEADER_VIEW_MODE_TOOLTIP": "Ansichtsmodus",
+  "HIERARCHICAL_TAGS_TITLE": "Hierarchische Tags",
+  "MODAL_CANCEL_BUTTON": "Abbrechen",
+  "MODAL_CLOSE_ARIA_LABEL": "Schließen",
+  "MORE_COLLECTIONS_TITLE": "Weitere Sammlungen",
+  "NAVIGATION_SIDEBAR_HELP_DOCS": "Hilfedokumente",
+  "NOTES": "Notizen",
+  "PROCESSING_TEXT": "Verarbeite...",
+  "READ_LATER": "Später lesen",
+  "RECENTLY_ADDED": "Zuletzt hinzugefügt",
+  "RECENTLY_MODIFIED": "Zuletzt geändert",
+  "RELEASE_NOTES": "Versionshinweise",
+  "RESTORE_BUTTON_TEXT": "Wiederherstellen",
+  "SAVED_FILTERS_CREATE_ARIA_LABEL": "Neuen Filter erstellen",
+  "SAVED_FILTERS_CREATE_MODAL_TITLE": "Aktuellen Filter speichern",
+  "SAVED_FILTERS_DELETE_CONFIRM_MESSAGE": "Möchten Sie diesen gespeicherten Filter wirklich löschen?",
+  "SAVED_FILTERS_DESCRIPTION_PLACEHOLDER": "Beschreibung eingeben (optional)",
+  "SAVED_FILTERS_EDIT_MODAL_TITLE": "Gespeicherten Filter bearbeiten",
+  "SAVED_FILTERS_NAME_LABEL": "Filtername:",
+  "SAVED_FILTERS_NAME_PLACEHOLDER": "Filtername eingeben",
+  "SAVED_FILTERS_NAME_VALIDATION_ERROR": "Filtername ist erforderlich",
+  "SAVED_FILTERS_TITLE": "Gespeicherte Filter",
+  "SAVE_BUTTON_TEXT": "Speichern",
+  "SETTINGS_SIDEBAR_ABOUT_TITLE": "Über",
+  "SETTINGS_SIDEBAR_CLEAR_DATA_BUTTON": "Daten löschen",
+  "SETTINGS_SIDEBAR_CLOSE_BUTTON_ARIA_LABEL": "Einstellungs-Seitenleiste schließen",
+  "SETTINGS_SIDEBAR_DARK_THEME_LABEL": "Dunkles Design",
+  "SETTINGS_SIDEBAR_DATA_MANAGEMENT_TITLE": "Datenverwaltung",
+  "SETTINGS_SIDEBAR_DEVELOPMENT_ROADMAP_LINK": "Entwicklungs-Roadmap",
+  "SETTINGS_SIDEBAR_EXPORT_LABEL": "Daten exportieren",
+  "SETTINGS_SIDEBAR_FEEDBACK_LABEL": "Feedback & Vorschläge",
+  "SETTINGS_SIDEBAR_FILTER_BAR_POSITION_LABEL": "Position der Filterleiste",
+  "SETTINGS_SIDEBAR_GITHUB_REPOSITORY_LINK": "GitHub-Repository",
+  "SETTINGS_SIDEBAR_IMPORT_LABEL": "Daten importieren",
+  "SETTINGS_SIDEBAR_REPORT_ISSUE_LINK": "Problem melden",
+  "SETTINGS_SIDEBAR_SELECT_LANGUAGE_PLACEHOLDER": "Sprache auswählen",
+  "SETTINGS_SIDEBAR_SELECT_SORT_ORDER_PLACEHOLDER": "Sortierreihenfolge auswählen",
+  "SETTINGS_SIDEBAR_SELECT_THEME_PLACEHOLDER": "Design auswählen",
+  "SETTINGS_SIDEBAR_SELECT_VIEW_MODE_PLACEHOLDER": "Ansichtsmodus auswählen",
+  "SETTINGS_SIDEBAR_THEME_STYLE_LABEL": "Design-Stil",
+  "SETTINGS_SIDEBAR_TOOLBAR_DISPLAY_SETTINGS_TITLE": "Symbolleisten-Anzeigeeinstellungen",
+  "SETTINGS_SIDEBAR_UI_LANGUAGE_LABEL": "Sprache",
+  "SETTINGS_SIDEBAR_UI_SETTINGS_TITLE": "Oberflächeneinstellungen",
+  "SETTINGS_SIDEBAR_VERSION_LABEL": "Version",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_ERROR": "WebDAV-Verbindungsfehler: {error}",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_SUCCESS": "WebDAV-Verbindung erfolgreich!",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_LABEL": "Passwort:",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_PLACEHOLDER": "WebDAV Passwort",
+  "SETTINGS_SYNC_WEBDAV_SAVE_SETTINGS_BUTTON": "WebDAV-Einstellungen speichern",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVED": "WebDAV-Einstellungen erfolgreich gespeichert!",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVE_ERROR": "Fehler beim Speichern der WebDAV-Einstellungen: {error}",
+  "SETTINGS_SYNC_WEBDAV_TEST_CONNECTION_BUTTON": "Verbindung testen",
+  "SETTINGS_SYNC_WEBDAV_URL_PLACEHOLDER": "WebDAV URL (z.B. https://example.com/remote.php/dav/files/username/)",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_LABEL": "Benutzername:",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_PLACEHOLDER": "WebDAV-Benutzername",
+  "SORT_OPTION_CREATED_ASC": "Erstellungsdatum ↑",
+  "SORT_OPTION_CREATED_DESC": "Erstellungsdatum ↓",
+  "SORT_OPTION_TITLE_ASC": "Titel (A-Z)",
+  "SORT_OPTION_TITLE_DESC": "Titel (Z-A)",
+  "SORT_OPTION_UPDATED_ASC": "Aktualisierungsdatum ↑",
+  "SORT_OPTION_UPDATED_DESC": "Aktualisierungsdatum ↓",
+  "STARRED": "Mit Stern markiert",
+  "TAG_INPUT_CLEAR_TAG_CONTENT_TOOLTIP": "Tag-Inhalt löschen",
+  "TAG_INPUT_EDIT_TAG_TOOLTIP": "Klicken, um Tag zu bearbeiten",
+  "TAG_INPUT_HINT_ENTER_COMMA_SEPARATOR": "Tipp: Verwenden Sie die Eingabetaste oder ein Komma, um mehrere Tags zu trennen",
+  "TAG_INPUT_PLACEHOLDER": "Tags eingeben, Enter oder Komma drücken, um mehrere Tags hinzuzufügen",
+  "TAG_INPUT_REMOVE_TAG_TOOLTIP": "Tag {tag} entfernen",
+  "TOOLBAR_BATCH_SELECT_MODE_TOOLTIP": "Stapelauswahlmodus",
+  "TOOLBAR_MENU_EXPORT_ALL_BOOKMARKS": "Alle Lesezeichen exportieren",
+  "TOOLBAR_MENU_EXPORT_CURRENT_RESULTS": "Aktuelle Ergebnisse exportieren",
+  "TOOLBAR_MENU_OPEN_ALL_BOOKMARKS": "Alle Lesezeichen öffnen",
+  "TOOLBAR_MENU_SELECT_MODE": "Auswahlmodus",
+  "TOOLBAR_SELECT_BUTTON": "Auswählen",
+  "WELCOME_MESSAGE": "Willkommen bei UTags!",
+  "ZZ_P_COLON": ":",
+  "__BOOKMARK_FORM_URL_LABEL": "URL:",
+  "__BOOKMARK_FORM_URL_PLACEHOLDER": "https://example.com",
+  "__MODAL_SAVE_BUTTON": "Speichern",
+  "__SAVED_FILTERS_DESCRIPTION_LABEL": "Beschreibung:"
+}

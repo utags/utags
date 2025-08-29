@@ -1,0 +1,314 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "ADD_BOOKMARK_MODAL_TITLE": "Aggiungi segnalibro",
+  "AI_SUMMARY_BUTTON_TEXT": "Riepilogo IA",
+  "ALL_BOOKMARKS": "Tutti i segnalibri",
+  "APP_TITLE": "UTags Segnalibri",
+  "BATCH_TAG_ADD_MODAL_ERROR_ADD_FAILED": "Impossibile aggiungere i tag: {errorDetails}",
+  "BATCH_TAG_ADD_MODAL_ERROR_NO_BOOKMARKS_SELECTED": "Nessun segnalibro selezionato",
+  "BATCH_TAG_ADD_MODAL_SELECTED_BOOKMARKS_COUNT": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} segnalibro selezionato",
+        "countPlural=other": "{count} segnalibri selezionati"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "{tagsCount} tag aggiunto con successo a {bookmarksCount} segnalibro",
+        "bookmarksPlural=one, tagsPlural=other": "{tagsCount} tag aggiunti con successo a {bookmarksCount} segnalibro",
+        "bookmarksPlural=other, tagsPlural=one": "{tagsCount} tag aggiunto con successo a {bookmarksCount} segnalibri",
+        "bookmarksPlural=other, tagsPlural=other": "{tagsCount} tag aggiunti con successo a {bookmarksCount} segnalibri"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_TITLE": "Aggiungi tag in blocco",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_NO_TAGS_SELECTED": "Seleziona almeno un tag da rimuovere",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_REMOVE_FAILED": "Impossibile rimuovere i tag: {errorDetails}",
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibro",
+        "bookmarksPlural=one, tagsPlural=other": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibro",
+        "bookmarksPlural=other, tagsPlural=one": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibri",
+        "bookmarksPlural=other, tagsPlural=other": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibri"
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE_WITH_DELETIONS": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "input deletedBookmarksCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural",
+        "local deletedBookmarksPlural = deletedBookmarksCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural",
+        "deletedBookmarksPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=one": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibro e, di conseguenza, {deletedBookmarksCount} segnalibro è stato eliminato.",
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=other": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibro e, di conseguenza, {deletedBookmarksCount} segnalibri sono stati eliminati.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=one": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibro e, di conseguenza, {deletedBookmarksCount} segnalibro è stato eliminato.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=other": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibro e, di conseguenza, {deletedBookmarksCount} segnalibri sono stati eliminati.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=one": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibri e, di conseguenza, {deletedBookmarksCount} segnalibro è stato eliminato.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=other": "{tagsCount} tag rimosso con successo da {bookmarksCount} segnalibri e, di conseguenza, {deletedBookmarksCount} segnalibri sono stati eliminati.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=one": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibri e, di conseguenza, {deletedBookmarksCount} segnalibro è stato eliminato.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=other": "{tagsCount} tag rimossi con successo da {bookmarksCount} segnalibri e, di conseguenza, {deletedBookmarksCount} segnalibri sono stati eliminati."
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_HINT": "Suggerimento: usa Invio o la virgola per separare più tag. I tag verranno rimossi solo se tutti i tag inseriti esistono su un segnalibro. Se tutti i tag vengono rimossi, anche il segnalibro verrà eliminato.",
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_PLACEHOLDER": "Inserisci i tag da rimuovere, premi Invio o virgola per aggiungere più tag",
+  "BATCH_TAG_REMOVE_MODAL_TITLE": "Rimuovi tag in blocco",
+  "BOOKMARKS_DELETED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} segnalibro eliminato con successo.",
+        "countPlural=other": "{count} segnalibri eliminati con successo."
+      }
+    }
+  ],
+  "BOOKMARKS_DELETION_NO_ITEMS": "Nessun segnalibro è stato eliminato.",
+  "BOOKMARKS_RESTORED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} segnalibro ripristinato con successo.",
+        "countPlural=other": "{count} segnalibri ripristinati con successo."
+      }
+    }
+  ],
+  "BOOKMARKS_RESTORE_NO_ITEMS": "Nessun segnalibro è stato ripristinato.",
+  "BOOKMARK_FORM_ALWAYS_SHOW_ADVANCED_LABEL": "Mostra sempre opzioni avanzate",
+  "BOOKMARK_FORM_COVER_IMAGE_LOAD_ERROR": "Caricamento immagine di copertina non riuscito",
+  "BOOKMARK_FORM_COVER_IMAGE_PREVIEW_ALT": "Anteprima immagine di copertina",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_LABEL": "URL immagine di copertina:",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_PLACEHOLDER": "Inserisci URL immagine di copertina (opzionale)",
+  "BOOKMARK_FORM_DESCRIPTION_PLACEHOLDER": "Inserisci descrizione (opzionale)",
+  "BOOKMARK_FORM_FAVICON_LOAD_ERROR": "Caricamento immagine favicon non riuscito",
+  "BOOKMARK_FORM_FAVICON_PREVIEW_ALT": "Anteprima favicon",
+  "BOOKMARK_FORM_FAVICON_URL_LABEL": "URL Favicon:",
+  "BOOKMARK_FORM_FAVICON_URL_PLACEHOLDER": "Inserisci URL favicon (opzionale)",
+  "BOOKMARK_FORM_HIDE_ADVANCED_OPTIONS_BUTTON": "Nascondi opzioni avanzate",
+  "BOOKMARK_FORM_MERGE_CONFIRM": "Sei sicuro di voler unire '{sourceUrl}' in '{targetUrl}'?",
+  "BOOKMARK_FORM_NOTE_PLACEHOLDER": "Inserisci nota (opzionale)",
+  "BOOKMARK_FORM_SHOW_ADVANCED_OPTIONS_BUTTON": "Mostra opzioni avanzate",
+  "BOOKMARK_FORM_TAGS_ERROR_EMPTY": "È richiesto almeno un tag. Usa le virgole per separare più tag.",
+  "BOOKMARK_FORM_TITLE_PLACEHOLDER": "Inserisci titolo (opzionale)",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_ADD_MODE": "Questo URL di segnalibro esiste già. Puoi modificare il segnalibro esistente o cambiare URL.",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_EDIT_MODE": "Questo URL di segnalibro esiste già. Si prega di unire manualmente e salvare, o cambiare URL.",
+  "BOOKMARK_FORM_URL_ERROR_INVALID": "Inserisci un formato URL valido (es. https://example.com)",
+  "BOOKMARK_FORM_URL_ERROR_NOT_FOUND_EDIT_MODE": "Segnalibro non trovato; potrebbe essere stato eliminato. Puoi inserire i dettagli per aggiungerlo come nuovo segnalibro, o aggiornare e riprovare.",
+  "BOOKMARK_ITEM_DATETIME_TOOLTIP": "Aggiornato: {updatedTime}\nCreato: {createdTime}",
+  "BOOKMARK_ITEM_UNTITLED": "Senza titolo",
+  "BOOKMARK_LIST_BATCH_ADD_TAGS": "Aggiungi tag",
+  "BOOKMARK_LIST_BATCH_EDIT_TAGS": "Modifica nomi dei tag",
+  "BOOKMARK_LIST_BATCH_REMOVE_TAGS": "Rimuovi tag",
+  "BOOKMARK_LIST_COPY_TO_MY_BOOKMARKS": "Copia nei Miei Segnalibri",
+  "BOOKMARK_LIST_DELETE_BOOKMARKS": "Elimina segnalibri",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_EXPAND": "o fai clic su 'Espandi tutto' per visualizzare tutti i risultati correnti.",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_FILTER": "Suggerimento: usa i filtri per individuare rapidamente gli elementi,",
+  "BOOKMARK_LIST_LOAD_INFO_MAIN": "Visualizzazione dei primi {count} segnalibri 🔖",
+  "BOOKMARK_LIST_NO_MATCHING_BOOKMARKS": "Nessun segnalibro corrispondente trovato",
+  "BOOKMARK_LIST_PERMANENTLY_DELETE_BOOKMARKS": "Elimina definitivamente i segnalibri",
+  "BOOKMARK_LIST_RESTORE_BOOKMARKS": "Ripristina segnalibri",
+  "BOOKMARK_LIST_SELECTED_COUNT": "Selezionati: {selectedCount} elementi",
+  "BOOKMARK_LIST_SELECT_ALL": "Seleziona tutto",
+  "COLLECTIONS_CREATE_ARIA_LABEL": "Crea una nuova raccolta",
+  "COLLECTIONS_CREATE_MODAL_TITLE": "Crea nuova raccolta",
+  "COLLECTIONS_DELETE_CONFIRM_MESSAGE": "Vuoi davvero eliminare questa raccolta?",
+  "COLLECTIONS_EDIT_MODAL_TITLE": "Modifica raccolta",
+  "COLLECTIONS_MORE_ACTIONS_ARIA_LABEL": "Altre azioni",
+  "COLLECTIONS_NAME_LABEL": "Nome della raccolta:",
+  "COLLECTIONS_NAME_PLACEHOLDER": "Inserisci il nome della raccolta",
+  "COLLECTIONS_NAME_VALIDATION_ERROR": "Il nome della raccolta è obbligatorio",
+  "COLLECTIONS_PATH_LABEL": "Sentiero:",
+  "COLLECTIONS_PATH_PLACEHOLDER": "Inserisci percorso (opzionale): work",
+  "COLLECTIONS_SAVE_MODAL_DESCRIPTION": "Salva le condizioni del filtro corrente come una raccolta per un rapido accesso la prossima volta.",
+  "COLLECTIONS_TITLE": "Collezioni",
+  "COMPOSITE_FILTERS_CLEAR_SEARCH_ARIA_LABEL": "Cancella parole chiave di ricerca",
+  "COMPOSITE_FILTERS_DOMAIN_FILTER_TITLE": "Filtro domini",
+  "COMPOSITE_FILTERS_RESET_BUTTON": "Reimposta filtri",
+  "COMPOSITE_FILTERS_TAG_FILTER_TITLE": "Filtro tag",
+  "COMPOSITE_FILTERS_TITLE_LEVEL": "Filtro #{level}",
+  "COMPOSITE_FILTERS_TOGGLE_MULTI_SELECT_TITLE": "Alterna modalità selezione singola/multipla",
+  "CONFIRM_MODAL_MESSAGE_BATCH_DELETE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Sei sicuro di voler eliminare il segnalibro ({count}) selezionato?",
+        "countPlural=other": "Sei sicuro di voler eliminare i {count} segnalibri selezionati?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_MESSAGE_BATCH_RESTORE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Sei sicuro di voler ripristinare questo segnalibro?",
+        "countPlural=other": "Sei sicuro di voler ripristinare {count} segnalibri?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_TITLE_BATCH_DELETE_BOOKMARKS": "Elimina segnalibri in blocco",
+  "CONFIRM_MODAL_TITLE_BATCH_RESTORE_BOOKMARKS": "Conferma ripristino multiplo",
+  "DELETED_BOOKMARKS": "Segnalibri eliminati",
+  "DELETE_BUTTON_TEXT": "Eliminare",
+  "EDIT_BOOKMARK_MODAL_TITLE": "Modifica segnalibro",
+  "EDIT_BUTTON_TEXT": "Modificare",
+  "EXPAND_ALL_BUTTON_TEXT": "Espandi tutto",
+  "FAVORITES_TITLE": "Preferiti",
+  "FEATURE_COMING_SOON_ALERT": "Questa funzionalità sarà presto disponibile, resta sintonizzato!",
+  "FIELD_DESCRIPTION": "Descrizione",
+  "FIELD_NOTE": "Nota",
+  "FIELD_TAGS": "Tag",
+  "FIELD_TITLE": "Titolo",
+  "HEADER_ADD_BUTTON_TOOLTIP": "Aggiungi",
+  "HEADER_MENU_ADD_BOOKMARK": "Aggiungi segnalibro",
+  "HEADER_MENU_CREATE_COLLECTION": "Crea raccolta",
+  "HEADER_MENU_SAVE_CURRENT_FILTER": "Salva filtro corrente",
+  "HEADER_SETTINGS_TOOLTIP": "Impostazioni",
+  "HEADER_SIDEBAR_POSITION_LEFT": "Sinistra",
+  "HEADER_SIDEBAR_POSITION_RIGHT": "Destra",
+  "HEADER_SORT_BY_TOOLTIP": "Ordina per",
+  "HEADER_THEME_SELECT_TOOLTIP": "Seleziona tema",
+  "HEADER_TOGGLE_NAVBAR_TOOLTIP": "Attiva/disattiva barra di navigazione",
+  "HEADER_VIEW_MODE_TOOLTIP": "Modalità di visualizzazione",
+  "HIERARCHICAL_TAGS_TITLE": "Tag Gerarchici",
+  "MODAL_CANCEL_BUTTON": "Cancellare",
+  "MODAL_CLOSE_ARIA_LABEL": "Vicino",
+  "MORE_COLLECTIONS_TITLE": "Altre collezioni",
+  "NAVIGATION_SIDEBAR_HELP_DOCS": "Documenti di Aiuto",
+  "NOTES": "Note",
+  "PROCESSING_TEXT": "Elaborazione...",
+  "READ_LATER": "Leggi dopo",
+  "RECENTLY_ADDED": "Aggiunto di recente",
+  "RECENTLY_MODIFIED": "Modificato di recente",
+  "RELEASE_NOTES": "Note di rilascio",
+  "RESTORE_BUTTON_TEXT": "Ripristina",
+  "SAVED_FILTERS_CREATE_ARIA_LABEL": "Crea nuovo filtro",
+  "SAVED_FILTERS_CREATE_MODAL_TITLE": "Salva filtro corrente",
+  "SAVED_FILTERS_DELETE_CONFIRM_MESSAGE": "Sei sicuro di voler eliminare questo filtro salvato?",
+  "SAVED_FILTERS_DESCRIPTION_PLACEHOLDER": "Inserisci descrizione (opzionale)",
+  "SAVED_FILTERS_EDIT_MODAL_TITLE": "Modifica filtro salvato",
+  "SAVED_FILTERS_NAME_LABEL": "Nome del filtro:",
+  "SAVED_FILTERS_NAME_PLACEHOLDER": "Inserisci il nome del filtro",
+  "SAVED_FILTERS_NAME_VALIDATION_ERROR": "Il nome del filtro è obbligatorio",
+  "SAVED_FILTERS_TITLE": "Filtri salvati",
+  "SAVE_BUTTON_TEXT": "Salva",
+  "SETTINGS_SIDEBAR_ABOUT_TITLE": "Informazioni",
+  "SETTINGS_SIDEBAR_CLEAR_DATA_BUTTON": "Cancella dati",
+  "SETTINGS_SIDEBAR_CLOSE_BUTTON_ARIA_LABEL": "Chiudi la barra laterale delle impostazioni",
+  "SETTINGS_SIDEBAR_DARK_THEME_LABEL": "Tema scuro",
+  "SETTINGS_SIDEBAR_DATA_MANAGEMENT_TITLE": "Gestione dati",
+  "SETTINGS_SIDEBAR_DEVELOPMENT_ROADMAP_LINK": "Roadmap di sviluppo",
+  "SETTINGS_SIDEBAR_EXPORT_LABEL": "Esporta dati",
+  "SETTINGS_SIDEBAR_FEEDBACK_LABEL": "Feedback e suggerimenti",
+  "SETTINGS_SIDEBAR_FILTER_BAR_POSITION_LABEL": "Posizione barra dei filtri",
+  "SETTINGS_SIDEBAR_GITHUB_REPOSITORY_LINK": "Repository GitHub",
+  "SETTINGS_SIDEBAR_IMPORT_LABEL": "Importa dati",
+  "SETTINGS_SIDEBAR_REPORT_ISSUE_LINK": "Segnala un problema",
+  "SETTINGS_SIDEBAR_SELECT_LANGUAGE_PLACEHOLDER": "Seleziona lingua",
+  "SETTINGS_SIDEBAR_SELECT_SORT_ORDER_PLACEHOLDER": "Seleziona ordine",
+  "SETTINGS_SIDEBAR_SELECT_THEME_PLACEHOLDER": "Seleziona tema",
+  "SETTINGS_SIDEBAR_SELECT_VIEW_MODE_PLACEHOLDER": "Seleziona modalità di visualizzazione",
+  "SETTINGS_SIDEBAR_THEME_STYLE_LABEL": "Stile tema",
+  "SETTINGS_SIDEBAR_TOOLBAR_DISPLAY_SETTINGS_TITLE": "Impostazioni di visualizzazione della barra degli strumenti",
+  "SETTINGS_SIDEBAR_UI_LANGUAGE_LABEL": "Lingua",
+  "SETTINGS_SIDEBAR_UI_SETTINGS_TITLE": "Impostazioni interfaccia",
+  "SETTINGS_SIDEBAR_VERSION_LABEL": "Versione",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_ERROR": "Errore connessione WebDAV: {error}",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_SUCCESS": "Connessione WebDAV riuscita!",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_LABEL": "Password:",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_PLACEHOLDER": "Password WebDAV",
+  "SETTINGS_SYNC_WEBDAV_SAVE_SETTINGS_BUTTON": "Salva impostazioni WebDAV",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVED": "Impostazioni WebDAV salvate con successo!",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVE_ERROR": "Errore nel salvataggio delle impostazioni WebDAV: {error}",
+  "SETTINGS_SYNC_WEBDAV_TEST_CONNECTION_BUTTON": "Testa connessione",
+  "SETTINGS_SYNC_WEBDAV_URL_PLACEHOLDER": "URL WebDAV (es. https://example.com/remote.php/dav/files/username/)",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_LABEL": "Nome utente:",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_PLACEHOLDER": "Nome utente WebDAV",
+  "SORT_OPTION_CREATED_ASC": "Data di creazione ↑",
+  "SORT_OPTION_CREATED_DESC": "Data di creazione ↓",
+  "SORT_OPTION_TITLE_ASC": "Titolo (A-Z)",
+  "SORT_OPTION_TITLE_DESC": "Titolo (Z-A)",
+  "SORT_OPTION_UPDATED_ASC": "Data di aggiornamento ↑",
+  "SORT_OPTION_UPDATED_DESC": "Data di aggiornamento ↓",
+  "STARRED": "Speciali",
+  "TAG_INPUT_CLEAR_TAG_CONTENT_TOOLTIP": "Cancella contenuto tag",
+  "TAG_INPUT_EDIT_TAG_TOOLTIP": "Clicca per modificare il tag",
+  "TAG_INPUT_HINT_ENTER_COMMA_SEPARATOR": "Suggerimento: usa Invio o virgola per separare più tag",
+  "TAG_INPUT_PLACEHOLDER": "Inserisci i tag, premi Invio o virgola per aggiungere più tag",
+  "TAG_INPUT_REMOVE_TAG_TOOLTIP": "Rimuovi tag {tag}",
+  "TOOLBAR_BATCH_SELECT_MODE_TOOLTIP": "Modalità selezione multipla",
+  "TOOLBAR_MENU_EXPORT_ALL_BOOKMARKS": "Esporta tutti i segnalibri",
+  "TOOLBAR_MENU_EXPORT_CURRENT_RESULTS": "Esporta risultati filtro corrente",
+  "TOOLBAR_MENU_OPEN_ALL_BOOKMARKS": "Apri tutti i segnalibri",
+  "TOOLBAR_MENU_SELECT_MODE": "Modalità selezione",
+  "TOOLBAR_SELECT_BUTTON": "Seleziona",
+  "WELCOME_MESSAGE": "Benvenuto in UTags!",
+  "ZZ_P_COLON": ":",
+  "__BOOKMARK_FORM_URL_LABEL": "URL:",
+  "__BOOKMARK_FORM_URL_PLACEHOLDER": "https://example.com",
+  "__MODAL_SAVE_BUTTON": "Salva",
+  "__SAVED_FILTERS_DESCRIPTION_LABEL": "Descrizione:"
+}

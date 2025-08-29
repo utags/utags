@@ -48,3 +48,6 @@ tsconfig.tsbuildinfo
 
 ._*
 **/src/remote/**
+**/mock-data.json
+**/mock-server/.mock-data/
+**/coverage/*

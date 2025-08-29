@@ -1,0 +1,164 @@
+{
+  "name": "utags-app",
+  "version": "0.19.9-25082502",
+  "author": "Pipecraft",
+  "namespace": "https://utags.pipecraft.net/",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/utags/utags-bookmarks/issues"
+  },
+  "homepage": "https://github.com/utags/utags-bookmarks#readme",
+  "type": "module",
+  "scripts": {
+    "p": "prettier --write . && npx prettier@2.8.8 --config .prettierrc-markdown.cjs --write *.md",
+    "lint": "run-s lint:*",
+    "lint:code": "npm run p && xo --fix",
+    "lint:type": "tsc --noemit",
+    "lint:check": "svelte-check --tsconfig ./tsconfig.json",
+    "dev": "vite",
+    "dev:proxy": "tsx watch mock-server/webdav-proxy.ts",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest --run",
+    "test:watch": "vitest watch",
+    "coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui --coverage.enabled=true",
+    "test:real": "USE_REAL_API=true vitest",
+    "mock:sync-server": "node --loader ts-node/esm mock-server/sync-server.ts",
+    "compile-paraglide": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide",
+    "machine-translate": "inlang machine translate --project project.inlang",
+    "sort-messages-keys": "node sort-message-keys.js"
+  },
+  "devDependencies": {
+    "@inlang/cli": "^3.0.12",
+    "@inlang/paraglide-js": "2.1.0",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.11",
+    "@testing-library/svelte": "^5.2.8",
+    "@types/express": "^5.0.3",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^24.0.8",
+    "@vitest/coverage-v8": "^3.2.3",
+    "@vitest/ui": "^3.2.3",
+    "autoprefixer": "^10.4.21",
+    "browser-extension-utils": "^0.2.0",
+    "console-tagger": "^0.0.6",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "focus-trap-lite": "^0.0.6",
+    "http-proxy-middleware": "^3.0.0",
+    "jsdom": "^26.1.0",
+    "lucide-svelte": "^0.525.0",
+    "msw": "^2.10.2",
+    "node-fetch": "^3.3.2",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.6",
+    "postcss-load-config": "^6.0.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-svelte": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "svelte": "^5.34.9",
+    "svelte-check": "^4.2.1",
+    "svelte-persisted-store": "^0.12.0",
+    "svelte-virtual-list": "^3.0.1",
+    "tailwindcss": "^4.1.11",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.16.2",
+    "typescript": "^5.8.3",
+    "utags-utils": "^0.3.2",
+    "vite": "^6.3.5",
+    "vite-plugin-pwa": "^1.0.1",
+    "vitest": "^3.2.4",
+    "xo": "^0.60.0"
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "envs": [
+      "browser"
+    ],
+    "globals": [
+      "document",
+      "chrome",
+      "GM",
+      "GM_setValue",
+      "GM_getValue",
+      "GM_deleteValue",
+      "GM_xmlhttpRequest",
+      "GM_log"
+    ],
+    "rules": {
+      "new-cap": [
+        "error",
+        {
+          "capIsNewExceptionPattern": "^m\\.\\w+"
+        }
+      ],
+      "@typescript-eslint/prefer-nullish-coalescing": 0,
+      "@typescript-eslint/prefer-optional-chain": 0,
+      "unicorn/prevent-abbreviations": 0,
+      "capitalized-comments": 0
+    },
+    "overrides": [
+      {
+        "files": [
+          "src/data/*"
+        ],
+        "rules": {
+          "@typescript-eslint/naming-convention": 0,
+          "unicorn/filename-case": 0
+        }
+      },
+      {
+        "files": [
+          "src/**/*.test.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/naming-convention": 0,
+          "@typescript-eslint/consistent-type-assertions": 0,
+          "@typescript-eslint/no-unsafe-assignment": 0,
+          "max-params": 0
+        }
+      },
+      {
+        "files": [
+          "src/sw.js"
+        ],
+        "rules": {
+          "unicorn/prefer-global-this": 0,
+          "array-callback-return": 0
+        }
+      },
+      {
+        "files": [
+          "**/*.user.js"
+        ],
+        "rules": {
+          "unicorn/prefer-module": 0,
+          "camelcase": 0,
+          "new-cap": 0
+        }
+      },
+      {
+        "files": [
+          "src/vite-env.d.ts"
+        ],
+        "rules": {
+          "@typescript-eslint/triple-slash-reference": 0
+        }
+      },
+      {
+        "files": [
+          "vite.config.ts"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": 0,
+          "@typescript-eslint/naming-convention": 0,
+          "@typescript-eslint/no-unsafe-call": 0,
+          "new-cap": 0
+        }
+      }
+    ]
+  }
+}
