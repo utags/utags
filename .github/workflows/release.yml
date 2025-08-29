@@ -95,6 +95,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./build/chrome-mv3-prod.zip
-            ./build/firefox-mv2-prod.zip
-            ./build/userscript-prod/utags.user.js
+            ./packages/extension/build/chrome-mv3-prod.zip
+            ./packages/extension/build/firefox-mv2-prod.zip
+            ./packages/extension/build/userscript-prod/utags.user.js
+            ./packages/webapp/utags-webapp.zip
