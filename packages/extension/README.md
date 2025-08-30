@@ -1,6 +1,6 @@
 # UTags - Add usertags to links
 
-> English | [中文](README-zh-CN.md)
+> English | [中文](README.zh-CN.md)
 
 Add **custom tags** or **notes** to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
 
