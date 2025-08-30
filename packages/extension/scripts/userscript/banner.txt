@@ -136,7 +136,7 @@
 //// * https://scriptcat.org/script-show-page/2784                                                                                          ////
 //// ** downloadURL https://scriptcat.org/scripts/code/2784/%F0%9F%8F%B7%EF%B8%8F+UTags+-+Add+usertags+to+links.user.js                     ////
 //// * https://github.com/utags/utags                                                                                                       ////
-//// ** downloadURL https://github.com/utags/utags/raw/main/build/userscript-prod/utags.user.js                                             ////
+//// ** downloadURL https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js                          ////
 ////                                                                                                                                        ////
 ////                                                                                                                                        ////
 ////                         Extension Version                                                                                              ////
