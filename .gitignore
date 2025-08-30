@@ -3,6 +3,7 @@
 
 # dependencies
 /node_modules
+**/node_modules
 /.pnp
 .pnp.js
 
@@ -26,11 +27,11 @@ yarn-error.log*
 .env*
 
 out/
-build/chrome-*/**
-build/firefox-*/**
-build/bookmarklet-*/**
-build/module-*/**
-build/*-dev/**
+**/build/chrome-*/**
+**/build/firefox-*/**
+**/build/bookmarklet-*/**
+**/build/module-*/**
+**/build/*-dev/**
 *.zip
 *.crx
 dist/
@@ -46,4 +47,7 @@ keys.json
 tsconfig.tsbuildinfo
 
 ._*
-src/remote/**
+**/src/remote/**
+**/mock-data.json
+**/mock-server/.mock-data/
+**/coverage/*

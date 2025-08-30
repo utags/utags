@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "UTags HTTP Proxy Extension",
+  "version": "1.0.0",
+  "description": "HTTP proxy extension for UTags webapp to bypass CORS restrictions",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://localhost:*/*",
+        "*://127.0.0.1:*/*",
+        "*://*.github.io/*",
+        "*://*.netlify.app/*",
+        "*://*.vercel.app/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "UTags HTTP Proxy"
+  }
+}

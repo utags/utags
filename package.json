@@ -1,145 +1,51 @@
 {
-  "name": "utags",
-  "displayName": "UTags - Add usertags to links",
-  "displayName:zh-CN": "小鱼标签 (UTags) - 为链接添加用户标签",
-  "displayName:zh-HK": "小魚標籤 (UTags) - 為連結添加用戶標籤",
-  "displayName:zh-TW": "小魚標籤 (UTags) - 為連結新增使用者標籤",
-  "displayName:ja": "小魚タグ (UTags) - リンクにユーザータグを追加",
-  "displayName:ko": "UTags - 링크에 사용자 태그 추가",
-  "displayName:de": "UTags - Benutzer-Tags zu Links hinzufügen",
-  "displayName:fr": "UTags - Ajouter des tags utilisateur aux liens",
-  "displayName:es": "UTags - Agregar etiquetas de usuario a los enlaces",
-  "displayName:it": "UTags - Aggiungi tag utente ai collegamenti",
-  "displayName:pt": "UTags - Adicionar tags de usuário aos links",
-  "displayName:vi": "UTags - Thêm tag người dùng vào liên kết",
-  "displayName:ru": "UTags - Добавление пользовательских тегов к ссылкам",
-  "version": "0.19.12",
-  "description": "Add custom tags or notes to links such as users, posts and videos. It works on X, Facebook, Youtube, TikTok, Reddit and many sites. Also serves as a modern bookmark management tool.",
-  "description_userscript": "Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.",
-  "description_userscript:zh-CN": "为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。",
-  "description_userscript:zh-HK": "為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。",
-  "description_userscript:zh-TW": "為網頁上的使用者、貼文、影片新增自訂標籤和備註，讓你的瀏覽體驗更加個人化和高效。輕鬆識別使用者、整理內容、過濾無關資訊。同時也是一個現代化的書籤管理工具。支援 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。",
-  "description_userscript:ja": "ウェブ上のユーザー、投稿、動画にカスタムタグやメモを追加して、ブラウジング体験を向上させましょう。コンテンツの整理、ユーザーの識別、不要な投稿のフィルタリングに最適です。また、モダンなブックマーク管理ツールとしても機能します。X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch など 100+ の人気サイトをサポートしています。",
-  "description_userscript:ko": "웹상의 사용자, 게시물, 동영상에 사용자 정의 태그와 메모를 추가하여 브라우징 경험을 향상시키세요. 콘텐츠 정리, 사용자 식별, 원하지 않는 게시물 필터링에 완벽합니다. 또한 현대적인 북마크 관리 도구로도 기능합니다. X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch 등 100개 이상의 인기 웹사이트를 지원합니다.",
-  "description_userscript:de": "Verbessern Sie Ihr Browsing-Erlebnis, indem Sie benutzerdefinierte Tags und Notizen zu Benutzern, Beiträgen und Videos im Web hinzufügen. Perfekt zum Organisieren von Inhalten, Identifizieren von Benutzern und Filtern unerwünschter Beiträge. Funktioniert auch als modernes Lesezeichen-Management-Tool. Unterstützt über 100 beliebte Websites, darunter X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch und viele mehr.",
-  "description_userscript:fr": "Améliorez votre expérience de navigation en ajoutant des tags personnalisés et des notes aux utilisateurs, publications et vidéos sur le web. Parfait pour organiser le contenu, identifier les utilisateurs et filtrer les publications indésirables. Fonctionne également comme un outil moderne de gestion des signets. Prend en charge plus de 100 sites web populaires, notamment X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch et bien d'autres.",
-  "description_userscript:es": "Mejora tu experiencia de navegación agregando etiquetas personalizadas y notas a usuarios, publicaciones y videos en la web. Perfecto para organizar contenido, identificar usuarios y filtrar publicaciones no deseadas. También funciona como una herramienta moderna de gestión de marcadores. Compatible con más de 100 sitios web populares, incluyendo X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch y muchos más.",
-  "description_userscript:it": "Migliora la tua esperienza di navigazione aggiungendo tag personalizzati e note a utenti, post e video sul web. Perfetto per organizzare contenuti, identificare utenti e filtrare post indesiderati. Funziona anche come strumento moderno di gestione dei segnalibri. Supporta oltre 100 siti web popolari, tra cui X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch e molti altri.",
-  "description_userscript:pt": "Melhore sua experiência de navegação adicionando tags personalizadas e notas a usuários, posts e vídeos na web. Perfeito para organizar conteúdo, identificar usuários e filtrar posts indesejados. Também funciona como uma ferramenta moderna de gerenciamento de favoritos. Suporta mais de 100 sites populares, incluindo X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch e muitos outros.",
-  "description_userscript:vi": "Nâng cao trải nghiệm duyệt web của bạn bằng cách thêm thẻ tùy chỉnh và ghi chú cho người dùng, bài đăng và video trên web. Hoàn hảo để tổ chức nội dung, nhận dạng người dùng và lọc các bài đăng không mong muốn. Cũng hoạt động như một công cụ quản lý bookmark hiện đại. Hỗ trợ hơn 100 trang web phổ biến bao gồm X (Twitter), Reddit, Facebook, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch và nhiều trang khác.",
-  "description_userscript:ru": "Улучшите свой опыт просмотра веб-страниц, добавляя пользовательские теги и заметки к пользователям, публикациям и видео. Идеально подходит для организации контента, идентификации пользователей и фильтрации нежелательных постов. Также функционирует как современный инструмент управления закладками. Поддерживает 100+ популярных сайтов, включая X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch и многие другие.",
+  "name": "utags-monorepo",
+  "private": true,
+  "version": "0.19.13",
+  "packageManager": "pnpm@10.6.2",
+  "description": "monorepo for utags extension and webapp",
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write . && npx prettier@2.8.8 --config .prettierrc-markdown.cjs --write '**/*.md'",
+    "lint": "run-s lint:*",
+    "lint:format": "pnpm -w run format",
+    "lint:code": "xo --fix",
+    "lint:type": "tsc --noemit",
+    "build": "run-s build:*",
+    "build:extension": "pnpm -r --filter ./packages/extension build",
+    "build:webapp": "pnpm -r --filter ./packages/webapp build",
+    "package": "run-s package:*",
+    "package:extension": "pnpm -r --filter ./packages/extension package",
+    "package:webapp": "pnpm -r --filter ./packages/webapp package",
+    "test": "vitest --run",
+    "test:watch": "vitest watch",
+    "test:ui": "vitest --ui --coverage.enabled=true",
+    "test:coverage": "vitest --coverage"
+  },
   "author": "Pipecraft",
-  "namespace": "https://utags.pipecraft.net/",
-  "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/utags/utags/issues"
   },
   "homepage": "https://github.com/utags/utags#readme",
-  "scripts": {
-    "p": "prettier --write .",
-    "lint": "run-s lint:*",
-    "lint:code": "prettier --write . && xo --fix",
-    "lint:type": "tsc --noemit",
-    "dev": "run-p dev:*",
-    "dev:chrome": "plasmo dev",
-    "dev:firefox": "sleep 2 && plasmo dev --target=firefox-mv2",
-    "dev:userscript": "node scripts/userscript/watch.mjs",
-    "staging": "run-p staging:*",
-    "staging:userscript": "node scripts/userscript/build.mjs --staging && pnpm prettier --log-level warn --write build/userscript-staging/ && http-server build/userscript-staging/",
-    "build": "run-s build:*",
-    "build:chrome": "cross-env PARCEL_WORKER_BACKEND=process plasmo build && node scripts/chrome/update-manifest.mjs",
-    "build:firefox": "cross-env PARCEL_WORKER_BACKEND=process plasmo build --target=firefox-mv2 && node scripts/firefox/update-manifest.mjs && addons-linter build/firefox-mv2-prod/",
-    "build:userscript": "node scripts/userscript/build.mjs && pnpm prettier --log-level warn --write build/userscript-prod/",
-    "package": "run-s package:*",
-    "package:chrome": "plasmo package",
-    "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip",
-    "test": "vitest --run",
-    "test:watch": "vitest watch",
-    "test:ui": "vitest --ui --coverage.enabled=true"
-  },
-  "dependencies": {
-    "browser-extension-i18n": "^0.1.3",
-    "browser-extension-settings": "^0.6.4",
-    "browser-extension-storage": "^0.1.2",
-    "browser-extension-utils": "^0.2.2",
-    "plasmo": "^0.90.5",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "utags-utils": "^0.3.2"
-  },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.6.2",
     "@types/chrome": "^0.1.4",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
-    "addons-linter": "^7.19.0",
-    "bookmarkleter": "^1.1.0",
-    "cross-env": "^10.0.0",
-    "esbuild": "^0.25.9",
     "http-server": "^14.1.1",
     "jsdom": "^26.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.6.2",
-    "sass": "^1.90.0",
+    "prettier-plugin-svelte": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.12",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4",
     "xo": "^0.60.0"
-  },
-  "manifest": {
-    "permissions": [
-      "storage"
-    ]
-  },
-  "xo": {
-    "space": 2,
-    "prettier": true,
-    "globals": [
-      "GM",
-      "document"
-    ],
-    "envs": [
-      "browser",
-      "webextensions"
-    ],
-    "rules": {
-      "import/extensions": 0,
-      "n/file-extension-in-import": 0,
-      "import/order": 0,
-      "@typescript-eslint/prefer-nullish-coalescing": 0,
-      "@typescript-eslint/prefer-optional-chain": 0,
-      "logical-assignment-operators": 0,
-      "unicorn/prevent-abbreviations": 0,
-      "capitalized-comments": 0
-    },
-    "overrides": [
-      {
-        "files": "src/messages/*.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0
-        }
-      },
-      {
-        "files": "src/**/*.test.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0
-        }
-      },
-      {
-        "files": "src/sites/**/*.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0,
-          "n/file-extension-in-import": 0
-        }
-      }
-    ],
-    "ignores": [
-      "src/storage/index.ts",
-      "build/**/*"
-    ]
   },
   "pnpm": {
     "ignoredBuiltDependencies": [

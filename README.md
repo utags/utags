@@ -1,317 +1,288 @@
-# UTags - Add usertags to links
+# UTags - Universal Tagging System
 
-> English | [中文](README-zh-CN.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags/ci.yml?branch=main)](https://github.com/utags/utags/actions)
+[![UTags Official Site](https://img.shields.io/badge/UTags-Official_Site-brightgreen)](https://utags.link)
 
-Add **custom tags** or **notes** to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.
+> English | [中文](README.zh-CN.md)
 
-**UTags** = **Usertags**. **Userscript**, **Userstyle** allows users to customize the functionality and style of the site, **Usertags** allows users to customize the tags (labels) for the site.
+## 🚀 Project Overview
 
-For now it works on
+**UTags** is a comprehensive tagging ecosystem that revolutionizes how you organize and manage web content. This monorepo contains two complementary applications:
 
-- V2EX ([www.v2ex.com](https://www.v2ex.com/))
-- Greasy Fork ([greasyfork.org](https://greasyfork.org/) and [sleazyfork.org](https://sleazyfork.org/))
-- Hacker News ([news.ycombinator.com](https://news.ycombinator.com/))
-- Lobsters ([lobste.rs](https://lobste.rs/))
-- GitHub ([github.com](https://github.com/))
-- Reddit ([www.reddit.com](https://www.reddit.com/))
-- X(Twitter) ([x.com](https://x.com/) / [twitter.com](https://twitter.com/))
-- Wechat ([mp.weixin.qq.com](https://mp.weixin.qq.com/))
-- Instagram ([www.instagram.com](https://www.instagram.com/))
-- Threads ([www.threads.net](https://www.threads.net/))
-- Facebook ([www.facebook.com](https://www.facebook.com/))
-- YouTube ([www.youtube.com](https://www.youtube.com/))
-- Bilibili ([www.bilibili.com](https://www.bilibili.com/))
-- TikTok ([www.tiktok.com](https://www.tiktok.com/))
-- 52pojie ([www.52pojie.cn](https://www.52pojie.cn/))
-- juejin ([juejin.cn](https://juejin.cn/))
-- zhihu ([zhihu.com](https://www.zhihu.com/))
-- xiaohongshu, RedNote ([xiaohongshu.com](https://www.xiaohongshu.com/))
-- weibo ([weibo.com](https://weibo.com/), [weibo.cn](https://weibo.cn/))
-- sspai ([sspai.com](https://sspai.com/))
-- douyin ([douyin.com](https://www.douyin.com/))
-- Google Podcasts ([podcasts.google.com](https://podcasts.google.com/))
-- Rebang.Today ([rebang.today](https://rebang.today/))
-- MyAnimeList ([myanimelist.net](https://myanimelist.net/))
-- douban ([douban.com](https://www.douban.com/))
-- pixiv ([www.pixiv.net](https://www.pixiv.net/))
-- LINUX DO ([linux.do](https://linux.do/))
-- APPINN ([meta.appinn.net](https://meta.appinn.net/))
-- NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
-- Keylol ([keylol.com](https://keylol.com/))
-- DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
-- Discourse ([meta.discourse.org](https://meta.discourse.org/))
-- Open AI ([community.openai.com](https://community.openai.com/))
-- Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
-- WaniKani ([community.wanikani.com](https://community.wanikani.com/))
-- tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
-- Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
-- Flarum Community Chinese ([discuss.flarum.org.cn](https://discuss.flarum.org.cn/))
-- uTools Community ([yuanliao.info](https://yuanliao.info/))
-- NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
-- Veryfb ([veryfb.com](https://veryfb.com/))
-- Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
-- NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
-- Inoreader ([www.inoreader.com](https://www.inoreader.com/))
-- zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
-- Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
-- Twitch ([www.twitch.tv](https://www.twitch.tv/))
-- Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
-- Flickr ([www.flickr.com](https://www.flickr.com/))
-- Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
-- And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
+- **🏷️ UTags Extension/Userscript**: Add custom tags and notes to links, users, posts, and videos across the web
+- **📚 UTags Bookmark Manager**: A modern web application for advanced bookmark management with powerful filtering
 
-## Installation
+Together, they provide a complete solution for organizing, tagging, and managing your digital content with unprecedented flexibility and control.
 
-- Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
-- Edge: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-- Firefox: [Firefox Addon Store](https://addons.mozilla.org/firefox/addon/utags/)
-- User Script: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links), [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784), [GitHub](https://github.com/utags/utags/raw/main/build/userscript-prod/utags.user.js)
-- [Manually install browser extensions](manual-installation.md)
+🌐 [Experience UTags Live](https://utags.link/) | 📦 [Install Browser Extension](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 
-## Usage
+## 📁 Repository Structure
 
-- Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags
+```
+utags/
+├── packages/
+│   ├── extension/          # Browser extension & userscript
+│   └── webapp/             # Web-based bookmark manager
+├── docs/                   # Documentation
+├── assets/                 # Shared assets and screenshots
+└── custom-style-examples/  # CSS customization examples
+```
 
-- Multiple tags are separated by commas
+## ✨ Key Features
 
-- Tags can be added to post titles, usernames, and categories
-  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/h5x46uh3w12bfyhtfyo1wdip0xu4)
+### 🌐 Universal Web Tagging
 
-- Some special tags have special effects, such as 'ignore', 'clickbait', 'promotion', 'block', 'hide', etc.
-  ![screenshots](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/568f6cu7je6isfx858kuyjorfl5n)
+- Tag users, posts, videos, and links across 50+ websites
+- Special tags with filtering effects (hide, block, favorite, etc.)
+- Cross-platform synchronization via GitHub and WebDAV
+- Support for Chrome, Firefox, Edge, and userscript managers
 
-## Screenshots
+### 📊 Advanced Bookmark Management
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-01.png)
+- Powerful filtering engine with AND/OR/NOT logic
+- Hierarchical tag organization
+- Real-time search and progressive filtering
+- Data visualization and usage analytics
+- PWA support for offline access
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-02.png)
+### 🔄 Seamless Integration
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-03.png)
+- Automatic sync between extension and web app
+- Import/export from major browsers
+- Open API for custom integrations
+- Multi-language support (12+ languages)
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-04.png)
+## 🚀 Quick Start
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-05.png)
+### Option 1: Use Both Components (Recommended)
 
-![screenshots](https://wsrv.nl/?url=https://raw.githubusercontent.com/utags/utags/refs/heads/main/assets/screenshots-06.png)
+1. **Install the Extension**:
 
-## Video Demos
+   - [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+   - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
+   - [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
+   - [Userscript](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
 
-- 📺 YouTube: [demo1](https://www.youtube.com/watch?v=WzUzBA5V91A) [demo2](https://www.youtube.com/watch?v=zlNqk0nhLdI)
+2. **Access the Web App**: Visit [https://utags.link](https://utags.link) for advanced bookmark management
 
-## Features
+3. **Start Tagging**: Add tags while browsing, manage them in the web app
 
-- You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
-- Tags can be added to post titles, usernames, and categories
-- Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
-- **Modern bookmark management**: Visit [https://utags.link/](https://utags.link/) to experience advanced bookmark management features. For detailed information about the web app, see [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
-- On the [tag list](https://utags.link/) page, you can see tagged users and posts, sorted by update order
-- Support [data export and import](https://utags.link/)
-- Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do` and `v2ex.com`.
+### Option 2: Extension Only
 
-## Release Notes
+Install the browser extension to add tags directly while browsing websites.
 
-- 0.19.x
-  - Optimize data sync logic, solve data inconsistency problem
-  - Update dmm.co.jp site support
-  - Add language switching functionality
-  - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
-  - Add menu command to tag current page
-  - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
-  - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access them via right-click menu with ➕/➖ icons for adding/removing tags
-  - Enable tag styling in tag input window
-  - Improve userscript availability detection and error handling in sync adapter
-- 0.18.x
-  - Add the website Flickr
-  - Add the website Ruanyifeng
-  - Add the website Twitch
-  - Add the website Yamibo
-  - Support special tags on vxna and planet of v2ex.com
-  - Support tagging GitHub files and folders
-  - Display tags next to GitHub issue titles
-- 0.17.1
-  - Support data synchronization via GitHub and WebDAV
-- 0.16.0
-  - Implement soft delete for bookmarks
-- 0.15.0
-  - Integration with the new webapp ([https://utags.link](https://utags.link))
-- 0.12.11
-  - Remove the limit on the number of settable emoji tags
-- 0.12.10
-  - On BOSS Zhipin, you can mark companies and job positions and leave remarks. For instance, adding tags like "block" or "hide" allows you to hide uninterested companies and job positions.
-  - Make UTags support the website forum.cursor.com
-- 0.12.9
-  - Make UTags support the website www.zhipin.com
-- 0.12.5
-  - Enhance the mobile experience of Discourse
-  - Make UTags support the website kater.me and bbs.viva-la-vita.org
-- 0.12.4
-  - Make UTags support the website www.inoreader.com
-- 0.12.3
-  - Make UTags support the website www.nodeseek.com
-- 0.12.2
-  - Make UTags support the website built with flarum, includes discuss.flarum.org, discuss.flarum.org.cn, www.nodeloc.com, freesmth.net, veryfb.com
-- 0.12.1
-  - Make UTags support the website bbs.tampermonkey.net.cn
-  - Add the official installation URLs for userscripts as well as the URLs of extension stores.
-  - Enable browsing content tagging on V2EX
-  - Display the enable button on websites that support browsing content tagging
-- 0.12.0
-  - Enable applying custom style
-- 0.11.1
-  - Add an option for change the title color for the browsed content
-- 0.11.0
-  - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do`.
-  - Display the "Settings" button in the tag input interface
-- 0.10.7
-  - Enhance add tags on X (Twitter). Filtering tweet and comments with special tags.
-- 0.10.6
-  - Apply utags to community.wanikani.com
-- 0.10.4
-  - Apply utags to rule34video.com, rule34gen.com
-- 0.10.3
-  - Enable add tags to communities, posts and users on Reddit. Filtering posts and comments with special tags.
-  - Enable add tags to videos and users on TikTok. Filtering videos and replies with special tags.
-- 0.10.1
-  - Enable add tags to notes and users on RedNote(xiaohongshu). Filtering notes and replies with special tags.
-  - Improve performance
-- 0.9.11
-  - Enable add tags to posts, categories and tags on linux.do and other discourse sites. Filtering posts and replies with special tags.
-- 0.9.10
-  - Apply utags to dlsite.com
-  - Apply utags to dmm.co.jp
-  - Apply utags to kemono.su
-  - Apply utags to coomer.su
-  - Apply utags to keylol.com
-- 0.9.9
-  - Apply utags to www.pixiv.net
-  - Apply utags to linux.do
-  - Apply utags to meta.appinn.net
-  - Apply utags to NGA
-- 0.9.8
-  - twitter.com -> x.com
-  - fix github.com, threads.net, e-hentai.org issues
-- 0.9.5
-  - Add emoji tags 👍
-  - Increase the size of the list of candidate tags
-  - Enable the select/find feature on the tag management page
-  - Use CSS custom properties to define the width of the text tag border
-- 0.9.4
-  - Update selectors for GitHub, now can add tags to issues, pulls and discussions
-  - Define utags font-size and icon size with CSS custom properties
-- 0.9.3
-  - Update selectors and style
-  - Apply utags to douban.com
-  - Apply utags to myanimelist.net
-  - Change the injection moment to 'document_start'
-- 0.9.1
-  - Add the copy button in the prompt UI
-- 0.9.0
-  - Use advanced tag input prompt UI
-  - Define utags ul styles with css custom properties
-- 0.8.10
-  - Apply utags to rebang.today
-- 0.8.9
-  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
-- 0.8.8
-  - Apply utags to podcasts.google.com
-  - Apply utags to douyin.com
-  - Apply utags to sspai.com
-- 0.8.7
-  - Apply utags to weibo.com, weibo.cn
-  - Apply utags to pornhub.com
-- 0.8.6
-  - Apply utags to xiaohongshu.com
-- 0.8.5
-  - Apply utags to zhihu.com
-- 0.8.4
-  - Fix a bug on YouTube, compare keys when reusing utags elements
-  - Update youtube selectors and style
-- 0.8.0
-  - Implement multi-language support, currently supports English and Chinese
-- 0.7.7
-  - Update instagram.com, threads.net
-  - Improve performance, update tags when document is not hidden
-- 0.7.6
-  - use svg element instead of background-image with data: url to fix CSP issue
-  - (v2ex): handle cited replies generated by ve2x.rep userscript
-- 0.7.5
-  - Handle default site rules for chrome extension and firefox addon
-  - Add option to enable/disable utags on current site
-  - Update bilibili, github selectors
-- 0.7.2
-  - Apply utags to 52pojie.cn
-  - Apply utags to juejin.cn
-- 0.7.1
-  - Apply utags to tiktok.com
-  - Apply utags to bilibili.com
-  - Apply utags to youtube.com
-  - Apply utags to facebook.com
-- 0.7.0
-  - Apply utags to threads.net
-  - Apply utags to instagram.com
-  - Apply utags to mp.weixin.qq.com
-- 0.6.7
-  - Apply utags to twitter.com
-- 0.6.6
-  - \[github\] Match username in issues, PRs and commits
-  - Prevent utags elements from being remade when the tags have not changed
-- 0.6.5
-  - Apply utags to reddit.com
-- 0.6.4
-  - Apply utags to github.com
-- 0.6.3
-  - Apply utags to lobste.rs
-  - Move focus on utags elements through the TAB key
-  - Show utags with vimium hint marker on Firefox
-- 0.6.0
-  - Apply utags to hacker news (news.ycombinator.com)
-- 0.5.2
-  - Improve performance
-  - Prevent tag content from being copied together when copying HTML text
-- 0.5.0
-  - Apply utags to greasyfork.org and sleazyfork.org
-  - \[V2EX\] 允许给所有外部链接添加标签
-- 0.4.5
-  - 取消点击空白区域时显示标签按钮的延迟效果
-  - 连续点击区域相同时，隐藏标签按钮
-- 0.4.1
-  - 更新标签图标与样式
-- 0.4.0
-  - 支持触屏设备
-- 0.3.1
-  - 提高可访问性, 修改 v2ex 超级增强兼容问题
-- 0.3.0
-  - 修复楼中楼回复模式时，隐藏或半透明效果影响整个楼的问题
-- 0.2.1
-  - 设置中添加打开标签列表，导出数据/导入数据链接
-- 0.2.0
-  - 添加设置功能，可以设置是否显示被隐藏的内容，是否去除半透明效果
-- 0.1.10
-  - 兼容 Violentmonkey, Greasemonkey(Firefox), Userscripts(Safari) 等脚本管理器
-- 0.1.5
-  - 添加更多特殊标签，比如：标题党, 推广, 无聊, 忽略, 已阅, hide, 隐藏, 不再显示, 热门, 收藏, 关注, 稍后阅读
-  - 修改 www.v2ex.com 匹配规则，支持更多页面，比如：提醒系统、账户余额等
-- 0.1.4
-  - 支持给 www.v2ex.com 节点添加标签
-- 0.1.2
-  - 解决 Firefox 浏览器不支持 'sb', 'block' 等标签的特殊功能的问题
-- [See more](release-notes/readme.md)
+### Option 3: Web App Only
 
-## License
+Use the [web application](https://utags.link) for bookmark management without the extension.
 
-Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
+## 📦 Packages
 
-## >\_
+### 🏷️ UTags Extension
 
-[![Pipecraft](https://img.shields.io/badge/site-pipecraft-brightgreen)](https://www.pipecraft.net)
-[![UTags](https://img.shields.io/badge/site-UTags-brightgreen)](https://utags.link)
+**Location**: [`packages/extension/`](packages/extension/)
+
+A browser extension and userscript that enables tagging of web content across 50+ supported websites.
+
+#### Supported Websites
+
+- **Social**: X (Twitter), Reddit, Facebook, Instagram, Threads, TikTok, YouTube
+- **Development**: GitHub, Greasy Fork, Hacker News, Stack Overflow
+- **Chinese Sites**: Bilibili, Zhihu, Weibo, Douyin, Xiaohongshu, V2EX
+- **Forums**: Discourse, Flarum, NGA, Linux.do, NodeSeek
+- **And 30+ more sites**
+
+#### Key Features
+
+- 🏷️ **Smart Tagging**: Add tags to users, posts, videos, and links
+- 🎯 **Special Tags**: Use tags like `block`, `hide`, `favorite` for content filtering
+- 📱 **Touch Support**: Works on mobile browsers
+- 🔄 **Auto Sync**: Synchronize data across devices
+- 🎨 **Customizable**: Apply custom styles and themes
+- 🌍 **Multi-language**: Support for 12+ languages
+
+#### Installation
+
+- **Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+- **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
+- **Edge**: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
+- **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+
+#### Usage
+
+1. Hover over usernames, post titles, or links
+2. Click the 🏷️ tag icon that appears
+3. Add tags separated by commas
+4. Use special tags for filtering effects
+
+---
+
+### 📚 UTags Bookmark Manager
+
+**Location**: [`packages/webapp/`](packages/webapp/)
+
+A modern web application for advanced bookmark management with powerful tagging and filtering capabilities.
+
+#### Key Features
+
+- 🔍 **Advanced Filtering**: AND/OR/NOT logic, regex support, progressive filtering
+- 🏷️ **Hierarchical Tags**: Organize with `parent/child/grandchild` structure
+- 📊 **Data Visualization**: Usage statistics and analytics dashboard
+- 🔄 **Multi-platform Sync**: GitHub and WebDAV synchronization
+- 📱 **PWA Support**: Offline access, add to home screen
+- 🌓 **Themes**: Light and dark mode support
+- 🌍 **Responsive**: Perfect for desktop and mobile
+
+#### Product Advantages
+
+- ✅ **Completely Free**: MIT license, no registration required
+- ✅ **No Ads**: Clean, focused experience
+- ✅ **Unlimited Bookmarks**: No storage limits
+- ✅ **Privacy First**: Local data storage, user control
+- ✅ **Self-hostable**: Deploy to your own server
+- ✅ **Cross-browser**: Works with all modern browsers
+
+#### Live Instances
+
+- [https://utags.link](https://utags.link/) (Primary)
+- [https://utags.top](https://utags.top/)
+- [https://utags-bookmarks.pages.dev](https://utags-bookmarks.pages.dev/)
+- [https://utags.github.io](https://utags.github.io/)
+
+#### Self-hosting
+
+**Quick Deploy**:
+
+```bash
+# Clone and build
+git clone https://github.com/utags/utags.git
+cd utags/packages/webapp
+npm install && npm run build
+
+# Deploy dist/ folder to your web server
+```
+
+**Pre-built Version**:
+
+```bash
+# Clone pre-built files
+git clone -b gh-pages --single-branch https://github.com/utags/utags-bookmarks.git
+# Deploy to your web server
+```
+
+## 🛠 Development
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm 8+
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/utags/utags.git
+cd utags
+
+# Install dependencies
+pnpm install
+
+# Build all packages
+pnpm run build
+
+# Run tests
+pnpm test
+```
+
+### Package-specific Development
+
+**Extension Development**:
+
+```bash
+cd packages/extension
+pnpm dev          # Development build
+pnpm build        # Production build
+pnpm package      # Create distribution package
+```
+
+**Webapp Development**:
+
+```bash
+cd packages/webapp
+pnpm dev          # Start dev server at http://localhost:5173
+pnpm build        # Production build
+pnpm preview      # Preview production build
+pnpm package      # Create distribution package
+```
+
+### Available Scripts
+
+- `pnpm format` - Format all code
+- `pnpm lint` - Lint and fix issues
+- `pnpm build` - Build all packages
+- `pnpm package` - Package all distributions
+- `pnpm test` - Run tests
+
+## 📸 Screenshots
+
+![Extension in action](assets/screenshots-01.png)
+_Adding tags to users and posts_
+
+![Bookmark Manager](assets/screenshots-02.png)
+_Advanced filtering and tag management_
+
+![Special Tags](assets/screenshots-03.png)
+_Special tags with filtering effects_
+
+## 🛣 Roadmap
+
+### Extension
+
+- [ ] Custom site rules editor
+- [ ] Advanced tag styling options
+- [ ] Community tag sharing
+- [ ] AI-powered tag suggestions
+
+### Webapp
+
+- [ ] Mobile app (React Native)
+- [ ] Advanced note-taking features
+- [ ] Team collaboration features
+- [ ] API marketplace
+
+### Shared
+
+- [ ] Real-time sync improvements
+- [ ] Enhanced security features
+- [ ] Plugin ecosystem
+- [ ] Enterprise features
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Ways to Contribute
+
+- 🐛 [Report bugs](https://github.com/utags/utags/issues)
+- 💡 [Request features](https://github.com/utags/utags/issues)
+- 🔧 [Submit pull requests](https://github.com/utags/utags/pulls)
+- 📖 [Improve documentation](https://github.com/utags/utags/tree/main/docs)
+- 🌍 [Help with translations](https://github.com/utags/utags/tree/main/packages/webapp/messages)
+
+## 📄 License
+
+Copyright (c) 2023-2025 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
+
+## 🔗 Links
+
+- 🌐 **Official Website**: [https://utags.link](https://utags.link)
+- 📦 **Chrome Extension**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+- 🦊 **Firefox Add-on**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
+- 📜 **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/orgs/utags/discussions)
+- 📺 **Video Demos**: [YouTube](https://www.youtube.com/watch?v=WzUzBA5V91A)
+
+---
+
+[![Pipecraft](https://img.shields.io/badge/Pipecraft-Projects-2EAADC)](https://www.pipecraft.net)
+[![UTags](https://img.shields.io/badge/UTags-Official_Site-brightgreen)](https://utags.link)

@@ -1,0 +1,88 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* width */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+:root {
+  --scrollbar-track: #f1f5f9;
+  --scrollbar-thumb: #cbd5e1;
+  --scrollbar-thumb-hover: #555;
+  --scrollbar-width: 8px;
+}
+
+:root.dark {
+  --scrollbar-track: #1e293b;
+  --scrollbar-thumb: #475569;
+  --scrollbar-thumb-hover: #64748b;
+}
+
+button {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+}
+
+@utility group-title {
+  @apply flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800;
+}
+
+@utility group-title-button {
+  @apply opacity-0 transition-opacity duration-200 group-hover:opacity-100;
+}
+
+@utility base-input-field-container {
+  @apply flex flex-col gap-2;
+}
+
+@utility base-input-label {
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+}
+@utility base-input-element {
+  @apply w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-xs transition-all outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:border-blue-500;
+  &:disabled {
+    @apply cursor-not-allowed bg-gray-100 opacity-70 dark:bg-gray-700/20;
+  }
+}
+
+@utility base-merge-mode-input-element {
+  @apply border-amber-300 bg-amber-100 dark:border-amber-600 dark:bg-amber-700/20;
+  &:disabled {
+    @apply cursor-default opacity-70;
+  }
+  &:not(:disabled):is(input) {
+    @apply focus:ring-1 focus:ring-amber-300 dark:focus:ring-amber-600;
+  }
+}
+
+body:not(#a) .merge-mode-input-element {
+  @apply base-merge-mode-input-element;
+}
+
+:not(#utags_bookmarks_should_has_higher_specificity):not(
+    #utags_bookmarks_should_has_higher_specificity
+  ):not(#utags_bookmarks_should_has_higher_specificity)
+  .utags_ul {
+  display: none !important;
+}

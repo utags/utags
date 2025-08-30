@@ -1,0 +1,363 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "ADD_BOOKMARK_MODAL_TITLE": "Добавить закладку",
+  "AI_SUMMARY_BUTTON_TEXT": "Сводка ИИ",
+  "ALL_BOOKMARKS": "Все закладки",
+  "APP_TITLE": "UTags Закладки",
+  "BATCH_TAG_ADD_MODAL_ERROR_ADD_FAILED": "Не удалось добавить теги: {errorDetails}",
+  "BATCH_TAG_ADD_MODAL_ERROR_NO_BOOKMARKS_SELECTED": "Закладки не выбраны",
+  "BATCH_TAG_ADD_MODAL_SELECTED_BOOKMARKS_COUNT": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Выбрана {count} закладка",
+        "countPlural=few": "Выбрано {count} закладки",
+        "countPlural=many": "Выбрано {count} закладок",
+        "countPlural=other": "Выбрано {count} закладки"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "Успешно добавлен {tagsCount} тег к {bookmarksCount} закладке",
+        "bookmarksPlural=one, tagsPlural=few": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладке",
+        "bookmarksPlural=one, tagsPlural=many": "Успешно добавлено {tagsCount} тегов к {bookmarksCount} закладке",
+        "bookmarksPlural=one, tagsPlural=other": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладке",
+        "bookmarksPlural=few, tagsPlural=one": "Успешно добавлен {tagsCount} тег к {bookmarksCount} закладкам",
+        "bookmarksPlural=few, tagsPlural=few": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладкам",
+        "bookmarksPlural=few, tagsPlural=many": "Успешно добавлено {tagsCount} тегов к {bookmarksCount} закладкам",
+        "bookmarksPlural=few, tagsPlural=other": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладкам",
+        "bookmarksPlural=many, tagsPlural=one": "Успешно добавлен {tagsCount} тег к {bookmarksCount} закладкам",
+        "bookmarksPlural=many, tagsPlural=few": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладкам",
+        "bookmarksPlural=many, tagsPlural=many": "Успешно добавлено {tagsCount} тегов к {bookmarksCount} закладкам",
+        "bookmarksPlural=many, tagsPlural=other": "Успешно добавлено {tagsCount} тега к {bookmarksCount} закладкам",
+        "bookmarksPlural=other, tagsPlural=one": "Успешно добавлен тег {tagsCount} в закладки {bookmarksCount}",
+        "bookmarksPlural=other, tagsPlural=other": "Успешно добавлены теги {tagsCount} в закладки {bookmarksCount}"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_TITLE": "Пакетное добавление тегов",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_NO_TAGS_SELECTED": "Пожалуйста, выберите хотя бы один тег для удаления",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_REMOVE_FAILED": "Не удалось удалить теги: {errorDetails}",
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладки",
+        "bookmarksPlural=one, tagsPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладки",
+        "bookmarksPlural=one, tagsPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладки",
+        "bookmarksPlural=one, tagsPlural=other": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладки",
+        "bookmarksPlural=few, tagsPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок",
+        "bookmarksPlural=few, tagsPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок",
+        "bookmarksPlural=few, tagsPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок",
+        "bookmarksPlural=few, tagsPlural=other": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок",
+        "bookmarksPlural=many, tagsPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок",
+        "bookmarksPlural=many, tagsPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок",
+        "bookmarksPlural=many, tagsPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок",
+        "bookmarksPlural=many, tagsPlural=other": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок",
+        "bookmarksPlural=other, tagsPlural=one": "Успешно удален {tagsCount} из закладок {bookmarksCount}",
+        "bookmarksPlural=other, tagsPlural=other": "Успешно удалены теги {tagsCount} из закладок {bookmarksCount}"
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE_WITH_DELETIONS": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "input deletedBookmarksCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural",
+        "local deletedBookmarksPlural = deletedBookmarksCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural",
+        "deletedBookmarksPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладки, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=few": "Успешно удален {tagsCount} тег из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=many": "Успешно удален {tagsCount} тег из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=one, tagsPlural=few,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладки, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=one, tagsPlural=few,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=one, tagsPlural=few,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=one, tagsPlural=many,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладки, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=one, tagsPlural=many,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=one, tagsPlural=many,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладки, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=few, tagsPlural=one,deletedBookmarksPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=few, tagsPlural=one,deletedBookmarksPlural=few": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=few, tagsPlural=one,deletedBookmarksPlural=many": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=few, tagsPlural=few,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=few, tagsPlural=few,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=few, tagsPlural=few,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=few, tagsPlural=many,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=few, tagsPlural=many,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=few, tagsPlural=many,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=many, tagsPlural=one,deletedBookmarksPlural=one": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=many, tagsPlural=one,deletedBookmarksPlural=few": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=many, tagsPlural=one,deletedBookmarksPlural=many": "Успешно удален {tagsCount} тег из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=many, tagsPlural=few,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=many, tagsPlural=few,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=many, tagsPlural=few,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тега из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок.",
+        "bookmarksPlural=many, tagsPlural=many,deletedBookmarksPlural=one": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего была удалена {deletedBookmarksCount} закладка.",
+        "bookmarksPlural=many, tagsPlural=many,deletedBookmarksPlural=few": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладки.",
+        "bookmarksPlural=many, tagsPlural=many,deletedBookmarksPlural=many": "Успешно удалено {tagsCount} тегов из {bookmarksCount} закладок, в результате чего было удалено {deletedBookmarksCount} закладок."
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_HINT": "Подсказка: Используйте Enter или запятую для разделения нескольких тегов. Теги будут удалены только в том случае, если все введенные теги существуют в закладке. Если все теги будут удалены, закладка также будет удалена.",
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_PLACEHOLDER": "Введите теги для удаления, нажмите Enter или запятую для добавления нескольких тегов",
+  "BATCH_TAG_REMOVE_MODAL_TITLE": "Пакетное удаление тегов",
+  "BOOKMARKS_DELETED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Успешно удалена {count} закладка.",
+        "countPlural=few": "Успешно удалены {count} закладки.",
+        "countPlural=many": "Успешно удалено {count} закладок.",
+        "countPlural=other": "Успешно удалены {count} закладки."
+      }
+    }
+  ],
+  "BOOKMARKS_DELETION_NO_ITEMS": "Закладки не были удалены.",
+  "BOOKMARKS_RESTORED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Успешно восстановлена {count} закладка.",
+        "countPlural=few": "Успешно восстановлены {count} закладки.",
+        "countPlural=many": "Успешно восстановлено {count} закладок.",
+        "countPlural=other": "Успешно восстановлено {count} закладки."
+      }
+    }
+  ],
+  "BOOKMARKS_RESTORE_NO_ITEMS": "Закладки не были восстановлены.",
+  "BOOKMARK_FORM_ALWAYS_SHOW_ADVANCED_LABEL": "Всегда показывать расширенные параметры",
+  "BOOKMARK_FORM_COVER_IMAGE_LOAD_ERROR": "Не удалось загрузить изображение обложки",
+  "BOOKMARK_FORM_COVER_IMAGE_PREVIEW_ALT": "Предпросмотр изображения обложки",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_LABEL": "URL изображения обложки:",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_PLACEHOLDER": "Введите URL изображения обложки (необязательно)",
+  "BOOKMARK_FORM_DESCRIPTION_PLACEHOLDER": "Введите описание (необязательно)",
+  "BOOKMARK_FORM_FAVICON_LOAD_ERROR": "Не удалось загрузить изображение favicon",
+  "BOOKMARK_FORM_FAVICON_PREVIEW_ALT": "Предпросмотр favicon",
+  "BOOKMARK_FORM_FAVICON_URL_LABEL": "URL Favicon:",
+  "BOOKMARK_FORM_FAVICON_URL_PLACEHOLDER": "Введите URL favicon (необязательно)",
+  "BOOKMARK_FORM_HIDE_ADVANCED_OPTIONS_BUTTON": "Скрыть расширенные параметры",
+  "BOOKMARK_FORM_MERGE_CONFIRM": "Вы уверены, что хотите объединить '{sourceUrl}' с '{targetUrl}'?",
+  "BOOKMARK_FORM_NOTE_PLACEHOLDER": "Введите примечание (необязательно)",
+  "BOOKMARK_FORM_SHOW_ADVANCED_OPTIONS_BUTTON": "Показать расширенные параметры",
+  "BOOKMARK_FORM_TAGS_ERROR_EMPTY": "Требуется хотя бы один тег. Используйте запятые для разделения нескольких тегов.",
+  "BOOKMARK_FORM_TITLE_PLACEHOLDER": "Введите заголовок (необязательно)",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_ADD_MODE": "Этот URL закладки уже существует. Вы можете отредактировать существующую закладку или изменить URL.",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_EDIT_MODE": "Этот URL закладки уже существует. Пожалуйста, объедините вручную и сохраните, или измените URL.",
+  "BOOKMARK_FORM_URL_ERROR_INVALID": "Пожалуйста, введите действительный формат URL (например, https://example.com)",
+  "BOOKMARK_FORM_URL_ERROR_NOT_FOUND_EDIT_MODE": "Закладка не найдена; возможно, она была удалена. Вы можете ввести данные, чтобы добавить ее как новую закладку, или обновить и повторить попытку.",
+  "BOOKMARK_ITEM_DATETIME_TOOLTIP": "Обновлено: {updatedTime}\nСоздано: {createdTime}",
+  "BOOKMARK_ITEM_UNTITLED": "Без названия",
+  "BOOKMARK_LIST_BATCH_ADD_TAGS": "Добавить теги",
+  "BOOKMARK_LIST_BATCH_EDIT_TAGS": "Изменить имена тегов",
+  "BOOKMARK_LIST_BATCH_REMOVE_TAGS": "Удалить теги",
+  "BOOKMARK_LIST_COPY_TO_MY_BOOKMARKS": "Копировать в Мои закладки",
+  "BOOKMARK_LIST_DELETE_BOOKMARKS": "Удалить закладки",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_EXPAND": "или нажмите «Развернуть все», чтобы просмотреть все текущие результаты.",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_FILTER": "Совет: Используйте фильтры для быстрого поиска элементов,",
+  "BOOKMARK_LIST_LOAD_INFO_MAIN": "Отображаются первые {count} закладок 🔖",
+  "BOOKMARK_LIST_NO_MATCHING_BOOKMARKS": "Соответствующих закладок не найдено",
+  "BOOKMARK_LIST_PERMANENTLY_DELETE_BOOKMARKS": "Удалить закладки навсегда",
+  "BOOKMARK_LIST_RESTORE_BOOKMARKS": "Восстановить закладки",
+  "BOOKMARK_LIST_SELECTED_COUNT": "Выбрано: {selectedCount} элементов",
+  "BOOKMARK_LIST_SELECT_ALL": "Выбрать все",
+  "COLLECTIONS_CREATE_ARIA_LABEL": "Создать новую коллекцию",
+  "COLLECTIONS_CREATE_MODAL_TITLE": "Создать новую коллекцию",
+  "COLLECTIONS_DELETE_CONFIRM_MESSAGE": "Вы уверены, что хотите удалить эту коллекцию?",
+  "COLLECTIONS_EDIT_MODAL_TITLE": "Редактировать коллекцию",
+  "COLLECTIONS_MORE_ACTIONS_ARIA_LABEL": "Больше действий",
+  "COLLECTIONS_NAME_LABEL": "Название коллекции:",
+  "COLLECTIONS_NAME_PLACEHOLDER": "Введите название коллекции",
+  "COLLECTIONS_NAME_VALIDATION_ERROR": "Название коллекции обязательно",
+  "COLLECTIONS_PATH_LABEL": "Путь:",
+  "COLLECTIONS_PATH_PLACEHOLDER": "Введите путь (необязательно): work",
+  "COLLECTIONS_SAVE_MODAL_DESCRIPTION": "Сохраните текущие условия фильтра как коллекцию для быстрого доступа в следующий раз.",
+  "COLLECTIONS_TITLE": "Коллекции",
+  "COMPOSITE_FILTERS_CLEAR_SEARCH_ARIA_LABEL": "Очистить ключевые слова поиска",
+  "COMPOSITE_FILTERS_DOMAIN_FILTER_TITLE": "Фильтр доменов",
+  "COMPOSITE_FILTERS_RESET_BUTTON": "Сбросить фильтры",
+  "COMPOSITE_FILTERS_TAG_FILTER_TITLE": "Фильтр тегов",
+  "COMPOSITE_FILTERS_TITLE_LEVEL": "Фильтр #{level}",
+  "COMPOSITE_FILTERS_TOGGLE_MULTI_SELECT_TITLE": "Переключить режим одиночного/множественного выбора",
+  "CONFIRM_MODAL_MESSAGE_BATCH_DELETE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Вы уверены, что хотите удалить выбранную {count} закладку?",
+        "countPlural=few": "Вы уверены, что хотите удалить выбранные {count} закладки?",
+        "countPlural=many": "Вы уверены, что хотите удалить выбранные {count} закладок?",
+        "countPlural=other": "Вы уверены, что хотите удалить выбранные {count} закладки?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_MESSAGE_BATCH_RESTORE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Вы уверены, что хотите восстановить эту закладку?",
+        "countPlural=few": "Вы уверены, что хотите восстановить {count} закладки?",
+        "countPlural=many": "Вы уверены, что хотите восстановить {count} закладок?",
+        "countPlural=other": "Вы уверены, что хотите восстановить {count} закладки?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_TITLE_BATCH_DELETE_BOOKMARKS": "Пакетное удаление закладок",
+  "CONFIRM_MODAL_TITLE_BATCH_RESTORE_BOOKMARKS": "Подтвердить пакетное восстановление",
+  "DELETED_BOOKMARKS": "Удаленные закладки",
+  "DELETE_BUTTON_TEXT": "Удалить",
+  "EDIT_BOOKMARK_MODAL_TITLE": "Редактировать закладку",
+  "EDIT_BUTTON_TEXT": "Редактировать",
+  "EXPAND_ALL_BUTTON_TEXT": "Развернуть все",
+  "FAVORITES_TITLE": "Избранное",
+  "FEATURE_COMING_SOON_ALERT": "Эта функция скоро появится, следите за обновлениями!",
+  "FIELD_DESCRIPTION": "Описание",
+  "FIELD_NOTE": "Примечание",
+  "FIELD_TAGS": "Теги",
+  "FIELD_TITLE": "Заголовок",
+  "HEADER_ADD_BUTTON_TOOLTIP": "Добавить",
+  "HEADER_MENU_ADD_BOOKMARK": "Добавить закладку",
+  "HEADER_MENU_CREATE_COLLECTION": "Создать коллекцию",
+  "HEADER_MENU_SAVE_CURRENT_FILTER": "Сохранить текущий фильтр",
+  "HEADER_SETTINGS_TOOLTIP": "Настройки",
+  "HEADER_SIDEBAR_POSITION_LEFT": "Слева",
+  "HEADER_SIDEBAR_POSITION_RIGHT": "Справа",
+  "HEADER_SORT_BY_TOOLTIP": "Сортировать по",
+  "HEADER_THEME_SELECT_TOOLTIP": "Выбрать тему",
+  "HEADER_TOGGLE_NAVBAR_TOOLTIP": "Переключить панель навигации",
+  "HEADER_VIEW_MODE_TOOLTIP": "Режим просмотра",
+  "HIERARCHICAL_TAGS_TITLE": "Иерархические теги",
+  "MODAL_CANCEL_BUTTON": "Отмена",
+  "MODAL_CLOSE_ARIA_LABEL": "Закрывать",
+  "MORE_COLLECTIONS_TITLE": "Еще коллекции",
+  "NAVIGATION_SIDEBAR_HELP_DOCS": "Документация",
+  "NOTES": "Примечания",
+  "PROCESSING_TEXT": "Обработка...",
+  "READ_LATER": "Читать позже",
+  "RECENTLY_ADDED": "Недавно добавлено",
+  "RECENTLY_MODIFIED": "Недавно изменено",
+  "RELEASE_NOTES": "Заметки о выпуске",
+  "RESTORE_BUTTON_TEXT": "Восстановить",
+  "SAVED_FILTERS_CREATE_ARIA_LABEL": "Создать новый фильтр",
+  "SAVED_FILTERS_CREATE_MODAL_TITLE": "Сохранить текущий фильтр",
+  "SAVED_FILTERS_DELETE_CONFIRM_MESSAGE": "Вы уверены, что хотите удалить этот сохраненный фильтр?",
+  "SAVED_FILTERS_DESCRIPTION_PLACEHOLDER": "Введите описание (необязательно)",
+  "SAVED_FILTERS_EDIT_MODAL_TITLE": "Редактировать сохраненный фильтр",
+  "SAVED_FILTERS_NAME_LABEL": "Название фильтра:",
+  "SAVED_FILTERS_NAME_PLACEHOLDER": "Введите название фильтра",
+  "SAVED_FILTERS_NAME_VALIDATION_ERROR": "Название фильтра обязательно",
+  "SAVED_FILTERS_TITLE": "Сохраненные фильтры",
+  "SAVE_BUTTON_TEXT": "Сохранять",
+  "SETTINGS_SIDEBAR_ABOUT_TITLE": "О программе",
+  "SETTINGS_SIDEBAR_CLEAR_DATA_BUTTON": "Очистить данные",
+  "SETTINGS_SIDEBAR_CLOSE_BUTTON_ARIA_LABEL": "Закрыть боковую панель настроек",
+  "SETTINGS_SIDEBAR_DARK_THEME_LABEL": "Тёмная тема",
+  "SETTINGS_SIDEBAR_DATA_MANAGEMENT_TITLE": "Управление данными",
+  "SETTINGS_SIDEBAR_DEVELOPMENT_ROADMAP_LINK": "План разработки",
+  "SETTINGS_SIDEBAR_EXPORT_LABEL": "Экспорт данных",
+  "SETTINGS_SIDEBAR_FEEDBACK_LABEL": "Обратная связь и предложения",
+  "SETTINGS_SIDEBAR_FILTER_BAR_POSITION_LABEL": "Положение панели фильтров",
+  "SETTINGS_SIDEBAR_GITHUB_REPOSITORY_LINK": "Репозиторий GitHub",
+  "SETTINGS_SIDEBAR_IMPORT_LABEL": "Импорт данных",
+  "SETTINGS_SIDEBAR_REPORT_ISSUE_LINK": "Сообщить о проблеме",
+  "SETTINGS_SIDEBAR_SELECT_LANGUAGE_PLACEHOLDER": "Выбрать язык",
+  "SETTINGS_SIDEBAR_SELECT_SORT_ORDER_PLACEHOLDER": "Выбрать порядок сортировки",
+  "SETTINGS_SIDEBAR_SELECT_THEME_PLACEHOLDER": "Выбрать тему",
+  "SETTINGS_SIDEBAR_SELECT_VIEW_MODE_PLACEHOLDER": "Выбрать режим просмотра",
+  "SETTINGS_SIDEBAR_THEME_STYLE_LABEL": "Стиль темы",
+  "SETTINGS_SIDEBAR_TOOLBAR_DISPLAY_SETTINGS_TITLE": "Настройки отображения панели инструментов",
+  "SETTINGS_SIDEBAR_UI_LANGUAGE_LABEL": "Язык",
+  "SETTINGS_SIDEBAR_UI_SETTINGS_TITLE": "Настройки интерфейса",
+  "SETTINGS_SIDEBAR_VERSION_LABEL": "Версия",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_ERROR": "Ошибка соединения WebDAV: {error}",
+  "SETTINGS_SYNC_WEBDAV_CONNECTION_SUCCESS": "Соединение WebDAV успешно!",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_LABEL": "Пароль:",
+  "SETTINGS_SYNC_WEBDAV_PASSWORD_PLACEHOLDER": "Пароль WebDAV",
+  "SETTINGS_SYNC_WEBDAV_SAVE_SETTINGS_BUTTON": "Сохранить настройки WebDAV",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVED": "Настройки WebDAV успешно сохранены!",
+  "SETTINGS_SYNC_WEBDAV_SETTINGS_SAVE_ERROR": "Ошибка сохранения настроек WebDAV: {error}",
+  "SETTINGS_SYNC_WEBDAV_TEST_CONNECTION_BUTTON": "Проверить соединение",
+  "SETTINGS_SYNC_WEBDAV_URL_PLACEHOLDER": "URL WebDAV (например, https://example.com/remote.php/dav/files/username/)",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_LABEL": "Имя пользователя:",
+  "SETTINGS_SYNC_WEBDAV_USERNAME_PLACEHOLDER": "Имя пользователя WebDAV",
+  "SORT_OPTION_CREATED_ASC": "Дата создания ↑",
+  "SORT_OPTION_CREATED_DESC": "Дата создания ↓",
+  "SORT_OPTION_TITLE_ASC": "Название (А-Я)",
+  "SORT_OPTION_TITLE_DESC": "Название (Я-А)",
+  "SORT_OPTION_UPDATED_ASC": "Дата обновления ↑",
+  "SORT_OPTION_UPDATED_DESC": "Дата обновления ↓",
+  "STARRED": "Помеченные",
+  "TAG_INPUT_CLEAR_TAG_CONTENT_TOOLTIP": "Очистить содержимое тега",
+  "TAG_INPUT_EDIT_TAG_TOOLTIP": "Нажмите, чтобы изменить тег",
+  "TAG_INPUT_HINT_ENTER_COMMA_SEPARATOR": "Подсказка: Используйте Enter или запятую для разделения нескольких тегов",
+  "TAG_INPUT_PLACEHOLDER": "Введите теги, нажмите Enter или запятую, чтобы добавить несколько тегов",
+  "TAG_INPUT_REMOVE_TAG_TOOLTIP": "Удалить тег {tag}",
+  "TOOLBAR_BATCH_SELECT_MODE_TOOLTIP": "Режим пакетного выбора",
+  "TOOLBAR_MENU_EXPORT_ALL_BOOKMARKS": "Экспорт всех закладок",
+  "TOOLBAR_MENU_EXPORT_CURRENT_RESULTS": "Экспорт текущих результатов",
+  "TOOLBAR_MENU_OPEN_ALL_BOOKMARKS": "Открыть все закладки",
+  "TOOLBAR_MENU_SELECT_MODE": "Режим выбора",
+  "TOOLBAR_SELECT_BUTTON": "Выбрать",
+  "WELCOME_MESSAGE": "Добро пожаловать в UTags!",
+  "ZZ_P_COLON": ":",
+  "__BOOKMARK_FORM_URL_LABEL": "URL:",
+  "__BOOKMARK_FORM_URL_PLACEHOLDER": "https://example.com",
+  "__MODAL_SAVE_BUTTON": "Сохранять",
+  "__SAVED_FILTERS_DESCRIPTION_LABEL": "Описание:"
+}

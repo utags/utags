@@ -1,0 +1,303 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "ADD_BOOKMARK_MODAL_TITLE": "Add Bookmark",
+  "AI_SUMMARY_BUTTON_TEXT": "AI Summary",
+  "ALL_BOOKMARKS": "All bookmarks",
+  "APP_TITLE": "UTags Bookmarks",
+  "BATCH_TAG_ADD_MODAL_ERROR_ADD_FAILED": "Failed to add tags: {errorDetails}",
+  "BATCH_TAG_ADD_MODAL_ERROR_NO_BOOKMARKS_SELECTED": "No bookmarks selected",
+  "BATCH_TAG_ADD_MODAL_SELECTED_BOOKMARKS_COUNT": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "{count} bookmark selected",
+        "countPlural=other": "{count} bookmarks selected"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "Successfully added {tagsCount} tag to {bookmarksCount} bookmark",
+        "bookmarksPlural=one, tagsPlural=other": "Successfully added {tagsCount} tags to {bookmarksCount} bookmark",
+        "bookmarksPlural=other, tagsPlural=one": "Successfully added {tagsCount} tag to {bookmarksCount} bookmarks",
+        "bookmarksPlural=other, tagsPlural=other": "Successfully added {tagsCount} tags to {bookmarksCount} bookmarks"
+      }
+    }
+  ],
+  "BATCH_TAG_ADD_MODAL_TITLE": "Batch Add Tags",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_NO_TAGS_SELECTED": "Please select at least one tag to remove",
+  "BATCH_TAG_REMOVE_MODAL_ERROR_REMOVE_FAILED": "Failed to remove tags: {errorDetails}",
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmark",
+        "bookmarksPlural=one, tagsPlural=other": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmark",
+        "bookmarksPlural=other, tagsPlural=one": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmarks",
+        "bookmarksPlural=other, tagsPlural=other": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmarks"
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_SUCCESS_MESSAGE_WITH_DELETIONS": [
+    {
+      "declarations": [
+        "input bookmarksCount",
+        "input tagsCount",
+        "input deletedBookmarksCount",
+        "local bookmarksPlural = bookmarksCount: plural",
+        "local tagsPlural = tagsCount: plural",
+        "local deletedBookmarksPlural = deletedBookmarksCount: plural"
+      ],
+      "selectors": [
+        "bookmarksPlural",
+        "tagsPlural",
+        "deletedBookmarksPlural"
+      ],
+      "match": {
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=one": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmark, and {deletedBookmarksCount} bookmark was deleted as a result.",
+        "bookmarksPlural=one, tagsPlural=one,deletedBookmarksPlural=other": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmark, and {deletedBookmarksCount} bookmarks were deleted as a result.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=one": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmark, and {deletedBookmarksCount} bookmark was deleted as a result.",
+        "bookmarksPlural=one, tagsPlural=other,deletedBookmarksPlural=other": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmark, and {deletedBookmarksCount} bookmarks were deleted as a result.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=one": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmarks, and {deletedBookmarksCount} bookmark was deleted as a result.",
+        "bookmarksPlural=other, tagsPlural=one,deletedBookmarksPlural=other": "Successfully removed {tagsCount} tag from {bookmarksCount} bookmarks, and {deletedBookmarksCount} bookmarks were deleted as a result.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=one": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmarks, and {deletedBookmarksCount} bookmark was deleted as a result.",
+        "bookmarksPlural=other, tagsPlural=other,deletedBookmarksPlural=other": "Successfully removed {tagsCount} tags from {bookmarksCount} bookmarks, and {deletedBookmarksCount} bookmarks were deleted as a result."
+      }
+    }
+  ],
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_HINT": "Hint: Use Enter or comma to separate multiple tags. Tags will be removed only if all entered tags exist on a bookmark. If all tags are removed, the bookmark will also be deleted.",
+  "BATCH_TAG_REMOVE_MODAL_TAG_INPUT_PLACEHOLDER": "Enter tags to remove, press Enter or comma to add multiple tags",
+  "BATCH_TAG_REMOVE_MODAL_TITLE": "Batch Remove Tags",
+  "BOOKMARKS_DELETED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Successfully deleted {count} bookmark.",
+        "countPlural=other": "Successfully deleted {count} bookmarks."
+      }
+    }
+  ],
+  "BOOKMARKS_DELETION_NO_ITEMS": "No bookmarks were deleted.",
+  "BOOKMARKS_RESTORED_SUCCESS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Successfully restored {count} bookmark.",
+        "countPlural=other": "Successfully restored {count} bookmarks."
+      }
+    }
+  ],
+  "BOOKMARKS_RESTORE_NO_ITEMS": "No bookmarks were restored.",
+  "BOOKMARK_FORM_ALWAYS_SHOW_ADVANCED_LABEL": "Always show advanced options",
+  "BOOKMARK_FORM_COVER_IMAGE_LOAD_ERROR": "Cover image failed to load",
+  "BOOKMARK_FORM_COVER_IMAGE_PREVIEW_ALT": "Cover image preview",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_LABEL": "Cover Image URL:",
+  "BOOKMARK_FORM_COVER_IMAGE_URL_PLACEHOLDER": "Enter cover image URL (optional)",
+  "BOOKMARK_FORM_DESCRIPTION_PLACEHOLDER": "Enter description (optional)",
+  "BOOKMARK_FORM_FAVICON_LOAD_ERROR": "Favicon image failed to load",
+  "BOOKMARK_FORM_FAVICON_PREVIEW_ALT": "Favicon preview",
+  "BOOKMARK_FORM_FAVICON_URL_LABEL": "Favicon URL:",
+  "BOOKMARK_FORM_FAVICON_URL_PLACEHOLDER": "Enter favicon URL (optional)",
+  "BOOKMARK_FORM_HIDE_ADVANCED_OPTIONS_BUTTON": "Hide Advanced Options",
+  "BOOKMARK_FORM_MERGE_CONFIRM": "Are you sure you want to merge '{sourceUrl}' into '{targetUrl}'?",
+  "BOOKMARK_FORM_NOTE_PLACEHOLDER": "Enter note (optional)",
+  "BOOKMARK_FORM_SHOW_ADVANCED_OPTIONS_BUTTON": "Show Advanced Options",
+  "BOOKMARK_FORM_TAGS_ERROR_EMPTY": "At least one tag is required. Use commas to separate multiple tags.",
+  "BOOKMARK_FORM_TITLE_PLACEHOLDER": "Enter title (optional)",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_ADD_MODE": "This bookmark URL already exists. You can edit the existing bookmark or change to a different URL.",
+  "BOOKMARK_FORM_URL_ERROR_CONFLICT_EDIT_MODE": "This bookmark URL already exists. Please merge manually and save, or change to a different URL.",
+  "BOOKMARK_FORM_URL_ERROR_INVALID": "Please enter a valid URL format (e.g., https://example.com)",
+  "BOOKMARK_FORM_URL_ERROR_NOT_FOUND_EDIT_MODE": "Bookmark not found; it may have been deleted. You can enter details to add it as a new bookmark, or refresh and try again.",
+  "BOOKMARK_ITEM_DATETIME_TOOLTIP": "Updated: {updatedTime}\nCreated: {createdTime}",
+  "BOOKMARK_ITEM_UNTITLED": "Untitled",
+  "BOOKMARK_LIST_BATCH_ADD_TAGS": "Add Tags",
+  "BOOKMARK_LIST_BATCH_EDIT_TAGS": "Edit Tag Names",
+  "BOOKMARK_LIST_BATCH_REMOVE_TAGS": "Remove Tags",
+  "BOOKMARK_LIST_COPY_TO_MY_BOOKMARKS": "Copy to My Bookmarks",
+  "BOOKMARK_LIST_DELETE_BOOKMARKS": "Delete Bookmarks",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_EXPAND": "or click 'Expand All' to view all current results.",
+  "BOOKMARK_LIST_LOAD_INFO_HINT_FILTER": "Tip: Use filters to quickly locate items,",
+  "BOOKMARK_LIST_LOAD_INFO_MAIN": "Showing the first {count} bookmarks 🔖",
+  "BOOKMARK_LIST_NO_MATCHING_BOOKMARKS": "No matching bookmarks found",
+  "BOOKMARK_LIST_PERMANENTLY_DELETE_BOOKMARKS": "Permanently Delete Bookmarks",
+  "BOOKMARK_LIST_RESTORE_BOOKMARKS": "Restore Bookmarks",
+  "BOOKMARK_LIST_SELECTED_COUNT": "Selected: {selectedCount} items",
+  "BOOKMARK_LIST_SELECT_ALL": "Select All",
+  "COLLECTIONS_CREATE_ARIA_LABEL": "Create new collection",
+  "COLLECTIONS_CREATE_MODAL_TITLE": "Create New Collection",
+  "COLLECTIONS_DELETE_CONFIRM_MESSAGE": "Are you sure you want to delete this collection?",
+  "COLLECTIONS_EDIT_MODAL_TITLE": "Edit Collection",
+  "COLLECTIONS_MORE_ACTIONS_ARIA_LABEL": "More actions",
+  "COLLECTIONS_NAME_LABEL": "Collection Name:",
+  "COLLECTIONS_NAME_PLACEHOLDER": "Enter collection name",
+  "COLLECTIONS_NAME_VALIDATION_ERROR": "Collection name is required",
+  "COLLECTIONS_PATH_LABEL": "Path:",
+  "COLLECTIONS_PATH_PLACEHOLDER": "Enter path (optional): work",
+  "COLLECTIONS_SAVE_MODAL_DESCRIPTION": "Save the current filter conditions as a collection for quick access next time.",
+  "COLLECTIONS_TITLE": "Collections",
+  "COMPOSITE_FILTERS_CLEAR_SEARCH_ARIA_LABEL": "Clear search keywords",
+  "COMPOSITE_FILTERS_DOMAIN_FILTER_TITLE": "Domain Filter",
+  "COMPOSITE_FILTERS_RESET_BUTTON": "Reset Filters",
+  "COMPOSITE_FILTERS_TAG_FILTER_TITLE": "Tag Filter",
+  "COMPOSITE_FILTERS_TITLE_LEVEL": "Filter #{level}",
+  "COMPOSITE_FILTERS_TOGGLE_MULTI_SELECT_TITLE": "Toggle single/multi-select mode",
+  "CONFIRM_MODAL_MESSAGE_BATCH_DELETE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Are you sure you want to delete the selected {count} bookmark?",
+        "countPlural=other": "Are you sure you want to delete the selected {count} bookmarks?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_MESSAGE_BATCH_RESTORE_BOOKMARKS": [
+    {
+      "declarations": [
+        "input count",
+        "local countPlural = count: plural"
+      ],
+      "selectors": [
+        "countPlural"
+      ],
+      "match": {
+        "countPlural=one": "Are you sure you want to restore this bookmark?",
+        "countPlural=other": "Are you sure you want to restore {count} bookmarks?"
+      }
+    }
+  ],
+  "CONFIRM_MODAL_TITLE_BATCH_DELETE_BOOKMARKS": "Batch Delete Bookmarks",
+  "CONFIRM_MODAL_TITLE_BATCH_RESTORE_BOOKMARKS": "Confirm Batch Restore",
+  "DELETED_BOOKMARKS": "Deleted Bookmarks",
+  "DELETE_BUTTON_TEXT": "Delete",
+  "EDIT_BOOKMARK_MODAL_TITLE": "Edit Bookmark",
+  "EDIT_BUTTON_TEXT": "Edit",
+  "EXPAND_ALL_BUTTON_TEXT": "Expand All",
+  "FAVORITES_TITLE": "Favorites",
+  "FEATURE_COMING_SOON_ALERT": "This feature is coming soon, please stay tuned!",
+  "FIELD_DESCRIPTION": "Description",
+  "FIELD_NOTE": "Note",
+  "FIELD_TAGS": "Tags",
+  "FIELD_TITLE": "Title",
+  "HEADER_ADD_BUTTON_TOOLTIP": "Add",
+  "HEADER_MENU_ADD_BOOKMARK": "Add Bookmark",
+  "HEADER_MENU_CREATE_COLLECTION": "Create Collection",
+  "HEADER_MENU_SAVE_CURRENT_FILTER": "Save Current Filter",
+  "HEADER_SETTINGS_TOOLTIP": "Settings",
+  "HEADER_SIDEBAR_POSITION_LEFT": "Left",
+  "HEADER_SIDEBAR_POSITION_RIGHT": "Right",
+  "HEADER_SORT_BY_TOOLTIP": "Sort By",
+  "HEADER_THEME_SELECT_TOOLTIP": "Select Theme",
+  "HEADER_TOGGLE_NAVBAR_TOOLTIP": "Toggle Navigation Bar",
+  "HEADER_VIEW_MODE_TOOLTIP": "View Mode",
+  "HIERARCHICAL_TAGS_TITLE": "Hierarchical Tags",
+  "MODAL_CANCEL_BUTTON": "Cancel",
+  "MODAL_CLOSE_ARIA_LABEL": "Close",
+  "MORE_COLLECTIONS_TITLE": "More Collections",
+  "NAVIGATION_SIDEBAR_HELP_DOCS": "Help Docs",
+  "NOTES": "Notes",
+  "PROCESSING_TEXT": "Processing...",
+  "READ_LATER": "Read Later",
+  "RECENTLY_ADDED": "Recently added",
+  "RECENTLY_MODIFIED": "Recently modified",
+  "RELEASE_NOTES": "Release Notes",
+  "RESTORE_BUTTON_TEXT": "Restore",
+  "SAVED_FILTERS_CREATE_ARIA_LABEL": "Create new filter",
+  "SAVED_FILTERS_CREATE_MODAL_TITLE": "Save Current Filter",
+  "SAVED_FILTERS_DELETE_CONFIRM_MESSAGE": "Are you sure you want to delete this saved filter?",
+  "SAVED_FILTERS_DESCRIPTION_PLACEHOLDER": "Enter description (optional)",
+  "SAVED_FILTERS_EDIT_MODAL_TITLE": "Edit Saved Filter",
+  "SAVED_FILTERS_NAME_LABEL": "Filter Name:",
+  "SAVED_FILTERS_NAME_PLACEHOLDER": "Enter filter name",
+  "SAVED_FILTERS_NAME_VALIDATION_ERROR": "Filter name is required",
+  "SAVED_FILTERS_TITLE": "Saved Filters",
+  "SAVE_BUTTON_TEXT": "Save",
+  "SETTINGS_SIDEBAR_ABOUT_TITLE": "About",
+  "SETTINGS_SIDEBAR_CLEAR_DATA_BUTTON": "Clear Data",
+  "SETTINGS_SIDEBAR_CLOSE_BUTTON_ARIA_LABEL": "Close settings sidebar",
+  "SETTINGS_SIDEBAR_DARK_THEME_LABEL": "Dark Theme",
+  "SETTINGS_SIDEBAR_DATA_MANAGEMENT_TITLE": "Data Management",
+  "SETTINGS_SIDEBAR_DEVELOPMENT_ROADMAP_LINK": "Development Roadmap",
+  "SETTINGS_SIDEBAR_EXPORT_LABEL": "Export Data",
+  "SETTINGS_SIDEBAR_FEEDBACK_LABEL": "Feedback & Suggestions",
+  "SETTINGS_SIDEBAR_FILTER_BAR_POSITION_LABEL": "Filter Bar Position",
+  "SETTINGS_SIDEBAR_GITHUB_REPOSITORY_LINK": "GitHub Repository",
+  "SETTINGS_SIDEBAR_IMPORT_LABEL": "Import Data",
+  "SETTINGS_SIDEBAR_REPORT_ISSUE_LINK": "Report an Issue",
+  "SETTINGS_SIDEBAR_SELECT_LANGUAGE_PLACEHOLDER": "Select Language",
+  "SETTINGS_SIDEBAR_SELECT_SORT_ORDER_PLACEHOLDER": "Select Sort Order",
+  "SETTINGS_SIDEBAR_SELECT_THEME_PLACEHOLDER": "Select Theme",
+  "SETTINGS_SIDEBAR_SELECT_VIEW_MODE_PLACEHOLDER": "Select View Mode",
+  "SETTINGS_SIDEBAR_THEME_STYLE_LABEL": "Theme Style",
+  "SETTINGS_SIDEBAR_TOOLBAR_DISPLAY_SETTINGS_TITLE": "Toolbar Display Settings",
+  "SETTINGS_SIDEBAR_UI_LANGUAGE_LABEL": "Language",
+  "SETTINGS_SIDEBAR_UI_SETTINGS_TITLE": "Interface Settings",
+  "SETTINGS_SIDEBAR_VERSION_LABEL": "Version",
+  "SORT_OPTION_CREATED_ASC": "Created Date ↑",
+  "SORT_OPTION_CREATED_DESC": "Created Date ↓",
+  "SORT_OPTION_TITLE_ASC": "Title (A-Z)",
+  "SORT_OPTION_TITLE_DESC": "Title (Z-A)",
+  "SORT_OPTION_UPDATED_ASC": "Updated Date ↑",
+  "SORT_OPTION_UPDATED_DESC": "Updated Date ↓",
+  "STARRED": "Starred",
+  "TAG_INPUT_CLEAR_TAG_CONTENT_TOOLTIP": "Clear tag content",
+  "TAG_INPUT_EDIT_TAG_TOOLTIP": "Click to edit tag",
+  "TAG_INPUT_HINT_ENTER_COMMA_SEPARATOR": "Tip: Use Enter or comma to separate multiple tags",
+  "TAG_INPUT_PLACEHOLDER": "Enter tags, press Enter or comma to add multiple tags",
+  "TAG_INPUT_REMOVE_TAG_TOOLTIP": "Remove tag {tag}",
+  "TOOLBAR_BATCH_SELECT_MODE_TOOLTIP": "Batch Select Mode",
+  "TOOLBAR_MENU_EXPORT_ALL_BOOKMARKS": "Export All Bookmarks",
+  "TOOLBAR_MENU_EXPORT_CURRENT_RESULTS": "Export Current Results",
+  "TOOLBAR_MENU_OPEN_ALL_BOOKMARKS": "Open All Bookmarks",
+  "TOOLBAR_MENU_SELECT_MODE": "Select Mode",
+  "TOOLBAR_SELECT_BUTTON": "Select",
+  "WELCOME_MESSAGE": "Welcome to UTags!",
+  "ZZ_P_COLON": ":",
+  "__BOOKMARK_FORM_URL_LABEL": "URL:",
+  "__BOOKMARK_FORM_URL_PLACEHOLDER": "https://example.com",
+  "__MODAL_SAVE_BUTTON": "Save",
+  "__SAVED_FILTERS_DESCRIPTION_LABEL": "Description:"
+}
