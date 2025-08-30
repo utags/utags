@@ -57,4 +57,3 @@ And more. Click here to add more sites. https://github.com/utags/utags/issues
 
 More information:
 - https://github.com/utags/utags
-- https://github.com/utags/utags-bookmarks

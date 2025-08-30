@@ -108,7 +108,7 @@ De plus, en raison des politiques publiques de Greasy Fork, vous devez ajouter m
 - Les tags peuvent être ajoutés directement sur la page actuellement affichée, et sauvegarder les tags ne provoque pas de rechargement de la page
 - Les tags peuvent être ajoutés aux titres de publications, noms d'utilisateur et catégories
 - Support de l'extension Vimium : appuyez sur la touche "f" et des marqueurs d'indices seront également affichés sur les icônes de tags pour ajouter rapidement des tags
-- **Gestion moderne des signets** : Visitez [https://utags.link/](https://utags.link/) pour découvrir des fonctionnalités avancées de gestion des signets. Pour des informations détaillées sur l'application web, consultez [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
+- **Gestion moderne des signets** : Visitez [https://utags.link/](https://utags.link/) pour découvrir des fonctionnalités avancées de gestion des signets. Pour des informations détaillées sur l'application web, consultez [https://github.com/utags/utags/blob/main/packages/webapp/README.md](https://github.com/utags/utags/blob/main/packages/webapp/README.md)
 - Sur la page [Liste des tags](https://utags.link/), vous pouvez voir les utilisateurs et publications tagués dans l'ordre de mise à jour
 - Prend en charge [l'export et l'import de données](https://utags.link/)
 - Marquage automatique des publications lues. Le contenu lu peut être affiché en semi-transparent ou masqué. Cette fonctionnalité doit être activée manuellement sur la page des paramètres. Elle est désactivée par défaut. Actuellement, elle ne s'applique qu'aux sites `linux.do` et `v2ex.com`

@@ -1,7 +1,7 @@
 # UTags 书签管理器
 
 [![开源协议](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![构建状态](https://img.shields.io/github/actions/workflow/status/utags/utags-bookmarks/ci.yml?branch=main)](https://github.com/utags/utags-bookmarks/actions)
+[![构建状态](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags 官方网站](https://img.shields.io/badge/UTags-官方站点-brightgreen)](https://utags.link)
 
 ## 🚀 项目概览
@@ -142,20 +142,20 @@ npm run dev
 
 ```bash
 # 克隆仓库
-git clone https://github.com/utags/utags-bookmarks.git
-cd utags-bookmarks
+git clone https://github.com/utags/utags.git
+cd utags
 
 # 安装依赖
-npm install
+pnpm install
 
 # 构建生产版本
-npm run build
+pnpm run build
 
 # 选项1：将 dist 文件夹部署到你的 Web 服务器
 # 构建文件将位于 'dist' 目录中
 
 # 选项2：启动本地预览服务器
-npm run preview
+pnpm run preview
 # 这将在 http://localhost:4173 提供构建文件的服务
 ```
 
@@ -163,7 +163,7 @@ npm run preview
 
 ```bash
 # 克隆 gh-pages 分支（包含预构建文件）
-git clone -b gh-pages --single-branch https://github.com/utags/utags-bookmarks.git utags-bookmarks-dist
+git clone -b gh-pages --single-branch https://github.com/utags/utags.git utags-bookmarks-dist
 cd utags-bookmarks-dist
 
 # 将文件部署到你的 Web 服务器
@@ -189,8 +189,8 @@ git reset --hard origin/gh-pages
 
 通过以下方式贡献：
 
-- 🐛 [GitHub Issues](https://github.com/utags/utags-bookmarks/issues) - 报告问题
-- 💡 [Pull Requests](https://github.com/utags/utags-bookmarks/pulls) - 添加功能
+- 🐛 [GitHub Issues](https://github.com/utags/utags/issues) - 报告问题
+- 💡 [Pull Requests](https://github.com/utags/utags/pulls) - 添加功能
 - 💬 [GitHub Discussions](https://github.com/orgs/utags/discussions) - 获取帮助和分享技巧
 
 请遵循我们的[贡献指南](CONTRIBUTING.zh-CN.md)。

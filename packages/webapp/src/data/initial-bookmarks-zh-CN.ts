@@ -84,7 +84,17 @@ export const initialBookmarks = {
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
       updated: Date.now() - 4000,
     },
-    tags: ['★', '开源项目', '浏览器扩展', '用户脚本', 'userscript'],
+    tags: [
+      '★',
+      '开源项目',
+      '浏览器扩展',
+      '用户脚本',
+      'userscript',
+      '书签',
+      '书签管理器',
+      '工具/免费',
+      'Bookmarks',
+    ],
   },
   'https://utags.link/c/public/help-zh': {
     meta: {
@@ -117,14 +127,6 @@ export const initialBookmarks = {
       updated: Date.now() - 4000,
     },
     tags: ['速查表', '工具'],
-  },
-  'https://github.com/utags/utags-bookmarks': {
-    meta: {
-      title: 'UTags 书签管理器',
-      created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
-      updated: Date.now() - 4000,
-    },
-    tags: ['★', '开源项目', '书签', '书签管理器', '工具/免费', 'Bookmarks'],
   },
 
   'https://tapmeplus1.com/zh': {

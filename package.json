@@ -47,6 +47,10 @@
     "vitest": "^3.2.4",
     "xo": "^0.60.0"
   },
+  "xo": {
+    "space": 2,
+    "prettier": true
+  },
   "pnpm": {
     "ignoredBuiltDependencies": [
       "@parcel/watcher",

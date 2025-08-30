@@ -80,7 +80,15 @@ export const initialBookmarks = {
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
       updated: Date.now() - 4000,
     },
-    tags: ['★', 'Open Source', 'Browser Extension', 'Userscript'],
+    tags: [
+      '★',
+      'Open Source',
+      'Browser Extension',
+      'Userscript',
+      'Bookmark Manager', // 书签管理器
+      'Tools/Free', // 工具/免费
+      'Bookmarks',
+    ],
   },
   'https://utags.link/c/public/help': {
     meta: {
@@ -120,20 +128,6 @@ export const initialBookmarks = {
     tags: [
       'Quick Reference Sheet', // 速查表
       'Tools', // 工具
-    ],
-  },
-  'https://github.com/utags/utags-bookmarks': {
-    meta: {
-      title: 'UTags Bookmark Manager', // UTags 书签管理器
-      created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
-      updated: Date.now() - 4000,
-    },
-    tags: [
-      '★',
-      'Open Source',
-      'Bookmark Manager', // 书签管理器
-      'Tools/Free', // 工具/免费
-      'Bookmarks',
     ],
   },
 

@@ -379,7 +379,7 @@
             </div>
             <div class="flex items-center justify-between px-1 py-1.5">
               <a
-                href="https://github.com/utags/utags-bookmarks"
+                href="https://github.com/utags/utags"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 text-gray-700 hover:text-blue-600 dark:text-gray-300">
@@ -389,7 +389,7 @@
             </div>
             <div class="flex items-center justify-between px-1 py-1.5">
               <a
-                href="https://github.com/utags/utags-bookmarks/issues"
+                href="https://github.com/utags/utags/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 text-gray-700 hover:text-blue-600 dark:text-gray-300">
@@ -399,7 +399,7 @@
             </div>
             <div class="flex items-center justify-between px-1 py-1.5">
               <a
-                href="https://github.com/utags/utags-bookmarks?tab=readme-ov-file#-development-roadmap"
+                href="https://github.com/utags/utags/tree/main/packages/webapp#-development-roadmap"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="flex items-center gap-3 text-gray-700 hover:text-blue-600 dark:text-gray-300">

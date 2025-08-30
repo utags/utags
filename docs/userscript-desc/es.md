@@ -108,7 +108,7 @@ Además, debido a las políticas públicas de Greasy Fork, debe agregar manualme
 - Las etiquetas se pueden agregar directamente en la página que se está viendo actualmente, y guardar etiquetas no causa que la página se recargue
 - Las etiquetas se pueden agregar a títulos de publicaciones, nombres de usuario y categorías
 - Soporte para la extensión Vimium: presione la tecla "f" y también se mostrarán marcadores de pistas en los iconos de etiquetas para agregar etiquetas rápidamente
-- **Gestión moderna de marcadores**: Visite [https://utags.link/](https://utags.link/) para experimentar funciones avanzadas de gestión de marcadores. Para información detallada sobre la aplicación web, consulte [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
+- **Gestión moderna de marcadores**: Visite [https://utags.link/](https://utags.link/) para experimentar funciones avanzadas de gestión de marcadores. Para información detallada sobre la aplicación web, consulte [https://github.com/utags/utags/blob/main/packages/webapp/README.md](https://github.com/utags/utags/blob/main/packages/webapp/README.md)
 - En la página [Lista de etiquetas](https://utags.link/) puede ver usuarios y publicaciones etiquetados en orden de actualización
 - Soporta [exportación e importación de datos](https://utags.link/)
 - Marcado automático de publicaciones leídas. El contenido leído se puede mostrar semi-transparente u oculto. Esta función debe activarse manualmente en la página de configuración. Está desactivada por defecto. Actualmente solo se aplica a los sitios `linux.do` y `v2ex.com`

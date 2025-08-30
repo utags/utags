@@ -1,7 +1,7 @@
 # UTags - Universal Tagging System
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags/ci.yml?branch=main)](https://github.com/utags/utags/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags Official Site](https://img.shields.io/badge/UTags-Official_Site-brightgreen)](https://utags.link)
 
 > English | [中文](README.zh-CN.md)
@@ -166,7 +166,8 @@ npm install && npm run build
 
 ```bash
 # Clone pre-built files
-git clone -b gh-pages --single-branch https://github.com/utags/utags-bookmarks.git
+git clone -b gh-pages --single-branch https://github.com/utags/utags.git utags-bookmarks-dist
+cd utags-bookmarks-dist
 # Deploy to your web server
 ```
 

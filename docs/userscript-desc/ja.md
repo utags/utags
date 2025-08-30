@@ -108,7 +108,7 @@
 - 閲覧中のページに直接タグを追加でき、タグを保存してもページが再読み込みされません
 - 投稿のタイトル、ユーザー名、カテゴリにタグを追加できます
 - Vimium 拡張機能をサポート：「f」キーを押すとタグアイコンにもヒントマーカーが表示され、素早くタグを追加できます
-- **モダンなブックマーク管理**：[https://utags.link/](https://utags.link/)にアクセスして高度なブックマーク管理機能を体験してください。Web アプリケーションの詳細については、[https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)をご覧ください
+- **モダンなブックマーク管理**：[https://utags.link/](https://utags.link/)にアクセスして高度なブックマーク管理機能を体験してください。Web アプリケーションの詳細については、[https://github.com/utags/utags/blob/main/packages/webapp/README.md](https://github.com/utags/utags/blob/main/packages/webapp/README.md)をご覧ください
 - [タグリスト](https://utags.link/)ページで、タグ付きユーザーと投稿を更新順で確認できます
 - [データのエクスポートとインポート](https://utags.link/)をサポート
 - 閲覧済み投稿の自動マーク。閲覧済みコンテンツを半透明で表示したり非表示にしたりできます。この機能は設定ページで手動で有効にする必要があります。デフォルトでは無効です。現在は`linux.do`と`v2ex.com`のサイトにのみ適用されます

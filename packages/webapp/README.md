@@ -1,7 +1,7 @@
 # UTags Bookmark Manager
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags-bookmarks/ci.yml?branch=main)](https://github.com/utags/utags-bookmarks/actions)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags Official Site](https://img.shields.io/badge/UTags-Official_Site-brightgreen)](https://utags.link)
 
 ## 🚀 Project Overview
@@ -136,20 +136,20 @@ Access the application at `http://localhost:5173`
 
 ```bash
 # Clone the repository
-git clone https://github.com/utags/utags-bookmarks.git
-cd utags-bookmarks
+git clone https://github.com/utags/utags.git
+cd utags
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build for production
-npm run build
+pnpm run build
 
 # Option 1: Deploy the dist folder to your web server
 # The built files will be in the 'dist' directory
 
 # Option 2: Start a local preview server
-npm run preview
+pnpm run preview
 # This will serve the built files at http://localhost:4173
 ```
 
@@ -157,7 +157,7 @@ npm run preview
 
 ```bash
 # Clone the gh-pages branch (contains pre-built files)
-git clone -b gh-pages --single-branch https://github.com/utags/utags-bookmarks.git utags-bookmarks-dist
+git clone -b gh-pages --single-branch https://github.com/utags/utags.git utags-bookmarks-dist
 cd utags-bookmarks-dist
 
 # Deploy the files to your web server
@@ -183,8 +183,8 @@ git reset --hard origin/gh-pages
 
 Contributions through:
 
-- 🐛 [GitHub Issues](https://github.com/utags/utags-bookmarks/issues) - for bug reports
-- 💡 [Pull Requests](https://github.com/utags/utags-bookmarks/pulls) - for feature additions
+- 🐛 [GitHub Issues](https://github.com/utags/utags/issues) - for bug reports
+- 💡 [Pull Requests](https://github.com/utags/utags/pulls) - for feature additions
 - 💬 [GitHub Discussions](https://github.com/orgs/utags/discussions) - get help and share tips
 
 Please follow our [contribution guidelines](CONTRIBUTING.md).

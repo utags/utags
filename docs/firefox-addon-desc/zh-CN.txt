@@ -57,4 +57,3 @@ Rule34Generate(Rule34Gen) (rule34gen.com)
 
 更多内容请访问
 - https://github.com/utags/utags
-- https://github.com/utags/utags-bookmarks

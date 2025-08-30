@@ -113,9 +113,10 @@ For now it works on
 - You can directly add tags to the browsed page, and the page will not be reloaded when you save the tag
 - Tags can be added to post titles, usernames, and categories
 - Support Vimium extension, click the 'f' key, the tag icon will also have a hint marker, you can quickly add tags
-- **Modern bookmark management**: Visit [https://utags.link/](https://utags.link/) to experience advanced bookmark management features. For detailed information about the web app, see [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
+- **Modern bookmark management**: Visit [https://utags.link/](https://utags.link/) to experience advanced bookmark management features. For detailed information about the web app, see [packages/webapp/README.md](https://github.com/utags/utags/blob/main/packages/webapp/README.md)
 - On the [tag list](https://utags.link/) page, you can see tagged users and posts, sorted by update order
 - Support [data export and import](https://utags.link/)
+- Support [data synchronization](https://utags.link/)
 - Automatically mark browsed posts. You can display the browsed content semi - transparently or hide it. This feature needs to be manually enabled on the settings page. By default, it is turned off. Currently, it is only applicable to the website `linux.do` and `v2ex.com`.
 
 ## Release Notes

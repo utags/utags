@@ -1,7 +1,7 @@
 # UTags - 通用标签系统
 
 [![开源协议](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![构建状态](https://img.shields.io/github/actions/workflow/status/utags/utags/ci.yml?branch=main)](https://github.com/utags/utags/actions)
+[![构建状态](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags 官方网站](https://img.shields.io/badge/UTags-官方站点-brightgreen)](https://utags.link)
 
 > [English](README.md) | 中文
@@ -166,7 +166,8 @@ npm install && npm run build
 
 ```bash
 # 克隆预构建文件
-git clone -b gh-pages --single-branch https://github.com/utags/utags-bookmarks.git
+git clone -b gh-pages --single-branch https://github.com/utags/utags.git utags-bookmarks-dist
+cd utags-bookmarks-dist
 # 部署到您的网络服务器
 ```
 

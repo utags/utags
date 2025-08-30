@@ -108,7 +108,7 @@ Außerdem müssen Sie aufgrund der öffentlichen Richtlinien von Greasy Fork fü
 - Tags können direkt auf der aktuell angezeigten Seite hinzugefügt werden, und das Speichern von Tags führt nicht zu einem Neuladen der Seite
 - Tags können zu Beitragstiteln, Benutzernamen und Kategorien hinzugefügt werden
 - Unterstützung für die Vimium-Erweiterung: Drücken Sie die "f"-Taste, und Hinweismarkierungen werden auch auf Tag-Symbolen angezeigt, um schnell Tags hinzuzufügen
-- **Modernes Lesezeichen-Management**: Besuchen Sie [https://utags.link/](https://utags.link/), um erweiterte Lesezeichen-Management-Funktionen zu erleben. Detaillierte Informationen über die Web-App finden Sie unter [https://github.com/utags/utags-bookmarks](https://github.com/utags/utags-bookmarks)
+- **Modernes Lesezeichen-Management**: Besuchen Sie [https://utags.link/](https://utags.link/), um erweiterte Lesezeichen-Management-Funktionen zu erleben. Detaillierte Informationen über die Web-App finden Sie unter [https://github.com/utags/utags/blob/main/packages/webapp/README.md](https://github.com/utags/utags/blob/main/packages/webapp/README.md)
 - Auf der [Tag-Liste](https://utags.link/) Seite können Sie getaggte Benutzer und Beiträge in der Reihenfolge der Aktualisierung anzeigen
 - Unterstützt [Datenexport und -import](https://utags.link/)
 - Automatische Markierung gelesener Beiträge. Gelesene Inhalte können halbtransparent angezeigt oder ausgeblendet werden. Diese Funktion muss auf der Einstellungsseite manuell aktiviert werden. Sie ist standardmäßig deaktiviert. Derzeit gilt sie nur für die Websites `linux.do` und `v2ex.com`
