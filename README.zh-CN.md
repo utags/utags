@@ -146,7 +146,6 @@ utags/
 
 - [https://utags.link](https://utags.link/)（主要）
 - [https://utags.top](https://utags.top/)
-- [https://utags-bookmarks.pages.dev](https://utags-bookmarks.pages.dev/)
 - [https://utags.github.io](https://utags.github.io/)
 
 #### 自托管

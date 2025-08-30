@@ -199,7 +199,6 @@ git reset --hard origin/gh-pages
 
 - [https://utags.link](https://utags.link/)
 - [https://utags.top](https://utags.top/)
-- [https://utags-bookmarks.pages.dev](https://utags-bookmarks.pages.dev/)
 - [https://utags.github.io](https://utags.github.io/)
 
 ## 📄 许可证

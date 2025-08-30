@@ -120,14 +120,6 @@ export const initialBookmarks = {
     },
     tags: ['discussions', '论坛', '社区', 'utags'],
   },
-  'https://utags.link/ref/': {
-    meta: {
-      title: 'Quick Reference',
-      created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
-      updated: Date.now() - 4000,
-    },
-    tags: ['速查表', '工具'],
-  },
 
   'https://tapmeplus1.com/zh': {
     meta: {

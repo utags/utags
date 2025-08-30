@@ -119,17 +119,6 @@ export const initialBookmarks = {
       'UTags',
     ],
   },
-  'https://utags.link/ref/': {
-    meta: {
-      title: 'Quick Reference',
-      created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
-      updated: Date.now() - 4000,
-    },
-    tags: [
-      'Quick Reference Sheet', // 速查表
-      'Tools', // 工具
-    ],
-  },
 
   'https://tapmeplus1.com/zh': {
     meta: {

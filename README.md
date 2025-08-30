@@ -146,7 +146,6 @@ A modern web application for advanced bookmark management with powerful tagging 
 
 - [https://utags.link](https://utags.link/) (Primary)
 - [https://utags.top](https://utags.top/)
-- [https://utags-bookmarks.pages.dev](https://utags-bookmarks.pages.dev/)
 - [https://utags.github.io](https://utags.github.io/)
 
 #### Self-hosting

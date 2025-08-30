@@ -193,7 +193,6 @@ Please follow our [contribution guidelines](CONTRIBUTING.md).
 
 - [https://utags.link](https://utags.link/)
 - [https://utags.top](https://utags.top/)
-- [https://utags-bookmarks.pages.dev](https://utags-bookmarks.pages.dev/)
 - [https://utags.github.io](https://utags.github.io/)
 
 ## 📄 License
