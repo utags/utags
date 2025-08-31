@@ -144,6 +144,14 @@
         ),
       },
       {
+        name: m.DOWNLOAD(),
+        icon: 'download',
+        href: buildCollectionPath(
+          `utags-downloads${isChineseLocale() ? '-zh' : ''}`,
+          'public'
+        ),
+      },
+      {
         name: m.RELEASE_NOTES(),
         icon: 'file-text',
         href: buildCollectionPath(

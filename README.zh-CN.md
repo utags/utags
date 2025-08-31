@@ -15,7 +15,7 @@
 
 它们共同提供了一个完整的解决方案，以前所未有的灵活性和控制力来组织、标记和管理您的数字内容。
 
-🌐 [体验 UTags](https://utags.link/) | 📦 [安装浏览器扩展](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+🌐 [体验 UTags](https://utags.link/) | 📦 [安装浏览器扩展](https://utags.link/c/public/utags-downloads-zh)
 
 ## 📁 仓库结构
 

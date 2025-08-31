@@ -15,7 +15,7 @@
 
 Together, they provide a complete solution for organizing, tagging, and managing your digital content with unprecedented flexibility and control.
 
-🌐 [Experience UTags Live](https://utags.link/) | 📦 [Install Browser Extension](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+🌐 [Experience UTags Live](https://utags.link/) | 📦 [Install Browser Extension](https://utags.link/c/public/utags-downloads)
 
 ## 📁 Repository Structure
 
