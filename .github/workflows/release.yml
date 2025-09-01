@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Compile Paraglide
+        run: pnpm run --filter ./packages/webapp compile-paraglide
+
       # Run tests
       - name: Run tests
         run: pnpm run test
