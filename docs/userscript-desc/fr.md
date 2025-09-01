@@ -126,6 +126,7 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
 
 - 0.19.x
   - Ajout de commandes de menu de tags rapides : Configurez des tags rapides personnalisés dans les paramètres et accédez-y via le menu clic droit avec les icônes ➕/➖ pour ajouter/supprimer des tags
+  - Ajouter la fonction d'étoile rapide pour le site web linux.do - activez l'ajout rapide d'étoiles dans les paramètres pour un marquage plus rapide
   - Optimisation de la logique de synchronisation des données, résolution des problèmes d'incohérence des données
   - Mise à jour du support du site dmm.co.jp
   - Ajout de la fonctionnalité de changement de langue

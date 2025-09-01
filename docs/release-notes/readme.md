@@ -12,6 +12,7 @@
 - Add quick tag menu commands for faster tag management - configure custom quick tags in settings and access them via right-click context menu with ➕/➖ icons
 - Add support for star special tags (★★★, ★★, ★, ☆☆☆, ☆☆, ☆) with priority sorting
 - Add new setting option "Enable tag styling in tag input window" for enhanced tag input experience
+- Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
 - Improve userscript availability detection and error handling in sync adapter
 
 ## uTags v0.18 Release Notes

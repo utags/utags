@@ -122,6 +122,7 @@ For now it works on
 ## Release Notes
 
 - 0.19.x
+  - Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
   - Optimize data sync logic, solve data inconsistency problem
   - Update dmm.co.jp site support
   - Add language switching functionality

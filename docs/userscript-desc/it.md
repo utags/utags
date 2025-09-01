@@ -126,6 +126,7 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
 
 - 0.19.x
   - Aggiunta dei Comandi Menu Tag Rapidi: Configura tag rapidi personalizzati nelle impostazioni e accedi tramite menu clic destro con icone ➕/➖ per aggiungere/rimuovere tag
+  - Aggiungere funzione stella rapida per il sito web linux.do - abilita l'aggiunta rapida di stelle nelle impostazioni per un bookmarking più veloce
   - Ottimizzazione della logica di sincronizzazione dati, risoluzione di problemi di inconsistenza dati
   - Aggiornamento del supporto del sito dmm.co.jp
   - Aggiunta della funzionalità di cambio lingua

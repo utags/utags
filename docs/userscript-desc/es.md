@@ -126,6 +126,7 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
 
 - 0.19.x
   - Adición de comandos de menú de etiquetas rápidas: Configure etiquetas rápidas personalizadas en la configuración y acceda a través del menú de clic derecho con iconos ➕/➖ para agregar/eliminar etiquetas
+  - Agregar función de estrella rápida para el sitio web linux.do - habilite la adición rápida de estrellas en la configuración para un marcado más rápido
   - Optimización de la lógica de sincronización de datos, resolución de problemas de inconsistencia de datos
   - Actualización del soporte del sitio dmm.co.jp
   - Adición de funcionalidad de cambio de idioma
