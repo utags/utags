@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.14
+// @version              0.19.15
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -1627,6 +1627,7 @@
     "menu.modifyCurrentPageTags": "Tags der aktuellen Seite \xE4ndern",
     "menu.addQuickTag": "{tag} Tag zur aktuellen Seite hinzuf\xFCgen",
     "menu.removeQuickTag": "{tag} Tag von der aktuellen Seite entfernen",
+    "menu.bookmarkList": "Lesezeichen-Manager",
     "settings.enableQuickStar":
       "Schnelles Hinzuf\xFCgen von Sternen aktivieren",
     "settings.quickTags": "Schnell-Tags",
@@ -1686,6 +1687,7 @@
     "menu.modifyCurrentPageTags": "Modify current page tags",
     "menu.addQuickTag": "Add {tag} tag to current page",
     "menu.removeQuickTag": "Remove {tag} tag from current page",
+    "menu.bookmarkList": "Bookmark Manager",
     "settings.quickTags": "Quick Tags",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
     "settings.enableQuickStar": "Enable quick star adding",
@@ -1748,6 +1750,7 @@
     "menu.modifyCurrentPageTags": "Modificar etiquetas de la p\xE1gina actual",
     "menu.addQuickTag": "Agregar etiqueta {tag} a la p\xE1gina actual",
     "menu.removeQuickTag": "Eliminar etiqueta {tag} de la p\xE1gina actual",
+    "menu.bookmarkList": "Administrador de marcadores",
     "settings.enableQuickStar": "Habilitar agregar estrella r\xE1pida",
     "settings.quickTags": "Etiquetas R\xE1pidas",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -1814,6 +1817,7 @@
       "Modifier les \xE9tiquettes de la page actuelle",
     "menu.addQuickTag": "Ajouter l'\xE9tiquette {tag} \xE0 la page actuelle",
     "menu.removeQuickTag": "Supprimer l'\xE9tiquette {tag} de la page actuelle",
+    "menu.bookmarkList": "Gestionnaire de favoris",
     "settings.enableQuickStar": "Activer ajout rapide d'\xE9toile",
     "settings.quickTags": "\xC9tiquettes Rapides",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -1875,6 +1879,7 @@
     "menu.modifyCurrentPageTags": "Modifica tag della pagina corrente",
     "menu.addQuickTag": "Aggiungi tag {tag} alla pagina corrente",
     "menu.removeQuickTag": "Rimuovi tag {tag} dalla pagina corrente",
+    "menu.bookmarkList": "Gestione segnalibri",
     "settings.enableQuickStar": "Abilita aggiunta rapida stella",
     "settings.quickTags": "Tag Rapidi",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -1946,6 +1951,8 @@
       "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306B {tag} \u30BF\u30B0\u3092\u8FFD\u52A0",
     "menu.removeQuickTag":
       "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u304B\u3089 {tag} \u30BF\u30B0\u3092\u524A\u9664",
+    "menu.bookmarkList":
+      "\u30D6\u30C3\u30AF\u30DE\u30FC\u30AF \u30DE\u30CD\u30FC\u30B8\u30E3",
     "settings.enableQuickStar":
       "\u30AF\u30A4\u30C3\u30AF\u30B9\u30BF\u30FC\u8FFD\u52A0\u3092\u6709\u52B9\u306B\u3059\u308B",
     "settings.quickTags": "\u30AF\u30A4\u30C3\u30AF\u30BF\u30B0",
@@ -2018,6 +2025,7 @@
       "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0 {tag} \uD0DC\uADF8 \uCD94\uAC00",
     "menu.removeQuickTag":
       "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0\uC11C {tag} \uD0DC\uADF8 \uC81C\uAC70",
+    "menu.bookmarkList": "\uBD81\uB9C8\uD06C \uAD00\uB9AC\uC790",
     "settings.enableQuickStar":
       "\uBE60\uB978 \uBCC4\uD45C \uCD94\uAC00 \uD65C\uC131\uD654",
     "settings.quickTags": "\uBE60\uB978 \uD0DC\uADF8",
@@ -2080,6 +2088,7 @@
     "menu.modifyCurrentPageTags": "Modificar tags da p\xE1gina atual",
     "menu.addQuickTag": "Adicionar tag {tag} \xE0 p\xE1gina atual",
     "menu.removeQuickTag": "Remover tag {tag} da p\xE1gina atual",
+    "menu.bookmarkList": "Gerenciador de favoritos",
     "settings.enableQuickStar": "Ativar adi\xE7\xE3o r\xE1pida de estrela",
     "settings.quickTags": "Tags R\xE1pidas",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -2159,6 +2168,8 @@
       "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u043A \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
     "menu.removeQuickTag":
       "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
+    "menu.bookmarkList":
+      "\u0414\u0438\u0441\u043F\u0435\u0442\u0447\u0435\u0440 \u0437\u0430\u043A\u043B\u0430\u0434\u043E\u043A",
     "settings.enableQuickStar":
       "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u043E\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0437\u0432\u0435\u0437\u0434\u044B",
     "settings.quickTags":
@@ -2231,6 +2242,7 @@
       "Th\xEAm th\u1EBB {tag} v\xE0o trang hi\u1EC7n t\u1EA1i",
     "menu.removeQuickTag":
       "X\xF3a th\u1EBB {tag} kh\u1ECFi trang hi\u1EC7n t\u1EA1i",
+    "menu.bookmarkList": "Tr\xECnh qu\u1EA3n l\xFD d\u1EA5u trang",
     "settings.enableQuickStar": "K\xEDch ho\u1EA1t th\xEAm sao nhanh",
     "settings.quickTags": "Th\u1EBB Nhanh",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -2302,6 +2314,7 @@
       "\u4E3A\u5F53\u524D\u7F51\u9875\u6DFB\u52A0 {tag} \u6807\u7B7E",
     "menu.removeQuickTag":
       "\u5220\u9664\u5F53\u524D\u7F51\u9875\u7684 {tag} \u6807\u7B7E",
+    "menu.bookmarkList": "\u4E66\u7B7E\u7BA1\u7406\u5668",
     "settings.quickTags": "\u5FEB\u6377\u6807\u7B7E",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
     "settings.enableQuickStar":
@@ -2373,6 +2386,7 @@
       "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
     "menu.removeQuickTag":
       "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "menu.bookmarkList": "\u66F8\u7C64\u7BA1\u7406\u5668",
     "settings.enableQuickStar":
       "\u555F\u7528\u5FEB\u901F\u6DFB\u52A0\u661F\u6A19",
     "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
@@ -2444,6 +2458,7 @@
       "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
     "menu.removeQuickTag":
       "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "menu.bookmarkList": "\u66F8\u7C64\u7BA1\u7406\u5668",
     "settings.enableQuickStar":
       "\u555F\u7528\u5FEB\u901F\u65B0\u589E\u661F\u6A19",
     "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
@@ -10797,6 +10812,13 @@
       return
     }
     setupWebappBridge()
+    await registerMenuCommand(
+      "\u{1F516} ".concat(i2("menu.bookmarkList")),
+      () => {
+        const url = "https://utags.link/"
+        window.open(url, "utags_bookmarks")
+      }
+    )
     onSettingsChange()
     onSettingsChange2()
     await initStorage()
