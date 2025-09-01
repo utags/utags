@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.19.12
+// @version              0.19.14
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -1627,6 +1627,8 @@
     "menu.modifyCurrentPageTags": "Tags der aktuellen Seite \xE4ndern",
     "menu.addQuickTag": "{tag} Tag zur aktuellen Seite hinzuf\xFCgen",
     "menu.removeQuickTag": "{tag} Tag von der aktuellen Seite entfernen",
+    "settings.enableQuickStar":
+      "Schnelles Hinzuf\xFCgen von Sternen aktivieren",
     "settings.quickTags": "Schnell-Tags",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -1686,6 +1688,7 @@
     "menu.removeQuickTag": "Remove {tag} tag from current page",
     "settings.quickTags": "Quick Tags",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
+    "settings.enableQuickStar": "Enable quick star adding",
   }
   var en_default2 = messages15
   var messages16 = {
@@ -1745,6 +1748,7 @@
     "menu.modifyCurrentPageTags": "Modificar etiquetas de la p\xE1gina actual",
     "menu.addQuickTag": "Agregar etiqueta {tag} a la p\xE1gina actual",
     "menu.removeQuickTag": "Eliminar etiqueta {tag} de la p\xE1gina actual",
+    "settings.enableQuickStar": "Habilitar agregar estrella r\xE1pida",
     "settings.quickTags": "Etiquetas R\xE1pidas",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -1810,6 +1814,7 @@
       "Modifier les \xE9tiquettes de la page actuelle",
     "menu.addQuickTag": "Ajouter l'\xE9tiquette {tag} \xE0 la page actuelle",
     "menu.removeQuickTag": "Supprimer l'\xE9tiquette {tag} de la page actuelle",
+    "settings.enableQuickStar": "Activer ajout rapide d'\xE9toile",
     "settings.quickTags": "\xC9tiquettes Rapides",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -1870,6 +1875,7 @@
     "menu.modifyCurrentPageTags": "Modifica tag della pagina corrente",
     "menu.addQuickTag": "Aggiungi tag {tag} alla pagina corrente",
     "menu.removeQuickTag": "Rimuovi tag {tag} dalla pagina corrente",
+    "settings.enableQuickStar": "Abilita aggiunta rapida stella",
     "settings.quickTags": "Tag Rapidi",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -1940,6 +1946,8 @@
       "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u306B {tag} \u30BF\u30B0\u3092\u8FFD\u52A0",
     "menu.removeQuickTag":
       "\u73FE\u5728\u306E\u30DA\u30FC\u30B8\u304B\u3089 {tag} \u30BF\u30B0\u3092\u524A\u9664",
+    "settings.enableQuickStar":
+      "\u30AF\u30A4\u30C3\u30AF\u30B9\u30BF\u30FC\u8FFD\u52A0\u3092\u6709\u52B9\u306B\u3059\u308B",
     "settings.quickTags": "\u30AF\u30A4\u30C3\u30AF\u30BF\u30B0",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2010,6 +2018,8 @@
       "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0 {tag} \uD0DC\uADF8 \uCD94\uAC00",
     "menu.removeQuickTag":
       "\uD604\uC7AC \uD398\uC774\uC9C0\uC5D0\uC11C {tag} \uD0DC\uADF8 \uC81C\uAC70",
+    "settings.enableQuickStar":
+      "\uBE60\uB978 \uBCC4\uD45C \uCD94\uAC00 \uD65C\uC131\uD654",
     "settings.quickTags": "\uBE60\uB978 \uD0DC\uADF8",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2070,6 +2080,7 @@
     "menu.modifyCurrentPageTags": "Modificar tags da p\xE1gina atual",
     "menu.addQuickTag": "Adicionar tag {tag} \xE0 p\xE1gina atual",
     "menu.removeQuickTag": "Remover tag {tag} da p\xE1gina atual",
+    "settings.enableQuickStar": "Ativar adi\xE7\xE3o r\xE1pida de estrela",
     "settings.quickTags": "Tags R\xE1pidas",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2148,6 +2159,8 @@
       "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u043A \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0435",
     "menu.removeQuickTag":
       "\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u0442\u0435\u0433 {tag} \u0441 \u0442\u0435\u043A\u0443\u0449\u0435\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B",
+    "settings.enableQuickStar":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0431\u044B\u0441\u0442\u0440\u043E\u0435 \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u0437\u0432\u0435\u0437\u0434\u044B",
     "settings.quickTags":
       "\u0411\u044B\u0441\u0442\u0440\u044B\u0435 \u0422\u0435\u0433\u0438",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
@@ -2218,6 +2231,7 @@
       "Th\xEAm th\u1EBB {tag} v\xE0o trang hi\u1EC7n t\u1EA1i",
     "menu.removeQuickTag":
       "X\xF3a th\u1EBB {tag} kh\u1ECFi trang hi\u1EC7n t\u1EA1i",
+    "settings.enableQuickStar": "K\xEDch ho\u1EA1t th\xEAm sao nhanh",
     "settings.quickTags": "Th\u1EBB Nhanh",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2290,6 +2304,8 @@
       "\u5220\u9664\u5F53\u524D\u7F51\u9875\u7684 {tag} \u6807\u7B7E",
     "settings.quickTags": "\u5FEB\u6377\u6807\u7B7E",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
+    "settings.enableQuickStar":
+      "\u542F\u7528\u5FEB\u901F\u6DFB\u52A0\u661F\u6807",
   }
   var zh_cn_default2 = messages24
   var messages25 = {
@@ -2357,6 +2373,8 @@
       "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
     "menu.removeQuickTag":
       "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "settings.enableQuickStar":
+      "\u555F\u7528\u5FEB\u901F\u6DFB\u52A0\u661F\u6A19",
     "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2426,6 +2444,8 @@
       "\u70BA\u7576\u524D\u7DB2\u9801\u6DFB\u52A0 {tag} \u6A19\u7C64",
     "menu.removeQuickTag":
       "\u522A\u9664\u7576\u524D\u7DB2\u9801\u7684 {tag} \u6A19\u7C64",
+    "settings.enableQuickStar":
+      "\u555F\u7528\u5FEB\u901F\u65B0\u589E\u661F\u6A19",
     "settings.quickTags": "\u5FEB\u6377\u6A19\u7C64",
     "settings.quickTagsPlaceholder": "\u2605, \u2B50, \u{1F48E}",
   }
@@ -2940,6 +2960,14 @@
       })
     }
   }
+  var starTags = [
+    "\u2605\u2605\u2605",
+    "\u2605\u2605",
+    "\u2605",
+    "\u2606\u2606\u2606",
+    "\u2606\u2606",
+    "\u2606",
+  ]
   var isUserscript = true
   var isProduction = true
   function getFirstHeadElement(tagName = "h1") {
@@ -2953,12 +2981,10 @@
   }
   function sortTags(tags, privilegedTags) {
     function getTagPriority(tag) {
-      if (tag === "\u2605\u2605\u2605") return 16
-      if (tag === "\u2605\u2605") return 15
-      if (tag === "\u2605") return 14
-      if (tag === "\u2606\u2606\u2606") return 13
-      if (tag === "\u2606\u2606") return 12
-      if (tag === "\u2606") return 11
+      const starIndex = starTags.indexOf(tag)
+      if (starIndex !== -1) {
+        return 16 - starIndex
+      }
       if (privilegedTags.includes(tag)) return 1
       return 0
     }
@@ -3112,6 +3138,12 @@
       return result
     }
     return data
+  }
+  function containsStarRatingTag(tags) {
+    return starTags.some((starTag) => tags.includes(starTag))
+  }
+  function removeStarRatingTags(tags) {
+    return tags.filter((tag) => !starTags.includes(tag))
   }
   var mergeData = async () => {
     return { numberOfLinks: 0, numberOfTags: 0 }
@@ -3798,9 +3830,9 @@
         if (target.closest(".utags_prompt")) {
           return
         }
-        if (target.closest(".utags_ul")) {
+        if (target.closest(".utags_ul,.utags_custom_btn")) {
           const captainTag = target.closest(
-            ".utags_captain_tag,.utags_captain_tag2"
+            ".utags_captain_tag,.utags_captain_tag2,.utags_custom_btn"
           )
           const textTag = target.closest(".utags_text_tag")
           if (captainTag) {
@@ -6831,9 +6863,10 @@
     }
   })()
   var discourse_default =
-    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_0{--utags-notag-captain-tag-top: 1px}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:-2px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{object-position:100% 200%;position:absolute;top:-9999px;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag=inline]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:8px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:5px !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"]{max-width:max-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1,:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}:not(#a):not(#b):not(#c) .post-links-container .post-links .track-link[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_0{object-position:200% 0%;margin-top:6px !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-left:16px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-container{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-14px !important}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 6px}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_1{position:absolute;top:-9999px;margin-top:10px !important}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_0,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_1,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .leaderboard .winner{padding-bottom:50px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -56px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-56px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"]{display:inline-flex !important;width:fit-content !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .notification a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-6px !important;margin-left:42px !important}:not(#a):not(#b):not(#c) [data-utags_list_node]:last-of-type{display:var(--utags-list-node-display) !important}:not(#a):not(#b):not(#c) .user-menu.revamped .menu-tabs-container{z-index:91;background-color:var(--secondary)}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 14px;--utags-notag-captain-tag-left: -8px}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:18px !important;margin-left:-4px !important;max-width:58px !important}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}'
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_0{--utags-notag-captain-tag-top: 1px}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:-2px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{object-position:100% 200%;position:absolute;top:-9999px;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag=inline]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:8px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:5px !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"]{max-width:max-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1,:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}:not(#a):not(#b):not(#c) .post-links-container .post-links .track-link[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_0{object-position:200% 0%;margin-top:6px !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-left:16px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-container{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-14px !important}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 6px}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_1{position:absolute;top:-9999px;margin-top:10px !important}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_0,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_1,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .leaderboard .winner{padding-bottom:50px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -56px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-56px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"]{display:inline-flex !important;width:fit-content !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .notification a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-6px !important;margin-left:42px !important}:not(#a):not(#b):not(#c) [data-utags_list_node]:last-of-type{display:var(--utags-list-node-display) !important}:not(#a):not(#b):not(#c) .user-menu.revamped .menu-tabs-container{z-index:91;background-color:var(--secondary)}:not(#a):not(#b):not(#c) .actions__ .bookmark-menu-trigger:nth-of-type(n + 2){display:none}:not(#a):not(#b):not(#c) .utags_custom_btn.starred svg{color:var(--utags-star-tag-color)}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 14px;--utags-notag-captain-tag-left: -8px}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:18px !important;margin-left:-4px !important;max-width:58px !important}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}'
   var discourse_default2 = (() => {
     const prefix3 = location.origin + "/"
+    const host3 = location.host
     const getUserProfileUrl = (url, exact = false) => {
       if (url.startsWith(prefix3)) {
         const href2 = url.slice(prefix3.length).toLowerCase()
@@ -6859,6 +6892,13 @@
         }
       }
       return void 0
+    }
+    function getCommentUrl(url, floor) {
+      const postUrl = getPostUrl(url)
+      if (!postUrl) {
+        return
+      }
+      return floor <= 1 ? postUrl : "".concat(postUrl, "/").concat(floor)
     }
     function getCategoryUrl(url, exact = false) {
       if (url.startsWith(prefix3)) {
@@ -6952,7 +6992,7 @@
         }
         key = getPostUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (
             element.closest(".mobile-view .topic-list a[data-user-card]") &&
             element.dataset.userCard
@@ -6981,7 +7021,7 @@
         }
         key = getCategoryUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -6995,7 +7035,7 @@
         }
         key = getTagUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -7067,7 +7107,7 @@
               ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
             )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
               element.utags = { key, meta }
@@ -7103,6 +7143,86 @@
             element.dataset.utags = element.dataset.utags || ""
             element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
+          }
+        }
+      },
+      postProcess() {
+        var _a
+        const enableQuickStar = getSettingsValue(
+          "enableQuickStar_".concat(host3)
+        )
+        if (!enableQuickStar) {
+          return
+        }
+        const bookmarkButton =
+          '<button class="utags_custom_btn btn no-text btn-icon fk-d-menu__trigger bookmark-menu-trigger post-action-menu__bookmark btn-flat bookmark widget-button bookmark-menu__trigger btn-icon no-text" aria-expanded="false" title="\u5C06\u6B64\u5E16\u5B50\u52A0\u5165 UTags \u4E66\u7B7E" data-identifier="bookmark-menu" data-trigger="" type="button">\n<svg class="fa d-icon d-icon-bookmark svg-icon svg-string" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="#star"></use></svg>      <span aria-hidden="true">\n        </span>\n    </button>'
+        const copyLinkButtons = $$(
+          "[data-post-number] .actions .post-action-menu__copy-link"
+        )
+        for (const button of copyLinkButtons) {
+          let bookmarkElement
+          const prevElement = button.previousElementSibling
+          const isBookmarkButton =
+            prevElement == null
+              ? void 0
+              : prevElement.classList.contains("bookmark-menu-trigger")
+          if (isBookmarkButton) {
+            bookmarkElement = prevElement
+          } else {
+            button.insertAdjacentHTML("beforebegin", bookmarkButton)
+            bookmarkElement = button.previousElementSibling
+          }
+          if (bookmarkElement) {
+            const postNumberElement = button.closest("[data-post-number]")
+            const postNumber = Number(
+              (postNumberElement == null
+                ? void 0
+                : postNumberElement.dataset.postNumber) || 1
+            )
+            const key = getCommentUrl(location.href, postNumber)
+            if (key) {
+              const type = postNumber > 1 ? "comment" : "topic"
+              const titleElement = $(
+                "#topic-title .fancy-title,h1.header-title .topic-link"
+              )
+              const title = titleElement
+                ? (_a = titleElement.textContent) == null
+                  ? void 0
+                  : _a.trim()
+                : document.title
+              const formattedTitle =
+                postNumber > 1
+                  ? "\u56DE\u590D #".concat(postNumber, " >> ").concat(title)
+                  : title
+              const postContentElement = $(
+                ".post__contents .cooked",
+                postNumberElement
+              )
+              const description = postContentElement
+                ? getTrimmedTitle(postContentElement)
+                : ""
+              const formattedDescription =
+                description.length > 1e3
+                  ? description.slice(0, 1e3)
+                  : description
+              const meta = { type }
+              if (formattedTitle) meta.title = formattedTitle
+              if (formattedDescription) meta.description = formattedDescription
+              const bookmark = getBookmark(key)
+              const tags = bookmark.tags || []
+              const hasStar = containsStarRatingTag(tags)
+              const tobeTags = hasStar
+                ? removeStarRatingTags(tags)
+                : ["\u2605", ...tags]
+              bookmarkElement.dataset.utags_key = key
+              bookmarkElement.dataset.utags_meta = JSON.stringify(meta)
+              bookmarkElement.dataset.utags_tags = tobeTags.join(",")
+              if (hasStar) {
+                bookmarkElement.classList.add("starred")
+              } else {
+                bookmarkElement.classList.remove("starred")
+              }
+            }
           }
         }
       },
@@ -9840,12 +9960,16 @@
     }
     const currentPageLink = $("#utags_current_page_link")
     if (currentPageLink) {
-      const key = getCanonicalUrl(location.href)
+      const key = getCanonicalUrl(currentPageLink.href)
       if (key) {
         const title = getTrimmedTitle(currentPageLink)
+        const description = currentPageLink.dataset.utags_description
+        const meta = {}
+        if (title) meta.title = title
+        if (description) meta.description = description
         currentPageLink.utags = {
           key,
-          meta: title ? { title } : {},
+          meta,
         }
         matchedNodesSet.add(currentPageLink)
       }
@@ -9868,159 +9992,181 @@
     }
     return true
   }
+  var isQuickStarAvailable = () => {
+    if (host2 === "linux.do") {
+      return true
+    }
+    return false
+  }
   var isTagManager = location.href.includes("utags.pipecraft.net/tags/")
   var getSettingsTable = () => {
     let groupNumber = 1
-    return {
-      ["enableCurrentSite_".concat(host2)]: {
-        title: i2("settings.enableCurrentSite"),
-        defaultValue: isEnabledByDefault(),
-      },
-      showHidedItems: {
-        title: i2("settings.showHidedItems"),
-        defaultValue: false,
-        group: ++groupNumber,
-      },
-      noOpacityEffect: {
-        title: i2("settings.noOpacityEffect"),
-        defaultValue: false,
-        group: groupNumber,
-      },
-      ["useVisitedFunction_".concat(host2)]: {
-        title: i2("settings.useVisitedFunction"),
-        defaultValue: false,
-        group: ++groupNumber,
-      },
-      ["displayEffectOfTheVisitedContent_".concat(host2)]: {
-        title: i2("settings.displayEffectOfTheVisitedContent"),
-        type: "select",
-        defaultValue: "2",
-        options: {
-          [i2("settings.displayEffectOfTheVisitedContent.recordingonly")]: "0",
-          [i2("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
-          [i2("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
-          [i2("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
-          [i2("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+    return __spreadProps(
+      __spreadValues(
+        {
+          ["enableCurrentSite_".concat(host2)]: {
+            title: i2("settings.enableCurrentSite"),
+            defaultValue: isEnabledByDefault(),
+          },
         },
-        group: groupNumber,
-      },
-      pinnedTagsTitle: {
-        title: i2("settings.pinnedTags"),
-        type: "action",
-        async onclick() {
-          const input = $('textarea[data-key="pinnedTags"]')
-          if (input) {
-            input.scrollIntoView({ block: "start" })
-            input.selectionStart = input.value.length
-            input.selectionEnd = input.value.length
-            input.focus()
-          }
+        isQuickStarAvailable()
+          ? {
+              ["enableQuickStar_".concat(host2)]: {
+                title: i2("settings.enableQuickStar"),
+                defaultValue: false,
+                group: ++groupNumber,
+              },
+            }
+          : {}
+      ),
+      {
+        showHidedItems: {
+          title: i2("settings.showHidedItems"),
+          defaultValue: false,
+          group: ++groupNumber,
         },
-        group: ++groupNumber,
-      },
-      pinnedTags: {
-        title: i2("settings.pinnedTags"),
-        defaultValue: i2("settings.pinnedTagsDefaultValue"),
-        placeholder: i2("settings.pinnedTagsPlaceholder"),
-        type: "textarea",
-        group: groupNumber,
-      },
-      emojiTagsTitle: {
-        title: i2("settings.emojiTags"),
-        type: "action",
-        async onclick() {
-          const input = $('textarea[data-key="emojiTags"]')
-          if (input) {
-            input.scrollIntoView({ block: "start" })
-            input.selectionStart = input.value.length
-            input.selectionEnd = input.value.length
-            input.focus()
-          }
+        noOpacityEffect: {
+          title: i2("settings.noOpacityEffect"),
+          defaultValue: false,
+          group: groupNumber,
         },
-        group: groupNumber,
-      },
-      emojiTags: {
-        title: i2("settings.emojiTags"),
-        defaultValue:
-          "\u2605, \u2605\u2605, \u2605\u2605\u2605, \u2606, \u2606\u2606, \u2606\u2606\u2606, \u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
-        placeholder: "\u{1F44D}, \u{1F44E}",
-        type: "textarea",
-        group: groupNumber,
-      },
-      quickTagsTitle: {
-        title: i2("settings.quickTags"),
-        type: "action",
-        async onclick() {
-          const input = $('textarea[data-key="quickTags"]')
-          if (input) {
-            input.scrollIntoView({ block: "start" })
-            input.selectionStart = input.value.length
-            input.selectionEnd = input.value.length
-            input.focus()
-          }
+        ["useVisitedFunction_".concat(host2)]: {
+          title: i2("settings.useVisitedFunction"),
+          defaultValue: false,
+          group: ++groupNumber,
         },
-        group: ++groupNumber,
-      },
-      quickTags: {
-        title: i2("settings.quickTags"),
-        defaultValue: "\u2605, \u2764\uFE0F",
-        placeholder: i2("settings.quickTagsPlaceholder"),
-        type: "textarea",
-        group: groupNumber,
-      },
-      customStyle: {
-        title: i2("settings.customStyle"),
-        defaultValue: false,
-        group: ++groupNumber,
-      },
-      customStyleValue: {
-        title: "Custom style value",
-        defaultValue: i2("settings.customStyleDefaultValue"),
-        placeholder: i2("settings.customStyleDefaultValue"),
-        type: "textarea",
-        group: groupNumber,
-      },
-      customStyleTip: {
-        title: i2("settings.customStyleExamples"),
-        type: "tip",
-        tipContent: i2("settings.customStyleExamplesContent"),
-        group: groupNumber,
-      },
-      ["customStyle_".concat(host2)]: {
-        title: i2("settings.customStyleCurrentSite"),
-        defaultValue: false,
-        group: ++groupNumber,
-      },
-      ["customStyleValue_".concat(host2)]: {
-        title: "Custom style value",
-        defaultValue: "",
-        placeholder: i2("settings.customStyleDefaultValue"),
-        type: "textarea",
-        group: groupNumber,
-      },
-      enableTagStyleInPrompt: {
-        title: i2("settings.enableTagStyleInPrompt"),
-        defaultValue: true,
-        group: ++groupNumber,
-      },
-      useSimplePrompt: {
-        title: i2("settings.useSimplePrompt"),
-        defaultValue: false,
-        group: groupNumber,
-      },
-      openTagsPage: {
-        title: i2("settings.openTagsPage"),
-        type: "externalLink",
-        url: "https://utags.link/",
-        group: ++groupNumber,
-      },
-      openDataPage: {
-        title: i2("settings.openDataPage"),
-        type: "externalLink",
-        url: "https://utags.link/",
-        group: groupNumber,
-      },
-    }
+        ["displayEffectOfTheVisitedContent_".concat(host2)]: {
+          title: i2("settings.displayEffectOfTheVisitedContent"),
+          type: "select",
+          defaultValue: "2",
+          options: {
+            [i2("settings.displayEffectOfTheVisitedContent.recordingonly")]:
+              "0",
+            [i2("settings.displayEffectOfTheVisitedContent.showtagonly")]: "1",
+            [i2("settings.displayEffectOfTheVisitedContent.changecolor")]: "4",
+            [i2("settings.displayEffectOfTheVisitedContent.translucent")]: "2",
+            [i2("settings.displayEffectOfTheVisitedContent.hide")]: "3",
+          },
+          group: groupNumber,
+        },
+        pinnedTagsTitle: {
+          title: i2("settings.pinnedTags"),
+          type: "action",
+          async onclick() {
+            const input = $('textarea[data-key="pinnedTags"]')
+            if (input) {
+              input.scrollIntoView({ block: "start" })
+              input.selectionStart = input.value.length
+              input.selectionEnd = input.value.length
+              input.focus()
+            }
+          },
+          group: ++groupNumber,
+        },
+        pinnedTags: {
+          title: i2("settings.pinnedTags"),
+          defaultValue: i2("settings.pinnedTagsDefaultValue"),
+          placeholder: i2("settings.pinnedTagsPlaceholder"),
+          type: "textarea",
+          group: groupNumber,
+        },
+        emojiTagsTitle: {
+          title: i2("settings.emojiTags"),
+          type: "action",
+          async onclick() {
+            const input = $('textarea[data-key="emojiTags"]')
+            if (input) {
+              input.scrollIntoView({ block: "start" })
+              input.selectionStart = input.value.length
+              input.selectionEnd = input.value.length
+              input.focus()
+            }
+          },
+          group: groupNumber,
+        },
+        emojiTags: {
+          title: i2("settings.emojiTags"),
+          defaultValue:
+            "\u2605, \u2605\u2605, \u2605\u2605\u2605, \u2606, \u2606\u2606, \u2606\u2606\u2606, \u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
+          placeholder: "\u{1F44D}, \u{1F44E}",
+          type: "textarea",
+          group: groupNumber,
+        },
+        quickTagsTitle: {
+          title: i2("settings.quickTags"),
+          type: "action",
+          async onclick() {
+            const input = $('textarea[data-key="quickTags"]')
+            if (input) {
+              input.scrollIntoView({ block: "start" })
+              input.selectionStart = input.value.length
+              input.selectionEnd = input.value.length
+              input.focus()
+            }
+          },
+          group: ++groupNumber,
+        },
+        quickTags: {
+          title: i2("settings.quickTags"),
+          defaultValue: "\u2605, \u2764\uFE0F",
+          placeholder: i2("settings.quickTagsPlaceholder"),
+          type: "textarea",
+          group: groupNumber,
+        },
+        customStyle: {
+          title: i2("settings.customStyle"),
+          defaultValue: false,
+          group: ++groupNumber,
+        },
+        customStyleValue: {
+          title: "Custom style value",
+          defaultValue: i2("settings.customStyleDefaultValue"),
+          placeholder: i2("settings.customStyleDefaultValue"),
+          type: "textarea",
+          group: groupNumber,
+        },
+        customStyleTip: {
+          title: i2("settings.customStyleExamples"),
+          type: "tip",
+          tipContent: i2("settings.customStyleExamplesContent"),
+          group: groupNumber,
+        },
+        ["customStyle_".concat(host2)]: {
+          title: i2("settings.customStyleCurrentSite"),
+          defaultValue: false,
+          group: ++groupNumber,
+        },
+        ["customStyleValue_".concat(host2)]: {
+          title: "Custom style value",
+          defaultValue: "",
+          placeholder: i2("settings.customStyleDefaultValue"),
+          type: "textarea",
+          group: groupNumber,
+        },
+        enableTagStyleInPrompt: {
+          title: i2("settings.enableTagStyleInPrompt"),
+          defaultValue: true,
+          group: ++groupNumber,
+        },
+        useSimplePrompt: {
+          title: i2("settings.useSimplePrompt"),
+          defaultValue: false,
+          group: groupNumber,
+        },
+        openTagsPage: {
+          title: i2("settings.openTagsPage"),
+          type: "externalLink",
+          url: "https://utags.link/",
+          group: ++groupNumber,
+        },
+        openDataPage: {
+          title: i2("settings.openDataPage"),
+          type: "externalLink",
+          url: "https://utags.link/",
+          group: groupNumber,
+        },
+      }
+    )
   }
   var addUtagsStyle = () => {
     const style = addStyle(content_default)
@@ -10094,7 +10240,8 @@
   if (start) {
     start = Date.now()
   }
-  function appendCurrentPageLink() {
+  function appendCurrentPageLink(options) {
+    options = options || {}
     const containerId = "utags_current_page_link_container"
     const existingContainer = $("#" + containerId)
     if (existingContainer) {
@@ -10107,9 +10254,12 @@
     const containerElement = document.createElement("div")
     containerElement.id = containerId
     const linkElement = document.createElement("a")
-    linkElement.href = location.href
-    linkElement.textContent = document.title
+    linkElement.href = options.href || location.href
+    linkElement.textContent = options.title || document.title
     linkElement.id = "utags_current_page_link"
+    if (options.description) {
+      linkElement.dataset.utags_description = options.description
+    }
     containerElement.append(linkElement)
     document.body.append(containerElement)
     return () => {
@@ -10118,8 +10268,8 @@
       }
     }
   }
-  function showCurrentPageLinkUtagsPrompt(tag, remove = false) {
-    const cleanUp = appendCurrentPageLink()
+  function showCurrentPageLinkUtagsPrompt(tag, remove = false, options) {
+    const cleanUp = appendCurrentPageLink(options)
     setTimeout(() => {
       const element = $("#utags_current_page_link + ul.utags_ul button")
       if (element) {
@@ -10145,7 +10295,7 @@
     }, 10)
     setTimeout(() => {
       cleanUp()
-    }, 3e3)
+    }, 1e3)
   }
   var menuCommandManager = createMenuCommandManager(
     () => {
