@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': 'Modificar etiquetas de la página actual',
   'menu.addQuickTag': 'Agregar etiqueta {tag} a la página actual',
   'menu.removeQuickTag': 'Eliminar etiqueta {tag} de la página actual',
+  'menu.bookmarkList': 'Administrador de marcadores',
   'settings.enableQuickStar': 'Habilitar agregar estrella rápida',
   'settings.quickTags': 'Etiquetas Rápidas',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

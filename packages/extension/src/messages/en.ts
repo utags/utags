@@ -97,6 +97,7 @@ body {
   'menu.modifyCurrentPageTags': 'Modify current page tags',
   'menu.addQuickTag': 'Add {tag} tag to current page',
   'menu.removeQuickTag': 'Remove {tag} tag from current page',
+  'menu.bookmarkList': 'Bookmark Manager',
   'settings.quickTags': 'Quick Tags',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
   'settings.enableQuickStar': 'Enable quick star adding',

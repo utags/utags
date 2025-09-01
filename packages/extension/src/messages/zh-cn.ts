@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': '修改当前网页标签',
   'menu.addQuickTag': '为当前网页添加 {tag} 标签',
   'menu.removeQuickTag': '删除当前网页的 {tag} 标签',
+  'menu.bookmarkList': '书签管理器',
   'settings.quickTags': '快捷标签',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
   'settings.enableQuickStar': '启用快速添加星标',

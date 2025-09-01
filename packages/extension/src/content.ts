@@ -17,11 +17,13 @@ import {
   getAttribute,
   getOffsetPosition,
   hasClass,
+  registerMenuCommand,
   removeClass,
   runWhenHeadExists,
   setStyle,
   throttle,
   uniq,
+  type RegisterMenuCommandOptions,
 } from 'browser-extension-utils'
 import styleText from 'data-text:./content.scss'
 import type { PlasmoCSConfig } from 'plasmo'
@@ -1118,6 +1120,15 @@ async function main() {
   }
 
   setupWebappBridge()
+
+  // Register bookmark list menu command for userscript
+  await registerMenuCommand(`🔖 ${i('menu.bookmarkList')}`, () => {
+    // Open https://utags.link/ in new tab or focus existing tab
+    const url = 'https://utags.link/'
+
+    // For userscript environment, simply open in new tab
+    window.open(url, 'utags_bookmarks')
+  })
 
   // Initialize the star handler with required dependencies
   // initStarHandler(showCurrentPageLinkUtagsPrompt)

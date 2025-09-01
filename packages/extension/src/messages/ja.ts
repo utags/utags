@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': '現在のページのタグを変更',
   'menu.addQuickTag': '現在のページに {tag} タグを追加',
   'menu.removeQuickTag': '現在のページから {tag} タグを削除',
+  'menu.bookmarkList': 'ブックマーク マネージャ',
   'settings.enableQuickStar': 'クイックスター追加を有効にする',
   'settings.quickTags': 'クイックタグ',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

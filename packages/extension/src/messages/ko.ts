@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': '현재 페이지 태그 수정',
   'menu.addQuickTag': '현재 페이지에 {tag} 태그 추가',
   'menu.removeQuickTag': '현재 페이지에서 {tag} 태그 제거',
+  'menu.bookmarkList': '북마크 관리자',
   'settings.enableQuickStar': '빠른 별표 추가 활성화',
   'settings.quickTags': '빠른 태그',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
