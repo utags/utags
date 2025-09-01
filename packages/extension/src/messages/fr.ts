@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': 'Modifier les étiquettes de la page actuelle',
   'menu.addQuickTag': "Ajouter l'étiquette {tag} à la page actuelle",
   'menu.removeQuickTag': "Supprimer l'étiquette {tag} de la page actuelle",
+  'settings.enableQuickStar': "Activer ajout rapide d'étoile",
   'settings.quickTags': 'Étiquettes Rapides',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }

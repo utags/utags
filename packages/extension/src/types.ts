@@ -6,6 +6,7 @@ export type UserTag = {
 export type UserTagMeta = {
   title?: string
   type?: string
+  description?: string
 }
 
 export type RecentTag = {

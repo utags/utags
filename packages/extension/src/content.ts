@@ -37,6 +37,7 @@ import {
   hideAllUtagsInArea,
 } from './modules/global-events'
 import { createMenuCommandManager } from './modules/menu-command-manager'
+import { initStarHandler, toggleStarHandler } from './modules/star-handler'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import {
   isAvailableOnCurrentSite,
@@ -79,6 +80,14 @@ const isEnabledByDefault = () => {
   return true
 }
 
+const isQuickStarAvailable = () => {
+  if (host === 'linux.do') {
+    return true
+  }
+
+  return false
+}
+
 const isTagManager = location.href.includes('utags.pipecraft.net/tags/')
 
 const getSettingsTable = (): SettingsTable => {
@@ -89,6 +98,16 @@ const getSettingsTable = (): SettingsTable => {
       title: i('settings.enableCurrentSite'),
       defaultValue: isEnabledByDefault(),
     },
+
+    ...(isQuickStarAvailable()
+      ? {
+          [`enableQuickStar_${host}`]: {
+            title: i('settings.enableQuickStar'),
+            defaultValue: false,
+            group: ++groupNumber,
+          },
+        }
+      : {}),
 
     showHidedItems: {
       title: i('settings.showHidedItems'),
@@ -336,7 +355,16 @@ if (start) {
  * Append a link to the current page at the end of the document body
  * @returns A cleanup function that removes the appended link
  */
-function appendCurrentPageLink(): () => void {
+function appendCurrentPageLink(
+  options?:
+    | {
+        href?: string
+        title?: string
+        description?: string
+      }
+    | undefined
+): () => void {
+  options = options || {}
   const containerId = 'utags_current_page_link_container'
 
   // Check if container already exists
@@ -355,9 +383,16 @@ function appendCurrentPageLink(): () => void {
 
   // Create the anchor element
   const linkElement = document.createElement('a')
-  linkElement.href = location.href
-  linkElement.textContent = document.title
+  linkElement.href = options.href || location.href
+  // Use options.title if provided, otherwise use document.title
+  linkElement.textContent = options.title || document.title
   linkElement.id = 'utags_current_page_link'
+
+  // Add description to dataset if provided
+  if (options.description) {
+    // TODO: read from description tag, but don't overwrite exsiting value
+    linkElement.dataset.utags_description = options.description
+  }
 
   // Append link to container
   containerElement.append(linkElement)
@@ -373,8 +408,18 @@ function appendCurrentPageLink(): () => void {
   }
 }
 
-function showCurrentPageLinkUtagsPrompt(tag?: string, remove = false) {
-  const cleanUp = appendCurrentPageLink()
+function showCurrentPageLinkUtagsPrompt(
+  tag?: string,
+  remove = false,
+  options?:
+    | {
+        href?: string
+        title?: string
+        description?: string
+      }
+    | undefined
+) {
+  const cleanUp = appendCurrentPageLink(options)
   setTimeout(() => {
     const element = $('#utags_current_page_link + ul.utags_ul button')!
     if (element) {
@@ -401,7 +446,7 @@ function showCurrentPageLinkUtagsPrompt(tag?: string, remove = false) {
   }, 10)
   setTimeout(() => {
     cleanUp()
-  }, 3000)
+  }, 1000)
 }
 
 // Initialize menu command manager
@@ -1074,6 +1119,9 @@ async function main() {
 
   setupWebappBridge()
 
+  // Initialize the star handler with required dependencies
+  // initStarHandler(showCurrentPageLinkUtagsPrompt)
+
   visitedOnSettingsChange()
   onSettingsChange()
 
@@ -1082,14 +1130,6 @@ async function main() {
   setTimeout(outputData, 1)
 
   await updateAddTagsToCurrentPageMenuCommand()
-
-  // registerMenuCommand(
-  //   '⭐ ' +'收藏当前网页',
-  //   () => {
-  //     showCurrentPageLinkUtagsPrompt()
-  //   },
-  //   'u'
-  // )
 
   await displayTags()
 

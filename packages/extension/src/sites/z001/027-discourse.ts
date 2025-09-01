@@ -1,3 +1,4 @@
+import { getSettingsValue } from 'browser-extension-settings'
 import { $, $$, doc } from 'browser-extension-utils'
 import styleText from 'data-text:./027-discourse.scss'
 import { getTrimmedTitle } from 'utags-utils'
@@ -7,10 +8,13 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
 
 export default (() => {
   const prefix = location.origin + '/'
+  const host = location.host
 
   const getUserProfileUrl = (url: string, exact = false) => {
     if (url.startsWith(prefix)) {
@@ -40,6 +44,15 @@ export default (() => {
     }
 
     return undefined
+  }
+
+  function getCommentUrl(url: string, floor: number) {
+    const postUrl = getPostUrl(url)
+    if (!postUrl) {
+      return
+    }
+
+    return floor <= 1 ? postUrl : `${postUrl}/${floor}`
   }
 
   function getCategoryUrl(url: string, exact = false) {
@@ -162,7 +175,7 @@ export default (() => {
 
       key = getPostUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
 
         if (
           element.closest('.mobile-view .topic-list a[data-user-card]') &&
@@ -199,7 +212,7 @@ export default (() => {
 
       key = getCategoryUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -217,7 +230,7 @@ export default (() => {
 
       key = getTagUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -297,7 +310,7 @@ export default (() => {
             '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
           ) as UtagsHTMLElement)
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
             element.utags = { key, meta }
@@ -341,6 +354,86 @@ export default (() => {
           element.dataset.utags_node_type = 'link'
 
           matchedNodesSet.add(element)
+        }
+      }
+    },
+    postProcess() {
+      const enableQuickStar = getSettingsValue(
+        `enableQuickStar_${host}`
+      ) as boolean
+      if (!enableQuickStar) {
+        return
+      }
+
+      const bookmarkButton = `<button class="utags_custom_btn btn no-text btn-icon fk-d-menu__trigger bookmark-menu-trigger post-action-menu__bookmark btn-flat bookmark widget-button bookmark-menu__trigger btn-icon no-text" aria-expanded="false" title="将此帖子加入 UTags 书签" data-identifier="bookmark-menu" data-trigger="" type="button">
+<svg class="fa d-icon d-icon-bookmark svg-icon svg-string" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><use href="#star"></use></svg>      <span aria-hidden="true">
+        </span>
+    </button>`
+      // 所有楼层
+      const copyLinkButtons = $$(
+        '[data-post-number] .actions .post-action-menu__copy-link'
+      )
+      for (const button of copyLinkButtons) {
+        let bookmarkElement: HTMLElement | undefined
+        // Check if bookmark button already exists before this copy link button
+        const prevElement = button.previousElementSibling
+        const isBookmarkButton = prevElement?.classList.contains(
+          'bookmark-menu-trigger'
+        )
+
+        if (isBookmarkButton) {
+          bookmarkElement = prevElement as HTMLElement
+        } else {
+          // Insert bookmark button before each copy link button
+          button.insertAdjacentHTML('beforebegin', bookmarkButton)
+          bookmarkElement = button.previousElementSibling as HTMLElement
+        }
+
+        if (bookmarkElement) {
+          const postNumberElement: HTMLElement =
+            button.closest('[data-post-number]')!
+          const postNumber = Number(postNumberElement?.dataset.postNumber || 1)
+          const key = getCommentUrl(location.href, postNumber)
+          if (key) {
+            const type = postNumber > 1 ? 'comment' : 'topic'
+            const titleElement = $(
+              '#topic-title .fancy-title,h1.header-title .topic-link'
+            )
+            const title = titleElement
+              ? titleElement.textContent?.trim()
+              : document.title
+            const formattedTitle =
+              postNumber > 1 ? `回复 #${postNumber} >> ${title}` : title
+            const postContentElement = $(
+              '.post__contents .cooked',
+              postNumberElement
+            )
+            const description = postContentElement
+              ? getTrimmedTitle(postContentElement)
+              : ''
+            const formattedDescription =
+              description.length > 1000
+                ? description.slice(0, 1000)
+                : description
+            const meta: UserTagMeta = { type }
+            if (formattedTitle) meta.title = formattedTitle
+            if (formattedDescription) meta.description = formattedDescription
+            const bookmark = getBookmark(key)
+            const tags = bookmark.tags || []
+            const hasStar = containsStarRatingTag(tags)
+            const tobeTags = hasStar
+              ? removeStarRatingTags(tags)
+              : ['★', ...tags]
+            bookmarkElement.dataset.utags_key = key
+            bookmarkElement.dataset.utags_meta = JSON.stringify(meta)
+            bookmarkElement.dataset.utags_tags = tobeTags.join(',')
+
+            if (hasStar) {
+              bookmarkElement.classList.add('starred')
+            } else {
+              bookmarkElement.classList.remove('starred')
+            }
+          }
         }
       }
     },

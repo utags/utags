@@ -88,8 +88,8 @@ export function humanizeUrl(url: string) {
     // Path simplification logic: Keep first and last segments when exceeding 2, otherwise keep original
     const pathSegments = parsed.pathname.split('/').filter(Boolean)
     const simplifiedPath =
-      pathSegments.length > 2
-        ? `/${pathSegments[0]}/.../${pathSegments.slice(-1).join('')}`
+      pathSegments.length > 4
+        ? `/${pathSegments[0]}/.../${pathSegments.slice(-2).join('/')}`
         : parsed.pathname
 
     // Build new URL object with cleaned parameters and simplified path

@@ -155,7 +155,9 @@ describe('humanizeUrl', () => {
   it('should correctly handle URLs with tracking parameters', () => {
     const url =
       'https://www.example.com/path1/path2/path3?utm_source=test&valid=1#section'
-    expect(humanizeUrl(url)).toBe('example.com/path1/.../path3?valid=1#section')
+    expect(humanizeUrl(url)).toBe(
+      'example.com/path1/path2/path3?valid=1#section'
+    )
   })
 
   it('should preserve valid query parameters', () => {
@@ -163,9 +165,14 @@ describe('humanizeUrl', () => {
     expect(humanizeUrl(url)).toBe('example.com/?foo=bar&valid=true')
   })
 
-  it('should simplify long paths keeping first and last segments', () => {
+  it('should simplify long paths keeping first and last two segments', () => {
     const url = 'https://example.com/a/b/c/d/e'
-    expect(humanizeUrl(url)).toBe('example.com/a/.../e')
+    expect(humanizeUrl(url)).toBe('example.com/a/.../d/e')
+  })
+
+  it('should not simplify paths with 4 or fewer segments', () => {
+    const url = 'https://example.com/a/b/c/d'
+    expect(humanizeUrl(url)).toBe('example.com/a/b/c/d')
   })
 
   it('should preserve hash fragments', () => {

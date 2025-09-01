@@ -2,6 +2,8 @@ import { $$, createElement } from 'browser-extension-utils'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
+export const starTags = ['★★★', '★★', '★', '☆☆☆', '☆☆', '☆']
+
 // eslint-disable-next-line n/prefer-global/process
 export const isChromeExtension = process.env.PLASMO_TARGET === 'chrome-mv3'
 // eslint-disable-next-line n/prefer-global/process
@@ -71,12 +73,12 @@ export function sortTags(tags: string[], privilegedTags: string[]) {
    */
   function getTagPriority(tag: string): number {
     // Star tags have the highest priority (exact match required)
-    if (tag === '★★★') return 16
-    if (tag === '★★') return 15
-    if (tag === '★') return 14
-    if (tag === '☆☆☆') return 13
-    if (tag === '☆☆') return 12
-    if (tag === '☆') return 11
+    const starIndex = starTags.indexOf(tag)
+    if (starIndex !== -1) {
+      // Return priority based on position in starTags array
+      // First star tag (★★★) gets highest priority (16), last (☆) gets lowest star priority (11)
+      return 16 - starIndex
+    }
 
     // Privileged tags have medium priority (only if not already a star tag)
     if (privilegedTags.includes(tag)) return 1
@@ -352,4 +354,26 @@ export function normalizeBookmarkData<T>(data: T): T {
 
   // Handle primitives (string, number, boolean)
   return data
+}
+
+/**
+ * Checks if the given tags array contains any star rating tags.
+ * Star tags include various star symbols: ★★★, ★★, ★, ☆☆☆, ☆☆, ☆
+ *
+ * @param tags - Array of tag strings to check
+ * @returns True if any star tag is found, false otherwise
+ */
+export function containsStarRatingTag(tags: string[]): boolean {
+  return starTags.some((starTag) => tags.includes(starTag))
+}
+
+/**
+ * Filters out all star rating tags from the given tags array.
+ * Removes any tags that match the predefined star symbols: ★★★, ★★, ★, ☆☆☆, ☆☆, ☆
+ *
+ * @param tags - Array of tag strings to filter
+ * @returns New array with star rating tags removed
+ */
+export function removeStarRatingTags(tags: string[]): string[] {
+  return tags.filter((tag) => !starTags.includes(tag))
 }

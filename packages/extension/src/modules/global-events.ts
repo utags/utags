@@ -135,9 +135,9 @@ export function bindDocumentEvents() {
         return
       }
 
-      if (target.closest('.utags_ul')) {
+      if (target.closest('.utags_ul,.utags_custom_btn')) {
         const captainTag = target.closest(
-          '.utags_captain_tag,.utags_captain_tag2'
+          '.utags_captain_tag,.utags_captain_tag2,.utags_custom_btn'
         ) as HTMLElement | undefined
         const textTag = target.closest('.utags_text_tag') as
           | HTMLElement

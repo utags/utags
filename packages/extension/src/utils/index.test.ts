@@ -4,7 +4,13 @@
 import { describe, expect, it } from 'vitest'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
-import { normalizeBookmarkData, sortBookmarks, sortTags } from './index.js'
+import {
+  containsStarRatingTag,
+  normalizeBookmarkData,
+  removeStarRatingTags,
+  sortBookmarks,
+  sortTags,
+} from './index.js'
 
 type BookmarkItem = [string, BookmarkTagsAndMetadata]
 
@@ -1108,6 +1114,164 @@ describe('sortTags', () => {
 
       // Only exact match '★★★' should be treated as star tag
       expect(result).toEqual(['★★★', ' ★★★ ', 'STAR', '★ ★★'])
+    })
+  })
+
+  describe('containsStarRatingTag', () => {
+    it('should return true when tags contain three-star rating', () => {
+      const tags = ['javascript', '★★★', 'tutorial']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain two-star rating', () => {
+      const tags = ['react', '★★', 'frontend']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain one-star rating', () => {
+      const tags = ['vue', '★', 'component']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain three-hollow-star rating', () => {
+      const tags = ['angular', '☆☆☆', 'framework']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain two-hollow-star rating', () => {
+      const tags = ['svelte', '☆☆', 'modern']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain one-hollow-star rating', () => {
+      const tags = ['nodejs', '☆', 'backend']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return true when tags contain multiple star ratings', () => {
+      const tags = ['project', '★★★', '☆☆', 'important']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+
+    it('should return false when tags contain no star ratings', () => {
+      const tags = ['javascript', 'tutorial', 'beginner']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(false)
+    })
+
+    it('should return false when tags array is empty', () => {
+      const tags: string[] = []
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(false)
+    })
+
+    it('should return false when tags contain star-like but not exact star symbols', () => {
+      const tags = ['star', 'STAR', '★ ★★', ' ★★★ ', '★★★★']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(false)
+    })
+
+    it('should handle case sensitivity correctly', () => {
+      const tags = ['★★★', 'STAR', 'Star']
+      const result = containsStarRatingTag(tags)
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('removeStarRatingTags', () => {
+    it('should remove three-star rating from tags', () => {
+      const tags = ['javascript', '★★★', 'tutorial']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['javascript', 'tutorial'])
+    })
+
+    it('should remove two-star rating from tags', () => {
+      const tags = ['react', '★★', 'frontend']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['react', 'frontend'])
+    })
+
+    it('should remove one-star rating from tags', () => {
+      const tags = ['vue', '★', 'component']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['vue', 'component'])
+    })
+
+    it('should remove three-hollow-star rating from tags', () => {
+      const tags = ['angular', '☆☆☆', 'framework']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['angular', 'framework'])
+    })
+
+    it('should remove two-hollow-star rating from tags', () => {
+      const tags = ['svelte', '☆☆', 'modern']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['svelte', 'modern'])
+    })
+
+    it('should remove one-hollow-star rating from tags', () => {
+      const tags = ['nodejs', '☆', 'backend']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['nodejs', 'backend'])
+    })
+
+    it('should remove multiple star ratings from tags', () => {
+      const tags = ['project', '★★★', '☆☆', 'important', '★', 'work']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['project', 'important', 'work'])
+    })
+
+    it('should remove all star ratings when tags contain only star ratings', () => {
+      const tags = ['★★★', '★★', '★', '☆☆☆', '☆☆', '☆']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual([])
+    })
+
+    it('should return same array when no star ratings present', () => {
+      const tags = ['javascript', 'tutorial', 'beginner']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['javascript', 'tutorial', 'beginner'])
+    })
+
+    it('should return empty array when input is empty', () => {
+      const tags: string[] = []
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual([])
+    })
+
+    it('should preserve non-star tags that look similar to star ratings', () => {
+      const tags = ['star', 'STAR', '★ ★★', ' ★★★ ', '★★★★', '★★★']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['star', 'STAR', '★ ★★', ' ★★★ ', '★★★★'])
+    })
+
+    it('should preserve original array order for non-star tags', () => {
+      const tags = ['z-tag', '★★★', 'a-tag', '☆☆', 'b-tag', '★', 'c-tag']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['z-tag', 'a-tag', 'b-tag', 'c-tag'])
+    })
+
+    it('should handle duplicate star ratings', () => {
+      const tags = ['project', '★★★', 'important', '★★★', 'work']
+      const result = removeStarRatingTags(tags)
+      expect(result).toEqual(['project', 'important', 'work'])
+    })
+
+    it('should not mutate the original array', () => {
+      const originalTags = ['javascript', '★★★', 'tutorial']
+      const tagsCopy = [...originalTags]
+      const result = removeStarRatingTags(originalTags)
+
+      expect(originalTags).toEqual(tagsCopy)
+      expect(result).not.toBe(originalTags)
+      expect(result).toEqual(['javascript', 'tutorial'])
     })
   })
 })

@@ -334,6 +334,17 @@
     z-index: 91;
     background-color: var(--secondary);
   }
+
+  /* 隐藏原有的书签按钮 */
+  .actions__ .bookmark-menu-trigger:nth-of-type(n + 2) {
+    display: none;
+  }
+
+  .utags_custom_btn.starred {
+    svg {
+      color: var(--utags-star-tag-color);
+    }
+  }
 }
 
 /* Mobile */

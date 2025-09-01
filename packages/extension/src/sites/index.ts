@@ -376,12 +376,18 @@ export function matchedNodes() {
 
   const currentPageLink = $('#utags_current_page_link') as UtagsHTMLElement
   if (currentPageLink) {
-    const key = getCanonicalUrl(location.href)
+    const key = getCanonicalUrl(currentPageLink.href)
     if (key) {
       const title = getTrimmedTitle(currentPageLink)
+      const description = currentPageLink.dataset.utags_description
+      // Build meta object only with properties that have values
+      const meta: { title?: string; description?: string } = {}
+      if (title) meta.title = title
+      if (description) meta.description = description
+
       currentPageLink.utags = {
         key,
-        meta: title ? { title } : {},
+        meta,
       }
       matchedNodesSet.add(currentPageLink)
     }

@@ -99,6 +99,7 @@ body {
   'menu.removeQuickTag': 'Remove {tag} tag from current page',
   'settings.quickTags': 'Quick Tags',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
+  'settings.enableQuickStar': 'Enable quick star adding',
 }
 
 export default messages

@@ -96,6 +96,7 @@ body {
   'menu.modifyCurrentPageTags': '修改當前網頁標籤',
   'menu.addQuickTag': '為當前網頁添加 {tag} 標籤',
   'menu.removeQuickTag': '刪除當前網頁的 {tag} 標籤',
+  'settings.enableQuickStar': '啟用快速添加星標',
   'settings.quickTags': '快捷標籤',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
 }

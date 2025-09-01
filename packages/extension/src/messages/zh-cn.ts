@@ -98,6 +98,7 @@ body {
   'menu.removeQuickTag': '删除当前网页的 {tag} 标签',
   'settings.quickTags': '快捷标签',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
+  'settings.enableQuickStar': '启用快速添加星标',
 }
 
 export default messages
