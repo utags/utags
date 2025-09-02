@@ -2,6 +2,11 @@
 
 > English | [中文](zh-CN.md)
 
+## uTags v0.20 Release Notes
+
+- Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
+- Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
+
 ## uTags v0.19 Release Notes
 
 - Optimize data sync logic, solve data inconsistency problem

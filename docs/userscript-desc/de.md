@@ -124,6 +124,9 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
 
 ## Versionshinweise
 
+- 0.20
+  - ShadowRoot-Traversierungsfunktionalität hinzugefügt, um das Finden und Markieren von Elementen innerhalb von Shadow DOM zu unterstützen
+  - Bilibili.com-Website-Unterstützung optimiert, Verbesserung der Tag-Funktionalitätskompatibilität und -leistung auf der Plattform
 - 0.19.x
   - Hinzufügung von Schnell-Tag-Menübefehlen: Konfigurieren Sie benutzerdefinierte Schnell-Tags in den Einstellungen und greifen Sie über das Rechtsklick-Menü mit ➕/➖ Symbolen zum Hinzufügen/Entfernen von Tags darauf zu
   - Schnell-Stern-Funktion für linux.do Website hinzugefügt - aktivieren Sie die schnelle Stern-Hinzufügung in den Einstellungen für schnelleres Bookmarking

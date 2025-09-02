@@ -377,3 +377,8 @@ export function containsStarRatingTag(tags: string[]): boolean {
 export function removeStarRatingTags(tags: string[]): string[] {
   return tags.filter((tag) => !starTags.includes(tag))
 }
+
+let utagsId = 1
+export function generateUtagsId() {
+  return String(utagsId++)
+}

@@ -1,5 +1,8 @@
 import { $, $$, addEventListener, runOnce } from 'browser-extension-utils'
 import styleText from 'data-text:./013-bilibili.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
+
+import { traverseAllShadowRoots } from '../../utils/shadow-root-traverser'
 
 export default (() => {
   const prefix = 'https://www.bilibili.com/'
@@ -40,12 +43,13 @@ export default (() => {
 
   return {
     matches: /bilibili\.com|biligame\.com/,
+    // Exclude all, use addExtraMatchedNodes instead
     excludeSelectors: ['*'],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // runOnce("site:window:error", () => {
+      // runOnce('site:window:error', () => {
       //   addEventListener(
       //     window,
-      //     "error",
+      //     'error',
       //     (error) => {
       //       console.error(error)
       //       // error.preventDefault()
@@ -78,7 +82,7 @@ export default (() => {
           return false
         }
 
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         const key = prefix2 + userId
         const meta = { title, type: 'user' }
         element.utags = { key, meta }
@@ -86,9 +90,10 @@ export default (() => {
         matchedNodesSet.add(element)
       }
 
+      // 视频 up 主
       const elements2 = $$('.upname a,a.bili-video-card__info--owner')
       for (const element of elements2) {
-        const href = element.href as string
+        const href = (element as HTMLAnchorElement).href
         if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
           if (key) {
@@ -97,7 +102,7 @@ export default (() => {
               element
             )
             if (nameElement) {
-              const title = nameElement.textContent
+              const title = getTrimmedTitle(nameElement)
               const meta = { title, type: 'user' }
               nameElement.utags = { key, meta }
               nameElement.dataset.utags_node_type = 'link'
@@ -122,11 +127,11 @@ export default (() => {
         ].join(',')
       )
       for (const element of elements3) {
-        const href = element.href as string
+        const href = (element as HTMLAnchorElement).href
         if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
           if (key) {
-            let title = element.textContent.trim()
+            let title = getTrimmedTitle(element)
             if (title) {
               title = title.replace(/^@/, '')
               const meta = { title, type: 'user' }
@@ -137,6 +142,46 @@ export default (() => {
         }
       }
 
+      traverseAllShadowRoots(
+        (shadowRoot, hostElement) => {
+          // console.log('Found shadow root in:', hostElement.tagName, hostElement)
+          const elements = $$(
+            '[data-user-profile-id] a',
+            shadowRoot as unknown as HTMLElement
+          )
+          for (const element of elements) {
+            const href = (element as HTMLAnchorElement).href
+            if (href.startsWith(prefix2)) {
+              const key = getUserProfileUrl(href)
+              if (key) {
+                let title = getTrimmedTitle(element)
+                if (title) {
+                  title = title.replace(/^@/, '')
+                  const meta = { title, type: 'user' }
+                  element.utags = { key, meta }
+                  element.dataset.utags_absolute = '1'
+                  matchedNodesSet.add(element)
+                }
+              }
+            }
+          }
+        },
+        document.documentElement,
+        {
+          maxDepth: 50,
+          includeTags: [
+            'bili-comments',
+            'bili-comment-thread-renderer',
+            'bili-comment-renderer',
+            'bili-comment-replies-renderer',
+            'bili-comment-reply-renderer',
+            'bili-comment-user-info',
+            'bili-rich-text',
+            'bili-user-profile',
+          ],
+        }
+      )
+
       if (
         location.href.startsWith(prefix2) ||
         location.href.startsWith(prefix3 + 'space/')
@@ -144,7 +189,7 @@ export default (() => {
         // profile header
         const element = $('#h-name,.m-space-info .name')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: 'user' }
@@ -157,7 +202,7 @@ export default (() => {
       // video title
       const element = $('h1.video-title,h1.title-text')
       if (element) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         const key = getVideoUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'video' }
@@ -172,7 +217,7 @@ export default (() => {
       for (const element of elements4) {
         const key = getVideoUrl(element.href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const target =
             element.parentElement!.tagName === 'H3'
               ? element.parentElement!

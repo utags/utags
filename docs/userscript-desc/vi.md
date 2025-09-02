@@ -124,6 +124,9 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Ghi chú phát hành
 
+- 0.20
+  - Thêm chức năng duyệt shadowRoot để hỗ trợ tìm kiếm và gắn thẻ các phần tử trong Shadow DOM
+  - Tối ưu hóa hỗ trợ trang web bilibili.com, cải thiện khả năng tương thích và hiệu suất của chức năng thẻ trên nền tảng
 - 0.19.x
   - Thêm Lệnh Menu Thẻ Nhanh: Cấu hình thẻ nhanh tùy chỉnh trong cài đặt và truy cập qua menu chuột phải với biểu tượng ➕/➖ để thêm/xóa thẻ
   - Thêm tính năng sao nhanh cho trang web linux.do - kích hoạt thêm sao nhanh trong cài đặt để đánh dấu nhanh hơn

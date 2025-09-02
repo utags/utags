@@ -121,6 +121,9 @@ For now it works on
 
 ## Release Notes
 
+- 0.20
+  - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
+  - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
 - 0.19.x
   - Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
   - Optimize data sync logic, solve data inconsistency problem

@@ -366,6 +366,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
 }
 
 export function matchedNodes() {
+  console.time('matchedNodes')
   const matchedNodesSet = new Set<UtagsHTMLElement>()
 
   addMatchedNodes(matchedNodesSet)
@@ -442,5 +443,6 @@ export function matchedNodes() {
   //   console.log(list)
   // }
 
+  console.timeEnd('matchedNodes')
   return [...matchedNodesSet]
 }

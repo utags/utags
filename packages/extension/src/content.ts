@@ -61,7 +61,7 @@ import {
 } from './storage/bookmarks'
 import { getEmojiTags } from './storage/tags'
 import type { UserTag, UserTagMeta } from './types'
-import { sortTags } from './utils'
+import { generateUtagsId, sortTags } from './utils'
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -470,13 +470,40 @@ async function updateAddTagsToCurrentPageMenuCommand(tags?: string[]) {
   await menuCommandManager.updateQuickTagMenuCommands(tags)
 }
 
+const utagsIdSet = new Set<string>()
 function appendTagsToPage(
   element: HTMLElement,
   key: string,
   tags: string[],
   meta: UserTagMeta | undefined
 ) {
-  const utagsUl = element.nextSibling as HTMLElement
+  let utagsId = element.dataset.utags_id
+  if (!utagsId) {
+    utagsId = generateUtagsId()
+    element.dataset.utags_id = utagsId
+    if (element.dataset.utags_absolute) {
+      addEventListener(element, 'mouseover', () => {
+        const utagsId = element.dataset.utags_id
+        const utags = $(`[data-utags_for_id="${utagsId}"]`)
+        if (utags) {
+          updateTagPosition(element)
+          addClass(utags, 'utags_ul_active')
+        }
+      })
+      addEventListener(element, 'mouseout', () => {
+        const utagsId = element.dataset.utags_id
+        const utags = $(`[data-utags_for_id="${utagsId}"]`)
+        if (utags) {
+          removeClass(utags, 'utags_ul_active')
+        }
+      })
+    }
+  }
+
+  utagsIdSet.add(utagsId)
+  const utagsUl =
+    $(`[data-utags_for_id="${utagsId}"]`) ||
+    (element.nextSibling as HTMLElement)
   if (hasClass(utagsUl, 'utags_ul')) {
     if (
       element.dataset.utags === tags.join(',') &&
@@ -487,6 +514,8 @@ function appendTagsToPage(
 
     utagsUl.remove()
   }
+
+  // console.debug('appendTagsToPage', utagsId, element)
 
   // On some websites, using the `UL` tag will affect the selectors of the original website.
   // For example: https://www.zhipin.com/
@@ -532,7 +561,18 @@ function appendTagsToPage(
     ul.append(li)
   }
 
-  element.after(ul)
+  if (element.dataset.utags_absolute) {
+    ul.dataset.utags_for_id = utagsId
+    const container =
+      $('#utags_absolute_ul_container') ||
+      addElement(document.body, 'div', {
+        id: 'utags_absolute_ul_container',
+      })
+    container.append(ul)
+  } else {
+    element.after(ul)
+  }
+
   element.dataset.utags = tags.join(',')
   /* Fix v2ex polish start */
   // 为了防止阻塞渲染页面，延迟执行
@@ -556,9 +596,16 @@ function appendTagsToPage(
 function cleanUnusedUtags() {
   const utagsUlList = $$('.utags_ul,ul[data-utags_key],ol[data-utags_key]')
   for (const utagsUl of utagsUlList) {
-    const element = utagsUl.previousSibling as HTMLElement
-    if (element && getAttribute(element, 'data-utags') !== null) {
-      continue
+    const utagsId = utagsUl.dataset.utags_for_id
+    if (utagsId) {
+      if (utagsIdSet.has(utagsId)) {
+        continue
+      }
+    } else {
+      const element = utagsUl.previousSibling as HTMLElement
+      if (element && getAttribute(element, 'data-utags') !== null) {
+        continue
+      }
     }
 
     utagsUl.remove()
@@ -569,6 +616,8 @@ async function displayTags() {
   if (start) {
     console.error('start of displayTags', Date.now() - start)
   }
+
+  utagsIdSet.clear()
 
   emojiTags = await getEmojiTags()
 
@@ -775,7 +824,10 @@ function getMaxOffsetLeft(
 // display: contents -> offsetParent = null, offsetWith = 0, offsetLeft = 0, offsetTop = 0
 
 function updateTagPosition(element: HTMLElement) {
-  const utags = element.nextElementSibling as HTMLElement
+  const utagsId = element.dataset.utags_id
+  const utags =
+    $(`[data-utags_for_id="${utagsId}"]`) ||
+    (element.nextElementSibling as HTMLElement)
   if (!utags || !hasClass(utags, 'utags_ul')) {
     return
   }

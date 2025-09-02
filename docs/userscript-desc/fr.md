@@ -124,6 +124,9 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
 
 ## Notes de version
 
+- 0.20
+  - Ajouter la fonctionnalité de traversée shadowRoot pour prendre en charge la recherche et le marquage d'éléments dans Shadow DOM
+  - Optimiser le support du site web bilibili.com, améliorant la compatibilité et les performances de la fonctionnalité de tags sur la plateforme
 - 0.19.x
   - Ajout de commandes de menu de tags rapides : Configurez des tags rapides personnalisés dans les paramètres et accédez-y via le menu clic droit avec les icônes ➕/➖ pour ajouter/supprimer des tags
   - Ajouter la fonction d'étoile rapide pour le site web linux.do - activez l'ajout rapide d'étoiles dans les paramètres pour un marquage plus rapide

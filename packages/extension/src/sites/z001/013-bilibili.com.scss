@@ -1,4 +1,35 @@
 :not(#a):not(#b):not(#c) {
+  /* default */
+  #utags_absolute_ul_container {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+      position: absolute;
+      top: -9999px;
+      margin-top: -2px !important;
+      margin-left: 0px !important;
+      flex-wrap: nowrap !important;
+    }
+  }
+
   .bili-video-card__info--right,
   .video-page-card-small,
   .video-page-operator-card-small {

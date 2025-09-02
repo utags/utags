@@ -2,6 +2,11 @@
 
 > [English](readme.md) | 中文
 
+## uTags v0.20 版本更新
+
+- 新增 shadowRoot 遍历功能，支持在 Shadow DOM 中查找和标记元素
+- 优化 bilibili.com 网站支持，提升标签功能在该平台的兼容性和性能
+
 ## uTags v0.19 版本更新
 
 - 优化数据同步逻辑，解决数据不一致问题
