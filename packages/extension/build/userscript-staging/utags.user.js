@@ -10028,7 +10028,7 @@
           ? {
               ["enableQuickStar_".concat(host2)]: {
                 title: i2("settings.enableQuickStar"),
-                defaultValue: false,
+                defaultValue: true,
                 group: ++groupNumber,
               },
             }

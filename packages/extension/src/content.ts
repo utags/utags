@@ -105,7 +105,7 @@ const getSettingsTable = (): SettingsTable => {
       ? {
           [`enableQuickStar_${host}`]: {
             title: i('settings.enableQuickStar'),
-            defaultValue: false,
+            defaultValue: true,
             group: ++groupNumber,
           },
         }
