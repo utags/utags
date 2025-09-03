@@ -47,6 +47,9 @@ export default (() => {
       '.with-submenu',
       '#script-links.tabs',
       '#install-area',
+      '.self-link',
+      '.discussion-subscribe',
+      '.discussion-unsubscribe',
       // History > version numbers
       '.history_versions .version-number',
       'a[href*="show_all_versions"]',

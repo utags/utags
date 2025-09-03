@@ -3761,7 +3761,6 @@
       delete element.dataset.utags_visited
     }
   }
-  var numberLimitOfShowAllUtagsInArea = 10
   var lastShownArea
   var isPromptShown = false
   function hideAllUtagsInArea(target) {
@@ -3782,59 +3781,6 @@
         removeClass(element2, "utags_hide_all")
       })
     }
-  }
-  function showAllUtagsInArea(element) {
-    if (!element) {
-      return false
-    }
-    const utags = $$(".utags_ul", element)
-    if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
-      addClass(element, "utags_show_all")
-      return true
-    }
-    return false
-  }
-  function findElementToShowAllUtags(target) {
-    hideAllUtagsInArea(target)
-    if (!target) {
-      return
-    }
-    const targets = []
-    let width
-    let height
-    do {
-      targets.push(target)
-      const tagName = target.tagName
-      const style = getComputedStyle(target)
-      if (
-        style.position === "fixed" ||
-        style.position === "sticky" ||
-        /^(BODY|TABLE|UL|OL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
-      ) {
-        break
-      }
-      target = target.parentElement
-      if (target) {
-        width = target.offsetWidth || target.clientWidth
-        height = target.offsetHeight || target.clientHeight
-      } else {
-        width = 0
-        height = 0
-      }
-    } while (targets.length < 8 && target && width > 20 && height > 10)
-    while (targets.length > 0) {
-      const area = targets.pop()
-      if (showAllUtagsInArea(area)) {
-        if (lastShownArea === area) {
-          hideAllUtagsInArea()
-          return
-        }
-        lastShownArea = area
-        return
-      }
-    }
-    hideAllUtagsInArea()
-    lastShownArea = void 0
   }
   function bindDocumentEvents() {
     const eventType = isTouchScreen() ? "touchstart" : "click"
@@ -3898,11 +3844,7 @@
             event.stopPropagation()
             event.stopImmediatePropagation()
           }
-          return
         }
-        setTimeout(() => {
-          findElementToShowAllUtags(target)
-        }, 100)
       },
       true
     )
@@ -4799,6 +4741,9 @@
         ".with-submenu",
         "#script-links.tabs",
         "#install-area",
+        ".self-link",
+        ".discussion-subscribe",
+        ".discussion-unsubscribe",
         ".history_versions .version-number",
         'a[href*="show_all_versions"]',
         'a[href*="/reports/new"]',

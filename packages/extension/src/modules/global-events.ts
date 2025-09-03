@@ -197,12 +197,13 @@ export function bindDocumentEvents() {
           event.stopImmediatePropagation()
         }
 
-        return
+        // Don't need this if no call findElementToShowAllUtags
+        // return
       }
 
-      setTimeout(() => {
-        findElementToShowAllUtags(target)
-      }, 100)
+      // setTimeout(() => {
+      //   findElementToShowAllUtags(target)
+      // }, 100)
 
       // TODO: delay display utags in corner of page for current page
     },
