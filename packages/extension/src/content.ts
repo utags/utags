@@ -31,6 +31,7 @@ import { splitTags } from 'utags-utils'
 
 import createTag from './components/tag'
 import { getAvailableLocales, i, resetI18n } from './messages'
+import { clearTagManagerCache } from './modules/advanced-tag-manager'
 import { registerDebuggingHotkey } from './modules/debugging'
 import { outputData } from './modules/export-import'
 import {
@@ -42,6 +43,7 @@ import { createMenuCommandManager } from './modules/menu-command-manager'
 import { initStarHandler, toggleStarHandler } from './modules/star-handler'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import {
+  clearVisitedCache,
   isAvailableOnCurrentSite,
   TAG_VISITED,
   onSettingsChange as visitedOnSettingsChange,
@@ -55,6 +57,7 @@ import {
 } from './sites/index'
 import {
   addTagsValueChangeListener,
+  clearCachedUrlMap,
   getCachedUrlMap,
   getTags,
   initBookmarksStore,
@@ -68,6 +71,7 @@ import {
   getUtagsUlByTarget,
   sortTags,
 } from './utils'
+import { EventListenerManager } from './utils/event-listener-manager'
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -79,6 +83,8 @@ export const config: PlasmoCSConfig = {
 
 let emojiTags: string[]
 const host = location.host
+
+const eventManager = new EventListenerManager()
 
 const isEnabledByDefault = () => {
   if (host.includes('www.bilibili.com')) {
@@ -1209,14 +1215,30 @@ async function main() {
 
   await displayTags()
 
-  addEventListener(doc, 'visibilitychange', async () => {
+  eventManager.addEventListener(doc, 'visibilitychange', async () => {
     if (!doc.hidden) {
       await displayTags()
     }
   })
 
-  bindDocumentEvents()
-  bindWindowEvents()
+  bindDocumentEvents(eventManager)
+  bindWindowEvents(eventManager)
+
+  // Add cleanup mechanism for page unload
+  const cleanup = () => {
+    eventManager.removeAllEventListeners()
+    observer.disconnect()
+    // Clear global variables
+    utagsIdSet.clear()
+    // Clear cached data to free memory
+    clearCachedUrlMap()
+    clearVisitedCache()
+    clearTagManagerCache()
+  }
+
+  // Listen for page unload events
+  eventManager.addEventListener(globalThis, 'beforeunload', cleanup)
+  eventManager.addEventListener(globalThis, 'pagehide', cleanup)
 
   const observer = new MutationObserver(async (mutationsList) => {
     // console.error("mutation", Date.now(), mutationsList)

@@ -30,6 +30,19 @@ let displayedTags = new Set()
 let currentTags = new Set<string>()
 let disableTagStyleInPrompt = false
 
+/**
+ * Clears all tag manager global variables to free memory
+ * Should be called when the extension is being unloaded or reset
+ */
+export function clearTagManagerCache(): void {
+  pinnedTags = []
+  mostUsedTags = []
+  recentAddedTags = []
+  emojiTags = []
+  displayedTags = new Set()
+  currentTags = new Set()
+}
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 function onSelect(selected: string | null, input: HTMLInputElement) {
   if (selected) {

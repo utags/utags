@@ -16,6 +16,7 @@ import { saveTags } from '../storage/bookmarks'
 import { getEmojiTags } from '../storage/tags'
 import { type NullOrUndefined, type UserTag, type UserTagMeta } from '../types'
 import { filterTags, sortTags } from '../utils'
+import { type EventListenerManager } from '../utils/event-listener-manager'
 import { advancedPrompt } from './advanced-tag-manager'
 import { simplePrompt } from './simple-tag-manger'
 import { addVisited, removeVisited, TAG_VISITED } from './visited'
@@ -119,10 +120,20 @@ function findElementToShowAllUtags(target: HTMLElement) {
   lastShownArea = undefined
 }
 
-export function bindDocumentEvents() {
+export function bindDocumentEvents(eventManager?: EventListenerManager) {
   const eventType = isTouchScreen() ? 'touchstart' : 'click'
+  const addListener = eventManager
+    ? (
+        target: EventTarget,
+        type: string,
+        listener: EventListener,
+        options?: boolean | AddEventListenerOptions
+      ) => {
+        eventManager.addEventListener(target, type, listener, options)
+      }
+    : addEventListener
 
-  addEventListener(
+  addListener(
     doc,
     eventType,
     (event: PointerEvent) => {
@@ -210,7 +221,7 @@ export function bindDocumentEvents() {
     true
   )
 
-  addEventListener(
+  addListener(
     doc,
     'keydown',
     (event: KeyboardEvent) => {
@@ -219,7 +230,7 @@ export function bindDocumentEvents() {
       }
 
       if (event.key === 'Escape' && $('.utags_show_all')) {
-        // 按“ESC”键时要做的事。
+        // 按"ESC"键时要做的事。
         hideAllUtagsInArea()
         // 取消默认动作，从而避免处理两次。
         event.preventDefault()
@@ -228,7 +239,7 @@ export function bindDocumentEvents() {
     true
   )
 
-  addEventListener(
+  addListener(
     doc,
     'mousedown',
     (event: MouseEvent) => {
@@ -242,7 +253,7 @@ export function bindDocumentEvents() {
     },
     true
   )
-  addEventListener(
+  addListener(
     doc,
     'mouseup',
     (event: MouseEvent) => {
@@ -269,7 +280,7 @@ function extendHistoryApi2() {
   }, 100)
 }
 
-export function bindWindowEvents() {
+export function bindWindowEvents(eventManager?: EventListenerManager) {
   extendHistoryApi()
 
   // 浏览器扩展有不同的结果。脚本运行环境的 windows, history 对象与网页的不是一个对象
@@ -279,7 +290,19 @@ export function bindWindowEvents() {
   // Firefox extension: X
   extendHistoryApi2()
 
-  addEventListener(globalThis, 'locationchange', function () {
+  const addListener = eventManager
+    ? (
+        target: EventTarget,
+        type: string,
+        listener: EventListener,
+        options?: boolean | AddEventListenerOptions
+      ) => {
+        eventManager.addEventListener(target, type, listener, options)
+      }
+    : addEventListener
+
+  // For SPA navigation
+  addListener(globalThis, 'locationchange', function () {
     hideAllUtagsInArea()
   })
 }

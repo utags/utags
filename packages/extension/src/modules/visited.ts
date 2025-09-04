@@ -5,7 +5,15 @@ const host = location.host
 let useVisitedFunction = false
 let displayMark = false
 let isAvailable = false
-const cache = {}
+let cache: Record<string, number> = {}
+
+/**
+ * Clears the visited links cache to free memory
+ * Should be called when the extension is being unloaded or reset
+ */
+export function clearVisitedCache(): void {
+  cache = {}
+}
 
 export function setPrefix(newPrefix: string) {
   prefix = newPrefix

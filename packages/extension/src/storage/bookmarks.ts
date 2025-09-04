@@ -111,6 +111,14 @@ const storageKey = 'extension.utags.urlmap'
 let cachedUrlMap: BookmarksData = {}
 let addTagsValueChangeListenerInitialized = false
 
+/**
+ * Clears the cached URL map to free memory
+ * Should be called when the extension is being unloaded or reset
+ */
+export function clearCachedUrlMap(): void {
+  cachedUrlMap = {}
+}
+
 function createEmptyBookmarksStore(): BookmarksStore {
   const store: BookmarksStore = {
     data: {},
