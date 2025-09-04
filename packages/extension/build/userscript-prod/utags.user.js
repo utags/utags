@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.1
+// @version              0.20.2
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -3164,6 +3164,15 @@
   function generateUtagsId() {
     return String(utagsId++)
   }
+  function getUtagsUlById(id) {
+    return id ? $('[data-utags_for_id="'.concat(id, '"]')) : void 0
+  }
+  function getUtagsTargetById(id) {
+    return id ? $('[data-utags_id="'.concat(id, '"]')) : void 0
+  }
+  function getUtagsUlByTarget(element) {
+    return getUtagsUlById(element.dataset.utags_id)
+  }
   var mergeData = async () => {
     return { numberOfLinks: 0, numberOfTags: 0 }
   }
@@ -3761,7 +3770,6 @@
       delete element.dataset.utags_visited
     }
   }
-  var numberLimitOfShowAllUtagsInArea = 10
   var lastShownArea
   var isPromptShown = false
   function hideAllUtagsInArea(target) {
@@ -3782,59 +3790,6 @@
         removeClass(element2, "utags_hide_all")
       })
     }
-  }
-  function showAllUtagsInArea(element) {
-    if (!element) {
-      return false
-    }
-    const utags = $$(".utags_ul", element)
-    if (utags.length > 0 && utags.length <= numberLimitOfShowAllUtagsInArea) {
-      addClass(element, "utags_show_all")
-      return true
-    }
-    return false
-  }
-  function findElementToShowAllUtags(target) {
-    hideAllUtagsInArea(target)
-    if (!target) {
-      return
-    }
-    const targets = []
-    let width
-    let height
-    do {
-      targets.push(target)
-      const tagName = target.tagName
-      const style = getComputedStyle(target)
-      if (
-        style.position === "fixed" ||
-        style.position === "sticky" ||
-        /^(BODY|TABLE|UL|OL|NAV|ARTICLE|SECTION|ASIDE)$/.test(tagName)
-      ) {
-        break
-      }
-      target = target.parentElement
-      if (target) {
-        width = target.offsetWidth || target.clientWidth
-        height = target.offsetHeight || target.clientHeight
-      } else {
-        width = 0
-        height = 0
-      }
-    } while (targets.length < 8 && target && width > 20 && height > 10)
-    while (targets.length > 0) {
-      const area = targets.pop()
-      if (showAllUtagsInArea(area)) {
-        if (lastShownArea === area) {
-          hideAllUtagsInArea()
-          return
-        }
-        lastShownArea = area
-        return
-      }
-    }
-    hideAllUtagsInArea()
-    lastShownArea = void 0
   }
   function bindDocumentEvents() {
     const eventType = isTouchScreen() ? "touchstart" : "click"
@@ -3898,11 +3853,7 @@
             event.stopPropagation()
             event.stopImmediatePropagation()
           }
-          return
         }
-        setTimeout(() => {
-          findElementToShowAllUtags(target)
-        }, 100)
       },
       true
     )
@@ -4574,6 +4525,87 @@
     window.addEventListener("message", messageListener)
     console.log("[UTags Extension] ready for HTTP proxy requests")
   }
+  var DEFAULT_EXCLUDE_TAGS = [
+    "script",
+    "style",
+    "link",
+    "meta",
+    "title",
+    "base",
+    "noscript",
+    "template",
+    "br",
+    "hr",
+    "img",
+    "input",
+    "area",
+    "source",
+    "track",
+    "wbr",
+    "col",
+    "embed",
+    "param",
+    "svg",
+    "picture",
+    "iframe",
+    "button",
+    "textarea",
+    "select",
+    "option",
+    "canvas",
+    "video",
+    "audio",
+    "object",
+  ]
+  function traverseAllShadowRoots(
+    callback,
+    rootElement = document.documentElement,
+    options = {}
+  ) {
+    const {
+      includeTags,
+      excludeTags = [],
+      maxDepth = 10,
+      useDefaultExcludeTags = true,
+    } = options
+    const includeTagsSet = includeTags
+      ? new Set(includeTags.map((tag) => tag.toLowerCase()))
+      : null
+    const excludeTagsSet = /* @__PURE__ */ new Set([
+      ...(useDefaultExcludeTags ? DEFAULT_EXCLUDE_TAGS : []),
+      ...excludeTags.map((tag) => tag.toLowerCase()),
+    ])
+    function traverseElement(element, currentDepth) {
+      if (currentDepth > maxDepth) {
+        console.warn("Maximum traversal depth reached, stopping traversal")
+        return
+      }
+      const tagName = element.tagName.toLowerCase()
+      if (excludeTagsSet.has(tagName)) {
+        return
+      }
+      if (includeTagsSet && !includeTagsSet.has(tagName)) {
+        traverseChildren(element, currentDepth)
+        return
+      }
+      if (element.shadowRoot) {
+        callback(element.shadowRoot, element)
+        const shadowChildren = element.shadowRoot.children
+        for (const shadowChild of shadowChildren) {
+          traverseElement(shadowChild, currentDepth + 1)
+        }
+        return
+      }
+      traverseChildren(element, currentDepth)
+    }
+    function traverseChildren(element, currentDepth) {
+      const children = element.children
+      for (const child of children) {
+        traverseElement(child, currentDepth + 1)
+      }
+    }
+    traverseElement(rootElement, 0)
+  }
   var default_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
   var default_default2 = /* @__PURE__ */ (() => {
@@ -4799,6 +4831,9 @@
         ".with-submenu",
         "#script-links.tabs",
         "#install-area",
+        ".self-link",
+        ".discussion-subscribe",
+        ".discussion-unsubscribe",
         ".history_versions .version-number",
         'a[href*="show_all_versions"]',
         'a[href*="/reports/new"]',
@@ -5178,7 +5213,7 @@
     }
   })()
   var reddit_com_default =
-    '#TOFIX_uFEFF{display:block}:not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) shreddit-comment [slot=commentMeta]{position:relative}:not(#a):not(#b):not(#c) [data-testid=user-hover-card]{position:relative}:not(#a):not(#b):not(#c) div[slot=content]{position:relative}:not(#a):not(#b):not(#c) div[slot=comment]{position:relative}:not(#a):not(#b):not(#c) article:hover a[slot=title]+.utags_ul .utags_captain_tag,:not(#a):not(#b):not(#c) [slot=post-media-container]:hover a+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:0}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_0,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_0{object-position:100% 50%}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_1,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-4px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) [data-utags_list_node*=",hide,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u9690\u85CF,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",block,"]{opacity:1%;display:block !important}'
+    '#TOFIX_uFEFF{display:block}:not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) shreddit-comment [slot=commentMeta]{position:relative}:not(#a):not(#b):not(#c) [data-testid=user-hover-card]{position:relative}:not(#a):not(#b):not(#c) div[slot=content]{position:relative}:not(#a):not(#b):not(#c) div[slot=comment]{position:relative}:not(#a):not(#b):not(#c) article:hover a[slot=title]+.utags_ul .utags_captain_tag,:not(#a):not(#b):not(#c) [slot=post-media-container]:hover a+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:0}:not(#a):not(#b):not(#c) article a[slot=title],:not(#a):not(#b):not(#c) recent-posts a{position:relative}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_0,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_0{object-position:100% 50%}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_1,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-4px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) [data-utags_list_node*=",hide,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u9690\u85CF,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#a):not(#b):not(#c) [data-utags_list_node*=",block,"]{opacity:1%;display:block !important}'
   var reddit_com_default2 = (() => {
     const prefix3 = "https://www.reddit.com/"
     function getCanonicalUrl2(url) {
@@ -5279,7 +5314,7 @@
         }
         let key = getUserProfileUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -5290,7 +5325,7 @@
         }
         key = getCommunityUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -5301,7 +5336,7 @@
         }
         key = getCommentsUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -5325,7 +5360,7 @@
       addExtraMatchedNodes(matchedNodesSet) {
         let element = $('[data-testid="profile-main"] .w-full p')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: "user" }
@@ -5335,7 +5370,7 @@
         }
         element = $(".w-full h1")
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getCommunityUrl(location.href)
           if (title && key) {
             const meta = { title, type: "community" }
@@ -5345,7 +5380,7 @@
         }
         element = $('h1[slot="title"]')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getCommentsUrl(location.href, true)
           if (title && key) {
             const meta = { title, type: "comments" }
@@ -5724,87 +5759,6 @@
   })()
   var bilibili_com_default =
     ':not(#a):not(#b):not(#c) #utags_absolute_ul_container{position:absolute;top:0;z-index:2}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-2px !important;margin-left:0px !important;flex-wrap:nowrap !important}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}'
-  var DEFAULT_EXCLUDE_TAGS = [
-    "script",
-    "style",
-    "link",
-    "meta",
-    "title",
-    "base",
-    "noscript",
-    "template",
-    "br",
-    "hr",
-    "img",
-    "input",
-    "area",
-    "source",
-    "track",
-    "wbr",
-    "col",
-    "embed",
-    "param",
-    "svg",
-    "picture",
-    "iframe",
-    "button",
-    "textarea",
-    "select",
-    "option",
-    "canvas",
-    "video",
-    "audio",
-    "object",
-  ]
-  function traverseAllShadowRoots(
-    callback,
-    rootElement = document.documentElement,
-    options = {}
-  ) {
-    const {
-      includeTags,
-      excludeTags = [],
-      maxDepth = 10,
-      useDefaultExcludeTags = true,
-    } = options
-    const includeTagsSet = includeTags
-      ? new Set(includeTags.map((tag) => tag.toLowerCase()))
-      : null
-    const excludeTagsSet = /* @__PURE__ */ new Set([
-      ...(useDefaultExcludeTags ? DEFAULT_EXCLUDE_TAGS : []),
-      ...excludeTags.map((tag) => tag.toLowerCase()),
-    ])
-    function traverseElement(element, currentDepth) {
-      if (currentDepth > maxDepth) {
-        console.warn("Maximum traversal depth reached, stopping traversal")
-        return
-      }
-      const tagName = element.tagName.toLowerCase()
-      if (excludeTagsSet.has(tagName)) {
-        return
-      }
-      if (includeTagsSet && !includeTagsSet.has(tagName)) {
-        traverseChildren(element, currentDepth)
-        return
-      }
-      if (element.shadowRoot) {
-        callback(element.shadowRoot, element)
-        const shadowChildren = element.shadowRoot.children
-        for (const shadowChild of shadowChildren) {
-          traverseElement(shadowChild, currentDepth + 1)
-        }
-        return
-      }
-      traverseChildren(element, currentDepth)
-    }
-    function traverseChildren(element, currentDepth) {
-      const children = element.children
-      for (const child of children) {
-        traverseElement(child, currentDepth + 1)
-      }
-    }
-    traverseElement(rootElement, 0)
-  }
   var bilibili_com_default2 = /* @__PURE__ */ (() => {
     const prefix3 = "https://www.bilibili.com/"
     const prefix22 = "https://space.bilibili.com/"
@@ -10453,26 +10407,30 @@
       utagsId2 = generateUtagsId()
       element.dataset.utags_id = utagsId2
       if (element.dataset.utags_absolute) {
-        addEventListener(element, "mouseover", () => {
-          const utagsId3 = element.dataset.utags_id
-          const utags = $('[data-utags_for_id="'.concat(utagsId3, '"]'))
+        addEventListener(element, "mouseover", (event) => {
+          const target = event.target
+          const utags = getUtagsUlByTarget(target)
           if (utags) {
-            updateTagPosition(element)
+            updateTagPosition(target)
             addClass(utags, "utags_ul_active")
           }
         })
-        addEventListener(element, "mouseout", () => {
-          const utagsId3 = element.dataset.utags_id
-          const utags = $('[data-utags_for_id="'.concat(utagsId3, '"]'))
+        addEventListener(element, "mouseout", (event) => {
+          const target = event.target
+          const utags = getUtagsUlByTarget(target)
           if (utags) {
             removeClass(utags, "utags_ul_active")
           }
         })
+      } else {
+        addEventListener(element, "mouseover", (event) => {
+          const target = event.target
+          updateTagPosition(target)
+        })
       }
     }
     utagsIdSet.add(utagsId2)
-    const utagsUl =
-      $('[data-utags_for_id="'.concat(utagsId2, '"]')) || element.nextSibling
+    const utagsUl = getUtagsUlById(utagsId2) || element.nextSibling
     if (hasClass(utagsUl, "utags_ul")) {
       if (
         element.dataset.utags === tags.join(",") &&
@@ -10585,9 +10543,6 @@
         tags.push(TAG_VISITED)
       }
       appendTagsToPage(node, key2, tags, utags.meta)
-      setTimeout(() => {
-        updateTagPosition(node)
-      })
     }
     if (start) {
       console.error("after appendTagsToPage", Date.now() - start)
@@ -10706,10 +10661,7 @@
     return maxOffsetRight - utags.clientWidth - utagsSizeFix
   }
   function updateTagPosition(element) {
-    const utagsId2 = element.dataset.utags_id
-    const utags =
-      $('[data-utags_for_id="'.concat(utagsId2, '"]')) ||
-      element.nextElementSibling
+    const utags = getUtagsUlByTarget(element) || element.nextElementSibling
     if (!utags || !hasClass(utags, "utags_ul")) {
       return
     }
@@ -10908,6 +10860,14 @@
     }
     element.dataset.utags_fit_content = "0"
   }
+  function updateTagPositionForAllTargets() {
+    for (const id of utagsIdSet) {
+      const target = getUtagsTargetById(id)
+      if (target) {
+        updateTagPosition(target)
+      }
+    }
+  }
   async function main() {
     addUtagsStyle()
     await initSettings(() => {
@@ -11016,9 +10976,13 @@
         cleanUnusedUtags()
         displayTagsThrottled()
       }
-      if ($("#vimiumHintMarkerContainer")) {
+      if (
+        $("#vimium-hint-marker-container") ||
+        $("#vimiumHintMarkerContainer")
+      ) {
         addClass(doc.body, "utags_show_all")
         addClass(doc.documentElement, "utags_vimium_hint")
+        updateTagPositionForAllTargets()
       } else if (hasClass(doc.documentElement, "utags_vimium_hint")) {
         removeClass(doc.documentElement, "utags_vimium_hint")
         hideAllUtagsInArea()
@@ -11027,15 +10991,6 @@
     observer.observe(doc, {
       childList: true,
       subtree: true,
-    })
-    addEventListener(doc, "mouseover", (event) => {
-      const target = event.target
-      if (
-        target &&
-        (target.tagName === "A" || target.dataset.utags !== void 0)
-      ) {
-        displayTagsThrottled()
-      }
     })
   }
   runWhenHeadExists(async () => {
