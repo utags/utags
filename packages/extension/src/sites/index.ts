@@ -9,6 +9,7 @@ import {
 import { getTrimmedTitle, trimTitle } from 'utags-utils'
 
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
+import { findElementsInShadowRoots } from '../utils/shadow-root-traverser'
 import defaultSite from './default'
 import v2ex from './z001/001-v2ex'
 import greasyforkOrg from './z001/002-greasyfork.org'
@@ -304,6 +305,20 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   }
 
   const elements = $$(matchedNodesSelector)
+
+  // const foundElements: Element[] = findElementsInShadowRoots(
+  //   matchedNodesSelector,
+  //   document.documentElement,
+  //   {
+  //     maxDepth: 50,
+  //     includeTags: [
+  //       //
+  //       'shreddit-feed',
+  //       'shreddit-post',
+  //     ],
+  //   }
+  // )
+  // elements.push(...Array.from(foundElements as HTMLElement[]))
 
   if (elements.length === 0) {
     return

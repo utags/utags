@@ -61,7 +61,13 @@ import {
 } from './storage/bookmarks'
 import { getEmojiTags } from './storage/tags'
 import type { UserTag, UserTagMeta } from './types'
-import { generateUtagsId, sortTags } from './utils'
+import {
+  generateUtagsId,
+  getUtagsTargetById,
+  getUtagsUlById,
+  getUtagsUlByTarget,
+  sortTags,
+} from './utils'
 
 export const config: PlasmoCSConfig = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -482,28 +488,32 @@ function appendTagsToPage(
     utagsId = generateUtagsId()
     element.dataset.utags_id = utagsId
     if (element.dataset.utags_absolute) {
-      addEventListener(element, 'mouseover', () => {
-        const utagsId = element.dataset.utags_id
-        const utags = $(`[data-utags_for_id="${utagsId}"]`)
+      addEventListener(element, 'mouseover', (event) => {
+        const target = event.target as HTMLElement
+        const utags = getUtagsUlByTarget(target)
         if (utags) {
-          updateTagPosition(element)
+          updateTagPosition(target)
           addClass(utags, 'utags_ul_active')
         }
       })
-      addEventListener(element, 'mouseout', () => {
-        const utagsId = element.dataset.utags_id
-        const utags = $(`[data-utags_for_id="${utagsId}"]`)
+      addEventListener(element, 'mouseout', (event) => {
+        const target = event.target as HTMLElement
+        const utags = getUtagsUlByTarget(target)
         if (utags) {
           removeClass(utags, 'utags_ul_active')
         }
+      })
+    } else {
+      addEventListener(element, 'mouseover', (event) => {
+        const target = event.target as HTMLElement
+        updateTagPosition(target)
       })
     }
   }
 
   utagsIdSet.add(utagsId)
   const utagsUl =
-    $(`[data-utags_for_id="${utagsId}"]`) ||
-    (element.nextSibling as HTMLElement)
+    getUtagsUlById(utagsId) || (element.nextSibling as HTMLElement)
   if (hasClass(utagsUl, 'utags_ul')) {
     if (
       element.dataset.utags === tags.join(',') &&
@@ -659,10 +669,6 @@ async function displayTags() {
     }
 
     appendTagsToPage(node, key, tags, utags.meta)
-
-    setTimeout(() => {
-      updateTagPosition(node)
-    })
   }
 
   if (start) {
@@ -824,10 +830,8 @@ function getMaxOffsetLeft(
 // display: contents -> offsetParent = null, offsetWith = 0, offsetLeft = 0, offsetTop = 0
 
 function updateTagPosition(element: HTMLElement) {
-  const utagsId = element.dataset.utags_id
   const utags =
-    $(`[data-utags_for_id="${utagsId}"]`) ||
-    (element.nextElementSibling as HTMLElement)
+    getUtagsUlByTarget(element) || (element.nextElementSibling as HTMLElement)
   if (!utags || !hasClass(utags, 'utags_ul')) {
     return
   }
@@ -1094,6 +1098,15 @@ function updateTagPosition(element: HTMLElement) {
   element.dataset.utags_fit_content = '0'
 }
 
+function updateTagPositionForAllTargets() {
+  for (const id of utagsIdSet) {
+    const target = getUtagsTargetById(id)
+    if (target) {
+      updateTagPosition(target)
+    }
+  }
+}
+
 async function main() {
   addUtagsStyle()
 
@@ -1226,9 +1239,10 @@ async function main() {
       displayTagsThrottled()
     }
 
-    if ($('#vimiumHintMarkerContainer')) {
+    if ($('#vimium-hint-marker-container') || $('#vimiumHintMarkerContainer')) {
       addClass(doc.body, 'utags_show_all')
       addClass(doc.documentElement, 'utags_vimium_hint')
+      updateTagPositionForAllTargets()
     } else if (hasClass(doc.documentElement, 'utags_vimium_hint')) {
       removeClass(doc.documentElement, 'utags_vimium_hint')
       hideAllUtagsInArea()
@@ -1240,15 +1254,15 @@ async function main() {
   })
 
   // To fix issues on reddit, add mouseover event
-  addEventListener(doc, 'mouseover', (event: Event) => {
-    const target = event.target as HTMLElement
-    if (
-      target &&
-      (target.tagName === 'A' || target.dataset.utags !== undefined)
-    ) {
-      displayTagsThrottled()
-    }
-  })
+  // addEventListener(doc, 'mouseover', (event: Event) => {
+  //   const target = event.target as HTMLElement
+  //   if (
+  //     target &&
+  //     (target.tagName === 'A' || target.dataset.utags !== undefined)
+  //   ) {
+  //     displayTagsThrottled()
+  //   }
+  // })
 
   // For debug
   // registerDebuggingHotkey()

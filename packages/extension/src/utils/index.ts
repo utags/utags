@@ -1,4 +1,4 @@
-import { $$, createElement } from 'browser-extension-utils'
+import { $, $$, createElement } from 'browser-extension-utils'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
@@ -381,4 +381,16 @@ export function removeStarRatingTags(tags: string[]): string[] {
 let utagsId = 1
 export function generateUtagsId() {
   return String(utagsId++)
+}
+
+export function getUtagsUlById(id: string | undefined) {
+  return id ? $(`[data-utags_for_id="${id}"]`) : undefined
+}
+
+export function getUtagsTargetById(id: string | undefined) {
+  return id ? $(`[data-utags_id="${id}"]`) : undefined
+}
+
+export function getUtagsUlByTarget(element: HTMLElement) {
+  return getUtagsUlById(element.dataset.utags_id)
 }

@@ -59,6 +59,9 @@
   article a[slot="title"],
   /* Recent Posts */
   recent-posts a {
+    /* Fix title can't hover */
+    position: relative;
+
     &[data-utags_fit_content="1"] {
       min-width: unset !important;
       width: fit-content !important;
