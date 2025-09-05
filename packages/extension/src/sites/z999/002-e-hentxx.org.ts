@@ -1,8 +1,10 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./002-e-hentxx.org.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { getFirstHeadElement } from '../../utils'
+import { getUtags, setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -65,7 +67,7 @@ export default (() => {
             meta.title = title
           }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
@@ -80,7 +82,11 @@ export default (() => {
       // Extened view
       const titleElement = $('.gl4e.glname .glink', element) as UtagsHTMLElement
       if (titleElement) {
-        titleElement.utags = element.utags
+        const utags = getUtags(element)
+        if (utags) {
+          setUtags(titleElement, utags)
+        }
+
         titleElement.dataset.utags = titleElement.dataset.utags || ''
         titleElement.dataset.utags_node_type = 'link'
         return titleElement
@@ -102,10 +108,10 @@ export default (() => {
         // post title
         const element = getFirstHeadElement() as UtagsHTMLElement
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

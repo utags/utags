@@ -1,6 +1,8 @@
 import { $, $$, getAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./012-youtube.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -57,7 +59,7 @@ export default (() => {
 
           const key = prefix + pathname.slice(1)
           const meta = { type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
 
           return true
         }
@@ -67,7 +69,7 @@ export default (() => {
 
           const key = prefix + pathname.slice(1)
           const meta = { type: 'channel' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
 
           return true
         }
@@ -81,7 +83,7 @@ export default (() => {
           }
 
           const meta = title ? { title, type: 'video' } : { type: 'video' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
 
           return true
         }
@@ -98,10 +100,10 @@ export default (() => {
           '#inner-header-container #container.ytd-channel-name #text'
         )
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -114,10 +116,10 @@ export default (() => {
           '#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title'
         )
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'video' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

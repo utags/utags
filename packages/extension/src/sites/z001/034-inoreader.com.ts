@@ -1,6 +1,8 @@
 import { $, $$, doc, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./034-inoreader.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -52,13 +54,13 @@ export default (() => {
 
       const key = getArticleUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
 
         const meta = { type: 'article', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         if (element.closest('.search_feed_article')) {
@@ -91,10 +93,10 @@ export default (() => {
       if (key) {
         const element = $('.article_full_contents div.article_title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'article' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

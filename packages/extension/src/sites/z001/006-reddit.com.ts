@@ -2,6 +2,7 @@ import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./006-reddit.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -121,7 +122,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -136,7 +137,7 @@ export default (() => {
 
         const meta = { type: 'community', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -151,7 +152,7 @@ export default (() => {
 
         const meta = { type: 'comments', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -178,7 +179,7 @@ export default (() => {
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }
@@ -189,7 +190,7 @@ export default (() => {
         const key = getCommunityUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'community' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }
@@ -200,7 +201,7 @@ export default (() => {
         const key = getCommentsUrl(location.href, true)
         if (title && key) {
           const meta = { title, type: 'comments' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }

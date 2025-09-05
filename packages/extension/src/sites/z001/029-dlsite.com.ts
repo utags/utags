@@ -1,6 +1,8 @@
 import { $ } from 'browser-extension-utils'
 import styleText from 'data-text:./029-dlsite.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -56,7 +58,7 @@ export default (() => {
         )
       ) {
         const key = getProductUrl(element.href)
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
 
         if (!key || !title) {
           return
@@ -65,7 +67,7 @@ export default (() => {
         const parentElement = element.parentElement!
         const meta = { title }
 
-        parentElement.utags = { key, meta }
+        setUtags(parentElement, key, meta)
         parentElement.dataset.utags_node_type = 'link'
         return parentElement
       }
@@ -137,10 +139,10 @@ export default (() => {
         // post title
         const element = $('h1#work_name')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }
@@ -152,10 +154,10 @@ export default (() => {
         // post title
         const element = $('.prof_maker_name')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }

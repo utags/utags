@@ -33,6 +33,7 @@ import createTag from './components/tag'
 import { getAvailableLocales, i, resetI18n } from './messages'
 import { clearTagManagerCache } from './modules/advanced-tag-manager'
 import { registerDebuggingHotkey } from './modules/debugging'
+import { clearDomReferences } from './modules/dom-reference-manager'
 import { outputData } from './modules/export-import'
 import {
   bindDocumentEvents,
@@ -71,6 +72,7 @@ import {
   getUtagsUlByTarget,
   sortTags,
 } from './utils'
+import { getUtags } from './utils/dom-utils'
 import { EventListenerManager } from './utils/event-listener-manager'
 
 export const config: PlasmoCSConfig = {
@@ -657,7 +659,7 @@ async function displayTags() {
   await getCachedUrlMap()
 
   for (const node of nodes) {
-    const utags: UserTag = node.utags!
+    const utags: UserTag | undefined = getUtags(node)
     if (!utags) {
       continue
     }
@@ -1234,6 +1236,8 @@ async function main() {
     clearCachedUrlMap()
     clearVisitedCache()
     clearTagManagerCache()
+    // Clear DOM references to prevent memory leaks from circular references
+    clearDomReferences()
   }
 
   // Listen for page unload events

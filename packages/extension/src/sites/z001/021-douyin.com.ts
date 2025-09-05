@@ -1,7 +1,9 @@
 import { $, $$, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./021-douyin.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import { getFirstHeadElement } from '../../utils'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -56,21 +58,21 @@ export default (() => {
       let key = getUserProfileUrl(href, true)
       if (key) {
         const meta = { type: 'user' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
       key = getVideoUrl(href)
       if (key) {
         const meta = { type: 'video' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
       key = getNoteUrl(href)
       if (key) {
         const meta = { type: 'post' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
@@ -90,10 +92,10 @@ export default (() => {
         // profile header
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -104,11 +106,11 @@ export default (() => {
         // post title
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const target = element.parentElement!.parentElement!
           if (title) {
             const meta = { title, type: 'video' }
-            target.utags = { key, meta }
+            setUtags(target, key, meta)
             target.dataset.utags_node_type = 'link'
             matchedNodesSet.add(target)
           }
@@ -120,10 +122,10 @@ export default (() => {
         // post title
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

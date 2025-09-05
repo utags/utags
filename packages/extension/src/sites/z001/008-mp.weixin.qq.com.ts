@@ -1,4 +1,7 @@
 import { $ } from 'browser-extension-utils'
+import { getTrimmedTitle } from 'utags-utils'
+
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   function getCanonicalUrl(url: string) {
@@ -22,11 +25,11 @@ export default (() => {
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const element = $('h1.rich_media_title')
       if (element) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (title) {
           const key = getCanonicalUrl(location.href)
           const meta = { title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }

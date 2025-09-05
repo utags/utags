@@ -1,6 +1,7 @@
 import { $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./030-keylol.com.scss'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -61,7 +62,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         return true
       }

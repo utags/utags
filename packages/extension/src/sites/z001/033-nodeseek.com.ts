@@ -1,11 +1,13 @@
 import { $, $$, doc, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./033-nodeseek.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -84,7 +86,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
 
         if (!title) {
           return false
@@ -92,20 +94,20 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
 
         return true
       }
 
       key = getPostUrl(href, true)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title || /^#\d+$/.test(title)) {
           return false
         }
 
         const meta = { type: 'post', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
         return true
@@ -113,13 +115,13 @@ export default (() => {
 
       key = getCategoryUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
 
         const meta = { type: 'category', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
 
         return true
       }
@@ -153,10 +155,10 @@ export default (() => {
         // profile header
         const element = $('h1.username')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

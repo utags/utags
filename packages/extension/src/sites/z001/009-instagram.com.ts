@@ -1,6 +1,7 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./009-instagram.com.scss'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -22,7 +23,7 @@ export default (() => {
           }
 
           const meta = { type: 'user' }
-          element.utags = { meta }
+          setUtags(element, '', meta)
 
           return true
         }

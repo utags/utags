@@ -1,6 +1,8 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./010-threads.net.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -28,7 +30,7 @@ export default (() => {
         // console.log(href2)
         if (/^@[\w.]+$/.test(href2)) {
           const meta = { type: 'user' }
-          element.utags = { meta }
+          setUtags(element, '', meta)
 
           return true
         }
@@ -45,11 +47,11 @@ export default (() => {
       // profile header
       const element = $('h1+div>div>span,h2+div>div>span')
       if (element) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         const key = getUserProfileUrl(location.href)
         if (title && key && key === 'https://www.threads.net/@' + title) {
           const meta = { title, type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }

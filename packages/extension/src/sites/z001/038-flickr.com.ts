@@ -7,7 +7,7 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
-import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   // Constants
@@ -148,7 +148,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -274,7 +274,7 @@ export default (() => {
       //     const title = element.textContent!.trim()
       //     if (title) {
       //       const meta = { title, type: "user" }
-      //       element.utags = { key, meta }
+      //       setUtags(element, key, meta)
       //       matchedNodesSet.add(element)
       //     }
       //   }
@@ -289,7 +289,7 @@ export default (() => {
           const title = titleElement.textContent!.trim()
           if (title) {
             const meta = { title, type: 'group' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)

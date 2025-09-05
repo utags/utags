@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   // Constants
@@ -94,14 +95,14 @@ export default (() => {
 
       const key = getPostUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
 
         if (!title) {
           return false
         }
 
         const meta = { title, type: 'post' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
         element.dataset.utags = element.dataset.utags || ''
@@ -123,10 +124,10 @@ export default (() => {
         addVisited(key)
         const element = $('h1#page-title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }

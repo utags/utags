@@ -1,7 +1,9 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./005-github.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import type { UtagsHTMLElement } from '../../types'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -148,7 +150,7 @@ export default (() => {
           const username = /^https:\/\/github\.com\/([\w-]+)$/.exec(key)![1]
           const title = username
           const meta = { title, type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
@@ -156,36 +158,36 @@ export default (() => {
         if (key) {
           const title = key.replace(prefix, '')
           const meta = { title, type: 'repo' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
         key = getTopicsUrl(href)
         if (key) {
-          const text = element.textContent.trim()
+          const text = getTrimmedTitle(element)
           if (text === '#') {
             return false
           }
 
           const title = '#' + key.replace(prefix + 'topics/', '')
           const meta = { title, type: 'topic' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
         key = getIssuesUrl(href)
         if (key) {
           const meta = { type: 'issue' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
         key = getFileUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const type = key.includes('/blob/') ? 'file' : 'dir'
           const meta = { title, type }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
 
@@ -224,10 +226,10 @@ export default (() => {
       if (key) {
         const element = $('[data-testid="issue-header"] h1,.gh-header-show h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'issue' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -237,11 +239,11 @@ export default (() => {
       if (key) {
         const element = $('h1#file-name-id-wide')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const type = key.includes('/blob/') ? 'file' : 'dir'
             const meta = { title, type }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

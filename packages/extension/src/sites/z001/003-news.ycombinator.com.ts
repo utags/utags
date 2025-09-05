@@ -1,5 +1,6 @@
 import { $, $$ } from 'browser-extension-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -48,7 +49,7 @@ export default (() => {
             const title = cloneComment(commentText).textContent
             if (key && title) {
               const meta = { title, type: 'comment' }
-              target.utags = { key, meta }
+              setUtags(target, key, meta)
               matchedNodesSet.add(target)
             }
           }
@@ -65,7 +66,7 @@ export default (() => {
             const title = cloneComment(commentText).textContent
             if (key && title) {
               const meta = { title, type }
-              target.utags = { key, meta }
+              setUtags(target, key, meta)
               matchedNodesSet.add(target)
             }
           }
@@ -81,7 +82,7 @@ export default (() => {
             const title = cloneComment(commentText).textContent
             if (key && title) {
               const meta = { title, type: 'comment' }
-              target.utags = { key, meta }
+              setUtags(target, key, meta)
               matchedNodesSet.add(target)
             }
           }
@@ -99,7 +100,7 @@ export default (() => {
               const title = titleElement.textContent
               if (key && title) {
                 const meta = { title, type: 'topic' }
-                target.utags = { key, meta }
+                setUtags(target, key, meta)
                 matchedNodesSet.add(target)
               }
             }

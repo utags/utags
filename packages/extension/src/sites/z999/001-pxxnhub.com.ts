@@ -1,6 +1,8 @@
 import { $, $$, getAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./001-pxxnhub.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -72,14 +74,14 @@ export default (() => {
       let key = getChannelUrl(href, true)
       if (key) {
         const meta = { type: 'channel' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
       key = getUserProfileUrl(href, true)
       if (key) {
         const meta = { type: 'user' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
@@ -92,7 +94,7 @@ export default (() => {
         }
 
         const meta = title ? { title, type: 'video' } : { type: 'video' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
 
         return true
       }
@@ -120,10 +122,10 @@ export default (() => {
         // profile header
         const element = $('.name h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -134,10 +136,10 @@ export default (() => {
         // video title or shorts title
         const element = $('.title h1')
         if (element && !$('a', element)) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'channel' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -148,10 +150,10 @@ export default (() => {
         // video title or shorts title
         const element = $('h1.title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'video' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

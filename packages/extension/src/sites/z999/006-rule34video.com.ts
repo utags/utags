@@ -1,6 +1,8 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./006-rule34video.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -71,7 +73,7 @@ export default (() => {
           const key = href.replace(/(https?:\/\/[^/]+\/).*/, '$1')
           const meta = { type: 'AD', title: 'AD' }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
         }
 
@@ -82,8 +84,8 @@ export default (() => {
       if (key) {
         const titleElement = $('.thumb_title', element)
         const title = titleElement
-          ? titleElement.textContent.trim()
-          : element.textContent.trim()
+          ? getTrimmedTitle(titleElement)
+          : getTrimmedTitle(element)
 
         if (!title) {
           return false
@@ -91,7 +93,7 @@ export default (() => {
 
         const meta = { type: 'video', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -122,10 +124,10 @@ export default (() => {
         // title
         const element = $('.brand_inform .title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'model' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -136,10 +138,10 @@ export default (() => {
         // title
         const element = $('.channel_logo .title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -150,10 +152,10 @@ export default (() => {
         // title
         const element = $('.brand_inform .title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'category' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -164,10 +166,10 @@ export default (() => {
         // title
         const element = $('h1.title_video')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'video' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

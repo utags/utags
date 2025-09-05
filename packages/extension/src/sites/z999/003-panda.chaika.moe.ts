@@ -1,6 +1,8 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./003-panda.chaika.moe.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -37,10 +39,10 @@ export default (() => {
         // post title
         const element = $('h5')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -50,10 +52,10 @@ export default (() => {
         const key = element.href
         const titleElement = $('.cover-title', element)
         if (titleElement) {
-          const title = titleElement.textContent
+          const title = getTrimmedTitle(titleElement)
           const meta = { title, type: 'post' }
 
-          titleElement.utags = { key, meta }
+          setUtags(titleElement, key, meta)
           titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }
@@ -68,7 +70,7 @@ export default (() => {
           const title = titleElement.textContent
           const meta = { title, type: 'post' }
 
-          titleElement.utags = { key, meta }
+          setUtags(titleElement, key, meta)
           titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }

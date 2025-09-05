@@ -1,5 +1,7 @@
 import { $, $$ } from 'browser-extension-utils'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -38,7 +40,7 @@ export default (() => {
             meta.title = title
           }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
 
           return true
@@ -61,10 +63,10 @@ export default (() => {
         // profile header
         const element = $('h1.username')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -84,7 +86,7 @@ export default (() => {
 
             if (title) {
               const meta = { title, type: 'user' }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }

@@ -2,6 +2,7 @@ import { $, $$, addEventListener, runOnce } from 'browser-extension-utils'
 import styleText from 'data-text:./013-bilibili.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import { traverseAllShadowRoots } from '../../utils/shadow-root-traverser'
 
 export default (() => {
@@ -85,7 +86,7 @@ export default (() => {
         const title = getTrimmedTitle(element)
         const key = prefix2 + userId
         const meta = { title, type: 'user' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags_node_type = 'link'
         matchedNodesSet.add(element)
       }
@@ -104,7 +105,7 @@ export default (() => {
             if (nameElement) {
               const title = getTrimmedTitle(nameElement)
               const meta = { title, type: 'user' }
-              nameElement.utags = { key, meta }
+              setUtags(nameElement, key, meta)
               nameElement.dataset.utags_node_type = 'link'
               matchedNodesSet.add(nameElement)
             }
@@ -135,7 +136,7 @@ export default (() => {
             if (title) {
               title = title.replace(/^@/, '')
               const meta = { title, type: 'user' }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -158,7 +159,7 @@ export default (() => {
                 if (title) {
                   title = title.replace(/^@/, '')
                   const meta = { title, type: 'user' }
-                  element.utags = { key, meta }
+                  setUtags(element, key, meta)
                   element.dataset.utags_absolute = '1'
                   matchedNodesSet.add(element)
                 }
@@ -193,7 +194,7 @@ export default (() => {
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -206,7 +207,7 @@ export default (() => {
         const key = getVideoUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'video' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }
@@ -225,7 +226,7 @@ export default (() => {
 
           if (title) {
             const meta = { title, type: 'video' }
-            target.utags = { key, meta }
+            setUtags(target, key, meta)
             target.dataset.utags_node_type = 'link'
             matchedNodesSet.add(target)
           }

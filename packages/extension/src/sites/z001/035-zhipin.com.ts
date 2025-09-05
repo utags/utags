@@ -7,11 +7,7 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
-import type {
-  UserTagMeta,
-  UtagsHTMLAnchorElement,
-  UtagsHTMLElement,
-} from '../../types'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -158,7 +154,7 @@ export default (() => {
 
       for (const element of $$(
         '.info-company div[data-url],.similar-job-list .similar-job-company[data-url]'
-      ) as UtagsHTMLElement[]) {
+      ) as HTMLAnchorElement[]) {
         if (element.dataset.url) {
           element.href =
             location.origin + element.dataset.url.replace('/job/', '/')
@@ -166,7 +162,7 @@ export default (() => {
         }
       }
     },
-    validate(element: UtagsHTMLAnchorElement) {
+    validate(element: HTMLAnchorElement) {
       const href = element.href
 
       if (!href) {
@@ -197,7 +193,7 @@ export default (() => {
         }
 
         const meta = { type: 'company', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         if (element.closest('.sub-li-bottom a.user-info')) {
           element.dataset.utags_position_selector = 'a > p'
@@ -222,7 +218,7 @@ export default (() => {
 
         title = title.replace(' 在线 ', '')
         const meta = { type: 'job-detail', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         element.dataset.utags_position_selector =
           '.job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h'
@@ -280,7 +276,7 @@ export default (() => {
           const title = element.childNodes[0].textContent!.trim()
           if (title) {
             const meta = { title, type: 'company' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -295,7 +291,7 @@ export default (() => {
           const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'job-detail' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }
@@ -306,7 +302,7 @@ export default (() => {
           const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'job-detail' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }

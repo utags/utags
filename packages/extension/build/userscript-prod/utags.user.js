@@ -2984,7 +2984,7 @@
     "\u2606",
   ]
   var isUserscript = true
-  var isProduction = false
+  var isProduction = true
   function getFirstHeadElement(tagName = "h1") {
     for (const element of $$(tagName)) {
       if (element.closest(".browser_extension_settings_container")) {
@@ -4345,7 +4345,7 @@
   }
   async function initExtensionId() {
     const type = isUserscript ? "Userscript" : "Extension"
-    const tag = isProduction ? "" : " - ".concat("staging".toUpperCase())
+    const tag = isProduction ? "" : " - ".concat("prod".toUpperCase())
     let storedId = await getValue(STORAGE_KEY_EXTENSION_ID)
     if (!storedId) {
       storedId = "utags-"

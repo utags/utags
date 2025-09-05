@@ -1,6 +1,8 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./014-tiktok.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -43,8 +45,8 @@ export default (() => {
       if (key) {
         const titleElement = $('h3,[data-e2e="browse-username"]', element)
         const title = titleElement
-          ? titleElement.textContent.trim()
-          : element.textContent.trim()
+          ? getTrimmedTitle(titleElement)
+          : getTrimmedTitle(element)
 
         if (!title) {
           return false
@@ -52,7 +54,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         // element.dataset.utags = element.dataset.utags || ""
 
         return true
@@ -74,11 +76,11 @@ export default (() => {
       // profile header
       const element = $('h1[data-e2e="user-title"]')
       if (element) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }

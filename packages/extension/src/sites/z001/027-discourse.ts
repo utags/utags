@@ -11,6 +11,7 @@ import {
 import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
+import { removeUtags, setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   const prefix = location.origin + '/'
@@ -159,7 +160,7 @@ export default (() => {
 
         const meta = title ? { type: 'user', title } : { type: 'user' }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         if (element.closest('.topic-body .names a')) {
@@ -185,7 +186,7 @@ export default (() => {
           key = prefix + 'u/' + title.toLowerCase()
           const meta = { type: 'user', title }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
           return true
         }
@@ -202,7 +203,7 @@ export default (() => {
         }
 
         const meta = { type: 'post', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
         element.dataset.utags = element.dataset.utags || ''
@@ -218,7 +219,7 @@ export default (() => {
         }
 
         const meta = { type: 'category', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
 
         if (element.closest('.column .category-list .category-title-link')) {
           element.dataset.utags_position_selector =
@@ -236,7 +237,7 @@ export default (() => {
         }
 
         const meta = { type: 'tag', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         return true
       }
 
@@ -299,7 +300,7 @@ export default (() => {
           index++
           if (key !== element.dataset.utags_key || index === 2) {
             delete element.dataset.utags
-            delete element.utags
+            removeUtags(element)
           }
         }
 
@@ -313,7 +314,7 @@ export default (() => {
           const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_key = key
             matchedNodesSet.add(element)
           }
@@ -332,7 +333,7 @@ export default (() => {
           key = prefix + 'u/' + title.toLowerCase()
           const meta = { type: 'user', title }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
           element.dataset.utags_node_type = 'link'
           element.dataset.utags_position_selector = element.closest('.winner')
@@ -349,7 +350,7 @@ export default (() => {
           key = prefix + 'u/' + title.toLowerCase()
           const meta = { type: 'user', title }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
           element.dataset.utags_node_type = 'link'
 

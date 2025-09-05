@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   const prefix = location.origin + '/'
@@ -116,7 +117,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         // if (element.closest(".topic-body .names a")) {
@@ -132,7 +133,7 @@ export default (() => {
 
       key = getVideoUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
 
         if (!title) {
           return false
@@ -143,7 +144,7 @@ export default (() => {
         }
 
         const meta = { type: 'video', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
         element.dataset.utags = element.dataset.utags || ''
@@ -159,7 +160,7 @@ export default (() => {
       //   }
 
       //   const meta = { type: "category", title }
-      //   element.utags = { key, meta }
+      //   setUtags(element, key, meta)
 
       //   if (element.closest(".column .category-list .category-title-link")) {
       //     element.dataset.utags_position_selector =
@@ -177,7 +178,7 @@ export default (() => {
       //   }
 
       //   const meta = { type: "tag", title }
-      //   element.utags = { key, meta }
+      //   setUtags(element, key, meta)
       //   return true
       // }
 
@@ -205,10 +206,10 @@ export default (() => {
 
         const element = $('[data-a-target="stream-title"]')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'video' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }
@@ -220,12 +221,12 @@ export default (() => {
         '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
       )) {
         const id = element.dataset.aUser
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (id && title) {
           key = prefix + id.toLowerCase()
           const meta = { type: 'user', title }
 
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ''
           element.dataset.utags_node_type = 'link'
 

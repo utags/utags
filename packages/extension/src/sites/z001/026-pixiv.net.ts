@@ -1,5 +1,8 @@
 import { $ } from 'browser-extension-utils'
 import styleText from 'data-text:./026-pixiv.net.scss'
+import { getTrimmedTitle } from 'utags-utils'
+
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   const prefix = 'https://www.pixiv.net/'
@@ -46,7 +49,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -55,7 +58,7 @@ export default (() => {
       // key = getPostUrl(href)
       // if (key) {
       //   const meta = { type: "post" }
-      //   element.utags = { key, meta }
+      //   setUtags(element, key, meta)
       //   return true
       // }
 
@@ -67,10 +70,10 @@ export default (() => {
         // profile header
         const element = $('h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

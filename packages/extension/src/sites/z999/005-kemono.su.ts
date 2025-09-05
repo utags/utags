@@ -1,6 +1,8 @@
 import { $, getAttribute, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./005-kemono.su.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -23,7 +25,7 @@ export default (() => {
       const hrefAttr = getAttribute(element, 'href')
 
       // Comments
-      if (hrefAttr.startsWith('#')) {
+      if (!hrefAttr || hrefAttr.startsWith('#')) {
         return false
       }
 
@@ -68,10 +70,10 @@ export default (() => {
         // post title
         const element = $('h1.post__title,h1.scrape__title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

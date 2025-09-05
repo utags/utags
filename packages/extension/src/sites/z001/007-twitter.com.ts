@@ -1,5 +1,8 @@
 import { $$, setStyle } from 'browser-extension-utils'
 import styleText from 'data-text:./007-twitter.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
+
+import { setUtags } from '../../utils/dom-utils'
 
 export default (() => {
   const prefix = 'https://x.com/'
@@ -37,7 +40,7 @@ export default (() => {
           setStyle(parent, { zIndex: '1' })
 
           const meta = { type: 'user' }
-          element.utags = { meta }
+          setUtags(element, '', meta)
 
           return true
         }
@@ -49,14 +52,14 @@ export default (() => {
       // profile header
       const elements = $$('[data-testid="UserName"] span')
       for (const element of elements) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title || !title.startsWith('@')) {
           continue
         }
 
         const key = prefix + title.slice(1)
         const meta = { title, type: 'user' }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         matchedNodesSet.add(element)
       }
     },

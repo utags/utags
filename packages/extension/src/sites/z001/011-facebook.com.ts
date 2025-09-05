@@ -1,7 +1,9 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./011-facebook.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import { getFirstHeadElement, getUrlParameters } from '../../utils'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -78,7 +80,7 @@ export default (() => {
 
       const key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -88,7 +90,7 @@ export default (() => {
         }
 
         const meta = { type: 'user', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -106,11 +108,11 @@ export default (() => {
       // profile header
       const element = getFirstHeadElement('div[role="main"] h1')
       if (element) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         const key = getUserProfileUrl(location.href)
         if (title && key) {
           const meta = { title, type: 'user' }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       }

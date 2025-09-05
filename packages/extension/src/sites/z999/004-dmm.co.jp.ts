@@ -2,6 +2,7 @@ import { $ } from 'browser-extension-utils'
 import styleText from 'data-text:./004-dmm.co.jp.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -116,7 +117,7 @@ export default (() => {
             : getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'product' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
           }
         }
 
@@ -131,7 +132,7 @@ export default (() => {
           : getTrimmedTitle(element)
         if (title) {
           const meta = { title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags_position_selector = 'div > div > p'
           return true
         }
@@ -145,7 +146,7 @@ export default (() => {
           : getTrimmedTitle(element)
         if (title) {
           const meta = { title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags_position_selector = 'div > div > p'
           return true
         }
@@ -190,10 +191,10 @@ export default (() => {
         // post title
         const element = $('h1.productTitle__txt')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -204,10 +205,10 @@ export default (() => {
         // post title
         const element = $('.circleProfile__name span')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -218,10 +219,10 @@ export default (() => {
         // post title
         const element = $('main h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

@@ -1,5 +1,6 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./037-yamibo.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
@@ -7,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { deleteUrlParameters } from '../../utils'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -135,7 +137,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -149,14 +151,14 @@ export default (() => {
 
         const meta = href === title ? { type: 'user' } : { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         return true
       }
 
       key = getPostUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -181,13 +183,13 @@ export default (() => {
 
         const meta = href === title ? { type: 'post' } : { type: 'post', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
         return true
       }
 
-      const title = element.textContent.trim()
+      const title = getTrimmedTitle(element)
       if (!title) {
         return false
       }
@@ -256,10 +258,10 @@ export default (() => {
             '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
           )
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'user' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -271,10 +273,10 @@ export default (() => {
 
         const element = $('#thread_subject')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }

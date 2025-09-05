@@ -8,6 +8,12 @@ import {
 } from 'browser-extension-utils'
 import { getTrimmedTitle, trimTitle } from 'utags-utils'
 
+import {
+  deleteElementUtags,
+  getElementUtags,
+  hasElementUtags,
+  setElementUtags,
+} from '../modules/dom-reference-manager'
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
 import { findElementsInShadowRoots } from '../utils/shadow-root-traverser'
 import defaultSite from './default'
@@ -272,7 +278,7 @@ const isValidUtagsElement = (element: HTMLElement) => {
     return false
   }
 
-  if (!element.textContent.trim()) {
+  if (!getTrimmedTitle(element)) {
     return false
   }
 
@@ -327,7 +333,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   const process = (element: UtagsHTMLElement) => {
     if (!preValidate(element) || !validateFunction(element)) {
       // It's not a candidate
-      delete element.utags
+      deleteElementUtags(element)
       return
     }
 
@@ -342,11 +348,11 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
 
     if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
       // It's not a candidate
-      delete element.utags
+      deleteElementUtags(element)
       return
     }
 
-    const utags: UserTag = element.utags! || {}
+    const utags = getElementUtags(element) || { key: '', meta: {} }
     const key = utags.key || getCanonicalUrl(element.href)
     if (!key) {
       return
@@ -362,11 +368,11 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       utags.meta.title = trimTitle(utags.meta.title)
     }
 
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    element.utags = {
+    // Store utags data in WeakMap instead of directly on the element
+    setElementUtags(element, {
       key,
       meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
-    } as UserTag
+    })
 
     matchedNodesSet.add(element)
   }
@@ -401,10 +407,10 @@ export function matchedNodes() {
       if (title) meta.title = title
       if (description) meta.description = description
 
-      currentPageLink.utags = {
+      setElementUtags(currentPageLink, {
         key,
         meta,
-      }
+      })
       matchedNodesSet.add(currentPageLink)
     }
   }
@@ -420,7 +426,7 @@ export function matchedNodes() {
   //       meta.title = title
   //     }
 
-  //     element.utags = { key, meta }
+  //     setUtags(element, key, meta)
   //   }
 
   //   matchedNodesSet.add(element)

@@ -1,6 +1,7 @@
 import { $ } from 'browser-extension-utils'
 import styleText from 'data-text:./002-greasyfork.org.scss'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -69,7 +70,7 @@ export default (() => {
           if (title) {
             const key = getScriptUrl(location.href)
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -81,7 +82,7 @@ export default (() => {
           if (title) {
             const key = getCanonicalUrl(location.href)
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }

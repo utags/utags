@@ -1,11 +1,13 @@
 import { $, $$, doc, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./032-flarum.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -87,7 +89,7 @@ export default (() => {
       if (key) {
         // ".GroupList-UserList-user .username" => example.com/groups page
         const titleElement = $('.GroupList-UserList-user .username', element)
-        const title = (titleElement || element).textContent.trim()
+        const title = getTrimmedTitle(titleElement || element)
 
         // if (!title) {
         //   return false
@@ -95,7 +97,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         if (titleElement) {
@@ -113,13 +115,13 @@ export default (() => {
         const titleElement =
           $('.DiscussionListItem-title', element) ||
           $('.TagTile-lastPostedDiscussion-title', element)
-        const title = (titleElement || element).textContent.trim()
+        const title = getTrimmedTitle(titleElement || element)
         if (!title) {
           return false
         }
 
         const meta = { type: 'post', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         markElementWhetherVisited(key, element)
         if (titleElement) {
@@ -136,13 +138,13 @@ export default (() => {
 
       key = getTagUrl(href)
       if (key) {
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
 
         const meta = { type: 'tag', title }
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
         return true
       }
@@ -170,10 +172,10 @@ export default (() => {
 
         const element = $('.item-title h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'post' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
@@ -185,10 +187,10 @@ export default (() => {
       if (key) {
         const element = $('h1.Hero-title')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'tag' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }

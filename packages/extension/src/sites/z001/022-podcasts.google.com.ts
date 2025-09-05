@@ -1,6 +1,8 @@
 import { $, $$, isVisible } from 'browser-extension-utils'
 import styleText from 'data-text:./022-podcasts.google.com.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -61,10 +63,10 @@ export default (() => {
         // episode title
         const element = $('h5')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const meta = { title, type: 'episode' }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -80,10 +82,10 @@ export default (() => {
               container
             )
             if (element) {
-              const title = element.textContent.trim()
+              const title = getTrimmedTitle(element)
               if (title) {
                 const meta = { title, type: 'feed' }
-                element.utags = { key, meta }
+                setUtags(element, key, meta)
                 matchedNodesSet.add(element)
               }
             }
@@ -101,7 +103,7 @@ export default (() => {
           const title = titleElement.textContent
           const meta = { title, type: 'episode' }
 
-          titleElement.utags = { key, meta }
+          setUtags(titleElement, key, meta)
           titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }
@@ -116,11 +118,11 @@ export default (() => {
 
         const key = getFeedUrl(element.href)
         const titleElement = $('div > div', element)
-        if (titleElement) {
+        if (key && titleElement) {
           const title = titleElement.textContent
           const meta = { title, type: 'feed' }
 
-          titleElement.utags = { key, meta }
+          setUtags(titleElement, key, meta)
           titleElement.dataset.utags_node_type = 'link'
           matchedNodesSet.add(titleElement)
         }

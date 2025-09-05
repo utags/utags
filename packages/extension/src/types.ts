@@ -19,14 +19,8 @@ export type NullOrUndefined = null | undefined
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export type UtagsHTMLElement = {
-  utags?: UserTag
   href?: string
 } & HTMLElement
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export type UtagsHTMLAnchorElement = {
-  utags?: UserTag
-} & HTMLAnchorElement
 
 // Global interface extensions
 declare global {

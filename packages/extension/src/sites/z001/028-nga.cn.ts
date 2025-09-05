@@ -1,6 +1,8 @@
 import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./028-nga.cn.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -35,7 +37,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
 
-        element.utags = { key, meta }
+        setUtags(element, key, meta)
         element.dataset.utags = element.dataset.utags || ''
 
         return true
@@ -56,14 +58,14 @@ export default (() => {
           '#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label'
         )
         if (label) {
-          const title = label.textContent.trim()
+          const title = getTrimmedTitle(label)
           if (title === '用 户 名') {
             const element = label.nextElementSibling as HTMLElement
             if (element) {
-              const title = element.textContent.trim()
+              const title = getTrimmedTitle(element)
               if (title) {
                 const meta = { title, type: 'user' }
-                element.utags = { key, meta }
+                setUtags(element, key, meta)
                 matchedNodesSet.add(element)
               }
             }

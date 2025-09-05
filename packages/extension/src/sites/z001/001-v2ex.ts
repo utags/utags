@@ -1,5 +1,6 @@
 import { $, $$, createElement, parseInt10 } from 'browser-extension-utils'
 import styleText from 'data-text:./001-v2ex.scss'
+import { getTrimmedTitle } from 'utags-utils'
 
 import {
   addVisited,
@@ -7,6 +8,7 @@ import {
   setPrefix,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
 export default (() => {
@@ -125,7 +127,7 @@ export default (() => {
           if (username) {
             const key = `https://www.v2ex.com/member/${username}`
             const meta = { title: username, type: 'user' }
-            profile.utags = { key, meta }
+            setUtags(profile, key, meta)
             matchedNodesSet.add(profile)
           }
         }
@@ -140,7 +142,7 @@ export default (() => {
           )
           const title = $('h1').textContent
           const meta = { title, type: 'topic' }
-          header.utags = { key, meta }
+          setUtags(header, key, meta)
           matchedNodesSet.add(header)
 
           addVisited(key)
@@ -180,7 +182,7 @@ export default (() => {
             const title =
               cloneWithoutCitedReplies(replyContentElement).textContent
             const meta = { title, type: 'reply' }
-            newAgoElement.utags = { key, meta }
+            setUtags(newAgoElement, key, meta)
             matchedNodesSet.add(newAgoElement)
           }
         }
@@ -214,7 +216,7 @@ export default (() => {
         //     const title =
         //       cloneWithoutCitedReplies(replyContentElement).textContent
         //     const meta = { title, type: "reply" }
-        //     newAgoElement.utags = { key, meta }
+        //     setUtags(newAgoElement, key, meta)
         //     matchedNodesSet.add(newAgoElement)
         //   }
         // }
@@ -227,9 +229,9 @@ export default (() => {
           const key = getCanonicalUrl(
             'https://www.v2ex.com' + location.pathname
           )
-          const title = header.textContent.replaceAll(/\s+/g, ' ').trim()
+          const title = getTrimmedTitle(header)
           const meta = { title, type: 'node' }
-          header.utags = { key, meta }
+          setUtags(header, key, meta)
           matchedNodesSet.add(header)
         }
       }
@@ -241,9 +243,9 @@ export default (() => {
           const key = getCanonicalUrl(
             'https://www.v2ex.com' + location.pathname
           )
-          const title = header.textContent.replaceAll(/\s+/g, ' ').trim()
+          const title = getTrimmedTitle(header)
           const meta = { title, type: 'tag' }
-          header.utags = { key, meta }
+          setUtags(header, key, meta)
           header.dataset.utags_flag = 'tag_page'
           matchedNodesSet.add(header)
         }
