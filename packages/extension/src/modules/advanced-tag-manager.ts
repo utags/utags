@@ -21,6 +21,7 @@ import {
   getRecentAddedTags,
 } from '../storage/tags'
 import { copyText, sortTags } from '../utils'
+import { createTimeout } from './timer-manager'
 
 let pinnedTags: string[]
 let mostUsedTags: string[]
@@ -238,7 +239,7 @@ function createPromptView(
         stopEventPropagation(event)
       }
 
-      setTimeout(() => {
+      createTimeout(() => {
         // When press 'Escape' key
         if (doc.activeElement === doc.body) {
           closeModal()
@@ -577,7 +578,7 @@ function createPromptView(
     textContent: i('prompt.settings'),
     async onclick() {
       closeModal()
-      setTimeout(showSettings, 1)
+      createTimeout(showSettings, 1)
     },
   })
 

@@ -2,6 +2,7 @@ import { $, $$ } from 'browser-extension-utils'
 import styleText from 'data-text:./006-reddit.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
+import { createTimeout } from '../../modules/timer-manager'
 import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
@@ -208,7 +209,7 @@ export default (() => {
     },
     getStyle: () => styleText,
     postProcess() {
-      setTimeout(() => {
+      createTimeout(() => {
         for (const element of $$(`[data-utags_list_node*=",hide,"],
     [data-utags_list_node*=",隐藏,"],
     [data-utags_list_node*=",屏蔽,"],

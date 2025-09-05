@@ -4,6 +4,13 @@ import {
   removeEventListener,
 } from 'browser-extension-utils'
 
+import {
+  clearManagedInterval,
+  createInterval,
+  createTimeout,
+  type TimerId,
+} from './timer-manager'
+
 function printNodeInfo(element: HTMLElement) {
   console.log(element)
   const style = getComputedStyle(element)
@@ -57,29 +64,29 @@ function stopDebuggingMode() {
   removeEventListener(doc, 'click', clickHandler, true)
 }
 
-let intervalId: NodeJS.Timeout
+let intervalId: TimerId
 function startAutoShowAllUtags() {
   if (!document.body) {
-    setTimeout(startAutoShowAllUtags, 100)
+    createTimeout(startAutoShowAllUtags, 100)
     return
   }
 
   console.log('startAutoShowAllUtags')
   document.body.classList.add('utags_show_all')
-  intervalId = setInterval(() => {
+  intervalId = createInterval(() => {
     document.body.classList.add('utags_show_all')
   }, 5000)
 }
 
 function stopAutoShowAllUtags() {
   console.log('stopAutoShowAllUtags')
-  clearInterval(intervalId)
+  clearManagedInterval(intervalId)
   document.body.classList.remove('utags_show_all')
 }
 
 function startDelayedDebugger() {
   console.log('start debugger after 5 seconds')
-  setTimeout(() => {
+  createTimeout(() => {
     // eslint-disable-next-line no-debugger
     debugger
   }, 5000)
@@ -105,7 +112,7 @@ export function registerDebuggingHotkey() {
           keydownCount = 1
         }
 
-        setTimeout(() => {
+        createTimeout(() => {
           if (keydownCount > 0) {
             keydownCount--
             console.log(keydownCount)

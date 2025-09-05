@@ -19,6 +19,7 @@ import { filterTags, sortTags } from '../utils'
 import { type EventListenerManager } from '../utils/event-listener-manager'
 import { advancedPrompt } from './advanced-tag-manager'
 import { simplePrompt } from './simple-tag-manger'
+import { createInterval } from './timer-manager'
 import { addVisited, removeVisited, TAG_VISITED } from './visited'
 
 const numberLimitOfShowAllUtagsInArea = 10
@@ -271,7 +272,7 @@ export function bindDocumentEvents(eventManager?: EventListenerManager) {
 
 function extendHistoryApi2() {
   let url = location.href
-  setInterval(() => {
+  createInterval(() => {
     const url2 = location.href
     if (url !== url2) {
       url = url2

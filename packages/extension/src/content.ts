@@ -43,6 +43,7 @@ import {
 import { createMenuCommandManager } from './modules/menu-command-manager'
 import { initStarHandler, toggleStarHandler } from './modules/star-handler'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
+import { clearAllTimers, createTimeout } from './modules/timer-manager'
 import {
   clearVisitedCache,
   isAvailableOnCurrentSite,
@@ -436,7 +437,7 @@ function showCurrentPageLinkUtagsPrompt(
     | undefined
 ) {
   const cleanUp = appendCurrentPageLink(options)
-  setTimeout(() => {
+  createTimeout(() => {
     const element = $('#utags_current_page_link + ul.utags_ul button')!
     if (element) {
       if (tag) {
@@ -460,7 +461,7 @@ function showCurrentPageLinkUtagsPrompt(
       showCurrentPageLinkUtagsPrompt(tag, remove)
     }
   }, 10)
-  setTimeout(() => {
+  createTimeout(() => {
     cleanUp()
   }, 1000)
 }
@@ -594,7 +595,7 @@ function appendTagsToPage(
   element.dataset.utags = tags.join(',')
   /* Fix v2ex polish start */
   // 为了防止阻塞渲染页面，延迟执行
-  setTimeout(() => {
+  createTimeout(() => {
     const style = getComputedStyle(element)
     const zIndex = style.zIndex
     if (zIndex && zIndex !== 'auto') {
@@ -1238,6 +1239,8 @@ async function main() {
     clearTagManagerCache()
     // Clear DOM references to prevent memory leaks from circular references
     clearDomReferences()
+    // Clear all managed timers to prevent memory leaks
+    clearAllTimers()
   }
 
   // Listen for page unload events
