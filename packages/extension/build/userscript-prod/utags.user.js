@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.2
+// @version              0.20.3
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -2513,6 +2513,31 @@
   function getAvailableLocales() {
     return availableLocales2
   }
+  function createModal(attributes) {
+    const div = createElement("div", {
+      class: "utags_modal",
+    })
+    const wrapper = addElement2(div, "div", {
+      class: "utags_modal_wrapper",
+    })
+    const content = addElement2(wrapper, "div", attributes)
+    addClass(content, "utags_modal_content")
+    let removed = false
+    return {
+      remove() {
+        if (!removed) {
+          removed = true
+          div.remove()
+        }
+      },
+      append(element) {
+        ;(element || doc.body).append(div)
+      },
+      getContentElement() {
+        return content
+      },
+    }
+  }
   var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
   var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
   var STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
@@ -2604,12 +2629,741 @@
   async function getEmojiTags() {
     return splitTags(getSettingsValue("emojiTags") || "")
   }
+  var starTags = [
+    "\u2605\u2605\u2605",
+    "\u2605\u2605",
+    "\u2605",
+    "\u2606\u2606\u2606",
+    "\u2606\u2606",
+    "\u2606",
+  ]
+  var isUserscript = true
+  var isProduction = true
+  function getFirstHeadElement(tagName = "h1") {
+    for (const element of $$(tagName)) {
+      if (element.closest(".browser_extension_settings_container")) {
+        continue
+      }
+      return element
+    }
+    return void 0
+  }
+  function sortTags(tags, privilegedTags) {
+    function getTagPriority(tag) {
+      const starIndex = starTags.indexOf(tag)
+      if (starIndex !== -1) {
+        return 16 - starIndex
+      }
+      if (privilegedTags.includes(tag)) return 1
+      return 0
+    }
+    return tags.sort((a, b) => {
+      const priorityA = getTagPriority(a)
+      const priorityB = getTagPriority(b)
+      return priorityB - priorityA
+    })
+  }
+  function filterTags(tags, removed) {
+    if (typeof removed === "string") {
+      removed = [removed]
+    }
+    if (removed.length === 0) {
+      return tags
+    }
+    return tags.filter((value) => {
+      return !removed.includes(value)
+    })
+  }
+  async function copyText(data) {
+    const textArea = createElement("textarea", {
+      style: "position: absolute; left: -100%;",
+      contentEditable: "true",
+    })
+    textArea.value = data.replaceAll("\xA0", " ")
+    document.body.append(textArea)
+    textArea.select()
+    await navigator.clipboard.writeText(textArea.value)
+    textArea.remove()
+  }
+  function deleteUrlParameters(urlString, keys, excepts) {
+    const url = new URL(urlString)
+    if (keys === "*") {
+      if (excepts && excepts.length > 0) {
+        const parameters2 = new URLSearchParams(url.search)
+        keys = []
+        for (const key of parameters2.keys()) {
+          if (!excepts.includes(key)) {
+            keys.push(key)
+          }
+        }
+      } else {
+        url.search = ""
+        return url.toString()
+      }
+    }
+    if (typeof keys === "string") {
+      keys = [keys]
+    }
+    const parameters = new URLSearchParams(url.search)
+    for (const key of keys) {
+      parameters.delete(key)
+    }
+    url.search = parameters.size === 0 ? "" : "?" + parameters.toString()
+    return url.toString()
+  }
+  function getUrlParameters(urlString, keys, allowEmpty = false) {
+    const url = new URL(urlString)
+    if (typeof keys === "string") {
+      keys = [keys]
+    }
+    const result = {}
+    const parameters = new URLSearchParams(url.search)
+    for (const key of keys) {
+      if (key) {
+        const value = parameters.get(key)
+        if (
+          (allowEmpty && value !== void 0 && value !== null) ||
+          (!allowEmpty && value)
+        ) {
+          result[key] = value
+        }
+      }
+    }
+    return result
+  }
+  function sortBookmarks(bookmarks) {
+    return [...bookmarks].sort((a, b) => {
+      const createdA = a[1].meta.created
+      const createdB = b[1].meta.created
+      if (createdB === createdA) {
+        return a[0].localeCompare(b[0])
+      }
+      return createdB - createdA
+    })
+  }
+  function sortMetaProperties(meta) {
+    if (!meta || typeof meta !== "object") {
+      return meta
+    }
+    const sortedMeta = {}
+    const entries = Object.entries(meta)
+    const createdEntry = entries.find(([key]) => key === "created")
+    const otherEntries = entries
+      .filter(([key]) => key !== "created")
+      .sort(([a], [b]) => a.localeCompare(b))
+    for (const [key, value] of otherEntries) {
+      sortedMeta[key] = value
+    }
+    if (createdEntry) {
+      sortedMeta[createdEntry[0]] = createdEntry[1]
+    }
+    return sortedMeta
+  }
+  function isMetaObject(value) {
+    return value !== null && typeof value === "object"
+  }
+  function isBookmarkTagsAndMetadata(value) {
+    return (
+      value !== null &&
+      typeof value === "object" &&
+      "tags" in value &&
+      Array.isArray(value.tags)
+    )
+  }
+  function sortBookmarkProperties(value) {
+    const _a = value,
+      { tags, meta } = _a,
+      rest = __objRest(_a, ["tags", "meta"])
+    return __spreadProps(
+      __spreadValues(
+        {
+          tags,
+        },
+        rest
+      ),
+      {
+        meta,
+      }
+    )
+  }
+  function normalizeBookmarkData(data) {
+    if (data === null || data === void 0) {
+      return data
+    }
+    if (Array.isArray(data)) {
+      return data.map((item) => normalizeBookmarkData(item))
+    }
+    if (typeof data === "object") {
+      const result = {}
+      for (const [key, value] of Object.entries(data)) {
+        result[key] =
+          key === "meta" && isMetaObject(value)
+            ? sortMetaProperties(value)
+            : normalizeBookmarkData(value)
+      }
+      if (isBookmarkTagsAndMetadata(result)) {
+        return sortBookmarkProperties(result)
+      }
+      return result
+    }
+    return data
+  }
+  function containsStarRatingTag(tags) {
+    return starTags.some((starTag) => tags.includes(starTag))
+  }
+  function removeStarRatingTags(tags) {
+    return tags.filter((tag) => !starTags.includes(tag))
+  }
+  var utagsId = 1
+  function generateUtagsId() {
+    return String(utagsId++)
+  }
+  function getUtagsUlById(id) {
+    return id ? $('[data-utags_for_id="'.concat(id, '"]')) : void 0
+  }
+  function getUtagsTargetById(id) {
+    return id ? $('[data-utags_id="'.concat(id, '"]')) : void 0
+  }
+  function getUtagsUlByTarget(element) {
+    return getUtagsUlById(element.dataset.utags_id)
+  }
+  function getUtagsTargetFromEvent(event) {
+    const target = event.target
+    if (!target) {
+      return
+    }
+    if (target.dataset.utags_id) {
+      return target
+    }
+    const ancestor = target.closest("[data-utags_id]")
+    return ancestor || void 0
+  }
+  var timeoutIds = /* @__PURE__ */ new Set()
+  var intervalIds = /* @__PURE__ */ new Set()
+  function createTimeout(callback, delay, ...args) {
+    if (args.length === 0) {
+      const timeoutId2 = setTimeout(() => {
+        timeoutIds.delete(timeoutId2)
+        callback()
+      }, delay)
+      timeoutIds.add(timeoutId2)
+      return timeoutId2
+    }
+    const timeoutId = setTimeout(
+      (...callbackArgs) => {
+        timeoutIds.delete(timeoutId)
+        callback(...callbackArgs)
+      },
+      delay,
+      ...args
+    )
+    timeoutIds.add(timeoutId)
+    return timeoutId
+  }
+  function createInterval(callback, delay, ...args) {
+    if (args.length === 0) {
+      const intervalId2 = setInterval(callback, delay)
+      intervalIds.add(intervalId2)
+      return intervalId2
+    }
+    const intervalId = setInterval(callback, delay, ...args)
+    intervalIds.add(intervalId)
+    return intervalId
+  }
+  function clearAllTimers() {
+    for (const id of timeoutIds) {
+      clearTimeout(id)
+    }
+    timeoutIds.clear()
+    for (const id of intervalIds) {
+      clearInterval(id)
+    }
+    intervalIds.clear()
+  }
+  var pinnedTags
+  var mostUsedTags
+  var recentAddedTags
+  var emojiTags
+  var displayedTags = /* @__PURE__ */ new Set()
+  var currentTags = /* @__PURE__ */ new Set()
+  var disableTagStyleInPrompt = false
+  function clearTagManagerCache() {
+    pinnedTags = []
+    mostUsedTags = []
+    recentAddedTags = []
+    emojiTags = []
+    displayedTags = /* @__PURE__ */ new Set()
+    currentTags = /* @__PURE__ */ new Set()
+  }
+  function onSelect(selected, input) {
+    if (selected) {
+      input.value = ""
+      const tags = splitTags(selected)
+      for (const tag of tags) {
+        currentTags.add(tag)
+      }
+      updateLists()
+    }
+  }
+  function removeTag(tag) {
+    if (tag) {
+      tag = tag.trim()
+      currentTags.delete(tag)
+      updateLists()
+    }
+  }
+  function updateLists(container) {
+    displayedTags = /* @__PURE__ */ new Set()
+    const ul1 = $(".utags_modal_content ul.utags_current_tags", container)
+    if (ul1) {
+      updateCurrentTagList(ul1)
+    }
+    const ul = $(
+      ".utags_modal_content ul.utags_select_list.utags_pined_list",
+      container
+    )
+    if (ul) {
+      updateCandidateTagList(ul, pinnedTags)
+    }
+    const ul4 = $(
+      ".utags_modal_content ul.utags_select_list.utags_emoji_list",
+      container
+    )
+    if (ul4) {
+      updateCandidateTagList(ul4, emojiTags, 1e3, true)
+    }
+    const ul2 = $(
+      ".utags_modal_content ul.utags_select_list.utags_most_used",
+      container
+    )
+    if (ul2) {
+      updateCandidateTagList(ul2, mostUsedTags)
+    }
+    const ul3 = $(
+      ".utags_modal_content ul.utags_select_list.utags_recent_added",
+      container
+    )
+    if (ul3) {
+      updateCandidateTagList(ul3, recentAddedTags)
+    }
+  }
+  function updateCandidateTagList(ul, candidateTags, limitSize, isEmoji) {
+    ul.textContent = ""
+    let index = 0
+    for (const text of candidateTags) {
+      if (displayedTags.has(text)) {
+        continue
+      }
+      displayedTags.add(text)
+      const li = addElement2(ul, "li", {})
+      addElement2(li, "span", {
+        class: "utags_text_tag" + (isEmoji ? " utags_emoji_tag" : ""),
+        textContent: text,
+        "data-utags_tag": text,
+      })
+      index++
+      if (index >= (limitSize || 50)) {
+        break
+      }
+    }
+  }
+  function getNextList(parentElement) {
+    let parentNext = parentElement.nextElementSibling
+    while (parentNext && parentNext.children.length === 0) {
+      parentNext = parentNext.nextElementSibling
+    }
+    return parentNext
+  }
+  function getPreviousList(parentElement) {
+    let parentPrevious = parentElement.previousElementSibling
+    while (parentPrevious && parentPrevious.children.length === 0) {
+      parentPrevious = parentPrevious.previousElementSibling
+    }
+    return parentPrevious
+  }
+  function updateCurrentTagList(ul) {
+    ul.textContent = ""
+    const sortedTags = sortTags([...currentTags], emojiTags)
+    for (const tag of sortedTags) {
+      displayedTags.add(tag)
+      const li = addElement2(ul, "li")
+      const a = createTag(tag, {
+        isEmoji: emojiTags.includes(tag),
+        noLink: true,
+      })
+      li.append(a)
+    }
+  }
+  function removeAllActive(type) {
+    if (type !== 2) {
+      const selector = ".utags_modal_content ul.utags_select_list .utags_active"
+      for (const li of $$(selector)) {
+        removeClass(li, "utags_active")
+      }
+    }
+    if (type !== 1) {
+      const selector =
+        ".utags_modal_content ul.utags_select_list .utags_active2"
+      for (const li of $$(selector)) {
+        removeClass(li, "utags_active2")
+      }
+    }
+  }
+  async function copyCurrentTags(input) {
+    const value = sortTags([...currentTags], emojiTags).join(", ")
+    await copyText(value)
+    input.value = value
+    input.focus()
+    input.select()
+  }
+  function stopEventPropagation(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    event.stopImmediatePropagation()
+  }
+  function createPromptView(message, value, resolve) {
+    const modal = createModal({ class: "utags_prompt" })
+    const content = modal.getContentElement()
+    value = value || ""
+    addElement2(content, "span", {
+      class: "utags_title",
+      textContent: message,
+    })
+    const currentTagsWrapper = addElement2(content, "div", {
+      class: "utags_current_tags_wrapper",
+    })
+    addElement2(currentTagsWrapper, "span", {
+      textContent: "",
+      style: "display: none;",
+      "data-utags": "",
+    })
+    addElement2(currentTagsWrapper, "ul", {
+      class: "utags_current_tags utags_ul",
+    })
+    const input = addElement2(content, "input", {
+      type: "text",
+      placeholder: "foo, bar",
+      onblur(event) {
+        if (event.relatedTarget) {
+          input.focus()
+          stopEventPropagation(event)
+        }
+        createTimeout(() => {
+          if (doc.activeElement === doc.body) {
+            closeModal2()
+          }
+        }, 1)
+      },
+    })
+    setTimeout(() => {
+      input.focus()
+      input.select()
+    })
+    addElement2(currentTagsWrapper, "button", {
+      type: "button",
+      class: "utags_button_copy",
+      textContent: i2("prompt.copy"),
+      async onclick() {
+        await copyCurrentTags(input)
+      },
+    })
+    const listWrapper = addElement2(content, "div", {
+      class: "utags_list_wrapper",
+    })
+    addElement2(listWrapper, "ul", {
+      class:
+        "utags_select_list utags_pined_list" +
+        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
+      "data-utags_list_name": i2("prompt.pinnedTags"),
+    })
+    addElement2(listWrapper, "ul", {
+      class:
+        "utags_select_list utags_most_used" +
+        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
+      "data-utags_list_name": i2("prompt.mostUsedTags"),
+    })
+    addElement2(listWrapper, "ul", {
+      class:
+        "utags_select_list utags_recent_added" +
+        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
+      "data-utags_list_name": i2("prompt.recentAddedTags"),
+    })
+    addElement2(listWrapper, "ul", {
+      class:
+        "utags_select_list utags_emoji_list" +
+        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
+      "data-utags_list_name": i2("prompt.emojiTags"),
+    })
+    updateLists(content)
+    const buttonWrapper = addElement2(content, "div", {
+      class: "utags_buttons_wrapper",
+    })
+    let closed = false
+    const closeModal2 = (value2) => {
+      if (closed) {
+        return
+      }
+      closed = true
+      removeEventListener(input, "keydown", keydonwHandler, true)
+      removeEventListener(doc, "keydown", keydonwHandler, true)
+      removeEventListener(doc, "mousedown", mousedownHandler, true)
+      removeEventListener(doc, "click", clickHandler, true)
+      removeEventListener(doc, "mouseover", mouseoverHandler, true)
+      setTimeout(() => {
+        modal.remove()
+      })
+      resolve(value2 == null ? null : value2)
+    }
+    const okHandler = () => {
+      closeModal2(Array.from(currentTags).join(","))
+    }
+    addElement2(buttonWrapper, "button", {
+      type: "button",
+      textContent: i2("prompt.cancel"),
+      onclick() {
+        closeModal2()
+      },
+    })
+    addElement2(buttonWrapper, "button", {
+      type: "button",
+      class: "utags_primary",
+      textContent: i2("prompt.ok"),
+      onclick() {
+        onSelect(input.value.trim(), input)
+        okHandler()
+      },
+    })
+    const keydonwHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      let current = $(".utags_modal_content ul.utags_select_list .utags_active")
+      switch (event.key) {
+        case "Escape": {
+          stopEventPropagation(event)
+          closeModal2()
+          break
+        }
+        case "Enter": {
+          stopEventPropagation(event)
+          input.focus()
+          if (current) {
+            onSelect(current.textContent, input)
+          } else if (input.value.trim()) {
+            onSelect(input.value.trim(), input)
+          } else {
+            okHandler()
+          }
+          break
+        }
+        case "Tab": {
+          stopEventPropagation(event)
+          input.focus()
+          break
+        }
+        case "ArrowDown": {
+          stopEventPropagation(event)
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const next = current.nextElementSibling
+            if (next) {
+              next.scrollIntoView({ block: "end" })
+              removeAllActive()
+              addClass(next, "utags_active")
+            }
+          } else {
+            const next = $(".utags_modal_content ul.utags_select_list li")
+            if (next) {
+              next.scrollIntoView({ block: "end" })
+              removeAllActive()
+              addClass(next, "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowUp": {
+          stopEventPropagation(event)
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const previous = current.previousElementSibling
+            if (previous) {
+              previous.scrollIntoView({ block: "end" })
+              removeAllActive()
+              addClass(previous, "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowLeft": {
+          stopEventPropagation(event)
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const parentElement = current.parentElement
+            const index = Array.prototype.indexOf.call(
+              parentElement.children,
+              current
+            )
+            const parentPrevious = getPreviousList(parentElement)
+            if (parentPrevious) {
+              removeAllActive()
+              const newIndex = Math.min(
+                parentPrevious.children.length - 1,
+                index
+              )
+              const next = parentPrevious.children[newIndex]
+              next.scrollIntoView({ block: "end" })
+              addClass(next, "utags_active")
+            }
+          }
+          break
+        }
+        case "ArrowRight": {
+          stopEventPropagation(event)
+          input.focus()
+          current = $(
+            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
+          )
+          if (current) {
+            const parentElement = current.parentElement
+            const index = Array.prototype.indexOf.call(
+              parentElement.children,
+              current
+            )
+            const parentNext = getNextList(parentElement)
+            if (parentNext) {
+              removeAllActive()
+              const newIndex = Math.min(parentNext.children.length - 1, index)
+              const next = parentNext.children[newIndex]
+              next.scrollIntoView({ block: "end" })
+              addClass(next, "utags_active")
+            }
+          }
+          break
+        }
+        default: {
+          removeAllActive()
+          break
+        }
+      }
+    }
+    addEventListener(input, "keydown", keydonwHandler, true)
+    addEventListener(doc, "keydown", keydonwHandler, true)
+    const mousedownHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      const target = event.target
+      if (!target) {
+        return
+      }
+      if (target.closest(".utags_modal_content")) {
+        if (target === input) {
+          return
+        }
+        event.preventDefault()
+        input.focus()
+      } else {
+        event.preventDefault()
+        input.focus()
+      }
+    }
+    addEventListener(doc, "mousedown", mousedownHandler, true)
+    const clickHandler = (event) => {
+      if (event.defaultPrevented || !$(".utags_modal_content")) {
+        return
+      }
+      const target = event.target
+      if (!target) {
+        return
+      }
+      if (
+        !target.closest(".utags_modal_content button") &&
+        !target.closest(".utags_modal_content .utags_footer a")
+      ) {
+        stopEventPropagation(event)
+      }
+      if (target.closest(".utags_modal_content")) {
+        input.focus()
+        if (target.closest(".utags_modal_content ul.utags_select_list li")) {
+          onSelect(target.textContent, input)
+        }
+        if (target.closest(".utags_modal_content ul.utags_current_tags li a")) {
+          removeTag(target.dataset.utags_tag)
+        }
+      } else {
+        closeModal2()
+      }
+    }
+    addEventListener(doc, "click", clickHandler, true)
+    const mouseoverHandler = (event) => {
+      const target = event.target
+      if (!(target == null ? void 0 : target.closest(".utags_modal_content"))) {
+        return
+      }
+      const li = target.closest("ul.utags_select_list li")
+      if (li) {
+        removeAllActive()
+        addClass(li, "utags_active2")
+      } else {
+        removeAllActive(2)
+      }
+    }
+    addEventListener(doc, "mousemove", mouseoverHandler, true)
+    const footer = addElement2(content, "div", {
+      class: "utags_footer",
+    })
+    addElement2(footer, "a", {
+      class: "utags_link_settings",
+      textContent: i2("prompt.settings"),
+      async onclick() {
+        closeModal2()
+        createTimeout(showSettings, 1)
+      },
+    })
+    modal.append()
+  }
+  async function advancedPrompt(message, value) {
+    pinnedTags = await getPinnedTags()
+    mostUsedTags = await getMostUsedTags()
+    recentAddedTags = await getRecentAddedTags()
+    emojiTags = await getEmojiTags()
+    currentTags = new Set(splitTags(value))
+    disableTagStyleInPrompt = !getSettingsValue("enableTagStyleInPrompt")
+    return new Promise((resolve) => {
+      createPromptView(message, value, resolve)
+    })
+  }
+  var elementToUtagsMap = /* @__PURE__ */ new WeakMap()
+  function setElementUtags(element, utags) {
+    elementToUtagsMap.set(element, utags)
+  }
+  function getElementUtags(element) {
+    return elementToUtagsMap.get(element)
+  }
+  function deleteElementUtags(element) {
+    return elementToUtagsMap.delete(element)
+  }
+  function clearDomReferences() {
+    console.log("DOM references will be garbage collected naturally")
+  }
   var currentExtensionVersion = "0.14.2"
   var currentDatabaseVersion = 3
   var DELETED_BOOKMARK_TAG = "._DELETED_"
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap = {}
   var addTagsValueChangeListenerInitialized = false
+  function clearCachedUrlMap() {
+    cachedUrlMap = {}
+  }
   function createEmptyBookmarksStore() {
     const store = {
       data: {},
@@ -2975,204 +3729,6 @@
       })
     }
   }
-  var starTags = [
-    "\u2605\u2605\u2605",
-    "\u2605\u2605",
-    "\u2605",
-    "\u2606\u2606\u2606",
-    "\u2606\u2606",
-    "\u2606",
-  ]
-  var isUserscript = true
-  var isProduction = true
-  function getFirstHeadElement(tagName = "h1") {
-    for (const element of $$(tagName)) {
-      if (element.closest(".browser_extension_settings_container")) {
-        continue
-      }
-      return element
-    }
-    return void 0
-  }
-  function sortTags(tags, privilegedTags) {
-    function getTagPriority(tag) {
-      const starIndex = starTags.indexOf(tag)
-      if (starIndex !== -1) {
-        return 16 - starIndex
-      }
-      if (privilegedTags.includes(tag)) return 1
-      return 0
-    }
-    return tags.sort((a, b) => {
-      const priorityA = getTagPriority(a)
-      const priorityB = getTagPriority(b)
-      return priorityB - priorityA
-    })
-  }
-  function filterTags(tags, removed) {
-    if (typeof removed === "string") {
-      removed = [removed]
-    }
-    if (removed.length === 0) {
-      return tags
-    }
-    return tags.filter((value) => {
-      return !removed.includes(value)
-    })
-  }
-  async function copyText(data) {
-    const textArea = createElement("textarea", {
-      style: "position: absolute; left: -100%;",
-      contentEditable: "true",
-    })
-    textArea.value = data.replaceAll("\xA0", " ")
-    document.body.append(textArea)
-    textArea.select()
-    await navigator.clipboard.writeText(textArea.value)
-    textArea.remove()
-  }
-  function deleteUrlParameters(urlString, keys, excepts) {
-    const url = new URL(urlString)
-    if (keys === "*") {
-      if (excepts && excepts.length > 0) {
-        const parameters2 = new URLSearchParams(url.search)
-        keys = []
-        for (const key of parameters2.keys()) {
-          if (!excepts.includes(key)) {
-            keys.push(key)
-          }
-        }
-      } else {
-        url.search = ""
-        return url.toString()
-      }
-    }
-    if (typeof keys === "string") {
-      keys = [keys]
-    }
-    const parameters = new URLSearchParams(url.search)
-    for (const key of keys) {
-      parameters.delete(key)
-    }
-    url.search = parameters.size === 0 ? "" : "?" + parameters.toString()
-    return url.toString()
-  }
-  function getUrlParameters(urlString, keys, allowEmpty = false) {
-    const url = new URL(urlString)
-    if (typeof keys === "string") {
-      keys = [keys]
-    }
-    const result = {}
-    const parameters = new URLSearchParams(url.search)
-    for (const key of keys) {
-      if (key) {
-        const value = parameters.get(key)
-        if (
-          (allowEmpty && value !== void 0 && value !== null) ||
-          (!allowEmpty && value)
-        ) {
-          result[key] = value
-        }
-      }
-    }
-    return result
-  }
-  function sortBookmarks(bookmarks) {
-    return [...bookmarks].sort((a, b) => {
-      const createdA = a[1].meta.created
-      const createdB = b[1].meta.created
-      if (createdB === createdA) {
-        return a[0].localeCompare(b[0])
-      }
-      return createdB - createdA
-    })
-  }
-  function sortMetaProperties(meta) {
-    if (!meta || typeof meta !== "object") {
-      return meta
-    }
-    const sortedMeta = {}
-    const entries = Object.entries(meta)
-    const createdEntry = entries.find(([key]) => key === "created")
-    const otherEntries = entries
-      .filter(([key]) => key !== "created")
-      .sort(([a], [b]) => a.localeCompare(b))
-    for (const [key, value] of otherEntries) {
-      sortedMeta[key] = value
-    }
-    if (createdEntry) {
-      sortedMeta[createdEntry[0]] = createdEntry[1]
-    }
-    return sortedMeta
-  }
-  function isMetaObject(value) {
-    return value !== null && typeof value === "object"
-  }
-  function isBookmarkTagsAndMetadata(value) {
-    return (
-      value !== null &&
-      typeof value === "object" &&
-      "tags" in value &&
-      Array.isArray(value.tags)
-    )
-  }
-  function sortBookmarkProperties(value) {
-    const _a = value,
-      { tags, meta } = _a,
-      rest = __objRest(_a, ["tags", "meta"])
-    return __spreadProps(
-      __spreadValues(
-        {
-          tags,
-        },
-        rest
-      ),
-      {
-        meta,
-      }
-    )
-  }
-  function normalizeBookmarkData(data) {
-    if (data === null || data === void 0) {
-      return data
-    }
-    if (Array.isArray(data)) {
-      return data.map((item) => normalizeBookmarkData(item))
-    }
-    if (typeof data === "object") {
-      const result = {}
-      for (const [key, value] of Object.entries(data)) {
-        result[key] =
-          key === "meta" && isMetaObject(value)
-            ? sortMetaProperties(value)
-            : normalizeBookmarkData(value)
-      }
-      if (isBookmarkTagsAndMetadata(result)) {
-        return sortBookmarkProperties(result)
-      }
-      return result
-    }
-    return data
-  }
-  function containsStarRatingTag(tags) {
-    return starTags.some((starTag) => tags.includes(starTag))
-  }
-  function removeStarRatingTags(tags) {
-    return tags.filter((tag) => !starTags.includes(tag))
-  }
-  var utagsId = 1
-  function generateUtagsId() {
-    return String(utagsId++)
-  }
-  function getUtagsUlById(id) {
-    return id ? $('[data-utags_for_id="'.concat(id, '"]')) : void 0
-  }
-  function getUtagsTargetById(id) {
-    return id ? $('[data-utags_id="'.concat(id, '"]')) : void 0
-  }
-  function getUtagsUlByTarget(element) {
-    return getUtagsUlById(element.dataset.utags_id)
-  }
   var mergeData = async () => {
     return { numberOfLinks: 0, numberOfTags: 0 }
   }
@@ -3212,484 +3768,66 @@
       })
     }
   }
-  function createModal(attributes) {
-    const div = createElement("div", {
-      class: "utags_modal",
-    })
-    const wrapper = addElement2(div, "div", {
-      class: "utags_modal_wrapper",
-    })
-    const content = addElement2(wrapper, "div", attributes)
-    addClass(content, "utags_modal_content")
-    let removed = false
-    return {
-      remove() {
-        if (!removed) {
-          removed = true
-          div.remove()
-        }
-      },
-      append(element) {
-        ;(element || doc.body).append(div)
-      },
-      getContentElement() {
-        return content
-      },
+  var EventListenerManager = class {
+    constructor() {
+      __publicField(this, "listeners")
+      this.listeners = []
     }
-  }
-  var pinnedTags
-  var mostUsedTags
-  var recentAddedTags
-  var emojiTags
-  var displayedTags = /* @__PURE__ */ new Set()
-  var currentTags = /* @__PURE__ */ new Set()
-  var disableTagStyleInPrompt = false
-  function onSelect(selected, input) {
-    if (selected) {
-      input.value = ""
-      const tags = splitTags(selected)
-      for (const tag of tags) {
-        currentTags.add(tag)
+    /**
+     * Add event listener with tracking for cleanup
+     * @param target - The event target to attach listener to
+     * @param type - The event type
+     * @param listener - The event listener function
+     * @param options - Optional event listener options
+     */
+    addEventListener(target, type, listener, options) {
+      target.addEventListener(type, listener, options)
+      this.listeners.push({ target, type, listener, options })
+    }
+    /**
+     * Remove all tracked event listeners
+     * Safely removes all event listeners that were added through this manager
+     */
+    removeAllEventListeners() {
+      for (const { target, type, listener, options } of this.listeners) {
+        try {
+          target.removeEventListener(type, listener, options)
+        } catch (error) {
+          console.warn("Failed to remove event listener:", error)
+        }
       }
-      updateLists()
+      this.listeners.length = 0
     }
-  }
-  function removeTag(tag) {
-    if (tag) {
-      tag = tag.trim()
-      currentTags.delete(tag)
-      updateLists()
+    /**
+     * Get count of tracked listeners for debugging
+     * @returns The number of currently tracked event listeners
+     */
+    getListenerCount() {
+      return this.listeners.length
     }
-  }
-  function updateLists(container) {
-    displayedTags = /* @__PURE__ */ new Set()
-    const ul1 = $(".utags_modal_content ul.utags_current_tags", container)
-    if (ul1) {
-      updateCurrentTagList(ul1)
-    }
-    const ul = $(
-      ".utags_modal_content ul.utags_select_list.utags_pined_list",
-      container
-    )
-    if (ul) {
-      updateCandidateTagList(ul, pinnedTags)
-    }
-    const ul4 = $(
-      ".utags_modal_content ul.utags_select_list.utags_emoji_list",
-      container
-    )
-    if (ul4) {
-      updateCandidateTagList(ul4, emojiTags, 1e3, true)
-    }
-    const ul2 = $(
-      ".utags_modal_content ul.utags_select_list.utags_most_used",
-      container
-    )
-    if (ul2) {
-      updateCandidateTagList(ul2, mostUsedTags)
-    }
-    const ul3 = $(
-      ".utags_modal_content ul.utags_select_list.utags_recent_added",
-      container
-    )
-    if (ul3) {
-      updateCandidateTagList(ul3, recentAddedTags)
-    }
-  }
-  function updateCandidateTagList(ul, candidateTags, limitSize, isEmoji) {
-    ul.textContent = ""
-    let index = 0
-    for (const text of candidateTags) {
-      if (displayedTags.has(text)) {
-        continue
-      }
-      displayedTags.add(text)
-      const li = addElement2(ul, "li", {})
-      addElement2(li, "span", {
-        class: "utags_text_tag" + (isEmoji ? " utags_emoji_tag" : ""),
-        textContent: text,
-        "data-utags_tag": text,
-      })
-      index++
-      if (index >= (limitSize || 50)) {
-        break
-      }
-    }
-  }
-  function getNextList(parentElement) {
-    let parentNext = parentElement.nextElementSibling
-    while (parentNext && parentNext.children.length === 0) {
-      parentNext = parentNext.nextElementSibling
-    }
-    return parentNext
-  }
-  function getPreviousList(parentElement) {
-    let parentPrevious = parentElement.previousElementSibling
-    while (parentPrevious && parentPrevious.children.length === 0) {
-      parentPrevious = parentPrevious.previousElementSibling
-    }
-    return parentPrevious
-  }
-  function updateCurrentTagList(ul) {
-    ul.textContent = ""
-    const sortedTags = sortTags([...currentTags], emojiTags)
-    for (const tag of sortedTags) {
-      displayedTags.add(tag)
-      const li = addElement2(ul, "li")
-      const a = createTag(tag, {
-        isEmoji: emojiTags.includes(tag),
-        noLink: true,
-      })
-      li.append(a)
-    }
-  }
-  function removeAllActive(type) {
-    if (type !== 2) {
-      const selector = ".utags_modal_content ul.utags_select_list .utags_active"
-      for (const li of $$(selector)) {
-        removeClass(li, "utags_active")
-      }
-    }
-    if (type !== 1) {
-      const selector =
-        ".utags_modal_content ul.utags_select_list .utags_active2"
-      for (const li of $$(selector)) {
-        removeClass(li, "utags_active2")
-      }
-    }
-  }
-  async function copyCurrentTags(input) {
-    const value = sortTags([...currentTags], emojiTags).join(", ")
-    await copyText(value)
-    input.value = value
-    input.focus()
-    input.select()
-  }
-  function stopEventPropagation(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    event.stopImmediatePropagation()
-  }
-  function createPromptView(message, value, resolve) {
-    const modal = createModal({ class: "utags_prompt" })
-    const content = modal.getContentElement()
-    value = value || ""
-    addElement2(content, "span", {
-      class: "utags_title",
-      textContent: message,
-    })
-    const currentTagsWrapper = addElement2(content, "div", {
-      class: "utags_current_tags_wrapper",
-    })
-    addElement2(currentTagsWrapper, "span", {
-      textContent: "",
-      style: "display: none;",
-      "data-utags": "",
-    })
-    addElement2(currentTagsWrapper, "ul", {
-      class: "utags_current_tags utags_ul",
-    })
-    const input = addElement2(content, "input", {
-      type: "text",
-      placeholder: "foo, bar",
-      onblur(event) {
-        if (event.relatedTarget) {
-          input.focus()
-          stopEventPropagation(event)
-        }
-        setTimeout(() => {
-          if (doc.activeElement === doc.body) {
-            closeModal2()
-          }
-        }, 1)
-      },
-    })
-    setTimeout(() => {
-      input.focus()
-      input.select()
-    })
-    addElement2(currentTagsWrapper, "button", {
-      type: "button",
-      class: "utags_button_copy",
-      textContent: i2("prompt.copy"),
-      async onclick() {
-        await copyCurrentTags(input)
-      },
-    })
-    const listWrapper = addElement2(content, "div", {
-      class: "utags_list_wrapper",
-    })
-    addElement2(listWrapper, "ul", {
-      class:
-        "utags_select_list utags_pined_list" +
-        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
-      "data-utags_list_name": i2("prompt.pinnedTags"),
-    })
-    addElement2(listWrapper, "ul", {
-      class:
-        "utags_select_list utags_most_used" +
-        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
-      "data-utags_list_name": i2("prompt.mostUsedTags"),
-    })
-    addElement2(listWrapper, "ul", {
-      class:
-        "utags_select_list utags_recent_added" +
-        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
-      "data-utags_list_name": i2("prompt.recentAddedTags"),
-    })
-    addElement2(listWrapper, "ul", {
-      class:
-        "utags_select_list utags_emoji_list" +
-        (disableTagStyleInPrompt ? " utags_disable_tag_style" : ""),
-      "data-utags_list_name": i2("prompt.emojiTags"),
-    })
-    updateLists(content)
-    const buttonWrapper = addElement2(content, "div", {
-      class: "utags_buttons_wrapper",
-    })
-    let closed = false
-    const closeModal2 = (value2) => {
-      if (closed) {
-        return
-      }
-      closed = true
-      removeEventListener(input, "keydown", keydonwHandler, true)
-      removeEventListener(doc, "keydown", keydonwHandler, true)
-      removeEventListener(doc, "mousedown", mousedownHandler, true)
-      removeEventListener(doc, "click", clickHandler, true)
-      removeEventListener(doc, "mouseover", mouseoverHandler, true)
-      setTimeout(() => {
-        modal.remove()
-      })
-      resolve(value2 == null ? null : value2)
-    }
-    const okHandler = () => {
-      closeModal2(Array.from(currentTags).join(","))
-    }
-    addElement2(buttonWrapper, "button", {
-      type: "button",
-      textContent: i2("prompt.cancel"),
-      onclick() {
-        closeModal2()
-      },
-    })
-    addElement2(buttonWrapper, "button", {
-      type: "button",
-      class: "utags_primary",
-      textContent: i2("prompt.ok"),
-      onclick() {
-        onSelect(input.value.trim(), input)
-        okHandler()
-      },
-    })
-    const keydonwHandler = (event) => {
-      if (event.defaultPrevented || !$(".utags_modal_content")) {
-        return
-      }
-      let current = $(".utags_modal_content ul.utags_select_list .utags_active")
-      switch (event.key) {
-        case "Escape": {
-          stopEventPropagation(event)
-          closeModal2()
-          break
-        }
-        case "Enter": {
-          stopEventPropagation(event)
-          input.focus()
-          if (current) {
-            onSelect(current.textContent, input)
-          } else if (input.value.trim()) {
-            onSelect(input.value.trim(), input)
-          } else {
-            okHandler()
-          }
-          break
-        }
-        case "Tab": {
-          stopEventPropagation(event)
-          input.focus()
-          break
-        }
-        case "ArrowDown": {
-          stopEventPropagation(event)
-          input.focus()
-          current = $(
-            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
-          )
-          if (current) {
-            const next = current.nextElementSibling
-            if (next) {
-              next.scrollIntoView({ block: "end" })
-              removeAllActive()
-              addClass(next, "utags_active")
-            }
-          } else {
-            const next = $(".utags_modal_content ul.utags_select_list li")
-            if (next) {
-              next.scrollIntoView({ block: "end" })
-              removeAllActive()
-              addClass(next, "utags_active")
-            }
-          }
-          break
-        }
-        case "ArrowUp": {
-          stopEventPropagation(event)
-          input.focus()
-          current = $(
-            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
-          )
-          if (current) {
-            const previous = current.previousElementSibling
-            if (previous) {
-              previous.scrollIntoView({ block: "end" })
-              removeAllActive()
-              addClass(previous, "utags_active")
-            }
-          }
-          break
-        }
-        case "ArrowLeft": {
-          stopEventPropagation(event)
-          input.focus()
-          current = $(
-            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
-          )
-          if (current) {
-            const parentElement = current.parentElement
-            const index = Array.prototype.indexOf.call(
-              parentElement.children,
-              current
-            )
-            const parentPrevious = getPreviousList(parentElement)
-            if (parentPrevious) {
-              removeAllActive()
-              const newIndex = Math.min(
-                parentPrevious.children.length - 1,
-                index
-              )
-              const next = parentPrevious.children[newIndex]
-              next.scrollIntoView({ block: "end" })
-              addClass(next, "utags_active")
-            }
-          }
-          break
-        }
-        case "ArrowRight": {
-          stopEventPropagation(event)
-          input.focus()
-          current = $(
-            ".utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2"
-          )
-          if (current) {
-            const parentElement = current.parentElement
-            const index = Array.prototype.indexOf.call(
-              parentElement.children,
-              current
-            )
-            const parentNext = getNextList(parentElement)
-            if (parentNext) {
-              removeAllActive()
-              const newIndex = Math.min(parentNext.children.length - 1, index)
-              const next = parentNext.children[newIndex]
-              next.scrollIntoView({ block: "end" })
-              addClass(next, "utags_active")
-            }
-          }
-          break
-        }
-        default: {
-          removeAllActive()
-          break
+    /**
+     * Remove a specific event listener
+     * @param target - The event target
+     * @param type - The event type
+     * @param listener - The event listener function
+     * @param options - Optional event listener options
+     */
+    removeEventListener(target, type, listener, options) {
+      const index = this.listeners.findIndex(
+        (item) =>
+          item.target === target &&
+          item.type === type &&
+          item.listener === listener
+      )
+      if (index !== -1) {
+        try {
+          target.removeEventListener(type, listener, options)
+          this.listeners.splice(index, 1)
+        } catch (error) {
+          console.warn("Failed to remove specific event listener:", error)
         }
       }
     }
-    addEventListener(input, "keydown", keydonwHandler, true)
-    addEventListener(doc, "keydown", keydonwHandler, true)
-    const mousedownHandler = (event) => {
-      if (event.defaultPrevented || !$(".utags_modal_content")) {
-        return
-      }
-      const target = event.target
-      if (!target) {
-        return
-      }
-      if (target.closest(".utags_modal_content")) {
-        if (target === input) {
-          return
-        }
-        event.preventDefault()
-        input.focus()
-      } else {
-        event.preventDefault()
-        input.focus()
-      }
-    }
-    addEventListener(doc, "mousedown", mousedownHandler, true)
-    const clickHandler = (event) => {
-      if (event.defaultPrevented || !$(".utags_modal_content")) {
-        return
-      }
-      const target = event.target
-      if (!target) {
-        return
-      }
-      if (
-        !target.closest(".utags_modal_content button") &&
-        !target.closest(".utags_modal_content .utags_footer a")
-      ) {
-        stopEventPropagation(event)
-      }
-      if (target.closest(".utags_modal_content")) {
-        input.focus()
-        if (target.closest(".utags_modal_content ul.utags_select_list li")) {
-          onSelect(target.textContent, input)
-        }
-        if (target.closest(".utags_modal_content ul.utags_current_tags li a")) {
-          removeTag(target.dataset.utags_tag)
-        }
-      } else {
-        closeModal2()
-      }
-    }
-    addEventListener(doc, "click", clickHandler, true)
-    const mouseoverHandler = (event) => {
-      const target = event.target
-      if (!(target == null ? void 0 : target.closest(".utags_modal_content"))) {
-        return
-      }
-      const li = target.closest("ul.utags_select_list li")
-      if (li) {
-        removeAllActive()
-        addClass(li, "utags_active2")
-      } else {
-        removeAllActive(2)
-      }
-    }
-    addEventListener(doc, "mousemove", mouseoverHandler, true)
-    const footer = addElement2(content, "div", {
-      class: "utags_footer",
-    })
-    addElement2(footer, "a", {
-      class: "utags_link_settings",
-      textContent: i2("prompt.settings"),
-      async onclick() {
-        closeModal2()
-        setTimeout(showSettings, 1)
-      },
-    })
-    modal.append()
-  }
-  async function advancedPrompt(message, value) {
-    pinnedTags = await getPinnedTags()
-    mostUsedTags = await getMostUsedTags()
-    recentAddedTags = await getRecentAddedTags()
-    emojiTags = await getEmojiTags()
-    currentTags = new Set(splitTags(value))
-    disableTagStyleInPrompt = !getSettingsValue("enableTagStyleInPrompt")
-    return new Promise((resolve) => {
-      createPromptView(message, value, resolve)
-    })
   }
   async function simplePrompt(message, value) {
     return prompt(message, value)
@@ -3700,6 +3838,9 @@
   var displayMark = false
   var isAvailable = false
   var cache = {}
+  function clearVisitedCache() {
+    cache = {}
+  }
   function setPrefix(newPrefix) {
     prefix2 = newPrefix
   }
@@ -3791,9 +3932,14 @@
       })
     }
   }
-  function bindDocumentEvents() {
+  function bindDocumentEvents(eventManager2) {
     const eventType = isTouchScreen() ? "touchstart" : "click"
-    addEventListener(
+    const addListener = eventManager2
+      ? (target, type, listener, options) => {
+          eventManager2.addEventListener(target, type, listener, options)
+        }
+      : addEventListener
+    addListener(
       doc,
       eventType,
       (event) => {
@@ -3857,7 +4003,7 @@
       },
       true
     )
-    addEventListener(
+    addListener(
       doc,
       "keydown",
       (event) => {
@@ -3871,7 +4017,7 @@
       },
       true
     )
-    addEventListener(
+    addListener(
       doc,
       "mousedown",
       (event) => {
@@ -3884,7 +4030,7 @@
       },
       true
     )
-    addEventListener(
+    addListener(
       doc,
       "mouseup",
       (event) => {
@@ -3900,7 +4046,7 @@
   }
   function extendHistoryApi2() {
     let url = location.href
-    setInterval(() => {
+    createInterval(() => {
       const url2 = location.href
       if (url !== url2) {
         url = url2
@@ -3908,10 +4054,15 @@
       }
     }, 100)
   }
-  function bindWindowEvents() {
+  function bindWindowEvents(eventManager2) {
     extendHistoryApi()
     extendHistoryApi2()
-    addEventListener(globalThis, "locationchange", function () {
+    const addListener = eventManager2
+      ? (target, type, listener, options) => {
+          eventManager2.addEventListener(target, type, listener, options)
+        }
+      : addEventListener
+    addListener(globalThis, "locationchange", function () {
       hideAllUtagsInArea()
     })
   }
@@ -4623,6 +4774,19 @@
   })()
   var v2ex_default =
     ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .header h1+.utags_ul_0+.votes{margin-left:24px}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .xna-entry,:not(#a):not(#b):not(#c) .planet-post{--utags-list-node-display: flex}'
+  function setUtags(element, keyOrUserTag, meta) {
+    if (typeof keyOrUserTag === "string") {
+      setElementUtags(element, { key: keyOrUserTag, meta: meta || {} })
+    } else {
+      setElementUtags(element, keyOrUserTag)
+    }
+  }
+  function getUtags(element) {
+    return getElementUtags(element)
+  }
+  function removeUtags(element) {
+    return deleteElementUtags(element)
+  }
   var v2ex_default2 = (() => {
     function getCanonicalUrl2(url) {
       if (url.startsWith("https://links.pipecraft")) {
@@ -4697,7 +4861,7 @@
             if (username) {
               const key = "https://www.v2ex.com/member/".concat(username)
               const meta = { title: username, type: "user" }
-              profile.utags = { key, meta }
+              setUtags(profile, key, meta)
               matchedNodesSet.add(profile)
             }
           }
@@ -4710,7 +4874,7 @@
             )
             const title = $("h1").textContent
             const meta = { title, type: "topic" }
-            header.utags = { key, meta }
+            setUtags(header, key, meta)
             matchedNodesSet.add(header)
             addVisited(key)
             markElementWhetherVisited(key, header)
@@ -4751,7 +4915,7 @@
               const title =
                 cloneWithoutCitedReplies(replyContentElement).textContent
               const meta = { title, type: "reply" }
-              newAgoElement.utags = { key, meta }
+              setUtags(newAgoElement, key, meta)
               matchedNodesSet.add(newAgoElement)
             }
           }
@@ -4762,9 +4926,9 @@
             const key = getCanonicalUrl2(
               "https://www.v2ex.com" + location.pathname
             )
-            const title = header.textContent.replaceAll(/\s+/g, " ").trim()
+            const title = getTrimmedTitle(header)
             const meta = { title, type: "node" }
-            header.utags = { key, meta }
+            setUtags(header, key, meta)
             matchedNodesSet.add(header)
           }
         }
@@ -4774,9 +4938,9 @@
             const key = getCanonicalUrl2(
               "https://www.v2ex.com" + location.pathname
             )
-            const title = header.textContent.replaceAll(/\s+/g, " ").trim()
+            const title = getTrimmedTitle(header)
             const meta = { title, type: "tag" }
-            header.utags = { key, meta }
+            setUtags(header, key, meta)
             header.dataset.utags_flag = "tag_page"
             matchedNodesSet.add(header)
           }
@@ -4850,7 +5014,7 @@
             if (title) {
               const key = getScriptUrl(location.href)
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -4861,7 +5025,7 @@
             if (title) {
               const key = getCanonicalUrl2(location.href)
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -4914,7 +5078,7 @@
               const title = cloneComment(commentText).textContent
               if (key && title) {
                 const meta = { title, type: "comment" }
-                target.utags = { key, meta }
+                setUtags(target, key, meta)
                 matchedNodesSet.add(target)
               }
             }
@@ -4930,7 +5094,7 @@
               const title = cloneComment(commentText).textContent
               if (key && title) {
                 const meta = { title, type }
-                target.utags = { key, meta }
+                setUtags(target, key, meta)
                 matchedNodesSet.add(target)
               }
             }
@@ -4945,7 +5109,7 @@
               const title = cloneComment(commentText).textContent
               if (key && title) {
                 const meta = { title, type: "comment" }
-                target.utags = { key, meta }
+                setUtags(target, key, meta)
                 matchedNodesSet.add(target)
               }
             }
@@ -4962,7 +5126,7 @@
                 const title = titleElement.textContent
                 if (key && title) {
                   const meta = { title, type: "topic" }
-                  target.utags = { key, meta }
+                  setUtags(target, key, meta)
                   matchedNodesSet.add(target)
                 }
               }
@@ -5122,39 +5286,39 @@
             const username = /^https:\/\/github\.com\/([\w-]+)$/.exec(key)[1]
             const title = username
             const meta = { title, type: "user" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           key = getRepoUrl(href)
           if (key) {
             const title = key.replace(prefix3, "")
             const meta = { title, type: "repo" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           key = getTopicsUrl(href)
           if (key) {
-            const text = element.textContent.trim()
+            const text = getTrimmedTitle(element)
             if (text === "#") {
               return false
             }
             const title = "#" + key.replace(prefix3 + "topics/", "")
             const meta = { title, type: "topic" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           key = getIssuesUrl(href)
           if (key) {
             const meta = { type: "issue" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           key = getFileUrl(href)
           if (key) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             const type = key.includes("/blob/") ? "file" : "dir"
             const meta = { title, type }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           return false
@@ -5187,10 +5351,10 @@
             '[data-testid="issue-header"] h1,.gh-header-show h1'
           )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "issue" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -5199,11 +5363,11 @@
         if (key) {
           const element = $("h1#file-name-id-wide")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const type = key.includes("/blob/") ? "file" : "dir"
               const meta = { title, type }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -5319,7 +5483,7 @@
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -5330,7 +5494,7 @@
             return false
           }
           const meta = { type: "community", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -5341,7 +5505,7 @@
             return false
           }
           const meta = { type: "comments", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -5364,7 +5528,7 @@
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: "user" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5374,7 +5538,7 @@
           const key = getCommunityUrl(location.href)
           if (title && key) {
             const meta = { title, type: "community" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5384,14 +5548,14 @@
           const key = getCommentsUrl(location.href, true)
           if (title && key) {
             const meta = { title, type: "comments" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
       },
       getStyle: () => reddit_com_default,
       postProcess() {
-        setTimeout(() => {
+        createTimeout(() => {
           for (const element of $$(
             '[data-utags_list_node*=",hide,"],\n    [data-utags_list_node*=",\u9690\u85CF,"],\n    [data-utags_list_node*=",\u5C4F\u853D,"],\n    [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],\n    [data-utags_list_node*=",block,"]'
           )) {
@@ -5432,7 +5596,7 @@
             const parent = element.parentElement
             setStyle(parent, { zIndex: "1" })
             const meta = { type: "user" }
-            element.utags = { meta }
+            setUtags(element, "", meta)
             return true
           }
         }
@@ -5441,13 +5605,13 @@
       addExtraMatchedNodes(matchedNodesSet) {
         const elements = $$('[data-testid="UserName"] span')
         for (const element of elements) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title || !title.startsWith("@")) {
             continue
           }
           const key = prefix3 + title.slice(1)
           const meta = { title, type: "user" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           matchedNodesSet.add(element)
         }
       },
@@ -5472,11 +5636,11 @@
       addExtraMatchedNodes(matchedNodesSet) {
         const element = $("h1.rich_media_title")
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (title) {
             const key = getCanonicalUrl2(location.href)
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5501,7 +5665,7 @@
               element.dataset.utags_node_type = "notag_relative"
             }
             const meta = { type: "user" }
-            element.utags = { meta }
+            setUtags(element, "", meta)
             return true
           }
         }
@@ -5534,7 +5698,7 @@
           const href2 = href.slice(24)
           if (/^@[\w.]+$/.test(href2)) {
             const meta = { type: "user" }
-            element.utags = { meta }
+            setUtags(element, "", meta)
             return true
           }
         }
@@ -5547,11 +5711,11 @@
       addExtraMatchedNodes(matchedNodesSet) {
         const element = $("h1+div>div>span,h2+div>div>span")
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key && key === "https://www.threads.net/@" + title) {
             const meta = { title, type: "user" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5618,7 +5782,7 @@
         }
         const key = getUserProfileUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -5626,7 +5790,7 @@
             element.dataset.utags_flag = "username_with_avatar"
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -5639,11 +5803,11 @@
       addExtraMatchedNodes(matchedNodesSet) {
         const element = getFirstHeadElement('div[role="main"] h1')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: "user" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5700,13 +5864,13 @@
           if (/^\/@[\w-]+$/.test(pathname)) {
             const key2 = prefix3 + pathname.slice(1)
             const meta = { type: "user" }
-            element.utags = { key: key2, meta }
+            setUtags(element, key2, meta)
             return true
           }
           if (/^\/channel\/[\w-]+$/.test(pathname)) {
             const key2 = prefix3 + pathname.slice(1)
             const meta = { type: "channel" }
-            element.utags = { key: key2, meta }
+            setUtags(element, key2, meta)
             return true
           }
           const key = getVideoUrl(href)
@@ -5717,7 +5881,7 @@
               title = titleElement.textContent
             }
             const meta = title ? { title, type: "video" } : { type: "video" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
         }
@@ -5731,10 +5895,10 @@
             "#inner-header-container #container.ytd-channel-name #text"
           )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -5745,10 +5909,10 @@
             "#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title"
           )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "video" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -5820,7 +5984,7 @@
           const title = getTrimmedTitle(element2)
           const key = prefix22 + userId
           const meta = { title, type: "user" }
-          element2.utags = { key, meta }
+          setUtags(element2, key, meta)
           element2.dataset.utags_node_type = "link"
           matchedNodesSet.add(element2)
         }
@@ -5837,7 +6001,7 @@
               if (nameElement) {
                 const title = getTrimmedTitle(nameElement)
                 const meta = { title, type: "user" }
-                nameElement.utags = { key, meta }
+                setUtags(nameElement, key, meta)
                 nameElement.dataset.utags_node_type = "link"
                 matchedNodesSet.add(nameElement)
               }
@@ -5867,7 +6031,7 @@
               if (title) {
                 title = title.replace(/^@/, "")
                 const meta = { title, type: "user" }
-                element2.utags = { key, meta }
+                setUtags(element2, key, meta)
                 matchedNodesSet.add(element2)
               }
             }
@@ -5885,7 +6049,7 @@
                   if (title) {
                     title = title.replace(/^@/, "")
                     const meta = { title, type: "user" }
-                    element2.utags = { key, meta }
+                    setUtags(element2, key, meta)
                     element2.dataset.utags_absolute = "1"
                     matchedNodesSet.add(element2)
                   }
@@ -5918,7 +6082,7 @@
             const key = getUserProfileUrl(location.href)
             if (title && key) {
               const meta = { title, type: "user" }
-              element2.utags = { key, meta }
+              setUtags(element2, key, meta)
               matchedNodesSet.add(element2)
             }
           }
@@ -5929,7 +6093,7 @@
           const key = getVideoUrl(location.href)
           if (title && key) {
             const meta = { title, type: "video" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -5946,7 +6110,7 @@
                 : element2
             if (title) {
               const meta = { title, type: "video" }
-              target.utags = { key, meta }
+              setUtags(target, key, meta)
               target.dataset.utags_node_type = "link"
               matchedNodesSet.add(target)
             }
@@ -5994,13 +6158,13 @@
         if (key) {
           const titleElement = $('h3,[data-e2e="browse-username"]', element)
           const title = titleElement
-            ? titleElement.textContent.trim()
-            : element.textContent.trim()
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return false
@@ -6018,11 +6182,11 @@
       addExtraMatchedNodes(matchedNodesSet) {
         const element = $('h1[data-e2e="user-title"]')
         if (element) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: "user" }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
@@ -6079,7 +6243,7 @@
             if (title) {
               meta.title = title
             }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
             return true
           }
@@ -6099,10 +6263,10 @@
         if (key) {
           const element2 = $("h1.username")
           if (element2) {
-            const title = element2.textContent.trim()
+            const title = getTrimmedTitle(element2)
             if (title) {
               const meta = { title, type: "user" }
-              element2.utags = { key, meta }
+              setUtags(element2, key, meta)
               matchedNodesSet.add(element2)
             }
           }
@@ -6119,7 +6283,7 @@
                 : element.textContent
               if (title) {
                 const meta = { title, type: "user" }
-                element.utags = { key: key2, meta }
+                setUtags(element, key2, meta)
                 matchedNodesSet.add(element)
               }
             }
@@ -6165,7 +6329,7 @@
             if (title) {
               meta.title = title
             }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
         }
@@ -6182,10 +6346,10 @@
         if (key) {
           const element = $("h1.ProfileHeader-title .ProfileHeader-name")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6267,13 +6431,13 @@
             element
           let title
           if (titleElement) {
-            title = titleElement.textContent.trim()
+            title = getTrimmedTitle(titleElement)
           }
           if (!title) {
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -6285,7 +6449,7 @@
             if (sibling && hasClass(sibling, "footer")) {
               const titleElement = $(".title span", sibling)
               if (titleElement) {
-                const title = titleElement.textContent.trim()
+                const title = getTrimmedTitle(titleElement)
                 if (title) {
                   meta.title = title
                 }
@@ -6293,7 +6457,7 @@
               element.dataset.utags = element.dataset.utags || ""
             }
           }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return true
@@ -6310,10 +6474,10 @@
         if (key) {
           const element = $(".user-info .user-name")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
             }
@@ -6323,10 +6487,10 @@
         if (key) {
           const element = $(".note-content .title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6385,7 +6549,7 @@
         const key = getUserProfileUrl(href, true)
         if (key) {
           const meta = { type: "user" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           if ($(".m-icon.vipicon", element)) {
             element.dataset.utags = element.dataset.utags || ""
           }
@@ -6405,10 +6569,10 @@
             '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
           )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6489,10 +6653,10 @@
         if (key) {
           const element = $(".article-header .title")
           if (element && !element.closest(".pai_title")) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6503,10 +6667,10 @@
             ".user_content .user__info__card .ss__user__card__nickname"
           )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6561,19 +6725,19 @@
         let key = getUserProfileUrl(href, true)
         if (key) {
           const meta = { type: "user" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         key = getVideoUrl(href)
         if (key) {
           const meta = { type: "video" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         key = getNoteUrl(href)
         if (key) {
           const meta = { type: "post" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return true
@@ -6588,10 +6752,10 @@
         if (key) {
           const element = getFirstHeadElement("h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6600,11 +6764,11 @@
         if (key) {
           const element = getFirstHeadElement("h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             const target = element.parentElement.parentElement
             if (title) {
               const meta = { title, type: "video" }
-              target.utags = { key, meta }
+              setUtags(target, key, meta)
               target.dataset.utags_node_type = "link"
               matchedNodesSet.add(target)
             }
@@ -6614,10 +6778,10 @@
         if (key) {
           const element = getFirstHeadElement("h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6676,10 +6840,10 @@
         if (key) {
           const element = $("h5")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "episode" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -6693,10 +6857,10 @@
                 container
               )
               if (element) {
-                const title = element.textContent.trim()
+                const title = getTrimmedTitle(element)
                 if (title) {
                   const meta = { title, type: "feed" }
-                  element.utags = { key, meta }
+                  setUtags(element, key, meta)
                   matchedNodesSet.add(element)
                 }
               }
@@ -6712,7 +6876,7 @@
           if (key2 && titleElement) {
             const title = titleElement.textContent
             const meta = { title, type: "episode" }
-            titleElement.utags = { key: key2, meta }
+            setUtags(titleElement, key2, meta)
             titleElement.dataset.utags_node_type = "link"
             matchedNodesSet.add(titleElement)
           }
@@ -6725,10 +6889,10 @@
           }
           const key2 = getFeedUrl(element.href)
           const titleElement = $("div > div", element)
-          if (titleElement) {
+          if (key2 && titleElement) {
             const title = titleElement.textContent
             const meta = { title, type: "feed" }
-            titleElement.utags = { key: key2, meta }
+            setUtags(titleElement, key2, meta)
             titleElement.dataset.utags_node_type = "link"
             matchedNodesSet.add(titleElement)
           }
@@ -6928,7 +7092,7 @@
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -6939,10 +7103,10 @@
         if (key) {
           const element = $("h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -7068,7 +7232,7 @@
             return false
           }
           const meta = title ? { type: "user", title } : { type: "user" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           if (element.closest(".topic-body .names a")) {
             element.dataset.utags_position_selector = ".topic-body .names"
@@ -7089,7 +7253,7 @@
             const title2 = element.dataset.userCard
             key = prefix3 + "u/" + title2.toLowerCase()
             const meta2 = { type: "user", title: title2 }
-            element.utags = { key, meta: meta2 }
+            setUtags(element, key, meta2)
             element.dataset.utags = element.dataset.utags || ""
             return true
           }
@@ -7103,7 +7267,7 @@
             element.dataset.utags_flag = "inline"
           }
           const meta = { type: "post", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           element.dataset.utags = element.dataset.utags || ""
           return true
@@ -7115,7 +7279,7 @@
             return false
           }
           const meta = { type: "category", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           if (element.closest(".column .category-list .category-title-link")) {
             element.dataset.utags_position_selector =
               ".category-text-title .category-name"
@@ -7129,7 +7293,7 @@
             return false
           }
           const meta = { type: "tag", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return true
@@ -7187,7 +7351,7 @@
             index++
             if (key !== element2.dataset.utags_key || index === 2) {
               delete element2.dataset.utags
-              delete element2.utags
+              removeUtags(element2)
             }
           }
           const element =
@@ -7199,7 +7363,7 @@
             const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_key = key
               matchedNodesSet.add(element)
             }
@@ -7214,7 +7378,7 @@
           if (title) {
             key = prefix3 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
             element.dataset.utags_node_type = "link"
             element.dataset.utags_position_selector = element.closest(".winner")
@@ -7228,7 +7392,7 @@
           if (title) {
             key = prefix3 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
             element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
@@ -7346,7 +7510,7 @@
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -7364,14 +7528,14 @@
             "#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label"
           )
           if (label) {
-            const title = label.textContent.trim()
+            const title = getTrimmedTitle(label)
             if (title === "\u7528\u2002\u6237\u2002\u540D") {
               const element = label.nextElementSibling
               if (element) {
-                const title2 = element.textContent.trim()
+                const title2 = getTrimmedTitle(element)
                 if (title2) {
                   const meta = { title: title2, type: "user" }
-                  element.utags = { key, meta }
+                  setUtags(element, key, meta)
                   matchedNodesSet.add(element)
                 }
               }
@@ -7427,13 +7591,13 @@
           )
         ) {
           const key = getProductUrl(element.href)
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!key || !title) {
             return
           }
           const parentElement = element.parentElement
           const meta = { title }
-          parentElement.utags = { key, meta }
+          setUtags(parentElement, key, meta)
           parentElement.dataset.utags_node_type = "link"
           return parentElement
         }
@@ -7504,10 +7668,10 @@
         if (key) {
           const element = $("h1#work_name")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
             }
@@ -7517,10 +7681,10 @@
         if (key) {
           const element = $(".prof_maker_name")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
             }
@@ -7578,7 +7742,7 @@
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -7697,14 +7861,14 @@
         }
         let key = getUserProfileUrl(href, true)
         if (key) {
-          let title2 = element.textContent.trim()
+          let title2 = getTrimmedTitle(element)
           if (!title2) {
             return false
           }
           if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title2)) {
             const titleElement = $("#uhd h2")
             if (titleElement) {
-              title2 = titleElement.textContent.trim()
+              title2 = getTrimmedTitle(titleElement)
             }
           }
           if (
@@ -7717,13 +7881,13 @@
           }
           const meta =
             href === title2 ? { type: "user" } : { type: "user", title: title2 }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
         key = getPostUrl(href)
         if (key) {
-          const title2 = element.textContent.trim()
+          const title2 = getTrimmedTitle(element)
           if (!title2) {
             return false
           }
@@ -7747,11 +7911,11 @@
           }
           const meta =
             href === title2 ? { type: "post" } : { type: "post", title: title2 }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           return true
         }
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -7813,10 +7977,10 @@
               ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
             )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -7826,10 +7990,10 @@
           addVisited(key)
           const element = $("#thread_subject")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -7906,9 +8070,9 @@
         let key = getUserProfileUrl(href, true)
         if (key) {
           const titleElement = $(".GroupList-UserList-user .username", element)
-          const title = (titleElement || element).textContent.trim()
+          const title = getTrimmedTitle(titleElement || element)
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           if (titleElement) {
             element.dataset.utags_position_selector =
@@ -7923,12 +8087,12 @@
           const titleElement =
             $(".DiscussionListItem-title", element) ||
             $(".TagTile-lastPostedDiscussion-title", element)
-          const title = (titleElement || element).textContent.trim()
+          const title = getTrimmedTitle(titleElement || element)
           if (!title) {
             return false
           }
           const meta = { type: "post", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           markElementWhetherVisited(key, element)
           if (titleElement) {
@@ -7943,12 +8107,12 @@
         }
         key = getTagUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "tag", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -7977,10 +8141,10 @@
           addVisited(key)
           const element = $(".item-title h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
@@ -7991,10 +8155,10 @@
         if (key) {
           const element = $("h1.Hero-title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "tag" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
             }
@@ -8069,33 +8233,33 @@
         }
         let key = getUserProfileUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         key = getPostUrl(href, true)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title || /^#\d+$/.test(title)) {
             return false
           }
           const meta = { type: "post", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           return true
         }
         key = getCategoryUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "category", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return true
@@ -8124,10 +8288,10 @@
         if (key) {
           const element = $("h1.username")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -8176,12 +8340,12 @@
         }
         const key = getArticleUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "article", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           if (element.closest(".search_feed_article")) {
             element.dataset.utags_position_selector = "h6"
@@ -8211,10 +8375,10 @@
         if (key) {
           const element = $(".article_full_contents div.article_title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "article" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -8329,7 +8493,7 @@
             return false
           }
           const meta = { type: "company", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           if (element.closest(".sub-li-bottom a.user-info")) {
             element.dataset.utags_position_selector = "a > p"
@@ -8350,7 +8514,7 @@
           }
           title = title.replace(" \u5728\u7EBF ", "")
           const meta = { type: "job-detail", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           element.dataset.utags_position_selector =
             ".job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h"
@@ -8393,7 +8557,7 @@
             const title = element.childNodes[0].textContent.trim()
             if (title) {
               const meta = { title, type: "company" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -8406,7 +8570,7 @@
             const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "job-detail" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
             }
@@ -8416,7 +8580,7 @@
             const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "job-detail" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
             }
@@ -8524,13 +8688,13 @@
             return false
           }
           const meta = { type: "user", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
         key = getVideoUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
@@ -8538,7 +8702,7 @@
             return false
           }
           const meta = { type: "video", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           element.dataset.utags = element.dataset.utags || ""
           return true
@@ -8558,10 +8722,10 @@
           addVisited(key)
           const element = $('[data-a-target="stream-title"]')
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "video" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
             }
@@ -8571,11 +8735,11 @@
           '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
         )) {
           const id = element.dataset.aUser
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (id && title) {
             key = prefix3 + id.toLowerCase()
             const meta = { type: "user", title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
             element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
@@ -8687,7 +8851,7 @@
         }
         let key = getUserProfileUrl(href, true)
         if (key) {
-          const title2 = element.textContent.trim()
+          const title2 = getTrimmedTitle(element)
           if (!title2) {
             return false
           }
@@ -8701,13 +8865,13 @@
           }
           const meta =
             href === title2 ? { type: "user" } : { type: "user", title: title2 }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
         key = getPostUrl(href)
         if (key) {
-          const title2 = element.textContent.trim()
+          const title2 = getTrimmedTitle(element)
           if (!title2) {
             return false
           }
@@ -8731,11 +8895,11 @@
           }
           const meta =
             href === title2 ? { type: "post" } : { type: "post", title: title2 }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           return true
         }
-        const title = element.textContent.trim()
+        const title = getTrimmedTitle(element)
         if (!title) {
           return false
         }
@@ -8802,10 +8966,10 @@
               ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
             )
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -8815,10 +8979,10 @@
           addVisited(key)
           const element = $("#thread_subject")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
             }
@@ -8899,7 +9063,7 @@
             return false
           }
           const meta = { type: "user", title: title2 }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -9016,7 +9180,7 @@
             const title = titleElement.textContent.trim()
             if (title) {
               const meta = { title, type: "group" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               element.dataset.utags_node_type = "link"
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
@@ -9083,12 +9247,12 @@
         }
         const key = getPostUrl(href)
         if (key) {
-          const title = element.textContent.trim()
+          const title = getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { title, type: "post" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
           element.dataset.utags = element.dataset.utags || ""
           return true
@@ -9107,10 +9271,10 @@
           addVisited(key)
           const element = $("h1#page-title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
               markElementWhetherVisited(key, element)
             }
@@ -9178,13 +9342,13 @@
         let key = getChannelUrl(href, true)
         if (key) {
           const meta = { type: "channel" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         key = getUserProfileUrl(href, true)
         if (key) {
           const meta = { type: "user" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         key = getVideoUrl(href)
@@ -9195,7 +9359,7 @@
             title = titleElement.textContent
           }
           const meta = title ? { title, type: "video" } : { type: "video" }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           return true
         }
         return true
@@ -9220,10 +9384,10 @@
         if (key) {
           const element = $(".name h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9232,10 +9396,10 @@
         if (key) {
           const element = $(".title h1")
           if (element && !$("a", element)) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "channel" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9244,10 +9408,10 @@
         if (key) {
           const element = $("h1.title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "video" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9307,7 +9471,7 @@
             if (title) {
               meta.title = title
             }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             return true
           }
           if (isImageViewUrl(href)) {
@@ -9319,7 +9483,10 @@
       map(element) {
         const titleElement = $(".gl4e.glname .glink", element)
         if (titleElement) {
-          titleElement.utags = element.utags
+          const utags = getUtags(element)
+          if (utags) {
+            setUtags(titleElement, utags)
+          }
           titleElement.dataset.utags = titleElement.dataset.utags || ""
           titleElement.dataset.utags_node_type = "link"
           return titleElement
@@ -9339,10 +9506,10 @@
         if (key) {
           const element = getFirstHeadElement()
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9383,10 +9550,10 @@
         if (key) {
           const element = $("h5")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9395,9 +9562,9 @@
           const key2 = element.href
           const titleElement = $(".cover-title", element)
           if (titleElement) {
-            const title = titleElement.textContent
+            const title = getTrimmedTitle(titleElement)
             const meta = { title, type: "post" }
-            titleElement.utags = { key: key2, meta }
+            setUtags(titleElement, key2, meta)
             titleElement.dataset.utags_node_type = "link"
             matchedNodesSet.add(titleElement)
           }
@@ -9408,7 +9575,7 @@
           if (titleElement) {
             const title = titleElement.textContent
             const meta = { title, type: "post" }
-            titleElement.utags = { key: key2, meta }
+            setUtags(titleElement, key2, meta)
             titleElement.dataset.utags_node_type = "link"
             matchedNodesSet.add(titleElement)
           }
@@ -9502,7 +9669,7 @@
               : getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "product" }
-              element.utags = { key: key2, meta }
+              setUtags(element, key2, meta)
             }
           }
           return true
@@ -9515,7 +9682,7 @@
             : getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_position_selector = "div > div > p"
             return true
           }
@@ -9528,7 +9695,7 @@
             : getTrimmedTitle(element)
           if (title) {
             const meta = { title }
-            element.utags = { key, meta }
+            setUtags(element, key, meta)
             element.dataset.utags_position_selector = "div > div > p"
             return true
           }
@@ -9571,10 +9738,10 @@
         if (key) {
           const element = $("h1.productTitle__txt")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9583,10 +9750,10 @@
         if (key) {
           const element = $(".circleProfile__name span")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9595,10 +9762,10 @@
         if (key) {
           const element = $("main h1")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9625,7 +9792,7 @@
       matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
-        if (hrefAttr.startsWith("#")) {
+        if (!hrefAttr || hrefAttr.startsWith("#")) {
           return false
         }
         const href = element.href
@@ -9665,10 +9832,10 @@
         if (key) {
           const element = $("h1.post__title,h1.scrape__title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "post" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9737,7 +9904,7 @@
           if ($("header", element.parentElement)) {
             const key2 = href.replace(/(https?:\/\/[^/]+\/).*/, "$1")
             const meta = { type: "AD", title: "AD" }
-            element.utags = { key: key2, meta }
+            setUtags(element, key2, meta)
             element.dataset.utags = element.dataset.utags || ""
           }
           return true
@@ -9746,13 +9913,13 @@
         if (key) {
           const titleElement = $(".thumb_title", element)
           const title = titleElement
-            ? titleElement.textContent.trim()
-            : element.textContent.trim()
+            ? getTrimmedTitle(titleElement)
+            : getTrimmedTitle(element)
           if (!title) {
             return false
           }
           const meta = { type: "video", title }
-          element.utags = { key, meta }
+          setUtags(element, key, meta)
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
@@ -9779,10 +9946,10 @@
         if (key) {
           const element = $(".brand_inform .title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "model" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9791,10 +9958,10 @@
         if (key) {
           const element = $(".channel_logo .title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "user" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9803,10 +9970,10 @@
         if (key) {
           const element = $(".brand_inform .title")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "category" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9815,10 +9982,10 @@
         if (key) {
           const element = $("h1.title_video")
           if (element) {
-            const title = element.textContent.trim()
+            const title = getTrimmedTitle(element)
             if (title) {
               const meta = { title, type: "video" }
-              element.utags = { key, meta }
+              setUtags(element, key, meta)
               matchedNodesSet.add(element)
             }
           }
@@ -9969,7 +10136,7 @@
     if (!element.textContent) {
       return false
     }
-    if (!element.textContent.trim()) {
+    if (!getTrimmedTitle(element)) {
       return false
     }
     const media = $(
@@ -10000,7 +10167,7 @@
     const process2 = (element) => {
       var _a
       if (!preValidate(element) || !validateFunction(element)) {
-        delete element.utags
+        deleteElementUtags(element)
         return
       }
       if (mappingFunction) {
@@ -10011,10 +10178,10 @@
         }
       }
       if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
-        delete element.utags
+        deleteElementUtags(element)
         return
       }
-      const utags = element.utags || {}
+      const utags = getElementUtags(element) || { key: "", meta: {} }
       const key = utags.key || getCanonicalUrl(element.href)
       if (!key) {
         return
@@ -10027,10 +10194,10 @@
       if ((_a = utags.meta) == null ? void 0 : _a.title) {
         utags.meta.title = trimTitle(utags.meta.title)
       }
-      element.utags = {
+      setElementUtags(element, {
         key,
         meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
-      }
+      })
       matchedNodesSet.add(element)
     }
     for (const element of elements) {
@@ -10057,10 +10224,10 @@
         const meta = {}
         if (title) meta.title = title
         if (description) meta.description = description
-        currentPageLink.utags = {
+        setElementUtags(currentPageLink, {
           key,
           meta,
-        }
+        })
         matchedNodesSet.add(currentPageLink)
       }
     }
@@ -10077,6 +10244,7 @@
   }
   var emojiTags2
   var host2 = location.host
+  var eventManager = new EventListenerManager()
   var isEnabledByDefault = () => {
     if (host2.includes("www.bilibili.com")) {
       return false
@@ -10361,7 +10529,7 @@
   }
   function showCurrentPageLinkUtagsPrompt(tag, remove = false, options) {
     const cleanUp = appendCurrentPageLink(options)
-    setTimeout(() => {
+    createTimeout(() => {
       const element = $("#utags_current_page_link + ul.utags_ul button")
       if (element) {
         if (tag) {
@@ -10384,7 +10552,7 @@
         showCurrentPageLinkUtagsPrompt(tag, remove)
       }
     }, 10)
-    setTimeout(() => {
+    createTimeout(() => {
       cleanUp()
     }, 1e3)
   }
@@ -10408,7 +10576,10 @@
       element.dataset.utags_id = utagsId2
       if (element.dataset.utags_absolute) {
         addEventListener(element, "mouseover", (event) => {
-          const target = event.target
+          const target = getUtagsTargetFromEvent(event)
+          if (!target) {
+            return
+          }
           const utags = getUtagsUlByTarget(target)
           if (utags) {
             updateTagPosition(target)
@@ -10416,7 +10587,10 @@
           }
         })
         addEventListener(element, "mouseout", (event) => {
-          const target = event.target
+          const target = getUtagsTargetFromEvent(event)
+          if (!target) {
+            return
+          }
           const utags = getUtagsUlByTarget(target)
           if (utags) {
             removeClass(utags, "utags_ul_active")
@@ -10424,7 +10598,10 @@
         })
       } else {
         addEventListener(element, "mouseover", (event) => {
-          const target = event.target
+          const target = getUtagsTargetFromEvent(event)
+          if (!target) {
+            return
+          }
           updateTagPosition(target)
         })
       }
@@ -10485,7 +10662,7 @@
       element.after(ul)
     }
     element.dataset.utags = tags.join(",")
-    setTimeout(() => {
+    createTimeout(() => {
       const style = getComputedStyle(element)
       const zIndex = style.zIndex
       if (zIndex && zIndex !== "auto") {
@@ -10529,7 +10706,7 @@
     }
     await getCachedUrlMap()
     for (const node of nodes) {
-      const utags = node.utags
+      const utags = getUtags(node)
       if (!utags) {
         continue
       }
@@ -10543,6 +10720,11 @@
         tags.push(TAG_VISITED)
       }
       appendTagsToPage(node, key2, tags, utags.meta)
+      if (tags.length > 0) {
+        setTimeout(() => {
+          updateTagPosition(node)
+        })
+      }
     }
     if (start) {
       console.error("after appendTagsToPage", Date.now() - start)
@@ -10953,13 +11135,25 @@
     setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
     await displayTags()
-    addEventListener(doc, "visibilitychange", async () => {
+    eventManager.addEventListener(doc, "visibilitychange", async () => {
       if (!doc.hidden) {
         await displayTags()
       }
     })
-    bindDocumentEvents()
-    bindWindowEvents()
+    bindDocumentEvents(eventManager)
+    bindWindowEvents(eventManager)
+    const cleanup = () => {
+      eventManager.removeAllEventListeners()
+      observer.disconnect()
+      utagsIdSet.clear()
+      clearCachedUrlMap()
+      clearVisitedCache()
+      clearTagManagerCache()
+      clearDomReferences()
+      clearAllTimers()
+    }
+    eventManager.addEventListener(globalThis, "beforeunload", cleanup)
+    eventManager.addEventListener(globalThis, "pagehide", cleanup)
     const observer = new MutationObserver(async (mutationsList) => {
       let shouldUpdate = false
       for (const mutationRecord of mutationsList) {
@@ -10976,10 +11170,7 @@
         cleanUnusedUtags()
         displayTagsThrottled()
       }
-      if (
-        $("#vimium-hint-marker-container") ||
-        $("#vimiumHintMarkerContainer")
-      ) {
+      if ($("#vimium-hint-marker-container,#vimiumHintMarkerContainer")) {
         addClass(doc.body, "utags_show_all")
         addClass(doc.documentElement, "utags_vimium_hint")
         updateTagPositionForAllTargets()
