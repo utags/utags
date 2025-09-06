@@ -172,6 +172,8 @@ cd utags-bookmarks-dist
 
 ## 🛠 开发
 
+Wiki: [开发指南](https://zread.ai/utags/utags)
+
 ### 前置要求
 
 - Node.js 18+
