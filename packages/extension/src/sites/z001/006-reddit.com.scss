@@ -123,11 +123,12 @@
     }
   }
 
-  [data-utags_list_node*=",hide,"],
-  [data-utags_list_node*=",隐藏,"],
-  [data-utags_list_node*=",屏蔽,"],
-  [data-utags_list_node*=",不再显示,"],
-  [data-utags_list_node*=",block,"] {
+  /* Comments prevent from hide */
+  shreddit-comment[data-utags_list_node*=",hide,"],
+  shreddit-comment[data-utags_list_node*=",隐藏,"],
+  shreddit-comment[data-utags_list_node*=",屏蔽,"],
+  shreddit-comment[data-utags_list_node*=",不再显示,"],
+  shreddit-comment[data-utags_list_node*=",block,"] {
     opacity: 1%;
     display: block !important;
   }
