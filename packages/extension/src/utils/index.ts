@@ -394,3 +394,17 @@ export function getUtagsTargetById(id: string | undefined) {
 export function getUtagsUlByTarget(element: HTMLElement) {
   return getUtagsUlById(element.dataset.utags_id)
 }
+
+export function getUtagsTargetFromEvent(event: Event): HTMLElement | undefined {
+  const target: HTMLElement | undefined = event.target as HTMLElement
+  if (!target) {
+    return
+  }
+
+  if (target.dataset.utags_id) {
+    return target
+  }
+
+  const ancestor = target.closest<HTMLElement>('[data-utags_id]')!
+  return ancestor || undefined
+}

@@ -69,6 +69,7 @@ import type { UserTag, UserTagMeta } from './types'
 import {
   generateUtagsId,
   getUtagsTargetById,
+  getUtagsTargetFromEvent,
   getUtagsUlById,
   getUtagsUlByTarget,
   sortTags,
@@ -498,7 +499,11 @@ function appendTagsToPage(
     element.dataset.utags_id = utagsId
     if (element.dataset.utags_absolute) {
       addEventListener(element, 'mouseover', (event) => {
-        const target = event.target as HTMLElement
+        const target = getUtagsTargetFromEvent(event)
+        if (!target) {
+          return
+        }
+
         const utags = getUtagsUlByTarget(target)
         if (utags) {
           updateTagPosition(target)
@@ -506,7 +511,11 @@ function appendTagsToPage(
         }
       })
       addEventListener(element, 'mouseout', (event) => {
-        const target = event.target as HTMLElement
+        const target = getUtagsTargetFromEvent(event)
+        if (!target) {
+          return
+        }
+
         const utags = getUtagsUlByTarget(target)
         if (utags) {
           removeClass(utags, 'utags_ul_active')
@@ -514,7 +523,11 @@ function appendTagsToPage(
       })
     } else {
       addEventListener(element, 'mouseover', (event) => {
-        const target = event.target as HTMLElement
+        const target = getUtagsTargetFromEvent(event)
+        if (!target) {
+          return
+        }
+
         updateTagPosition(target)
       })
     }
@@ -678,6 +691,12 @@ async function displayTags() {
     }
 
     appendTagsToPage(node, key, tags, utags.meta)
+
+    if (tags.length > 0) {
+      setTimeout(() => {
+        updateTagPosition(node)
+      })
+    }
   }
 
   if (start) {
@@ -1268,7 +1287,7 @@ async function main() {
       displayTagsThrottled()
     }
 
-    if ($('#vimium-hint-marker-container') || $('#vimiumHintMarkerContainer')) {
+    if ($('#vimium-hint-marker-container,#vimiumHintMarkerContainer')) {
       addClass(doc.body, 'utags_show_all')
       addClass(doc.documentElement, 'utags_vimium_hint')
       updateTagPositionForAllTargets()
