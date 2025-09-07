@@ -127,6 +127,7 @@ Mais informações: [https://github.com/utags/utags](https://github.com/utags/ut
 - 0.20
   - Adicionar funcionalidade de travessia shadowRoot para suportar a busca e marcação de elementos dentro do Shadow DOM
   - Otimizar o suporte do site bilibili.com, melhorando a compatibilidade e performance da funcionalidade de tags na plataforma
+  - Adicionar funcionalidade de filtragem de tags especiais e estrela rápida para o site pornhub.com
 - 0.19.x
   - Adição de Comandos de Menu de Tags Rápidas: Configure tags rápidas personalizadas nas configurações e acesse através do menu de clique direito com ícones ➕/➖ para adicionar/remover tags
   - Adicionar função de estrela rápida para o site linux.do - ative a adição rápida de estrelas nas configurações para marcação mais rápida

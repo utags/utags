@@ -6,6 +6,7 @@
 
 - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
 - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
+- Add special tag filtering and quick star functionality for pornhub.com website
 
 ## uTags v0.19 Release Notes
 

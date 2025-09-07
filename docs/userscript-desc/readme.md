@@ -127,6 +127,7 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 - 0.20
   - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
   - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
+  - Add special tag filtering and quick star functionality for pornhub.com website
 - 0.19.x
   - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access via right-click menu with ➕/➖ icons for adding/removing tags
   - Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
