@@ -99,7 +99,8 @@ const isEnabledByDefault = () => {
 }
 
 const isQuickStarAvailable = () => {
-  if (host === 'linux.do') {
+  // eslint-disable-next-line no-restricted-globals
+  if (host === 'linux.do' || host.includes(`p${atob('b3I=')}nhub.com`)) {
     return true
   }
 

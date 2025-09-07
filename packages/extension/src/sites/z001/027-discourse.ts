@@ -401,7 +401,7 @@ export default (() => {
               '#topic-title .fancy-title,h1.header-title .topic-link'
             )
             const title = titleElement
-              ? titleElement.textContent?.trim()
+              ? getTrimmedTitle(titleElement)
               : document.title
             const formattedTitle =
               postNumber > 1 ? `回复 #${postNumber} >> ${title}` : title
