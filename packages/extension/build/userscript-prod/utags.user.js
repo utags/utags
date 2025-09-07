@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.4
+// @version              0.20.5
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -7405,7 +7405,6 @@
         }
       },
       postProcess() {
-        var _a
         const enableQuickStar = getSettingsValue(
           "enableQuickStar_".concat(host3)
         )
@@ -7444,9 +7443,7 @@
                 "#topic-title .fancy-title,h1.header-title .topic-link"
               )
               const title = titleElement
-                ? (_a = titleElement.textContent) == null
-                  ? void 0
-                  : _a.trim()
+                ? getTrimmedTitle(titleElement)
                 : document.title
               const formattedTitle =
                 postNumber > 1
@@ -9291,7 +9288,15 @@
     }
   })()
   var pxxnhub_com_default =
-    ':not(#a):not(#b):not(#c) .usernameWrap .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
+    ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg{fill:none}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg path,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg{fill:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_0__ .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
+  function getStarIconSvg(size = 20) {
+    return '<svg class="favIcon" width="'
+      .concat(size, '" height="')
+      .concat(
+        size,
+        '" viewBox="0 0 20 20">\n    <path d="M10 1L12.59 6.26L18.5 7.13L14 11.21L15.31 17L10 14.26L4.69 17L6 11.21L1.5 7.13L7.41 6.26L10 1Z"></path>\n  </svg>'
+      )
+  }
   var pxxnhub_com_default2 = (() => {
     const xx = atob("b3I=")
     const hostname2 = "p".concat(xx, "nhub.com")
@@ -9336,8 +9341,45 @@
       }
       return void 0
     }
+    function getCategoryUrl(href) {
+      if (href.includes(hostname2)) {
+        const index = href.indexOf(hostname2) + 12
+        const href2 = href.slice(index)
+        if (href2 === "hd") {
+          return prefix3 + href2
+        }
+        if (/^categories\/[\w-]+/.test(href2)) {
+          return prefix3 + href2.replace(/(^categories\/[\w-]+).*/, "$1")
+        }
+        if (/^video\?c=\d+/.test(href2)) {
+          return prefix3 + href2.replace(/(^video\?c=\d+).*/, "$1")
+        }
+        if (/^video\/incategories(?:\/[\w-]+){2}/.test(href2)) {
+          return (
+            prefix3 +
+            href2.replace(/(^video\/incategories(?:\/[\w-]+){2}).*/, "$1")
+          )
+        }
+      }
+      return void 0
+    }
     return {
       matches: /p[ro_][r_]nhub\.com/,
+      listNodesSelectors: [
+        "ul.search-video-thumbs li",
+        "ul.videos li",
+        ".videoViewPage .commentBlock",
+        "ul.categoriesListSection li",
+      ],
+      conditionNodesSelectors: [
+        "ul.search-video-thumbs li .usernameWrap a",
+        "ul.search-video-thumbs li .vidTitleWrapper a",
+        "ul.videos li .usernameWrap a",
+        "ul.videos li .vidTitleWrapper a",
+        "ul.videos li .title a",
+        ".videoViewPage .commentBlock .usernameWrap a",
+        "ul.categoriesListSection li .categoryTitleWrapper a",
+      ],
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
@@ -9367,6 +9409,12 @@
           setUtags(element, key, meta)
           return true
         }
+        key = getCategoryUrl(href)
+        if (key) {
+          const meta = { type: "category" }
+          setUtags(element, key, meta)
+          return true
+        }
         return true
       },
       excludeSelectors: [
@@ -9382,7 +9430,7 @@
         ".subFilterList",
         ".greyButton",
         ".orangeButton",
-        "".concat(xx, "xxxxx"),
+        "a[onclick]",
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         let key = getUserProfileUrl(location.href)
@@ -9418,6 +9466,59 @@
               const meta = { title, type: "video" }
               setUtags(element, key, meta)
               matchedNodesSet.add(element)
+            }
+          }
+        }
+      },
+      postProcess() {
+        const host3 = location.host
+        const enableQuickStar = getSettingsValue(
+          "enableQuickStar_".concat(host3)
+        )
+        if (!enableQuickStar) {
+          return
+        }
+        const bookmarkButton =
+          '<div class="utags_custom_btn utags_custom_bookmark_btn videoCtaPill icon-wrapper favorite-wrapper tooltipTrig" data-label="star" data-title="Add star">\n                                '.concat(
+            getStarIconSvg(20),
+            "\n                                <span>Star</span>\n                              </div>"
+          )
+        const favoriteButton = $(".favorite-wrapper")
+        const key = getVideoUrl(location.href)
+        if (favoriteButton && key) {
+          let bookmarkElement
+          const nextElement = favoriteButton.nextElementSibling
+          const isBookmarkButton =
+            nextElement == null
+              ? void 0
+              : nextElement.classList.contains("utags_custom_bookmark_btn")
+          if (isBookmarkButton) {
+            bookmarkElement = nextElement
+          } else {
+            favoriteButton.insertAdjacentHTML("afterend", bookmarkButton)
+            bookmarkElement = favoriteButton.nextElementSibling
+          }
+          if (bookmarkElement) {
+            const type = "video"
+            const titleElement = $(".title h1")
+            const title = titleElement
+              ? getTrimmedTitle(titleElement)
+              : document.title
+            const meta = { type }
+            if (title) meta.title = title
+            const bookmark = getBookmark(key)
+            const tags = bookmark.tags || []
+            const hasStar = containsStarRatingTag(tags)
+            const tobeTags = hasStar
+              ? removeStarRatingTags(tags)
+              : ["\u2605", ...tags]
+            bookmarkElement.dataset.utags_key = key
+            bookmarkElement.dataset.utags_meta = JSON.stringify(meta)
+            bookmarkElement.dataset.utags_tags = tobeTags.join(",")
+            if (hasStar) {
+              bookmarkElement.classList.add("starred")
+            } else {
+              bookmarkElement.classList.remove("starred")
             }
           }
         }
@@ -10257,7 +10358,10 @@
     return true
   }
   var isQuickStarAvailable = () => {
-    if (host2 === "linux.do") {
+    if (
+      host2 === "linux.do" ||
+      host2.includes("p".concat(atob("b3I="), "nhub.com"))
+    ) {
       return true
     }
     return false
