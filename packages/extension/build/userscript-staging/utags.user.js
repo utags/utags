@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.5
+// @version              0.20.6
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -5821,19 +5821,43 @@
     }
   })()
   var youtube_com_default =
-    ":not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-rich-item-renderer yt-formatted-string[ellipsis-truncate-styling] .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul_0,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul_0,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string .utags_ul_0 .utags_captain_tag{left:-24px}:not(#a):not(#b):not(#c) [hidden]+.utags_ul{display:none !important}"
+    ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) ytd-rich-item-renderer h3.ytd-rich-grid-media .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-rich-item-renderer yt-formatted-string[ellipsis-truncate-styling] .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer h3 .utags_ul_0,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer h3 .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-item-section-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) ytd-video-renderer.ytd-vertical-list-renderer yt-formatted-string.ytd-channel-name .utags_ul_0 .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn svg{margin:1px;fill:none}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn svg path{stroke:#000}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg{fill:none}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg path,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg path{stroke:#000}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg{fill:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .watch-active-metadata ytd-channel-name yt-formatted-string .utags_ul_1{margin:auto 0 !important}:not(#a):not(#b):not(#c) .watch-active-metadata__ ytd-channel-name yt-formatted-string .utags_ul_0,:not(#a):not(#b):not(#c) ytd-comment-thread-renderer h3.ytd-comment-renderer .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-2);--utags-notag-ul-height: var(--utags-notag-ul-height-2);--utags-notag-ul-position: var(--utags-notag-ul-position-2);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-2);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-2);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .ytd-shorts ytd-reel-video-renderer ytd-channel-name yt-formatted-string .utags_ul_0 .utags_captain_tag{left:-24px}:not(#a):not(#b):not(#c) [hidden]+.utags_ul{display:none !important}"
+  function getStarIconSvg(size = 20) {
+    return '<svg class="favIcon" width="'
+      .concat(size, '" height="')
+      .concat(
+        size,
+        '" viewBox="0 0 20 20">\n    <path d="M10 1L12.59 6.26L18.5 7.13L14 11.21L15.31 17L10 14.26L4.69 17L6 11.21L1.5 7.13L7.41 6.26L10 1Z"></path>\n  </svg>'
+      )
+  }
   var youtube_com_default2 = (() => {
     const prefix3 = "https://www.youtube.com/"
     const prefix22 = "https://m.youtube.com/"
-    function getUserProfileUrl(href) {
+    function getUserProfileUrl(href, exact = false) {
       if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
         const href2 = href.startsWith(prefix22)
           ? href.slice(22)
           : href.slice(24)
-        if (/^@[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^@[\w-]+).*/, "$1")
+        if (exact) {
+          if (/^@[\w-%]+$/.test(href2)) {
+            return prefix3 + href2.replace(/(^@[\w-%]+).*/, "$1")
+          }
+        } else if (/^@[\w-%]+/.test(href2)) {
+          return prefix3 + href2.replace(/(^@[\w-%]+).*/, "$1")
         }
-        if (/^channel\/[\w-]+/.test(href2)) {
+      }
+      return void 0
+    }
+    function getChannelUrl(href, exact = false) {
+      if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+        const href2 = href.startsWith(prefix22)
+          ? href.slice(22)
+          : href.slice(24)
+        if (exact) {
+          if (/^channel\/[\w-]+$/.test(href2)) {
+            return prefix3 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
+          }
+        } else if (/^channel\/[\w-]+/.test(href2)) {
           return prefix3 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
         }
       }
@@ -5858,32 +5882,39 @@
     }
     return {
       matches: /youtube\.com/,
+      listNodesSelectors: [
+        "ytd-rich-item-renderer",
+        "ytd-video-renderer",
+        "yt-lockup-view-model",
+      ],
+      conditionNodesSelectors: [
+        "ytd-rich-item-renderer a.yt-lockup-metadata-view-model__title",
+        "ytd-rich-item-renderer yt-content-metadata-view-model a",
+        "ytd-video-renderer .ytd-video-renderer h3",
+        "ytd-video-renderer .ytd-channel-name, a",
+        "yt-lockup-view-model h3.yt-lockup-metadata-view-model__heading-reset a",
+      ],
       validate(element) {
-        const hrefAttr = getAttribute(element, "href")
-        if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
-          return false
-        }
         const href = element.href
         if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
-          const pathname = element.pathname
-          if (/^\/@[\w-]+$/.test(pathname)) {
-            const key2 = prefix3 + pathname.slice(1)
+          let key = getUserProfileUrl(href, true)
+          if (key) {
             const meta = { type: "user" }
-            setUtags(element, key2, meta)
+            setUtags(element, key, meta)
             return true
           }
-          if (/^\/channel\/[\w-]+$/.test(pathname)) {
-            const key2 = prefix3 + pathname.slice(1)
+          key = getChannelUrl(href, true)
+          if (key) {
             const meta = { type: "channel" }
-            setUtags(element, key2, meta)
+            setUtags(element, key, meta)
             return true
           }
-          const key = getVideoUrl(href)
+          key = getVideoUrl(href)
           if (key) {
             let title
             const titleElement = $("#video-title", element)
             if (titleElement) {
-              title = titleElement.textContent
+              title = getTrimmedTitle(titleElement)
             }
             const meta = title ? { title, type: "video" } : { type: "video" }
             setUtags(element, key, meta)
@@ -5893,11 +5924,13 @@
         return false
       },
       excludeSelectors: [...default_default2.excludeSelectors],
+      validMediaSelectors: ["a span.ytSpecIconShapeHost svg"],
       addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
+        let key =
+          getUserProfileUrl(location.href) || getChannelUrl(location.href)
         if (key) {
           const element = $(
-            "#inner-header-container #container.ytd-channel-name #text"
+            "#inner-header-container #container.ytd-channel-name #text,yt-page-header-renderer yt-content-metadata-view-model span > span"
           )
           if (element) {
             const title = getTrimmedTitle(element)
@@ -5919,6 +5952,63 @@
               const meta = { title, type: "video" }
               setUtags(element, key, meta)
               matchedNodesSet.add(element)
+            }
+          }
+        }
+      },
+      postProcess() {
+        const host3 = location.host
+        const enableQuickStar = getSettingsValue(
+          "enableQuickStar_".concat(host3)
+        )
+        if (!enableQuickStar) {
+          return
+        }
+        const bookmarkButton =
+          '<yt-button-view-model class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">\n      <button-view-model class="ytSpecButtonViewModelHost style-scope ytd-menu-renderer">\n      <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="\u5206\u4EAB" aria-label="\u5206\u4EAB" aria-disabled="false" style="">\n      <div aria-hidden="true" class="yt-spec-button-shape-next__icon">\n      <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">\n      <span class="yt-icon-shape ytSpecIconShapeHost">\n      <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">\n      '.concat(
+            getStarIconSvg(22),
+            '\n      </div></span></span></div>\n      <div class="yt-spec-button-shape-next__button-text-content">Star</div><yt-touch-feedback-shape style="border-radius: inherit;">\n      <div aria-hidden="true" class="yt-spec-touch-feedback-shape yt-spec-touch-feedback-shape--touch-response">\n      <div class="yt-spec-touch-feedback-shape__stroke"></div><div class="yt-spec-touch-feedback-shape__fill">\n      </div></div></yt-touch-feedback-shape></button></button-view-model></yt-button-view-model>'
+          )
+        const targetButton = $(
+          "ytd-watch-metadata segmented-like-dislike-button-view-model"
+        )
+        const key = getVideoUrl(location.href)
+        if (targetButton && key) {
+          let bookmarkElement
+          const nextElement = targetButton.nextElementSibling
+          const isBookmarkButton =
+            nextElement == null
+              ? void 0
+              : nextElement.classList.contains("utags_custom_bookmark_btn")
+          if (isBookmarkButton) {
+            bookmarkElement = nextElement
+          } else {
+            targetButton.insertAdjacentHTML("afterend", bookmarkButton)
+            bookmarkElement = targetButton.nextElementSibling
+          }
+          if (bookmarkElement) {
+            const type = "video"
+            const titleElement = $(
+              "#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title"
+            )
+            const title = titleElement
+              ? getTrimmedTitle(titleElement)
+              : document.title
+            const meta = { type }
+            if (title) meta.title = title
+            const bookmark = getBookmark(key)
+            const tags = bookmark.tags || []
+            const hasStar = containsStarRatingTag(tags)
+            const tobeTags = hasStar
+              ? removeStarRatingTags(tags)
+              : ["\u2605", ...tags]
+            bookmarkElement.dataset.utags_key = key
+            bookmarkElement.dataset.utags_meta = JSON.stringify(meta)
+            bookmarkElement.dataset.utags_tags = tobeTags.join(",")
+            if (hasStar) {
+              bookmarkElement.classList.add("starred")
+            } else {
+              bookmarkElement.classList.remove("starred")
             }
           }
         }
@@ -9289,14 +9379,6 @@
   })()
   var pxxnhub_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg{fill:none}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg path,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg{fill:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_0__ .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
-  function getStarIconSvg(size = 20) {
-    return '<svg class="favIcon" width="'
-      .concat(size, '" height="')
-      .concat(
-        size,
-        '" viewBox="0 0 20 20">\n    <path d="M10 1L12.59 6.26L18.5 7.13L14 11.21L15.31 17L10 14.26L4.69 17L6 11.21L1.5 7.13L7.41 6.26L10 1Z"></path>\n  </svg>'
-      )
-  }
   var pxxnhub_com_default2 = (() => {
     const xx = atob("b3I=")
     const hostname2 = "p".concat(xx, "nhub.com")
@@ -10360,6 +10442,7 @@
   var isQuickStarAvailable = () => {
     if (
       host2 === "linux.do" ||
+      host2.includes("youtube.com") || // eslint-disable-next-line no-restricted-globals
       host2.includes("p".concat(atob("b3I="), "nhub.com"))
     ) {
       return true
