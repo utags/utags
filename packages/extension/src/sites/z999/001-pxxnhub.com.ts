@@ -247,7 +247,6 @@ export default (() => {
                                 ${getStarIconSvg(20)}
                                 <span>Star</span>
                               </div>`
-      // 所有楼层
       const favoriteButton = $('.favorite-wrapper')
       const key = getVideoUrl(location.href)
       if (favoriteButton && key) {

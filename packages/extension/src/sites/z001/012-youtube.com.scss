@@ -1,4 +1,26 @@
 :not(#a):not(#b):not(#c) {
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
   ytd-rich-item-renderer /* home page */ {
     h3.ytd-rich-grid-media {
       .utags_ul_0 {
@@ -42,7 +64,46 @@
     }
   }
 
-  .watch-active-metadata ytd-channel-name yt-formatted-string /* watch page > channel name */,
+  /* watch page > star button */
+  .utags_custom_bookmark_btn {
+    svg {
+      margin: 1px;
+      fill: none;
+
+      path {
+        stroke: black;
+      }
+    }
+  }
+  .utags_custom_bookmark_btn:hover,
+  .utags_custom_bookmark_btn.starred:hover {
+    svg {
+      fill: none;
+
+      path {
+        stroke: black;
+      }
+    }
+  }
+
+  .utags_custom_bookmark_btn.starred {
+    svg {
+      fill: var(--utags-star-tag-color);
+
+      path {
+        stroke: var(--utags-star-tag-color);
+      }
+    }
+  }
+
+  /* watch page > channel name */
+  .watch-active-metadata ytd-channel-name yt-formatted-string {
+    .utags_ul_1 {
+      margin: auto 0 !important;
+    }
+  }
+
+  .watch-active-metadata__ ytd-channel-name yt-formatted-string /* watch page > channel name */,
   ytd-comment-thread-renderer h3.ytd-comment-renderer {
     .utags_ul_0 {
       --utags-notag-ul-disply: var(--utags-notag-ul-disply-2);
