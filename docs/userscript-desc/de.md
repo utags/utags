@@ -128,6 +128,7 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
   - Hinzufügung der shadowRoot-Traversierungsfunktionalität zur Unterstützung des Findens und Markierens von Elementen innerhalb des Shadow DOM
   - Optimierung der bilibili.com-Website-Unterstützung, Verbesserung der Tag-Funktionalitätskompatibilität und -leistung auf der Plattform
   - Hinzufügung von spezieller Tag-Filterung und Schnellstern-Funktionalität für die pornhub.com-Website
+  - Hinzufügung von spezieller Tag-Filterung und Schnellstern-Funktionalität für die youtube.com-Website, Optimierung der Benutzernamen-Matching-Logik
 - 0.19.x
   - Hinzufügung von Schnell-Tag-Menübefehlen: Konfigurieren Sie benutzerdefinierte Schnell-Tags in den Einstellungen und greifen Sie über das Rechtsklick-Menü mit ➕/➖ Symbolen zum Hinzufügen/Entfernen von Tags darauf zu
   - Schnell-Stern-Funktion für linux.do Website hinzugefügt - aktivieren Sie die schnelle Stern-Hinzufügung in den Einstellungen für schnelleres Bookmarking

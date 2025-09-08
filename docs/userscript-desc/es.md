@@ -128,6 +128,7 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
   - Agregar funcionalidad de recorrido shadowRoot para admitir la búsqueda y etiquetado de elementos dentro de Shadow DOM
   - Optimizar el soporte del sitio web bilibili.com, mejorando la compatibilidad y el rendimiento de la funcionalidad de etiquetas en la plataforma
   - Agregar funcionalidad de filtrado de etiquetas especiales y estrella rápida para el sitio web pornhub.com
+  - Agregar funcionalidad de filtrado de etiquetas especiales y estrella rápida para el sitio web youtube.com, optimizar la lógica de coincidencia de nombres de usuario
 - 0.19.x
   - Adición de comandos de menú de etiquetas rápidas: Configure etiquetas rápidas personalizadas en la configuración y acceda a través del menú de clic derecho con iconos ➕/➖ para agregar/eliminar etiquetas
   - Agregar función de estrella rápida para el sitio web linux.do - habilite la adición rápida de estrellas en la configuración para un marcado más rápido

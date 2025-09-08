@@ -7,6 +7,7 @@
 - 新增 shadowRoot 遍历功能，支持在 Shadow DOM 中查找和标记元素
 - 优化 bilibili.com 网站支持，提升标签功能在该平台的兼容性和性能
 - 为 pornhub.com 网站添加特殊标签过滤功能，添加快速星标功能
+- 为 youtube.com 网站添加特殊标签过滤功能，添加快速星标功能，优化用户名匹配逻辑
 
 ## uTags v0.19 版本更新
 

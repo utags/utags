@@ -128,6 +128,7 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
   - Aggiungere la funzionalità di attraversamento shadowRoot per supportare la ricerca e l'etichettatura di elementi all'interno di Shadow DOM
   - Ottimizzare il supporto del sito web bilibili.com, migliorando la compatibilità e le prestazioni della funzionalità di tag sulla piattaforma
   - Aggiungere funzionalità di filtraggio tag speciali e stelle rapide per il sito web pornhub.com
+  - Aggiungere funzionalità di filtraggio tag speciali e stelle rapide per il sito web youtube.com, ottimizzare la logica di corrispondenza dei nomi utente
 - 0.19.x
   - Aggiunta dei Comandi Menu Tag Rapidi: Configura tag rapidi personalizzati nelle impostazioni e accedi tramite menu clic destro con icone ➕/➖ per aggiungere/rimuovere tag
   - Aggiungere funzione stella rapida per il sito web linux.do - abilita l'aggiunta rapida di stelle nelle impostazioni per un bookmarking più veloce
