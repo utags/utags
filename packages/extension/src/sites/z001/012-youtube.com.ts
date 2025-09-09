@@ -1,5 +1,5 @@
 import { getSettingsValue } from 'browser-extension-settings'
-import { $, $$, getAttribute } from 'browser-extension-utils'
+import { $, $$, createHTML, getAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./012-youtube.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -179,7 +179,7 @@ export default (() => {
 
       const bookmarkButton = `<yt-button-view-model class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">
       <button-view-model class="ytSpecButtonViewModelHost style-scope ytd-menu-renderer">
-      <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="分享" aria-label="分享" aria-disabled="false" style="">
+      <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="Add star" aria-label="Add star" aria-disabled="false" style="">
       <div aria-hidden="true" class="yt-spec-button-shape-next__icon">
       <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">
       <span class="yt-icon-shape ytSpecIconShapeHost">
@@ -207,7 +207,10 @@ export default (() => {
           bookmarkElement = nextElement as HTMLElement
         } else {
           // Insert bookmark button after each favorite button
-          targetButton.insertAdjacentHTML('afterend', bookmarkButton)
+          targetButton.insertAdjacentHTML(
+            'afterend',
+            createHTML(bookmarkButton)
+          )
           bookmarkElement = targetButton.nextElementSibling as HTMLElement
         }
 

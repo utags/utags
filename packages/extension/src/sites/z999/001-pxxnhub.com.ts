@@ -1,5 +1,5 @@
 import { getSettingsValue } from 'browser-extension-settings'
-import { $, $$, getAttribute } from 'browser-extension-utils'
+import { $, $$, createHTML, getAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./001-pxxnhub.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -261,7 +261,10 @@ export default (() => {
           bookmarkElement = nextElement as HTMLElement
         } else {
           // Insert bookmark button after each favorite button
-          favoriteButton.insertAdjacentHTML('afterend', bookmarkButton)
+          favoriteButton.insertAdjacentHTML(
+            'afterend',
+            createHTML(bookmarkButton)
+          )
           bookmarkElement = favoriteButton.nextElementSibling as HTMLElement
         }
 

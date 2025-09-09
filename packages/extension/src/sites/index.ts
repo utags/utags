@@ -390,29 +390,41 @@ export function matchedNodes() {
   console.time('matchedNodes')
   const matchedNodesSet = new Set<UtagsHTMLElement>()
 
-  addMatchedNodes(matchedNodesSet)
-
-  if (typeof currentSite.addExtraMatchedNodes === 'function') {
-    currentSite.addExtraMatchedNodes(matchedNodesSet)
+  try {
+    addMatchedNodes(matchedNodesSet)
+  } catch (error) {
+    console.error(error)
   }
 
-  const currentPageLink = $('#utags_current_page_link') as UtagsHTMLElement
-  if (currentPageLink) {
-    const key = getCanonicalUrl(currentPageLink.href)
-    if (key) {
-      const title = getTrimmedTitle(currentPageLink)
-      const description = currentPageLink.dataset.utags_description
-      // Build meta object only with properties that have values
-      const meta: { title?: string; description?: string } = {}
-      if (title) meta.title = title
-      if (description) meta.description = description
-
-      setElementUtags(currentPageLink, {
-        key,
-        meta,
-      })
-      matchedNodesSet.add(currentPageLink)
+  if (typeof currentSite.addExtraMatchedNodes === 'function') {
+    try {
+      currentSite.addExtraMatchedNodes(matchedNodesSet)
+    } catch (error) {
+      console.error(error)
     }
+  }
+
+  try {
+    const currentPageLink = $('#utags_current_page_link') as UtagsHTMLElement
+    if (currentPageLink) {
+      const key = getCanonicalUrl(currentPageLink.href)
+      if (key) {
+        const title = getTrimmedTitle(currentPageLink)
+        const description = currentPageLink.dataset.utags_description
+        // Build meta object only with properties that have values
+        const meta: { title?: string; description?: string } = {}
+        if (title) meta.title = title
+        if (description) meta.description = description
+
+        setElementUtags(currentPageLink, {
+          key,
+          meta,
+        })
+        matchedNodesSet.add(currentPageLink)
+      }
+    }
+  } catch (error) {
+    console.error(error)
   }
 
   // 添加 data-utags_primary_link 属性强制允许使用 utags
@@ -433,7 +445,11 @@ export function matchedNodes() {
   // }
 
   if (typeof currentSite.postProcess === 'function') {
-    currentSite.postProcess()
+    try {
+      currentSite.postProcess()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // Debug

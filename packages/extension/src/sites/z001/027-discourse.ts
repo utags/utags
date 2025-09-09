@@ -1,5 +1,5 @@
 import { getSettingsValue } from 'browser-extension-settings'
-import { $, $$, doc } from 'browser-extension-utils'
+import { $, $$, createHTML, doc } from 'browser-extension-utils'
 import styleText from 'data-text:./027-discourse.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -386,7 +386,7 @@ export default (() => {
           bookmarkElement = prevElement as HTMLElement
         } else {
           // Insert bookmark button before each copy link button
-          button.insertAdjacentHTML('beforebegin', bookmarkButton)
+          button.insertAdjacentHTML('beforebegin', createHTML(bookmarkButton))
           bookmarkElement = button.previousElementSibling as HTMLElement
         }
 
