@@ -32,7 +32,7 @@ jobs:
           cache: "pnpm"
           cache-dependency-path: "pnpm-lock.yaml"
 
-      - run: pnpm install --filter ./packages/webapp
+      - run: pnpm install --filter ./packages/webapp --filter ./packages/docusaurus
 
       - name: Compile Paraglide
         run: pnpm run --filter ./packages/webapp compile-paraglide
@@ -40,22 +40,31 @@ jobs:
       - name: Run tests
         run: pnpm run --filter ./packages/webapp test
 
-      - name: Build webapp
-        run: pnpm run --filter ./packages/webapp build
+      - name: Build webapp and docusaurus
+        run: pnpm run --filter ./packages/webapp --filter ./packages/docusaurus build
+
+      - name: Create dist directory
+        run: mkdir -p ./dist
+
+      - name: Copy docusaurus build to dist
+        run: cp -r ./packages/docusaurus/build/* ./dist/
+
+      - name: Copy webapp build to dist
+        run: cp -r ./packages/webapp/dist/* ./dist/
 
       - name: Copy 404.html
-        run: cp ./packages/webapp/dist/index.html ./packages/webapp/dist/404.html
+        run: cp ./dist/index.html ./dist/404.html
 
       - name: Create CNAME file
         if: "${{ vars.CNAME != '' }}"
-        run: echo "${{ vars.CNAME }}" > ./packages/webapp/dist/CNAME
+        run: echo "${{ vars.CNAME }}" > ./dist/CNAME
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./packages/webapp/dist
+          publish_dir: ./dist
           keep_files: true
           # Set to true when https://github.com/peaceiris/actions-gh-pages/issues/455 is resolved
           force_orphan: false

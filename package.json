@@ -13,6 +13,7 @@
     "lint:type": "tsc --noemit",
     "build": "run-s build:*",
     "build:extension": "pnpm -r --filter ./packages/extension build",
+    "build:docusaurus": "pnpm -r --filter ./packages/docusaurus build",
     "build:webapp": "pnpm -r --filter ./packages/webapp build",
     "package": "run-s package:*",
     "package:extension": "pnpm -r --filter ./packages/extension package",
