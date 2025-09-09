@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.6
+// @version              0.20.7
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -5965,7 +5965,7 @@
           return
         }
         const bookmarkButton =
-          '<yt-button-view-model class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">\n      <button-view-model class="ytSpecButtonViewModelHost style-scope ytd-menu-renderer">\n      <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="\u5206\u4EAB" aria-label="\u5206\u4EAB" aria-disabled="false" style="">\n      <div aria-hidden="true" class="yt-spec-button-shape-next__icon">\n      <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">\n      <span class="yt-icon-shape ytSpecIconShapeHost">\n      <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">\n      '.concat(
+          '<yt-button-view-model class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">\n      <button-view-model class="ytSpecButtonViewModelHost style-scope ytd-menu-renderer">\n      <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="Add star" aria-label="Add star" aria-disabled="false" style="">\n      <div aria-hidden="true" class="yt-spec-button-shape-next__icon">\n      <span class="ytIconWrapperHost" style="width: 24px; height: 24px;">\n      <span class="yt-icon-shape ytSpecIconShapeHost">\n      <div style="width: 100%; height: 100%; display: block; fill: currentcolor;">\n      '.concat(
             getStarIconSvg(22),
             '\n      </div></span></span></div>\n      <div class="yt-spec-button-shape-next__button-text-content">Star</div><yt-touch-feedback-shape style="border-radius: inherit;">\n      <div aria-hidden="true" class="yt-spec-touch-feedback-shape yt-spec-touch-feedback-shape--touch-response">\n      <div class="yt-spec-touch-feedback-shape__stroke"></div><div class="yt-spec-touch-feedback-shape__fill">\n      </div></div></yt-touch-feedback-shape></button></button-view-model></yt-button-view-model>'
           )
@@ -5983,7 +5983,10 @@
           if (isBookmarkButton) {
             bookmarkElement = nextElement
           } else {
-            targetButton.insertAdjacentHTML("afterend", bookmarkButton)
+            targetButton.insertAdjacentHTML(
+              "afterend",
+              createHTML(bookmarkButton)
+            )
             bookmarkElement = targetButton.nextElementSibling
           }
           if (bookmarkElement) {
@@ -7516,7 +7519,7 @@
           if (isBookmarkButton) {
             bookmarkElement = prevElement
           } else {
-            button.insertAdjacentHTML("beforebegin", bookmarkButton)
+            button.insertAdjacentHTML("beforebegin", createHTML(bookmarkButton))
             bookmarkElement = button.previousElementSibling
           }
           if (bookmarkElement) {
@@ -9577,7 +9580,10 @@
           if (isBookmarkButton) {
             bookmarkElement = nextElement
           } else {
-            favoriteButton.insertAdjacentHTML("afterend", bookmarkButton)
+            favoriteButton.insertAdjacentHTML(
+              "afterend",
+              createHTML(bookmarkButton)
+            )
             bookmarkElement = favoriteButton.nextElementSibling
           }
           if (bookmarkElement) {
@@ -10399,28 +10405,44 @@
   function matchedNodes() {
     console.time("matchedNodes")
     const matchedNodesSet = /* @__PURE__ */ new Set()
-    addMatchedNodes(matchedNodesSet)
-    if (typeof currentSite.addExtraMatchedNodes === "function") {
-      currentSite.addExtraMatchedNodes(matchedNodesSet)
+    try {
+      addMatchedNodes(matchedNodesSet)
+    } catch (error) {
+      console.error(error)
     }
-    const currentPageLink = $("#utags_current_page_link")
-    if (currentPageLink) {
-      const key = getCanonicalUrl(currentPageLink.href)
-      if (key) {
-        const title = getTrimmedTitle(currentPageLink)
-        const description = currentPageLink.dataset.utags_description
-        const meta = {}
-        if (title) meta.title = title
-        if (description) meta.description = description
-        setElementUtags(currentPageLink, {
-          key,
-          meta,
-        })
-        matchedNodesSet.add(currentPageLink)
+    if (typeof currentSite.addExtraMatchedNodes === "function") {
+      try {
+        currentSite.addExtraMatchedNodes(matchedNodesSet)
+      } catch (error) {
+        console.error(error)
       }
     }
+    try {
+      const currentPageLink = $("#utags_current_page_link")
+      if (currentPageLink) {
+        const key = getCanonicalUrl(currentPageLink.href)
+        if (key) {
+          const title = getTrimmedTitle(currentPageLink)
+          const description = currentPageLink.dataset.utags_description
+          const meta = {}
+          if (title) meta.title = title
+          if (description) meta.description = description
+          setElementUtags(currentPageLink, {
+            key,
+            meta,
+          })
+          matchedNodesSet.add(currentPageLink)
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
     if (typeof currentSite.postProcess === "function") {
-      currentSite.postProcess()
+      try {
+        currentSite.postProcess()
+      } catch (error) {
+        console.error(error)
+      }
     }
     console.timeEnd("matchedNodes")
     return [...matchedNodesSet]
