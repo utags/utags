@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkutags_docs=self.webpackChunkutags_docs||[]).push([[1903],{1912:s=>{s.exports=JSON.parse('{"blogBasePath":"/zh-CN/blog","blogTitle":"Blog","authorsListPath":"/zh-CN/blog/authors"}')}}]);
