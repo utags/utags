@@ -44,5 +44,20 @@
   },
   "engines": {
     "node": ">=18.0"
+  },
+  "xo": {
+    "space": 2,
+    "prettier": true,
+    "rules": {
+      "import/extensions": 0,
+      "n/file-extension-in-import": 0,
+      "import/order": 0,
+      "import/no-named-as-default": 0,
+      "@typescript-eslint/prefer-nullish-coalescing": 0,
+      "@typescript-eslint/prefer-optional-chain": 0,
+      "logical-assignment-operators": 0,
+      "unicorn/prevent-abbreviations": 0,
+      "capitalized-comments": 0
+    }
   }
 }
