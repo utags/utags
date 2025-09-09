@@ -6,7 +6,7 @@ import { themes as prismThemes } from 'prism-react-renderer'
 
 const config: Config = {
   title: 'UTags',
-  tagline: 'Dinosaurs are cool',
+  tagline: 'UTags are cool',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -93,6 +93,12 @@ const config: Config = {
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
+          to: '/contact',
+          position: 'left',
+          className: 'navbar__link--contact',
+          label: 'Contact Us',
+        },
+        {
           type: 'localeDropdown',
           position: 'right',
         },
@@ -111,7 +117,7 @@ const config: Config = {
           items: [
             {
               label: 'Help',
-              to: '/help/intro',
+              to: '/help/',
             },
           ],
         },

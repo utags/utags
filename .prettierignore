@@ -6,6 +6,8 @@ build/firefox-*/**
 build/bookmarklet-*/**
 build/module-*/**
 build/*-dev/**
+packages/docusaurus/build/**
+packages/docusaurus/.docusaurus/**
 *.min.js
 pnpm-lock.yaml
 tsconfig.json
