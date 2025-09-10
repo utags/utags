@@ -281,7 +281,7 @@ _具有筛选效果的特殊标签_
 - 📦 **Chrome 扩展**：[Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - 🦊 **Firefox 附加组件**：[Firefox 附加组件](https://addons.mozilla.org/firefox/addon/utags/)
 - 📜 **用户脚本**：[Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
-- 💬 **讨论**：[GitHub 讨论](https://github.com/orgs/utags/discussions)
+- 💬 **讨论**：[GitHub 讨论](https://github.com/utags/utags/discussions)
 - 📺 **视频演示**：[YouTube](https://www.youtube.com/watch?v=WzUzBA5V91A)
 
 ---

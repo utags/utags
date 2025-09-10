@@ -96,13 +96,13 @@ export const initialBookmarks = {
       'Bookmarks',
     ],
   },
-  'https://utags.link/c/public/help-zh': {
+  'https://utags.link/zh-CN/help/': {
     meta: {
       title: '帮助文档',
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
       updated: Date.now() - 4000,
     },
-    tags: ['help', 'public-collection', 'utags', '稍后阅读'],
+    tags: ['help', 'utags', '稍后阅读'],
   },
   'https://utags.link/c/public/release-notes-zh': {
     meta: {
@@ -112,7 +112,7 @@ export const initialBookmarks = {
     },
     tags: ['release-notes', 'public-collection', 'utags', 'Read Later'],
   },
-  'https://github.com/orgs/utags/discussions': {
+  'https://github.com/utags/utags/discussions': {
     meta: {
       title: '反馈与建议',
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),

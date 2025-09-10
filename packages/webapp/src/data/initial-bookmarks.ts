@@ -90,13 +90,13 @@ export const initialBookmarks = {
       'Bookmarks',
     ],
   },
-  'https://utags.link/c/public/help': {
+  'https://utags.link/help/': {
     meta: {
       title: 'Help Documentation', // 帮助文档
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),
       updated: Date.now() - 4000,
     },
-    tags: ['help', 'public-collection', 'UTags', 'Read Later'],
+    tags: ['help', 'UTags', 'Read Later'],
   },
   'https://utags.link/c/public/release-notes': {
     meta: {
@@ -106,7 +106,7 @@ export const initialBookmarks = {
     },
     tags: ['release-notes', 'public-collection', 'UTags', 'Read Later'],
   },
-  'https://github.com/orgs/utags/discussions': {
+  'https://github.com/utags/utags/discussions': {
     meta: {
       title: 'Feedback and Suggestions', // 反馈与建议
       created: Date.now() - 4000 - Math.floor(Math.random() * 3_600_000),

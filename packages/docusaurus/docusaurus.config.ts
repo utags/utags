@@ -86,12 +86,13 @@ const config: Config = {
       },
       items: [
         {
+          to: '/help/',
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Help',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        { to: '/blog/', label: 'Blog', position: 'left' },
         {
           to: '/contact',
           position: 'left',
@@ -151,7 +152,7 @@ const config: Config = {
           items: [
             {
               label: 'Blog',
-              to: '/blog',
+              to: '/blog/',
             },
             {
               label: 'GitHub',

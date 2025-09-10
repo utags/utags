@@ -191,7 +191,7 @@ git reset --hard origin/gh-pages
 
 - 🐛 [GitHub Issues](https://github.com/utags/utags/issues) - 报告问题
 - 💡 [Pull Requests](https://github.com/utags/utags/pulls) - 添加功能
-- 💬 [GitHub Discussions](https://github.com/orgs/utags/discussions) - 获取帮助和分享技巧
+- 💬 [GitHub Discussions](https://github.com/utags/utags/discussions) - 获取帮助和分享技巧
 
 请遵循我们的[贡献指南](CONTRIBUTING.zh-CN.md)。
 

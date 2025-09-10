@@ -185,7 +185,7 @@ Contributions through:
 
 - 🐛 [GitHub Issues](https://github.com/utags/utags/issues) - for bug reports
 - 💡 [Pull Requests](https://github.com/utags/utags/pulls) - for feature additions
-- 💬 [GitHub Discussions](https://github.com/orgs/utags/discussions) - get help and share tips
+- 💬 [GitHub Discussions](https://github.com/utags/utags/discussions) - get help and share tips
 
 Please follow our [contribution guidelines](CONTRIBUTING.md).
 

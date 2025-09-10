@@ -281,7 +281,7 @@ Copyright (c) 2023-2025 [Pipecraft](https://www.pipecraft.net). Licensed under t
 - 📦 **Chrome Extension**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - 🦊 **Firefox Add-on**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
 - 📜 **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/orgs/utags/discussions)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/utags/utags/discussions)
 - 📺 **Video Demos**: [YouTube](https://www.youtube.com/watch?v=WzUzBA5V91A)
 
 ---
