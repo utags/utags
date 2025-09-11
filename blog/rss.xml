@@ -4,84 +4,74 @@
         <title>UTags Blog</title>
         <link>https://utags.link/blog</link>
         <description>UTags Blog</description>
-        <lastBuildDate>Thu, 26 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 12 Sep 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Welcome]]></title>
+            <title><![CDATA[UTags 用户手册正式发布]]></title>
+            <link>https://utags.link/blog/user-manual-release</link>
+            <guid>https://utags.link/blog/user-manual-release</guid>
+            <pubDate>Fri, 12 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。]]></description>
+            <content:encoded><![CDATA[<p>我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="手册内容概览">手册内容概览<a href="https://utags.link/blog/user-manual-release#%E6%89%8B%E5%86%8C%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88" class="hash-link" aria-label="Direct link to 手册内容概览" title="Direct link to 手册内容概览">​</a></h2>
+<p>我们的用户手册涵盖了 UTags 的方方面面，包括：</p>
+<ul>
+<li><strong><a href="https://utags.link/help/user-manual/quick-start">快速入门指南</a></strong>：帮助新用户迅速上手 UTags 的基本功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/extension-guide">浏览器扩展使用指南</a></strong>：详细介绍如何使用 UTags 浏览器扩展</li>
+<li><strong><a href="https://utags.link/help/user-manual/webapp-guide">网页应用使用指南</a></strong>：全面解析 UTags 网页应用的各项功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-import-export">数据导入导出</a></strong>：学习如何管理您的书签数据</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-sync">数据同步设置</a></strong>：了解如何在多设备间同步您的书签</li>
+<li><strong><a href="https://utags.link/help/user-manual/advanced-features">高级功能</a></strong>：探索 UTags 的强大高级功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/faq">常见问题解答</a></strong>：解答用户最常见的疑问</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="为什么要阅读用户手册">为什么要阅读用户手册？<a href="https://utags.link/blog/user-manual-release#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%98%85%E8%AF%BB%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C" class="hash-link" aria-label="Direct link to 为什么要阅读用户手册？" title="Direct link to 为什么要阅读用户手册？">​</a></h2>
+<p>虽然 UTags 的设计注重直观性和易用性，但通过阅读用户手册，您可以：</p>
+<ul>
+<li><strong>发现隐藏功能</strong>：了解一些您可能不知道的强大功能</li>
+<li><strong>提高效率</strong>：学习快捷键和高级筛选技巧，更快地管理和查找书签</li>
+<li><strong>解决问题</strong>：遇到困难时，找到详细的解决方案</li>
+<li><strong>充分利用</strong>：确保您充分发挥 UTags 的全部潜力</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="持续更新">持续更新<a href="https://utags.link/blog/user-manual-release#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="Direct link to 持续更新" title="Direct link to 持续更新">​</a></h2>
+<p>我们将根据产品的发展和用户的反馈，持续更新用户手册。每当有新功能推出或现有功能优化时，手册也会同步更新，确保您始终能获取到最新的信息。</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="联系我们">联系我们<a href="https://utags.link/blog/user-manual-release#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC" class="hash-link" aria-label="Direct link to 联系我们" title="Direct link to 联系我们">​</a></h2>
+<p>如果您在使用 UTags 过程中有任何问题，或者对用户手册有任何建议，欢迎访问我们的<a href="https://utags.link/contact">联系页面</a>获取所有联系方式。</p>
+<p>我们非常重视用户的反馈，并将不断努力改进 UTags，使其成为最好的书签管理工具。</p>
+<p>感谢您选择 UTags，希望这份用户手册能帮助您更好地组织和管理您的网络世界！</p>]]></content:encoded>
+            <category>utags</category>
+            <category>manual</category>
+            <category>documentation</category>
+        </item>
+        <item>
+            <title><![CDATA[Welcome to UTags Blog]]></title>
             <link>https://utags.link/blog/welcome</link>
             <guid>https://utags.link/blog/welcome</guid>
-            <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[Docusaurus blogging features are powered by the blog plugin.]]></description>
-            <content:encoded><![CDATA[<p><a href="https://docusaurus.io/docs/blog" target="_blank" rel="noopener noreferrer">Docusaurus blogging features</a> are powered by the <a href="https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog" target="_blank" rel="noopener noreferrer">blog plugin</a>.</p>
-<p>Here are a few tips you might find useful.</p>
-<p>Simply add Markdown files (or folders) to the <code>blog</code> directory.</p>
-<p>Regular blog authors can be added to <code>authors.yml</code>.</p>
-<p>The blog post date can be extracted from filenames, such as:</p>
+            <pubDate>Wed, 10 Sep 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.]]></description>
+            <content:encoded><![CDATA[<p>Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="what-to-expect">What to Expect<a href="https://utags.link/blog/welcome#what-to-expect" class="hash-link" aria-label="Direct link to What to Expect" title="Direct link to What to Expect">​</a></h2>
+<p>On this blog, you'll find:</p>
 <ul>
-<li><code>2019-05-30-welcome.md</code></li>
-<li><code>2019-05-30-welcome/index.md</code></li>
+<li><strong>Feature Announcements</strong>: Stay updated on the latest features and improvements to UTags.</li>
+<li><strong>Usage Tips</strong>: Discover how to make the most of UTags' powerful filtering and organization capabilities.</li>
+<li><strong>Best Practices</strong>: Learn optimal ways to organize your bookmarks using tags, domains, and keywords.</li>
+<li><strong>Community Highlights</strong>: See how other users are leveraging UTags to improve their browsing experience.</li>
 </ul>
-<p>A blog post folder can be convenient to co-locate blog post images:</p>
-<p><img decoding="async" loading="lazy" alt="Docusaurus Plushie" src="https://utags.link/assets/images/docusaurus-plushie-banner-a60f7593abca1e3eef26a9afa244e4fb.jpeg" width="1500" height="500" class="img_JWp1"></p>
-<p>The blog supports tags as well!</p>
-<p><strong>And if you don't want a blog</strong>: just delete this directory, and use <code>blog: false</code> in your Docusaurus config.</p>]]></content:encoded>
-            <category>Facebook</category>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="key-features-of-utags">Key Features of UTags<a href="https://utags.link/blog/welcome#key-features-of-utags" class="hash-link" aria-label="Direct link to Key Features of UTags" title="Direct link to Key Features of UTags">​</a></h2>
+<p>If you're new to UTags, here's a quick overview of what makes it special:</p>
+<ul>
+<li><strong>Triple-dimension Filtering</strong>: Filter your bookmarks by tags, domains, and keywords simultaneously.</li>
+<li><strong>Tag Hierarchy</strong>: Create structured tag systems using the slash (/) separator.</li>
+<li><strong>Cross-device Synchronization</strong>: Access your bookmarks from anywhere with our sync options.</li>
+<li><strong>Clean, Intuitive Interface</strong>: Enjoy a distraction-free bookmark management experience.</li>
+</ul>
+<p>We're committed to making UTags the best bookmark management tool available. Stay tuned for more updates and tips!</p>
+<p>Happy bookmarking!</p>]]></content:encoded>
+            <category>utags</category>
             <category>Hello</category>
-            <category>Docusaurus</category>
-        </item>
-        <item>
-            <title><![CDATA[MDX Blog Post]]></title>
-            <link>https://utags.link/blog/mdx-blog-post</link>
-            <guid>https://utags.link/blog/mdx-blog-post</guid>
-            <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[Blog posts support Docusaurus Markdown features, such as MDX.]]></description>
-            <content:encoded><![CDATA[<p>Blog posts support <a href="https://docusaurus.io/docs/markdown-features" target="_blank" rel="noopener noreferrer">Docusaurus Markdown features</a>, such as <a href="https://mdxjs.com/" target="_blank" rel="noopener noreferrer">MDX</a>.</p>
-<div class="theme-admonition theme-admonition-tip admonition_VkFy alert alert--success"><div class="admonitionHeading_S7uQ"><span class="admonitionIcon_jruK"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_JtAn"><p>Use the power of React to create interactive blog posts.</p></div></div>
-<!-- -->
-<p>For example, use JSX to create an interactive button:</p>
-<div class="language-js codeBlockContainer_zc5S theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QH4w"><pre tabindex="0" class="prism-code language-js codeBlock_TjOV thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_rdBJ"><span class="token-line" style="color:#393A34"><span class="token operator" style="color:#393A34">&lt;</span><span class="token plain">button onClick</span><span class="token operator" style="color:#393A34">=</span><span class="token punctuation" style="color:#393A34">{</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">alert</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">'button clicked!'</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">}</span><span class="token operator" style="color:#393A34">&gt;</span><span class="token maybe-class-name">Click</span><span class="token plain"> me</span><span class="token operator" style="color:#393A34">!</span><span class="token operator" style="color:#393A34">&lt;</span><span class="token operator" style="color:#393A34">/</span><span class="token plain">button</span><span class="token operator" style="color:#393A34">&gt;</span><br></span></code></pre></div></div>
-<button>Click me!</button>]]></content:encoded>
-            <category>Docusaurus</category>
-        </item>
-        <item>
-            <title><![CDATA[Long Blog Post]]></title>
-            <link>https://utags.link/blog/long-blog-post</link>
-            <guid>https://utags.link/blog/long-blog-post</guid>
-            <pubDate>Wed, 29 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[This is the summary of a very long blog post,]]></description>
-            <content:encoded><![CDATA[<p>This is the summary of a very long blog post,</p>
-<p>Use a <code>&lt;!--</code> <code>truncate</code> <code>--&gt;</code> comment to limit blog post size in the list view.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content:encoded>
-            <category>Hello</category>
-            <category>Docusaurus</category>
-        </item>
-        <item>
-            <title><![CDATA[First Blog Post]]></title>
-            <link>https://utags.link/blog/first-blog-post</link>
-            <guid>https://utags.link/blog/first-blog-post</guid>
-            <pubDate>Tue, 28 May 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[Lorem ipsum dolor sit amet...]]></description>
-            <content:encoded><![CDATA[<p>Lorem ipsum dolor sit amet...</p>
-<p>...consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content:encoded>
-            <category>Hola</category>
-            <category>Docusaurus</category>
+            <category>introduction</category>
         </item>
     </channel>
 </rss>
