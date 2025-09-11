@@ -58,6 +58,14 @@
       "logical-assignment-operators": 0,
       "unicorn/prevent-abbreviations": 0,
       "capitalized-comments": 0
-    }
+    },
+    "overrides": [
+      {
+        "files": "src/components/**/*.tsx",
+        "rules": {
+          "unicorn/filename-case": 0
+        }
+      }
+    ]
   }
 }

@@ -1,8 +1,12 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 ---
 
 # 高级功能
+
+:::info
+ 未整理完
+:::
 
 本章节将详细介绍 UTags 的高级功能，帮助您充分发挥 UTags 的潜力，实现更高效的内容组织和管理。
 
@@ -18,7 +22,7 @@ sidebar_position: 7
 2. 例如，要搜索所有以 "http" 或 "https" 开头的 URL，可以使用 `/^https?:\/\//`
 3. 点击搜索按钮或按回车键执行搜索
 
-![正则表达式搜索示例截图](url)
+![正则表达式搜索示例截图](../assets/extension-usage-6.png)
 
 ### 常用正则表达式示例
 
@@ -59,7 +63,7 @@ sidebar_position: 7
    - 在添加标签时使用斜杠分隔层级，如 `技术/编程/JavaScript`
    - UTags 会自动创建相应的层次结构
 
-   ![标签层次结构创建截图](url)
+   ![标签层次结构创建截图](../assets/extension-usage-6.png)
 
 2. **编辑层次结构**：
 
@@ -67,7 +71,7 @@ sidebar_position: 7
    - 使用拖放操作调整标签的层次关系
    - 重命名标签时，可以修改其在层次结构中的位置
 
-   ![标签层次结构编辑截图](url)
+   ![标签层次结构编辑截图](../assets/extension-usage-6.png)
 
 3. **合并标签**：
 
@@ -75,7 +79,7 @@ sidebar_position: 7
    - 指定目标标签（可以是不同层次结构中的标签）
    - 确认合并操作
 
-   ![标签合并操作截图](url)
+   ![标签合并操作截图](../assets/extension-usage-6.png)
 
 ### 使用层次结构进行高级筛选
 
@@ -185,7 +189,7 @@ UTags 允许使用自定义 CSS 来修改标签和界面的外观：
 }
 ```
 
-![自定义标签样式效果截图](url)
+![自定义标签样式效果截图](../assets/extension-usage-6.png)
 
 ### 主题自定义
 

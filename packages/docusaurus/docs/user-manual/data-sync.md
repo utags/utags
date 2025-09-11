@@ -1,8 +1,18 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # 数据同步
+
+:::info
+ 未整理完
+
+ 请先参考
+
+- [GitHub 同步配置指南](https://github.com/utags/utags/discussions/58)
+- [WebDAV 同步配置指南](https://github.com/utags/utags/discussions/59)
+
+:::
 
 本章节将详细介绍 UTags 的数据同步功能，帮助您在多设备间保持标签和书签数据的一致性。
 
