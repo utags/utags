@@ -1,7 +1,7 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+utags:
+  label: utags
+  permalink: /utags
+  description: Utags tag description
 
 hello:
   label: Hello
