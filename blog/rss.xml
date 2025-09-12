@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>UTags Blog</title>
-        <link>https://utags.link/blog</link>
+        <link>https://utags.link/blog/</link>
         <description>UTags Blog</description>
         <lastBuildDate>Fri, 12 Sep 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,23 +10,23 @@
         <language>en</language>
         <item>
             <title><![CDATA[UTags 用户手册正式发布]]></title>
-            <link>https://utags.link/blog/user-manual-release</link>
-            <guid>https://utags.link/blog/user-manual-release</guid>
+            <link>https://utags.link/blog/user-manual-release/</link>
+            <guid>https://utags.link/blog/user-manual-release/</guid>
             <pubDate>Fri, 12 Sep 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。]]></description>
             <content:encoded><![CDATA[<p>我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="手册内容概览">手册内容概览<a href="https://utags.link/blog/user-manual-release#%E6%89%8B%E5%86%8C%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88" class="hash-link" aria-label="Direct link to 手册内容概览" title="Direct link to 手册内容概览">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="手册内容概览">手册内容概览<a href="https://utags.link/blog/user-manual-release/#%E6%89%8B%E5%86%8C%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88" class="hash-link" aria-label="Direct link to 手册内容概览" title="Direct link to 手册内容概览">​</a></h2>
 <p>我们的用户手册涵盖了 UTags 的方方面面，包括：</p>
 <ul>
-<li><strong><a href="https://utags.link/help/user-manual/quick-start">快速入门指南</a></strong>：帮助新用户迅速上手 UTags 的基本功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/extension-guide">浏览器扩展使用指南</a></strong>：详细介绍如何使用 UTags 浏览器扩展</li>
-<li><strong><a href="https://utags.link/help/user-manual/webapp-guide">网页应用使用指南</a></strong>：全面解析 UTags 网页应用的各项功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/data-import-export">数据导入导出</a></strong>：学习如何管理您的书签数据</li>
-<li><strong><a href="https://utags.link/help/user-manual/data-sync">数据同步设置</a></strong>：了解如何在多设备间同步您的书签</li>
-<li><strong><a href="https://utags.link/help/user-manual/advanced-features">高级功能</a></strong>：探索 UTags 的强大高级功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/faq">常见问题解答</a></strong>：解答用户最常见的疑问</li>
+<li><strong><a href="https://utags.link/help/user-manual/quick-start/">快速入门指南</a></strong>：帮助新用户迅速上手 UTags 的基本功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/extension-guide/">浏览器扩展使用指南</a></strong>：详细介绍如何使用 UTags 浏览器扩展</li>
+<li><strong><a href="https://utags.link/help/user-manual/webapp-guide/">网页应用使用指南</a></strong>：全面解析 UTags 网页应用的各项功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-import-export/">数据导入导出</a></strong>：学习如何管理您的书签数据</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-sync/">数据同步设置</a></strong>：了解如何在多设备间同步您的书签</li>
+<li><strong><a href="https://utags.link/help/user-manual/advanced-features/">高级功能</a></strong>：探索 UTags 的强大高级功能</li>
+<li><strong><a href="https://utags.link/help/user-manual/faq/">常见问题解答</a></strong>：解答用户最常见的疑问</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="为什么要阅读用户手册">为什么要阅读用户手册？<a href="https://utags.link/blog/user-manual-release#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%98%85%E8%AF%BB%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C" class="hash-link" aria-label="Direct link to 为什么要阅读用户手册？" title="Direct link to 为什么要阅读用户手册？">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="为什么要阅读用户手册">为什么要阅读用户手册？<a href="https://utags.link/blog/user-manual-release/#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%98%85%E8%AF%BB%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C" class="hash-link" aria-label="Direct link to 为什么要阅读用户手册？" title="Direct link to 为什么要阅读用户手册？">​</a></h2>
 <p>虽然 UTags 的设计注重直观性和易用性，但通过阅读用户手册，您可以：</p>
 <ul>
 <li><strong>发现隐藏功能</strong>：了解一些您可能不知道的强大功能</li>
@@ -34,10 +34,10 @@
 <li><strong>解决问题</strong>：遇到困难时，找到详细的解决方案</li>
 <li><strong>充分利用</strong>：确保您充分发挥 UTags 的全部潜力</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="持续更新">持续更新<a href="https://utags.link/blog/user-manual-release#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="Direct link to 持续更新" title="Direct link to 持续更新">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="持续更新">持续更新<a href="https://utags.link/blog/user-manual-release/#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="Direct link to 持续更新" title="Direct link to 持续更新">​</a></h2>
 <p>我们将根据产品的发展和用户的反馈，持续更新用户手册。每当有新功能推出或现有功能优化时，手册也会同步更新，确保您始终能获取到最新的信息。</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="联系我们">联系我们<a href="https://utags.link/blog/user-manual-release#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC" class="hash-link" aria-label="Direct link to 联系我们" title="Direct link to 联系我们">​</a></h2>
-<p>如果您在使用 UTags 过程中有任何问题，或者对用户手册有任何建议，欢迎访问我们的<a href="https://utags.link/contact">联系页面</a>获取所有联系方式。</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="联系我们">联系我们<a href="https://utags.link/blog/user-manual-release/#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC" class="hash-link" aria-label="Direct link to 联系我们" title="Direct link to 联系我们">​</a></h2>
+<p>如果您在使用 UTags 过程中有任何问题，或者对用户手册有任何建议，欢迎访问我们的<a href="https://utags.link/contact/">联系页面</a>获取所有联系方式。</p>
 <p>我们非常重视用户的反馈，并将不断努力改进 UTags，使其成为最好的书签管理工具。</p>
 <p>感谢您选择 UTags，希望这份用户手册能帮助您更好地组织和管理您的网络世界！</p>]]></content:encoded>
             <category>utags</category>
@@ -46,12 +46,12 @@
         </item>
         <item>
             <title><![CDATA[Welcome to UTags Blog]]></title>
-            <link>https://utags.link/blog/welcome</link>
-            <guid>https://utags.link/blog/welcome</guid>
+            <link>https://utags.link/blog/welcome/</link>
+            <guid>https://utags.link/blog/welcome/</guid>
             <pubDate>Wed, 10 Sep 2025 00:00:00 GMT</pubDate>
             <description><![CDATA[Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.]]></description>
             <content:encoded><![CDATA[<p>Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="what-to-expect">What to Expect<a href="https://utags.link/blog/welcome#what-to-expect" class="hash-link" aria-label="Direct link to What to Expect" title="Direct link to What to Expect">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="what-to-expect">What to Expect<a href="https://utags.link/blog/welcome/#what-to-expect" class="hash-link" aria-label="Direct link to What to Expect" title="Direct link to What to Expect">​</a></h2>
 <p>On this blog, you'll find:</p>
 <ul>
 <li><strong>Feature Announcements</strong>: Stay updated on the latest features and improvements to UTags.</li>
@@ -59,7 +59,7 @@
 <li><strong>Best Practices</strong>: Learn optimal ways to organize your bookmarks using tags, domains, and keywords.</li>
 <li><strong>Community Highlights</strong>: See how other users are leveraging UTags to improve their browsing experience.</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="key-features-of-utags">Key Features of UTags<a href="https://utags.link/blog/welcome#key-features-of-utags" class="hash-link" aria-label="Direct link to Key Features of UTags" title="Direct link to Key Features of UTags">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="key-features-of-utags">Key Features of UTags<a href="https://utags.link/blog/welcome/#key-features-of-utags" class="hash-link" aria-label="Direct link to Key Features of UTags" title="Direct link to Key Features of UTags">​</a></h2>
 <p>If you're new to UTags, here's a quick overview of what makes it special:</p>
 <ul>
 <li><strong>Triple-dimension Filtering</strong>: Filter your bookmarks by tags, domains, and keywords simultaneously.</li>
