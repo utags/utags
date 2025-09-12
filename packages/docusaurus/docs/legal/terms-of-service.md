@@ -1,90 +1,90 @@
 ---
-title: 用户条款
-description: UTags 用户条款
+title: Terms of Service
+description: UTags Terms of Service
 ---
 
-# 用户条款 (草稿)
+# Terms of Service (Draft)
 
-_最后更新日期：2025 年 9 月 9 日_
+_Last updated: September 9, 2025_
 
-## 1. 接受条款
+## 1. Acceptance of Terms
 
-欢迎使用 UTags（"服务"）。通过访问或使用我们的服务，您同意受本用户条款（"条款"）的约束。如果您不同意这些条款的任何部分，则不得使用我们的服务。
+Welcome to UTags ("Service"). By accessing or using our Service, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to any part of these Terms, you may not use our Service.
 
-## 2. 服务描述
+## 2. Service Description
 
-UTags 是一个现代化的书签管理工具，提供浏览器扩展/用户脚本和网页应用两种形式，允许用户组织、标记和管理网页书签。
+UTags is a modern bookmark management tool, available as both a browser extension/userscript and a web application, allowing users to organize, tag, and manage web bookmarks.
 
-## 3. 账户注册与安全
+## 3. Account Registration and Security
 
-### 3.1 账户创建
+### 3.1 Account Creation
 
-使用某些功能可能需要创建账户。您同意提供准确、完整和最新的信息，并对保持账户信息的准确性和完整性负责。
+Using certain features may require creating an account. You agree to provide accurate, complete, and up-to-date information, and are responsible for maintaining the accuracy and completeness of your account information.
 
-### 3.2 账户安全
+### 3.2 Account Security
 
-您负责维护您账户的保密性，并对发生在您账户下的所有活动负全部责任。您同意立即通知我们任何未经授权使用您账户的情况。
+You are responsible for maintaining the confidentiality of your account and are fully responsible for all activities that occur under your account. You agree to immediately notify us of any unauthorized use of your account.
 
-## 4. 用户内容
+## 4. User Content
 
-### 4.1 所有权
+### 4.1 Ownership
 
-您保留您通过服务提交、发布或显示的内容（"用户内容"）的所有权利。通过提交用户内容，您授予我们全球性、非独占、免版税的许可，允许我们使用、复制、处理、改编、修改、发布、传输、显示和分发此类内容，仅用于提供和维护服务。
+You retain all rights to the content you submit, post, or display through the Service ("User Content"). By submitting User Content, you grant us a worldwide, non-exclusive, royalty-free license to use, copy, process, adapt, modify, publish, transmit, display, and distribute such content solely for the purpose of providing and maintaining the Service.
 
-### 4.2 责任
+### 4.2 Responsibility
 
-您对您的用户内容和使用服务的后果负全部责任。您同意不提交、发布或传输任何非法、有害、威胁、辱骂、骚扰、诽谤、淫秽或其他不适当的内容。
+You are fully responsible for your User Content and the consequences of using the Service. You agree not to submit, post, or transmit any content that is illegal, harmful, threatening, abusive, harassing, defamatory, obscene, or otherwise inappropriate.
 
-## 5. 知识产权
+## 5. Intellectual Property
 
-### 5.1 我们的知识产权
+### 5.1 Our Intellectual Property
 
-服务及其原始内容、功能和设计受国际版权、商标、专利、商业秘密和其他知识产权或专有权利法律的保护。这些权利归 UTags 或其许可方所有。
+The Service and its original content, features, and functionality are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws. These rights are owned by UTags or its licensors.
 
-### 5.2 许可授予
+### 5.2 License Grant
 
-在您遵守这些条款的前提下，我们授予您访问和使用服务的有限、非独占、不可转让、可撤销的许可。
+Subject to your compliance with these Terms, we grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Service.
 
-## 6. 第三方链接和内容
+## 6. Third-Party Links and Content
 
-我们的服务可能包含指向第三方网站或服务的链接，这些网站或服务不由我们拥有或控制。我们对任何第三方网站或服务的内容、隐私政策或做法不承担任何责任。
+Our Service may contain links to third-party websites or services that are not owned or controlled by us. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services.
 
-## 7. 终止
+## 7. Termination
 
-我们可以因任何原因或无原因，在任何时候终止或暂停您对服务的访问，恕不另行通知，包括但不限于您违反这些条款。
+We may terminate or suspend your access to the Service at any time, with or without cause, and without prior notice, including, but not limited to, if you violate these Terms.
 
-## 8. 免责声明
+## 8. Disclaimer
 
-### 8.1 服务"按原样"提供
+### 8.1 Service Provided "As Is"
 
-服务"按原样"和"按可用性"提供，不提供任何明示或暗示的保证。
+The Service is provided "as is" and "as available" without any express or implied warranties.
 
-### 8.2 不保证
+### 8.2 No Guarantees
 
-我们不保证服务将不间断、及时、安全或无错误，也不保证任何内容的准确性或可靠性。
+We do not guarantee that the Service will be uninterrupted, timely, secure, or error-free, nor do we guarantee the accuracy or reliability of any content.
 
-## 9. 责任限制
+## 9. Limitation of Liability
 
-在任何情况下，UTags 及其董事、员工、合作伙伴、代理人、供应商或附属机构均不对任何间接的、附带的、特殊的、后果性的或惩罚性的损害负责，包括但不限于利润损失、数据损失、使用损失或其他无形损失。
+In no event shall UTags, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, or other intangible losses.
 
-## 10. 赔偿
+## 10. Indemnification
 
-您同意赔偿并使 UTags 及其董事、员工、合作伙伴、代理人、供应商和附属机构免受任何索赔、损失、责任、费用和支出（包括但不限于律师费）的影响，这些索赔、损失、责任、费用和支出是由于您使用服务、违反这些条款或侵犯任何第三方权利而引起的。
+You agree to defend, indemnify, and hold harmless UTags and its directors, employees, partners, agents, suppliers, and affiliates from and against any claims, losses, liabilities, expenses, and costs (including but not limited to attorneys' fees) arising from your use of the Service, violation of these Terms, or infringement of any third-party rights.
 
-## 11. 适用法律
+## 11. Governing Law
 
-这些条款应受中华人民共和国法律管辖，不考虑其冲突法规定。
+These Terms shall be governed by the laws of the People's Republic of China, without regard to its conflict of law provisions.
 
-## 12. 条款变更
+## 12. Changes to Terms
 
-我们保留在任何时候修改或替换这些条款的权利。如果修订是重大的，我们将尝试提前至少 30 天通知。重大变更的定义由我们自行决定。
+We reserve the right to modify or replace these Terms at any time. If the revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
 
-## 13. 联系我们
+## 13. Contact Us
 
-如果您对这些条款有任何问题，请通过以下方式联系我们：
+If you have any questions about these Terms, please contact us through the following channel:
 
-- GitHub：[https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)
+- GitHub: [https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)
 
-## 14. 完整协议
+## 14. Entire Agreement
 
-这些条款构成您与 UTags 之间关于服务使用的完整协议，并取代所有先前或同时的书面或口头理解或协议。
+These Terms constitute the entire agreement between you and UTags regarding the use of the Service and supersede all prior or contemporaneous written or oral understandings or agreements.

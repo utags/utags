@@ -1,25 +1,25 @@
 ---
-title: 法律条款
-description: UTags 法律条款
+title: Legal Terms
+description: UTags Legal Terms
 ---
 
-# 法律条款
+# Legal Terms
 
-欢迎访问 UTags 法律条款页面。在使用我们的服务之前，请仔细阅读以下法律文档：
+Welcome to the UTags Legal Terms page. Please carefully read the following legal documents before using our services:
 
-## 可用文档
+## Available Documents
 
-- [隐私政策](./privacy-policy.md) - 了解我们如何收集、使用和保护您的个人信息
-- [用户条款](./terms-of-service.md) - 了解使用我们服务的条款和条件
+- [Privacy Policy](./privacy-policy.md) - Learn how we collect, use, and protect your personal information
+- [Terms of Service](./terms-of-service.md) - Understand the terms and conditions for using our services
 
-## 重要说明
+## Important Notice
 
-使用 UTags 服务即表示您同意我们的隐私政策和用户条款。如果您不同意这些条款的任何部分，请不要使用我们的服务。
+By using UTags services, you agree to our Privacy Policy and Terms of Service. If you do not agree to any part of these terms, please do not use our services.
 
-我们可能会不时更新这些法律文档。任何重大变更都将通过服务内通知您。我们建议您定期查看这些文档以了解最新信息。
+We may update these legal documents from time to time. Any significant changes will be notified to you through in-service notifications. We recommend that you review these documents regularly to stay informed of the latest information.
 
-## 联系我们
+## Contact Us
 
-如果您对我们的法律条款有任何问题或疑虑，请通过以下方式联系我们：
+If you have any questions or concerns about our legal terms, please contact us through the following channel:
 
-- GitHub：[https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)
+- GitHub: [https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)

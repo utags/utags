@@ -2,71 +2,71 @@
 sidebar_position: 2
 ---
 
-# UTags 简介
+# UTags Introduction
 
-## 什么是 UTags
+## What is UTags
 
-UTags（Universal Tagging System，通用标签系统）是一个革命性的内容组织和管理工具，它允许用户为网络上的各种内容添加自定义标签，并提供强大的书签管理功能。UTags 的设计理念是让用户能够以自己的方式组织和筛选互联网内容，突破传统书签管理的局限性。
+UTags (Universal Tagging System) is a revolutionary content organization and management tool that allows users to add custom tags to various content on the web and provides powerful bookmark management capabilities. The design philosophy of UTags is to enable users to organize and filter internet content in their own way, breaking through the limitations of traditional bookmark management.
 
-UTags 不仅仅是一个简单的标签工具，它是一个完整的生态系统，旨在提供无缝的内容组织体验，帮助用户在信息爆炸的时代更有效地管理和检索信息。
+UTags is not just a simple tagging tool; it is a complete ecosystem designed to provide a seamless content organization experience, helping users more effectively manage and retrieve information in an era of information explosion.
 
-## 核心功能概述
+## Core Features Overview
 
-### 通用网页标签功能
+### Universal Web Tagging Features
 
-- **多元素标签**：为用户名、帖子、视频和链接等网页元素添加自定义标签
-- **特殊标签效果**：使用特殊标签（如 `block`、`hide`、`favorite` 等）实现内容筛选
-- **跨平台同步**：通过 GitHub 和 WebDAV 在多设备间同步标签数据
-- **广泛兼容性**：支持 Chrome、Firefox、Edge 和各种用户脚本管理器
-- **触屏支持**：在移动设备上也能流畅使用
-- **自定义样式**：应用自定义 CSS 样式和主题
-- **多语言支持**：支持 12 种以上语言
+- **Multi-element Tagging**: Add custom tags to web elements such as usernames, posts, videos, and links
+- **Special Tag Effects**: Use special tags (such as `block`, `hide`, `favorite`, etc.) to filter content
+- **Cross-platform Synchronization**: Synchronize tag data across multiple devices via GitHub and WebDAV
+- **Wide Compatibility**: Support for Chrome, Firefox, Edge, and various userscript managers
+- **Custom Styles**: Apply custom CSS styles and themes
+- **Multi-language Support**: Support for over 12 languages
+<!-- - **Touch Screen Support**: Smooth operation on mobile devices -->
 
-### 高级书签管理
+### Advanced Bookmark Management
 
-- **强大筛选引擎**：支持 AND/OR/NOT 逻辑和正则表达式
-- **层次化标签组织**：使用 `父标签/子标签/孙标签` 结构组织标签
-- **实时搜索**：快速查找和渐进式筛选
-- **数据可视化**：标签使用统计和分析仪表板
-- **PWA 支持**：离线访问，添加到主屏幕
-- **主题切换**：支持亮色和暗色模式
-- **响应式设计**：完美适配桌面和移动设备
+- **Powerful Filtering Engine**: Support for AND/OR/NOT logic and regular expressions
+- **Hierarchical Tag Organization**: Use `parent tag/child tag/grandchild tag` structure to organize tags
+- **Real-time Search**: Fast lookup and progressive filtering
+- **Data Visualization**: Tag usage statistics and analytics dashboard
+- **PWA Support**: Offline access, add to home screen
+- **Theme Switching**: Support for light and dark modes
+- **Responsive Design**: Perfect adaptation for desktop and mobile devices
 
-### 产品优势
+### Product Advantages
 
-- **完全免费**：MIT 许可证，无需注册
-- **无广告**：干净、专注的使用体验
-- **无限书签**：没有存储限制
-- **隐私优先**：本地数据存储，用户完全控制
-- **可自托管**：可部署到自己的服务器
-- **跨浏览器**：适用于所有现代浏览器
+- **Completely Free**: MIT license, no registration required
+- **No Ads**: Clean, focused user experience
+- **Unlimited Bookmarks**: No storage limitations
+- **Privacy First**: Local data storage, full user control
+- **Self-hostable**: Can be deployed to your own server
+- **Cross-browser**: Works with all modern browsers
 
-## 系统组成
+## System Components
 
-UTags 由两个主要组件组成，它们可以独立使用，但结合使用时能发挥最大效用：
+UTags consists of two main components that can be used independently but work best when used together:
 
-### 🏷️ UTags 浏览器扩展/用户脚本
+### 🏷️ UTags Browser Extension/Userscript
 
-浏览器扩展和用户脚本是 UTags 的核心组件，它允许用户在浏览网页时直接为内容添加标签。这个组件支持 50 多个网站，包括社交媒体、开发平台、论坛等。
+The browser extension and userscript are core components of UTags, allowing users to directly add tags to content while browsing the web. This component supports over 50 websites, including social media, development platforms, forums, and more.
 
-主要功能：
+Main features:
 
-- 为网页元素添加标签
-- 使用特殊标签进行内容筛选
-- 自动同步标签数据
-- 自定义标签样式
+- Add tags to web elements
+- Filter content using special tags
+- Automatically synchronize tag data
+- Customize tag styles
 
-### 📚 UTags 网页应用（书签管理器）
+### 📚 UTags Web Application (Bookmark Manager)
 
-UTags 网页应用是一个现代化的书签管理工具，提供强大的标签和筛选功能。它可以独立使用，也可以与浏览器扩展/用户脚本配合使用，实现更完整的内容管理体验。
+The UTags web application is a modern bookmark management tool that provides powerful tagging and filtering capabilities. It can be used independently or in conjunction with the browser extension/userscript to achieve a more complete content management experience.
 
-主要功能：
+Main features:
 
-- 高级书签筛选
-- 层次化标签组织
-- 数据可视化和分析
-- 多平台同步
-- PWA 支持（离线访问）
-- 主题切换
+- Advanced bookmark filtering
+- Hierarchical tag organization
+- Data visualization and analysis
+- Multi-platform synchronization
+- PWA support (offline access)
+- Theme switching
 
-在接下来的章节中，我们将详细介绍如何安装和使用这两个组件，以及如何充分利用 UTags 的各种功能。
+In the following chapters, we will provide detailed instructions on how to install and use these two components, as well as how to fully utilize the various features of UTags.

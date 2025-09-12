@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#f5f5f5"/>
+  <text x="400" y="250" font-family="Arial" font-size="24" text-anchor="middle" fill="#666">导入选项界面截图占位符</text>
+  <rect x="100" y="100" width="600" height="300" stroke="#ccc" stroke-width="2" fill="none" rx="10" ry="10"/>
+</svg>

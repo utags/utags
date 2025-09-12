@@ -2,82 +2,82 @@
 sidebar_position: 1
 ---
 
-# 欢迎使用 UTags
+# Welcome to UTags
 
-👋 **欢迎来到 UTags 帮助中心！**
+👋 **Welcome to UTags Help Center!**
 
-## 🚀 UTags 是什么？
+## 🚀 What is UTags?
 
-UTags 是一个革命性的通用标签系统，旨在彻底改变您组织和管理网络内容的方式。我们的生态系统包含两个互补的应用：
+UTags is a revolutionary universal tagging system designed to transform how you organize and manage web content. Our ecosystem consists of two complementary applications:
 
-### 🏷️ UTags 浏览器扩展/用户脚本
+### 🏷️ UTags Browser Extension/Userscript
 
-为网络内容添加自定义标签的强大工具，让您可以：
+A powerful tool for adding custom tags to web content, allowing you to:
 
-- 为 50+ 网站上的用户、帖子、视频和链接添加标签
-- 使用特殊标签（如 `block`、`hide`、`star`）实现内容过滤
-- 自定义样式和主题
-- 支持 12+ 种语言
+- Add tags to users, posts, videos, and links on 50+ websites
+- Filter content using special tags (such as `block`, `hide`, `star`)
+- Customize styles and themes
+- Support for 12+ languages
 
-### 📚 UTags 书签管理器
+### 📚 UTags Bookmark Manager
 
-一个现代化的网页应用，提供先进的书签管理功能：
+A modern web application offering advanced bookmark management features:
 
-- 强大的过滤引擎，支持 AND/OR/NOT 逻辑
-- 支持正则表达式的高级搜索功能
-- 层次化标签组织（`父标签/子标签/孙标签`）
-- 实时搜索和渐进式过滤
-- 数据可视化和使用分析
-- PWA 支持，可离线访问
+- Powerful filtering engine with AND/OR/NOT logic
+- Advanced search functionality with regular expression support
+- Hierarchical tag organization (`parent/child/grandchild`)
+- Real-time search and progressive filtering
+- Data visualization and usage analytics
+- PWA support for offline access
 
-## ✨ 为什么选择 UTags？
+## ✨ Why Choose UTags?
 
-- **完全免费**：MIT 许可证，无需注册
-- **无广告**：干净、专注的体验
-- **无限书签**：没有存储限制
-- **隐私优先**：本地数据存储，用户控制
-- **可自托管**：部署到您自己的服务器
-- **跨浏览器**：适用于所有现代浏览器
+- **Completely Free**: MIT license, no registration required
+- **No Ads**: Clean, focused experience
+- **Unlimited Bookmarks**: No storage limitations
+- **Privacy First**: Local data storage, user control
+- **Self-hostable**: Deploy to your own server
+- **Cross-browser**: Works with all modern browsers
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 选项 1：同时使用两个组件（推荐）
+### Option 1: Use Both Components (Recommended)
 
-1. **安装扩展**：
+1. **Install Extension**:
 
-   - [Chrome 网上应用店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
-   - [Firefox 附加组件](https://addons.mozilla.org/firefox/addon/utags/)
-   - [Edge 附加组件](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-   - [用户脚本](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+   - [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+   - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
+   - [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
+   - [Userscript](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
 
-2. **访问网页应用**：访问 [https://utags.link](https://utags.link) 进行高级书签管理
+2. **Access Web App**: Visit [https://utags.link](https://utags.link) for advanced bookmark management
 
-3. **开始添加标签**：在浏览网页时添加标签，在网页应用中管理它们
+3. **Start Adding Tags**: Add tags while browsing and manage them in the web app
 
-### 选项 2：仅使用扩展
+### Option 2: Extension Only
 
-安装浏览器扩展，直接在浏览网站时添加标签。
+Install the browser extension to add tags directly while browsing websites.
 
-### 选项 3：仅使用网页应用
+### Option 3: Web App Only
 
-使用[网页应用](https://utags.link)进行书签管理，无需安装扩展。
+Use the [web app](https://utags.link) for bookmark management without installing the extension.
 
-## 📚 了解更多
+## 📚 Learn More
 
-- [用户手册](/help/user-manual) - 详细的使用指南
-- [常见问题](/help/user-manual/faq) - 解答您可能遇到的问题
-- [高级功能](/help/user-manual/advanced-features) - 探索 UTags 的强大功能
+- [User Manual](/help/user-manual) - Detailed usage guide
+- [FAQ](/help/user-manual/faq) - Answers to common questions
+- [Advanced Features](/help/user-manual/advanced-features) - Explore UTags' powerful capabilities
 
-## 🌐 在线实例
+## 🌐 Online Instances
 
-- [https://utags.link](https://utags.link/) (主站)
+- [https://utags.link](https://utags.link/) (Main site)
 - [https://utags.top](https://utags.top/)
 - [https://utags.github.io](https://utags.github.io/)
 
-## 🤝 获取支持
+## 🤝 Get Support
 
-如果您有任何问题或建议，请访问我们的 [GitHub 仓库](https://github.com/utags/utags) 提交 issue 或参与讨论。
+If you have any questions or suggestions, please visit our [GitHub repository](https://github.com/utags/utags) to submit an issue or participate in discussions, or check our [Contact page](/contact/) for more support options.
 
 ---
 
-**开始使用 UTags，重新定义您的网络体验！**
+**Start using UTags and redefine your web experience!**

@@ -4,213 +4,213 @@ sidebar_position: 3
 
 import BrowserWindow from '@site/src/components/BrowserWindow';
 
-# 快速入门
+# Quick Start
 
-本章节将帮助您快速上手 UTags，包括安装、基本设置和首次使用指南。
+This section will help you quickly get started with UTags, including installation, basic setup, and first-use guide.
 
-## 安装指南
+## Installation Guide
 
-### 浏览器扩展与用户脚本的选择
+### Choosing Between Browser Extension and User Script
 
-UTags 插件支持浏览器扩展与用户脚本两种安装方式，您只需安装其中之一即可，它们的**基本功能**是相同的。在选择时可以参考以下区别：
+UTags plugin supports two installation methods: browser extension and user script. You only need to install one of them, as their **basic functions** are the same. When choosing, you can refer to the following differences:
 
-- **浏览器扩展**：功能更加丰富，与浏览器集成度更高
-- **用户脚本**：版本更新更加及时，适合喜欢尝鲜的用户
+- **Browser Extension**: More feature-rich with higher browser integration
+- **User Script**: More timely version updates, suitable for users who like to try new features
 
-根据您的使用习惯和需求选择适合自己的安装方式。
+Choose the installation method that suits your usage habits and needs.
 
-### 浏览器扩展安装
+### Browser Extension Installation
 
-UTags 浏览器扩展支持 Chrome、Firefox、Edge 等主流浏览器，安装步骤如下：
+UTags browser extension supports mainstream browsers such as Chrome, Firefox, Edge, etc. The installation steps are as follows:
 
-- **Chrome**：[Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
-- **Firefox**：[Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
-- **Edge**：[Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
+- **Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
+- **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
+- **Edge**: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
 
-安装步骤：
+Installation steps:
 
-1. 点击上述对应浏览器的链接
-2. 在扩展商店页面点击"添加到浏览器"或"安装"按钮
-3. 确认安装
-4. 安装完成后，浏览器工具栏会出现 UTags 图标
-5. 建议将 UTags 图标固定在工具栏中，方便日常使用（右键点击图标，选择"固定到工具栏"或类似选项）
+1. Click the link corresponding to your browser above
+2. Click the "Add to Browser" or "Install" button on the extension store page
+3. Confirm installation
+4. After installation is complete, the UTags icon will appear in the browser toolbar
+5. It is recommended to pin the UTags icon to the toolbar for convenient daily use (right-click the icon and select "Pin to Toolbar" or a similar option)
 
 ![浏览器扩展安装截图](../assets/install-extension-1.png)
 ![浏览器扩展安装截图](../assets/install-extension-2.png)
 
-### 用户脚本安装
+### User Script Installation
 
-用户脚本是一种轻量级的浏览器扩展方式，适合那些希望保持浏览器轻量化或不想安装完整扩展的用户。UTags 提供了功能完整的用户脚本版本，您可以通过以下步骤安装：
+User script is a lightweight browser extension method, suitable for those who want to keep their browser lightweight or don't want to install a complete extension. UTags provides a fully functional user script version, which you can install through the following steps:
 
-#### 前置条件
+#### Prerequisites
 
-1. **安装用户脚本管理器**：您需要先安装以下任一用户脚本管理器：
-   - [Tampermonkey](https://www.tampermonkey.net/)（推荐，支持所有主流浏览器）
-   - [Violentmonkey](https://violentmonkey.github.io/)（开源选择，适合 Firefox/Chrome）
-   - [ScriptCat](https://scriptcat.org/)（国产脚本管理器，中文界面）
-     ![用户脚本管理器安装](../assets/install-userscript-1.png)
+1. **Install a User Script Manager**: You need to first install one of the following user script managers:
+   - [Tampermonkey](https://www.tampermonkey.net/) (Recommended, supports all mainstream browsers)
+   - [Violentmonkey](https://violentmonkey.github.io/) (Open source option, suitable for Firefox/Chrome)
+   - [ScriptCat](https://scriptcat.org/) (Chinese script manager with Chinese interface)
+     ![User Script Manager Installation](../assets/install-userscript-1.png)
 
-#### 安装步骤
+#### Installation Steps
 
-1. 访问以下任一 UTags 用户脚本发布页面：
+1. Visit one of the following UTags user script release pages:
 
-   - [Greasy Fork - UTags](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)（国际用户脚本平台）
-   - [ScriptCat - UTags](https://scriptcat.org/script-show-page/2784)（中文用户脚本平台）
+   - [Greasy Fork - UTags](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links) (International user script platform)
+   - [ScriptCat - UTags](https://scriptcat.org/script-show-page/2784) (Chinese user script platform)
 
-2. 点击页面上的"安装此脚本"或"Install this script"按钮
-   ![安装按钮](../assets/install-userscript-2.png)
+2. Click the "Install this script" button on the page
+   ![Install Button](../assets/install-userscript-2.png)
 
-3. 在弹出的用户脚本管理器窗口中确认安装
-   ![确认安装](../assets/install-userscript-3.png)
+3. Confirm installation in the user script manager window that pops up
+   ![Confirm Installation](../assets/install-userscript-3.png)
 
-4. 安装完成后，刷新网页以激活脚本
+4. After installation is complete, refresh the webpage to activate the script
 
-5. 验证安装：刷新刚刚访问的 Greasy Fork 或 ScriptCat 页面，您应该能看到 UTags 的"设置"命令菜单
-   ![验证安装](../assets/install-userscript-5.png)
+5. Verify installation: Refresh the Greasy Fork or ScriptCat page you just visited, you should see the UTags "Settings" command menu
+   ![Verify Installation](../assets/install-userscript-5.png)
 
-#### 用户脚本权限设置
+#### User Script Permission Settings
 
-如果您发现安装后用户脚本没有在网页中生效，请检查以下设置：
+If you find that the user script is not working on webpages after installation, please check the following settings:
 
-1. **开启浏览器的开发者模式**（部分浏览器需要）：
+1. **Enable Browser Developer Mode** (required for some browsers):
 
-   - **Chrome**：访问 `chrome://extensions/`，勾选右上角的"开发者模式"
-   - **Edge**：访问 `edge://extensions/`，打开"开发人员模式"
-   - **Firefox**：访问 `about:addons`，点击扩展，然后点击设置图标，选择"调试附加组件"
+   - **Chrome**: Visit `chrome://extensions/`, check "Developer mode" in the upper right corner
+   - **Edge**: Visit `edge://extensions/`, turn on "Developer mode"
+   - **Firefox**: Visit `about:addons`, click Extensions, then click the settings icon, select "Debug Add-ons"
 
-2. **检查脚本管理器权限**：
-   - 在脚本管理器的设置页面，确保"允许用户脚本"或"Allow User Scripts"已启用
-   - 确认脚本管理器的网站访问权限设置正确（通常需要"所有网站"权限）
-   - 检查 UTags 脚本是否被禁用或处于暂停状态
+2. **Check Script Manager Permissions**:
+   - In the script manager's settings page, ensure that "Allow User Scripts" is enabled
+   - Confirm that the script manager's website access permissions are set correctly (usually requires "All websites" permission)
+   - Check if the UTags script is disabled or in a paused state
 
-![脚本管理器权限设置](../assets/install-userscript-4.png)
+![Script Manager Permission Settings](../assets/install-userscript-4.png)
 
-#### 故障排除
+#### Troubleshooting
 
-- **脚本未生效**：尝试重启脚本管理器，重启浏览器，或检查脚本管理器的控制台是否有错误信息
-- **权限问题**：某些网站可能限制用户脚本执行，尝试在脚本管理器中为该网站单独设置权限
+- **Script Not Working**: Try restarting the script manager, restarting the browser, or checking if there are any error messages in the script manager's console
+- **Permission Issues**: Some websites may restrict user script execution; try setting permissions for that website separately in the script manager
 
-### 网页应用访问
+### Web Application Access
 
-UTags 网页应用（书签管理器）不需要安装，您可以直接通过以下链接访问：
+The UTags web application (bookmark manager) does not need to be installed; you can access it directly through the following links:
 
-- 主站：[https://utags.link](https://utags.link/)
-- 备用站点：
+- Main site: [https://utags.link](https://utags.link/)
+- Alternative sites:
   - [https://utags.top](https://utags.top/)
   - [https://utags.github.io](https://utags.github.io/)
 
-![网页应用](../assets/webapp-1.png)
+![Web Application](../assets/webapp-1.png)
 
-您也可以将网页应用添加到主屏幕，实现类似原生应用的体验：
+You can also add the web application to your home screen for a native app-like experience:
 
-1. 访问 UTags 网页应用
-2. 在浏览器菜单中选择"添加到主屏幕"或"安装应用"
-3. 按照提示完成安装
+1. Visit the UTags web application
+2. Select "Add to Home Screen" or "Install App" from the browser menu
+3. Follow the prompts to complete installation
 
-### 浏览器扩展或用户脚本与网页应用间的数据同步配置
+### Data Synchronization Configuration Between Browser Extension or User Script and Web Application
 
-- 安装扩展或用户脚本后访问网页应用首次使用会自动添加。
-
-<BrowserWindow url="https://utags.link/">
-  ![添加标签截图](../assets/extension-sync-1.png)
-</BrowserWindow>
-
-如果没有自动添加时：
-
-- 打开网页应用 > 设置 > Sync Settings，点击 Discover Targets
-- 查看是否有新的插件出现，有的话点击添加
+- After installing the extension or user script, visiting the web application for the first time will automatically add it.
 
 <BrowserWindow url="https://utags.link/">
-  ![添加标签截图](../assets/extension-sync-2.png)
+  ![Add Tag Screenshot](../assets/extension-sync-1.png)
 </BrowserWindow>
-- 然后点击 "Sync Now" 按钮完成同步
+
+If it is not automatically added:
+
+- Open the web application > Settings > Sync Settings, click Discover Targets
+- Check if there are any new plugins appearing, if so, click to add them
 
 <BrowserWindow url="https://utags.link/">
-  ![添加标签截图](../assets/extension-sync-3.png)
+  ![Add Tag Screenshot](../assets/extension-sync-2.png)
+</BrowserWindow>
+- Then click the "Sync Now" button to complete synchronization
+
+<BrowserWindow url="https://utags.link/">
+  ![Add Tag Screenshot](../assets/extension-sync-3.png)
 </BrowserWindow>
 
-## 首次使用指南
+## First-Use Guide
 
-### 使用浏览器扩展/用户脚本添加标签
+### Adding Tags Using Browser Extension/User Script
 
-1. 访问任何支持的网站（如 Twitter、Reddit、GitHub 等）
-2. 将鼠标悬停在用户名、帖子标题或链接上
+1. Visit any supported website (such as Twitter, Reddit, GitHub, etc.)
+2. Hover your mouse over a username, post title, or link
 
-   ![添加标签截图](../assets/extension-usage-1.png)
+   ![Add Tag Screenshot](../assets/extension-usage-1.png)
 
-3. 点击出现的 🏷️ 标签图标
-4. 在弹出的输入框中输入标签，多个标签用逗号分隔
+3. Click on the 🏷️ tag icon that appears
+4. Enter tags in the popup input box, separating multiple tags with commas
 
-   ![添加标签截图](../assets/extension-usage-2.png)
+   ![Add Tag Screenshot](../assets/extension-usage-2.png)
 
-5. 按回车键或点击确认按钮保存标签
+5. Press Enter or click the confirm button to save the tags
 
-   ![添加标签截图](../assets/extension-usage-3.png)
+   ![Add Tag Screenshot](../assets/extension-usage-3.png)
 
-### 使用网页应用管理书签
+### Managing Bookmarks Using the Web Application
 
-1. 访问 UTags 网页应用
+1. Visit the UTags web application
 
-   ![使用网页应用](../assets/webapp-usage-1.png)
+   ![Using Web Application](../assets/webapp-usage-1.png)
 
-2. 点击"添加书签"按钮
-3. 输入书签 URL、标题和标签
+2. Click the "Add Bookmark" button
+3. Enter the bookmark URL, title, and tags
 
-   ![使用网页应用](../assets/webapp-usage-2.png)
+   ![Using Web Application](../assets/webapp-usage-2.png)
 
-4. 点击保存
-5. 使用左侧的标签筛选面板筛选书签
-   ![使用网页应用](../assets/webapp-usage-3.png)
+4. Click Save
+5. Use the tag filtering panel on the left to filter bookmarks
+   ![Using Web Application](../assets/webapp-usage-3.png)
 
-### 特殊标签使用
+### Using Special Tags
 
-特殊标签可以实现特定的筛选效果：
+Special tags can achieve specific filtering effects:
 
-- `block`，`hide` 或 `屏蔽`：隐藏带有此标签的内容
-- `★` 或 `☆`：将内容标记为收藏
-- `toread` 或 `稍后阅读`：将内容标记为稍后阅读
+- `block`, `hide` or `屏蔽`: Hide content with this tag
+- `★` or `☆`: Mark content as favorite
+- `toread` or `稍后阅读`: Mark content as read later
 
-更多特殊标签详见[特殊标签使用](./special-tags.md)
+For more special tags, see [Special Tags Usage](./special-tags.md)
 
-### 导入浏览器书签
+### Importing Browser Bookmarks
 
-作为首次使用 UTags，您可以导入浏览器书签来快速开始：
+As a first-time user of UTags, you can import browser bookmarks to get started quickly:
 
-1. **清空样本数据**（可选）：
+1. **Clear Sample Data** (optional):
 
-   - 进入 UTags 设置页面
-   - 找到"数据管理"部分
-   - 点击"清空数据"选项，确认清空样本数据
+   - Go to the UTags settings page
+   - Find the "Data Management" section
+   - Click the "Clear Data" option, confirm to clear sample data
 
-2. **导入浏览器书签**（简易步骤）：
-   - 从浏览器（Chrome/Firefox/Edge/Safari）导出书签为 HTML 文件
-   - 在 UTags 设置中找到"导入/导出"选项
-   - 上传书签文件并完成导入
+2. **Import Browser Bookmarks** (simple steps):
+   - Export bookmarks from your browser (Chrome/Firefox/Edge/Safari) as an HTML file
+   - Find the "Import/Export" option in UTags settings
+   - Upload the bookmark file and complete the import
 
-> **提示**：导入后，您的浏览器文件夹结构会自动转换为标签，方便您立即体验 UTags 的强大筛选功能。
+> **Tip**: After importing, your browser folder structure will be automatically converted to tags, allowing you to immediately experience UTags' powerful filtering functionality.
 
-👉 详细的导入导出指南请参阅[数据导入导出](./data-import-export.md)文档。
+👉 For detailed import and export guides, please refer to the [Data Import and Export](./data-import-export.md) document.
 
-### 数据同步设置
+### Data Synchronization Settings
 
-为了安全地将书签数据保存在云端并在多设备间同步，UTags 提供了简便的数据同步功能：
+To securely save bookmark data in the cloud and synchronize between multiple devices, UTags provides a simple data synchronization function:
 
-1. 在 UTags 网页应用或扩展的设置页面中选择"数据同步"
-2. 选择适合您的同步方式：
-   - **GitHub**：适合开发者，需要 GitHub 账号和个人访问令牌（PAT）
-   - **WebDAV**：适合所有用户，支持 NextCloud、坚果云等服务
-3. 按照界面提示完成配置并测试连接
-4. 启用自动同步，设置同步频率（可选）
+1. Select "Data Synchronization" in the settings page of the UTags web application or extension
+2. Choose the synchronization method that suits you:
+   - **GitHub**: Suitable for developers, requires a GitHub account and Personal Access Token (PAT)
+   - **WebDAV**: Suitable for all users, supports services like NextCloud, Jianguoyun, etc.
+3. Follow the interface prompts to complete configuration and test the connection
+4. Enable automatic synchronization and set synchronization frequency (optional)
 
-> **提示**：首次同步完成后，您可以在任何设备上访问相同的书签数据。
+> **Tip**: After the first synchronization is complete, you can access the same bookmark data on any device.
 
-👉 详细的同步设置和故障排除指南请参阅[数据同步文档](./data-sync.md)。
+👉 For detailed synchronization settings and troubleshooting guides, please refer to the [Data Synchronization Documentation](./data-sync.md).
 
-## 下一步
+## Next Steps
 
-现在您已经了解了 UTags 的基本安装和使用方法。接下来，您可以：
+Now that you understand the basic installation and usage methods of UTags. Next, you can:
 
-- 阅读[浏览器扩展/用户脚本使用指南](./extension-guide.md)，了解更多标签功能
-- 阅读[网页应用使用指南](./webapp-guide.md)，掌握高级书签管理技巧
-- 探索[数据同步](./data-sync.md)章节，设置多设备同步
-- 查看[高级功能](./advanced-features.md)，发掘 UTags 的全部潜力
+- Read the [Browser Extension/User Script Usage Guide](./extension-guide.md) to learn more about tag functions
+- Read the [Web Application Usage Guide](./webapp-guide.md) to master advanced bookmark management techniques
+- Explore the [Data Synchronization](./data-sync.md) section to set up multi-device synchronization
+- Check out [Advanced Features](./advanced-features.md) to discover the full potential of UTags

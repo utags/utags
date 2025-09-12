@@ -1,92 +1,92 @@
 ---
-title: 隐私政策
-description: UTags 隐私政策
+title: Privacy Policy
+description: UTags Privacy Policy
 ---
 
-# 隐私政策 (草稿)
+# Privacy Policy (Draft)
 
-_最后更新日期：2025 年 9 月 9 日_
+_Last updated: September 9, 2025_
 
-## 引言
+## Introduction
 
-欢迎使用 UTags（"我们"、"我们的"或"本服务"）。我们致力于保护您的隐私和个人信息。本隐私政策旨在帮助您了解我们收集、使用和保护的信息类型，以及您对这些信息的控制权。
+Welcome to UTags ("we", "our", or "the Service"). We are committed to protecting your privacy and personal information. This Privacy Policy is designed to help you understand the types of information we collect, use, and protect, as well as your control over this information.
 
-使用我们的服务即表示您同意本隐私政策中描述的做法。如果您不同意本政策的任何部分，请不要使用我们的服务。
+By using our Service, you agree to the practices described in this Privacy Policy. If you do not agree to any part of this policy, please do not use our Service.
 
-## 我们收集的信息
+## Information We Collect
 
-### 您直接提供的信息
+### Information You Provide Directly
 
-- **账户信息**：当您创建账户时，我们可能会收集您的电子邮件地址和您选择的密码。
-- **用户内容**：我们存储您在使用服务时创建的书签、标签和其他内容。
-- **同步设置**：如果您选择使用我们的同步功能，我们会收集必要的信息以启用此功能，如您的 GitHub 或 WebDAV 凭证。
+- **Account Information**: When you create an account, we may collect your email address and your chosen password.
+- **User Content**: We store bookmarks, tags, and other content you create while using the Service.
+- **Synchronization Settings**: If you choose to use our synchronization feature, we collect necessary information to enable this functionality, such as your GitHub or WebDAV credentials.
 
-### 自动收集的信息
+### Automatically Collected Information
 
-- **使用数据**：我们可能会收集有关您如何使用我们服务的信息，例如您访问的功能、点击的按钮以及其他交互。
-- **设备信息**：我们可能会收集有关您使用的设备的信息，包括浏览器类型、操作系统和设备标识符。
-- **日志数据**：我们的服务器自动记录您访问我们服务时的某些信息，包括 IP 地址、访问日期和时间、浏览器类型和操作系统。
+- **Usage Data**: We may collect information about how you use our Service, such as features you access, buttons you click, and other interactions.
+- **Device Information**: We may collect information about the device you use, including browser type, operating system, and device identifiers.
+- **Log Data**: Our servers automatically record certain information when you access our Service, including IP address, access date and time, browser type, and operating system.
 
-## 我们如何使用信息
+## How We Use Information
 
-我们使用收集的信息用于：
+We use the collected information to:
 
-- 提供、维护和改进我们的服务
-- 处理和完成交易
-- 发送与服务相关的通信
-- 响应您的评论、问题和请求
-- 监控和分析趋势、使用情况和活动
-- 检测、调查和预防欺诈性交易和其他非法活动
-- 保护我们服务的安全性和完整性
+- Provide, maintain, and improve our Service
+- Process and complete transactions
+- Send Service-related communications
+- Respond to your comments, questions, and requests
+- Monitor and analyze trends, usage, and activities
+- Detect, investigate, and prevent fraudulent transactions and other illegal activities
+- Protect the security and integrity of our Service
 
-## 信息共享和披露
+## Information Sharing and Disclosure
 
-我们不会出售或出租您的个人信息给第三方用于营销目的。我们可能在以下情况下共享您的信息：
+We do not sell or rent your personal information to third parties for marketing purposes. We may share your information in the following circumstances:
 
-- **服务提供商**：我们可能会与帮助我们提供服务的第三方服务提供商共享信息（例如，托管服务、分析服务等）。
-- **合规和法律原因**：如果法律要求或为了响应法律程序，我们可能会披露您的信息。
-- **业务转让**：如果我们参与合并、收购或资产出售，您的信息可能会作为该交易的一部分被转让。
-- **征得同意**：在您同意的情况下，我们可能会以本政策未描述的方式共享您的信息。
+- **Service Providers**: We may share information with third-party service providers that help us provide the Service (e.g., hosting services, analytics services, etc.).
+- **Compliance and Legal Reasons**: We may disclose your information if required by law or in response to legal process.
+- **Business Transfers**: If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.
+- **With Consent**: With your consent, we may share your information in ways not described in this policy.
 
-## 数据安全
+## Data Security
 
-我们采取合理的措施来保护您的个人信息免受未经授权的访问、使用或披露。然而，没有任何互联网传输或电子存储方法是 100%安全的。因此，虽然我们努力使用商业上可接受的方式来保护您的个人信息，但我们不能保证其绝对安全。
+We take reasonable measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of Internet transmission or electronic storage is 100% secure. Therefore, while we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.
 
-## 您的数据权利
+## Your Data Rights
 
-根据您所在地区的适用法律，您可能拥有以下权利：
+Depending on applicable laws in your region, you may have the following rights:
 
-- 访问您的个人信息
-- 更正不准确的数据
-- 删除您的数据
-- 限制或反对某些处理
-- 数据可携带性
-- 撤回同意
+- Access your personal information
+- Correct inaccurate data
+- Delete your data
+- Restrict or object to certain processing
+- Data portability
+- Withdraw consent
 
-如果您希望行使这些权利，请通过下面提供的联系方式与我们联系。
+If you wish to exercise these rights, please contact us using the contact information provided below.
 
-## 数据保留
+## Data Retention
 
-我们将保留您的信息，只要您的账户处于活动状态或按需提供服务。如果您选择删除您的账户，我们将在合理的时间内从我们的系统中删除您的信息，除非法律要求我们保留某些信息。
+We will retain your information for as long as your account is active or as needed to provide services. If you choose to delete your account, we will delete your information from our systems within a reasonable time, unless the law requires us to retain certain information.
 
-## 儿童隐私
+## Children's Privacy
 
-我们的服务不面向 13 岁以下的儿童，我们不会故意收集 13 岁以下儿童的个人信息。如果我们得知我们收集了 13 岁以下儿童的个人信息，我们将采取措施尽快删除该信息。
+Our Service is not directed to children under 13, and we do not knowingly collect personal information from children under 13. If we learn that we have collected personal information from a child under 13, we will take steps to delete that information as quickly as possible.
 
-## 国际数据传输
+## International Data Transfers
 
-您的信息可能会被传输到并维护在您所在州、省、国家或其他政府管辖区域之外的计算机上，这些地方的数据保护法律可能与您所在管辖区域的法律不同。如果您位于欧洲经济区或英国，请注意，我们将按照适用法律的要求处理您的信息。
+Your information may be transferred to and maintained on computers located outside of your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those in your jurisdiction. If you are located in the European Economic Area or the United Kingdom, please note that we will process your information in accordance with applicable law requirements.
 
-## 隐私政策的变更
+## Changes to This Privacy Policy
 
-我们可能会不时更新本隐私政策。我们将通过在此页面上发布新的隐私政策来通知您任何变更。我们鼓励您定期查看本隐私政策，以了解我们如何保护您的信息。
+We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. We encourage you to review this Privacy Policy periodically to stay informed about how we are protecting your information.
 
-## 联系我们
+## Contact Us
 
-如果您对本隐私政策有任何问题或疑虑，请通过以下方式联系我们：
+If you have any questions or concerns about this Privacy Policy, please contact us through the following channel:
 
-- GitHub：[https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)
+- GitHub: [https://github.com/utags/utags/issues](https://github.com/utags/utags/issues)
 
-## 适用法律
+## Governing Law
 
-本隐私政策受中华人民共和国法律管辖，不考虑其冲突法规定。
+This Privacy Policy is governed by the laws of the People's Republic of China, without regard to its conflict of law provisions.
