@@ -1,43 +1,43 @@
 ---
 slug: user-manual-release
-title: UTags 用户手册正式发布
+title: UTags User Manual Officially Released
 authors: [pipecraft]
 tags: [utags, manual, documentation]
 ---
 
-# UTags 用户手册正式发布
+# UTags User Manual Officially Released
 
-我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。
+We are excited to announce that the complete UTags user manual is now officially released! Whether you are a new user just starting with UTags, or an experienced user looking to explore more features, this comprehensive manual will be your valuable companion.
 
-## 手册内容概览
+## Manual Content Overview
 
-我们的用户手册涵盖了 UTags 的方方面面，包括：
+Our user manual covers all aspects of UTags, including:
 
-- **[快速入门指南](/help/user-manual/quick-start)**：帮助新用户迅速上手 UTags 的基本功能
-- **[浏览器扩展使用指南](/help/user-manual/extension-guide)**：详细介绍如何使用 UTags 浏览器扩展
-- **[网页应用使用指南](/help/user-manual/webapp-guide)**：全面解析 UTags 网页应用的各项功能
-- **[数据导入导出](/help/user-manual/data-import-export)**：学习如何管理您的书签数据
-- **[数据同步设置](/help/user-manual/data-sync)**：了解如何在多设备间同步您的书签
-- **[高级功能](/help/user-manual/advanced-features)**：探索 UTags 的强大高级功能
-- **[常见问题解答](/help/user-manual/faq)**：解答用户最常见的疑问
+- **[Quick Start Guide](/help/user-manual/quick-start)**: Helps new users quickly get started with UTags' basic features
+- **[Browser Extension Guide](/help/user-manual/extension-guide)**: Detailed instructions on how to use the UTags browser extension
+- **[Web Application Guide](/help/user-manual/webapp-guide)**: Comprehensive analysis of all features in the UTags web application
+- **[Data Import and Export](/help/user-manual/data-import-export)**: Learn how to manage your bookmark data
+- **[Data Synchronization Settings](/help/user-manual/data-sync)**: Understand how to synchronize your bookmarks across multiple devices
+- **[Advanced Features](/help/user-manual/advanced-features)**: Explore UTags' powerful advanced features
+- **[Frequently Asked Questions](/help/user-manual/faq)**: Answers to users' most common questions
 
-## 为什么要阅读用户手册？
+## Why Read the User Manual?
 
-虽然 UTags 的设计注重直观性和易用性，但通过阅读用户手册，您可以：
+Although UTags is designed with intuition and ease of use in mind, by reading the user manual, you can:
 
-- **发现隐藏功能**：了解一些您可能不知道的强大功能
-- **提高效率**：学习快捷键和高级筛选技巧，更快地管理和查找书签
-- **解决问题**：遇到困难时，找到详细的解决方案
-- **充分利用**：确保您充分发挥 UTags 的全部潜力
+- **Discover Hidden Features**: Learn about powerful features you might not be aware of
+- **Improve Efficiency**: Learn keyboard shortcuts and advanced filtering techniques to manage and find bookmarks faster
+- **Solve Problems**: Find detailed solutions when you encounter difficulties
+- **Maximize Utilization**: Ensure you fully leverage all of UTags' potential
 
-## 持续更新
+## Continuous Updates
 
-我们将根据产品的发展和用户的反馈，持续更新用户手册。每当有新功能推出或现有功能优化时，手册也会同步更新，确保您始终能获取到最新的信息。
+We will continuously update the user manual based on product development and user feedback. Whenever new features are released or existing features are optimized, the manual will be updated accordingly to ensure you always have access to the latest information.
 
-## 联系我们
+## Contact Us
 
-如果您在使用 UTags 过程中有任何问题，或者对用户手册有任何建议，欢迎访问我们的[联系页面](/contact)获取所有联系方式。
+If you have any questions while using UTags, or any suggestions for the user manual, please visit our [contact page](/contact) for all contact information.
 
-我们非常重视用户的反馈，并将不断努力改进 UTags，使其成为最好的书签管理工具。
+We highly value user feedback and will continuously work to improve UTags, making it the best bookmark management tool.
 
-感谢您选择 UTags，希望这份用户手册能帮助您更好地组织和管理您的网络世界！
+Thank you for choosing UTags, and we hope this user manual helps you better organize and manage your online world!

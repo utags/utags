@@ -204,6 +204,7 @@ import BrowserWindow from '@site/src/components/BrowserWindow';
 示例自定义 CSS：
 
 <BrowserWindow url="https://utags.link/">
+
 ```css
 /* 全局标签样式 */
 body {
@@ -215,35 +216,35 @@ body {
   --utags-text-tag-background-color: red;
 }
 
-/_ 特定标签样式：标签为 'TEST' 的样式 _/
-.utags_text_tag[data-utags_tag='TEST'] {
-/_ 标签文字颜色 _/
---utags-text-tag-color: white;
-/_ 标签边框颜色 _/
---utags-text-tag-border-color: orange;
-/_ 标签背景颜色 _/
---utags-text-tag-background-color: orange;
+/* 特定标签样式：标签为 'TEST' 的样式 */
+[data-utags_tag='TEST'] {
+  /* 标签文字颜色 */
+  --utags-text-tag-color: white;
+  /* 标签边框颜色 */
+  --utags-text-tag-border-color: orange;
+  /* 标签背景颜色 */
+  --utags-text-tag-background-color: orange;
 }
 
-/_ 列表项样式：含有 'bar' 标签的条目 _/
+/* 列表项样式：含有 'bar' 标签的条目 */
 [data-utags_list_node*=',bar,'] {
-/_ 列表中含有 'bar' 标签的条目的背景色 _/
-background-color: aqua;
+  /* 列表中含有 'bar' 标签的条目的背景色 */
+  background-color: aqua;
 }
 
-/_ 浏览历史样式 _/
+/* 浏览历史样式 */
 body {
-/_ 浏览过的帖子的标题颜色 _/
---utags-visited-title-color: red;
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: red;
 }
 
-/_ 深色模式下的样式 _/
+/* 深色模式下的样式 */
 [data-utags_darkmode='1'] body {
-/_ 浏览过的帖子的标题颜色 _/
---utags-visited-title-color: yellow;
+  /* 浏览过的帖子的标题颜色 */
+  --utags-visited-title-color: yellow;
 }
-
 ```
+
 </BrowserWindow>
 
 ## 支持的网站列表
@@ -362,4 +363,7 @@ UTags 提供以下默认键盘快捷键：
 1. 查阅[常见问题解答](./faq.md)（FAQ）
 2. 在 [GitHub Issues](https://github.com/utags/utags/issues) 提交问题报告
 3. 访问[联系页面](/contact)获取更多支持渠道
+
+```
+
 ```

@@ -5,7 +5,7 @@ sidebar_position: 10
 # 附录
 
 :::info
- 未整理完
+未整理完
 :::
 
 ## 术语表

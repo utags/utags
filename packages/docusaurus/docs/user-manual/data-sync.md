@@ -5,9 +5,9 @@ sidebar_position: 7
 # 数据同步
 
 :::info
- 未整理完
+未整理完
 
- 请先参考
+请先参考
 
 - [GitHub 同步配置指南](https://github.com/utags/utags/discussions/58)
 - [WebDAV 同步配置指南](https://github.com/utags/utags/discussions/59)

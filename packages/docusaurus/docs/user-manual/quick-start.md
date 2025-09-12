@@ -53,6 +53,7 @@ UTags 浏览器扩展支持 Chrome、Firefox、Edge 等主流浏览器，安装�
 #### 安装步骤
 
 1. 访问以下任一 UTags 用户脚本发布页面：
+
    - [Greasy Fork - UTags](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)（国际用户脚本平台）
    - [ScriptCat - UTags](https://scriptcat.org/script-show-page/2784)（中文用户脚本平台）
 
@@ -72,6 +73,7 @@ UTags 浏览器扩展支持 Chrome、Firefox、Edge 等主流浏览器，安装�
 如果您发现安装后用户脚本没有在网页中生效，请检查以下设置：
 
 1. **开启浏览器的开发者模式**（部分浏览器需要）：
+
    - **Chrome**：访问 `chrome://extensions/`，勾选右上角的"开发者模式"
    - **Edge**：访问 `edge://extensions/`，打开"开发人员模式"
    - **Firefox**：访问 `about:addons`，点击扩展，然后点击设置图标，选择"调试附加组件"
@@ -175,6 +177,7 @@ UTags 网页应用（书签管理器）不需要安装，您可以直接通过�
 作为首次使用 UTags，您可以导入浏览器书签来快速开始：
 
 1. **清空样本数据**（可选）：
+
    - 进入 UTags 设置页面
    - 找到"数据管理"部分
    - 点击"清空数据"选项，确认清空样本数据
