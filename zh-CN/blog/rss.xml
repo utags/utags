@@ -45,30 +45,30 @@
             <category>documentation</category>
         </item>
         <item>
-            <title><![CDATA[Welcome to UTags Blog]]></title>
+            <title><![CDATA[欢迎来到小鱼标签博客]]></title>
             <link>https://utags.link/zh-CN/blog/welcome/</link>
             <guid>https://utags.link/zh-CN/blog/welcome/</guid>
             <pubDate>Wed, 10 Sep 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.]]></description>
-            <content:encoded><![CDATA[<p>Welcome to the official UTags blog! We're excited to have you here. This blog will serve as a central hub for all things related to UTags - our modern bookmark management tool designed to help you organize and retrieve your bookmarks efficiently.</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="what-to-expect">What to Expect<a href="https://utags.link/zh-CN/blog/welcome/#what-to-expect" class="hash-link" aria-label="What to Expect的直接链接" title="What to Expect的直接链接">​</a></h2>
-<p>On this blog, you'll find:</p>
+            <description><![CDATA[欢迎来到小鱼标签（UTags）官方博客！我们很高兴您能来到这里。这个博客将作为所有与小鱼标签相关内容的中心枢纽 - 我们的现代书签管理工具旨在帮助您高效地组织和检索书签。]]></description>
+            <content:encoded><![CDATA[<p>欢迎来到小鱼标签（UTags）官方博客！我们很高兴您能来到这里。这个博客将作为所有与小鱼标签相关内容的中心枢纽 - 我们的现代书签管理工具旨在帮助您高效地组织和检索书签。</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="博客内容">博客内容<a href="https://utags.link/zh-CN/blog/welcome/#%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9" class="hash-link" aria-label="博客内容的直接链接" title="博客内容的直接链接">​</a></h2>
+<p>在这个博客上，您将找到：</p>
 <ul>
-<li><strong>Feature Announcements</strong>: Stay updated on the latest features and improvements to UTags.</li>
-<li><strong>Usage Tips</strong>: Discover how to make the most of UTags' powerful filtering and organization capabilities.</li>
-<li><strong>Best Practices</strong>: Learn optimal ways to organize your bookmarks using tags, domains, and keywords.</li>
-<li><strong>Community Highlights</strong>: See how other users are leveraging UTags to improve their browsing experience.</li>
+<li><strong>功能公告</strong>：了解小鱼标签的最新功能和改进。</li>
+<li><strong>使用技巧</strong>：探索如何充分利用小鱼标签强大的过滤和组织功能。</li>
+<li><strong>最佳实践</strong>：学习使用标签、域名和关键词组织书签的最佳方法。</li>
+<li><strong>社区亮点</strong>：了解其他用户如何利用小鱼标签改善他们的浏览体验。</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="key-features-of-utags">Key Features of UTags<a href="https://utags.link/zh-CN/blog/welcome/#key-features-of-utags" class="hash-link" aria-label="Key Features of UTags的直接链接" title="Key Features of UTags的直接链接">​</a></h2>
-<p>If you're new to UTags, here's a quick overview of what makes it special:</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="小鱼标签的主要特点">小鱼标签的主要特点<a href="https://utags.link/zh-CN/blog/welcome/#%E5%B0%8F%E9%B1%BC%E6%A0%87%E7%AD%BE%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9" class="hash-link" aria-label="小鱼标签的主要特点的直接链接" title="小鱼标签的主要特点的直接链接">​</a></h2>
+<p>如果您是小鱼标签的新用户，以下是它特别之处的快速概览：</p>
 <ul>
-<li><strong>Triple-dimension Filtering</strong>: Filter your bookmarks by tags, domains, and keywords simultaneously.</li>
-<li><strong>Tag Hierarchy</strong>: Create structured tag systems using the slash (/) separator.</li>
-<li><strong>Cross-device Synchronization</strong>: Access your bookmarks from anywhere with our sync options.</li>
-<li><strong>Clean, Intuitive Interface</strong>: Enjoy a distraction-free bookmark management experience.</li>
+<li><strong>三维过滤</strong>：同时通过标签、域名和关键词过滤您的书签。</li>
+<li><strong>标签层次结构</strong>：使用斜杠（/）分隔符创建结构化的标签系统。</li>
+<li><strong>跨设备同步</strong>：通过我们的同步选项，随时随地访问您的书签。</li>
+<li><strong>简洁、直观的界面</strong>：享受无干扰的书签管理体验。</li>
 </ul>
-<p>We're committed to making UTags the best bookmark management tool available. Stay tuned for more updates and tips!</p>
-<p>Happy bookmarking!</p>]]></content:encoded>
+<p>我们致力于使小鱼标签成为最好的书签管理工具。敬请期待更多更新和提示！</p>
+<p>愉快的书签管理之旅！</p>]]></content:encoded>
             <category>utags</category>
             <category>Hello</category>
             <category>introduction</category>

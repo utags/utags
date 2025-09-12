@@ -8,37 +8,37 @@
     <subtitle>UTags Blog</subtitle>
     <icon>https://utags.link/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[UTags 用户手册正式发布]]></title>
+        <title type="html"><![CDATA[UTags User Manual Officially Released]]></title>
         <id>https://utags.link/blog/user-manual-release/</id>
         <link href="https://utags.link/blog/user-manual-release/"/>
         <updated>2025-09-12T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。]]></summary>
-        <content type="html"><![CDATA[<p>我们很高兴地宣布，UTags 的完整用户手册现已正式发布！无论您是刚刚开始使用 UTags 的新用户，还是希望深入了解更多功能的老用户，这份详尽的手册都将是您的得力助手。</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="手册内容概览">手册内容概览<a href="https://utags.link/blog/user-manual-release/#%E6%89%8B%E5%86%8C%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88" class="hash-link" aria-label="Direct link to 手册内容概览" title="Direct link to 手册内容概览">​</a></h2>
-<p>我们的用户手册涵盖了 UTags 的方方面面，包括：</p>
+        <summary type="html"><![CDATA[We are excited to announce that the complete UTags user manual is now officially released! Whether you are a new user just starting with UTags, or an experienced user looking to explore more features, this comprehensive manual will be your valuable companion.]]></summary>
+        <content type="html"><![CDATA[<p>We are excited to announce that the complete UTags user manual is now officially released! Whether you are a new user just starting with UTags, or an experienced user looking to explore more features, this comprehensive manual will be your valuable companion.</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="manual-content-overview">Manual Content Overview<a href="https://utags.link/blog/user-manual-release/#manual-content-overview" class="hash-link" aria-label="Direct link to Manual Content Overview" title="Direct link to Manual Content Overview">​</a></h2>
+<p>Our user manual covers all aspects of UTags, including:</p>
 <ul>
-<li><strong><a href="https://utags.link/help/user-manual/quick-start/">快速入门指南</a></strong>：帮助新用户迅速上手 UTags 的基本功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/extension-guide/">浏览器扩展使用指南</a></strong>：详细介绍如何使用 UTags 浏览器扩展</li>
-<li><strong><a href="https://utags.link/help/user-manual/webapp-guide/">网页应用使用指南</a></strong>：全面解析 UTags 网页应用的各项功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/data-import-export/">数据导入导出</a></strong>：学习如何管理您的书签数据</li>
-<li><strong><a href="https://utags.link/help/user-manual/data-sync/">数据同步设置</a></strong>：了解如何在多设备间同步您的书签</li>
-<li><strong><a href="https://utags.link/help/user-manual/advanced-features/">高级功能</a></strong>：探索 UTags 的强大高级功能</li>
-<li><strong><a href="https://utags.link/help/user-manual/faq/">常见问题解答</a></strong>：解答用户最常见的疑问</li>
+<li><strong><a href="https://utags.link/help/user-manual/quick-start/">Quick Start Guide</a></strong>: Helps new users quickly get started with UTags' basic features</li>
+<li><strong><a href="https://utags.link/help/user-manual/extension-guide/">Browser Extension Guide</a></strong>: Detailed instructions on how to use the UTags browser extension</li>
+<li><strong><a href="https://utags.link/help/user-manual/webapp-guide/">Web Application Guide</a></strong>: Comprehensive analysis of all features in the UTags web application</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-import-export/">Data Import and Export</a></strong>: Learn how to manage your bookmark data</li>
+<li><strong><a href="https://utags.link/help/user-manual/data-sync/">Data Synchronization Settings</a></strong>: Understand how to synchronize your bookmarks across multiple devices</li>
+<li><strong><a href="https://utags.link/help/user-manual/advanced-features/">Advanced Features</a></strong>: Explore UTags' powerful advanced features</li>
+<li><strong><a href="https://utags.link/help/user-manual/faq/">Frequently Asked Questions</a></strong>: Answers to users' most common questions</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="为什么要阅读用户手册">为什么要阅读用户手册？<a href="https://utags.link/blog/user-manual-release/#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%98%85%E8%AF%BB%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C" class="hash-link" aria-label="Direct link to 为什么要阅读用户手册？" title="Direct link to 为什么要阅读用户手册？">​</a></h2>
-<p>虽然 UTags 的设计注重直观性和易用性，但通过阅读用户手册，您可以：</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="why-read-the-user-manual">Why Read the User Manual?<a href="https://utags.link/blog/user-manual-release/#why-read-the-user-manual" class="hash-link" aria-label="Direct link to Why Read the User Manual?" title="Direct link to Why Read the User Manual?">​</a></h2>
+<p>Although UTags is designed with intuition and ease of use in mind, by reading the user manual, you can:</p>
 <ul>
-<li><strong>发现隐藏功能</strong>：了解一些您可能不知道的强大功能</li>
-<li><strong>提高效率</strong>：学习快捷键和高级筛选技巧，更快地管理和查找书签</li>
-<li><strong>解决问题</strong>：遇到困难时，找到详细的解决方案</li>
-<li><strong>充分利用</strong>：确保您充分发挥 UTags 的全部潜力</li>
+<li><strong>Discover Hidden Features</strong>: Learn about powerful features you might not be aware of</li>
+<li><strong>Improve Efficiency</strong>: Learn keyboard shortcuts and advanced filtering techniques to manage and find bookmarks faster</li>
+<li><strong>Solve Problems</strong>: Find detailed solutions when you encounter difficulties</li>
+<li><strong>Maximize Utilization</strong>: Ensure you fully leverage all of UTags' potential</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="持续更新">持续更新<a href="https://utags.link/blog/user-manual-release/#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0" class="hash-link" aria-label="Direct link to 持续更新" title="Direct link to 持续更新">​</a></h2>
-<p>我们将根据产品的发展和用户的反馈，持续更新用户手册。每当有新功能推出或现有功能优化时，手册也会同步更新，确保您始终能获取到最新的信息。</p>
-<h2 class="anchor anchorWithStickyNavbar__IT8" id="联系我们">联系我们<a href="https://utags.link/blog/user-manual-release/#%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC" class="hash-link" aria-label="Direct link to 联系我们" title="Direct link to 联系我们">​</a></h2>
-<p>如果您在使用 UTags 过程中有任何问题，或者对用户手册有任何建议，欢迎访问我们的<a href="https://utags.link/contact/">联系页面</a>获取所有联系方式。</p>
-<p>我们非常重视用户的反馈，并将不断努力改进 UTags，使其成为最好的书签管理工具。</p>
-<p>感谢您选择 UTags，希望这份用户手册能帮助您更好地组织和管理您的网络世界！</p>]]></content>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="continuous-updates">Continuous Updates<a href="https://utags.link/blog/user-manual-release/#continuous-updates" class="hash-link" aria-label="Direct link to Continuous Updates" title="Direct link to Continuous Updates">​</a></h2>
+<p>We will continuously update the user manual based on product development and user feedback. Whenever new features are released or existing features are optimized, the manual will be updated accordingly to ensure you always have access to the latest information.</p>
+<h2 class="anchor anchorWithStickyNavbar__IT8" id="contact-us">Contact Us<a href="https://utags.link/blog/user-manual-release/#contact-us" class="hash-link" aria-label="Direct link to Contact Us" title="Direct link to Contact Us">​</a></h2>
+<p>If you have any questions while using UTags, or any suggestions for the user manual, please visit our <a href="https://utags.link/contact/">contact page</a> for all contact information.</p>
+<p>We highly value user feedback and will continuously work to improve UTags, making it the best bookmark management tool.</p>
+<p>Thank you for choosing UTags, and we hope this user manual helps you better organize and manage your online world!</p>]]></content>
         <author>
             <name>Pipecraft</name>
             <uri>https://linkedin.com/in/yangshun</uri>
