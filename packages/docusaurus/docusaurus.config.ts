@@ -72,6 +72,10 @@ const config: Config = {
         theme: {
           customCss: './src/css/custom.css',
         },
+        gtag: {
+          trackingID: 'G-7FV6Z2SXHE',
+          anonymizeIP: false,
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -169,6 +173,13 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+  scripts: [
+    {
+      src: 'https://cloud.umami.is/script.js',
+      defer: true,
+      'data-website-id': '0f07f0f5-b3be-4d94-bb22-6adf4b2375be',
+    },
+  ],
 }
 
 export default config
