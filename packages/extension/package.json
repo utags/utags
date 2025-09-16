@@ -69,14 +69,14 @@
     "utags-utils": "^0.3.2"
   },
   "devDependencies": {
-    "@types/react": "^19.1.11",
+    "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.7",
     "addons-linter": "^7.19.0",
     "bookmarkleter": "^1.1.0",
     "cross-env": "^10.0.0",
     "esbuild": "^0.25.9",
-    "jsdom": "^26.1.0",
-    "sass": "^1.90.0",
+    "jsdom": "^27.0.0",
+    "sass": "^1.92.1",
     "vitest": "^3.2.4"
   },
   "manifest": {
