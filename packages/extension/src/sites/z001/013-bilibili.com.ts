@@ -125,9 +125,17 @@ export default (() => {
           '.user-name a',
           'a[href^="https://space.bilibili.com/"]',
           'a.staff-name',
+          // 首页特殊卡片
+          '.floor-single-card a.sub-title'
         ].join(',')
       )
       for (const element of elements3) {
+        const nameElement = $('.name,.bili-video-card__info--author', element)
+        if (nameElement) {
+          // 上面已经处理过的
+          continue
+        }
+
         const href = (element as HTMLAnchorElement).href
         if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
@@ -188,13 +196,14 @@ export default (() => {
         location.href.startsWith(prefix3 + 'space/')
       ) {
         // profile header
-        const element = $('#h-name,.m-space-info .name')
+        const element = $('#h-name,.m-space-info .name,.upinfo__main .nickname')
         if (element) {
           const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
             const meta = { title, type: 'user' }
             setUtags(element, key, meta)
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }
         }
@@ -213,7 +222,15 @@ export default (() => {
       }
 
       const elements4 = $$(
-        '.bili-video-card__info--right a,.video-page-card-small .info a,.video-page-operator-card-small .info a'
+        [
+          '.bili-video-card__info--right a',
+          '.video-page-card-small .info a',
+          '.video-page-operator-card-small .info a',
+          // 个人页面视频列表
+          '.bili-video-card__title a',
+          // 个人页面置顶视频
+          '.top-section__content a.top-video__title',
+        ].join(',')
       ) as HTMLAnchorElement[]
       for (const element of elements4) {
         const key = getVideoUrl(element.href)
