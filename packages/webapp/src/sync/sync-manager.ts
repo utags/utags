@@ -417,7 +417,8 @@ export class SyncManager extends EventEmitter<SyncEvents> {
           updatesForLocal!,
           updatesForRemote!,
           localDeletions!,
-          remoteDeletions!
+          remoteDeletions!,
+          remoteSyncMeta
         )
       }
 
@@ -936,7 +937,8 @@ export class SyncManager extends EventEmitter<SyncEvents> {
     updatesForLocal: BookmarksData,
     updatesForRemote: BookmarksData,
     localDeletions: string[],
-    remoteDeletions: string[]
+    remoteDeletions: string[],
+    remoteSyncMeta?: SyncMetadata
   ): void {
     const mergeHistoryEntry = {
       serviceId: serviceConfig.id,
@@ -970,6 +972,8 @@ export class SyncManager extends EventEmitter<SyncEvents> {
         userAgent: navigator.userAgent,
         origin: globalThis.location?.origin || 'unknown',
       },
+      lastSyncMeta: serviceConfig.lastSyncMeta,
+      remoteSyncMeta,
     }
 
     // Console log for immediate debugging with enhanced timestamp information
