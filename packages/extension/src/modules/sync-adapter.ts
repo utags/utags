@@ -236,6 +236,13 @@ function isValidMessage(event: MessageEvent): boolean {
   return true
 }
 
+// Flag to track if a message is currently being processed
+let isProcessingMessage = false
+
+/**
+ * Handles messages from the content script or other sources
+ * Implements concurrency control to prevent processing multiple messages simultaneously
+ */
 const messageHandler = async (event: MessageEvent) => {
   if (!MY_EXTENSION_ID) {
     console.error('MY_EXTENSION_ID not initialized')
@@ -248,156 +255,188 @@ const messageHandler = async (event: MessageEvent) => {
 
   const message = event.data as BrowserExtensionMessage<MessageType>
   console.log(`${SCRIPT_NAME} Received message:`, message)
-  const actionType = message.type
 
-  // Skip userscript availability check for discovery and ping messages,
-  // or when not running in userscript environment
-  const shouldCheckUserscript =
-    isUserscript &&
-    actionType !== DISCOVER_MESSAGE_TYPE &&
-    actionType !== PING_MESSAGE_TYPE
-
-  if (shouldCheckUserscript) {
-    const isUserscriptAvailable = await checkUserscriptAvailable()
-    if (!isUserscriptAvailable) {
-      console.warn(
-        `${SCRIPT_NAME} Userscript not available, sending error response`
-      )
-      const errorResponse: BrowserExtensionResponse<MessageType> = {
-        type: message.type,
-        source: SOURCE_EXTENSION,
-        id: message.id,
-        extensionId: MY_EXTENSION_ID,
-        error: 'Userscript not available or disabled',
-      }
-      ;(event.source as Window).postMessage(errorResponse, event.origin)
-      return
+  // Check if we're already processing a message
+  if (isProcessingMessage) {
+    console.warn(
+      `${SCRIPT_NAME} Already processing a message, rejecting new request:`,
+      message.id
+    )
+    // Send rejection response
+    const rejectionResponse: BrowserExtensionResponse<MessageType> = {
+      type: message.type,
+      source: SOURCE_EXTENSION,
+      id: message.id,
+      extensionId: MY_EXTENSION_ID,
+      error:
+        'Another message is currently being processed, please try again later',
     }
+    ;(event.source as Window).postMessage(rejectionResponse, event.origin)
+    return
   }
 
-  let responsePayload: ResponsePayloadMap[MessageType] | undefined
-  let error: string | undefined
+  // Set the processing flag
+  isProcessingMessage = true
 
-  const payload = message.payload
-  const id = message.id
   try {
-    const remoteMetadata = await loadMetadata()
+    const actionType = message.type
 
-    switch (actionType) {
-      case DISCOVER_MESSAGE_TYPE: {
-        // Respond to discovery broadcasts
-        responsePayload = {
+    // Skip userscript availability check for discovery and ping messages,
+    // or when not running in userscript environment
+    const shouldCheckUserscript =
+      isUserscript &&
+      actionType !== DISCOVER_MESSAGE_TYPE &&
+      actionType !== PING_MESSAGE_TYPE
+
+    if (shouldCheckUserscript) {
+      const isUserscriptAvailable = await checkUserscriptAvailable()
+      if (!isUserscriptAvailable) {
+        console.warn(
+          `${SCRIPT_NAME} Userscript not available, sending error response`
+        )
+        const errorResponse: BrowserExtensionResponse<MessageType> = {
+          type: message.type,
+          source: SOURCE_EXTENSION,
+          id: message.id,
           extensionId: MY_EXTENSION_ID,
-          extensionName: MY_EXTENSION_NAME,
-        } // Example name
-        // Send a specific response type for discovery
-        ;(event.source as Window).postMessage(
-          {
-            source: SOURCE_EXTENSION,
-            type: DISCOVERY_RESPONSE_TYPE,
-            id, // Echo id to potentially correlate, though not strictly necessary for broadcast
+          error: 'Userscript not available or disabled',
+        }
+        ;(event.source as Window).postMessage(errorResponse, event.origin)
+        return
+      }
+    }
+
+    let responsePayload: ResponsePayloadMap[MessageType] | undefined
+    let error: string | undefined
+
+    const payload = message.payload
+    const id = message.id
+    try {
+      const remoteMetadata = await loadMetadata()
+
+      switch (actionType) {
+        case DISCOVER_MESSAGE_TYPE: {
+          // Respond to discovery broadcasts
+          responsePayload = {
             extensionId: MY_EXTENSION_ID,
-            payload: responsePayload,
-          },
-          event.origin
-        )
-        console.log(`${SCRIPT_NAME} Responded to discovery broadcast.`)
-        return // Stop further processing for this message
-      }
-
-      case PING_MESSAGE_TYPE: {
-        // Handle PING from adapter's init
-        responsePayload = { status: PONG_MESSAGE_TYPE }
-        console.log(`${SCRIPT_NAME} PING received. Responding PONG.`)
-        break
-      }
-
-      case GET_AUTH_STATUS_MESSAGE_TYPE: {
-        // Adapter expects an AuthStatus string
-        responsePayload = { status: 'authenticated' }
-        console.log(
-          `${SCRIPT_NAME} Auth status requested. Responding:`,
-          responsePayload
-        )
-        break
-      }
-
-      case GET_REMOTE_METADATA_MESSAGE_TYPE: {
-        responsePayload = { metadata: remoteMetadata }
-        console.log(
-          `${SCRIPT_NAME} Metadata requested. Responding:`,
-          responsePayload
-        )
-        break
-      }
-
-      case DOWNLOAD_MESSAGE_TYPE: {
-        const data = await loadData()
-        // Adapter expects { data: string | undefined; remoteMeta: SyncMetadata | undefined }
-        responsePayload = { data, remoteMeta: remoteMetadata }
-        console.log(
-          `${SCRIPT_NAME} Data requested. Responding:`,
-          responsePayload
-        )
-        break
-      }
-
-      case UPLOAD_MESSAGE_TYPE: {
-        if (!payload || typeof (payload as any).data !== 'string') {
-          throw new Error('UPLOAD_DATA: Invalid payload')
+            extensionName: MY_EXTENSION_NAME,
+          } // Example name
+          // Send a specific response type for discovery
+          ;(event.source as Window).postMessage(
+            {
+              source: SOURCE_EXTENSION,
+              type: DISCOVERY_RESPONSE_TYPE,
+              id, // Echo id to potentially correlate, though not strictly necessary for broadcast
+              extensionId: MY_EXTENSION_ID,
+              payload: responsePayload,
+            },
+            event.origin
+          )
+          console.log(`${SCRIPT_NAME} Responded to discovery broadcast.`)
+          return // Stop further processing for this message
         }
 
-        // Adapter sends expectedRemoteMeta as 'metadata' in the payload
-        const expectedMeta = payload.metadata
+        case PING_MESSAGE_TYPE: {
+          // Handle PING from adapter's init
+          responsePayload = { status: PONG_MESSAGE_TYPE }
+          console.log(`${SCRIPT_NAME} PING received. Responding PONG.`)
+          break
+        }
 
-        if (expectedMeta && remoteMetadata) {
-          if (
-            expectedMeta.version !== remoteMetadata.version ||
-            expectedMeta.timestamp !== remoteMetadata.timestamp
-          ) {
+        case GET_AUTH_STATUS_MESSAGE_TYPE: {
+          // Adapter expects an AuthStatus string
+          responsePayload = { status: 'authenticated' }
+          console.log(
+            `${SCRIPT_NAME} Auth status requested. Responding:`,
+            responsePayload
+          )
+          break
+        }
+
+        case GET_REMOTE_METADATA_MESSAGE_TYPE: {
+          responsePayload = { metadata: remoteMetadata }
+          console.log(
+            `${SCRIPT_NAME} Metadata requested. Responding:`,
+            responsePayload
+          )
+          break
+        }
+
+        case DOWNLOAD_MESSAGE_TYPE: {
+          const data = await loadData()
+          // Adapter expects { data: string | undefined; remoteMeta: SyncMetadata | undefined }
+          responsePayload = { data, remoteMeta: remoteMetadata }
+          console.log(
+            `${SCRIPT_NAME} Data requested. Responding:`,
+            responsePayload
+          )
+          break
+        }
+
+        case UPLOAD_MESSAGE_TYPE: {
+          if (!payload || typeof (payload as any).data !== 'string') {
+            throw new Error('UPLOAD_DATA: Invalid payload')
+          }
+
+          // Adapter sends expectedRemoteMeta as 'metadata' in the payload
+          const expectedMeta = payload.metadata
+
+          if (expectedMeta && remoteMetadata) {
+            if (
+              expectedMeta.version !== remoteMetadata.version ||
+              expectedMeta.timestamp !== remoteMetadata.timestamp
+            ) {
+              throw new Error(
+                'Conflict: Expected remote metadata does not match current remote metadata.'
+              )
+            }
+          } else if (expectedMeta && !remoteMetadata) {
             throw new Error(
-              'Conflict: Expected remote metadata does not match current remote metadata.'
+              'Conflict: Expected remote metadata, but no remote data found.'
+            )
+          } else if (!expectedMeta && remoteMetadata) {
+            throw new Error(
+              'Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification.'
             )
           }
-        } else if (expectedMeta && !remoteMetadata) {
-          throw new Error(
-            'Conflict: Expected remote metadata, but no remote data found.'
-          )
-        } else if (!expectedMeta && remoteMetadata) {
-          throw new Error(
-            'Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification.'
-          )
+
+          const newTimestamp = Date.now()
+          const oldVersionNumber = getVersionNumber(remoteMetadata)
+          const newVersion = `v${oldVersionNumber + 1}`
+          const newMeta = { timestamp: newTimestamp, version: newVersion }
+
+          await saveData(payload.data)
+          await saveMetadata(newMeta)
+          // Adapter expects { metadata: SyncMetadata }
+          responsePayload = { metadata: newMeta }
+          console.log(`${SCRIPT_NAME} Data uploaded. New metadata:`, newMeta)
+          break
         }
-
-        const newTimestamp = Date.now()
-        const oldVersionNumber = getVersionNumber(remoteMetadata)
-        const newVersion = `v${oldVersionNumber + 1}`
-        const newMeta = { timestamp: newTimestamp, version: newVersion }
-
-        await saveData(payload.data)
-        await saveMetadata(newMeta)
-        // Adapter expects { metadata: SyncMetadata }
-        responsePayload = { metadata: newMeta }
-        console.log(`${SCRIPT_NAME} Data uploaded. New metadata:`, newMeta)
-        break
       }
+    } catch (error_) {
+      error = error_ instanceof Error ? error_.message : String(error_)
+      console.log(`${SCRIPT_NAME} Error processing message:`, error_)
     }
-  } catch (error_) {
-    error = error_ instanceof Error ? error_.message : String(error_)
-    console.log(`${SCRIPT_NAME} Error processing message:`, error_)
-  }
 
-  // Send response back to the web app, matching BrowserExtensionResponse format
-  const response: BrowserExtensionResponse<MessageType> = {
-    type: actionType,
-    source: SOURCE_EXTENSION, // Source must be 'utags-extension'
-    id, // Echo back the id
-    extensionId: MY_EXTENSION_ID, // Include our ID in the response
-    payload: responsePayload,
-    error,
-  }
+    // Send response back to the web app, matching BrowserExtensionResponse format
+    const response: BrowserExtensionResponse<MessageType> = {
+      type: actionType,
+      source: SOURCE_EXTENSION, // Source must be 'utags-extension'
+      id, // Echo back the id
+      extensionId: MY_EXTENSION_ID, // Include our ID in the response
+      payload: responsePayload,
+      error,
+    }
 
-  ;(event.source as Window).postMessage(response, event.origin)
+    ;(event.source as Window).postMessage(response, event.origin)
+  } finally {
+    // Reset the processing flag after message handling is complete
+    // This ensures the flag is reset even if an error occurs during processing
+    isProcessingMessage = false
+    console.log(
+      `${SCRIPT_NAME} Message processing complete, ready for next message`
+    )
+  }
 }
 
 async function initExtensionId(): Promise<void> {

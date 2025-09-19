@@ -627,12 +627,22 @@ describe('SyncAdapter', () => {
       // Check that both responses are valid and for the correct type
       // The order is not guaranteed, so we check both possibilities
       if (response1.type === 'PING') {
-        expect(response1.payload).toEqual({ status: 'PONG' })
+        // Ping message should fail if another message is being processed
+        expect(response1.payload).toBeUndefined()
+        expect(response1.error).toBe(
+          'Another message is currently being processed, please try again later'
+        )
+        // expect(response1.payload).toEqual({ status: 'PONG' })
         expect(response2.type).toBe('GET_AUTH_STATUS')
         expect(response2.payload).toEqual({ status: 'authenticated' })
       } else {
+        // GET_AUTH_STATUS message should fail if another message is being processed
         expect(response1.type).toBe('GET_AUTH_STATUS')
-        expect(response1.payload).toEqual({ status: 'authenticated' })
+        expect(response1.payload).toBeUndefined()
+        expect(response1.error).toBe(
+          'Another message is currently being processed, please try again later'
+        )
+        // expect(response1.payload).toEqual({ status: 'authenticated' })
         expect(response2.type).toBe('PING')
         expect(response2.payload).toEqual({ status: 'PONG' })
       }
@@ -1123,6 +1133,97 @@ describe('SyncAdapter', () => {
         expect(mockPostMessage).toHaveBeenCalled()
         const response = getSentMessage()
         expect(response.id).toBe(unicodeId)
+      })
+    })
+    describe('Concurrency Control', () => {
+      it('should reject new messages while processing an existing message', async () => {
+        // Create a delayed response to simulate a long-running operation
+        const delayedResponse = new Promise<void>((resolve) => {
+          setTimeout(() => {
+            resolve()
+          }, 100)
+        })
+
+        // Mock serializeBookmarks to return a delayed promise
+        ;(serializeBookmarks as Mock).mockImplementationOnce(async () => {
+          return delayedResponse.then(() => JSON.stringify({ mockData: true }))
+        })
+
+        // Send first message that will take time to process
+        const firstMessagePromise = simulateWebappMessage('UPLOAD_DATA', {
+          data: JSON.stringify({ test: 'data' }),
+        })
+
+        // Without waiting for the first message to complete, send a second message
+        await simulateWebappMessage('UPLOAD_DATA', {
+          data: JSON.stringify({ second: 'test-data' }),
+        })
+
+        // Check that the second message was rejected with the correct error
+        expect(mockPostMessage).toHaveBeenCalledTimes(1)
+        const secondResponse = getSentMessage(0)
+        expect(secondResponse.error).toBe(
+          'Another message is currently being processed, please try again later'
+        )
+
+        // Wait for the first message to complete
+        await firstMessagePromise
+
+        // Check that the first message was processed
+        expect(mockPostMessage).toHaveBeenCalledTimes(2)
+
+        // // Reset mock to clear previous calls
+        // mockPostMessage.mockClear()
+
+        // Also mock serializeBookmarks for the third message
+        ;(serializeBookmarks as Mock).mockImplementationOnce(async () => {
+          return JSON.stringify({ mockData: true })
+        })
+
+        // Now send a third message which should be processed
+        await simulateWebappMessage('UPLOAD_DATA', {
+          data: JSON.stringify({ third: 'test-data' }),
+        })
+
+        // Check that the third message was processed
+        expect(mockPostMessage).toHaveBeenCalledTimes(3)
+        const thirdResponse = getSentMessage(1)
+        expect(thirdResponse.error).toBeUndefined()
+      })
+
+      it('should reset the processing flag after message handling is complete', async () => {
+        // Send a message and wait for it to complete
+        await simulateWebappMessage('PING')
+
+        // Verify the message was processed
+        expect(mockPostMessage).toHaveBeenCalledTimes(1)
+
+        // Send another message immediately after
+        await simulateWebappMessage('PING')
+
+        // Verify the second message was also processed (flag was reset)
+        expect(mockPostMessage).toHaveBeenCalledTimes(2)
+      })
+
+      it('should reset the processing flag even when an error occurs', async () => {
+        // Mock getValue to throw an error
+        ;(getValue as Mock).mockImplementationOnce(() => {
+          throw new Error('Test error')
+        })
+
+        // Send a message that will cause an error
+        await simulateWebappMessage('DOWNLOAD_DATA')
+
+        // Verify an error response was sent
+        expect(mockPostMessage).toHaveBeenCalledTimes(1)
+        const errorResponse = getSentMessage(0)
+        expect(errorResponse.error).toBeDefined()
+
+        // Send another message
+        await simulateWebappMessage('PING')
+
+        // Verify the second message was processed (flag was reset despite error)
+        expect(mockPostMessage).toHaveBeenCalledTimes(2)
       })
     })
   })
