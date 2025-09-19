@@ -126,7 +126,7 @@ export default (() => {
           'a[href^="https://space.bilibili.com/"]',
           'a.staff-name',
           // 首页特殊卡片
-          '.floor-single-card a.sub-title'
+          '.floor-single-card a.sub-title',
         ].join(',')
       )
       for (const element of elements3) {

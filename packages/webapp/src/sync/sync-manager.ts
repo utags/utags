@@ -136,6 +136,9 @@ export class SyncManager extends EventEmitter<SyncEvents> {
       return false
     }
 
+    // Emit initialization event before updating status
+    this.emit('syncInitializing', { serviceId: configId })
+
     this.updateStatus({ type: 'initializing' })
 
     let adapter: SyncAdapter
@@ -146,6 +149,13 @@ export class SyncManager extends EventEmitter<SyncEvents> {
       console.error(errMsg, error)
       this.emit('error', { message: errMsg, serviceId: configId, error })
       this.updateStatus({ type: 'error', error: errMsg })
+
+      this.emit('syncEnd', {
+        serviceId: configId,
+        status: 'error',
+        error,
+      })
+
       return false
     }
 

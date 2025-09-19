@@ -401,6 +401,7 @@ export type SyncStatus =
 
 export type SyncEvents = {
   statusChange: SyncStatus
+  syncInitializing: { serviceId: string }
   syncStart: { serviceId: string }
   syncSuccess: {
     serviceId: string

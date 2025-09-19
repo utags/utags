@@ -10,10 +10,11 @@
     promoteDiscoveredTarget,
   } from '../../stores/sync-config-store.js'
   import SyncServiceForm from './SyncServiceForm.svelte'
-  import { SyncManager } from '../../sync/sync-manager.js'
+  import { syncManager } from '../../sync/sync-manager.js'
   import type { SyncServiceConfig } from '../../sync/types.js'
   import { Pen, Trash2, RefreshCw, CheckCircle, Plus } from 'lucide-svelte'
   import ConfirmModal from '../ConfirmModal.svelte'
+  import { currentSyncingService } from '../../stores/sync-status-store.js'
 
   let { showSyncSettings = $bindable() } = $props<{
     showSyncSettings: boolean
@@ -22,9 +23,6 @@
   let editingService = $state<SyncServiceConfig | null>(null)
   let showConfirmModal = $state(false)
   let serviceToDelete = $state<string | null>(null)
-  let syncingServices = $state<Set<string>>(new Set())
-
-  const syncManager = new SyncManager()
 
   function handleAdd() {
     editingService = null
@@ -50,13 +48,20 @@
   }
 
   async function handleSyncNow(serviceId: string) {
-    syncingServices.add(serviceId)
-    syncingServices = new Set(syncingServices) // Trigger reactivity
+    // Check if there's already a sync in progress
+    if ($currentSyncingService) {
+      alert('Sync in progress, please try again later')
+      return
+    }
+
+    // Set current syncing service
+    currentSyncingService.set(serviceId)
+
     try {
       await syncManager.synchronize(serviceId)
     } finally {
-      syncingServices.delete(serviceId)
-      syncingServices = new Set(syncingServices) // Trigger reactivity
+      // Clear current syncing service when done
+      currentSyncingService.set(undefined)
     }
   }
 
@@ -151,7 +156,7 @@
               {:else}
                 <RefreshCw
                   size={20}
-                  class={syncingServices.has(service.id)
+                  class={$currentSyncingService === service.id
                     ? 'animate-spin'
                     : ''} />
               {/if}
@@ -194,13 +199,17 @@
               <Trash2 size={16} />
             </button>
             <button
-              class="rounded-full p-2 text-blue-500 transition-colors hover:bg-blue-100 dark:hover:bg-blue-900/50"
+              class="rounded-full p-2 text-blue-500 transition-colors hover:bg-blue-100 disabled:cursor-not-allowed disabled:text-gray-400 disabled:hover:bg-transparent dark:hover:bg-blue-900/50 dark:disabled:text-gray-600 dark:disabled:hover:bg-transparent"
               onclick={() => handleSyncNow(service.id)}
               title="Sync Now"
-              disabled={syncingServices.has(service.id)}>
+              disabled={!service.enabled ||
+                $currentSyncingService === service.id ||
+                !!$currentSyncingService}>
               <RefreshCw
                 size={16}
-                class={syncingServices.has(service.id) ? 'animate-spin' : ''} />
+                class={$currentSyncingService === service.id
+                  ? 'animate-spin'
+                  : ''} />
             </button>
             {#if $syncConfigStore.activeSyncServiceId !== service.id && false}
               <button

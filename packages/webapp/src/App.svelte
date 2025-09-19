@@ -36,7 +36,7 @@
   } from './utils/bookmark-actions.js'
   import appConfig from './config/app-config.js'
   import { HASH_DELIMITER, DELETED_BOOKMARK_TAG } from './config/constants.js'
-  import { SyncManager } from './sync/sync-manager.js'
+  import { syncManager } from './sync/sync-manager.js'
   import {
     initAutoSyncScheduler,
     stopAutoSyncScheduler,
@@ -62,7 +62,6 @@
   })
 
   initializeStores()
-  const syncManager = new SyncManager()
 
   document.documentElement.lang = getLocale()
 
