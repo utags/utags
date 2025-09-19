@@ -255,9 +255,21 @@ ParaglideJS, in conjunction with the Inlang ecosystem, is utilized for managing 
    - URL persistence: Filter conditions automatically sync to URL hash
 
 5. **Code Comments and Formatting**:
+
    - Comment content must be in English
    - Use Prettier for code formatting
    - Add function-level comments
+
+6. **Value Handling**:
+
+   - Prefer using `undefined` instead of `null` for representing absence of values
+   - Use `undefined` for optional parameters, uninitialized variables, and missing properties
+   - Reserve `null` only for cases where it has a specific semantic meaning distinct from `undefined`
+
+7. **Language Standards**:
+   - All code comments must be written in English
+   - All user-facing text content must be in English (then localized through i18n)
+   - Avoid using Chinese or other non-English languages in code, comments, or direct string literals
 
 ### Svelte 5 Event Handling Standards
 
