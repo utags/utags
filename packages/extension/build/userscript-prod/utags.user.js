@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.20.8
+// @version              0.20.9
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -4349,6 +4349,7 @@
     }
     return true
   }
+  var isProcessingMessage = false
   var messageHandler = async (event) => {
     if (!MY_EXTENSION_ID) {
       console.error("MY_EXTENSION_ID not initialized")
@@ -4359,140 +4360,173 @@
     }
     const message = event.data
     console.log("".concat(SCRIPT_NAME, " Received message:"), message)
-    const actionType = message.type
-    const shouldCheckUserscript =
-      isUserscript &&
-      actionType !== DISCOVER_MESSAGE_TYPE &&
-      actionType !== PING_MESSAGE_TYPE
-    if (shouldCheckUserscript) {
-      const isUserscriptAvailable = await checkUserscriptAvailable()
-      if (!isUserscriptAvailable) {
-        console.warn(
-          "".concat(
-            SCRIPT_NAME,
-            " Userscript not available, sending error response"
-          )
-        )
-        const errorResponse = {
-          type: message.type,
-          source: SOURCE_EXTENSION,
-          id: message.id,
-          extensionId: MY_EXTENSION_ID,
-          error: "Userscript not available or disabled",
-        }
-        event.source.postMessage(errorResponse, event.origin)
-        return
+    if (isProcessingMessage) {
+      console.warn(
+        "".concat(
+          SCRIPT_NAME,
+          " Already processing a message, rejecting new request:"
+        ),
+        message.id
+      )
+      const rejectionResponse = {
+        type: message.type,
+        source: SOURCE_EXTENSION,
+        id: message.id,
+        extensionId: MY_EXTENSION_ID,
+        error:
+          "Another message is currently being processed, please try again later",
       }
+      event.source.postMessage(rejectionResponse, event.origin)
+      return
     }
-    let responsePayload
-    let error
-    const payload = message.payload
-    const id = message.id
+    isProcessingMessage = true
     try {
-      const remoteMetadata = await loadMetadata()
-      switch (actionType) {
-        case DISCOVER_MESSAGE_TYPE: {
-          responsePayload = {
+      const actionType = message.type
+      const shouldCheckUserscript =
+        isUserscript &&
+        actionType !== DISCOVER_MESSAGE_TYPE &&
+        actionType !== PING_MESSAGE_TYPE
+      if (shouldCheckUserscript) {
+        const isUserscriptAvailable = await checkUserscriptAvailable()
+        if (!isUserscriptAvailable) {
+          console.warn(
+            "".concat(
+              SCRIPT_NAME,
+              " Userscript not available, sending error response"
+            )
+          )
+          const errorResponse = {
+            type: message.type,
+            source: SOURCE_EXTENSION,
+            id: message.id,
             extensionId: MY_EXTENSION_ID,
-            extensionName: MY_EXTENSION_NAME,
+            error: "Userscript not available or disabled",
           }
-          event.source.postMessage(
-            {
-              source: SOURCE_EXTENSION,
-              type: DISCOVERY_RESPONSE_TYPE,
-              id,
-              extensionId: MY_EXTENSION_ID,
-              payload: responsePayload,
-            },
-            event.origin
-          )
-          console.log(
-            "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
-          )
+          event.source.postMessage(errorResponse, event.origin)
           return
         }
-        case PING_MESSAGE_TYPE: {
-          responsePayload = { status: PONG_MESSAGE_TYPE }
-          console.log(
-            "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
-          )
-          break
-        }
-        case GET_AUTH_STATUS_MESSAGE_TYPE: {
-          responsePayload = { status: "authenticated" }
-          console.log(
-            "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
-            responsePayload
-          )
-          break
-        }
-        case GET_REMOTE_METADATA_MESSAGE_TYPE: {
-          responsePayload = { metadata: remoteMetadata }
-          console.log(
-            "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
-            responsePayload
-          )
-          break
-        }
-        case DOWNLOAD_MESSAGE_TYPE: {
-          const data = await loadData()
-          responsePayload = { data, remoteMeta: remoteMetadata }
-          console.log(
-            "".concat(SCRIPT_NAME, " Data requested. Responding:"),
-            responsePayload
-          )
-          break
-        }
-        case UPLOAD_MESSAGE_TYPE: {
-          if (!payload || typeof payload.data !== "string") {
-            throw new Error("UPLOAD_DATA: Invalid payload")
+      }
+      let responsePayload
+      let error
+      const payload = message.payload
+      const id = message.id
+      try {
+        const remoteMetadata = await loadMetadata()
+        switch (actionType) {
+          case DISCOVER_MESSAGE_TYPE: {
+            responsePayload = {
+              extensionId: MY_EXTENSION_ID,
+              extensionName: MY_EXTENSION_NAME,
+            }
+            event.source.postMessage(
+              {
+                source: SOURCE_EXTENSION,
+                type: DISCOVERY_RESPONSE_TYPE,
+                id,
+                extensionId: MY_EXTENSION_ID,
+                payload: responsePayload,
+              },
+              event.origin
+            )
+            console.log(
+              "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
+            )
+            return
           }
-          const expectedMeta = payload.metadata
-          if (expectedMeta && remoteMetadata) {
-            if (
-              expectedMeta.version !== remoteMetadata.version ||
-              expectedMeta.timestamp !== remoteMetadata.timestamp
-            ) {
+          case PING_MESSAGE_TYPE: {
+            responsePayload = { status: PONG_MESSAGE_TYPE }
+            console.log(
+              "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
+            )
+            break
+          }
+          case GET_AUTH_STATUS_MESSAGE_TYPE: {
+            responsePayload = { status: "authenticated" }
+            console.log(
+              "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case GET_REMOTE_METADATA_MESSAGE_TYPE: {
+            responsePayload = { metadata: remoteMetadata }
+            console.log(
+              "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case DOWNLOAD_MESSAGE_TYPE: {
+            const data = await loadData()
+            responsePayload = { data, remoteMeta: remoteMetadata }
+            console.log(
+              "".concat(SCRIPT_NAME, " Data requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case UPLOAD_MESSAGE_TYPE: {
+            if (!payload || typeof payload.data !== "string") {
+              throw new Error("UPLOAD_DATA: Invalid payload")
+            }
+            const expectedMeta = payload.metadata
+            if (expectedMeta && remoteMetadata) {
+              if (
+                expectedMeta.version !== remoteMetadata.version ||
+                expectedMeta.timestamp !== remoteMetadata.timestamp
+              ) {
+                throw new Error(
+                  "Conflict: Expected remote metadata does not match current remote metadata."
+                )
+              }
+            } else if (expectedMeta && !remoteMetadata) {
               throw new Error(
-                "Conflict: Expected remote metadata does not match current remote metadata."
+                "Conflict: Expected remote metadata, but no remote data found."
+              )
+            } else if (!expectedMeta && remoteMetadata) {
+              throw new Error(
+                "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
               )
             }
-          } else if (expectedMeta && !remoteMetadata) {
-            throw new Error(
-              "Conflict: Expected remote metadata, but no remote data found."
+            const newTimestamp = Date.now()
+            const oldVersionNumber = getVersionNumber(remoteMetadata)
+            const newVersion = "v".concat(oldVersionNumber + 1)
+            const newMeta = { timestamp: newTimestamp, version: newVersion }
+            await saveData(payload.data)
+            await saveMetadata(newMeta)
+            responsePayload = { metadata: newMeta }
+            console.log(
+              "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
+              newMeta
             )
-          } else if (!expectedMeta && remoteMetadata) {
-            throw new Error(
-              "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
-            )
+            break
           }
-          const newTimestamp = Date.now()
-          const oldVersionNumber = getVersionNumber(remoteMetadata)
-          const newVersion = "v".concat(oldVersionNumber + 1)
-          const newMeta = { timestamp: newTimestamp, version: newVersion }
-          await saveData(payload.data)
-          await saveMetadata(newMeta)
-          responsePayload = { metadata: newMeta }
-          console.log(
-            "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
-            newMeta
-          )
-          break
         }
+      } catch (error_) {
+        error = error_ instanceof Error ? error_.message : String(error_)
+        console.log(
+          "".concat(SCRIPT_NAME, " Error processing message:"),
+          error_
+        )
       }
-    } catch (error_) {
-      error = error_ instanceof Error ? error_.message : String(error_)
-      console.log("".concat(SCRIPT_NAME, " Error processing message:"), error_)
+      const response = {
+        type: actionType,
+        source: SOURCE_EXTENSION,
+        id,
+        extensionId: MY_EXTENSION_ID,
+        payload: responsePayload,
+        error,
+      }
+      event.source.postMessage(response, event.origin)
+    } finally {
+      isProcessingMessage = false
+      console.log(
+        "".concat(
+          SCRIPT_NAME,
+          " Message processing complete, ready for next message"
+        )
+      )
     }
-    const response = {
-      type: actionType,
-      source: SOURCE_EXTENSION,
-      id,
-      extensionId: MY_EXTENSION_ID,
-      payload: responsePayload,
-      error,
-    }
-    event.source.postMessage(response, event.origin)
   }
   async function initExtensionId() {
     const type = isUserscript ? "Userscript" : "Extension"
