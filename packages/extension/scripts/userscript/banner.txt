@@ -73,6 +73,7 @@
 // @match                https://www.pixiv.net/*
 // @match                https://meta.discourse.org/*
 // @match                https://linux.do/*
+// @match                https://idcflare.com/*
 // @match                https://meta.appinn.net/*
 // @match                https://community.openai.com/*
 // @match                https://community.cloudflare.com/*
