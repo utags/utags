@@ -68,6 +68,7 @@
 - 百合会 ([bbs.yamibo.com](https://bbs.yamibo.com/))
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- IDC Flare ([idcflare.com](https://idcflare.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装

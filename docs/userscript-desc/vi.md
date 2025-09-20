@@ -63,6 +63,7 @@ Các trang web hiện được hỗ trợ:
 - Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- IDC Flare ([idcflare.com](https://idcflare.com/))
 - Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
 
 Ngoài ra, do chính sách công khai của Greasy Fork, bạn phải thêm thủ công các quy tắc `user matches` trong cài đặt script cho các trang web sau:

@@ -68,6 +68,7 @@ For now it works on
 - Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- IDC Flare ([idcflare.com](https://idcflare.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

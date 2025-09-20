@@ -101,6 +101,7 @@ const isEnabledByDefault = () => {
 const isQuickStarAvailable = () => {
   if (
     host === 'linux.do' ||
+    host === 'idcflare.com' ||
     host.includes('youtube.com') ||
     // eslint-disable-next-line no-restricted-globals
     host.includes(`p${atob('b3I=')}nhub.com`)

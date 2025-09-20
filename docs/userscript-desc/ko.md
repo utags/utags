@@ -63,6 +63,7 @@
 - Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- IDC Flare ([idcflare.com](https://idcflare.com/))
 - 기타 다수. 새로운 사이트 추가를 제안하려면 [여기](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)를 클릭하세요.
 
 또한, Greasy Fork의 공개 정책으로 인해 다음 웹사이트에서는 스크립트 설정에서 수동으로 `user matches` 규칙을 추가해야 합니다:

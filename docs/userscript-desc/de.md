@@ -63,6 +63,7 @@ Derzeit unterstützte Websites:
 - Yamibo.com ([bbs.yamibo.com](https://bbs.yamibo.com/))
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
+- IDC Flare ([idcflare.com](https://idcflare.com/))
 - Und viele mehr. Klicken Sie [hier](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), um neue Websites vorzuschlagen.
 
 Außerdem müssen Sie aufgrund der öffentlichen Richtlinien von Greasy Fork für die folgenden Websites manuell `user matches`-Regeln in den Skripteinstellungen hinzufügen:
