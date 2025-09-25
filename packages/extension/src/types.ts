@@ -1,6 +1,7 @@
 export type UserTag = {
   key: string
   meta?: UserTagMeta
+  originalKey?: string
 }
 
 export type UserTagMeta = {

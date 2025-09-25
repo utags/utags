@@ -352,8 +352,14 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    const utags = getElementUtags(element) || { key: '', meta: {} }
-    const key = utags.key || getCanonicalUrl(element.href)
+    const originalKey = element.href
+    let utags = getElementUtags(element)
+    // vue 等框架会重复利用 element 对象，只修改 href 属性。每次需要验证 href 值是否与缓存的 utags.originalKey 值一致
+    if (!utags || utags.originalKey !== originalKey) {
+      utags = { key: '', meta: {}, originalKey }
+    }
+
+    const key = utags.key || getCanonicalUrl(originalKey)
     if (!key) {
       return
     }

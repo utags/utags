@@ -10427,8 +10427,12 @@
         deleteElementUtags(element)
         return
       }
-      const utags = getElementUtags(element) || { key: "", meta: {} }
-      const key = utags.key || getCanonicalUrl(element.href)
+      const originalKey = element.href
+      let utags = getElementUtags(element)
+      if (!utags || utags.originalKey !== originalKey) {
+        utags = { key: "", meta: {}, originalKey }
+      }
+      const key = utags.key || getCanonicalUrl(originalKey)
       if (!key) {
         return
       }
