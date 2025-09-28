@@ -2,7 +2,10 @@ import { $, $$, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./021-douyin.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import { getFirstHeadElement } from '../../utils'
+import {
+  extractTrimmedTextWithImageAlt,
+  getFirstHeadElement,
+} from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
 import defaultSite from '../default'
 
@@ -57,7 +60,12 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const meta = { type: 'user' }
+        const title = extractTrimmedTextWithImageAlt(element)
+        if (!title) {
+          return false
+        }
+
+        const meta = { type: 'user', title }
         setUtags(element, key, meta)
         return true
       }
@@ -92,7 +100,7 @@ export default (() => {
         // profile header
         const element = getFirstHeadElement('h1')
         if (element) {
-          const title = getTrimmedTitle(element)
+          const title = extractTrimmedTextWithImageAlt(element)
           if (title) {
             const meta = { title, type: 'user' }
             setUtags(element, key, meta)

@@ -408,3 +408,42 @@ export function getUtagsTargetFromEvent(event: Event): HTMLElement | undefined {
   const ancestor = target.closest<HTMLElement>('[data-utags_id]')!
   return ancestor || undefined
 }
+
+/**
+ * Extracts text content from an element, including alt text from images
+ * @param element - The DOM element to extract text from
+ * @returns The combined text content from the element and its children
+ */
+export function extractTextWithImageAlt(element: Element): string {
+  let text = ''
+
+  // Process all child nodes
+  for (const node of Array.from(element.childNodes)) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      // 1. Text node: directly append its content
+      text += node.textContent || ''
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const elementNode = node as Element
+
+      // 2. Element node: check if it's an image
+      text +=
+        // If it's an image, append its alt attribute value
+        // 3. Otherwise, recursively process other nested elements (like <span>, <b>, etc.)
+        elementNode.tagName === 'IMG'
+          ? elementNode.getAttribute('alt') || ''
+          : extractTextWithImageAlt(elementNode)
+    }
+    // Ignore other node types, such as Comment Nodes
+  }
+
+  return text
+}
+
+/**
+ * Extracts text content from an element including alt text from images, and trims whitespace
+ * @param element - The DOM element to extract text from
+ * @returns The trimmed text content from the element and its children
+ */
+export function extractTrimmedTextWithImageAlt(element: Element): string {
+  return extractTextWithImageAlt(element).trim()
+}
