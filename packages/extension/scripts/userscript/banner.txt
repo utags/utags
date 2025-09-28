@@ -102,6 +102,7 @@
 // @match                https://www.nodeloc.com/*
 // @match                https://veryfb.com/*
 // @match                https://www.nodeseek.com/*
+// @match                https://www.deepflood.com/*
 // @match                https://*.inoreader.com/*
 // @match                https://kater.me/*
 // @match                https://bbs.viva-la-vita.org/*

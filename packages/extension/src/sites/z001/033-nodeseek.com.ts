@@ -59,7 +59,7 @@ export default (() => {
   }
 
   return {
-    matches: /www\.nodeseek\.com/,
+    matches: /www\.nodeseek\.com|www\.deepflood\.com/,
     preProcess() {
       setVisitedAvailable(true)
     },

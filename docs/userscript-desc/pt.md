@@ -56,6 +56,7 @@ Sites atualmente suportados:
 - Kater ([kater.me](https://kater.me/))
 - Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
+- DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
 - zhipin.com ([www.zhipin.com](https://www.zhipin.com/))
 - Cursor - Community Forum ([forum.cursor.com](https://forum.cursor.com/))
