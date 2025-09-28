@@ -64,6 +64,7 @@
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
+- Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - 還有更多。點擊[這裡](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)建議新網站。
 
 另外，由於 Greasy Fork 的公開政策，您需要在腳本設定中手動添加以下網站的 `user matches` 規則：

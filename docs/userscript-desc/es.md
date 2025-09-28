@@ -64,6 +64,7 @@ Sitios actualmente soportados:
 - Flickr ([www.flickr.com](https://www.flickr.com/))
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
+- Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - Y muchos más. Haga clic [aquí](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) para sugerir nuevos sitios.
 
 Además, debido a las políticas públicas de Greasy Fork, debe agregar manualmente reglas `user matches` en la configuración del script para los siguientes sitios web:
