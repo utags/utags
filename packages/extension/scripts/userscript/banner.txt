@@ -80,6 +80,8 @@
 // @match                https://community.cloudflare.com/*
 // @match                https://community.wanikani.com/*
 // @match                https://forum.cursor.com/*
+// @match                https://forum.obsidian.md/*
+// @match                https://forum-zh.obsidian.md/*
 // @match                https://bbs.nga.cn/*
 // @match                https://nga.178.com/*
 // @match                https://ngabbs.com/*
