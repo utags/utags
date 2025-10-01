@@ -1,4 +1,5 @@
 import { $, $$, createElement } from 'browser-extension-utils'
+import { trimTitle } from 'utags-utils'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
@@ -445,5 +446,5 @@ export function extractTextWithImageAlt(element: Element): string {
  * @returns The trimmed text content from the element and its children
  */
 export function extractTrimmedTextWithImageAlt(element: Element): string {
-  return extractTextWithImageAlt(element).trim()
+  return trimTitle(extractTextWithImageAlt(element))
 }

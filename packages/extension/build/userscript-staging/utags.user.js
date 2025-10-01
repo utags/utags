@@ -1519,7 +1519,13 @@
   }
   function trimTitle(title) {
     if (!title) return ""
-    return title.replaceAll(/\s+/gm, " ").trim()
+    return title
+      .replaceAll("\u200D", " ")
+      .replaceAll(
+        /[\s\u200B\u200C\u2060\uFEFF\u2066\u2067\u2068\u2069\u061C\u202A\u202B\u202C\u202D\u202E]+/gm,
+        " "
+      )
+      .trim()
   }
   function getTrimmedTitle(element) {
     return trimTitle(element.textContent)
@@ -2859,7 +2865,7 @@
     return text
   }
   function extractTrimmedTextWithImageAlt(element) {
-    return extractTextWithImageAlt(element).trim()
+    return trimTitle(extractTextWithImageAlt(element))
   }
   var timeoutIds = /* @__PURE__ */ new Set()
   var intervalIds = /* @__PURE__ */ new Set()
