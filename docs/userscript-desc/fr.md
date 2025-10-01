@@ -132,6 +132,7 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
   - Optimiser le support du site web bilibili.com, améliorant la compatibilité et les performances de la fonctionnalité de tags sur la plateforme
   - Ajouter des fonctionnalités de filtrage de tags spéciaux et d'étoiles rapides pour le site web pornhub.com
   - Ajouter des fonctionnalités de filtrage de tags spéciaux et d'étoiles rapides pour le site web youtube.com, optimiser la logique de correspondance des noms d'utilisateur
+  - Ajouter de nouveaux tags spéciaux commençant par des points d'exclamation : !, !!, !!!, !important pour le marquage de priorité
 - 0.19.x
   - Ajout de commandes de menu de tags rapides : Configurez des tags rapides personnalisés dans les paramètres et accédez-y via le menu clic droit avec les icônes ➕/➖ pour ajouter/supprimer des tags
   - Ajouter la fonction d'étoile rapide pour le site web linux.do - activez l'ajout rapide d'étoiles dans les paramètres pour un marquage plus rapide

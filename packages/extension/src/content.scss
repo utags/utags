@@ -618,6 +618,18 @@
     display: none;
   }
 
+  [data-utags_list_node*=",★,"],
+  [data-utags_list_node*=",★★,"],
+  [data-utags_list_node*=",★★★,"],
+  [data-utags_list_node*=",☆,"],
+  [data-utags_list_node*=",☆☆,"],
+  [data-utags_list_node*=",☆☆☆,"],
+  /* Tag start with !, eg. !, !!, !!!, !important */
+  [data-utags_list_node*=",!"] {
+    opacity: 100% !important;
+    display: var(--utags-list-node-display) !important;
+  }
+
   [data-utags_list_node*=",热门,"],
   [data-utags_list_node*=",收藏,"],
   [data-utags_list_node*=",重要,"],

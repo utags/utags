@@ -129,6 +129,7 @@ For now it works on
   - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
   - Add special tag filtering and quick star functionality for pornhub.com website
   - Add special tag filtering and quick star functionality for youtube.com website, optimize username matching logic
+  - Add new special tags starting with exclamation marks: !, !!, !!!, !important for priority marking
 - 0.19.x
   - Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
   - Optimize data sync logic, solve data inconsistency problem
