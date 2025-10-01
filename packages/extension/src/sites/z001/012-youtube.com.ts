@@ -18,11 +18,11 @@ export default (() => {
     if (href.startsWith(prefix) || href.startsWith(prefix2)) {
       const href2 = href.startsWith(prefix2) ? href.slice(22) : href.slice(24)
       if (exact) {
-        if (/^@[\w-%]+$/.test(href2)) {
-          return prefix + href2.replace(/(^@[\w-%]+).*/, '$1')
+        if (/^@[\w-.%]+$/.test(href2)) {
+          return prefix + href2.replace(/(^@[\w-.%]+).*/, '$1')
         }
-      } else if (/^@[\w-%]+/.test(href2)) {
-        return prefix + href2.replace(/(^@[\w-%]+).*/, '$1')
+      } else if (/^@[\w-.%]+/.test(href2)) {
+        return prefix + href2.replace(/(^@[\w-.%]+).*/, '$1')
       }
     }
 
@@ -147,6 +147,7 @@ export default (() => {
           if (title) {
             const meta = { title }
             setUtags(element, key, meta)
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }
         }
@@ -163,6 +164,7 @@ export default (() => {
           if (title) {
             const meta = { title, type: 'video' }
             setUtags(element, key, meta)
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
           }
         }

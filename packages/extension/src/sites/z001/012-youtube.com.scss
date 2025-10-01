@@ -1,6 +1,6 @@
 :not(#a):not(#b):not(#c) {
   /* default */
-  a + {
+  * + {
     .utags_ul_0 {
       /* right-center */
       object-position: 200% 50%;
@@ -96,8 +96,17 @@
     }
   }
 
+  /* watch page > video title */
+  #title h1.ytd-watch-metadata {
+    &[data-utags_fit_content="1"] {
+      max-width: fit-content !important;
+    }
+  }
+
   /* watch page > channel name */
-  .watch-active-metadata ytd-channel-name yt-formatted-string {
+  .watch-active-metadata ytd-channel-name yt-formatted-string.ytd-channel-name {
+    flex-direction: column;
+
     .utags_ul_1 {
       margin: auto 0 !important;
     }
