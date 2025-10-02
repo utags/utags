@@ -20,6 +20,9 @@ import {
   type SyncSettings,
 } from '../stores/sync-config-store.js'
 import { EventEmitter } from '../lib/event-emitter.js'
+import { isChineseLocale } from '../utils/i18n-utils.js'
+import { requestConfirm } from '../stores/confirm-store.js'
+import * as m from '../paraglide/messages.js'
 import {
   mergeBookmarks,
   type MergeStrategy,
@@ -380,7 +383,8 @@ export class SyncManager extends EventEmitter<SyncEvents> {
         remoteBookmarks,
         serviceConfig,
         this.defaultMergeStrategy,
-        currentSyncTimestamp
+        currentSyncTimestamp,
+        remoteSyncMeta
       )
       if (!mergeResult.success || !mergeResult.mergedBookmarks) {
         return false // Error handling done in _mergeData
@@ -632,7 +636,8 @@ export class SyncManager extends EventEmitter<SyncEvents> {
     remoteBookmarks: BookmarksData | undefined,
     serviceConfig: SyncServiceConfig,
     defaultMergeStrategy: MergeStrategy,
-    currentSyncTimestamp: number
+    currentSyncTimestamp: number,
+    remoteSyncMeta?: SyncMetadata
   ): Promise<{
     success: boolean
     mergedBookmarks?: BookmarksData
@@ -650,6 +655,77 @@ export class SyncManager extends EventEmitter<SyncEvents> {
     const syncOption: SyncOption = {
       currentSyncTime: currentSyncTimestamp,
       lastSyncTime: serviceConfig.lastDataChangeTimestamp || 0,
+    }
+
+    // Compare versions only when they are pure numeric or 'v<number>' formatted
+    const parseSimpleVersion = (v?: string): number | undefined => {
+      if (!v) return undefined
+      const s = v.trim()
+      if (/^\d+$/.test(s)) return Number(s)
+      const m = /^v(\d+)$/.exec(s)
+      if (m) return Number(m[1])
+      return undefined
+    }
+
+    const remoteVer = parseSimpleVersion(remoteSyncMeta?.version)
+    const localVer = parseSimpleVersion(serviceConfig.lastSyncMeta?.version)
+    console.log(
+      `[SyncManager] Comparing remote version ${remoteVer} with local version ${localVer}`
+    )
+
+    // Version sanity check: if remote version is older than last synced version
+    // Prompt user to run a first-merge flow or disable the sync service
+    if (
+      remoteVer !== undefined &&
+      localVer !== undefined &&
+      remoteVer < localVer
+    ) {
+      const remoteVerText = remoteSyncMeta?.version ?? String(remoteVer)
+      const localVerText =
+        serviceConfig.lastSyncMeta?.version ?? String(localVer)
+
+      // Use global confirm store handled in App.svelte
+      const showConfirmModal = async (opts: {
+        title: string
+        message: string
+        confirmText?: string
+        cancelText?: string
+      }): Promise<boolean> => {
+        return requestConfirm(opts)
+      }
+
+      // Use i18n messages
+      const title = m.CONFIRM_MODAL_TITLE_SYNC_STRATEGY()
+      const message = m.CONFIRM_MODAL_MESSAGE_SYNC_STRATEGY({
+        remoteVer: remoteVerText,
+        localVer: localVerText,
+      })
+
+      const proceed = await showConfirmModal({
+        title,
+        message,
+        confirmText: m.CONTINUE_BUTTON_TEXT?.() || 'Continue',
+        cancelText: undefined,
+      })
+      if (proceed) {
+        // Start first-merge: reset lastSyncTime to 0 and prefer newer data
+        syncOption.lastSyncTime = 0
+        mergeStrategy.meta = 'newer'
+        mergeStrategy.tags = 'newer'
+        console.warn(
+          `[SyncManager] Remote version (${remoteVerText}) is older than last sync version (${localVerText}). Proceed with first-merge: lastSyncTime=0, strategy=meta:newer,tags:newer.`
+        )
+      } else {
+        const updatedServiceConfig: SyncServiceConfig = {
+          ...serviceConfig,
+          enabled: false,
+        }
+        updateSyncService(updatedServiceConfig)
+        console.warn(
+          `[SyncManager] Remote version check failed and user chose not to continue. Disabled sync service: ${serviceConfig.name}`
+        )
+        return { success: false }
+      }
     }
 
     this.updateStatus({ type: 'merging' })

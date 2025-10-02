@@ -50,6 +50,7 @@
   import BatchTagAddModal from './components/BatchTagAddModal.svelte'
   import BatchTagRemoveModal from './components/BatchTagRemoveModal.svelte'
   import ConfirmModal from './components/ConfirmModal.svelte'
+  import { confirmState, resolveConfirm } from './stores/confirm-store.js'
 
   import Toolbar from './components/Toolbar.svelte'
   import { settings, bookmarks, exportData } from './stores/stores.js'
@@ -707,6 +708,15 @@
         cancelText={m.MODAL_CANCEL_BUTTON()}
         bind:isOpen={showBatchRestoreConfirmModal}
         onConfirm={confirmBatchRestoreBookmarks} />
+      <!-- Global ConfirmModal controlled by confirmState store -->
+      <ConfirmModal
+        isOpen={$confirmState.isOpen}
+        title={$confirmState.title}
+        message={$confirmState.message}
+        confirmText={$confirmState.confirmText}
+        cancelText={$confirmState.cancelText ?? m.MODAL_CANCEL_BUTTON()}
+        onConfirm={() => resolveConfirm(true)}
+        onClose={() => resolveConfirm(false)} />
     </div>
   </div>
 </main>

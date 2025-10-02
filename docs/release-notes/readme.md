@@ -2,12 +2,17 @@
 
 > English | [中文](zh-CN.md)
 
+## uTags v0.21 Release Notes
+
+- Optimize remote version anomaly handling: after confirmation, perform first-merge (`lastSyncTime=0`, prefer newer data) or cancel to disable sync.
+
 ## uTags v0.20 Release Notes
 
 - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
 - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
 - Add special tag filtering and quick star functionality for pornhub.com website
 - Add special tag filtering and quick star functionality for youtube.com website, optimize username matching logic
+- Add new special tags starting with exclamation marks: !, !!, !!!, !important for priority marking
 
 ## uTags v0.19 Release Notes
 

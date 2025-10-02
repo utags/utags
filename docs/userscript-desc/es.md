@@ -127,6 +127,8 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
 
 ## Notas de la versión
 
+- 0.21
+  - Optimizar el manejo de anomalías de versión remota: tras confirmación, realizar primera fusión (`lastSyncTime=0`, preferir datos más nuevos) o cancelar para desactivar la sincronización.
 - 0.20
   - Agregar funcionalidad de recorrido shadowRoot para admitir la búsqueda y etiquetado de elementos dentro de Shadow DOM
   - Optimizar el soporte del sitio web bilibili.com, mejorando la compatibilidad y el rendimiento de la funcionalidad de etiquetas en la plataforma

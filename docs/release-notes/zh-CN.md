@@ -2,12 +2,17 @@
 
 > [English](readme.md) | 中文
 
+## uTags v0.21 版本更新
+
+- 优化远程版本异常处理：确认后可执行首次合并（`lastSyncTime=0`，优先较新数据）或取消以禁用同步。
+
 ## uTags v0.20 版本更新
 
 - 新增 shadowRoot 遍历功能，支持在 Shadow DOM 中查找和标记元素
 - 优化 bilibili.com 网站支持，提升标签功能在该平台的兼容性和性能
 - 为 pornhub.com 网站添加特殊标签过滤功能，添加快速星标功能
 - 为 youtube.com 网站添加特殊标签过滤功能，添加快速星标功能，优化用户名匹配逻辑
+- 新增以感叹号开头的特殊标签：!、!!、!!!、!important 用于优先级标记
 
 ## uTags v0.19 版本更新
 

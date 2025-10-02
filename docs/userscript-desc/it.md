@@ -127,6 +127,8 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
 
 ## Note di rilascio
 
+- 0.21
+  - Ottimizzare la gestione delle anomalie di versione remota: dopo la conferma, eseguire la prima fusione (`lastSyncTime=0`, preferire i dati più recenti) oppure annullare per disabilitare la sincronizzazione.
 - 0.20
   - Aggiungere la funzionalità di attraversamento shadowRoot per supportare la ricerca e l'etichettatura di elementi all'interno di Shadow DOM
   - Ottimizzare il supporto del sito web bilibili.com, migliorando la compatibilità e le prestazioni della funzionalità di tag sulla piattaforma
