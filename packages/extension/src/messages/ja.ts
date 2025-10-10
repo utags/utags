@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': '現在のページに {tag} タグを追加',
   'menu.removeQuickTag': '現在のページから {tag} タグを削除',
   'menu.bookmarkList': 'ブックマーク マネージャ',
+  'menu.hideAllTags': 'すべてのタグを非表示',
+  'menu.unhideAllTags': 'すべてのタグの非表示を解除',
   'settings.enableQuickStar': 'クイックスター追加を有効にする',
   'settings.quickTags': 'クイックタグ',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

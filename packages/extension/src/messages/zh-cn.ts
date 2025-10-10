@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': '为当前网页添加 {tag} 标签',
   'menu.removeQuickTag': '删除当前网页的 {tag} 标签',
   'menu.bookmarkList': '书签管理器',
+  'menu.hideAllTags': '隐藏所有标签',
+  'menu.unhideAllTags': '取消隐藏所有标签',
   'settings.quickTags': '快捷标签',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
   'settings.enableQuickStar': '启用快速添加星标',

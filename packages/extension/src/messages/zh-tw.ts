@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': '為當前網頁添加 {tag} 標籤',
   'menu.removeQuickTag': '刪除當前網頁的 {tag} 標籤',
   'menu.bookmarkList': '書籤管理器',
+  'menu.hideAllTags': '隱藏所有標籤',
+  'menu.unhideAllTags': '取消隱藏所有標籤',
   'settings.enableQuickStar': '啟用快速新增星標',
   'settings.quickTags': '快捷標籤',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

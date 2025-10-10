@@ -129,6 +129,7 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
 
 - 0.21
   - Optimiser la gestion des anomalies de version distante : après confirmation, effectuer une première fusion (`lastSyncTime=0`, privilégier les données les plus récentes) ou annuler pour désactiver la synchronisation.
+  - Nouveau commande de menu : Masquer/Afficher toutes les tags avec titre dynamique et support multilingue.
 - 0.20
   - Ajouter la fonctionnalité de traversée shadowRoot pour prendre en charge la recherche et le marquage d'éléments dans Shadow DOM
   - Optimiser le support du site web bilibili.com, améliorant la compatibilité et les performances de la fonctionnalité de tags sur la plateforme

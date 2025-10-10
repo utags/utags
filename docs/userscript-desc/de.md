@@ -129,6 +129,7 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
 
 - 0.21
   - Optimierung der Behandlung von Remote-Versionsanomalien: Nach Bestätigung erste Zusammenführung durchführen (`lastSyncTime=0`, neuere Daten bevorzugen) oder abbrechen, um die Synchronisierung zu deaktivieren.
+  - Neuer Menü-Befehl: Alle Tags ausblenden/einblenden mit dynamischem Titel und mehrsprachiger Unterstützung.
 - 0.20
   - Hinzufügung der shadowRoot-Traversierungsfunktionalität zur Unterstützung des Findens und Markierens von Elementen innerhalb des Shadow DOM
   - Optimierung der bilibili.com-Website-Unterstützung, Verbesserung der Tag-Funktionalitätskompatibilität und -leistung auf der Plattform

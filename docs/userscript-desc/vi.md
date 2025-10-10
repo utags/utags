@@ -129,6 +129,7 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 
 - 0.21
   - Tối ưu xử lý bất thường phiên bản từ xa: sau khi xác nhận, thực hiện hợp nhất lần đầu (`lastSyncTime=0`, ưu tiên dữ liệu mới hơn) hoặc hủy để vô hiệu hóa đồng bộ.
+  - Lệnh menu mới: Ẩn/Hiện tất cả thẻ với tiêu đề động và hỗ trợ đa ngôn ngữ.
 - 0.20
   - Thêm chức năng duyệt shadowRoot để hỗ trợ tìm kiếm và gắn thẻ các phần tử trong Shadow DOM
   - Tối ưu hóa hỗ trợ trang web bilibili.com, cải thiện khả năng tương thích và hiệu suất của chức năng thẻ trên nền tảng

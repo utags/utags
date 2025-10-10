@@ -129,6 +129,7 @@ More information: [https://github.com/utags/utags](https://github.com/utags/utag
 
 - 0.21
   - Optimize remote version anomaly handling: after confirmation, perform first-merge (`lastSyncTime=0`, prefer newer data) or cancel to disable sync.
+  - Add menu command: Hide/Unhide all tags with dynamic title and multi-language support.
 - 0.20
   - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
   - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform

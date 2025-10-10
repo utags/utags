@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': 'Aggiungi tag {tag} alla pagina corrente',
   'menu.removeQuickTag': 'Rimuovi tag {tag} dalla pagina corrente',
   'menu.bookmarkList': 'Gestione segnalibri',
+  'menu.hideAllTags': 'Nascondi tutte le etichette',
+  'menu.unhideAllTags': 'Mostra tutte le etichette',
   'settings.enableQuickStar': 'Abilita aggiunta rapida stella',
   'settings.quickTags': 'Tag Rapidi',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

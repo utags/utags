@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': 'Adicionar tag {tag} à página atual',
   'menu.removeQuickTag': 'Remover tag {tag} da página atual',
   'menu.bookmarkList': 'Gerenciador de favoritos',
+  'menu.hideAllTags': 'Ocultar todas as etiquetas',
+  'menu.unhideAllTags': 'Mostrar todas as etiquetas',
   'settings.enableQuickStar': 'Ativar adição rápida de estrela',
   'settings.quickTags': 'Tags Rápidas',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

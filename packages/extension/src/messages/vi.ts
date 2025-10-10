@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': 'Thêm thẻ {tag} vào trang hiện tại',
   'menu.removeQuickTag': 'Xóa thẻ {tag} khỏi trang hiện tại',
   'menu.bookmarkList': 'Trình quản lý dấu trang',
+  'menu.hideAllTags': 'Ẩn tất cả thẻ',
+  'menu.unhideAllTags': 'Hiện tất cả thẻ',
   'settings.enableQuickStar': 'Kích hoạt thêm sao nhanh',
   'settings.quickTags': 'Thẻ Nhanh',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

@@ -98,6 +98,8 @@ body {
   'menu.addQuickTag': 'Добавить тег {tag} к текущей странице',
   'menu.removeQuickTag': 'Удалить тег {tag} с текущей страницы',
   'menu.bookmarkList': 'Диспетчер закладок',
+  'menu.hideAllTags': 'Скрыть все теги',
+  'menu.unhideAllTags': 'Показать все теги',
   'settings.enableQuickStar': 'Включить быстрое добавление звезды',
   'settings.quickTags': 'Быстрые Теги',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',

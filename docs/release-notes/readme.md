@@ -5,6 +5,7 @@
 ## uTags v0.21 Release Notes
 
 - Optimize remote version anomaly handling: after confirmation, perform first-merge (`lastSyncTime=0`, prefer newer data) or cancel to disable sync.
+- Add menu command to hide/unhide all tags, with dynamic title and multi-language support.
 
 ## uTags v0.20 Release Notes
 

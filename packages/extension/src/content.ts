@@ -90,6 +90,42 @@ const host = location.host
 
 const eventManager = new EventListenerManager()
 
+// Store menu id for hide/unhide all tags command
+let hideAllTagsMenuId: string | number | undefined
+
+// Helper to check whether all tags are currently hidden
+function isAllTagsHidden(): boolean {
+  return hasClass(doc.documentElement, 'utags_hide_all_tags')
+}
+
+// Click handler to toggle class and refresh menu title
+async function onClickHideAllTags() {
+  if (isAllTagsHidden()) {
+    removeClass(doc.documentElement, 'utags_hide_all_tags')
+    displayTagsThrottled()
+  } else {
+    addClass(doc.documentElement, 'utags_hide_all_tags')
+  }
+
+  await registerOrUpdateHideAllTagsMenu()
+}
+
+// Register or update the hide/unhide all tags menu command
+async function registerOrUpdateHideAllTagsMenu() {
+  const title = `🙈 ${isAllTagsHidden() ? i('menu.unhideAllTags') : i('menu.hideAllTags')}`
+  const options: RegisterMenuCommandOptions = {}
+  if (hideAllTagsMenuId === undefined) {
+    hideAllTagsMenuId = await registerMenuCommand(
+      title,
+      onClickHideAllTags,
+      options
+    )
+  } else {
+    options.id = String(hideAllTagsMenuId)
+    await registerMenuCommand(title, onClickHideAllTags, options)
+  }
+}
+
 const isEnabledByDefault = () => {
   if (host.includes('www.bilibili.com')) {
     return false
@@ -651,6 +687,10 @@ function cleanUnusedUtags() {
 }
 
 async function displayTags() {
+  if (isAllTagsHidden()) {
+    return
+  }
+
   if (start) {
     console.error('start of displayTags', Date.now() - start)
   }
@@ -1228,6 +1268,9 @@ async function main() {
     // For userscript environment, simply open in new tab
     window.open(url, 'utags_bookmarks')
   })
+
+  // Register hide/unhide all tags menu command for userscript (with dynamic title)
+  await registerOrUpdateHideAllTagsMenu()
 
   // Initialize the star handler with required dependencies
   // initStarHandler(showCurrentPageLinkUtagsPrompt)

@@ -97,6 +97,8 @@ body {
   'menu.addQuickTag': '{tag} Tag zur aktuellen Seite hinzufügen',
   'menu.removeQuickTag': '{tag} Tag von der aktuellen Seite entfernen',
   'menu.bookmarkList': 'Lesezeichen-Manager',
+  'menu.hideAllTags': 'Alle Tags ausblenden',
+  'menu.unhideAllTags': 'Alle Tags einblenden',
   'settings.enableQuickStar': 'Schnelles Hinzufügen von Sternen aktivieren',
   'settings.quickTags': 'Schnell-Tags',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
