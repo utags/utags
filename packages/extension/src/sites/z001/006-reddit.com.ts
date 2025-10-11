@@ -103,6 +103,8 @@ export default (() => {
       'shreddit-feed article a[data-testid="subreddit-name"]',
       'shreddit-feed article a[slot="title"]',
       'shreddit-feed article [slot="authorName"] a',
+      // Flair
+      'shreddit-feed article shreddit-post-flair a',
       'shreddit-feed shreddit-ad-post a',
       'shreddit-comment faceplate-hovercard a',
       'shreddit-comment [noun="comment_author"] a',

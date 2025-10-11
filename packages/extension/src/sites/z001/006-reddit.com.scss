@@ -87,6 +87,31 @@
     }
   }
 
+  /* List > Flair*/
+  shreddit-feed article shreddit-post-flair a {
+    &[data-utags_fit_content="1"] {
+      display: inline-block;
+      width: fit-content !important;
+      height: fit-content !important;
+    }
+
+    & + {
+      .utags_ul_0 {
+        /* right-top */
+        object-position: 200% 0%;
+      }
+
+      .utags_ul_1 {
+        /* left-bottom */
+        object-position: 200% 0%;
+        position: absolute;
+        top: -9999px;
+        margin-top: 3px !important;
+        margin-left: 0px !important;
+      }
+    }
+  }
+
   /* Comments page */
   h1[slot="title"] {
     &[data-utags_fit_content="1"] {
