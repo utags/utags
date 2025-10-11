@@ -1,8 +1,41 @@
 :not(#a):not(#b):not(#c) {
-  [data-e2e="comment-item"] {
-    .utags_ul_0 .utags_captain_tag {
-      left: -26px;
+  /* default */
+  a + {
+    .utags_ul_0 {
+      /* right-top */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
     }
+
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
+  /* 视频评论区用户名 */
+  [data-e2e="comment-item"] {
+    .utags_ul_1 {
+      display: flex !important;
+    }
+  }
+
+  /* Comments prevent from hide */
+  [data-e2e="comment-item"][data-utags_list_node*=",hide,"],
+  [data-e2e="comment-item"][data-utags_list_node*=",隐藏,"],
+  [data-e2e="comment-item"][data-utags_list_node*=",屏蔽,"],
+  [data-e2e="comment-item"][data-utags_list_node*=",不再显示,"],
+  [data-e2e="comment-item"][data-utags_list_node*=",block,"] {
+    opacity: 1%;
+    display: flex !important;
   }
 
   [data-e2e="detail-video-info"] {
