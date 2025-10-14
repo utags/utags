@@ -89,7 +89,7 @@ async function handleHttpRequest(
   request: HttpRequestMessage
 ): Promise<HttpResponse> {
   // Update statistics
-  await updateStatistics()
+  // await updateStatistics()
   const { method, url, headers, body, timeout } = request.payload
 
   console.log(
