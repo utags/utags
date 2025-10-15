@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.21.3
+// @version              0.21.4
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -126,6 +126,9 @@
 // @include              https://e*hentai.org/*
 // @include              https://*.p*nhub.com/*
 // @include              https://*.e*hentai.org/*
+// @include              https://xsijishe.*/*
+// @include              https://sjs47.*/*
+// @include              https://sjslt.*/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *
@@ -10309,6 +10312,258 @@
       getStyle: () => rule34video_com_default,
     }
   })()
+  var xsijishe_net_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
+  var xsijishe_net_default2 = (() => {
+    const mainPrefix = "https://xsijishe.net/"
+    const prefix3 = location.origin + "/"
+    function getCanonicalUrl2(url) {
+      if (url.startsWith(prefix3)) {
+        let href2 = getUserProfileUrl(url, true)
+        if (href2) {
+          return href2
+        }
+        href2 = getPostUrl(url)
+        if (href2) {
+          return href2
+        }
+      }
+      return url
+    }
+    function getUserProfileUrl(url, exact = false) {
+      if (url.startsWith(prefix3)) {
+        url = deleteUrlParameters(url, "do")
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (exact) {
+          if (/^\?\d+(#.*)?$/.test(href2)) {
+            return (
+              mainPrefix +
+              href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
+            return (
+              mainPrefix +
+              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
+            return (
+              mainPrefix +
+              href2.replace(
+                /^home\.php\?mod=space&uid=(\d+).*/,
+                "home.php?mod=space&uid=$1"
+              )
+            )
+          }
+        } else if (/^u\/[\w.-]+/.test(href2)) {
+          return mainPrefix + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getPostUrl(url) {
+      if (url.startsWith(prefix3)) {
+        const href2 = url.slice(prefix3.length).toLowerCase()
+        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
+          return (
+            mainPrefix +
+            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
+          )
+        }
+        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
+          return (
+            mainPrefix +
+            href2.replace(
+              /^forum\.php\?mod=redirect&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
+          return (
+            mainPrefix +
+            href2.replace(
+              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /xsijishe\.\w+|sjs47\.\w+|sjslt\.cc/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        //
+        "#threadlist table tbody",
+        "#postlist .comiis_vrx",
+        ".nex_forum_lists",
+      ],
+      conditionNodesSelectors: [
+        //
+        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
+        '#threadlist table tbody a[href^="thread-"]',
+        '#threadlist table tbody a[href^="space-uid-"]',
+        "#postlist .comiis_vrx .authi a",
+        ".nex_forum_lists .nex_threads_author a",
+        ".nex_forum_lists .nex_forumtit_top a",
+      ],
+      validate(element) {
+        const href = element.href
+        if (!href.startsWith(prefix3)) {
+          return true
+        }
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const title2 = getTrimmedTitle(element)
+          if (!title2) {
+            return false
+          }
+          if (
+            /^\d+$/.test(title2) &&
+            element.parentElement.parentElement.textContent.includes(
+              "\u79EF\u5206"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "user" } : { type: "user", title: title2 }
+          setUtags(element, key, meta)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl(href)
+        if (key) {
+          const title2 = getTrimmedTitle(element)
+          if (!title2) {
+            return false
+          }
+          if (
+            title2 === "New" ||
+            title2 === "\u7F6E\u9876" ||
+            /^\d+$/.test(title2) ||
+            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title2)
+          ) {
+            return false
+          }
+          if ($('span[title^="20"]', element)) {
+            return false
+          }
+          if (
+            element.parentElement.textContent.includes(
+              "\u6700\u540E\u56DE\u590D\u4E8E"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "post" } : { type: "post", title: title2 }
+          setUtags(element, key, meta)
+          markElementWhetherVisited(key, element)
+          return true
+        }
+        const title = getTrimmedTitle(element)
+        if (!title) {
+          return false
+        }
+        if (
+          title === "New" ||
+          title === "\u7F6E\u9876" ||
+          /^\d+$/.test(title)
+        ) {
+          return false
+        }
+        return false
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        "#hd",
+        ".oyheader",
+        "#scrolltop",
+        "#fd_page_bottom",
+        "#visitedforums",
+        "#pt",
+        ".tps",
+        ".pgbtn",
+        ".pgs",
+        "#f_pst",
+        'a[href*="member.php?mod=logging"]',
+        'a[href*="member.php?mod=register"]',
+        'a[href*="login/oauth/"]',
+        'a[href*="mod=spacecp&ac=usergroup"]',
+        'a[href*="home.php?mod=spacecp"]',
+        'a[href*="goto=lastpost#lastpost"]',
+        'a[onclick*="copyThreadUrl"]',
+        "#gadmin_menu",
+        "#guser_menu",
+        "#gupgrade_menu",
+        "#gmy_menu",
+        ".showmenu",
+        "ul.tb.cl",
+        ".comiis_irbox_tit",
+        "#thread_types",
+        "#threadlist .th",
+        "#filter_special_menu",
+        'a[title="RSS"]',
+        ".fa_fav",
+        ".p_pop",
+        ".comiis_topinfo",
+        ".bm .bm_h .kmfz",
+        "td.num a",
+        "td.plc .pi",
+        "td.plc .po.hin",
+        "td.pls .tns",
+        "ul.comiis_o",
+        ".nex_member_more",
+        ".nex_member_hids",
+        'a[onclick*="showMenu"]',
+        'a[onclick*="showWindow"]',
+        ".toplist_7ree",
+        "nav",
+        ".btn",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "user" }
+              setUtags(element, key, meta)
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("#thread_subject")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "post" }
+              setUtags(element, key, meta)
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => xsijishe_net_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
   var sites = [
     github_com_default2,
     v2ex_default2,
@@ -10355,6 +10610,7 @@
     dmm_co_jp_default2,
     kemono_su_default2,
     rule34video_com_default2,
+    xsijishe_net_default2,
   ]
   var getCanonicalUrlFunctionList = [default_default2, ...sites]
     .map((site) => site.getCanonicalUrl)
