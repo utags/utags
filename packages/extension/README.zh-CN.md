@@ -71,6 +71,7 @@
 - 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
+- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装

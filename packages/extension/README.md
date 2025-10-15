@@ -71,6 +71,7 @@ For now it works on
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
+- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

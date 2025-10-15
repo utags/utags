@@ -66,6 +66,7 @@ Sites actuellement pris en charge :
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
+- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - Et bien d'autres. Cliquez [ici](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) pour suggérer de nouveaux sites.
 
 De plus, en raison des politiques publiques de Greasy Fork, vous devez ajouter manuellement des règles `user matches` dans les paramètres du script pour les sites web suivants :

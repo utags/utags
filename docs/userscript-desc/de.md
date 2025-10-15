@@ -66,6 +66,7 @@ Derzeit unterstützte Websites:
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
+- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - Und viele mehr. Klicken Sie [hier](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), um neue Websites vorzuschlagen.
 
 Außerdem müssen Sie aufgrund der öffentlichen Richtlinien von Greasy Fork für die folgenden Websites manuell `user matches`-Regeln in den Skripteinstellungen hinzufügen:

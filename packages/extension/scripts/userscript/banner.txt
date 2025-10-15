@@ -126,6 +126,9 @@
 // @include              https://e*hentai.org/*
 // @include              https://*.p*nhub.com/*
 // @include              https://*.e*hentai.org/*
+// @include              https://xsijishe.*/*
+// @include              https://sjs47.*/*
+// @include              https://sjslt.*/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *
