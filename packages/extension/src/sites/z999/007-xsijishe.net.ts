@@ -121,7 +121,7 @@ export default (() => {
       //
       '#threadlist table tbody',
       '#postlist .comiis_vrx',
-      '.nex_forum_lists'
+      '.nex_forum_lists',
     ],
     conditionNodesSelectors: [
       //
@@ -134,7 +134,7 @@ export default (() => {
       // author
       '.nex_forum_lists .nex_threads_author a',
       // post title
-      '.nex_forum_lists .nex_forumtit_top a'
+      '.nex_forum_lists .nex_forumtit_top a',
     ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
@@ -152,7 +152,7 @@ export default (() => {
 
         if (
           /^\d+$/.test(title) &&
-          element.parentElement!.parentElement!.textContent!.includes('积分')
+          element.parentElement!.parentElement!.textContent.includes('积分')
         ) {
           return false
         }
@@ -185,7 +185,7 @@ export default (() => {
           return false
         }
 
-        if (element.parentElement!.textContent!.includes('最后回复于')) {
+        if (element.parentElement!.textContent.includes('最后回复于')) {
           return false
         }
 

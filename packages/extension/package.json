@@ -64,20 +64,20 @@
     "browser-extension-storage": "^0.1.2",
     "browser-extension-utils": "^0.2.2",
     "plasmo": "^0.90.5",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "utags-utils": "^0.3.3"
   },
   "devDependencies": {
-    "@types/react": "^19.1.16",
-    "@types/react-dom": "^19.1.7",
-    "addons-linter": "^8.0.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "addons-linter": "^8.4.0",
     "bookmarkleter": "^1.1.0",
     "cross-env": "^10.1.0",
-    "esbuild": "^0.25.10",
-    "jsdom": "^27.0.0",
-    "sass": "^1.93.2",
-    "vitest": "^3.2.4"
+    "esbuild": "^0.25.12",
+    "jsdom": "^27.1.0",
+    "sass": "^1.93.3",
+    "vitest": "^4.0.6"
   },
   "manifest": {
     "permissions": [
