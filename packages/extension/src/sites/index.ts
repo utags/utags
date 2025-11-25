@@ -56,6 +56,7 @@ import twitch_tv from './z001/036-twitch.tv'
 import yamibo_com from './z001/037-yamibo.com'
 import flickr_com from './z001/038-flickr.com'
 import ruanyifeng_com from './z001/039-ruanyifeng.com'
+import _2libra_com from './z001/040-2libra.com'
 import pxxnhub from './z999/001-pxxnhub.com'
 import ehentxx from './z999/002-e-hentxx.org'
 import panda_chaika_moe from './z999/003-panda.chaika.moe'
@@ -119,6 +120,7 @@ const sites: Site[] = [
   yamibo_com,
   flickr_com,
   ruanyifeng_com,
+  _2libra_com,
   pxxnhub,
   ehentxx,
   panda_chaika_moe,
