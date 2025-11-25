@@ -111,6 +111,8 @@
 // @match                https://*.yamibo.com/*
 // @match                https://*.flickr.com/*
 // @match                https://*.ruanyifeng.com/*
+// @match                https://www.uscardforum.com/*
+// @match                https://2libra.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
@@ -129,6 +131,13 @@
 // @include              https://xsijishe.*/*
 // @include              https://sjs47.*/*
 // @include              https://sjslt.*/*
+// @include              https://simpcity.cr/*
+// @include              https://simpcity.su/*
+// @include              https://simpcity.is/*
+// @include              https://simpcity.cz/*
+// @include              https://simpcity.hk/*
+// @include              https://simpcity.rs/*
+// @include              https://simpcity.ax/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *
@@ -7405,7 +7414,7 @@
     }
     return {
       matches:
-        /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md/,
+        /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md|www\.uscardforum\.com/,
       preProcess() {
         setVisitedAvailable(true)
       },

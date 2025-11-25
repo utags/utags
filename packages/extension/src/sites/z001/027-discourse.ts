@@ -88,7 +88,7 @@ export default (() => {
 
   return {
     matches:
-      /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md/,
+      /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md|www\.uscardforum\.com/,
     preProcess() {
       setVisitedAvailable(true)
     },
