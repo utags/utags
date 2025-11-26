@@ -72,6 +72,8 @@ For now it works on
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
+- SimpCity ([simpcity.cr](https://simpcity.cr/))
+- 2libra ([2libra.com](https://2libra.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

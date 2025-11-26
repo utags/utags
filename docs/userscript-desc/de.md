@@ -67,6 +67,8 @@ Derzeit unterstützte Websites:
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
+- SimpCity ([simpcity.cr](https://simpcity.cr/))
+- 2libra ([2libra.com](https://2libra.com/))
 - Und viele mehr. Klicken Sie [hier](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), um neue Websites vorzuschlagen.
 
 Außerdem müssen Sie aufgrund der öffentlichen Richtlinien von Greasy Fork für die folgenden Websites manuell `user matches`-Regeln in den Skripteinstellungen hinzufügen:
