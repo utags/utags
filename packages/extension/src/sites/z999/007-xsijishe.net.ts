@@ -13,10 +13,24 @@ import defaultSite from '../default'
 
 export default (() => {
   // https://47447.net/
-  const mainPrefix = 'https://xsijishe.net/'
-  const prefix = location.origin + '/'
+  const prefix = 'https://xsijishe.net/'
+
+  function normalizeDomain(url: string) {
+    if (
+      !url.startsWith(prefix) &&
+      /xsijishe\.\w+|sjs47\.\w+|sjslt\.cc/.test(url)
+    ) {
+      return url.replace(
+        /^https:\/\/(xsijishe\.\w+|sjs47\.\w+|sjslt\.cc)\/?/,
+        prefix
+      )
+    }
+
+    return url
+  }
 
   function getCanonicalUrl(url: string) {
+    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       let href2 = getUserProfileUrl(url, true)
       if (href2) {
@@ -35,6 +49,7 @@ export default (() => {
   // https://xsijishe.net/forum.php?mod=forumdisplay&fid=5&filter=typeid&typeid=4
   // https://xsijishe.net/forum.php?mod=forumdisplay&fid=5&filter=typeid&typeid=4
   function getUserProfileUrl(url: string, exact = false) {
+    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       url = deleteUrlParameters(url, 'do')
       const href2 = url.slice(prefix.length).toLowerCase()
@@ -42,15 +57,14 @@ export default (() => {
         // https://xsijishe.net/?1234567
         if (/^\?\d+(#.*)?$/.test(href2)) {
           return (
-            mainPrefix +
-            href2.replace(/^\?(\d+).*/, 'home.php?mod=space&uid=$1')
+            prefix + href2.replace(/^\?(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
 
         // https://xsijishe.net/space-uid-1234567.html
         if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
           return (
-            mainPrefix +
+            prefix +
             href2.replace(/^space-uid-(\d+).*/, 'home.php?mod=space&uid=$1')
           )
         }
@@ -58,7 +72,7 @@ export default (() => {
         // https://xsijishe.net/home.php?mod=space&uid=234567
         if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
           return (
-            mainPrefix +
+            prefix +
             href2.replace(
               /^home\.php\?mod=space&uid=(\d+).*/,
               'home.php?mod=space&uid=$1'
@@ -66,7 +80,7 @@ export default (() => {
           )
         }
       } else if (/^u\/[\w.-]+/.test(href2)) {
-        return mainPrefix + href2.replace(/^(u\/[\w.-]+).*/, '$1')
+        return prefix + href2.replace(/^(u\/[\w.-]+).*/, '$1')
       }
     }
 
@@ -74,13 +88,14 @@ export default (() => {
   }
 
   function getPostUrl(url: string) {
+    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length).toLowerCase()
 
       // https://xsijishe.net/thread-1234567-1-1.html
       if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
         return (
-          mainPrefix +
+          prefix +
           href2.replace(/^thread-(\d+).*/, 'forum.php?mod=viewthread&tid=$1')
         )
       }
@@ -88,7 +103,7 @@ export default (() => {
       // https://xsijishe.net/forum.php?mod=redirect&tid=1234567&goto=lastpost#lastpost
       if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
         return (
-          mainPrefix +
+          prefix +
           href2.replace(
             /^forum\.php\?mod=redirect&tid=(\d+).*/,
             'forum.php?mod=viewthread&tid=$1'
@@ -99,7 +114,7 @@ export default (() => {
       // https://xsijishe.net/forum.php?mod=viewthread&tid=1234567
       if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
         return (
-          mainPrefix +
+          prefix +
           href2.replace(
             /^forum\.php\?mod=viewthread&tid=(\d+).*/,
             'forum.php?mod=viewthread&tid=$1'

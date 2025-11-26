@@ -1362,7 +1362,9 @@ async function main() {
   // })
 
   // For debug
-  // registerDebuggingHotkey()
+  if (process.env.PLASMO_TAG === 'dev') {
+    // registerDebuggingHotkey()
+  }
 }
 
 runWhenHeadExists(async () => {

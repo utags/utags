@@ -803,6 +803,9 @@ textarea[data-key="emojiTags"] {
   --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);
   --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);
 }
+table {
+  --utags-list-node-display: table-row-group;
+}
 
 [data-utags_darkmode="1"] {
   --utags-visited-title-color: #666;

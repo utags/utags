@@ -1,0 +1,5 @@
+:not(#a):not(#b):not(#c) {
+  .structItem.structItem--thread {
+    --utags-list-node-display: table;
+  }
+}

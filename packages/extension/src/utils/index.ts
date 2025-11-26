@@ -448,3 +448,20 @@ export function extractTextWithImageAlt(element: Element): string {
 export function extractTrimmedTextWithImageAlt(element: Element): string {
   return trimTitle(extractTextWithImageAlt(element))
 }
+
+/**
+ * Returns the concatenated text from direct child text nodes of the element.
+ * It ignores any nested elements (e.g., <a>, <span>) and only uses text nodes
+ * directly under the provided element. Consecutive whitespace is normalized.
+ */
+export function getDirectChildText(element: Element): string {
+  const parts: string[] = []
+  for (const node of element.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = (node.textContent ?? '').trim()
+      if (text) parts.push(text)
+    }
+  }
+
+  return parts.join(' ').replaceAll(/\s+/g, ' ').trim()
+}

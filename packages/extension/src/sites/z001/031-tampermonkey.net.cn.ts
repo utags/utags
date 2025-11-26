@@ -21,7 +21,7 @@ export default (() => {
         return href2
       }
 
-      href2 = getPostUrl(url, true)
+      href2 = getPostUrl(url)
       if (href2) {
         return href2
       }
