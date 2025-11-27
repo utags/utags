@@ -1,6 +1,5 @@
 import { getSettingsValue } from 'browser-extension-settings'
 
-let prefix = location.origin + '/'
 const host = location.host
 let useVisitedFunction = false
 let displayMark = false
@@ -13,10 +12,6 @@ let cache: Record<string, number> = {}
  */
 export function clearVisitedCache(): void {
   cache = {}
-}
-
-export function setPrefix(newPrefix: string) {
-  prefix = newPrefix
 }
 
 export function isAvailableOnCurrentSite() {
@@ -52,8 +47,8 @@ function saveVisitedLinks(newVisitedLinks: string[]) {
 }
 
 function convertKey(url: string) {
-  if (url.includes(prefix)) {
-    return url.slice(prefix.length)
+  if (url.startsWith('http')) {
+    return url.replace(/^https?:\/\/[^/]+\//, '')
   }
 
   return url

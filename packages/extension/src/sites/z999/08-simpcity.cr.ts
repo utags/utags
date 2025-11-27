@@ -40,11 +40,10 @@ export default (() => {
   }
 
   function getPostUrl(url: string, exact = false) {
-    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
-        if (/^threads\/[\w-%]+\.\d+$/.test(href2)) {
+        if (/^threads\/[\w-%]+\.\d+\/?$/.test(href2)) {
           return prefix + href2.replace(/^(threads\/[\w-%]+\.\d+).*/, '$1/')
         }
       } else if (/^threads\/[\w-%]+\.\d+/.test(href2)) {
@@ -56,11 +55,10 @@ export default (() => {
   }
 
   function getUserProfileUrl(url: string, exact = false) {
-    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
-        if (/^members\/[\w-]+\.\d+$/.test(href2)) {
+        if (/^members\/[\w-]+\.\d+\/?$/.test(href2)) {
           return prefix + href2.replace(/^(members\/[\w-]+\.\d+).*/, '$1/')
         }
       } else if (/^members\/[\w-]+\.\d+/.test(href2)) {
@@ -89,7 +87,7 @@ export default (() => {
       'article.message--post[itemtype="https://schema.org/Comment"] .message-userDetails a.username',
     ],
     validate(element: HTMLAnchorElement) {
-      const href = element.href
+      const href = normalizeDomain(element.href)
 
       if (!href.startsWith(prefix)) {
         return true
@@ -162,7 +160,8 @@ export default (() => {
       'a[href^="/account/"]',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getPostUrl(location.href)
+      const href = normalizeDomain(location.href)
+      let key = getPostUrl(href)
       if (key) {
         addVisited(key)
         const element = $('h1.p-title-value')
@@ -178,7 +177,7 @@ export default (() => {
         }
       }
 
-      key = getUserProfileUrl(location.href)
+      key = getUserProfileUrl(href)
       if (key) {
         const element = $('h1.memberHeader-name')
         if (element) {

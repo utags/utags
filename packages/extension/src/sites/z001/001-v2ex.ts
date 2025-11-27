@@ -5,7 +5,6 @@ import { getTrimmedTitle } from 'utags-utils'
 import {
   addVisited,
   markElementWhetherVisited,
-  setPrefix,
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
@@ -50,7 +49,6 @@ export default (() => {
     matches: /v2ex\.com|v2hot\.|v2ex\.co/,
     preProcess() {
       setVisitedAvailable(true)
-      setPrefix('https://www.v2ex.com/')
     },
     listNodesSelectors: [
       '.box .cell',

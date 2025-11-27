@@ -49,7 +49,6 @@ export default (() => {
   // https://xsijishe.net/forum.php?mod=forumdisplay&fid=5&filter=typeid&typeid=4
   // https://xsijishe.net/forum.php?mod=forumdisplay&fid=5&filter=typeid&typeid=4
   function getUserProfileUrl(url: string, exact = false) {
-    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       url = deleteUrlParameters(url, 'do')
       const href2 = url.slice(prefix.length).toLowerCase()
@@ -88,7 +87,6 @@ export default (() => {
   }
 
   function getPostUrl(url: string) {
-    url = normalizeDomain(url)
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length).toLowerCase()
 
@@ -152,7 +150,7 @@ export default (() => {
       '.nex_forum_lists .nex_forumtit_top a',
     ],
     validate(element: HTMLAnchorElement) {
-      const href = element.href
+      const href = normalizeDomain(element.href)
 
       if (!href.startsWith(prefix)) {
         return true
@@ -275,7 +273,8 @@ export default (() => {
       '.btn',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href)
+      const href = normalizeDomain(location.href)
+      let key = getUserProfileUrl(href)
       if (key) {
         // profile header
         const element =
@@ -293,7 +292,7 @@ export default (() => {
         }
       }
 
-      key = getPostUrl(location.href)
+      key = getPostUrl(href)
       if (key) {
         addVisited(key)
 

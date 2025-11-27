@@ -3895,7 +3895,6 @@
   async function simplePrompt(message, value) {
     return prompt(message, value)
   }
-  var prefix2 = location.origin + "/"
   var host = location.host
   var useVisitedFunction = false
   var displayMark = false
@@ -3903,9 +3902,6 @@
   var cache = {}
   function clearVisitedCache() {
     cache = {}
-  }
-  function setPrefix(newPrefix) {
-    prefix2 = newPrefix
   }
   function isAvailableOnCurrentSite() {
     return isAvailable
@@ -3930,8 +3926,8 @@
     }
   }
   function convertKey(url) {
-    if (url.includes(prefix2)) {
-      return url.slice(prefix2.length)
+    if (url.startsWith("http")) {
+      return url.replace(/^https?:\/\/[^/]+\//, "")
     }
     return url
   }
@@ -4912,7 +4908,6 @@
       matches: /v2ex\.com|v2hot\.|v2ex\.co/,
       preProcess() {
         setVisitedAvailable(true)
-        setPrefix("https://www.v2ex.com/")
       },
       listNodesSelectors: [".box .cell", ".my-box .comment"],
       conditionNodesSelectors: [
@@ -5298,9 +5293,9 @@
       "github-copilot",
       "search",
     ])
-    const prefix3 = "https://github.com/"
+    const prefix2 = "https://github.com/"
     function getUserProfileUrl(href) {
-      if (href.startsWith(prefix3)) {
+      if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
         let username = ""
         if (/^[\w-]+$/.test(href2)) {
@@ -5310,34 +5305,34 @@
           username = /(author%3A|author=)([\w-]+)/.exec(href2)[2]
         }
         if (username && !noneUsers.has(username)) {
-          return prefix3 + username
+          return prefix2 + username
         }
       }
       return void 0
     }
     function getRepoUrl(href) {
-      if (href.startsWith(prefix3)) {
+      if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
         if (/^[\w-]+\/[\w-.]+(\?.*)?$/.test(href2)) {
           const username = /^([\w-]+)/.exec(href2)[1]
           if (username && !noneUsers.has(username)) {
-            return prefix3 + href2.replace(/(^[\w-]+\/[\w-.]+).*/, "$1")
+            return prefix2 + href2.replace(/(^[\w-]+\/[\w-.]+).*/, "$1")
           }
         }
       }
       return void 0
     }
     function getTopicsUrl(href) {
-      if (href.startsWith(prefix3)) {
+      if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
         if (/^topics\/[\w-.]+(\?.*)?$/.test(href2)) {
-          return prefix3 + href2.replace(/(^topics\/[\w-.]+).*/, "$1")
+          return prefix2 + href2.replace(/(^topics\/[\w-.]+).*/, "$1")
         }
       }
       return void 0
     }
     function getIssuesUrl(href) {
-      if (href.startsWith(prefix3)) {
+      if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
         if (
           /^[\w-]+\/[\w-.]+\/(issues|pull|discussions)\/\d+(\?.*)?$/.test(href2)
@@ -5345,7 +5340,7 @@
           const username = /^([\w-]+)/.exec(href2)[1]
           if (username && !noneUsers.has(username)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(
                 /(^[\w-]+\/[\w-.]+\/(issues|pull|discussions)\/\d+).*/,
                 "$1"
@@ -5357,12 +5352,12 @@
       return void 0
     }
     function getFileUrl(href) {
-      if (href.startsWith(prefix3)) {
+      if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
         if (/^[\w-]+\/[\w-.]+\/(tree|blob)\/([^/]+\/)+[^/]+$/.test(href2)) {
           const username = /^([\w-]+)/.exec(href2)[1]
           if (username && !noneUsers.has(username)) {
-            return prefix3 + href2
+            return prefix2 + href2
           }
         }
       }
@@ -5374,7 +5369,7 @@
       conditionNodesSelectors: [],
       validate(element) {
         const href = element.href
-        if (href.startsWith(prefix3)) {
+        if (href.startsWith(prefix2)) {
           if (/since|until/.test(href)) {
             return false
           }
@@ -5388,7 +5383,7 @@
           }
           key = getRepoUrl(href)
           if (key) {
-            const title = key.replace(prefix3, "")
+            const title = key.replace(prefix2, "")
             const meta = { title, type: "repo" }
             setUtags(element, key, meta)
             return true
@@ -5399,7 +5394,7 @@
             if (text === "#") {
               return false
             }
-            const title = "#" + key.replace(prefix3 + "topics/", "")
+            const title = "#" + key.replace(prefix2 + "topics/", "")
             const meta = { title, type: "topic" }
             setUtags(element, key, meta)
             return true
@@ -5476,9 +5471,9 @@
   var reddit_com_default =
     '#TOFIX_uFEFF{display:block}:not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) shreddit-comment [slot=commentMeta]{position:relative}:not(#a):not(#b):not(#c) [data-testid=user-hover-card]{position:relative}:not(#a):not(#b):not(#c) div[slot=content]{position:relative}:not(#a):not(#b):not(#c) div[slot=comment]{position:relative}:not(#a):not(#b):not(#c) article:hover a[slot=title]+.utags_ul .utags_captain_tag,:not(#a):not(#b):not(#c) [slot=post-media-container]:hover a+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:0}:not(#a):not(#b):not(#c) article a[slot=title],:not(#a):not(#b):not(#c) recent-posts a{position:relative}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title][data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) recent-posts a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_0,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_0{object-position:100% 50%}:not(#a):not(#b):not(#c) article a[slot=title]+.utags_ul_1,:not(#a):not(#b):not(#c) recent-posts a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-4px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) shreddit-feed article shreddit-post-flair a[data-utags_fit_content="1"]{display:inline-block;width:fit-content !important;height:fit-content !important}:not(#a):not(#b):not(#c) shreddit-feed article shreddit-post-flair a+.utags_ul_0{object-position:200% 0%}:not(#a):not(#b):not(#c) shreddit-feed article shreddit-post-flair a+.utags_ul_1{object-position:200% 0%;position:absolute;top:-9999px;margin-top:3px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"]{min-width:unset !important;width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1[slot=title]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) shreddit-comment[data-utags_list_node*=",hide,"],:not(#a):not(#b):not(#c) shreddit-comment[data-utags_list_node*=",\u9690\u85CF,"],:not(#a):not(#b):not(#c) shreddit-comment[data-utags_list_node*=",\u5C4F\u853D,"],:not(#a):not(#b):not(#c) shreddit-comment[data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#a):not(#b):not(#c) shreddit-comment[data-utags_list_node*=",block,"]{opacity:1%;display:block !important}'
   var reddit_com_default2 = (() => {
-    const prefix3 = "https://www.reddit.com/"
+    const prefix2 = "https://www.reddit.com/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -5495,12 +5490,12 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
           if (/^(user|u)\/[\w-]+\/?([?#].*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               "user/" +
               href2.replace(/^(user|u)\/([\w-]+).*/, "$2") +
               "/"
@@ -5508,7 +5503,7 @@
           }
         } else if (/^(user|u)\/[\w-]+/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             "user/" +
             href2.replace(/^(user|u)\/([\w-]+).*/, "$2") +
             "/"
@@ -5518,32 +5513,32 @@
       return void 0
     }
     function getCommunityUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
           if (/^r\/\w+\/?(#.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(r\/\w+).*/, "$1") + "/"
+            return prefix2 + href2.replace(/^(r\/\w+).*/, "$1") + "/"
           }
         } else if (/^r\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(r\/\w+).*/, "$1") + "/"
+          return prefix2 + href2.replace(/^(r\/\w+).*/, "$1") + "/"
         }
       }
       return void 0
     }
     function getCommentsUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
           if (/^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, "$1") +
               "/"
             )
           }
         } else if (/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, "$1") +
             "/"
           )
@@ -5573,7 +5568,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if ($("time,faceplate-number", element)) {
@@ -5672,7 +5667,7 @@
   var twitter_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .css-175oi2r.r-xoduu5:hover{z-index:2 !important}:not(#a):not(#b):not(#c) [data-testid=User-Name]:hover .utags_ul .utags_captain_tag,:not(#a):not(#b):not(#c) [data-testid=HoverCard]:hover .utags_ul .utags_captain_tag,:not(#a):not(#b):not(#c) [data-testid=UserCell]:hover .utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:0}"
   var twitter_com_default2 = /* @__PURE__ */ (() => {
-    const prefix3 = "https://x.com/"
+    const prefix2 = "https://x.com/"
     const prefix22 = "https://twitter.com/"
     return {
       matches: /x\.com|twitter\.com/,
@@ -5682,7 +5677,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+        if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
           const href2 = href.startsWith(prefix22)
             ? href.slice(20)
             : href.slice(14)
@@ -5712,7 +5707,7 @@
           if (!title || !title.startsWith("@")) {
             continue
           }
-          const key = prefix3 + title.slice(1)
+          const key = prefix2 + title.slice(1)
           const meta = { title, type: "user" }
           setUtags(element, key, meta)
           matchedNodesSet.add(element)
@@ -5829,10 +5824,10 @@
   var facebook_com_default =
     ":not(#a):not(#b):not(#c) a[data-utags_flag=username_with_avatar]+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -2px;--utags-notag-captain-tag-left: 0px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1+ul.utags_ul{margin-bottom:16px !important;display:inline-flex !important}"
   var facebook_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getUserProfileUrl(href, exact = false) {
-      if (href.startsWith(prefix3)) {
-        const href2 = href.slice(prefix3.length).toLowerCase()
+      if (href.startsWith(prefix2)) {
+        const href2 = href.slice(prefix2.length).toLowerCase()
         if (href2.startsWith("profile.php")) {
           const parameters = getUrlParameters(href, ["id", "sk"])
           if (parameters.id && !parameters.sk) {
@@ -5929,40 +5924,40 @@
       )
   }
   var youtube_com_default2 = (() => {
-    const prefix3 = "https://www.youtube.com/"
+    const prefix2 = "https://www.youtube.com/"
     const prefix22 = "https://m.youtube.com/"
     function getUserProfileUrl(href, exact = false) {
-      if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+      if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
         const href2 = href.startsWith(prefix22)
           ? href.slice(22)
           : href.slice(24)
         if (exact) {
           if (/^@[\w-.%]+$/.test(href2)) {
-            return prefix3 + href2.replace(/(^@[\w-.%]+).*/, "$1")
+            return prefix2 + href2.replace(/(^@[\w-.%]+).*/, "$1")
           }
         } else if (/^@[\w-.%]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^@[\w-.%]+).*/, "$1")
+          return prefix2 + href2.replace(/(^@[\w-.%]+).*/, "$1")
         }
       }
       return void 0
     }
     function getChannelUrl(href, exact = false) {
-      if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+      if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
         const href2 = href.startsWith(prefix22)
           ? href.slice(22)
           : href.slice(24)
         if (exact) {
           if (/^channel\/[\w-]+$/.test(href2)) {
-            return prefix3 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
           }
         } else if (/^channel\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^channel\/[\w-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getVideoUrl(href) {
-      if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+      if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
         const href2 = href.startsWith(prefix22)
           ? href.slice(22)
           : href.slice(24)
@@ -5970,10 +5965,10 @@
           return void 0
         }
         if (/^watch\?v=[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(watch\?v=[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(watch\?v=[\w-]+).*/, "$1")
         }
         if (/^shorts\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^shorts\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^shorts\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -5994,7 +5989,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (href.startsWith(prefix3) || href.startsWith(prefix22)) {
+        if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
           let key = getUserProfileUrl(href, true)
           if (key) {
             const meta = { type: "user" }
@@ -6122,9 +6117,9 @@
   var bilibili_com_default =
     ':not(#a):not(#b):not(#c) #utags_absolute_ul_container{position:absolute;top:0;z-index:2}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-2px !important;margin-left:0px !important;flex-wrap:nowrap !important}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}'
   var bilibili_com_default2 = /* @__PURE__ */ (() => {
-    const prefix3 = "https://www.bilibili.com/"
+    const prefix2 = "https://www.bilibili.com/"
     const prefix22 = "https://space.bilibili.com/"
-    const prefix32 = "https://m.bilibili.com/"
+    const prefix3 = "https://m.bilibili.com/"
     function getUserProfileUrl(href) {
       if (href.startsWith(prefix22)) {
         const href2 = href.slice(27)
@@ -6132,7 +6127,7 @@
           return prefix22 + href2.replace(/(^\d+).*/, "$1")
         }
       }
-      if (href.startsWith(prefix32 + "space/")) {
+      if (href.startsWith(prefix3 + "space/")) {
         const href2 = href.slice(29)
         if (/^\d+/.test(href2)) {
           return prefix22 + href2.replace(/(^\d+).*/, "$1")
@@ -6142,14 +6137,12 @@
     }
     function getVideoUrl(href) {
       if (
-        href.startsWith(prefix3 + "video/") ||
-        href.startsWith(prefix32 + "video/")
+        href.startsWith(prefix2 + "video/") ||
+        href.startsWith(prefix3 + "video/")
       ) {
-        const href2 = href.startsWith(prefix32)
-          ? href.slice(23)
-          : href.slice(25)
+        const href2 = href.startsWith(prefix3) ? href.slice(23) : href.slice(25)
         if (/^video\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(video\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(video\/\w+).*/, "$1")
         }
       }
       return void 0
@@ -6158,7 +6151,7 @@
       matches: /bilibili\.com|biligame\.com/,
       excludeSelectors: ["*"],
       addExtraMatchedNodes(matchedNodesSet) {
-        if (location.href.startsWith(prefix3 + "video/")) {
+        if (location.href.startsWith(prefix2 + "video/")) {
           if ($(".bpx-state-loading")) {
             return
           }
@@ -6280,7 +6273,7 @@
         )
         if (
           location.href.startsWith(prefix22) ||
-          location.href.startsWith(prefix32 + "space/")
+          location.href.startsWith(prefix3 + "space/")
         ) {
           const element2 = $(
             "#h-name,.m-space-info .name,.upinfo__main .nickname"
@@ -6338,16 +6331,16 @@
   var tiktok_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .css-e2j6y6-StyledLink+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .css-e2j6y6-StyledLink+.utags_ul_1{position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .css-1gstnae-DivCommentItemWrapper{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .css-1gstnae-DivCommentItemWrapper a[href^="/@"] p{display:inline}:not(#a):not(#b):not(#c) .css-ulyotp-DivCommentContentContainer{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .css-1asahzr-DivBroadcastTitleWrapper a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .css-1asahzr-DivBroadcastTitleWrapper a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .css-1asahzr-DivBroadcastTitleWrapper a+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .css-c5ejjw-DivProfileContainer[data-e2e=user-profile-card] a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .css-c5ejjw-DivProfileContainer[data-e2e=user-profile-card] a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .css-8c0sl4-AName[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important;height:fit-content !important}:not(#a):not(#b):not(#c) .css-8c0sl4-AName[data-utags_fit_content="1"] *:not(svg){width:fit-content !important;height:fit-content !important}:not(#a):not(#b):not(#c) .css-8c0sl4-AName+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .css-8c0sl4-AName+.utags_ul_1{position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) [data-e2e=recommend-card] a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -2px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) [data-e2e=recommend-card] a+.utags_ul_1{position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}'
   var tiktok_com_default2 = (() => {
-    const prefix3 = "https://www.tiktok.com/"
+    const prefix2 = "https://www.tiktok.com/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(23)
         if (exact) {
           if (/^@[\w.-]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/(^@[\w.-]+).*/, "$1")
+            return prefix2 + href2.replace(/(^@[\w.-]+).*/, "$1")
           }
         } else if (/^@[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^@[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^@[\w.-]+).*/, "$1")
         }
       }
       return void 0
@@ -6366,7 +6359,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         const key = getUserProfileUrl(href, true)
@@ -6429,12 +6422,12 @@
     }
   })()
   var juejin_cn_default = (() => {
-    const prefix3 = "https://juejin.cn/"
+    const prefix2 = "https://juejin.cn/"
     function getUserProfileUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(18)
         if (/^user\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(user\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(user\/\d+).*/, "$1")
         }
       }
       return void 0
@@ -6446,7 +6439,7 @@
           return false
         }
         const href = element.href
-        if (href.startsWith(prefix3)) {
+        if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
           if (key) {
             const titleElement = $(".name", element)
@@ -6508,16 +6501,16 @@
     }
   })()
   var zhihu_com_default = (() => {
-    const prefix3 = "https://www.zhihu.com/"
+    const prefix2 = "https://www.zhihu.com/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(22)
         if (exact) {
           if (/^people\/[\w-]+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(people\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(people\/[\w-]+).*/, "$1")
           }
         } else if (/^people\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(people\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(people\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -6532,7 +6525,7 @@
         if (!href.includes("zhihu.com")) {
           return true
         }
-        if (href.startsWith(prefix3 + "people/")) {
+        if (href.startsWith(prefix2 + "people/")) {
           const key = getUserProfileUrl(href, true)
           if (key) {
             const titleElement = $(".name", element)
@@ -6575,13 +6568,13 @@
   var xiaohongshu_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 100%;background-color:var(--utags-captain-tag-background-color) !important;border-radius:3px !important}:not(#a):not(#b):not(#c) .author-container .author-wrapper .name+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 8px}:not(#a):not(#b):not(#c) .author-container .author-wrapper .name+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:8px !important}:not(#a):not(#b):not(#c) .note-text{position:relative}:not(#a):not(#b):not(#c) .note-text .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comments-container .author-wrapper .author{align-items:flex-start;flex-direction:column}:not(#a):not(#b):not(#c) .comments-container .author-wrapper .author .name+.utags_ul_0{object-position:200% 50%}:not(#a):not(#b):not(#c) .note-content-user+.utags_ul_0{--utags-notag-captain-tag-top: 0px;--utags-notag-captain-tag-left: 20px}:not(#a):not(#b):not(#c) .tooltip-content .user-content .avatar-info+.utags_ul_0{--utags-notag-captain-tag-top: 6px;--utags-notag-captain-tag-left: 46px}:not(#a):not(#b):not(#c) .tooltip-content .user-content .avatar-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:6px !important;margin-left:46px !important}:not(#a):not(#b):not(#c) .note-item .cover+.utags_ul_0{--utags-notag-captain-tag-top: 18px;--utags-notag-captain-tag-left: -8px}:not(#a):not(#b):not(#c) .note-item .cover+.utags_ul_1{position:absolute;top:-9999px;margin-top:14px !important;margin-left:-4px !important}:not(#a):not(#b):not(#c) .note-item .author-wrapper .author+.utags_ul_0{--utags-notag-captain-tag-top: 16px;--utags-notag-captain-tag-left: 20px}:not(#a):not(#b):not(#c) .note-item .author-wrapper .author+.utags_ul_1{position:absolute;top:-9999px;margin-top:12px !important;margin-left:22px !important}:not(#a):not(#b):not(#c) #userPageContainer .user-info .user-nickname{align-items:flex-start;flex-direction:column}:not(#a):not(#b):not(#c) #userPageContainer .user-info .user-nickname .user-name+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 0px;--utags-notag-captain-tag-left: 0px}"
   var xiaohongshu_com_default2 = (() => {
-    const prefix3 = "https://www.xiaohongshu.com/"
+    const prefix2 = "https://www.xiaohongshu.com/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.startsWith("search_result") && href2.includes("keyword")) {
           return (
-            prefix3 +
+            prefix2 +
             "search_result/?" +
             href2.replace(/.*?(keyword=[^&]*).*/, "$1") +
             "&type=54"
@@ -6591,34 +6584,34 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(28)
         if (exact) {
           if (/^user\/profile\/\w+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+            return prefix2 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
           }
         } else if (/^user\/profile\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(user\/profile\/\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(28)
         if (/^explore\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(explore\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(explore\/\w+).*/, "$1")
         }
         if (/^user\/profile\/\w+\/\w+/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             "explore/" +
             href2.replace(/^user\/profile\/\w+\/(\w+).*/, "$1")
           )
         }
         if (/^search_result\/\w+/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             "explore/" +
             href2.replace(/^search_result\/(\w+).*/, "$1")
           )
@@ -6636,7 +6629,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -6716,10 +6709,10 @@
     }
   })()
   var weibo_com_default = (() => {
-    const prefix3 = "https://weibo.com/"
+    const prefix2 = "https://weibo.com/"
     const prefix22 = "https://m.weibo.cn/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3) || url.startsWith(prefix22)) {
+      if (url.startsWith(prefix2) || url.startsWith(prefix22)) {
         const href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -6728,27 +6721,27 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3) || url.startsWith(prefix22)) {
+      if (url.startsWith(prefix2) || url.startsWith(prefix22)) {
         const href2 = url.startsWith(prefix22) ? url.slice(19) : url.slice(18)
         if (exact) {
           if (/^u\/\d+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(u\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(u\/\d+).*/, "$1")
           }
           if (/^profile\/\d+(\?.*)?$/.test(href2)) {
-            return prefix3 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
+            return prefix2 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
           }
           if (/^\d+(\?.*)?$/.test(href2)) {
-            return prefix3 + "u/" + href2.replace(/^(\d+).*/, "$1")
+            return prefix2 + "u/" + href2.replace(/^(\d+).*/, "$1")
           }
         } else {
           if (/^u\/\d+/.test(href2)) {
-            return prefix3 + href2.replace(/^(u\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(u\/\d+).*/, "$1")
           }
           if (/^profile\/\d+/.test(href2)) {
-            return prefix3 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
+            return prefix2 + "u/" + href2.replace(/^profile\/(\d+).*/, "$1")
           }
           if (/^\d+/.test(href2)) {
-            return prefix3 + "u/" + href2.replace(/^(\d+).*/, "$1")
+            return prefix2 + "u/" + href2.replace(/^(\d+).*/, "$1")
           }
         }
       }
@@ -6799,7 +6792,7 @@
   var sspai_com_default =
     ":not(#a):not(#b):not(#c) #article-title+.utags_ul{display:block !important;margin-top:-30px !important;margin-bottom:20px !important}:not(#a):not(#b):not(#c) .user__info__card__center .utags_ul{display:block !important;margin-bottom:5px !important}:not(#a):not(#b):not(#c) .pai_title .utags_ul{float:left}"
   var sspai_com_default2 = (() => {
-    const prefix3 = "https://sspai.com/"
+    const prefix2 = "https://sspai.com/"
     const excludeLinks = [
       "https://sspai.com/prime",
       "https://sspai.com/matrix",
@@ -6812,28 +6805,28 @@
       "https://sspai.com/mall",
     ]
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href = url.slice(18)
         if (href.startsWith("u/")) {
-          return prefix3 + href.replace(/^(u\/\w+).*/, "$1")
+          return prefix2 + href.replace(/^(u\/\w+).*/, "$1")
         }
       }
       return url
     }
     function getUserProfileUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(18)
         if (/^u\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(18)
         if (/^post\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(post\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(post\/\d+).*/, "$1")
         }
       }
       return void 0
@@ -6898,34 +6891,34 @@
   var douyin_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-e2e=comment-item] .utags_ul_1{display:flex !important}:not(#a):not(#b):not(#c) [data-e2e=comment-item][data-utags_list_node*=",hide,"],:not(#a):not(#b):not(#c) [data-e2e=comment-item][data-utags_list_node*=",\u9690\u85CF,"],:not(#a):not(#b):not(#c) [data-e2e=comment-item][data-utags_list_node*=",\u5C4F\u853D,"],:not(#a):not(#b):not(#c) [data-e2e=comment-item][data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#a):not(#b):not(#c) [data-e2e=comment-item][data-utags_list_node*=",block,"]{opacity:1%;display:flex !important}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"]{display:block !important;margin-top:0px !important;margin-bottom:2px !important}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].utags_ul_0{height:0}:not(#a):not(#b):not(#c) [data-e2e=detail-video-info] .utags_ul[data-utags_key*="/video/"].utags_ul_0 .utags_captain_tag{top:-26px;background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/video/"]{display:block !important;height:0}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/video/"] .utags_captain_tag{top:-26px;background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=related-video] .utags_ul_0[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul_0[data-utags_key*="/user/"]{display:block !important;height:0px;width:0px}:not(#a):not(#b):not(#c) [data-e2e=user-info] a+.utags_ul_0[data-utags_key*="/user/"] .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}'
   var douyin_com_default2 = (() => {
-    const prefix3 = "https://www.douyin.com/"
+    const prefix2 = "https://www.douyin.com/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(23)
         if (exact) {
           if (/^user\/[\w-]+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(user\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(user\/[\w-]+).*/, "$1")
           }
         } else if (/^user\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(user\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(user\/[\w-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getVideoUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(23)
         if (/^video\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(video\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(video\/\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getNoteUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(23)
         if (/^note\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(note\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(note\/\w+).*/, "$1")
         }
       }
       return void 0
@@ -7015,31 +7008,31 @@
   })()
   var podcasts_google_com_default = ""
   var podcasts_google_com_default2 = (() => {
-    const prefix3 = "https://podcasts.google.com/"
+    const prefix2 = "https://podcasts.google.com/"
     function getEpisodeUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(28)
         if (exact) {
           if (/^feed\/\w+\/episode\/\w+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+            return prefix2 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
           }
         } else if (/^feed\/\w+\/episode\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getFeedUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(28)
         if (/^feed\/\w+(\?.*)?$/.test(href2)) {
-          return prefix3 + href2.replace(/^(feed\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(feed\/\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let url2 = getFeedUrl(url)
         if (url2) {
           return url2
@@ -7279,19 +7272,19 @@
   })()
   var pixiv_net_default = ""
   var pixiv_net_default2 = /* @__PURE__ */ (() => {
-    const prefix3 = "https://www.pixiv.net/"
+    const prefix2 = "https://www.pixiv.net/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = url.slice(22)
         if (href2.startsWith("en/")) {
           href2 = href2.slice(3)
         }
         if (exact) {
           if (/^users\/\d+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(users\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(users\/\d+).*/, "$1")
           }
         } else if (/^users\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(users\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(users\/\d+).*/, "$1")
         }
       }
       return void 0
@@ -7341,30 +7334,30 @@
   var discourse_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .topic-list{--utags-list-node-display: table-row}:not(#a):not(#b):not(#c) .topic-list .main-link a.title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_0{--utags-notag-captain-tag-top: 1px}:not(#a):not(#b):not(#c) .topic-list .discourse-tag+.utags_ul_1{margin-top:3px !important}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-left: -6px}:not(#a):not(#b):not(#c) .topic-list .posters a:first-of-type+.utags_ul_1{position:absolute;top:-9999px;margin-top:4px !important;margin-left:-2px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link+.utags_ul_1{object-position:100% 200%;position:absolute;top:-9999px;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .header-title a.topic-link[data-utags_flag=inline]+.utags_ul_1{position:unset;margin-bottom:4px !important}:not(#a):not(#b):not(#c) header .badge-category__wrapper+.utags_ul_1{margin-top:2px !important}:not(#a):not(#b):not(#c) #topic-title a.fancy-title+.utags_ul_1{margin-bottom:8px !important}:not(#a):not(#b):not(#c) #topic-title .discourse-tag+.utags_ul_1{margin-top:5px !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"]{max-width:max-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names[data-utags_fit_content="1"] *:not(svg),:not(#a):not(#b):not(#c) .topic-body .names[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1,:not(#a):not(#b):not(#c) .topic-body .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}:not(#a):not(#b):not(#c) .post-links-container .post-links .track-link[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names[data-utags_fit_content="1"]{max-width:max-content !important;max-height:max-content !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_0{object-position:200% 0%;margin-top:6px !important}:not(#a):not(#b):not(#c) .user-card .names a.user-profile-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-left:16px !important}:not(#a):not(#b):not(#c) .column .category-list .category-title-link+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .title+.utags_ul_1{margin-bottom:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .badge-category__wrapper+.utags_ul_1{padding-top:3px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .main-link .discourse-tag+.utags_ul_1{margin-top:4px !important}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .column .latest-topic-list .topic-poster a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .search-container{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .search-container .search-link+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-14px !important}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 13px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .search-container .search-results .author a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:17px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-info .user-detail .name-line a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 6px}:not(#a):not(#b):not(#c) .bookmark-list.topic-list tr a.avatar+.utags_ul_1{position:absolute;top:-9999px;margin-top:10px !important}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_0,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .user-content .user-stream-item__header a.avatar-link+.utags_ul_1,:not(#a):not(#b):not(#c) .user-content .filter-1 .post-list-item .post-list-item__header a.avatar-link+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:2px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .user-profile-names [data-utags][data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .leaderboard .winner{padding-bottom:50px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -56px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .leaderboard .winner .winner__avatar[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-56px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"]{display:inline-flex !important;width:fit-content !important}:not(#a):not(#b):not(#c) .notification a[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) .notification a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-6px !important;margin-left:42px !important}:not(#a):not(#b):not(#c) [data-utags_list_node]:last-of-type{display:var(--utags-list-node-display) !important}:not(#a):not(#b):not(#c) .user-menu.revamped .menu-tabs-container{z-index:91;background-color:var(--secondary)}:not(#a):not(#b):not(#c) .actions__ .bookmark-menu-trigger:nth-of-type(n + 2){display:none}:not(#a):not(#b):not(#c) .utags_custom_btn.starred svg{color:var(--utags-star-tag-color)}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: 14px;--utags-notag-captain-tag-left: -8px}.mobile-view:not(#a):not(#b):not(#c) .topic-list a[data-user-card]+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:18px !important;margin-left:-4px !important;max-width:58px !important}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: -4px}.mobile-view:not(#a):not(#b):not(#c) .topic-body .topic-meta-data .names a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100}'
   var discourse_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     const host3 = location.host
     const getUserProfileUrl = (url, exact = false) => {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^u\/[\w.-]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
           }
         } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^t\/[^/]+\/\d+(\/\d+)?([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
           }
         } else if (/^t\/[^/]+\/\d+?/.test(href2)) {
-          return prefix3 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(t\/[^/]+\/\d+).*/, "$1")
         }
       }
       return void 0
@@ -7377,29 +7370,29 @@
       return floor <= 1 ? postUrl : "".concat(postUrl, "/").concat(floor)
     }
     function getCategoryUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+              prefix2 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
             )
           }
         } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
-          return prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
         }
       }
       return void 0
     }
     function getTagUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+            return prefix2 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
           }
         } else if (/^tag\/[^/?#]+?/.test(href2)) {
-          return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+          return prefix2 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
         }
       }
       return void 0
@@ -7432,7 +7425,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -7474,7 +7467,7 @@
             element.dataset.userCard
           ) {
             const title2 = element.dataset.userCard
-            key = prefix3 + "u/" + title2.toLowerCase()
+            key = prefix2 + "u/" + title2.toLowerCase()
             const meta2 = { type: "user", title: title2 }
             setUtags(element, key, meta2)
             element.dataset.utags = element.dataset.utags || ""
@@ -7599,7 +7592,7 @@
         for (const element of $$(".leaderboard div[data-user-card]")) {
           const title = element.dataset.userCard
           if (title) {
-            key = prefix3 + "u/" + title.toLowerCase()
+            key = prefix2 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
@@ -7613,7 +7606,7 @@
         for (const element of $$(".chat-message span[data-user-card]")) {
           const title = element.dataset.userCard
           if (title) {
-            key = prefix3 + "u/" + title.toLowerCase()
+            key = prefix2 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
@@ -7704,13 +7697,13 @@
   })()
   var nga_cn_default = ""
   var nga_cn_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getUserProfileUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^nuke\.php\?func=ucp&uid=\d+/.test(href2)) {
           return (
-            prefix3 + href2.replace(/^(nuke\.php\?func=ucp&uid=\d+).*/, "$1")
+            prefix2 + href2.replace(/^(nuke\.php\?func=ucp&uid=\d+).*/, "$1")
           )
         }
       }
@@ -7720,7 +7713,7 @@
       matches: /bbs\.nga\.cn|nga\.178\.com|ngabbs\.com/,
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         const key = getUserProfileUrl(href)
@@ -7769,21 +7762,21 @@
   var dlsite_com_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%;background-color:var(--utags-captain-tag-background-color) !important;border-radius:3px !important;--utags-emoji-tag-background-color: #fff0}:not(#a):not(#b):not(#c) .n_worklist a.work_name,:not(#a):not(#b):not(#c) .n_worklist dt.work_name,:not(#a):not(#b):not(#c) .recommend_list a.work_name,:not(#a):not(#b):not(#c) .recommend_list dt.work_name,:not(#a):not(#b):not(#c) .genre_ranking a.work_name,:not(#a):not(#b):not(#c) .genre_ranking dt.work_name{width:fit-content}:not(#a):not(#b):not(#c) .n_worklist a.work_name+.utags_ul_0,:not(#a):not(#b):not(#c) .n_worklist dt.work_name+.utags_ul_0,:not(#a):not(#b):not(#c) .recommend_list a.work_name+.utags_ul_0,:not(#a):not(#b):not(#c) .recommend_list dt.work_name+.utags_ul_0,:not(#a):not(#b):not(#c) .genre_ranking a.work_name+.utags_ul_0,:not(#a):not(#b):not(#c) .genre_ranking dt.work_name+.utags_ul_0{object-position:200% 0%}:not(#a):not(#b):not(#c) .n_worklist .maker_name,:not(#a):not(#b):not(#c) .recommend_list .maker_name,:not(#a):not(#b):not(#c) .genre_ranking .maker_name{white-space:wrap;-webkit-line-clamp:unset;height:unset}:not(#a):not(#b):not(#c) h1#work_name[data-utags_fit_content="1"]{max-width:max-content !important}'
   var dlsite_com_default2 = (() => {
-    const prefix3 = "https://www.dlsite.com/"
+    const prefix2 = "https://www.dlsite.com/"
     function getProductUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.includes("=/product_id/")) {
-          return prefix3 + href2.replace(/^(.+\.html).*/, "$1")
+          return prefix2 + href2.replace(/^(.+\.html).*/, "$1")
         }
       }
       return void 0
     }
     function getMakerUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.includes("/profile/=/maker_id/")) {
-          return prefix3 + href2.replace(/^(.+\.html).*/, "$1")
+          return prefix2 + href2.replace(/^(.+\.html).*/, "$1")
         }
       }
       return void 0
@@ -7795,7 +7788,7 @@
           return true
         }
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if (href.includes("/=/")) {
@@ -7917,25 +7910,25 @@
   var keylol_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .frame-tab .dxb_bc .module{position:relative}:not(#a):not(#b):not(#c) .favatar .pi{height:unset}:not(#a):not(#b):not(#c) .ratl td:first-of-type{white-space:normal}"
   var keylol_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^\?\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^suid-\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^suid-(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(
                 /^home\.php\?mod=space&uid=(\d+).*/,
                 "home.php?mod=space&uid=$1"
@@ -7943,7 +7936,7 @@
             )
           }
         } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
         }
       }
       return void 0
@@ -7952,7 +7945,7 @@
       matches: /keylol\.com/,
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         const key = getUserProfileUrl(href, true)
@@ -7983,9 +7976,9 @@
   var tampermonkey_net_cn_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:-64px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}"
   var tampermonkey_net_cn_default2 = (() => {
-    const prefix3 = "https://bbs.tampermonkey.net.cn/"
+    const prefix2 = "https://bbs.tampermonkey.net.cn/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -7998,24 +7991,24 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         url = deleteUrlParameters(url, "do")
-        const href2 = url.slice(prefix3.length).toLowerCase()
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^\?\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(
                 /^home\.php\?mod=space&uid=(\d+).*/,
                 "home.php?mod=space&uid=$1"
@@ -8023,23 +8016,23 @@
             )
           }
         } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
           )
         }
         if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=redirect&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -8048,7 +8041,7 @@
         }
         if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=viewthread&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -8076,7 +8069,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -8226,42 +8219,42 @@
   var flarum_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) a.DiscussionListItem-main+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) a.DiscussionListItem-author+.utags_ul_0{object-position:0% 0%;--utags-notag-captain-tag-top: -22px}:not(#a):not(#b):not(#c) a.DiscussionListItem-author+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-18px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .DiscussionList--searchResults a.DiscussionListItem-main+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -18px}:not(#a):not(#b):not(#c) .DiscussionList--searchResults a.DiscussionListItem-main+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-14px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-info+.utags_ul_0{object-position:0% 0%}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-info+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-lastPostedDiscussion+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) h1.Hero-title[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) h1.Hero-title[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) h1.Hero-title+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1.Hero-title+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .PostStream .PostStream-item[data-index="0"]{display:block !important}:not(#a):not(#b):not(#c) .UserBio .UserBio-content p{position:relative}'
   var flarum_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^u\/[\w-]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(u\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(u\/[\w-]+).*/, "$1")
           }
         } else if (/^u\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^d\/\d+(?:-[^/?]+)?(?:\/\d+)?([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(d\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(d\/\d+).*/, "$1")
           }
         } else if (/^d\/\d+(?:-[^/?]+)?/.test(href2)) {
-          return prefix3 + href2.replace(/^(d\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(d\/\d+).*/, "$1")
         }
       }
       return void 0
     }
     function getTagUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^t\/[\w-]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(t\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(t\/[\w-]+).*/, "$1")
           }
         } else if (/^t\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(t\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(t\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -8284,7 +8277,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -8391,42 +8384,42 @@
   var nodeseek_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) ul.post-list li.post-list-item{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) ul.post-list li.post-list-item a.post-category+.utags_ul_0{object-position:-100% 50%}:not(#a):not(#b):not(#c) ul.post-list li.post-list-item a.post-category+.utags_ul_1{object-position:-100% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .nsk-post-wrapper .author-info ul.utags_ul_1{vertical-align:middle !important}:not(#a):not(#b):not(#c) .nsk-post-wrapper .author-info ul.utags_ul_1 a.utags_text_tag{height:15px !important}:not(#a):not(#b):not(#c) .hover-user-card{z-index:100}"
   var nodeseek_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^space\/\d+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(space\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(space\/\d+).*/, "$1")
           }
         } else if (/^space\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(space\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(space\/\d+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^post-\d+-\d+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(post-\d+)-.*/, "$1") + "-1"
+            return prefix2 + href2.replace(/^(post-\d+)-.*/, "$1") + "-1"
           }
         } else if (/^post-\d+-\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(post-\d+)-.*/, "$1") + "-1"
+          return prefix2 + href2.replace(/^(post-\d+)-.*/, "$1") + "-1"
         }
       }
       return void 0
     }
     function getCategoryUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^categories\/[\w-]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(categories\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/^(categories\/[\w-]+).*/, "$1")
           }
         } else if (/^categories\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(categories\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(categories\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -8448,7 +8441,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -8527,12 +8520,12 @@
   var inoreader_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .article_tile_footer_feed_title a+.utags_ul_1{position:absolute;top:-9999px;margin-top:-4px !important}:not(#a):not(#b):not(#c) .article_tile[data-utags_list_node^=","] .article_tile_content_wraper{position:unset}:not(#a):not(#b):not(#c) .ar .column_view_title a[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .article_tile a.article_title_link[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .article_magazine a.article_magazine_title_link[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .ar.article_card .article-details a.article_title_link[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .article_full_contents div.article_title+.utags_ul_0{object-position:0% -100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .article_full_contents div.article_title+.utags_ul_1{object-position:0% -100%;position:absolute;top:-9999px;margin-top:0px !important}:not(#a):not(#b):not(#c) #search_content a.featured_category+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:2px !important}:not(#a):not(#b):not(#c) #search_content a.search_feed_article+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:2px !important}'
   var inoreader_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getArticleUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^article\/\w+(-[^?#]*)?([?#].*)?$/.test(href2)) {
-          return prefix3 + href2.replace(/^(article\/\w+)-.*/, "$1")
+          return prefix2 + href2.replace(/^(article\/\w+)-.*/, "$1")
         }
       }
       return void 0
@@ -8552,7 +8545,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if (element.closest("#search_content .featured_category")) {
@@ -8614,27 +8607,27 @@
   var zhipin_com_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .sub-li a.job-info+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .sub-li .sub-li-bottom a+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .hot-company-wrapper a.company-info-top+.utags_ul_1{position:absolute;top:-9999px;margin-top:-16px !important;width:inherit}:not(#a):not(#b):not(#c) .hot-company-wrapper .company-job-item a.job-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:0px !important;width:inherit}:not(#a):not(#b):not(#c) .job-recommend-result .job-info .job-title a.job-name[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .job-recommend-result .job-info .job-title a.job-name+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .job-recommend-result .job-card-footer a.boss-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important}:not(#a):not(#b):not(#c) .search-job-result .job-card-body a.job-card-left+.utags_ul_1{position:absolute;top:-9999px;margin-top:34px !important}:not(#a):not(#b):not(#c) .search-job-result .job-card-body .job-card-right .company-name{max-width:290px;height:unset}:not(#a):not(#b):not(#c) .company-search a.company-info h4[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .company-search a.company-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:34px !important;width:194px}:not(#a):not(#b):not(#c) .company-search a.about-info+.utags_ul_1{position:absolute;top:-9999px;margin-top:-14px !important;width:214px}:not(#a):not(#b):not(#c) .job-banner .info-primary .name[data-utags_fit_content="1"],:not(#a):not(#b):not(#c) .smallbanner .company-info .name[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) .job-sider .sider-company .company-info a+.utags_ul_1{position:absolute;top:-9999px;margin-top:-2px !important;width:194px}:not(#a):not(#b):not(#c) .job-sider .sider-company [ka=job-detail-brandindustry][data-utags_fit_content="1"]{display:inline-flex !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .job-sider ul.similar-job-list li>a+.utags_ul_1{position:absolute;top:-9999px;margin-top:0px !important;width:260px}:not(#a):not(#b):not(#c) .job-sider ul.similar-job-list li>a .similar-job-attr{flex-wrap:wrap}:not(#a):not(#b):not(#c) .job-sider ul.similar-job-list li>a .similar-job-attr span.similar-job-company[data-url]+.utags_ul_1{width:100%;order:1}:not(#a):not(#b):not(#c) .job-detail .more-job-section ul.look-job-list{display:flex;flex-wrap:wrap}:not(#a):not(#b):not(#c) .job-detail .more-job-section ul.look-job-list li a{height:unset}:not(#a):not(#b):not(#c) .job-detail .more-job-section ul.look-job-list li a+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .job-detail .more-job-section ul.look-job-list li .info-company{flex-wrap:wrap}:not(#a):not(#b):not(#c) .job-detail .more-job-section ul.look-job-list li .info-company div[data-url]+.utags_ul_1{width:100%;order:1}:not(#a):not(#b):not(#c) .company-new .company-hotjob a+.utags_ul_1{position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .page-company-position ul.position-job-list .job-title{height:unset;flex-wrap:wrap}:not(#a):not(#b):not(#c) .page-company-position ul.position-job-list .job-title .job-name[data-utags_fit_content="1"]{display:inline-flex !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .page-company-position ul.position-job-list .job-title .job-name+.utags_ul_1{width:100%;order:1}:not(#a):not(#b):not(#c) .page-company-position ul.similar-job-list{display:flex;flex-wrap:wrap}:not(#a):not(#b):not(#c) .page-company-position ul.similar-job-list .company-info{flex-wrap:wrap}:not(#a):not(#b):not(#c) .page-company-position ul.similar-job-list .company-info a.company-logo+.utags_ul_1{width:100%;order:1}:not(#a):not(#b):not(#c) .job-detail-card{z-index:91}:not(#a):not(#b):not(#c) ul li .sub-li{position:relative}'
   var zhipin_com_default2 = (() => {
-    const prefix3 = "https://www.zhipin.com/"
+    const prefix2 = "https://www.zhipin.com/"
     function getCanonicalUrl2(url) {
-      if (url.includes(prefix3)) {
+      if (url.includes(prefix2)) {
         return url.replace(/[?#].*/, "")
       }
       return url
     }
     function getCompanyUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^gongsi\/[\w-~]+\.html/.test(href2)) {
-          return prefix3 + href2.replace(/^(gongsi\/[\w-~]+\.html).*/, "$1")
+          return prefix2 + href2.replace(/^(gongsi\/[\w-~]+\.html).*/, "$1")
         }
       }
       return void 0
     }
     function getJobDetailUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^job_detail\/[\w-~]+\.html/.test(href2)) {
-          return prefix3 + href2.replace(/^(job_detail\/[\w-~]+\.html).*/, "$1")
+          return prefix2 + href2.replace(/^(job_detail\/[\w-~]+\.html).*/, "$1")
         }
       }
       return void 0
@@ -8696,7 +8689,7 @@
         if (!href) {
           return false
         }
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if (element.closest(".common-tab-box")) {
@@ -8818,60 +8811,60 @@
   var twitch_tv_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-test-selector=ChannelLink][data-utags_fit_content="1"]{max-width:fit-content !important;display:flex}'
   var twitch_tv_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     const getUserProfileUrl = (url, exact = false) => {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^(directory|videos)/.test(href2)) {
           return void 0
         }
         if (exact) {
           if (/^\w+$/.test(href2)) {
-            return prefix3 + href2.replace(/^(\w+).*/, "$1")
+            return prefix2 + href2.replace(/^(\w+).*/, "$1")
           }
         } else if (/^\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(\w+).*/, "$1")
         }
       }
       return void 0
     }
     function getVideoUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^videos\/\d+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+            return prefix2 + href2.replace(/^(videos\/\d+).*/, "$1")
           }
         } else if (/^videos\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(videos\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(videos\/\d+).*/, "$1")
         }
       }
       return void 0
     }
     function getCategoryUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^c\/[\w-]+(\/[\w-]+)?\/\d+([?#].*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+              prefix2 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
             )
           }
         } else if (/^c\/[\w-]+(\/[\w-]+)?\/\d+?/.test(href2)) {
-          return prefix3 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
+          return prefix2 + href2.replace(/^(c\/[\w-]+(\/[\w-]+)?\/\d+).*/, "$1")
         }
       }
       return void 0
     }
     function getTagUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^tag\/[^/?#]+([?#].*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+            return prefix2 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
           }
         } else if (/^tag\/[^/?#]+?/.test(href2)) {
-          return prefix3 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
+          return prefix2 + href2.replace(/^(tag\/[^/?#]+).*/, "$1")
         }
       }
       return void 0
@@ -8891,7 +8884,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -8957,7 +8950,7 @@
           const id = element.dataset.aUser
           const title = getTrimmedTitle(element)
           if (id && title) {
-            key = prefix3 + id.toLowerCase()
+            key = prefix2 + id.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
             element.dataset.utags = element.dataset.utags || ""
@@ -8972,9 +8965,9 @@
   var yamibo_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
   var yamibo_com_default2 = (() => {
-    const prefix3 = "https://bbs.yamibo.com/"
+    const prefix2 = "https://bbs.yamibo.com/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -8987,24 +8980,24 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         url = deleteUrlParameters(url, "do")
-        const href2 = url.slice(prefix3.length).toLowerCase()
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^\?\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(
                 /^home\.php\?mod=space&uid=(\d+).*/,
                 "home.php?mod=space&uid=$1"
@@ -9012,23 +9005,23 @@
             )
           }
         } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
           )
         }
         if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=redirect&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -9037,7 +9030,7 @@
         }
         if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=viewthread&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -9066,7 +9059,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -9507,20 +9500,20 @@
   })()
   var libra_com_default = ""
   var libra_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getPostUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
           if (/^(post|post-flat)(?:\/[\w-]+){2}$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^(post|post-flat)\/([\w-]+\/[\w-]+).*/, "post/$2")
             )
           }
         } else if (/^(post|post-flat)(?:\/[\w-]+){2}/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/^(post|post-flat)\/([\w-]+\/[\w-]+).*/, "post/$2")
           )
         }
@@ -9528,14 +9521,14 @@
       return void 0
     }
     function getUserUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
           if (/^user\/[\w-%]+(\/(post)?)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(user\/[\w-%]+).*/, "$1/post")
+            return prefix2 + href2.replace(/^(user\/[\w-%]+).*/, "$1/post")
           }
         } else if (/^user\/[\w-%]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(user\/[\w-%]+).*/, "$1/post")
+          return prefix2 + href2.replace(/^(user\/[\w-%]+).*/, "$1/post")
         }
       }
       return void 0
@@ -9569,7 +9562,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getPostUrl(href)
@@ -9669,17 +9662,17 @@
   var pxxnhub_com_default2 = (() => {
     const xx = atob("b3I=")
     const hostname2 = "p".concat(xx, "nhub.com")
-    const prefix3 = "https://www.".concat(hostname2, "/")
+    const prefix2 = "https://www.".concat(hostname2, "/")
     function getUserProfileUrl(href, exact = false) {
       if (href.includes(hostname2)) {
         const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (exact) {
           if (/^(model|users)\/[\w-]+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
           }
         } else if (/^(model|users)\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^(model|users)\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -9690,10 +9683,10 @@
         const href2 = href.slice(index)
         if (exact) {
           if (/^channels\/[\w-]+(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+            return prefix2 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
           }
         } else if (/^channels\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^channels\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -9704,7 +9697,7 @@
         const href2 = href.slice(index)
         if (/^view_video.php\?viewkey=\w+/.test(href2)) {
           return (
-            prefix3 + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
+            prefix2 + href2.replace(/(view_video.php\?viewkey=\w+).*/, "$1")
           )
         }
       }
@@ -9715,17 +9708,17 @@
         const index = href.indexOf(hostname2) + 12
         const href2 = href.slice(index)
         if (href2 === "hd") {
-          return prefix3 + href2
+          return prefix2 + href2
         }
         if (/^categories\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/(^categories\/[\w-]+).*/, "$1")
+          return prefix2 + href2.replace(/(^categories\/[\w-]+).*/, "$1")
         }
         if (/^video\?c=\d+/.test(href2)) {
-          return prefix3 + href2.replace(/(^video\?c=\d+).*/, "$1")
+          return prefix2 + href2.replace(/(^video\?c=\d+).*/, "$1")
         }
         if (/^video\/incategories(?:\/[\w-]+){2}/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/(^video\/incategories(?:\/[\w-]+){2}).*/, "$1")
           )
         }
@@ -9902,13 +9895,13 @@
     ":not(#a):not(#b):not(#c) div.gt a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtl a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gtw a+.utags_ul_0,:not(#a):not(#b):not(#c) div.gl4e.glname .glink+.utags_ul_0,:not(#a):not(#b):not(#c) .gltm .glname a+.utags_ul_0,:not(#a):not(#b):not(#c) .gltc .glname a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-3);--utags-notag-ul-height: var(--utags-notag-ul-height-3);--utags-notag-ul-position: var(--utags-notag-ul-position-3);--utags-notag-ul-top: var(--utags-notag-ul-top-3);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-3);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );z-index:200}:not(#a):not(#b):not(#c) div.gl1t a+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-4);--utags-notag-captain-tag-left: 24px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}"
   var e_hentxx_org_default2 = (() => {
     const xx = atob("YWk=")
-    const prefix3 = "https://e-hent".concat(xx, ".org/")
+    const prefix2 = "https://e-hent".concat(xx, ".org/")
     const prefix22 = "https://exhent".concat(xx, ".org/")
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(21)
         if (/^g\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
+          return prefix2 + href2.replace(/^(g\/\w+\/\w+\/).*/, "$1")
         }
       }
       if (url.startsWith(prefix22)) {
@@ -9920,7 +9913,7 @@
       return void 0
     }
     function isImageViewUrl(url) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(21)
         return /^s\/\w+/.test(href2)
       }
@@ -9937,7 +9930,7 @@
           return true
         }
         const href = element.href
-        if (href && (href.startsWith(prefix3) || href.startsWith(prefix22))) {
+        if (href && (href.startsWith(prefix2) || href.startsWith(prefix22))) {
           const key = getPostUrl(href)
           if (key) {
             const titleElement = $(".glink", element)
@@ -9999,16 +9992,16 @@
   var panda_chaika_moe_default =
     ":not(#a):not(#b):not(#c) h5+.utags_ul{display:block !important;margin-top:-4px !important;margin-bottom:6px !important}"
   var panda_chaika_moe_default2 = (() => {
-    const prefix3 = "https://panda.chaika.moe/"
+    const prefix2 = "https://panda.chaika.moe/"
     function getPostUrl(url, exact = false) {
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(25)
         if (exact) {
           if (/^archive\/\d+\/(\?.*)?$/.test(href2)) {
-            return prefix3 + href2.replace(/^(archive\/\d+\/).*/, "$1")
+            return prefix2 + href2.replace(/^(archive\/\d+\/).*/, "$1")
           }
         } else if (/^archive\/\d+\//.test(href2)) {
-          return prefix3 + href2.replace(/^(archive\/\d+\/).*/, "$1")
+          return prefix2 + href2.replace(/^(archive\/\d+\/).*/, "$1")
         }
       }
       return void 0
@@ -10065,12 +10058,12 @@
   var dmm_co_jp_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{background-color:var(--utags-captain-tag-background-color) !important;border-radius:3px !important;--utags-emoji-tag-background-color: #fff0}:not(#a):not(#b):not(#c) .mainList__item a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -90px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) .mainList__item a+.utags_ul_1{margin-top:6px !important;width:100%}:not(#a):not(#b):not(#c) .pickup .fn-responsiveImg a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -70px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) .pickup .fn-responsiveImg a+.utags_ul_1{margin-top:6px !important;width:100%}:not(#a):not(#b):not(#c) .productList .tileListTtl__txt{height:unset}:not(#a):not(#b):not(#c) .productList .tileListTtl__txt--author{white-space:normal}:not(#a):not(#b):not(#c) #l-areaRecommendProduct a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -80px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) #l-areaRecommendProduct a+.utags_ul_1{margin-top:6px !important;width:100%}"
   var dmm_co_jp_default2 = (() => {
-    const prefix3 = "https://www.dmm.co.jp/"
+    const prefix2 = "https://www.dmm.co.jp/"
     function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.includes("/=/")) {
-          return prefix3 + href2.replace(/\?.*/, "")
+          return prefix2 + href2.replace(/\?.*/, "")
         }
       }
       if (url.includes("www.dmm.co.jp/digital/videoa/-/list/")) {
@@ -10095,19 +10088,19 @@
       return url
     }
     function getProductUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.includes("/detail/=/cid=")) {
-          return prefix3 + href2.replace(/\?.*/, "")
+          return prefix2 + href2.replace(/\?.*/, "")
         }
       }
       return void 0
     }
     function getMakerUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (href2.includes("/list/=/article=maker/id=")) {
-          return prefix3 + href2.replace(/\?.*/, "")
+          return prefix2 + href2.replace(/\?.*/, "")
         }
       }
       return void 0
@@ -10132,7 +10125,7 @@
       matches: /dmm\.co\.jp/,
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if (href.includes("/=/")) {
@@ -10256,12 +10249,12 @@
   var kemono_su_default =
     ":not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_0,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_0,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1{object-position:0% 100%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important;margin-left:4px !important;transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1 .utags_text_tag{--utags-text-tag-background-color: yellow}"
   var kemono_su_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getPostUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^\w+\/user\/\w+\/post\/\w+/.test(href2)) {
-          return prefix3 + href2.replace(/^(\w+\/user\/\w+\/post\/\w+).*/, "$1")
+          return prefix2 + href2.replace(/^(\w+\/user\/\w+\/post\/\w+).*/, "$1")
         }
       }
       return void 0
@@ -10274,7 +10267,7 @@
           return false
         }
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           return true
         }
         if (
@@ -10325,40 +10318,40 @@
   var rule34video_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .thumbs .thumb a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -2px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .list_items .item a.wrap_item+.utags_ul_0,:not(#a):not(#b):not(#c) .aside_wrap a.item+.utags_ul_0{object-position:100% 50%}"
   var rule34video_com_default2 = (() => {
-    const prefix3 = location.origin + "/"
+    const prefix2 = location.origin + "/"
     function getModelUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^models\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(models\/[\w-]+).*/, "$1") + "/"
+          return prefix2 + href2.replace(/^(models\/[\w-]+).*/, "$1") + "/"
         }
       }
       return void 0
     }
     function getMemberUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^members\/\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(members\/\d+).*/, "$1") + "/"
+          return prefix2 + href2.replace(/^(members\/\d+).*/, "$1") + "/"
         }
       }
       return void 0
     }
     function getCategoryUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^categories\/[\w-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(categories\/[\w-]+).*/, "$1") + "/"
+          return prefix2 + href2.replace(/^(categories\/[\w-]+).*/, "$1") + "/"
         }
       }
       return void 0
     }
     function getVideoUrl(url) {
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (/^video\/\d+(\/[\w-]+)?/.test(href2)) {
           return (
-            prefix3 + href2.replace(/^(video\/\d+(\/[\w-]+)?).*/, "$1") + "/"
+            prefix2 + href2.replace(/^(video\/\d+(\/[\w-]+)?).*/, "$1") + "/"
           )
         }
       }
@@ -10378,7 +10371,7 @@
       ],
       validate(element) {
         const href = element.href
-        if (!href.startsWith(prefix3)) {
+        if (!href.startsWith(prefix2)) {
           if ($("header", element.parentElement)) {
             const key2 = href.replace(/(https?:\/\/[^/]+\/).*/, "$1")
             const meta = { type: "AD", title: "AD" }
@@ -10475,22 +10468,22 @@
   var xsijishe_net_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
   var xsijishe_net_default2 = (() => {
-    const prefix3 = "https://xsijishe.net/"
+    const prefix2 = "https://xsijishe.net/"
     function normalizeDomain(url) {
       if (
-        !url.startsWith(prefix3) &&
+        !url.startsWith(prefix2) &&
         /xsijishe\.\w+|sjs47\.\w+|sjslt\.cc/.test(url)
       ) {
         return url.replace(
           /^https:\/\/(xsijishe\.\w+|sjs47\.\w+|sjslt\.cc)\/?/,
-          prefix3
+          prefix2
         )
       }
       return url
     }
     function getCanonicalUrl2(url) {
       url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -10503,25 +10496,24 @@
       return url
     }
     function getUserProfileUrl(url, exact = false) {
-      url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         url = deleteUrlParameters(url, "do")
-        const href2 = url.slice(prefix3.length).toLowerCase()
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
           if (/^\?\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
             )
           }
           if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
             return (
-              prefix3 +
+              prefix2 +
               href2.replace(
                 /^home\.php\?mod=space&uid=(\d+).*/,
                 "home.php?mod=space&uid=$1"
@@ -10529,24 +10521,23 @@
             )
           }
         } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix3 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
         }
       }
       return void 0
     }
     function getPostUrl(url) {
-      url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length).toLowerCase()
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
         if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
           )
         }
         if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=redirect&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -10555,7 +10546,7 @@
         }
         if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
           return (
-            prefix3 +
+            prefix2 +
             href2.replace(
               /^forum\.php\?mod=viewthread&tid=(\d+).*/,
               "forum.php?mod=viewthread&tid=$1"
@@ -10586,8 +10577,8 @@
         ".nex_forum_lists .nex_forumtit_top a",
       ],
       validate(element) {
-        const href = element.href
-        if (!href.startsWith(prefix3)) {
+        const href = normalizeDomain(element.href)
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -10701,7 +10692,8 @@
         ".btn",
       ],
       addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
+        const href = normalizeDomain(location.href)
+        let key = getUserProfileUrl(href)
         if (key) {
           const element =
             $(".user-profile-names .username") ||
@@ -10717,7 +10709,7 @@
             }
           }
         }
-        key = getPostUrl(location.href)
+        key = getPostUrl(href)
         if (key) {
           addVisited(key)
           const element = $("#thread_subject")
@@ -10740,16 +10732,16 @@
   var simpcity_cr_default =
     ":not(#a):not(#b):not(#c) .structItem.structItem--thread{--utags-list-node-display: table}"
   var simpcity_cr_default2 = (() => {
-    const prefix3 = "https://simpcity.cr/"
+    const prefix2 = "https://simpcity.cr/"
     function normalizeDomain(url) {
-      if (!url.startsWith(prefix3) && url.includes("simpcity")) {
-        return url.replace(/^https:\/\/simpcity\.\w+\/?/, prefix3)
+      if (!url.startsWith(prefix2) && url.includes("simpcity")) {
+        return url.replace(/^https:\/\/simpcity\.\w+\/?/, prefix2)
       }
       return url
     }
     function getCanonicalUrl2(url) {
       url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
+      if (url.startsWith(prefix2)) {
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -10762,29 +10754,27 @@
       return url
     }
     function getPostUrl(url, exact = false) {
-      url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
-          if (/^threads\/[\w-%]+\.\d+$/.test(href2)) {
-            return prefix3 + href2.replace(/^(threads\/[\w-%]+\.\d+).*/, "$1/")
+          if (/^threads\/[\w-%]+\.\d+\/?$/.test(href2)) {
+            return prefix2 + href2.replace(/^(threads\/[\w-%]+\.\d+).*/, "$1/")
           }
         } else if (/^threads\/[\w-%]+\.\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(threads\/[\w-%]+\.\d+).*/, "$1/")
+          return prefix2 + href2.replace(/^(threads\/[\w-%]+\.\d+).*/, "$1/")
         }
       }
       return void 0
     }
     function getUserProfileUrl(url, exact = false) {
-      url = normalizeDomain(url)
-      if (url.startsWith(prefix3)) {
-        const href2 = url.slice(prefix3.length)
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
         if (exact) {
-          if (/^members\/[\w-]+\.\d+$/.test(href2)) {
-            return prefix3 + href2.replace(/^(members\/[\w-]+\.\d+).*/, "$1/")
+          if (/^members\/[\w-]+\.\d+\/?$/.test(href2)) {
+            return prefix2 + href2.replace(/^(members\/[\w-]+\.\d+).*/, "$1/")
           }
         } else if (/^members\/[\w-]+\.\d+/.test(href2)) {
-          return prefix3 + href2.replace(/^(members\/[\w-]+\.\d+).*/, "$1/")
+          return prefix2 + href2.replace(/^(members\/[\w-]+\.\d+).*/, "$1/")
         }
       }
       return void 0
@@ -10803,8 +10793,8 @@
         'article.message--post[itemtype="https://schema.org/Comment"] .message-userDetails a.username',
       ],
       validate(element) {
-        const href = element.href
-        if (!href.startsWith(prefix3)) {
+        const href = normalizeDomain(element.href)
+        if (!href.startsWith(prefix2)) {
           return true
         }
         let key = getPostUrl(href)
@@ -10864,7 +10854,8 @@
         'a[href^="/account/"]',
       ],
       addExtraMatchedNodes(matchedNodesSet) {
-        let key = getPostUrl(location.href)
+        const href = normalizeDomain(location.href)
+        let key = getPostUrl(href)
         if (key) {
           addVisited(key)
           const element = $("h1.p-title-value")
@@ -10879,7 +10870,7 @@
             }
           }
         }
-        key = getUserProfileUrl(location.href)
+        key = getUserProfileUrl(href)
         if (key) {
           const element = $("h1.memberHeader-name")
           if (element) {
