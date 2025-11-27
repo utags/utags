@@ -219,11 +219,11 @@
   var regexCache = /* @__PURE__ */ new Map()
   function initAvailableLocales(array) {
     availableLocales = array
-      .map((locale2) => locale2.trim().toLowerCase())
+      .map((locale) => locale.trim().toLowerCase())
       .filter(Boolean)
   }
-  function isLocale(locale2) {
-    return locale2 ? availableLocales.includes(locale2.toLowerCase()) : false
+  function isLocale(locale) {
+    return locale ? availableLocales.includes(locale.toLowerCase()) : false
   }
   function extractLocaleFromNavigator() {
     if (typeof navigator === "undefined") {
@@ -268,8 +268,8 @@
   }
   function resolveMessageMaps(messageMaps, targetLanguage, baseLanguage) {
     const normalizedMaps = Object.fromEntries(
-      Object.entries(messageMaps).map(([locale2, messages27]) => [
-        locale2.toLowerCase(),
+      Object.entries(messageMaps).map(([locale, messages27]) => [
+        locale.toLowerCase(),
         messages27,
       ])
     )
@@ -664,7 +664,7 @@
     return GM.registerMenuCommand(name, callback, options)
   }
   var style_default =
-    '#browser_extension_settings_container{--browser-extension-settings-background-color: #f2f2f7;--browser-extension-settings-text-color: #444444;--browser-extension-settings-link-color: #217dfc;--sb-track-color: #00000000;--sb-thumb-color: #33334480;--sb-size: 2px;--font-family: "helvetica neue", "microsoft yahei", arial, sans-serif;position:fixed;top:10px;right:30px;max-height:90%;height:600px;overflow:hidden;display:none;z-index:100000;border-radius:5px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}#browser_extension_settings_container .browser_extension_settings_wrapper{display:flex;height:100%;overflow:hidden;background-color:var(--browser-extension-settings-background-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper h1,#browser_extension_settings_container .browser_extension_settings_wrapper h2{border:none;color:var(--browser-extension-settings-text-color);padding:0;font-family:var(--font-family);line-height:normal;letter-spacing:normal}#browser_extension_settings_container .browser_extension_settings_wrapper h1{font-size:26px;font-weight:800;margin:18px 0}#browser_extension_settings_container .browser_extension_settings_wrapper h2{font-size:18px;font-weight:600;margin:14px 0}#browser_extension_settings_container .browser_extension_settings_wrapper footer{display:flex;justify-content:center;flex-direction:column;font-size:11px;margin:10px auto 0px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper footer a{color:var(--browser-extension-settings-link-color) !important;font-family:var(--font-family);text-decoration:none;padding:0}#browser_extension_settings_container .browser_extension_settings_wrapper footer p{text-align:center;padding:0;margin:2px;line-height:13px;font-size:11px;color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous{color:var(--browser-extension-settings-link-color);cursor:pointer;display:none}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous::before{content:"< "}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container{overflow-x:auto;box-sizing:border-box;padding:10px 15px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div{background-color:#fff;font-size:14px;border-top:1px solid #ccc;padding:6px 15px 6px 15px}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited{display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-decoration:none;color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited:hover{text-decoration:none;color:var(--browser-extension-settings-text-color)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div a:visited span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a span,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div a:visited span{margin-right:10px;line-height:24px;font-family:var(--font-family)}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div.active,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:hover,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div.active,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:hover{background-color:#e4e4e6}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div.active a,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div.active a{cursor:default}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:first-of-type,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:first-of-type{border-top:none;border-top-right-radius:10px;border-top-left-radius:10px}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .installed_extension_list div:last-of-type,#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container .related_extension_list div:last-of-type{border-bottom-right-radius:10px;border-bottom-left-radius:10px}#browser_extension_settings_container .thin_scrollbar{scrollbar-color:var(--sb-thumb-color) var(--sb-track-color);scrollbar-width:thin}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar{width:var(--sb-size)}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar-track{background:var(--sb-track-color);border-radius:10px}#browser_extension_settings_container .thin_scrollbar::-webkit-scrollbar-thumb{background:var(--sb-thumb-color);border-radius:10px}#browser_extension_settings_main{min-width:250px;overflow-y:auto;overflow-x:hidden;box-sizing:border-box;padding:10px 15px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}#browser_extension_settings_main h2{text-align:center;margin:5px 0 0}#browser_extension_settings_main .option_groups{background-color:#fff;padding:6px 15px 6px 15px;border-radius:10px;display:flex;flex-direction:column;margin:10px 0 0}#browser_extension_settings_main .option_groups .action{font-size:14px;padding:6px 0 6px 0;color:var(--browser-extension-settings-link-color);cursor:pointer}#browser_extension_settings_main .bes_external_link{font-size:14px;padding:6px 0 6px 0}#browser_extension_settings_main .bes_external_link a,#browser_extension_settings_main .bes_external_link a:visited,#browser_extension_settings_main .bes_external_link a:hover{color:var(--browser-extension-settings-link-color);font-family:var(--font-family);text-decoration:none;cursor:pointer}#browser_extension_settings_main .option_groups textarea{font-size:12px;margin:10px 0 10px 0;height:100px;width:100%;border:1px solid #a9a9a9;border-radius:4px;box-sizing:border-box}#browser_extension_settings_main .switch_option,#browser_extension_settings_main .select_option{display:flex;justify-content:space-between;align-items:center;padding:6px 0 6px 0;font-size:14px}#browser_extension_settings_main .option_groups>*{border-top:1px solid #ccc}#browser_extension_settings_main .option_groups>*:first-child{border-top:none}#browser_extension_settings_main .bes_option>.bes_icon{width:24px;height:24px;margin-right:10px}#browser_extension_settings_main .bes_option>.bes_title{margin-right:10px;flex-grow:1}#browser_extension_settings_main .bes_option>.bes_select{box-sizing:border-box;background-color:#fff;height:24px;padding:0 2px 0 2px;margin:0;border-radius:6px;border:1px solid #ccc}#browser_extension_settings_main .option_groups .bes_tip{position:relative;margin:0;padding:0 15px 0 0;border:none;max-width:none;font-size:14px}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_anchor{cursor:help;text-decoration:underline}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_content{position:absolute;bottom:15px;left:0;background-color:#fff;color:var(--browser-extension-settings-text-color);text-align:left;padding:10px;display:none;border-radius:5px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}#browser_extension_settings_main .option_groups .bes_tip .bes_tip_anchor:hover+.bes_tip_content,#browser_extension_settings_main .option_groups .bes_tip .bes_tip_content:hover{display:block}#browser_extension_settings_main .option_groups .bes_tip p,#browser_extension_settings_main .option_groups .bes_tip pre{margin:revert;padding:revert}#browser_extension_settings_main .option_groups .bes_tip pre{font-family:Consolas,panic sans,bitstream vera sans mono,Menlo,microsoft yahei,monospace;font-size:13px;letter-spacing:.015em;line-height:120%;white-space:pre;overflow:auto;background-color:#f5f5f5;word-break:normal;overflow-wrap:normal;padding:.5em;border:none}#browser_extension_settings_main .bes_switch_container{--button-width: 51px;--button-height: 24px;--toggle-diameter: 20px;--color-off: #e9e9eb;--color-on: #34c759;width:var(--button-width);height:var(--button-height);position:relative;padding:0;margin:0;flex:none;user-select:none}#browser_extension_settings_main input[type=checkbox]{opacity:0;width:0;height:0;position:absolute}#browser_extension_settings_main .bes_switch{width:100%;height:100%;display:block;background-color:var(--color-off);border-radius:calc(var(--button-height)/2);border:none;cursor:pointer;transition:all .2s ease-out}#browser_extension_settings_main .bes_switch::before{display:none}#browser_extension_settings_main .bes_slider{width:var(--toggle-diameter);height:var(--toggle-diameter);position:absolute;left:2px;top:calc(50% - var(--toggle-diameter)/2);border-radius:50%;background:#fff;box-shadow:0px 3px 8px rgba(0,0,0,.15),0px 3px 1px rgba(0,0,0,.06);transition:all .2s ease-out;cursor:pointer}#browser_extension_settings_main input[type=checkbox]:checked+.bes_switch{background-color:var(--color-on)}#browser_extension_settings_main input[type=checkbox]:checked+.bes_switch .bes_slider{left:calc(var(--button-width) - var(--toggle-diameter) - 2px)}#browser_extension_side_menu{min-height:80px;width:30px;opacity:0;position:fixed;top:80px;right:0;padding-top:20px;z-index:10000}#browser_extension_side_menu:hover{opacity:1}#browser_extension_side_menu button{cursor:pointer;width:24px;height:24px;padding:0;border:none;background-color:rgba(0,0,0,0);background-image:none}#browser_extension_side_menu button svg{width:24px;height:24px}#browser_extension_side_menu button:hover{opacity:70%}#browser_extension_side_menu button:active{opacity:100%}@media(max-width: 500px){#browser_extension_settings_container{right:10px}#browser_extension_settings_container .browser_extension_settings_wrapper a.navigation_go_previous{display:block}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container{display:none}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container.bes_active{display:block}#browser_extension_settings_container .browser_extension_settings_wrapper .extension_list_container.bes_active+div{display:none}}'
+    ':host{--browser-extension-settings-background-color: #f2f2f7;--browser-extension-settings-text-color: #444444;--browser-extension-settings-link-color: #217dfc;--browser-extension-settings-border-radius: 8px;--sb-track-color: #00000000;--sb-thumb-color: #33334480;--sb-size: 2px;--font-family: "helvetica neue", "microsoft yahei", arial, sans-serif;position:fixed;top:10px;right:30px;display:none;z-index:200000;border-radius:var(--browser-extension-settings-border-radius);-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}:host .browser_extension_settings_v2_wrapper{display:flex;background-color:var(--browser-extension-settings-background-color);font-family:var(--font-family);border-radius:var(--browser-extension-settings-border-radius)}:host .browser_extension_settings_v2_wrapper h1,:host .browser_extension_settings_v2_wrapper h2{border:none;color:var(--browser-extension-settings-text-color);padding:0;font-family:var(--font-family);line-height:normal;letter-spacing:normal}:host .browser_extension_settings_v2_wrapper h1{font-size:26px;font-weight:800;margin:18px 0}:host .browser_extension_settings_v2_wrapper h2{font-size:18px;font-weight:600;margin:14px 0}:host .browser_extension_settings_v2_wrapper footer{display:flex;justify-content:center;flex-direction:column;font-size:11px;margin:10px auto 0px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}:host .browser_extension_settings_v2_wrapper footer a{color:var(--browser-extension-settings-link-color) !important;font-family:var(--font-family);text-decoration:none;padding:0}:host .browser_extension_settings_v2_wrapper footer p{text-align:center;padding:0;margin:2px;line-height:13px;font-size:11px;color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}:host .thin_scrollbar{scrollbar-color:var(--sb-thumb-color) var(--sb-track-color);scrollbar-width:thin}:host .thin_scrollbar::-webkit-scrollbar{width:var(--sb-size)}:host .thin_scrollbar::-webkit-scrollbar-track{background:var(--sb-track-color);border-radius:10px}:host .thin_scrollbar::-webkit-scrollbar-thumb{background:var(--sb-thumb-color);border-radius:10px}.browser_extension_settings_v2_main{min-width:300px;max-height:90vh;overflow-y:auto;overflow-x:hidden;border-radius:var(--browser-extension-settings-border-radius);box-sizing:border-box;padding:10px 15px;background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-family:var(--font-family)}.browser_extension_settings_v2_main h2{text-align:center;margin:5px 0 0}.browser_extension_settings_v2_main .option_groups{background-color:#fff;padding:6px 15px 6px 15px;border-radius:10px;display:flex;flex-direction:column;margin:10px 0 0}.browser_extension_settings_v2_main .option_groups .action{font-size:14px;padding:6px 0 6px 0;color:var(--browser-extension-settings-link-color);cursor:pointer}.browser_extension_settings_v2_main .bes_external_link{font-size:14px;padding:6px 0 6px 0}.browser_extension_settings_v2_main .bes_external_link a,.browser_extension_settings_v2_main .bes_external_link a:visited,.browser_extension_settings_v2_main .bes_external_link a:hover{color:var(--browser-extension-settings-link-color);font-family:var(--font-family);text-decoration:none;cursor:pointer}.browser_extension_settings_v2_main .option_groups textarea{background-color:var(--browser-extension-settings-background-color);color:var(--browser-extension-settings-text-color);font-size:12px;margin:10px 0 10px 0;padding:4px 8px;height:100px;width:100%;border:1px solid #a9a9a9;border-radius:4px;box-sizing:border-box}.browser_extension_settings_v2_main .switch_option,.browser_extension_settings_v2_main .select_option{display:flex;justify-content:space-between;align-items:center;padding:6px 0 6px 0;font-size:14px}.browser_extension_settings_v2_main .option_groups>*{border-top:1px solid #ccc}.browser_extension_settings_v2_main .option_groups>*:first-child{border-top:none}.browser_extension_settings_v2_main .bes_option>.bes_icon{width:24px;height:24px;margin-right:10px}.browser_extension_settings_v2_main .bes_option>.bes_title{margin-right:10px;flex-grow:1}.browser_extension_settings_v2_main .bes_option>.bes_select{color:var(--browser-extension-settings-text-color);box-sizing:border-box;background-color:#fff;height:24px;padding:0 2px 0 2px;margin:0;border-radius:6px;border:1px solid #ccc}.browser_extension_settings_v2_main .option_groups .bes_tip{position:relative;margin:0;padding:0 15px 0 0;border:none;max-width:none;font-size:14px}.browser_extension_settings_v2_main .option_groups .bes_tip .bes_tip_anchor{cursor:help;text-decoration:underline}.browser_extension_settings_v2_main .option_groups .bes_tip .bes_tip_content{position:absolute;bottom:15px;left:0;background-color:#fff;color:var(--browser-extension-settings-text-color);text-align:left;overflow-y:auto;max-height:300px;padding:10px;display:none;border-radius:5px;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22) !important}.browser_extension_settings_v2_main .option_groups .bes_tip .bes_tip_anchor:hover+.bes_tip_content,.browser_extension_settings_v2_main .option_groups .bes_tip .bes_tip_content:hover{display:block}.browser_extension_settings_v2_main .option_groups .bes_tip p,.browser_extension_settings_v2_main .option_groups .bes_tip pre{margin:revert;padding:revert}.browser_extension_settings_v2_main .option_groups .bes_tip pre{font-family:Consolas,panic sans,bitstream vera sans mono,Menlo,microsoft yahei,monospace;font-size:13px;letter-spacing:.015em;line-height:120%;white-space:pre;overflow:auto;background-color:#f5f5f5;word-break:normal;overflow-wrap:normal;padding:.5em;border:none}.browser_extension_settings_v2_main .bes_switch_container{--button-width: 51px;--button-height: 24px;--toggle-diameter: 20px;--color-off: #e9e9eb;--color-on: #34c759;width:var(--button-width);height:var(--button-height);position:relative;padding:0;margin:0;flex:none;user-select:none}.browser_extension_settings_v2_main input[type=checkbox]{opacity:0;width:0;height:0;position:absolute}.browser_extension_settings_v2_main .bes_switch{width:100%;height:100%;display:block;background-color:var(--color-off);border-radius:calc(var(--button-height)/2);border:none;cursor:pointer;transition:all .2s ease-out}.browser_extension_settings_v2_main .bes_switch::before{display:none}.browser_extension_settings_v2_main .bes_slider{width:var(--toggle-diameter);height:var(--toggle-diameter);position:absolute;left:2px;top:calc(50% - var(--toggle-diameter)/2);border-radius:50%;background:#fff;box-shadow:0px 3px 8px rgba(0,0,0,.15),0px 3px 1px rgba(0,0,0,.06);transition:all .2s ease-out;cursor:pointer}.browser_extension_settings_v2_main input[type=checkbox]:checked+.bes_switch{background-color:var(--color-on)}.browser_extension_settings_v2_main input[type=checkbox]:checked+.bes_switch .bes_slider{left:calc(var(--button-width) - var(--toggle-diameter) - 2px)}@media(max-width: 500px){:host{right:10px}.browser_extension_settings_v2_main{max-height:85%}}'
   function createSwitch(options = {}) {
     const container = createElement("label", { class: "bes_switch_container" })
     const checkbox = createElement(
@@ -692,7 +692,7 @@
     div.append(createSwitch(options))
     return div
   }
-  var besVersion = 62
+  var besVersion = 71
   var messages = {
     "settings.title": "Settings",
     "settings.otherExtensions": "Other Extensions",
@@ -1032,82 +1032,24 @@
   initAvailableLocales(locales)
   console.log("[settings] prefferedLocale:", getPrefferedLocale())
   var i = initI18n(localeMap, getPrefferedLocale())
-  function resetI18n(locale2) {
+  function resetI18n(locale) {
     console.log(
       "[settings] prefferedLocale:",
       getPrefferedLocale(),
       "locale:",
-      locale2
+      locale
     )
-    i = initI18n(localeMap, locale2 || getPrefferedLocale())
+    i = initI18n(localeMap, locale || getPrefferedLocale())
   }
-  var lang = navigator.language
-  var locale
-  if (lang === "zh-TW" || lang === "zh-HK") {
-    locale = "zh-TW"
-  } else if (lang.includes("zh")) {
-    locale = "zh-CN"
-  } else {
-    locale = "en"
+  var prefix = "browser_extension_settings_v2_"
+  var getSettingsElement = () => {
+    const wrapper = getSettingsWrapper()
+    return (
+      (wrapper == null
+        ? void 0
+        : wrapper.querySelector(".".concat(prefix, "main"))) || void 0
+    )
   }
-  var relatedExtensions = [
-    {
-      id: "utags",
-      title: i("settings.extensions.utags.title"),
-      url: "https://greasyfork.org/".concat(
-        locale,
-        "/scripts/460718-utags-add-usertags-to-links"
-      ),
-    },
-    {
-      id: "links-helper",
-      title: i("settings.extensions.links-helper.title"),
-      description:
-        "\u5728\u65B0\u6807\u7B7E\u9875\u4E2D\u6253\u5F00\u7B2C\u4E09\u65B9\u7F51\u7AD9\u94FE\u63A5\uFF0C\u56FE\u7247\u94FE\u63A5\u8F6C\u56FE\u7247\u6807\u7B7E\u7B49",
-      url: "https://greasyfork.org/".concat(
-        locale,
-        "/scripts/464541-links-helper"
-      ),
-    },
-    {
-      id: "v2ex.rep",
-      title: i("settings.extensions.v2ex.rep.title"),
-      url: "https://greasyfork.org/".concat(
-        locale,
-        "/scripts/466589-v2ex-rep-%E4%B8%93%E6%B3%A8%E6%8F%90%E5%8D%87-v2ex-%E4%B8%BB%E9%A2%98%E5%9B%9E%E5%A4%8D%E6%B5%8F%E8%A7%88%E4%BD%93%E9%AA%8C"
-      ),
-    },
-    {
-      id: "v2ex.min",
-      title: i("settings.extensions.v2ex.min.title"),
-      url: "https://greasyfork.org/".concat(
-        locale,
-        "/scripts/463552-v2ex-min-v2ex-%E6%9E%81%E7%AE%80%E9%A3%8E%E6%A0%BC"
-      ),
-    },
-    {
-      id: "replace-ugly-avatars",
-      title: i("settings.extensions.replace-ugly-avatars.title"),
-      url: "https://greasyfork.org/".concat(
-        locale,
-        "/scripts/472616-replace-ugly-avatars"
-      ),
-    },
-    {
-      id: "more-by-pipecraft",
-      title: i("settings.extensions.more-by-pipecraft.title"),
-      url: "https://greasyfork.org/".concat(locale, "/users/1030884-pipecraft"),
-    },
-  ]
-  var prefix = "browser_extension_settings_"
-  var randomId = String(Math.round(Math.random() * 1e4))
-  var settingsContainerId = prefix + "container_" + randomId
-  var settingsElementId = prefix + "main_" + randomId
-  var getSettingsElement = () => $("#" + settingsElementId)
-  var getSettingsStyle = () =>
-    style_default
-      .replaceAll(/browser_extension_settings_container/gm, settingsContainerId)
-      .replaceAll(/browser_extension_settings_main/gm, settingsElementId)
   var storageKey = "settings"
   var settingsOptions
   var settingsTable = {}
@@ -1136,29 +1078,38 @@
     const settingsContainer = getSettingsContainer()
     if (settingsContainer) {
       settingsContainer.style.display = "none"
+      settingsContainer.remove()
     }
     removeEventListener(document, "click", onDocumentClick, true)
     removeEventListener(document, "keydown", onDocumentKeyDown, true)
-  }
-  function destroySettings() {
-    closeModal()
-    const settingsContainer = getSettingsContainer()
-    if (settingsContainer) {
-      settingsContainer.remove()
-    }
+    removeEventListener(
+      globalThis,
+      "beforeShowSettings",
+      onBeforeShowSettings,
+      true
+    )
   }
   function isSettingsShown() {
-    const settingsContainer = getSettingsContainer()
+    const settingsContainer = $(".".concat(prefix, "container"))
     if (settingsContainer) {
       return settingsContainer.style.display === "block"
     }
     return false
   }
   var onDocumentClick = (event) => {
-    const target = event.target
-    if (
-      target == null ? void 0 : target.closest(".".concat(prefix, "container"))
-    ) {
+    var _a
+    const path =
+      ((_a = event.composedPath) == null ? void 0 : _a.call(event)) || []
+    const insideContainer = path.some((node) => {
+      var _a2
+      return (
+        node instanceof HTMLElement &&
+        ((_a2 = node.classList) == null
+          ? void 0
+          : _a2.contains("".concat(prefix, "container")))
+      )
+    })
+    if (insideContainer) {
       return
     }
     closeModal()
@@ -1182,13 +1133,13 @@
         const type = item.type || "switch"
         switch (type) {
           case "switch": {
+            const root = getSettingsElement()
             const checkbox = $(
-              "#"
-                .concat(
-                  settingsElementId,
-                  ' .option_groups .switch_option[data-key="'
-                )
-                .concat(key, '"] input')
+              '.option_groups .switch_option[data-key="'.concat(
+                key,
+                '"] input'
+              ),
+              root
             )
             if (checkbox) {
               checkbox.checked = getSettingsValue(key)
@@ -1196,13 +1147,13 @@
             break
           }
           case "select": {
+            const root = getSettingsElement()
             const options = $$(
-              "#"
-                .concat(
-                  settingsElementId,
-                  ' .option_groups .select_option[data-key="'
-                )
-                .concat(key, '"] .bes_select option')
+              '.option_groups .select_option[data-key="'.concat(
+                key,
+                '"] .bes_select option'
+              ),
+              root
             )
             for (const option of options) {
               option.selected = option.value === String(getSettingsValue(key))
@@ -1210,13 +1161,10 @@
             break
           }
           case "textarea": {
+            const root = getSettingsElement()
             const textArea = $(
-              "#"
-                .concat(
-                  settingsElementId,
-                  ' .option_groups textarea[data-key="'
-                )
-                .concat(key, '"]')
+              '.option_groups textarea[data-key="'.concat(key, '"]'),
+              root
             )
             if (textArea) {
               textArea.value = getSettingsValue(key)
@@ -1234,31 +1182,51 @@
       settingsOptions.onViewUpdate(settingsMain)
     }
   }
-  function getSettingsContainer() {
+  function getSettingsContainer(create = false) {
     const container = $(".".concat(prefix, "container"))
     if (container) {
       const theVersion = parseInt10(container.dataset.besVersion, 0)
       if (theVersion < besVersion) {
-        container.id = settingsContainerId
         container.dataset.besVersion = String(besVersion)
       }
       return container
     }
-    return addElement2(doc.body, "div", {
-      id: settingsContainerId,
-      class: "".concat(prefix, "container"),
-      "data-bes-version": besVersion,
-      style: "display: none;",
-    })
+    if (create) {
+      return addElement2(doc.body, "div", {
+        class: "".concat(prefix, "container"),
+        "data-bes-version": besVersion,
+        style: "display: none;",
+      })
+    }
+  }
+  function getSettingsShadowRoot() {
+    const container = getSettingsContainer(true)
+    if (container == null ? void 0 : container.attachShadow) {
+      return container.shadowRoot || container.attachShadow({ mode: "open" })
+    }
+    return void 0
   }
   function getSettingsWrapper() {
-    const container = getSettingsContainer()
-    return (
-      $(".".concat(prefix, "wrapper"), container) ||
-      addElement2(container, "div", {
-        class: "".concat(prefix, "wrapper"),
-      })
-    )
+    const shadow = getSettingsShadowRoot()
+    if (!shadow) {
+      const container = getSettingsContainer(true)
+      return (
+        $(".".concat(prefix, "wrapper"), container) ||
+        addElement2(container, "div", { class: "".concat(prefix, "wrapper") })
+      )
+    }
+    let wrapper = shadow.querySelector(".".concat(prefix, "wrapper"))
+    if (!wrapper) {
+      wrapper = createElement("div", { class: "".concat(prefix, "wrapper") })
+      shadow.append(wrapper)
+      const existStyle = shadow.querySelector("style")
+      if (!existStyle) {
+        const styleElm = createElement("style")
+        styleElm.textContent = style_default
+        shadow.append(styleElm)
+      }
+    }
+    return wrapper
   }
   function createSettingsElement() {
     let settingsMain = getSettingsElement()
@@ -1268,7 +1236,6 @@
         element.remove()
       }
       settingsMain = addElement2(wrapper, "div", {
-        id: settingsElementId,
         class: "".concat(prefix, "main thin_scrollbar"),
       })
       if (settingsOptions.title) {
@@ -1440,8 +1407,20 @@
       history.replaceState({}, "", location.href.replace(hashString, ""))
     }
   }
+  function onBeforeShowSettings() {
+    closeModal()
+  }
   async function showSettings() {
-    const settingsContainer = getSettingsContainer()
+    closeModal()
+    const event = new CustomEvent("beforeShowSettings")
+    globalThis.dispatchEvent(event)
+    addEventListener(
+      globalThis,
+      "beforeShowSettings",
+      onBeforeShowSettings,
+      true
+    )
+    const settingsContainer = getSettingsContainer(true)
     const settingsMain = createSettingsElement()
     await updateOptions()
     settingsContainer.style.display = "block"
@@ -1463,10 +1442,10 @@
       localeSelect.options = {
         [i("settings.systemLanguage")]: "",
       }
-      for (const locale2 of availableLocales3) {
-        const lowerCaseLocale = locale2.toLowerCase()
-        const displayName = localeNames[lowerCaseLocale] || locale2
-        localeSelect.options[displayName] = locale2
+      for (const locale of availableLocales3) {
+        const lowerCaseLocale = locale.toLowerCase()
+        const displayName = localeNames[lowerCaseLocale] || locale
+        localeSelect.options[displayName] = locale
       }
     }
   }
@@ -1478,7 +1457,7 @@
       console.log("lastLocale:", lastLocale, "newLocale:", newLocale)
       if (lastLocale !== newLocale) {
         const isShown = isSettingsShown()
-        destroySettings()
+        closeModal()
         resetI18n(newLocale)
         lastLocale = newLocale
         setTimeout(() => {
@@ -1497,10 +1476,9 @@
     setTimeout(() => {
       resetSettingsUI(optionsProvider)
     }, 50)
-    runWhenHeadExists(() => {
-      addStyle(getSettingsStyle())
+    void registerMenuCommand(i("settings.menu.settings"), showSettings, {
+      accessKey: "o",
     })
-    registerMenuCommand(i("settings.menu.settings"), showSettings, "o")
     handleShowSettingsUrl()
   }
   var content_default =
@@ -2557,14 +2535,14 @@
     vi: vi_default2,
   }
   var i2 = initI18n(localeMap2, getPrefferedLocale())
-  function resetI18n2(locale2) {
+  function resetI18n2(locale) {
     console.log(
       "[utags] prefferedLocale:",
       getPrefferedLocale(),
       "locale:",
-      locale2
+      locale
     )
-    i2 = initI18n(localeMap2, locale2 || getPrefferedLocale())
+    i2 = initI18n(localeMap2, locale || getPrefferedLocale())
   }
   function getAvailableLocales() {
     return availableLocales2
@@ -11195,6 +11173,23 @@
     matches: ["https://*/*", "http://*/*"],
     all_frames: false,
   }
+  if (false) {
+    const runtime =
+      (_c = (_a = globalThis.chrome) == null ? void 0 : _a.runtime) != null
+        ? _c
+        : (_b = globalThis.browser) == null
+          ? void 0
+          : _b.runtime
+    ;(_d = runtime == null ? void 0 : runtime.onMessage) == null
+      ? void 0
+      : _d.addListener((message) => {
+          if (
+            (message == null ? void 0 : message.type) === "utags:show-settings"
+          ) {
+            void showSettings2()
+          }
+        })
+  }
   var emojiTags2
   var host2 = location.host
   var eventManager = new EventListenerManager()
@@ -11451,8 +11446,8 @@
     }
   }
   function onSettingsChange2() {
-    const locale2 = getSettingsValue("locale") || getPrefferedLocale()
-    resetI18n2(locale2)
+    const locale = getSettingsValue("locale") || getPrefferedLocale()
+    resetI18n2(locale)
     if (getSettingsValue("showHidedItems")) {
       addClass(doc.documentElement, "utags_no_hide")
     } else {

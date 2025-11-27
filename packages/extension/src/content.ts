@@ -2,6 +2,7 @@ import { getPrefferedLocale } from 'browser-extension-i18n'
 import {
   getSettingsValue,
   initSettings,
+  showSettings,
   type SettingsTable,
 } from 'browser-extension-settings'
 import {
@@ -83,6 +84,20 @@ export const config: PlasmoCSConfig = {
   matches: ['https://*/*', 'http://*/*'],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   all_frames: false,
+}
+
+if (
+  process.env.PLASMO_TARGET === 'chrome-mv3' ||
+  process.env.PLASMO_TARGET === 'firefox-mv2'
+) {
+  // Receive popup trigger to show settings in the content context
+  const runtime =
+    (globalThis as any).chrome?.runtime ?? (globalThis as any).browser?.runtime
+  runtime?.onMessage?.addListener((message: any) => {
+    if (message?.type === 'utags:show-settings') {
+      void showSettings()
+    }
+  })
 }
 
 let emojiTags: string[]
