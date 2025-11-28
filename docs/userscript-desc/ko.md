@@ -32,7 +32,7 @@
 - MyAnimeList ([myanimelist.net](https://myanimelist.net/))
 - douban ([douban.com](https://www.douban.com/))
 - pixiv ([www.pixiv.net](https://www.pixiv.net/))
-- LINUX DO ([linux.do](https://linux.do/))
+- LINUX DO ([linux.do](https://linux.do/)) ([Invite Code](https://linux.do/invites/Smb6NS5Bj6))
 - APPINN ([meta.appinn.net](https://meta.appinn.net/))
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
@@ -68,7 +68,7 @@
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
-- 2libra ([2libra.com](https://2libra.com/))
+- 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - 기타 다수. 새로운 사이트 추가를 제안하려면 [여기](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)를 클릭하세요.
 
 또한, Greasy Fork의 공개 정책으로 인해 다음 웹사이트에서는 스크립트 설정에서 수동으로 `user matches` 규칙을 추가해야 합니다:

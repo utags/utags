@@ -32,7 +32,7 @@ Sitios actualmente soportados:
 - MyAnimeList ([myanimelist.net](https://myanimelist.net/))
 - douban ([douban.com](https://www.douban.com/))
 - pixiv ([www.pixiv.net](https://www.pixiv.net/))
-- LINUX DO ([linux.do](https://linux.do/))
+- LINUX DO ([linux.do](https://linux.do/)) ([Invite Code](https://linux.do/invites/Smb6NS5Bj6))
 - APPINN ([meta.appinn.net](https://meta.appinn.net/))
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
@@ -68,7 +68,7 @@ Sitios actualmente soportados:
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
-- 2libra ([2libra.com](https://2libra.com/))
+- 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - Y muchos más. Haga clic [aquí](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) para sugerir nuevos sitios.
 
 Además, debido a las políticas públicas de Greasy Fork, debe agregar manualmente reglas `user matches` en la configuración del script para los siguientes sitios web:

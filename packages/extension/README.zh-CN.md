@@ -34,7 +34,7 @@
 - MyAnimeList ([myanimelist.net](https://myanimelist.net/))
 - 豆瓣 ([douban.com](https://www.douban.com/))
 - pixiv ([www.pixiv.net](https://www.pixiv.net/))
-- LINUX DO ([linux.do](https://linux.do/))
+- LINUX DO ([linux.do](https://linux.do/)) ([邀请码](https://linux.do/invites/Smb6NS5Bj6))
 - 小众软件 ([meta.appinn.net](https://meta.appinn.net/))
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol 其乐 ([keylol.com](https://keylol.com/))
@@ -73,7 +73,7 @@
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
 - 司机社 ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
-- 2libra ([2libra.com](https://2libra.com/))
+- 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装
