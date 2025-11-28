@@ -56,9 +56,10 @@ export default (() => {
 
       if (
         location.pathname.startsWith('/post/') &&
-        !location.pathname.startsWith('/post/hot') &&
+        !location.pathname.startsWith('/post/hot/') &&
         !location.pathname.startsWith('/post/latest')
       ) {
+        // 楼中楼回复模式添加 utags_no_hide 类名，防止被隐藏
         $('[data-main-left]')?.classList.add('utags_no_hide')
       }
     },
@@ -134,7 +135,7 @@ export default (() => {
       '.btn',
       'a[href^="/coins"]',
       'a[href^="/notifications"]',
-      'a[href^="/post/hot"]',
+      'a[href^="/post/hot/"]',
       'a[href$="/history"]',
       'a[href^="/auth"]',
     ],
