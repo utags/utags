@@ -74,6 +74,7 @@ For now it works on
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
+- TouTiao ([toutiao.com](https://www.toutiao.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

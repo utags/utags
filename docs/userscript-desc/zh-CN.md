@@ -69,6 +69,7 @@
 - 司机社 ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
+- 今日头条 ([toutiao.com](https://www.toutiao.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
 
 另外，由于 Greasy Fork 的发布规则，下面这些网站需要在脚本设置里手动添加 `user matches` 规则。

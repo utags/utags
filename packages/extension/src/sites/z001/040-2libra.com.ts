@@ -34,7 +34,7 @@ export default (() => {
     return undefined
   }
 
-  function getUserUrl(url: string, exact = false) {
+  function getUserProfileUrl(url: string, exact = false) {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
@@ -109,7 +109,7 @@ export default (() => {
         return true
       }
 
-      key = getUserUrl(href)
+      key = getUserProfileUrl(href)
       if (key) {
         const title = getTrimmedTitle(element)
         if (!title) {
@@ -156,7 +156,7 @@ export default (() => {
         }
       }
 
-      key = getUserUrl(location.href)
+      key = getUserProfileUrl(location.href)
       if (key) {
         const element = $(
           '[data-main-left] div.w-full > div.w-full > div:first-child > div'

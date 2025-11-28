@@ -74,6 +74,7 @@
 - 司机社 ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
+- 今日头条 ([toutiao.com](https://www.toutiao.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 安装

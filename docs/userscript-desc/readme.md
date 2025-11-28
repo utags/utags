@@ -69,6 +69,7 @@ For now it works on
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
+- TouTiao ([toutiao.com](https://www.toutiao.com/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 In addition, due to the publishing rules of Greasy Fork, the following websites need to manually add the `user matches` rule in the script settings.

@@ -113,6 +113,7 @@
 // @match                https://*.ruanyifeng.com/*
 // @match                https://www.uscardforum.com/*
 // @match                https://2libra.com/*
+// @match                https://www.toutiao.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*

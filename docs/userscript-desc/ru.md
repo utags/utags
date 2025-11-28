@@ -70,6 +70,7 @@
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
+- TouTiao ([toutiao.com](https://www.toutiao.com/))
 - И многие другие. Нажмите [здесь](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), чтобы предложить добавление новых сайтов.
 
 Кроме того, из-за правил публикации Greasy Fork для следующих сайтов необходимо вручную добавить правило `user matches` в настройки скрипта:

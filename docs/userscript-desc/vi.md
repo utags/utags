@@ -69,6 +69,7 @@ Các trang web hiện được hỗ trợ:
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
+- TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
 
 Ngoài ra, do chính sách công khai của Greasy Fork, bạn phải thêm thủ công các quy tắc `user matches` trong cài đặt script cho các trang web sau:

@@ -69,6 +69,7 @@ Derzeit unterstützte Websites:
 - xsijishe.net ([xsijishe.net](https://xsijishe.net/))
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
+- TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Und viele mehr. Klicken Sie [hier](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), um neue Websites vorzuschlagen.
 
 Außerdem müssen Sie aufgrund der öffentlichen Richtlinien von Greasy Fork für die folgenden Websites manuell `user matches`-Regeln in den Skripteinstellungen hinzufügen:
