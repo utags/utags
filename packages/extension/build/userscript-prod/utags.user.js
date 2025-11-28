@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.21.12
+// @version              0.21.13
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -113,6 +113,7 @@
 // @match                https://*.ruanyifeng.com/*
 // @match                https://www.uscardforum.com/*
 // @match                https://2libra.com/*
+// @match                https://www.toutiao.com/*
 // @match                https://v2hot.pipecraft.net/*
 // @match                https://utags.pipecraft.net/*
 // @match                https://*.pipecraft.net/*
@@ -9498,7 +9499,8 @@
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
-  var libra_com_default = ""
+  var libra_com_default =
+    ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}"
   var libra_com_default2 = (() => {
     const prefix2 = location.origin + "/"
     function getPostUrl(url, exact = false) {
@@ -9520,7 +9522,7 @@
       }
       return void 0
     }
-    function getUserUrl(url, exact = false) {
+    function getUserProfileUrl(url, exact = false) {
       if (url.startsWith(prefix2)) {
         const href2 = url.slice(prefix2.length)
         if (exact) {
@@ -9540,7 +9542,7 @@
         setVisitedAvailable(true)
         if (
           location.pathname.startsWith("/post/") &&
-          !location.pathname.startsWith("/post/hot") &&
+          !location.pathname.startsWith("/post/hot/") &&
           !location.pathname.startsWith("/post/latest")
         ) {
           ;(_a = $("[data-main-left]")) == null
@@ -9580,7 +9582,7 @@
           element.dataset.utags = element.dataset.utags || ""
           return true
         }
-        key = getUserUrl(href)
+        key = getUserProfileUrl(href)
         if (key) {
           const title = getTrimmedTitle(element)
           if (!title) {
@@ -9602,7 +9604,7 @@
         ".btn",
         'a[href^="/coins"]',
         'a[href^="/notifications"]',
-        'a[href^="/post/hot"]',
+        'a[href^="/post/hot/"]',
         'a[href$="/history"]',
         'a[href^="/auth"]',
       ],
@@ -9622,7 +9624,7 @@
             }
           }
         }
-        key = getUserUrl(location.href)
+        key = getUserProfileUrl(location.href)
         if (key) {
           const element = $(
             "[data-main-left] div.w-full > div.w-full > div:first-child > div"
@@ -9655,6 +9657,198 @@
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
       getStyle: () => libra_com_default,
+    }
+  })()
+  var toutiao_com_default =
+    ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}"
+  var toutiao_com_default2 = (() => {
+    const prefix2 = "https://www.toutiao.com/"
+    function normalizeDomain(url) {
+      if (!url.startsWith(prefix2) && url.includes("toutiao.com")) {
+        return url.replace(/^https:\/\/(m\.)?toutiao\.com\/?/, prefix2)
+      }
+      return url
+    }
+    function getCanonicalUrl2(url) {
+      url = normalizeDomain(url)
+      url = deleteUrlParameters(url, "*")
+      if (url.startsWith(prefix2)) {
+        let href2 = getUserProfileUrl(url, true)
+        if (href2) {
+          return href2
+        }
+        href2 = getPostUrl(url, true)
+        if (href2) {
+          return href2
+        }
+      }
+      return url
+    }
+    function getPostUrl(url, exact = false) {
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
+        if (exact) {
+          if (/^(?:article|trending)\/\d+\/?$/.test(href2)) {
+            return (
+              prefix2 + href2.replace(/^((?:article|trending)\/\d+).*/, "$1/")
+            )
+          }
+        } else if (/^(?:article|trending)\/\d+\/?/.test(href2)) {
+          return (
+            prefix2 + href2.replace(/^((?:article|trending)\/\d+).*/, "$1/")
+          )
+        }
+      }
+      return void 0
+    }
+    function getVideoUrl(url, exact = false) {
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
+        if (exact) {
+          if (/^video\/\d+\/?$/.test(href2)) {
+            return prefix2 + href2.replace(/^(video\/\d+).*/, "$1/")
+          }
+        } else if (/^video\/\d+\/?/.test(href2)) {
+          return prefix2 + href2.replace(/^(video\/\d+).*/, "$1/")
+        }
+      }
+      return void 0
+    }
+    function getUserProfileUrl(url, exact = false) {
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length)
+        if (exact) {
+          if (/^c\/user\/(\d+|token\/[^/]+)\/?$/.test(href2)) {
+            return (
+              prefix2 +
+              href2.replace(/^c\/user\/(\d+|token\/[^/]+).*/, "c/user/$1/")
+            )
+          }
+        } else if (/^c\/user\/(\d+|token\/[^/]+)/.test(href2)) {
+          return (
+            prefix2 +
+            href2.replace(/^c\/user\/(\d+|token\/[^/]+).*/, "c/user/$1/")
+          )
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: /toutiao\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      validate(element) {
+        let href = normalizeDomain(element.href)
+        if (!href.startsWith(prefix2)) {
+          return true
+        }
+        href = deleteUrlParameters(href, "*")
+        let key = getPostUrl(href)
+        if (key) {
+          const titleElement = $(".news-title", element)
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          const meta = { type: "news", title }
+          setUtags(element, key, meta)
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          const titleElement = $(".news-title", element)
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          const meta = { type: "video", title }
+          setUtags(element, key, meta)
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getUserProfileUrl(href)
+        if (key) {
+          const title = getTrimmedTitle(element)
+          if (
+            !title ||
+            title.startsWith("\u7C89\u4E1D") ||
+            title.startsWith("\u5173\u6CE8") ||
+            title.startsWith("\u8D5E")
+          ) {
+            return false
+          }
+          const meta = { type: "user", title }
+          setUtags(element, key, meta)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        ".toutiao-header",
+        ".ttp-site-header",
+        ".main-nav-wrapper",
+        '[aria-label^="\u8BC4\u8BBA\u6570"]',
+        ".action-item",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        let href = normalizeDomain(location.href)
+        if (!href.startsWith(prefix2)) {
+          return
+        }
+        href = deleteUrlParameters(href, "*")
+        let key = getPostUrl(href)
+        if (key) {
+          addVisited(key)
+          const element = $("h2.title,.article-content h1")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "news" }
+              setUtags(element, key, meta)
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          addVisited(key)
+          const element = $(".ttp-video-extras-title h1")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "video" }
+              setUtags(element, key, meta)
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        key = getUserProfileUrl(href)
+        if (key) {
+          const element = $(".profile-info-wrapper .name")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "user" }
+              setUtags(element, key, meta)
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+      },
+      postProcess() {},
+      getStyle: () => toutiao_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
     }
   })()
   var pxxnhub_com_default =
@@ -10932,6 +11126,7 @@
     flickr_com_default2,
     ruanyifeng_com_default2,
     libra_com_default2,
+    toutiao_com_default2,
     pxxnhub_com_default2,
     e_hentxx_org_default2,
     panda_chaika_moe_default2,
