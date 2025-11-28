@@ -53,6 +53,12 @@
     "prettier": true
   },
   "pnpm": {
+    "overrides": {
+      "content-security-policy-parser": "0.6.0",
+      "msgpackr": "1.11.5",
+      "node-forge": "1.3.2",
+      "sucrase>glob": "10.5.0"
+    },
     "ignoredBuiltDependencies": [
       "@parcel/watcher",
       "@swc/core",
