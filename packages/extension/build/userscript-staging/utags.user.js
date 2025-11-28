@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.21.13
+// @version              0.21.14
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -6501,10 +6501,41 @@
       },
     }
   })()
-  var zhihu_com_default = (() => {
+  var zhihu_com_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) h1.Post-Title[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) h1.Post-Title+.utags_ul_1{position:absolute}:not(#a):not(#b):not(#c) .Recommendations-List .utags_ul_1{position:absolute}'
+  var zhihu_com_default2 = (() => {
     const prefix2 = "https://www.zhihu.com/"
-    function getUserProfileUrl(url, exact = false) {
+    const prefix22 = "https://zhuanlan.zhihu.com/"
+    function getCanonicalUrl2(url) {
       if (url.startsWith(prefix2)) {
+        const href2 = getUserProfileUrl(url, true)
+        if (href2) {
+          return href2
+        }
+      }
+      if (url.startsWith(prefix22)) {
+        const href2 = getPostUrl(url, true)
+        if (href2) {
+          return href2
+        }
+      }
+      return url
+    }
+    function getPostUrl(url, exact = false) {
+      if (url.startsWith(prefix22)) {
+        const href2 = url.slice(prefix22.length)
+        if (exact) {
+          if (/^p\/\d+$/.test(href2)) {
+            return prefix22 + href2.replace(/^(p\/\d+).*/, "$1")
+          }
+        } else if (/^p\/\d+/.test(href2)) {
+          return prefix22 + href2.replace(/^(p\/\d+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getUserProfileUrl(url, exact = false) {
+      if (url.startsWith(prefix2 + "people/")) {
         const href2 = url.slice(22)
         if (exact) {
           if (/^people\/[\w-]+(\?.*)?$/.test(href2)) {
@@ -6526,19 +6557,43 @@
         if (!href.includes("zhihu.com")) {
           return true
         }
-        if (href.startsWith(prefix2 + "people/")) {
-          const key = getUserProfileUrl(href, true)
-          if (key) {
-            const titleElement = $(".name", element)
-            let title
-            if (titleElement) {
-              title = titleElement.textContent
+        let key = getUserProfileUrl(href, true)
+        if (key) {
+          const titleElement = $(".name", element)
+          let title
+          if (titleElement) {
+            title = titleElement.textContent
+          }
+          const meta = { type: "user" }
+          if (title) {
+            meta.title = title
+          }
+          setUtags(element, key, meta)
+          return true
+        }
+        key = getPostUrl(href)
+        if (key) {
+          const titleElement = $("h1.PostItem-Title,.LinkCard-title", element)
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          const meta = { type: "post", title }
+          setUtags(element, key, meta)
+          markElementWhetherVisited(key, element)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        if (href.startsWith(prefix2)) {
+          const href2 = href.slice(prefix2.length)
+          if (/^(question|collection|column)\//.test(href2)) {
+            const titleElement = $("h1.PostItem-Title,.LinkCard-title", element)
+            const title = getTrimmedTitle(titleElement || element)
+            if (!title) {
+              return false
             }
-            const meta = { type: "user" }
-            if (title) {
-              meta.title = title
-            }
-            setUtags(element, key, meta)
+            const meta = { title }
+            setUtags(element, "", meta)
             return true
           }
         }
@@ -6549,9 +6604,27 @@
         ".NumberBoard",
         ".ProfileMain-tabs",
         ".Profile-lightList",
+        ".QuestionMainAction",
+        ".ContentItem-time",
       ],
+      validMediaSelectors: ["a.LinkCard"],
       addExtraMatchedNodes(matchedNodesSet) {
-        const key = getUserProfileUrl(location.href)
+        let key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+          const element = $("h1.Post-Title")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "post" }
+              setUtags(element, key, meta)
+              element.dataset.utags_node_type = "link"
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        key = getUserProfileUrl(location.href)
         if (key) {
           const element = $("h1.ProfileHeader-title .ProfileHeader-name")
           if (element) {
@@ -6564,6 +6637,8 @@
           }
         }
       },
+      getStyle: () => zhihu_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
     }
   })()
   var xiaohongshu_com_default =
@@ -11103,7 +11178,7 @@
     tiktok_com_default2,
     pojie_cn_default2,
     juejin_cn_default,
-    zhihu_com_default,
+    zhihu_com_default2,
     xiaohongshu_com_default2,
     weibo_com_default,
     sspai_com_default2,
