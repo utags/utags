@@ -47,6 +47,14 @@ export default (() => {
 
   const prefix = 'https://github.com/'
 
+  function getCanonicalUrl(url: string) {
+    if (url.startsWith('http://github.com/')) {
+      url = url.replace('http://', 'https://')
+    }
+
+    return url
+  }
+
   function getUserProfileUrl(href: string) {
     if (href.startsWith(prefix)) {
       const href2 = href.slice(19)
@@ -250,5 +258,6 @@ export default (() => {
       }
     },
     getStyle: () => styleText,
+    getCanonicalUrl,
   }
 })()

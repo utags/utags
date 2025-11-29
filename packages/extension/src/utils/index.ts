@@ -174,14 +174,14 @@ export function getUrlParameters(
   urlString: string,
   keys: string[] | string,
   allowEmpty = false
-) {
+): Record<string, string | undefined> {
   const url = new URL(urlString)
 
   if (typeof keys === 'string') {
     keys = [keys]
   }
 
-  const result = {}
+  const result = {} as Record<string, string | undefined>
   const parameters = new URLSearchParams(url.search)
   for (const key of keys) {
     if (key) {

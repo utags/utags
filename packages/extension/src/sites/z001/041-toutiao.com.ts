@@ -24,9 +24,9 @@ export default (() => {
 
   function getCanonicalUrl(url: string) {
     url = normalizeDomain(url)
-    url = deleteUrlParameters(url, '*')
 
     if (url.startsWith(prefix)) {
+      url = deleteUrlParameters(url, '*')
       let href2 = getUserProfileUrl(url, true)
       if (href2) {
         return href2

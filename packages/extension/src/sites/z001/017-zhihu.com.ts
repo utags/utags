@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { getUrlParameters } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -16,6 +17,17 @@ export default (() => {
 
   function getCanonicalUrl(url: string) {
     // url = deleteUrlParameters(url, '*')
+    if (url.startsWith('https://link.zhihu.com/')) {
+      const params = getUrlParameters(url, ['target'])
+      if (params.target) {
+        try {
+          url = decodeURIComponent(params.target)
+          return { url, domainChanged: true }
+        } catch {}
+      }
+
+      return url
+    }
 
     if (url.startsWith(prefix)) {
       const href2 = getUserProfileUrl(url, true)
@@ -50,14 +62,14 @@ export default (() => {
   }
 
   function getUserProfileUrl(url: string, exact = false) {
-    if (url.startsWith(prefix + 'people/')) {
+    if (url.startsWith(prefix)) {
       const href2 = url.slice(22)
       if (exact) {
-        if (/^people\/[\w-]+(\?.*)?$/.test(href2)) {
-          return prefix + href2.replace(/^(people\/[\w-]+).*/, '$1')
+        if (/^(?:people|org)\/[\w-]+(\?.*)?$/.test(href2)) {
+          return prefix + href2.replace(/^((?:people|org)\/[\w-]+).*/, '$1')
         }
-      } else if (/^people\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/^(people\/[\w-]+).*/, '$1')
+      } else if (/^(?:people|org)\/[\w-]+/.test(href2)) {
+        return prefix + href2.replace(/^((?:people|org)\/[\w-]+).*/, '$1')
       }
     }
 
@@ -73,7 +85,10 @@ export default (() => {
 
       const href = element.href
 
-      if (!href.includes('zhihu.com')) {
+      if (
+        !href.includes('zhihu.com') ||
+        href.startsWith('https://link.zhihu.com/')
+      ) {
         return true
       }
 

@@ -77,7 +77,9 @@ type Site = {
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<UtagsHTMLElement>) => void
-  getCanonicalUrl?: (url: string) => string
+  getCanonicalUrl?: (
+    url: string
+  ) => string | { url: string; domainChanged: boolean }
   getStyle?: () => string
   preProcess?: () => void
   postProcess?: () => void
@@ -237,7 +239,18 @@ export function getCanonicalUrl(url: string | undefined) {
 
   for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
     if (getCanonicalUrlFunc) {
-      url = getCanonicalUrlFunc(url)
+      const newUrl: string | { url: string; domainChanged: boolean } =
+        getCanonicalUrlFunc(url)
+
+      if (typeof newUrl === 'object') {
+        if (newUrl.domainChanged) {
+          return getCanonicalUrl(newUrl.url)
+        }
+
+        url = newUrl.url
+      } else {
+        url = newUrl
+      }
     }
   }
 
