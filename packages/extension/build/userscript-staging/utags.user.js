@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.21.14
+// @version              0.21.15
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -5295,6 +5295,12 @@
       "search",
     ])
     const prefix2 = "https://github.com/"
+    function getCanonicalUrl2(url) {
+      if (url.startsWith("http://github.com/")) {
+        url = url.replace("http://", "https://")
+      }
+      return url
+    }
     function getUserProfileUrl(href) {
       if (href.startsWith(prefix2)) {
         const href2 = href.slice(19)
@@ -5467,6 +5473,7 @@
         }
       },
       getStyle: () => github_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
     }
   })()
   var reddit_com_default =
@@ -6507,6 +6514,16 @@
     const prefix2 = "https://www.zhihu.com/"
     const prefix22 = "https://zhuanlan.zhihu.com/"
     function getCanonicalUrl2(url) {
+      if (url.startsWith("https://link.zhihu.com/")) {
+        const params = getUrlParameters(url, ["target"])
+        if (params.target) {
+          try {
+            url = decodeURIComponent(params.target)
+            return { url, domainChanged: true }
+          } catch (e) {}
+        }
+        return url
+      }
       if (url.startsWith(prefix2)) {
         const href2 = getUserProfileUrl(url, true)
         if (href2) {
@@ -6535,14 +6552,14 @@
       return void 0
     }
     function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix2 + "people/")) {
+      if (url.startsWith(prefix2)) {
         const href2 = url.slice(22)
         if (exact) {
-          if (/^people\/[\w-]+(\?.*)?$/.test(href2)) {
-            return prefix2 + href2.replace(/^(people\/[\w-]+).*/, "$1")
+          if (/^(?:people|org)\/[\w-]+(\?.*)?$/.test(href2)) {
+            return prefix2 + href2.replace(/^((?:people|org)\/[\w-]+).*/, "$1")
           }
-        } else if (/^people\/[\w-]+/.test(href2)) {
-          return prefix2 + href2.replace(/^(people\/[\w-]+).*/, "$1")
+        } else if (/^(?:people|org)\/[\w-]+/.test(href2)) {
+          return prefix2 + href2.replace(/^((?:people|org)\/[\w-]+).*/, "$1")
         }
       }
       return void 0
@@ -6554,7 +6571,10 @@
           return false
         }
         const href = element.href
-        if (!href.includes("zhihu.com")) {
+        if (
+          !href.includes("zhihu.com") ||
+          href.startsWith("https://link.zhihu.com/")
+        ) {
           return true
         }
         let key = getUserProfileUrl(href, true)
@@ -9746,8 +9766,8 @@
     }
     function getCanonicalUrl2(url) {
       url = normalizeDomain(url)
-      url = deleteUrlParameters(url, "*")
       if (url.startsWith(prefix2)) {
+        url = deleteUrlParameters(url, "*")
         let href2 = getUserProfileUrl(url, true)
         if (href2) {
           return href2
@@ -11268,7 +11288,15 @@
     }
     for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
       if (getCanonicalUrlFunc) {
-        url = getCanonicalUrlFunc(url)
+        const newUrl = getCanonicalUrlFunc(url)
+        if (typeof newUrl === "object") {
+          if (newUrl.domainChanged) {
+            return getCanonicalUrl(newUrl.url)
+          }
+          url = newUrl.url
+        } else {
+          url = newUrl
+        }
       }
     }
     return url
