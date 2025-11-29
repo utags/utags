@@ -46,6 +46,9 @@
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -72,11 +75,7 @@
 - 今日头条 ([toutiao.com](https://www.toutiao.com/))
 - 還有更多。點擊[這裡](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)建議新網站。
 
-另外，由於 Greasy Fork 的公開政策，您需要在腳本設定中手動添加以下網站的 `user matches` 規則：
-
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+若您也想在其他網站使用小魚標籤，只需在腳本設定中為目標網站手動加入 `user matches` 規則即可。
 
 ![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 

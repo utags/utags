@@ -46,6 +46,9 @@ Các trang web hiện được hỗ trợ:
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -72,11 +75,7 @@ Các trang web hiện được hỗ trợ:
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
 
-Ngoài ra, do chính sách công khai của Greasy Fork, bạn phải thêm thủ công các quy tắc `user matches` trong cài đặt script cho các trang web sau:
-
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+Nếu bạn muốn dùng UTags trên các trang web khác, chỉ cần thêm một quy tắc `user matches` cho trang đích trong phần cài đặt script.
 
 ![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 

@@ -46,6 +46,9 @@ Sites actuellement pris en charge :
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -72,11 +75,7 @@ Sites actuellement pris en charge :
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Et bien d'autres. Cliquez [ici](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) pour suggérer de nouveaux sites.
 
-De plus, en raison des politiques publiques de Greasy Fork, vous devez ajouter manuellement des règles `user matches` dans les paramètres du script pour les sites web suivants :
-
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+Si vous souhaitez utiliser UTags sur d'autres sites, ajoutez simplement une règle `user matches` pour le site cible dans les paramètres du script.
 
 ![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 

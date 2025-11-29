@@ -46,6 +46,9 @@
 - Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
 - Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
 - panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
+- PornHub ([pornhub.com](https://www.pornhub.com/))
+- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
+- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -72,11 +75,7 @@
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - 기타 다수. 새로운 사이트 추가를 제안하려면 [여기](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)를 클릭하세요.
 
-또한, Greasy Fork의 공개 정책으로 인해 다음 웹사이트에서는 스크립트 설정에서 수동으로 `user matches` 규칙을 추가해야 합니다:
-
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
+다른 웹사이트에서도 UTags를 사용하고 싶다면, 스크립트 설정에서 대상 사이트에 대한 `user matches` 규칙을 직접 추가하면 됩니다.
 
 ![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
 
