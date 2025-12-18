@@ -17,7 +17,7 @@
 - X(Twitter) ([x.com](https://x.com/) / [twitter.com](https://twitter.com/))
 - 微信公众号 ([mp.weixin.qq.com](https://mp.weixin.qq.com/))
 - Instagram ([www.instagram.com](https://www.instagram.com/))
-- Threads ([www.threads.net](https://www.threads.net/))
+- Threads ([www.threads.com](https://www.threads.com/), [www.threads.net](https://www.threads.net/))
 - Facebook ([www.facebook.com](https://www.facebook.com/))
 - YouTube ([www.youtube.com](https://www.youtube.com/))
 - B 站 Bilibili ([www.bilibili.com](https://www.bilibili.com/))

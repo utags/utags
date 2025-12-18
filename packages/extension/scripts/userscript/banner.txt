@@ -44,6 +44,7 @@
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*
 // @match                https://www.instagram.com/*
+// @match                https://www.threads.com/*
 // @match                https://www.threads.net/*
 // @match                https://*.facebook.com/*
 // @match                https://*.youtube.com/*

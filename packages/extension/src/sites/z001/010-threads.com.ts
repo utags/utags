@@ -1,5 +1,5 @@
 import { $, $$ } from 'browser-extension-utils'
-import styleText from 'data-text:./010-threads.net.scss'
+import styleText from 'data-text:./010-threads.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
@@ -7,11 +7,11 @@ import defaultSite from '../default'
 
 export default (() => {
   function getUserProfileUrl(url: string) {
-    if (url.startsWith('https://www.threads.net/')) {
+    if (url.startsWith('https://www.threads.com/')) {
       const href2 = url.slice(24)
       if (/^@[\w.]+/.test(href2)) {
         return (
-          'https://www.threads.net/' +
+          'https://www.threads.com/' +
           href2.replace(/(^@[\w.]+).*/, '$1').toLowerCase()
         )
       }
@@ -21,11 +21,11 @@ export default (() => {
   }
 
   return {
-    matches: /threads\.net/,
+    matches: /threads\.com/,
     validate(element: HTMLAnchorElement) {
       const href = element.href
-      if (href.startsWith('https://www.threads.net/')) {
-        // Remove "https://www.threads.net/"
+      if (href.startsWith('https://www.threads.com/')) {
+        // Remove "https://www.threads.com/"
         const href2 = href.slice(24)
         // console.log(href2)
         if (/^@[\w.]+$/.test(href2)) {
@@ -49,7 +49,7 @@ export default (() => {
       if (element) {
         const title = getTrimmedTitle(element)
         const key = getUserProfileUrl(location.href)
-        if (title && key && key === 'https://www.threads.net/@' + title) {
+        if (title && key && key === 'https://www.threads.com/@' + title) {
           const meta = { title, type: 'user' }
           setUtags(element, key, meta)
           matchedNodesSet.add(element)

@@ -15,7 +15,7 @@ For now it works on
 - X(Twitter) ([x.com](https://x.com/) / [twitter.com](https://twitter.com/))
 - Wechat ([mp.weixin.qq.com](https://mp.weixin.qq.com/))
 - Instagram ([www.instagram.com](https://www.instagram.com/))
-- Threads ([www.threads.net](https://www.threads.net/))
+- Threads ([www.threads.com](https://www.threads.com/), [www.threads.net](https://www.threads.net/))
 - Facebook ([www.facebook.com](https://www.facebook.com/))
 - YouTube ([www.youtube.com](https://www.youtube.com/))
 - Bilibili ([www.bilibili.com](https://www.bilibili.com/))
