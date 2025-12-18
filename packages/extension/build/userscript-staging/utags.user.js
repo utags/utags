@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.21.15
+// @version              0.21.16
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -44,6 +44,7 @@
 // @match                https://github.com/*
 // @match                https://www.reddit.com/*
 // @match                https://www.instagram.com/*
+// @match                https://www.threads.com/*
 // @match                https://www.threads.net/*
 // @match                https://*.facebook.com/*
 // @match                https://*.youtube.com/*
@@ -5781,15 +5782,15 @@
       getStyle: () => instagram_com_default,
     }
   })()
-  var threads_net_default =
-    ':not(#a):not(#b):not(#c) a[href^="/@"][data-utags]+.utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-4);--utags-notag-ul-height: var(--utags-notag-ul-height-4);--utags-notag-ul-position: var(--utags-notag-ul-position-4);--utags-notag-ul-top: var(--utags-notag-ul-top-4);--utags-notag-captain-tag-top: -22px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-4)}'
-  var threads_net_default2 = (() => {
+  var threads_com_default =
+    ':not(#a):not(#b):not(#c) a[href^="/@"][data-utags]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a[href^="/@"][data-utags]+.utags_ul_1{object-position:0% 200%}'
+  var threads_com_default2 = (() => {
     function getUserProfileUrl(url) {
-      if (url.startsWith("https://www.threads.net/")) {
+      if (url.startsWith("https://www.threads.com/")) {
         const href2 = url.slice(24)
         if (/^@[\w.]+/.test(href2)) {
           return (
-            "https://www.threads.net/" +
+            "https://www.threads.com/" +
             href2.replace(/(^@[\w.]+).*/, "$1").toLowerCase()
           )
         }
@@ -5797,10 +5798,10 @@
       return void 0
     }
     return {
-      matches: /threads\.net/,
+      matches: /threads\.com/,
       validate(element) {
         const href = element.href
-        if (href.startsWith("https://www.threads.net/")) {
+        if (href.startsWith("https://www.threads.com/")) {
           const href2 = href.slice(24)
           if (/^@[\w.]+$/.test(href2)) {
             const meta = { type: "user" }
@@ -5813,20 +5814,21 @@
       excludeSelectors: [
         ...default_default2.excludeSelectors,
         '[role="tablist"]',
+        "a[aria-label]",
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         const element = $("h1+div>div>span,h2+div>div>span")
         if (element) {
           const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
-          if (title && key && key === "https://www.threads.net/@" + title) {
+          if (title && key && key === "https://www.threads.com/@" + title) {
             const meta = { title, type: "user" }
             setUtags(element, key, meta)
             matchedNodesSet.add(element)
           }
         }
       },
-      getStyle: () => threads_net_default,
+      getStyle: () => threads_com_default,
     }
   })()
   var facebook_com_default =
@@ -11191,7 +11193,7 @@
     lobste_rs_default,
     mp_weixin_qq_com_default,
     instagram_com_default2,
-    threads_net_default2,
+    threads_com_default2,
     facebook_com_default2,
     youtube_com_default2,
     bilibili_com_default2,

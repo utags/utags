@@ -42,6 +42,8 @@ export default (() => {
       ...defaultSite.excludeSelectors,
       // Tabs
       '[role="tablist"]',
+      // Title, Tabs
+      'a[aria-label]',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       // profile header

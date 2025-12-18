@@ -16,10 +16,7 @@ export default (() => {
       if (href2.startsWith('profile.php')) {
         const parameters = getUrlParameters(href, ['id', 'sk'])
         if (parameters.id && !parameters.sk) {
-          return (
-            'https://www.facebook.com/profile.php?id=' +
-            (parameters.id as string)
-          )
+          return 'https://www.facebook.com/profile.php?id=' + parameters.id
         }
       }
       // https://www.facebook.com/123456789/ => https://www.facebook.com/profile.php?id=123456789
@@ -45,8 +42,7 @@ export default (() => {
         const parameters = getUrlParameters(href, ['profile_id'])
         if (parameters.profile_id) {
           return (
-            'https://www.facebook.com/profile.php?id=' +
-            (parameters.profile_id as string)
+            'https://www.facebook.com/profile.php?id=' + parameters.profile_id
           )
         }
       }
