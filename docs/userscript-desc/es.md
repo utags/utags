@@ -130,6 +130,9 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
 
 ## Notas de la versión
 
+- 0.22
+  - Se eliminó `// @noframes` y se habilitó `all_frames: true` para permitir que UTags se ejecute dentro de iframes, mejorando la compatibilidad con la extensión utags-shortcuts y userscripts.
+  - Módulo de configuración actualizado.
 - 0.21
   - Optimizar el manejo de anomalías de versión remota: tras confirmación, realizar primera fusión (`lastSyncTime=0`, preferir datos más nuevos) o cancelar para desactivar la sincronización.
   - Nuevo comando de menú: Ocultar/Mostrar todas las etiquetas con título dinámico y soporte multilingüe.

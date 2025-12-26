@@ -83,7 +83,7 @@ export const config: PlasmoCSConfig = {
   run_at: 'document_start',
   matches: ['https://*/*', 'http://*/*'],
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  all_frames: false,
+  all_frames: true,
 }
 
 if (

@@ -34,7 +34,6 @@
 // @icon                 {icon}
 // @author               {author}
 // @license              {license}
-// @noframes
 // @match                https://*.utags.link/*
 // @match                https://*.utags.top/*
 // @match                https://*.utags.plus/*

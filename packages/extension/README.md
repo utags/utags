@@ -128,6 +128,9 @@ For now it works on
 
 ## Release Notes
 
+- 0.22
+  - Removed `// @noframes` and enabled `all_frames: true` to allow UTags to run within iframes, improving compatibility with the utags-shortcuts extension and userscripts.
+  - Updated the settings module.
 - 0.21
   - Optimize remote version anomaly handling: after confirmation, perform first-merge (`lastSyncTime=0`, prefer newer data) or cancel to disable sync.
   - Add menu command: Hide/Unhide all tags with dynamic title and multi-language support.

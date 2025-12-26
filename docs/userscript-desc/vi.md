@@ -130,6 +130,9 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Ghi chú phát hành
 
+- 0.22
+  - Đã xóa `// @noframes` và bật `all_frames: true` để cho phép UTags chạy trong iframe, cải thiện khả năng tương thích với tiện ích mở rộng utags-shortcuts và userscripts.
+  - Cập nhật mô-đun cài đặt.
 - 0.21
   - Tối ưu xử lý bất thường phiên bản từ xa: sau khi xác nhận, thực hiện hợp nhất lần đầu (`lastSyncTime=0`, ưu tiên dữ liệu mới hơn) hoặc hủy để vô hiệu hóa đồng bộ.
   - Lệnh menu mới: Ẩn/Hiện tất cả thẻ với tiêu đề động và hỗ trợ đa ngôn ngữ.

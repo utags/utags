@@ -130,6 +130,9 @@ Plus d'informations : [https://github.com/utags/utags](https://github.com/utags/
 
 ## Notes de version
 
+- 0.22
+  - Suppression de `// @noframes` et activation de `all_frames: true` pour permettre à UTags de s'exécuter dans les iframes, améliorant la compatibilité avec l'extension utags-shortcuts et les userscripts.
+  - Mise à jour du module de paramètres.
 - 0.21
   - Optimiser la gestion des anomalies de version distante : après confirmation, effectuer une première fusion (`lastSyncTime=0`, privilégier les données les plus récentes) ou annuler pour désactiver la synchronisation.
   - Nouveau commande de menu : Masquer/Afficher toutes les tags avec titre dynamique et support multilingue.
