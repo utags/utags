@@ -2839,6 +2839,109 @@ describe('bookmarks', () => {
       expect(urlMap).toEqual({})
     })
   })
+
+  describe('saveBookmark coverage', () => {
+    test('should handle invalid key deletion', async () => {
+      // Setup: Add an invalid key directly to storage
+      const invalidKey = 'not-a-url'
+      const initialStore: BookmarksStore = {
+        data: {
+          [invalidKey]: {
+            tags: ['tag1'],
+            meta: { created: initialTime, updated: initialTime },
+          },
+        },
+        meta: {
+          databaseVersion: currentDatabaseVersion,
+          extensionVersion: currentExtensionVersion,
+          created: initialTime,
+          updated: initialTime,
+        },
+      }
+      getValue.mockResolvedValue(initialStore)
+
+      // Case 1: changed = true (exists -> deleted)
+      await saveBookmark(invalidKey, [], undefined)
+      expect(setValue).toHaveBeenCalledTimes(1)
+      // verify it's gone
+      const callArg = setValue.mock.calls[0][1] as BookmarksStore
+      expect(callArg.data[invalidKey]).toBeUndefined()
+
+      // Case 2: changed = false (doesn't exist -> no change)
+      setValue.mockClear()
+      getValue.mockResolvedValue(callArg) // update mock to reflect deletion
+      await saveBookmark(invalidKey, [], undefined)
+      expect(setValue).not.toHaveBeenCalled()
+    })
+
+    test('should handle soft deletion with empty tags', async () => {
+      const key = 'https://example.com/delete-me'
+      // Setup: exists
+      const initialStore: BookmarksStore = {
+        data: {
+          [key]: {
+            tags: ['tag1'],
+            meta: { created: initialTime, updated: initialTime },
+          },
+        },
+        meta: {
+          databaseVersion: currentDatabaseVersion,
+          extensionVersion: currentExtensionVersion,
+          created: initialTime,
+          updated: initialTime,
+        },
+      }
+      getValue.mockResolvedValue(initialStore)
+
+      // Case 1: changed = true (active -> soft deleted)
+      await saveBookmark(key, [], undefined)
+      expect(setValue).toHaveBeenCalledTimes(1)
+      const callArg1 = setValue.mock.calls[0][1] as BookmarksStore
+      expect(callArg1.data[key].tags).toContain(DELETED_BOOKMARK_TAG)
+
+      // Case 2: changed = false (already deleted -> no change)
+      setValue.mockClear()
+      getValue.mockResolvedValue(callArg1)
+      await saveBookmark(key, [], undefined)
+      expect(setValue).not.toHaveBeenCalled()
+    })
+
+    test('should handle bookmark updates', async () => {
+      const key = 'https://example.com/update-me'
+      const initialData = {
+        tags: ['tag1'],
+        meta: {
+          created: initialTime,
+          updated: initialTime,
+          title: 'Old Title',
+        },
+      }
+      const initialStore: BookmarksStore = {
+        data: {
+          [key]: initialData,
+        },
+        meta: {
+          databaseVersion: currentDatabaseVersion,
+          extensionVersion: currentExtensionVersion,
+          created: initialTime,
+          updated: initialTime,
+        },
+      }
+      getValue.mockResolvedValue(initialStore)
+
+      // Case 1: changed = true (update title)
+      await saveBookmark(key, ['tag1'], { title: 'New Title' })
+      expect(setValue).toHaveBeenCalledTimes(1)
+      const callArg1 = setValue.mock.calls[0][1] as BookmarksStore
+      expect(callArg1.data[key].meta.title).toBe('New Title')
+
+      // Case 2: changed = false (same data)
+      setValue.mockClear()
+      getValue.mockResolvedValue(callArg1)
+      await saveBookmark(key, ['tag1'], { title: 'New Title' }) // Same title
+      expect(setValue).not.toHaveBeenCalled()
+    })
+  })
 })
 /* eslint-enable @typescript-eslint/no-unsafe-assignment */
 

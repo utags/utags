@@ -109,7 +109,8 @@ const storageKey = 'extension.utags.urlmap'
 
 /** Cache for URL map data to improve performance */
 let cachedUrlMap: BookmarksData = {}
-let addTagsValueChangeListenerInitialized = false
+let addValueChangeListenerInitialized = false
+let tagsValueChangeListener: () => void | undefined
 
 /**
  * Clears the cached URL map to free memory
@@ -198,7 +199,7 @@ export async function getUrlMap(): Promise<BookmarksData> {
   return bookmarksStore.data
 }
 
-// TODO: remove this function
+// For test purpose
 export async function getCachedUrlMap(): Promise<BookmarksData> {
   // Ensure cachedUrlMap is initialized
   // if (!cachedUrlMap) {
@@ -244,21 +245,24 @@ export async function saveBookmark(
   const now = Date.now()
   const bookmarksStore = await getBookmarksStore()
   const urlMap = bookmarksStore.data
+  let changed = false
 
   // Update store metadata
   bookmarksStore.meta = {
     ...bookmarksStore.meta,
     databaseVersion: currentDatabaseVersion,
     extensionVersion: currentExtensionVersion,
-    updated: now,
   }
 
   const newTags = mergeTags(tags, [])
   let oldTags: string[] = []
 
   if (!isValidKey(key)) {
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-    delete urlMap[key]
+    if (urlMap[key]) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete urlMap[key]
+      changed = true
+    }
   } else if (newTags.length === 0) {
     // Mark as deleted bookmark if no tags are provided
     const existingData = urlMap[key]
@@ -274,11 +278,13 @@ export async function saveBookmark(
           deleted: now,
           actionType: 'DELETE',
         }
+        changed = true
       }
     }
   } else {
     // Update or create bookmark
     const existingData = urlMap[key] || {}
+    const existingDataStr = JSON.stringify(existingData)
     oldTags = existingData.tags || []
 
     const title =
@@ -286,37 +292,49 @@ export async function saveBookmark(
     const newMeta: BookmarkMetadata = {
       ...existingData.meta,
       ...meta,
-      // Use existing data's created time, not the input meta.created
-      // This preserves the original creation timestamp of the bookmark
-      created: normalizeCreated(
-        existingData.meta?.created,
-        existingData.meta?.updated,
-        now
-      ),
-      updated: now,
+    }
+
+    // Use existing data's created time, not the input meta.created
+    // This preserves the original creation timestamp of the bookmark
+    newMeta.created = normalizeCreated(
+      existingData.meta?.created,
+      existingData.meta?.updated,
+      now
+    )
+    if (existingData.meta?.updated) {
+      newMeta.updated = existingData.meta.updated
     }
 
     if (title) {
       newMeta.title = title
     }
 
-    urlMap[key] = {
+    const newData = {
       tags: newTags,
       meta: newMeta,
     }
+    const newDataStr = JSON.stringify(newData)
+
+    if (existingDataStr !== newDataStr) {
+      changed = true
+      newData.meta.updated = now
+    }
+
+    urlMap[key] = newData
   }
 
-  await persistBookmarksStore(bookmarksStore)
-  await addRecentTags(newTags, oldTags)
+  if (changed) {
+    bookmarksStore.meta.updated = now
+    await persistBookmarksStore(bookmarksStore)
+    await addRecentTags(newTags, oldTags)
+  }
 }
 
 // Alias for backward compatibility
 export const saveTags = saveBookmark
 
-export function addTagsValueChangeListener(
-  func: (key: string, oldValue: any, newValue: any, remote: boolean) => void
-) {
-  addValueChangeListener(storageKey, func)
+export function addTagsValueChangeListener(func: () => void) {
+  tagsValueChangeListener = func
 }
 
 /**
@@ -629,11 +647,14 @@ export async function initBookmarksStore(): Promise<void> {
   }
 
   console.log('Bookmarks store initialized')
+  if (tagsValueChangeListener) {
+    tagsValueChangeListener()
+  }
 
-  if (!addTagsValueChangeListenerInitialized) {
-    addTagsValueChangeListenerInitialized = true
+  if (!addValueChangeListenerInitialized) {
+    addValueChangeListenerInitialized = true
     // When data is updated in other tabs, clear cache and check version
-    addTagsValueChangeListener(async () => {
+    addValueChangeListener(storageKey, async () => {
       console.log('Data updated in other tab, clearing cache')
       cachedUrlMap = {}
       await initBookmarksStore()

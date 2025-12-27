@@ -61,7 +61,6 @@ import {
 import {
   addTagsValueChangeListener,
   clearCachedUrlMap,
-  getCachedUrlMap,
   getTags,
   initBookmarksStore,
 } from './storage/bookmarks'
@@ -731,8 +730,6 @@ async function displayTags() {
     console.error('after matchedNodes', Date.now() - start, nodes.length)
   }
 
-  await getCachedUrlMap()
-
   for (const node of nodes) {
     const utags: UserTag | undefined = getUtags(node)
     if (!utags) {
@@ -1290,10 +1287,10 @@ async function main() {
   // Initialize the star handler with required dependencies
   // initStarHandler(showCurrentPageLinkUtagsPrompt)
 
+  await initStorage()
+
   visitedOnSettingsChange()
   onSettingsChange()
-
-  await initStorage()
 
   setTimeout(outputData, 1)
 

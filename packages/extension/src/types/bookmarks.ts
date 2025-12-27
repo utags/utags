@@ -177,6 +177,10 @@ export type BookmarksStore = {
      */
     databaseVersion: number
     /**
+     * The version of the extension.
+     */
+    extensionVersion: string
+    /**
      * The timestamp when the bookmarks store was initially created.
      * Stored as milliseconds since epoch.
      */

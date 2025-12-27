@@ -33,7 +33,7 @@ export const availableLocales = /** @type {const} */ [
 
 initAvailableLocales(availableLocales)
 
-console.log('[utags] prefferedLocale:', getPrefferedLocale())
+// console.log('[utags] prefferedLocale:', getPrefferedLocale())
 export const localeMap = {
   zh: messagesZh,
   'zh-cn': messagesZh,
@@ -55,7 +55,7 @@ export const localeMap = {
 export let i = initI18n(localeMap, getPrefferedLocale())
 
 export function resetI18n(locale?: string) {
-  console.log('[utags] prefferedLocale:', getPrefferedLocale(), 'locale:', locale)
+  // console.log('[utags] prefferedLocale:', getPrefferedLocale(), 'locale:', locale)
   i = initI18n(localeMap, locale || getPrefferedLocale())
 }
 
