@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.22.0
+// @version              0.22.1
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -2546,7 +2546,6 @@
       "vi",
     ]
   initAvailableLocales(availableLocales2)
-  console.log("[utags] prefferedLocale:", getPrefferedLocale())
   var localeMap2 = {
     zh: zh_cn_default2,
     "zh-cn": zh_cn_default2,
@@ -2565,12 +2564,6 @@
   }
   var i2 = initI18n(localeMap2, getPrefferedLocale())
   function resetI18n2(locale) {
-    console.log(
-      "[utags] prefferedLocale:",
-      getPrefferedLocale(),
-      "locale:",
-      locale
-    )
     i2 = initI18n(localeMap2, locale || getPrefferedLocale())
   }
   function getAvailableLocales() {
@@ -3452,7 +3445,8 @@
   var DELETED_BOOKMARK_TAG = "._DELETED_"
   var storageKey2 = "extension.utags.urlmap"
   var cachedUrlMap = {}
-  var addTagsValueChangeListenerInitialized = false
+  var addValueChangeListenerInitialized = false
+  var tagsValueChangeListener
   function clearCachedUrlMap() {
     cachedUrlMap = {}
   }
@@ -3496,9 +3490,6 @@
     const bookmarksStore = await getBookmarksStore()
     return bookmarksStore.data
   }
-  async function getCachedUrlMap() {
-    return cachedUrlMap
-  }
   function getBookmark(key) {
     return (
       cachedUrlMap[key] || {
@@ -3509,22 +3500,25 @@
   }
   var getTags = getBookmark
   async function saveBookmark(key, tags, meta) {
-    var _a, _b, _c
+    var _a, _b, _c, _d
     const now = Date.now()
     const bookmarksStore = await getBookmarksStore()
     const urlMap = bookmarksStore.data
+    let changed = false
     bookmarksStore.meta = __spreadProps(
       __spreadValues({}, bookmarksStore.meta),
       {
         databaseVersion: currentDatabaseVersion,
         extensionVersion: currentExtensionVersion,
-        updated: now,
       }
     )
     const newTags = mergeTags(tags, [])
     let oldTags = []
     if (!isValidKey(key)) {
-      delete urlMap[key]
+      if (urlMap[key]) {
+        delete urlMap[key]
+        changed = true
+      }
     } else if (newTags.length === 0) {
       const existingData = urlMap[key]
       if (existingData) {
@@ -3541,39 +3535,51 @@
             deleted: now,
             actionType: "DELETE",
           }
+          changed = true
         }
       }
     } else {
       const existingData = urlMap[key] || {}
+      const existingDataStr = JSON.stringify(existingData)
       oldTags = existingData.tags || []
       const title =
         trimTitle(meta == null ? void 0 : meta.title) ||
         trimTitle((_a = existingData.meta) == null ? void 0 : _a.title)
-      const newMeta = __spreadProps(
-        __spreadValues(__spreadValues({}, existingData.meta), meta),
-        {
-          created: normalizeCreated(
-            (_b = existingData.meta) == null ? void 0 : _b.created,
-            (_c = existingData.meta) == null ? void 0 : _c.updated,
-            now
-          ),
-          updated: now,
-        }
+      const newMeta = __spreadValues(
+        __spreadValues({}, existingData.meta),
+        meta
       )
+      newMeta.created = normalizeCreated(
+        (_b = existingData.meta) == null ? void 0 : _b.created,
+        (_c = existingData.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      if ((_d = existingData.meta) == null ? void 0 : _d.updated) {
+        newMeta.updated = existingData.meta.updated
+      }
       if (title) {
         newMeta.title = title
       }
-      urlMap[key] = {
+      const newData = {
         tags: newTags,
         meta: newMeta,
       }
+      const newDataStr = JSON.stringify(newData)
+      if (existingDataStr !== newDataStr) {
+        changed = true
+        newData.meta.updated = now
+      }
+      urlMap[key] = newData
     }
-    await persistBookmarksStore(bookmarksStore)
-    await addRecentTags(newTags, oldTags)
+    if (changed) {
+      bookmarksStore.meta.updated = now
+      await persistBookmarksStore(bookmarksStore)
+      await addRecentTags(newTags, oldTags)
+    }
   }
   var saveTags = saveBookmark
   function addTagsValueChangeListener(func) {
-    addValueChangeListener(storageKey2, func)
+    tagsValueChangeListener = func
   }
   async function reload() {
     console.log("Current extension is outdated, page reload required")
@@ -3812,9 +3818,12 @@
       throw new Error(errorMessage)
     }
     console.log("Bookmarks store initialized")
-    if (!addTagsValueChangeListenerInitialized) {
-      addTagsValueChangeListenerInitialized = true
-      addTagsValueChangeListener(async () => {
+    if (tagsValueChangeListener) {
+      tagsValueChangeListener()
+    }
+    if (!addValueChangeListenerInitialized) {
+      addValueChangeListenerInitialized = true
+      addValueChangeListener(storageKey2, async () => {
         console.log("Data updated in other tab, clearing cache")
         cachedUrlMap = {}
         await initBookmarksStore()
@@ -11442,7 +11451,6 @@
     }
   }
   function matchedNodes() {
-    console.time("matchedNodes")
     const matchedNodesSet = /* @__PURE__ */ new Set()
     try {
       addMatchedNodes(matchedNodesSet)
@@ -11483,7 +11491,6 @@
         console.error(error)
       }
     }
-    console.timeEnd("matchedNodes")
     return [...matchedNodesSet]
   }
   var config = {
@@ -12007,7 +12014,6 @@
     if (start) {
       console.error("after matchedNodes", Date.now() - start, nodes.length)
     }
-    await getCachedUrlMap()
     for (const node of nodes) {
       const utags = getUtags(node)
       if (!utags) {
@@ -12433,9 +12439,9 @@
       }
     )
     await registerOrUpdateHideAllTagsMenu()
+    await initStorage()
     onSettingsChange()
     onSettingsChange2()
-    await initStorage()
     setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
     await displayTags()
