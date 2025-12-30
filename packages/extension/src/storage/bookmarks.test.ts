@@ -63,19 +63,22 @@ vi.mock('browser-extension-storage', () => {
       }),
     addValueChangeListener: vi
       .fn()
-      .mockImplementation((key: string, listener: (value: unknown) => void) => {
-        if (!listeners[key]) {
-          listeners[key] = []
-        }
+      .mockImplementation(
+        async (key: string, listener: (value: unknown) => void) => {
+          if (!listeners[key]) {
+            listeners[key] = []
+          }
 
-        listeners[key].push(listener)
-      }),
+          listeners[key].push(listener)
+        }
+      ),
     resetStorage: vi.fn().mockImplementation(() => {
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       for (const key of Object.keys(mockStorage)) delete mockStorage[key]
       // Should'nt reset listeners, as it's added only once
       // Object.keys(listeners).forEach((key) => delete listeners[key])
     }),
+    setPolling: vi.fn(),
   }
 })
 
@@ -119,7 +122,9 @@ describe('bookmarks', () => {
   /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   beforeAll(async () => {
     const browserExtensionStorage = await import('browser-extension-storage')
-    getValue = vi.mocked(browserExtensionStorage.getValue)
+    getValue = vi.mocked(
+      browserExtensionStorage.getValue
+    ) as unknown as typeof getValue
     setValue = vi.mocked(browserExtensionStorage.setValue)
     // @ts-expect-error - mock resetStorage for testing
     resetStorage = vi.mocked(browserExtensionStorage.resetStorage)
@@ -1315,7 +1320,7 @@ describe('bookmarks', () => {
     const url = 'https://example.com'
 
     await initBookmarksStore()
-    addValueChangeListener('extension.utags.urlmap', mockListener)
+    await addValueChangeListener('extension.utags.urlmap', mockListener)
     await saveBookmark(url, ['tag1'], {})
 
     expect(mockListener).toHaveBeenCalledWith(
@@ -2729,20 +2734,28 @@ describe('bookmarks', () => {
   })
 
   describe('Error handling', () => {
-    test('should handle storage operation failures', async () => {
-      // Mock storage operation failure
-      getValue.mockRejectedValue(new Error('Storage operation failed'))
+    test('should handle storage operation failures during migration', async () => {
+      // Mock storage operation failure during migration (since getBookmarksStore catches errors)
+      const v2Store = {
+        meta: {
+          databaseVersion: 2,
+          extensionVersion: '0.10.0',
+          created: Date.now(),
+        },
+        'https://example.com': {
+          tags: ['tag1'],
+          meta: { created: Date.now() },
+        },
+      }
+      getValue.mockResolvedValueOnce(v2Store)
+      setValue.mockRejectedValueOnce(new Error('Storage write failed'))
 
       // Attempt to initialize bookmarks store
-      await expect(initBookmarksStore()).rejects.toThrow(
-        'Storage operation failed'
-      )
+      await expect(initBookmarksStore()).rejects.toThrow('Storage write failed')
 
       // Verify error handling behavior
       expect(getValue).toHaveBeenCalledWith('extension.utags.urlmap')
-      expect(setValue).not.toHaveBeenCalled()
-      const urlMap = await getCachedUrlMap()
-      expect(urlMap).toEqual({})
+      expect(setValue).toHaveBeenCalled()
     })
 
     test('should handle version incompatibility', async () => {

@@ -86,7 +86,9 @@ export const config: PlasmoCSConfig = {
 }
 
 if (
+  // eslint-disable-next-line n/prefer-global/process
   process.env.PLASMO_TARGET === 'chrome-mv3' ||
+  // eslint-disable-next-line n/prefer-global/process
   process.env.PLASMO_TARGET === 'firefox-mv2'
 ) {
   // Receive popup trigger to show settings in the content context
@@ -1374,6 +1376,7 @@ async function main() {
   // })
 
   // For debug
+  // eslint-disable-next-line n/prefer-global/process
   if (process.env.PLASMO_TAG === 'dev') {
     // registerDebuggingHotkey()
   }
@@ -1382,6 +1385,6 @@ async function main() {
 runWhenHeadExists(async () => {
   if (doc.documentElement.dataset.utags === undefined) {
     doc.documentElement.dataset.utags = `${host}`
-    await main()
+    void main()
   }
 })

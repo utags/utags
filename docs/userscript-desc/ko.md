@@ -130,6 +130,9 @@
 
 ## 릴리스 노트
 
+- 0.23
+  - GM.* API 폴백 로직 최적화.
+  - Greasymonkey, quoid-userscripts, Stay 등 스크립트 관리자와의 호환성 향상.
 - 0.22
   - `// @noframes`를 제거하고 `all_frames: true`를 활성화하여 iframe 내에서 UTags가 실행되도록 허용, utags-shortcuts 확장 프로그램 및 유저스크립트와의 호환성을 개선했습니다.
   - 설정 모듈을 업데이트했습니다.

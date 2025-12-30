@@ -1,7 +1,7 @@
 {
   "name": "utags-monorepo",
   "private": true,
-  "version": "0.22.1",
+  "version": "0.23.0",
   "packageManager": "pnpm@10.6.2",
   "description": "monorepo for utags extension and webapp",
   "type": "module",

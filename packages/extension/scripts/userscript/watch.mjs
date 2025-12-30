@@ -8,7 +8,7 @@ const tag = "dev"
 const buildOptions = getBuildOptions(target, tag)
 buildOptions.alias = {
   ...buildOptions.alias,
-  "browser-extension-storage": "browser-extension-storage/userscript",
+  "browser-extension-storage": "browser-extension-storage/userscript-string",
   "browser-extension-utils": "browser-extension-utils/userscript",
 }
 

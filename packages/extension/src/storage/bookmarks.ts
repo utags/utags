@@ -1,6 +1,7 @@
 import {
   addValueChangeListener,
   getValue,
+  setPolling,
   setValue,
 } from 'browser-extension-storage'
 import { isUrl, uniq } from 'browser-extension-utils'
@@ -134,20 +135,25 @@ function createEmptyBookmarksStore(): BookmarksStore {
 }
 
 async function getBookmarksStore(): Promise<BookmarksStore> {
-  const bookmarksStore: BookmarksStore =
-    ((await getValue(storageKey)) as BookmarksStore) ||
-    createEmptyBookmarksStore()
+  try {
+    const bookmarksStore: BookmarksStore =
+      (await getValue(storageKey))! || createEmptyBookmarksStore()
 
-  if (!bookmarksStore.data) {
-    bookmarksStore.data = {}
+    if (!bookmarksStore.data) {
+      bookmarksStore.data = {}
+    }
+
+    if (!bookmarksStore.meta) {
+      bookmarksStore.meta = createEmptyBookmarksStore().meta
+    }
+
+    cachedUrlMap = filterDeleted(bookmarksStore.data)
+    return bookmarksStore
+  } catch (error) {
+    console.error('Error getting bookmarks store:', error)
+    cachedUrlMap = {}
+    return createEmptyBookmarksStore()
   }
-
-  if (!bookmarksStore.meta) {
-    bookmarksStore.meta = createEmptyBookmarksStore().meta
-  }
-
-  cachedUrlMap = filterDeleted(bookmarksStore.data)
-  return bookmarksStore
 }
 
 /**
@@ -379,7 +385,7 @@ function mergeTags(tags: string[], tags2: string[]): string[] {
       .concat(array2)
       .map((tag) => (tag ? String(tag).trim() : tag))
       .filter(Boolean)
-  ) as string[]
+  )
 }
 
 /**
@@ -653,11 +659,20 @@ export async function initBookmarksStore(): Promise<void> {
 
   if (!addValueChangeListenerInitialized) {
     addValueChangeListenerInitialized = true
+    setPolling(true)
     // When data is updated in other tabs, clear cache and check version
-    addValueChangeListener(storageKey, async () => {
-      console.log('Data updated in other tab, clearing cache')
-      cachedUrlMap = {}
-      await initBookmarksStore()
-    })
+    await addValueChangeListener(
+      storageKey,
+      async (_key, _oldValue, _newValue, remote) => {
+        if (remote) {
+          console.log('Data updated in other tab, clearing cache')
+        } else {
+          console.log('Data updated, clearing cache')
+        }
+
+        cachedUrlMap = {}
+        await initBookmarksStore()
+      }
+    )
   }
 }

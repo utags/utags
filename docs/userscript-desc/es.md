@@ -130,6 +130,9 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
 
 ## Notas de la versión
 
+- 0.23
+  - Optimizar la lógica de fallback de la API GM.*.
+  - Mejorar la compatibilidad con administradores de scripts como Greasymonkey, quoid-userscripts, Stay, etc.
 - 0.22
   - Se eliminó `// @noframes` y se habilitó `all_frames: true` para permitir que UTags se ejecute dentro de iframes, mejorando la compatibilidad con la extensión utags-shortcuts y userscripts.
   - Módulo de configuración actualizado.

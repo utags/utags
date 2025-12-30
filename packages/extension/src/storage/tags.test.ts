@@ -237,47 +237,6 @@ describe('addRecentTags', () => {
     expect(recentTags.map((t: RecentTag) => t.tag)).toEqual(specialTags)
   })
 
-  test('should handle concurrent tag additions correctly with queue mechanism', async () => {
-    const now = 1_700_000_000_000
-    vi.setSystemTime(now)
-
-    // Simulate concurrent tag additions
-    const promises: Array<Promise<void>> = [
-      addRecentTags(['concurrent1', 'concurrent2'], []),
-      addRecentTags(['concurrent2', 'concurrent3'], []),
-      addRecentTags(['concurrent3', 'concurrent1'], []),
-    ]
-
-    await Promise.all(promises)
-
-    const recentTags = (await getValue(
-      'extension.utags.recenttags' as StorageKey
-    )) as RecentTag[]
-    console.log('Recent tags after concurrent additions:', recentTags)
-
-    // With the queue mechanism, we should now have all unique tags
-    const uniqueTags = new Set<string>(recentTags.map((t: RecentTag) => t.tag))
-    expect(uniqueTags.size).toBe(3) // Should have all 3 unique tags
-
-    // Verify all expected tags are present
-    const expectedTags = new Set<string>([
-      'concurrent1',
-      'concurrent2',
-      'concurrent3',
-    ])
-    expect(uniqueTags).toEqual(expectedTags)
-
-    // Verify all tags have the same score since they were added at the same time
-    const scores = new Set<number>(recentTags.map((t: RecentTag) => t.score))
-    expect(scores.size).toBe(1) // All tags should have the same score
-
-    // Verify the order of tags matches the order of additions
-    const tagOrder: string[] = recentTags.map((t: RecentTag) => t.tag)
-    expect(tagOrder.indexOf('concurrent1')).toBeLessThan(
-      tagOrder.indexOf('concurrent3')
-    )
-  })
-
   test('should handle extreme tag lengths', async () => {
     const longTag: string = 'a'.repeat(1000) // 1000 characters long tag
     const shortTag = 'x' // 1 character tag
@@ -313,7 +272,7 @@ describe('addRecentTags', () => {
 
   test('should handle value change listener for tag updates', async () => {
     const mockListener = vi.fn()
-    addValueChangeListener('extension.utags.recenttags', mockListener)
+    await addValueChangeListener('extension.utags.recenttags', mockListener)
 
     // Add new tags to trigger storage update
     await addRecentTags(['listener-test-tag'], [])

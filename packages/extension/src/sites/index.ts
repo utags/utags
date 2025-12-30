@@ -152,7 +152,6 @@ function siteForExtensions(hostname: string): Site {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return {} as Site
 }
 
