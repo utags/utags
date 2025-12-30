@@ -128,6 +128,9 @@ For now it works on
 
 ## Release Notes
 
+- 0.23
+  - Optimize GM.\* API fallback logic.
+  - Improve compatibility with script managers such as Greasymonkey, quoid-userscripts, Stay, etc.
 - 0.22
   - Removed `// @noframes` and enabled `all_frames: true` to allow UTags to run within iframes, improving compatibility with the utags-shortcuts extension and userscripts.
   - Updated the settings module.

@@ -33,6 +33,7 @@ out/
 **/build/module-*/**
 **/build/*-dev/**
 *.zip
+*.tar.gz
 *.crx
 dist/
 

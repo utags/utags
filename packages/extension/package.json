@@ -13,7 +13,7 @@
   "displayName:pt": "UTags - Adicionar tags de usuário aos links",
   "displayName:vi": "UTags - Thêm tag người dùng vào liên kết",
   "displayName:ru": "UTags - Добавление пользовательских тегов к ссылкам",
-  "version": "0.22.1",
+  "version": "0.23.0",
   "description": "Add custom tags or notes to links such as users, posts and videos. It works on X, Facebook, Youtube, TikTok, Reddit and many sites.",
   "description_userscript": "Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.",
   "description_userscript:zh-CN": "为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。",
@@ -54,6 +54,7 @@
     "package": "run-s package:*",
     "package:chrome": "plasmo package",
     "package:firefox": "plasmo package --target=firefox-mv2 && addons-linter build/firefox-mv2-prod.zip",
+    "package:src": "../../pack-extension-source.sh && mv ../../utags-extension.tar.gz build/utags-extension.tar.gz",
     "test": "vitest --run",
     "test:watch": "vitest watch",
     "test:ui": "vitest --ui --coverage.enabled=true"
@@ -61,8 +62,8 @@
   "dependencies": {
     "browser-extension-i18n": "^0.1.3",
     "browser-extension-settings": "^0.8.2",
-    "browser-extension-storage": "^0.1.4",
-    "browser-extension-utils": "^0.2.2",
+    "browser-extension-storage": "^0.2.7",
+    "browser-extension-utils": "^0.3.3",
     "plasmo": "^0.90.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -108,6 +109,7 @@
       "@typescript-eslint/prefer-optional-chain": 0,
       "logical-assignment-operators": 0,
       "unicorn/prevent-abbreviations": 0,
+      "@typescript-eslint/consistent-type-assertions": 0,
       "capitalized-comments": 0
     },
     "overrides": [
@@ -133,6 +135,7 @@
     ],
     "ignores": [
       "src/storage/index.ts",
+      "src/global.d.ts",
       "build/**/*"
     ]
   }

@@ -112,11 +112,11 @@ importers:
         specifier: ^0.8.2
         version: 0.8.2(react@19.2.0)
       browser-extension-storage:
-        specifier: ^0.1.4
-        version: 0.1.4(react@19.2.0)
+        specifier: ^0.2.7
+        version: 0.2.7(react@19.2.0)
       browser-extension-utils:
-        specifier: ^0.2.2
-        version: 0.2.2
+        specifier: ^0.3.3
+        version: 0.3.3
       plasmo:
         specifier: ^0.90.5
         version: 0.90.5(@swc/core@1.13.5(@swc/helpers@0.5.17))(@swc/helpers@0.5.17)(@types/node@24.10.0)(ejs@3.1.10)(lodash@4.17.21)(postcss@8.5.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(relateurl@0.2.7)(terser@5.44.0)(ts-node@10.9.2(@swc/core@1.13.5(@swc/helpers@0.5.17))(@types/node@24.10.0)(typescript@5.2.2))
@@ -4665,9 +4665,17 @@ packages:
     resolution: {integrity: sha512-W5CpDTNGfldbjgQyOaFD/CPOT01mNrcMRnj6PcV6oqLwoteR+5lyLuQfQx15v2hYxD5dCJ4pwAEsf2hF5rYRZA==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
+  browser-extension-storage@0.2.7:
+    resolution: {integrity: sha512-EsrXXMkpfx2lXt28STpxfsVFrTvdWLeU6lj0C2oW7beSBxv6fP51/LQurv1FjCjHILt7n/eGROs5ulXBkxl3Og==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
+
   browser-extension-utils@0.2.2:
     resolution: {integrity: sha512-PS28QAOmap5s/uyYMIzCN3K+24/zeBoxvJ3A4ibsX9MzbS1/av0gwqdZG4clb3YY035pyglxD/iP89knOqGY6w==}
     engines: {node: '>=16.9.0'}
+
+  browser-extension-utils@0.3.3:
+    resolution: {integrity: sha512-m7d7raREOvBfbvrJOpi8GRoeySOOlpsOxl9LM0UDwLpdCVdbYOozhRxBvU45IReqTY+geRfcSbBFbPXUG63Hsg==}
+    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
   browserslist@4.22.1:
     resolution: {integrity: sha512-FEVc202+2iuClEhZhrWy6ZiAcRLvNMyYcxZ8raemul1DYVOVdFsbqckWLdsixQZCpJlwe77Z3UTalE7jsjnKfQ==}
@@ -16418,7 +16426,15 @@ snapshots:
     transitivePeerDependencies:
       - react
 
+  browser-extension-storage@0.2.7(react@19.2.0):
+    dependencies:
+      '@plasmohq/storage': 1.15.0(react@19.2.0)
+    transitivePeerDependencies:
+      - react
+
   browser-extension-utils@0.2.2: {}
+
+  browser-extension-utils@0.3.3: {}
 
   browserslist@4.22.1:
     dependencies:

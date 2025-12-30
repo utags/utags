@@ -28,10 +28,6 @@ function getScore(weight = 1): number {
   return (Math.floor(Date.now() / 1000) / 1_000_000_000) * weight
 }
 
-// Concurrency control lock and queue for tag updates
-let isUpdating = false
-const updateQueue: Array<{ newTags: string[]; oldTags: string[] }> = []
-
 /**
  * Adds new tags to the recent tags list and updates related tag collections
  * @param newTags Array of new tags to add
@@ -43,35 +39,6 @@ export async function addRecentTags(
 ): Promise<void> {
   if (newTags.length === 0) return
 
-  // If an update is already in progress, queue the current update
-  if (isUpdating) {
-    return new Promise<void>((resolve) => {
-      updateQueue.push({ newTags, oldTags })
-      resolve()
-    })
-  }
-
-  isUpdating = true
-  try {
-    await processTagUpdate(newTags, oldTags)
-
-    // Process remaining updates in the queue
-    while (updateQueue.length > 0) {
-      const nextUpdate = updateQueue.shift()
-      if (nextUpdate) {
-        // eslint-disable-next-line no-await-in-loop
-        await processTagUpdate(nextUpdate.newTags, nextUpdate.oldTags)
-      }
-    }
-  } finally {
-    isUpdating = false
-  }
-}
-
-async function processTagUpdate(
-  newTags: string[],
-  oldTags: string[]
-): Promise<void> {
   // Filter out tags that already exist in oldTags
   const uniqueNewTags =
     oldTags?.length > 0
@@ -81,8 +48,7 @@ async function processTagUpdate(
   if (uniqueNewTags.length === 0) return
 
   // Retrieve existing recent tags or initialize new array
-  const recentTags: RecentTag[] =
-    ((await getValue(STORAGE_KEY_RECENT_TAGS)) as RecentTag[]) || []
+  const recentTags: RecentTag[] = await getRecentTags()
   const score = getScore()
 
   // Add new tags with current score
@@ -147,6 +113,13 @@ async function generateMostUsedAndRecentAddedTags(
     setValue(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags),
     setValue(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags),
   ])
+  // await setValue(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags)
+  // await setValue(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags)
+}
+
+export async function getRecentTags(): Promise<RecentTag[]> {
+  const values = await getValue<RecentTag[]>(STORAGE_KEY_RECENT_TAGS)
+  return Array.isArray(values) ? values : []
 }
 
 /**
@@ -154,7 +127,8 @@ async function generateMostUsedAndRecentAddedTags(
  * @returns Array of most used tag strings
  */
 export async function getMostUsedTags(): Promise<string[]> {
-  return ((await getValue(STORAGE_KEY_MOST_USED_TAGS)) as string[]) || []
+  const values = await getValue<string[]>(STORAGE_KEY_MOST_USED_TAGS)
+  return Array.isArray(values) ? values : []
 }
 
 /**
@@ -162,7 +136,8 @@ export async function getMostUsedTags(): Promise<string[]> {
  * @returns Array of recently added tag strings
  */
 export async function getRecentAddedTags(): Promise<string[]> {
-  return ((await getValue(STORAGE_KEY_RECENT_ADDED_TAGS)) as string[]) || []
+  const values = await getValue<string[]>(STORAGE_KEY_RECENT_ADDED_TAGS)
+  return Array.isArray(values) ? values : []
 }
 
 /**

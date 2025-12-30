@@ -122,7 +122,7 @@ async function saveMetadata(metadata: SyncMetadata): Promise<void> {
  * @returns A promise that resolves with the loaded metadata or null if not found.
  */
 async function loadMetadata(): Promise<SyncMetadata | undefined> {
-  return (await getValue(SYNC_STORAGE_KEY_METADATA)) as SyncMetadata | undefined
+  return getValue(SYNC_STORAGE_KEY_METADATA)
 }
 
 /**
@@ -444,9 +444,7 @@ async function initExtensionId(): Promise<void> {
   // eslint-disable-next-line n/prefer-global/process
   const tag = isProduction ? '' : ` - ${process.env.PLASMO_TAG!.toUpperCase()}`
 
-  let storedId: string | undefined = (await getValue(
-    STORAGE_KEY_EXTENSION_ID
-  )) as string | undefined
+  let storedId: string | undefined = await getValue(STORAGE_KEY_EXTENSION_ID)
 
   if (!storedId) {
     storedId = `utags-${type.toLowerCase()}-${crypto.randomUUID()}`

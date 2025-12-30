@@ -57,5 +57,5 @@ export function clearDomReferences(): void {
   // WeakMap doesn't have a clear() method, but its entries will be
   // garbage collected when the DOM elements are no longer referenced
   // This is just a placeholder for explicit cleanup in the future if needed
-  console.log('DOM references will be garbage collected naturally')
+  // console.log('DOM references will be garbage collected naturally')
 }

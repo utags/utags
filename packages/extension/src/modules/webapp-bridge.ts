@@ -176,7 +176,7 @@ function handleHttpRequestUserscript(
     return
   }
 
-  gmRequest({
+  void gmRequest({
     method,
     url,
     headers: headers || {},
