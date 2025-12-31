@@ -3286,6 +3286,7 @@
   }
   function createPromptView(message, value, resolve) {
     let closed = false
+    let selectMode = false
     const modal = createModal({ class: "utags_prompt" })
     const content = modal.getContentElement()
     value = value || ""
@@ -3409,11 +3410,19 @@
       let current = $(".utags_modal_content ul.utags_select_list .utags_active")
       switch (event.key) {
         case "Escape": {
-          stopEventPropagation(event)
-          closeModal2()
+          if (selectMode) {
+            selectMode = false
+            removeAllActive()
+            focusToInput()
+            stopEventPropagation(event)
+          } else {
+            stopEventPropagation(event)
+            closeModal2()
+          }
           break
         }
         case "Enter": {
+          selectMode = false
           stopEventPropagation(event)
           focusToInput()
           if (current) {
@@ -3426,11 +3435,11 @@
           break
         }
         case "Tab": {
-          stopEventPropagation(event)
-          focusToInput()
+          selectMode = false
           break
         }
         case "ArrowDown": {
+          selectMode = true
           stopEventPropagation(event)
           focusToInput()
           current = $(
@@ -3470,6 +3479,9 @@
           break
         }
         case "ArrowLeft": {
+          if (!selectMode) {
+            return
+          }
           stopEventPropagation(event)
           focusToInput()
           current = $(
@@ -3496,6 +3508,9 @@
           break
         }
         case "ArrowRight": {
+          if (!selectMode) {
+            return
+          }
           stopEventPropagation(event)
           focusToInput()
           current = $(
@@ -3519,6 +3534,7 @@
           break
         }
         default: {
+          selectMode = false
           removeAllActive()
           break
         }

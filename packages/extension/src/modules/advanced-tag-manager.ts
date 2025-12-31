@@ -208,6 +208,7 @@ function createPromptView(
   resolve: (value: string | null) => void
 ) {
   let closed = false
+  let selectMode = false
   const modal = createModal({ class: 'utags_prompt' })
   const content = modal.getContentElement()
   value = value || ''
@@ -362,13 +363,22 @@ function createPromptView(
 
     switch (event.key) {
       case 'Escape': {
-        // 取消默认动作，从而避免处理两次。
-        stopEventPropagation(event)
-        closeModal()
+        if (selectMode) {
+          selectMode = false
+          removeAllActive()
+          focusToInput()
+          stopEventPropagation(event)
+        } else {
+          // 取消默认动作，从而避免处理两次。
+          stopEventPropagation(event)
+          closeModal()
+        }
+
         break
       }
 
       case 'Enter': {
+        selectMode = false
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         focusToInput()
@@ -386,12 +396,14 @@ function createPromptView(
 
       case 'Tab': {
         // 取消默认动作，从而避免处理两次。
-        stopEventPropagation(event)
-        focusToInput()
+        // stopEventPropagation(event)
+        // focusToInput()
+        selectMode = false
         break
       }
 
       case 'ArrowDown': {
+        selectMode = true
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         focusToInput()
@@ -438,6 +450,10 @@ function createPromptView(
       }
 
       case 'ArrowLeft': {
+        if (!selectMode) {
+          return
+        }
+
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         focusToInput()
@@ -464,6 +480,10 @@ function createPromptView(
       }
 
       case 'ArrowRight': {
+        if (!selectMode) {
+          return
+        }
+
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
         focusToInput()
@@ -490,6 +510,7 @@ function createPromptView(
       }
 
       default: {
+        selectMode = false
         removeAllActive()
         break
       }
