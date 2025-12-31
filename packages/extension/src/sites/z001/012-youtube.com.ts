@@ -172,9 +172,7 @@ export default (() => {
     },
     postProcess() {
       const host = location.host
-      const enableQuickStar = getSettingsValue(
-        `enableQuickStar_${host}`
-      ) as boolean
+      const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)
       if (!enableQuickStar) {
         return
       }

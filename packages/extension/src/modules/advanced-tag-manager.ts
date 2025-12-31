@@ -164,7 +164,7 @@ function updateCurrentTagList(ul: HTMLElement) {
     displayedTags.add(tag)
     const li = addElement(ul, 'li')
     const a = createTag(tag, { isEmoji: emojiTags.includes(tag), noLink: true })
-    li.append(a)
+    if (li) li.append(a)
   }
 }
 
@@ -207,6 +207,7 @@ function createPromptView(
   // eslint-disable-next-line @typescript-eslint/ban-types
   resolve: (value: string | null) => void
 ) {
+  let closed = false
   const modal = createModal({ class: 'utags_prompt' })
   const content = modal.getContentElement()
   value = value || ''
@@ -235,7 +236,7 @@ function createPromptView(
       // console.log(event.relatedTarget)
       // relatedTarget is null when Escape key pressed
       if (event.relatedTarget) {
-        input.focus()
+        focusToInput()
         stopEventPropagation(event)
       }
 
@@ -249,9 +250,17 @@ function createPromptView(
   }) as HTMLInputElement
 
   setTimeout(() => {
-    input.focus()
+    focusToInput()
     input.select()
   })
+
+  const focusToInput = () => {
+    if (closed) {
+      return
+    }
+
+    input.focus()
+  }
 
   addElement(currentTagsWrapper, 'button', {
     type: 'button',
@@ -299,7 +308,7 @@ function createPromptView(
   const buttonWrapper = addElement(content, 'div', {
     class: 'utags_buttons_wrapper',
   })
-  let closed = false
+
   const closeModal = (value?: string | undefined) => {
     if (closed) {
       return
@@ -311,11 +320,13 @@ function createPromptView(
     removeEventListener(doc, 'mousedown', mousedownHandler, true)
     removeEventListener(doc, 'click', clickHandler, true)
     removeEventListener(doc, 'mouseover', mouseoverHandler, true)
+    // https://github.com/utags/utags/issues/138
     // use setTimeout to resolve Safari issue
+    // Scroll to end because focus to input element, but input element is not visible or removed from dom
     // modal.remove()
     setTimeout(() => {
       modal.remove()
-    })
+    }, 10)
     // eslint-disable-next-line eqeqeq, no-eq-null
     resolve(value == null ? null : value)
   }
@@ -360,7 +371,7 @@ function createPromptView(
       case 'Enter': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
 
         if (current) {
           onSelect(current.textContent, input)
@@ -376,14 +387,14 @@ function createPromptView(
       case 'Tab': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
         break
       }
 
       case 'ArrowDown': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
         current = $(
           '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
@@ -410,7 +421,7 @@ function createPromptView(
       case 'ArrowUp': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
         current = $(
           '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
@@ -429,7 +440,7 @@ function createPromptView(
       case 'ArrowLeft': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
         current = $(
           '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
@@ -455,7 +466,7 @@ function createPromptView(
       case 'ArrowRight': {
         // 取消默认动作，从而避免处理两次。
         stopEventPropagation(event)
-        input.focus()
+        focusToInput()
         current = $(
           '.utags_modal_content ul.utags_select_list .utags_active,.utags_modal_content ul.utags_select_list .utags_active2'
         )
@@ -506,10 +517,10 @@ function createPromptView(
       }
 
       event.preventDefault()
-      input.focus()
+      focusToInput()
     } else {
       event.preventDefault()
-      input.focus()
+      focusToInput()
       // closeModal()
     }
   }
@@ -535,7 +546,7 @@ function createPromptView(
     }
 
     if (target.closest('.utags_modal_content')) {
-      input.focus()
+      focusToInput()
       if (target.closest('.utags_modal_content ul.utags_select_list li')) {
         onSelect(target.textContent, input)
       }
@@ -594,9 +605,7 @@ export async function advancedPrompt(
   recentAddedTags = await getRecentAddedTags()
   emojiTags = await getEmojiTags()
   currentTags = new Set(splitTags(value))
-  disableTagStyleInPrompt = !(getSettingsValue<boolean>(
-    'enableTagStyleInPrompt'
-  ) as boolean)
+  disableTagStyleInPrompt = !getSettingsValue<boolean>('enableTagStyleInPrompt')
 
   return new Promise((resolve) => {
     createPromptView(message, value, resolve)

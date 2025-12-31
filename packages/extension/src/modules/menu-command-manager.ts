@@ -117,7 +117,7 @@ export class MenuCommandManager {
    * @param currentTags - Array of current page tags
    */
   async updateQuickTagMenuCommands(currentTags: string[] = []): Promise<void> {
-    const quickTagsValue = (getSettingsValue('quickTags') as string) || '★'
+    const quickTagsValue = getSettingsValue('quickTags') || '★'
     const quickTags = splitTags(quickTagsValue)
 
     // Remove menu commands for tags that are no longer in settings

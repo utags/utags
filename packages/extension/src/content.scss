@@ -273,7 +273,7 @@
     left: 0;
     height: 0;
     width: 0;
-    z-index: 200000;
+    z-index: 2147483647;
 
     .utags_modal_wrapper {
       position: fixed;
@@ -284,7 +284,7 @@
       inset: 0px;
       padding-top: 5vh;
       background-color: rgba(255, 255, 255, 0.1);
-      z-index: 200000;
+      z-index: 2147483647;
     }
 
     .utags_modal_content {

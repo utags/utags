@@ -145,7 +145,7 @@ export async function getRecentAddedTags(): Promise<string[]> {
  * @returns Array of pinned tag strings
  */
 export async function getPinnedTags(): Promise<string[]> {
-  return splitTags((getSettingsValue('pinnedTags') as string) || '')
+  return splitTags(getSettingsValue('pinnedTags') || '')
 }
 
 /**
@@ -153,5 +153,5 @@ export async function getPinnedTags(): Promise<string[]> {
  * @returns Array of emoji tag strings
  */
 export async function getEmojiTags(): Promise<string[]> {
-  return splitTags((getSettingsValue('emojiTags') as string) || '')
+  return splitTags(getSettingsValue('emojiTags') || '')
 }

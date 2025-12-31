@@ -26,7 +26,7 @@ export default function createModal(attributes?: Record<string, unknown>) {
       }
     },
     append(element?: HTMLElement) {
-      ;(element || doc.body).append(div)
+      ;(element || doc.documentElement).append(div)
     },
     getContentElement() {
       return content

@@ -23,10 +23,9 @@ export function setVisitedAvailable(value: boolean) {
 }
 
 export function onSettingsChange() {
-  useVisitedFunction = getSettingsValue(`useVisitedFunction_${host}`) as boolean
+  useVisitedFunction = getSettingsValue(`useVisitedFunction_${host}`)
   displayMark =
-    (getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) as string) !==
-    '0'
+    getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) !== '0'
 }
 
 function getVisitedLinks(): string[] {

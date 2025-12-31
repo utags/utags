@@ -346,8 +346,7 @@ const addUtagsStyle = () => {
 }
 
 function updateCustomStyle() {
-  const customStyleValue =
-    (getSettingsValue('customStyleValue') as string) || ''
+  const customStyleValue = getSettingsValue('customStyleValue') || ''
   if (getSettingsValue('customStyle') && customStyleValue) {
     if ($('#utags_custom_style')) {
       $('#utags_custom_style')!.textContent = customStyleValue
@@ -364,8 +363,7 @@ function updateCustomStyle() {
     $('#utags_custom_style')!.remove()
   }
 
-  const customStyleValue2 =
-    (getSettingsValue(`customStyleValue_${host}`) as string) || ''
+  const customStyleValue2 = getSettingsValue(`customStyleValue_${host}`) || ''
   if (getSettingsValue(`customStyle_${host}`) && customStyleValue2) {
     if ($('#utags_custom_style_2')) {
       $('#utags_custom_style_2')!.textContent = customStyleValue2
@@ -381,8 +379,7 @@ function updateCustomStyle() {
 }
 
 function onSettingsChange() {
-  const locale =
-    (getSettingsValue('locale') as string | undefined) || getPrefferedLocale()
+  const locale = getSettingsValue('locale') || getPrefferedLocale()
   resetI18n(locale)
 
   if (getSettingsValue('showHidedItems')) {
@@ -398,7 +395,7 @@ function onSettingsChange() {
   }
 
   doc.documentElement.dataset.utags_displayEffectOfTheVisitedContent =
-    getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) as string
+    getSettingsValue(`displayEffectOfTheVisitedContent_${host}`)
 
   if (getSettingsValue(`enableCurrentSite_${host}`)) {
     doc.documentElement.dataset.utags = `${host}`
