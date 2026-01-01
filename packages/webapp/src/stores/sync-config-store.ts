@@ -127,9 +127,8 @@ export async function discoverBrowserExtensionTargets(): Promise<void> {
   isDiscovering.set(true)
   discoveredTargets.set([]) // Clear previous discoveries
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const { BrowserExtensionSyncAdapter } = await import(
-    '../sync/browser-extension-sync-adapter.js'
-  )
+  const { BrowserExtensionSyncAdapter } =
+    await import('../sync/browser-extension-sync-adapter.js')
   const adapter = new BrowserExtensionSyncAdapter()
 
   adapter.on('targetFound', (event: Event) => {

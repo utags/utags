@@ -604,9 +604,8 @@ describe('sync-config-store', () => {
 
       // Re-initialize store
       vi.resetModules()
-      const { syncConfigStore: newStore } = await import(
-        './sync-config-store.js'
-      )
+      const { syncConfigStore: newStore } =
+        await import('./sync-config-store.js')
       const store = get(newStore)
       expect(store.syncServices).toHaveLength(1)
       expect(store.syncServices[0]).toEqual(githubConfig)
@@ -621,9 +620,8 @@ describe('sync-config-store', () => {
       localStorageMock.getItem.mockReturnValue(JSON.stringify(invalidSettings))
 
       vi.resetModules()
-      const { syncConfigStore: newStore } = await import(
-        './sync-config-store.js'
-      )
+      const { syncConfigStore: newStore } =
+        await import('./sync-config-store.js')
       const store = get(newStore)
       expect(store.syncServices).toEqual([])
       expect(store.activeSyncServiceId).toBeUndefined()
@@ -640,9 +638,8 @@ describe('sync-config-store', () => {
       localStorageMock.getItem.mockReturnValue(JSON.stringify(invalidServices))
 
       vi.resetModules()
-      const { syncConfigStore: newStore } = await import(
-        './sync-config-store.js'
-      )
+      const { syncConfigStore: newStore } =
+        await import('./sync-config-store.js')
       const store = get(newStore)
       expect(store.syncServices).toHaveLength(1)
       expect(store.syncServices[0]).toEqual(githubConfig)
@@ -655,9 +652,8 @@ describe('sync-config-store', () => {
       // Reset mocks and stores before each test
       vi.resetModules()
       vi.clearAllMocks()
-      const { BrowserExtensionSyncAdapter } = await import(
-        '../sync/browser-extension-sync-adapter.js'
-      )
+      const { BrowserExtensionSyncAdapter } =
+        await import('../sync/browser-extension-sync-adapter.js')
       vi.mocked(BrowserExtensionSyncAdapter).mockReturnValue(mockAdapter as any)
       discoveredTargets.set([])
     })

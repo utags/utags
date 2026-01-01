@@ -112,9 +112,10 @@ export type BrowserExtensionResponse<R = unknown> = Message<R> & {
  * 3. Each discovery process must be followed by a destroy() call to clean up resources
  * 4. Target extension ID must be provided for direct communication
  */
-export class BrowserExtensionSyncAdapter
-  implements SyncAdapter<BrowserExtensionCredentials, BrowserExtensionTarget>
-{
+export class BrowserExtensionSyncAdapter implements SyncAdapter<
+  BrowserExtensionCredentials,
+  BrowserExtensionTarget
+> {
   private readonly eventTarget = new EventTarget()
   private config!: SyncServiceConfig<
     BrowserExtensionCredentials,

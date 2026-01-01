@@ -2765,7 +2765,7 @@
   }
   var focusTrapStack = []
   function initFocusTrap(element, selector, options) {
-    const trapId = Symbol("focusTrap")
+    const trapId = /* @__PURE__ */ Symbol("focusTrap")
     focusTrapStack.push(trapId)
     let root = element || document
     let query =

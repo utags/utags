@@ -45,7 +45,7 @@
     "express": "^5.1.0",
     "focus-trap-lite": "^0.0.6",
     "http-proxy-middleware": "^3.0.0",
-    "jsdom": "^27.1.0",
+    "jsdom": "^27.4.0",
     "lucide-svelte": "^0.552.0",
     "msw": "^2.11.6",
     "node-fetch": "^3.3.2",

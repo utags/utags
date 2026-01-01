@@ -23,9 +23,10 @@ const GITHUB_API_BASE_URL = appConfig.githubApiUrl
  * Implements the SyncAdapter interface for GitHub, allowing synchronization of bookmarks
  * with a file stored in a GitHub repository.
  */
-export class GitHubSyncAdapter
-  implements SyncAdapter<GithubCredentials, GithubTarget>
-{
+export class GitHubSyncAdapter implements SyncAdapter<
+  GithubCredentials,
+  GithubTarget
+> {
   private config!: SyncServiceConfig<GithubCredentials, GithubTarget>
   private credentials!: GithubCredentials
   private target!: GithubTarget

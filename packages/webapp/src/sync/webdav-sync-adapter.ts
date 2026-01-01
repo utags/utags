@@ -15,9 +15,10 @@ import type {
 import { buildSyncPath } from './sync-path-builder.js'
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export class WebDAVSyncAdapter
-  implements SyncAdapter<WebDAVCredentials, WebDAVTarget>
-{
+export class WebDAVSyncAdapter implements SyncAdapter<
+  WebDAVCredentials,
+  WebDAVTarget
+> {
   private config: SyncServiceConfig<WebDAVCredentials, WebDAVTarget> | undefined
   private client: WebDAVClientType | undefined
 

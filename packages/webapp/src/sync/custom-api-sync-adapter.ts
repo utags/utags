@@ -12,9 +12,10 @@ import { buildSyncPath } from './sync-path-builder.js'
 /**
  * Implements the SyncAdapter interface for synchronizing bookmarks with a custom API.
  */
-export class CustomApiSyncAdapter
-  implements SyncAdapter<ApiCredentials, ApiTarget>
-{
+export class CustomApiSyncAdapter implements SyncAdapter<
+  ApiCredentials,
+  ApiTarget
+> {
   private config!: SyncServiceConfig<ApiCredentials, ApiTarget> // Initialized by init()
   private apiCredentials!: ApiCredentials // Initialized by init()
   private apiTarget!: ApiTarget // Initialized by init()

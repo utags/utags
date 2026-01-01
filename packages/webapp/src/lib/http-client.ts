@@ -111,9 +111,8 @@ export const EnvironmentDetector = {
 
     try {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { MessageProxyEnvironmentDetector } = await import(
-        './message-proxy-http-client.js'
-      )
+      const { MessageProxyEnvironmentDetector } =
+        await import('./message-proxy-http-client.js')
       const isAvailable =
         await MessageProxyEnvironmentDetector.isMessageProxyAvailable()
 
@@ -154,9 +153,8 @@ export const HttpClient = {
     // First, try message proxy for cross-origin requests
     try {
       if (await EnvironmentDetector.isMessageProxyAvailable()) {
-        const { messageProxyHttpClient } = await import(
-          './message-proxy-http-client.js'
-        )
+        const { messageProxyHttpClient } =
+          await import('./message-proxy-http-client.js')
         return await messageProxyHttpClient.request(options)
       }
     } catch (error) {
