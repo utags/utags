@@ -64,6 +64,7 @@
     "browser-extension-settings": "^0.8.4",
     "browser-extension-storage": "^0.2.8",
     "browser-extension-utils": "^0.3.3",
+    "focus-trap-lite": "^0.1.0",
     "plasmo": "^0.90.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

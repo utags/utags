@@ -131,8 +131,10 @@ Weitere Informationen: [https://github.com/utags/utags](https://github.com/utags
 ## Versionshinweise
 
 - 0.23
-  - Optimierung der GM.\* API-Fallback-Logik.
+  - Optimisation der GM.\* API-Fallback-Logik.
   - Verbesserte Kompatibilität mit Skript-Managern wie Greasymonkey, quoid-userscripts, Stay usw.
+  - Verbesserte Tastaturinteraktion für Escape- und Tab-Tasten.
+  - Problem in Safari behoben, bei dem das Schließen des Tag-Eingabefelds die Seite nach unten scrollt.
 - 0.22
   - `// @noframes` entfernt und `all_frames: true` aktiviert, damit UTags in iframes ausgeführt werden kann, was die Kompatibilität mit der utags-shortcuts-Erweiterung und Userscripts verbessert.
   - Einstellungsmodul aktualisiert.

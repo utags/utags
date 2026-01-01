@@ -136,6 +136,8 @@
 - 0.23
   - 优化 GM.\* API fallback 逻辑
   - 提升 Greasymonkey, quoid-userscripts, Stay 等脚本管理器的兼容性
+  - 优化 Escape 和 Tab 键的交互体验
+  - 修复 Safari 中关闭标签输入面板时页面滚动到底部的问题
 - 0.22
   - 移除 `// @noframes` 指令并启用 `all_frames: true`，支持在 iframe 中运行，以兼容 utags-shortcuts 扩展及用户脚本。
   - 优化设置模块。

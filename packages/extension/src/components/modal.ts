@@ -4,6 +4,7 @@ import {
   createElement,
   doc,
 } from 'browser-extension-utils'
+import { initFocusTrap } from 'focus-trap-lite'
 
 export default function createModal(attributes?: Record<string, unknown>) {
   const div = createElement('div', {
@@ -27,6 +28,7 @@ export default function createModal(attributes?: Record<string, unknown>) {
     },
     append(element?: HTMLElement) {
       ;(element || doc.documentElement).append(div)
+      initFocusTrap(div)
     },
     getContentElement() {
       return content

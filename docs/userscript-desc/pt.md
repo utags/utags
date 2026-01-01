@@ -131,8 +131,10 @@ Mais informações: [https://github.com/utags/utags](https://github.com/utags/ut
 ## Notas de lançamento
 
 - 0.23
-  - Otimização da lógica de fallback da API GM.\*.
-  - Melhoria da compatibilidade com gerenciadores de scripts como Greasymonkey, quoid-userscripts, Stay, etc.
+  - Otimizar a lógica de fallback da API GM.\*.
+  - Melhorar a compatibilidade com gerenciadores de scripts como Greasymonkey, quoid-userscripts, Stay, etc.
+  - Melhorar a interação do teclado para as teclas Escape e Tab.
+  - Corrigir problema no Safari onde fechar o painel de entrada de tags rola a página para o fundo.
 - 0.22
   - Removido `// @noframes` e ativado `all_frames: true` para permitir que o UTags seja executado em iframes, melhorando a compatibilidade com a extensão utags-shortcuts e userscripts.
   - Módulo de configurações atualizado.

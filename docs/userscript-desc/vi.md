@@ -133,6 +133,8 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 - 0.23
   - Tối ưu hóa logic dự phòng (fallback) của GM.\* API.
   - Cải thiện khả năng tương thích với các trình quản lý script như Greasymonkey, quoid-userscripts, Stay, v.v.
+  - Cải thiện tương tác bàn phím cho các phím Escape và Tab.
+  - Sửa lỗi Safari khi đóng bảng nhập thẻ sẽ cuộn trang xuống dưới cùng.
 - 0.22
   - Đã xóa `// @noframes` và bật `all_frames: true` để cho phép UTags chạy trong iframe, cải thiện khả năng tương thích với tiện ích mở rộng utags-shortcuts và userscripts.
   - Cập nhật mô-đun cài đặt.

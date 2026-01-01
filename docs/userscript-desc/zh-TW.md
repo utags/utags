@@ -131,8 +131,10 @@
 ## 版本說明
 
 - 0.23
-  - 優化 GM.\* API fallback 邏輯
-  - 提升 Greasymonkey, quoid-userscripts, Stay 等腳本管理器的兼容性
+  - 優化 GM.\* API fallback 邏輯。
+  - 提升 Greasymonkey, quoid-userscripts, Stay 等腳本管理器的相容性。
+  - 優化 Escape 和 Tab 鍵的互動體驗。
+  - 修復 Safari 中關閉標籤輸入面板時頁面捲動到底部的問題。
 - 0.22
   - 移除 `// @noframes` 指令並啟用 `all_frames: true`，支援在 iframe 中執行，以相容 utags-shortcuts 擴充功能及使用者腳本。
   - 最佳化設定模組。

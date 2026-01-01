@@ -234,38 +234,57 @@ function createPromptView(
     type: 'text',
     placeholder: 'foo, bar',
     onblur(event: FocusEvent) {
-      // console.log(event.relatedTarget)
+      // console.log('onblur', event.relatedTarget, doc.activeElement, Date.now())
       // relatedTarget is null when Escape key pressed
       if (event.relatedTarget) {
-        focusToInput()
-        stopEventPropagation(event)
+        // focusToInput()
+        // stopEventPropagation(event)
       }
 
       createTimeout(() => {
         // When press 'Escape' key
+        // Chrome, Firefox 需要按两次 Escape 键才能在 keydonwHandler 里捕获, 而 Safari 只需要按一次
+        // 所以这里模拟第一次按 Escape 键，Safari 不会进入这里
+        // Same as keydonwHandler logic
         if (doc.activeElement === doc.body) {
-          closeModal()
+          if (selectMode) {
+            selectMode = false
+            removeAllActive()
+            focusToInput()
+            stopEventPropagation(event)
+          } else {
+            // 取消默认动作，从而避免处理两次。
+            stopEventPropagation(event)
+            closeModal()
+          }
         }
       }, 1)
     },
   }) as HTMLInputElement
 
   setTimeout(() => {
-    focusToInput()
-    input.select()
-  })
+    focusToInput(true)
+  }, 1) // After focus-trap-lite init
+  // Try again
+  setTimeout(() => {
+    focusToInput(true)
+  }, 10) // After focus-trap-lite init
 
-  const focusToInput = () => {
+  const focusToInput = (select = false) => {
     if (closed) {
       return
     }
 
     input.focus()
+    if (select) {
+      input.select()
+    }
   }
 
   addElement(currentTagsWrapper, 'button', {
     type: 'button',
     class: 'utags_button_copy',
+    tabIndex: '0',
     textContent: i('prompt.copy'),
     async onclick() {
       await copyCurrentTags(input)
@@ -274,6 +293,7 @@ function createPromptView(
 
   const listWrapper = addElement(content, 'div', {
     class: 'utags_list_wrapper',
+    tabIndex: '-1',
   })
 
   addElement(listWrapper, 'ul', {
@@ -338,6 +358,7 @@ function createPromptView(
 
   addElement(buttonWrapper, 'button', {
     type: 'button',
+    tabIndex: '0',
     textContent: i('prompt.cancel'),
     onclick() {
       closeModal()
@@ -346,6 +367,7 @@ function createPromptView(
   addElement(buttonWrapper, 'button', {
     type: 'button',
     class: 'utags_primary',
+    tabIndex: '0',
     textContent: i('prompt.ok'),
     onclick() {
       onSelect(input.value.trim(), input)
@@ -354,7 +376,7 @@ function createPromptView(
   })
 
   const keydonwHandler = (event: KeyboardEvent) => {
-    // console.log(event, event.target)
+    // console.log(event, event.target, event.defaultPrevented)
     if (event.defaultPrevented || !$('.utags_modal_content')) {
       return // 如果事件已经在进行中，则不做任何事。
     }
@@ -398,7 +420,7 @@ function createPromptView(
         // 取消默认动作，从而避免处理两次。
         // stopEventPropagation(event)
         // focusToInput()
-        selectMode = false
+        // selectMode = false
         break
       }
 
@@ -607,6 +629,7 @@ function createPromptView(
 
   addElement(footer, 'a', {
     class: 'utags_link_settings',
+    tabIndex: '0',
     textContent: i('prompt.settings'),
     async onclick() {
       closeModal()

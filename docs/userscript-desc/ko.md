@@ -133,6 +133,8 @@
 - 0.23
   - GM.\* API 폴백 로직 최적화.
   - Greasymonkey, quoid-userscripts, Stay 등 스크립트 관리자와의 호환성 향상.
+  - Escape 및 Tab 키에 대한 키보드 상호 작용 개선.
+  - 태그 입력 패널을 닫을 때 페이지가 맨 아래로 스크롤되는 Safari 문제 수정.
 - 0.22
   - `// @noframes`를 제거하고 `all_frames: true`를 활성화하여 iframe 내에서 UTags가 실행되도록 허용, utags-shortcuts 확장 프로그램 및 유저스크립트와의 호환성을 개선했습니다.
   - 설정 모듈을 업데이트했습니다.

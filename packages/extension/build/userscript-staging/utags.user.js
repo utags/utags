@@ -2763,6 +2763,118 @@
   function getAvailableLocales() {
     return availableLocales2
   }
+  var focusTrapStack = []
+  function initFocusTrap(element, selector, options) {
+    const trapId = Symbol("focusTrap")
+    focusTrapStack.push(trapId)
+    let root = element || document
+    let query =
+      selector ||
+      "a[href], button, input, textarea, select, details, [tabindex]"
+    let first
+    let last
+    let active = false
+    const getInitial = () => {
+      let target = first
+      if (options == null ? void 0 : options.firstFocusableElement) {
+        if (typeof options.firstFocusableElement === "string") {
+          const found = root.querySelector(options.firstFocusableElement)
+          if (found) {
+            target = found
+          }
+        } else if (
+          typeof options.firstFocusableElement === "object" &&
+          root.contains(options.firstFocusableElement)
+        ) {
+          target = options.firstFocusableElement
+        }
+      }
+      return target
+    }
+    const scan = () => {
+      const list = Array.from(root.querySelectorAll(query)).filter(
+        (element2) => {
+          if (element2.disabled === true) return false
+          if (element2.tabIndex === -1) return false
+          if (
+            element2.offsetWidth === 0 &&
+            element2.offsetHeight === 0 &&
+            element2.getClientRects().length === 0
+          )
+            return false
+          if (
+            globalThis.getComputedStyle(element2).visibility === "hidden" ||
+            globalThis.getComputedStyle(element2).display === "none"
+          )
+            return false
+          return true
+        }
+      )
+      first = list[0]
+      last = list[list.length - 1]
+      if (!first || !last || !document.contains(first)) {
+        destroy()
+      }
+    }
+    const init = () => {
+      scan()
+      if (options == null ? void 0 : options.focus) {
+        const target = getInitial()
+        if (target) target.focus()
+      }
+    }
+    const onKey = (event) => {
+      if (
+        focusTrapStack.length > 0 &&
+        focusTrapStack[focusTrapStack.length - 1] !== trapId
+      ) {
+        return
+      }
+      if (event.key === "Tab") {
+        scan()
+        if (!first || !last) {
+          destroy()
+          return
+        }
+        const activeElement = document.activeElement
+        const isLoseFocus = !root.contains(activeElement)
+        if (event.shiftKey) {
+          if (activeElement === first || isLoseFocus) {
+            last.focus()
+            event.preventDefault()
+          }
+        } else if (activeElement === last || isLoseFocus) {
+          first.focus()
+          event.preventDefault()
+        }
+      } else if (event.key === "Escape") {
+        destroy()
+      }
+    }
+    function destroy() {
+      if (active) {
+        const index = focusTrapStack.indexOf(trapId)
+        if (index !== -1) {
+          focusTrapStack.splice(index, 1)
+        }
+        active = false
+        first = void 0
+        last = void 0
+        query = void 0
+        root = void 0
+        document.removeEventListener("keydown", onKey)
+      }
+    }
+    if (!active) {
+      document.addEventListener("keydown", onKey)
+      active = true
+    }
+    init()
+    return {
+      destroy,
+      container: root,
+    }
+  }
   function createModal(attributes) {
     const div = createElement("div", {
       class: "utags_modal",
@@ -2782,6 +2894,7 @@
       },
       append(element) {
         ;(element || doc.documentElement).append(div)
+        initFocusTrap(div)
       },
       getContentElement() {
         return content
@@ -3310,29 +3423,41 @@
       placeholder: "foo, bar",
       onblur(event) {
         if (event.relatedTarget) {
-          focusToInput()
-          stopEventPropagation(event)
         }
         createTimeout(() => {
           if (doc.activeElement === doc.body) {
-            closeModal2()
+            if (selectMode) {
+              selectMode = false
+              removeAllActive()
+              focusToInput()
+              stopEventPropagation(event)
+            } else {
+              stopEventPropagation(event)
+              closeModal2()
+            }
           }
         }, 1)
       },
     })
     setTimeout(() => {
-      focusToInput()
-      input.select()
-    })
-    const focusToInput = () => {
+      focusToInput(true)
+    }, 1)
+    setTimeout(() => {
+      focusToInput(true)
+    }, 10)
+    const focusToInput = (select = false) => {
       if (closed) {
         return
       }
       input.focus()
+      if (select) {
+        input.select()
+      }
     }
     addElement2(currentTagsWrapper, "button", {
       type: "button",
       class: "utags_button_copy",
+      tabIndex: "0",
       textContent: i2("prompt.copy"),
       async onclick() {
         await copyCurrentTags(input)
@@ -3340,6 +3465,7 @@
     })
     const listWrapper = addElement2(content, "div", {
       class: "utags_list_wrapper",
+      tabIndex: "-1",
     })
     addElement2(listWrapper, "ul", {
       class:
@@ -3389,6 +3515,7 @@
     }
     addElement2(buttonWrapper, "button", {
       type: "button",
+      tabIndex: "0",
       textContent: i2("prompt.cancel"),
       onclick() {
         closeModal2()
@@ -3397,6 +3524,7 @@
     addElement2(buttonWrapper, "button", {
       type: "button",
       class: "utags_primary",
+      tabIndex: "0",
       textContent: i2("prompt.ok"),
       onclick() {
         onSelect(input.value.trim(), input)
@@ -3435,7 +3563,6 @@
           break
         }
         case "Tab": {
-          selectMode = false
           break
         }
         case "ArrowDown": {
@@ -3608,6 +3735,7 @@
     })
     addElement2(footer, "a", {
       class: "utags_link_settings",
+      tabIndex: "0",
       textContent: i2("prompt.settings"),
       async onclick() {
         closeModal2()

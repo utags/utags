@@ -133,6 +133,8 @@
 - 0.23
   - GM.\* API のフォールバックロジックを最適化。
   - Greasymonkey、quoid-userscripts、Stay などのスクリプトマネージャーとの互換性を向上。
+  - Escape キーと Tab キーのキーボード操作性を向上。
+  - Safari でタグ入力パネルを閉じるとページが下にスクロールする問題を修正。
 - 0.22
   - `// @noframes` を削除し、`all_frames: true` を有効にしました。これにより iframe 内での UTags の実行が可能になり、utags-shortcuts 拡張機能やユーザースクリプトとの互換性が向上しました。
   - 設定モジュールを更新しました。
