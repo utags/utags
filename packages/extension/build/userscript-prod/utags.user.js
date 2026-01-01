@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.23.1
+// @version              0.23.2
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -756,6 +756,14 @@
   var runWhenHeadExists = (func) => {
     if (!doc.head) {
       headFuncArray.push(func)
+      startObserveHeadBodyExists()
+      return
+    }
+    func()
+  }
+  var runWhenBodyExists = (func) => {
+    if (!doc.body) {
+      bodyFuncArray.push(func)
       startObserveHeadBodyExists()
       return
     }
@@ -1794,6 +1802,47 @@
       a.setAttribute("target", "_blank")
     }
     return a
+  }
+  var validNodeNames = {
+    A: true,
+    H1: true,
+    H2: true,
+    H3: true,
+    H4: true,
+    H5: true,
+    H6: true,
+    DIV: true,
+    SPAN: true,
+    P: true,
+    UL: true,
+    OL: true,
+    LI: true,
+    SECTION: true,
+  }
+  function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
+    const length = nodeList.length
+    for (let i3 = 0; i3 < length; i3++) {
+      const node = nodeList[i3]
+      if (node.nodeType !== 1) {
+        continue
+      }
+      const classList = node.classList
+      if (
+        classList.contains("utags_ul") ||
+        classList.contains("utags_li") ||
+        classList.contains("utags_text_tag") ||
+        classList.contains("utags_modal") ||
+        classList.contains("utags_modal_wrapper") ||
+        classList.contains("utags_modal_content") ||
+        classList.contains("browser_extension_settings_v2_container")
+      ) {
+        return false
+      }
+      if (validNodeNames[node.nodeName]) {
+        return true
+      }
+    }
+    return false
   }
   var messages14 = {
     "settings.enableCurrentSite": "UTags auf der aktuellen Website aktivieren",
@@ -3017,9 +3066,7 @@
     if (removed.length === 0) {
       return tags
     }
-    return tags.filter((value) => {
-      return !removed.includes(value)
-    })
+    return tags.filter((value) => !removed.includes(value))
   }
   async function copyText(data) {
     const textArea = createElement("textarea", {
@@ -4170,9 +4217,7 @@
       )
     }
   }
-  var mergeData = async () => {
-    return { numberOfLinks: 0, numberOfTags: 0 }
-  }
+  var mergeData = async () => ({ numberOfLinks: 0, numberOfTags: 0 })
   async function outputData() {
     if (
       /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
@@ -4327,9 +4372,7 @@
     key = convertKey(key)
     const visitedLinks = getVisitedLinks()
     if (visitedLinks.includes(key)) {
-      const newVisitedLinks = visitedLinks.filter((value) => {
-        return value !== key
-      })
+      const newVisitedLinks = visitedLinks.filter((value) => value !== key)
       saveVisitedLinks(newVisitedLinks)
     }
   }
@@ -4499,7 +4542,7 @@
           eventManager2.addEventListener(target, type, listener, options)
         }
       : addEventListener
-    addListener(globalThis, "locationchange", function () {
+    addListener(globalThis, "locationchange", () => {
       hideAllUtagsInArea()
     })
   }
@@ -12269,7 +12312,7 @@
       class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
     })
-    let li = createElement("li")
+    let li = createElement("li", { class: "utags_li" })
     const a = createElement("button", {
       type: "button",
       title: "Add tags",
@@ -12288,7 +12331,7 @@
     li.append(a)
     ul.append(li)
     for (const tag of tags) {
-      li = createElement("li")
+      li = createElement("li", { class: "utags_li" })
       const a2 = createTag(tag, {
         isEmoji: emojiTags2.includes(tag),
         noLink: isTagManager,
@@ -12422,36 +12465,6 @@
         setTimeout(displayTags)
       }
     })
-  }
-  var validNodeNames = {
-    A: true,
-    H1: true,
-    H2: true,
-    H3: true,
-    H4: true,
-    H5: true,
-    H6: true,
-    DIV: true,
-    SPAN: true,
-    P: true,
-    UL: true,
-    OL: true,
-    LI: true,
-    SECTION: true,
-  }
-  function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
-    const length = nodeList.length
-    for (let i3 = 0; i3 < length; i3++) {
-      const node = nodeList[i3]
-      if (
-        validNodeNames[node.nodeName] &&
-        !hasClass(node, "utags_ul") &&
-        !hasClass(node, "utags_modal")
-      ) {
-        return true
-      }
-    }
-    return false
   }
   function getOutermostOffsetParent(element1, element2) {
     if (
@@ -12784,10 +12797,9 @@
     onSettingsChange2()
     setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
-    await displayTags()
     eventManager.addEventListener(doc, "visibilitychange", async () => {
       if (!doc.hidden) {
-        await displayTags()
+        displayTagsThrottled()
       }
     })
     bindDocumentEvents(eventManager)
@@ -12829,9 +12841,12 @@
         hideAllUtagsInArea()
       }
     })
-    observer.observe(doc, {
-      childList: true,
-      subtree: true,
+    runWhenBodyExists(() => {
+      displayTagsThrottled()
+      observer.observe(doc.body, {
+        childList: true,
+        subtree: true,
+      })
     })
     if (false) {
     }
