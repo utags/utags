@@ -21,9 +21,8 @@ let originalBookmarksStore: BookmarkKeyValuePair[] = []
 
 // Mock callback for resolving bookmarks from the mutable store
 const mockResolveBookmarksCallback = vi.fn(
-  (urls: string[]): BookmarkKeyValuePair[] => {
-    return filterBookmarksByUrls(originalBookmarksStore, urls)
-  }
+  (urls: string[]): BookmarkKeyValuePair[] =>
+    filterBookmarksByUrls(originalBookmarksStore, urls)
 )
 
 describe('CompositeTagCommand', () => {

@@ -147,12 +147,12 @@ export type GithubTarget = {
 }
 
 // Placeholder for WebDAV and Custom API credentials and targets
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export type WebDAVCredentials = {
   username?: string
   password?: string
 }
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export type WebDAVTarget = {
   url: string
   path: string
@@ -254,7 +254,7 @@ export type Message<T = any> = {
  */
 export type AuthStatusRequestMessage = Message<void>
 export type AuthStatusResponseMessage = Message<{ status: AuthStatus }>
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export type DiscoverUTagsTargetsMessage = Message<void>
 export type DiscoveryResponseMessage = Message<{
   target: BrowserExtensionTarget

@@ -68,11 +68,11 @@ const testExtensionId = 'utags-extension'
 // Helper to simulate a message from the webapp
 const simulateWebappMessage: (
   type: string,
-  payload?: UploadMessagePayload | undefined,
+  payload?: UploadMessagePayload,
   targetExtensionId?: string
 ) => Promise<void> = async (
   type: string,
-  payload?: UploadMessagePayload | undefined,
+  payload?: UploadMessagePayload,
   targetExtensionId = testExtensionId
 ) => {
   const event = new MessageEvent('message', {
@@ -91,11 +91,8 @@ const simulateWebappMessage: (
 }
 
 // Helper to capture sent messages
-const getSentMessage = (callIndex = 0) => {
-  return mockPostMessage.mock.calls[
-    callIndex
-  ][0] as BrowserExtensionResponse<any>
-}
+const getSentMessage = (callIndex = 0) =>
+  mockPostMessage.mock.calls[callIndex][0] as BrowserExtensionResponse<any>
 
 const setMockMetadata = (
   metadata: SyncMetadata | undefined | (() => Promise<SyncMetadata | undefined>)
@@ -1145,9 +1142,10 @@ describe('SyncAdapter', () => {
         })
 
         // Mock serializeBookmarks to return a delayed promise
-        ;(serializeBookmarks as Mock).mockImplementationOnce(async () => {
-          return delayedResponse.then(() => JSON.stringify({ mockData: true }))
-        })
+        ;(serializeBookmarks as Mock).mockImplementationOnce(async () =>
+          // eslint-disable-next-line promise/prefer-await-to-then
+          delayedResponse.then(() => JSON.stringify({ mockData: true }))
+        )
 
         // Send first message that will take time to process
         const firstMessagePromise = simulateWebappMessage('UPLOAD_DATA', {
@@ -1176,9 +1174,9 @@ describe('SyncAdapter', () => {
         // mockPostMessage.mockClear()
 
         // Also mock serializeBookmarks for the third message
-        ;(serializeBookmarks as Mock).mockImplementationOnce(async () => {
-          return JSON.stringify({ mockData: true })
-        })
+        ;(serializeBookmarks as Mock).mockImplementationOnce(async () =>
+          JSON.stringify({ mockData: true })
+        )
 
         // Now send a third message which should be processed
         await simulateWebappMessage('UPLOAD_DATA', {

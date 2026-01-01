@@ -16,7 +16,7 @@ const console = new Console({
 })
 
 // Event name for bookmark updates
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const BOOKMARKS_UPDATED_EVENT = 'bookmarks-updated'
 
 /**

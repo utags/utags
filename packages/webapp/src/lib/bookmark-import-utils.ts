@@ -12,9 +12,8 @@ const console = new Console({
   },
 })
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const NO_ADD_DATE = '99999999999999'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const NO_LAST_MODIFIED = '0'
 
 export function validateBookmarks(bookmarksStore: BookmarksStore) {

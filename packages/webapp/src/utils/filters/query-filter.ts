@@ -28,20 +28,21 @@ export type QueryMatcher = (input: MatcherInput) => boolean
 type Condition = (input: MatcherInput) => boolean
 
 // 创建AND条件组合
-const createAndCondition = (conditions: Condition[]): Condition => {
-  return (input: MatcherInput) =>
+const createAndCondition =
+  (conditions: Condition[]): Condition =>
+  (input: MatcherInput) =>
     conditions.every((condition) => condition(input))
-}
 
 // 创建OR条件组合
-const createOrCondition = (conditions: Condition[]): Condition => {
-  return (input: MatcherInput) =>
+const createOrCondition =
+  (conditions: Condition[]): Condition =>
+  (input: MatcherInput) =>
     conditions.some((condition) => condition(input))
-}
 
-const createNegatedCondition = (condition: Condition): Condition => {
-  return (input: MatcherInput) => !condition(input)
-}
+const createNegatedCondition =
+  (condition: Condition): Condition =>
+  (input: MatcherInput) =>
+    !condition(input)
 
 const getCondition = (condition: Condition): Condition => condition
 
@@ -142,9 +143,9 @@ export const normalizeQueryStrings = (string: string): string => {
         // Replace the original regex pattern with its encoded version
         // This prevents subsequent string operations (like toLowerCase)
         // from modifying the regex pattern incorrectly
-        string = string.replace(`/${regex.pattern}/${regex.flags}`, (match) => {
-          return encodeRegex(match)
-        })
+        string = string.replace(`/${regex.pattern}/${regex.flags}`, (match) =>
+          encodeRegex(match)
+        )
       }
     }
 
@@ -245,7 +246,7 @@ export function expandPrefixes(query: string): string[] {
  */
 export function sortQueries(queries: string[]): string[] {
   // Prefix priority mapping, smaller number means higher priority
-  /* eslint-disable @typescript-eslint/naming-convention */
+
   const prefixPriority: Record<string, number> = {
     'domain:': 1,
     'url:': 2,
@@ -254,7 +255,6 @@ export function sortQueries(queries: string[]): string[] {
     'description:': 5,
     'note:': 6,
   }
-  /* eslint-enable @typescript-eslint/naming-convention */
 
   // Get query priority
   const getQueryPriority = (query: string): number => {
@@ -324,8 +324,8 @@ const createPrefixMatcher = (prefix: string, keyword: string): Condition => {
 }
 
 // 创建通用搜索匹配器（搜索所有字段）
-const createGenericMatcher = (query: string): Condition => {
-  return createOrCondition([
+const createGenericMatcher = (query: string): Condition =>
+  createOrCondition([
     createTitleCondition(query),
     createDescriptionCondition(query),
     createNoteCondition(query),
@@ -333,7 +333,6 @@ const createGenericMatcher = (query: string): Condition => {
     createUrlCondition(query),
     createDomainCondition(query),
   ])
-}
 
 /**
  * 从查询字符串数组创建条件数组
@@ -432,8 +431,7 @@ export function createQueryFilterCondition(
   const finalCondition = createAndCondition(conditions)
 
   // 返回符合FilterCondition类型的函数
-  return (href: string, tags: string[], meta: BookmarkMetadata) => {
+  return (href: string, tags: string[], meta: BookmarkMetadata) =>
     // debugger
-    return finalCondition({ href, tags, meta })
-  }
+    finalCondition({ href, tags, meta })
 }

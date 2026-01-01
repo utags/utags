@@ -119,7 +119,6 @@ describe('bookmarks', () => {
   const secondCallTime = new Date(2023, 0, 1, 13, 0).getTime() // 2023-01-01 13:00
   const thirdCallTime = new Date(2023, 0, 1, 13, 1).getTime() // 2023-01-01 13:01
 
-  /* eslint-disable @typescript-eslint/no-unsafe-assignment */
   beforeAll(async () => {
     const browserExtensionStorage = await import('browser-extension-storage')
     getValue = vi.mocked(
@@ -2956,7 +2955,6 @@ describe('bookmarks', () => {
     })
   })
 })
-/* eslint-enable @typescript-eslint/no-unsafe-assignment */
 
 /*
 

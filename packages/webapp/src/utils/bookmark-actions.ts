@@ -208,7 +208,7 @@ export function handleBookmarkEdit(href: string) {
  *
  * @param {string} url - The URL to summarize
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export function handleAISummary(url: string) {
   // Construct the LinkSumm URL with the target URL as a parameter
   const summaryUrl = `https://linksumm.aimerge.cc/?url=${encodeURIComponent(url)}`

@@ -1,7 +1,7 @@
 /**
  * Default tags that typically don't contain shadow roots and should be excluded from traversal
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const DEFAULT_EXCLUDE_TAGS = [
   'script',
   'style',

@@ -10,12 +10,10 @@ import type { SyncManager } from './sync-manager.js'
 
 // Mock dependencies
 const { mockIsAutoSyncSchedulerLockOwner, mockReleaseAutoSyncSchedulerLock } =
-  vi.hoisted(() => {
-    return {
-      mockIsAutoSyncSchedulerLockOwner: vi.fn(),
-      mockReleaseAutoSyncSchedulerLock: vi.fn(),
-    }
-  })
+  vi.hoisted(() => ({
+    mockIsAutoSyncSchedulerLockOwner: vi.fn(),
+    mockReleaseAutoSyncSchedulerLock: vi.fn(),
+  }))
 const mockSyncManagerSynchronize = vi.fn()
 
 vi.mock('./auto-sync-scheduler.js', () => ({
@@ -144,11 +142,12 @@ describe('Sync Queue', () => {
       let resolveProcess: (value: boolean | PromiseLike<boolean>) => void =
         emptyFunction
 
-      mockSyncManagerSynchronize.mockImplementationOnce(async () => {
-        return new Promise((resolve) => {
-          resolveProcess = resolve
-        })
-      })
+      mockSyncManagerSynchronize.mockImplementationOnce(
+        async () =>
+          new Promise((resolve) => {
+            resolveProcess = resolve
+          })
+      )
 
       addToSyncQueue(task1, mockSyncManager) // This will start processing and set isProcessingQueue = true
       expect(mockSyncManagerSynchronize).toHaveBeenCalledWith('service1')
@@ -360,13 +359,14 @@ describe('Sync Queue', () => {
       let resolveProcess: (value: boolean | PromiseLike<boolean>) => void =
         emptyFunction
 
-      mockSyncManagerSynchronize.mockImplementationOnce(async () => {
-        return new Promise((resolve) => {
-          resolveProcess = resolve
-          // Check status while processing
-          expect(isQueueProcessing()).toBe(true)
-        })
-      })
+      mockSyncManagerSynchronize.mockImplementationOnce(
+        async () =>
+          new Promise((resolve) => {
+            resolveProcess = resolve
+            // Check status while processing
+            expect(isQueueProcessing()).toBe(true)
+          })
+      )
 
       expect(isQueueProcessing()).toBe(false) // Before starting
       addToSyncQueue(task, mockSyncManager)

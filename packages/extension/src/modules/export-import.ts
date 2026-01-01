@@ -3,9 +3,7 @@ import { createElement, doc } from 'browser-extension-utils'
 import { getUrlMap } from '../storage/bookmarks'
 import { normalizeBookmarkData, sortBookmarks } from '../utils/index.js'
 
-const mergeData = async () => {
-  return { numberOfLinks: 0, numberOfTags: 0 }
-}
+const mergeData = async () => ({ numberOfLinks: 0, numberOfTags: 0 })
 
 export async function outputData() {
   if (

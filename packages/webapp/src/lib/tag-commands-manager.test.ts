@@ -63,11 +63,11 @@ describe('CommandManager', () => {
     ]
 
     // Mock the resolveBookmarksCallback to return a deep copy of the relevant bookmarks from our store
-    mockResolveBookmarksCallback = vi.fn(async (urls: string[]) => {
-      return structuredClone(originalBookmarksStore).filter(
+    mockResolveBookmarksCallback = vi.fn(async (urls: string[]) =>
+      structuredClone(originalBookmarksStore).filter(
         (bm: BookmarkKeyValuePair) => urls.includes(bm[0])
       )
-    })
+    )
 
     // Mock the persistCallback to update our in-memory store
     mockPersistCallback = vi.fn(

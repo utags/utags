@@ -149,14 +149,13 @@ function base64Decode(str: string): string {
 
 export const handlers = [
   // Handler for simulating API down (503 Service Unavailable)
-  http.get(`${mockApiUrl}/api-down-test*`, () => {
-    return new HttpResponse(null, { status: 503 })
-  }),
+  http.get(
+    `${mockApiUrl}/api-down-test*`,
+    () => new HttpResponse(null, { status: 503 })
+  ),
 
   // Handler for simulating network error
-  http.get(`${mockApiUrl}/network-error-test*`, () => {
-    return HttpResponse.error()
-  }),
+  http.get(`${mockApiUrl}/network-error-test*`, () => HttpResponse.error()),
 
   // Mock for Custom API GET /auth/status
   http.get(`${mockApiUrl}/auth/status`, ({ request }) => {
@@ -185,7 +184,6 @@ export const handlers = [
       return new HttpResponse(null, {
         status: 200,
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           ETag: `"${mockDataStore[filePath].meta.version}"`,
           'Last-Modified': new Date(
             mockDataStore[filePath].meta.timestamp || 0
@@ -201,11 +199,9 @@ export const handlers = [
   http.get(`${mockApiUrl}/:filePath`, ({ params }) => {
     const filePath = params.filePath as string
     if (mockDataStore[filePath]) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       return HttpResponse.json(JSON.parse(mockDataStore[filePath].data), {
         status: 200,
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           ETag: `"${mockDataStore[filePath].meta.version}"`,
           'Last-Modified': new Date(
             mockDataStore[filePath].meta.timestamp || 0
@@ -255,7 +251,6 @@ export const handlers = [
     return HttpResponse.json(responseBody, {
       status: 200,
       headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
         ETag: `"${newVersion}"`,
         'Last-Modified': new Date(newTimestamp).toUTCString(),
       },
@@ -350,7 +345,7 @@ export const handlers = [
         // Otherwise, return JSON with base64 encoded content (default behavior)
         return HttpResponse.json({
           sha: foundEntry.meta.sha,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           node_id: `mock-node-id-${sha}`,
           size: foundEntry.data.length,
           url: `${githubApiBaseUrl}/repos/${params.owner as string}/${params.repo as string}/git/blobs/${sha as string}`,

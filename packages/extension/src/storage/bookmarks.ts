@@ -104,7 +104,7 @@ type BookmarksStore = BookmarksStoreV3
  */
 export const currentExtensionVersion = '0.14.2'
 export const currentDatabaseVersion = 3
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export const DELETED_BOOKMARK_TAG = '._DELETED_'
 const storageKey = 'extension.utags.urlmap'
 
@@ -519,7 +519,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
  *
  * @param bookmarksStore V3 format bookmark store from v0.13.0
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 async function migrateV3_fixV0_13_0TimestampBug(
   bookmarksStore: BookmarksStoreV3
 ) {

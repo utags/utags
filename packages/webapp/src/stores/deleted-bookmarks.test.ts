@@ -29,7 +29,6 @@ const localStorageMock = (() => {
 vi.mock('./stores', () => ({
   settings: {
     subscribe: vi.fn((callback) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       callback({ maxDeletedBookmarks: 5 })
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       return () => {}

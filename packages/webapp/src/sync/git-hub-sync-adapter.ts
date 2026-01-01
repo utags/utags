@@ -16,7 +16,6 @@ import type {
 } from './types.js'
 import { buildSyncPath } from './sync-path-builder.js'
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const GITHUB_API_BASE_URL = appConfig.githubApiUrl
 
 /**
@@ -111,9 +110,8 @@ export class GitHubSyncAdapter implements SyncAdapter<
       const response = await fetch(url, {
         signal: this.abortController?.signal,
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           Authorization: `token ${this.credentials.token}`,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           Accept: 'application/vnd.github.v3+json',
         },
       })
@@ -195,11 +193,10 @@ export class GitHubSyncAdapter implements SyncAdapter<
       const response = await fetch(url, {
         signal: this.abortController?.signal,
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           Authorization: `token ${this.credentials.token}`,
           // Request raw content; GitHub's blobs API returns base64 by default if this is not set correctly.
           // 'application/vnd.github.v3.raw' or 'Accept: application/octet-stream' for raw
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           Accept: 'application/vnd.github.v3.raw',
         },
       })
@@ -285,9 +282,8 @@ export class GitHubSyncAdapter implements SyncAdapter<
         method: 'PUT',
         signal: this.abortController?.signal,
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           Authorization: `token ${this.credentials.token}`,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           Accept: 'application/vnd.github.v3+json',
           'Content-Type': 'application/json',
         },
@@ -399,9 +395,8 @@ export class GitHubSyncAdapter implements SyncAdapter<
         // Use a new AbortController for auth status check if main one is not available or for isolation
         signal: this.abortController?.signal, // Or a new AbortController().signal for short-lived check
         headers: {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           Authorization: `token ${this.credentials.token}`,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           Accept: 'application/vnd.github.v3+json',
         },
       })

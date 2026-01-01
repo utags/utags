@@ -183,16 +183,14 @@ function convertToUploadData(
   // Sort bookmarks before uploading to maintain a consistent order
   const sortedBookmarks = Object.fromEntries(
     sortBookmarks(Object.entries(remoteData), 'createdDesc').map(
-      ([url, tagsAndMetadta]) => {
-        return [
-          url,
-          {
-            tags: tagsAndMetadta.tags,
-            deletedMeta: tagsAndMetadta.deletedMeta,
-            meta: sortMetaProperties(tagsAndMetadta.meta),
-          },
-        ]
-      }
+      ([url, tagsAndMetadta]) => [
+        url,
+        {
+          tags: tagsAndMetadta.tags,
+          deletedMeta: tagsAndMetadta.deletedMeta,
+          meta: sortMetaProperties(tagsAndMetadta.meta),
+        },
+      ]
     )
   )
 
@@ -4035,9 +4033,8 @@ describe('SyncManager', () => {
       }
     }
 
-    const getSentMessage = (callIndex = 0) => {
-      return mockPostMessage.mock.calls[callIndex][0] // Adjust type as needed
-    }
+    const getSentMessage = (callIndex = 0) =>
+      mockPostMessage.mock.calls[callIndex][0] // Adjust type as needed
 
     beforeEach(() => {
       // ... existing beforeEach setup ...

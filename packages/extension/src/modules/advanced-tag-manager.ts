@@ -44,7 +44,7 @@ export function clearTagManagerCache(): void {
   currentTags = new Set()
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 function onSelect(selected: string | null, input: HTMLInputElement) {
   if (selected) {
     input.value = ''
@@ -204,7 +204,7 @@ function stopEventPropagation(event: Event) {
 function createPromptView(
   message: string,
   value: string | undefined,
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
   resolve: (value: string | null) => void
 ) {
   let closed = false
@@ -330,7 +330,7 @@ function createPromptView(
     class: 'utags_buttons_wrapper',
   })
 
-  const closeModal = (value?: string | undefined) => {
+  const closeModal = (value?: string) => {
     if (closed) {
       return
     }

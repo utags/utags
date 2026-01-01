@@ -71,9 +71,7 @@ vi.mock('../lib/tag-commands.js', async () => {
 const localStorageMock = (() => {
   let store: Record<string, string> = {}
   return {
-    getItem: vi.fn((key: string) => {
-      return store[key] || null
-    }),
+    getItem: vi.fn((key: string) => store[key] || null),
     setItem: vi.fn((key: string, value: string) => {
       store[key] = value
     }),

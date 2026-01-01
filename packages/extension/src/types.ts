@@ -15,17 +15,16 @@ export type RecentTag = {
   score: number
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 export type NullOrUndefined = null | undefined
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export type UtagsHTMLElement = {
   href?: string
 } & HTMLElement
 
 // Global interface extensions
 declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/naming-convention
+  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   interface HTMLElement {
     utags?: UserTag
   }

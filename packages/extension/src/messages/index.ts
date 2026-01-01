@@ -51,7 +51,7 @@ export const localeMap = {
   vi: messagesVi,
 }
 
-// eslint-disable-next-line import/no-mutable-exports
+// eslint-disable-next-line import-x/no-mutable-exports
 export let i = initI18n(localeMap, getPrefferedLocale())
 
 export function resetI18n(locale?: string) {

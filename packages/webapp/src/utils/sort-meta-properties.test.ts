@@ -153,14 +153,12 @@ describe('sortMetaProperties', () => {
     })
 
     it('should handle null input', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const result = sortMetaProperties(null as any)
 
       expect(result).toBe(null)
     })
 
     it('should handle undefined input', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const result = sortMetaProperties(undefined as any)
 
       expect(result).toBe(undefined)
@@ -172,14 +170,13 @@ describe('sortMetaProperties', () => {
       const booleanInput = true as any
       const arrayInput = [1, 2, 3] as any
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       expect(sortMetaProperties(stringInput)).toBe(stringInput)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       expect(sortMetaProperties(numberInput)).toBe(numberInput)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       expect(sortMetaProperties(booleanInput)).toBe(booleanInput)
       // Arrays are objects in JavaScript, so they get processed
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       expect(sortMetaProperties(arrayInput)).toEqual({ '0': 1, '1': 2, '2': 3 })
     })
 

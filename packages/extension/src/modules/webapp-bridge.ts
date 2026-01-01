@@ -66,7 +66,6 @@ type BackgroundResponse = {
   details?: any
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 type GMXMLHttpRequestResponse = {
   status: number
   statusText: string
@@ -74,7 +73,6 @@ type GMXMLHttpRequestResponse = {
   responseHeaders?: string
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 type GMXMLHttpRequestOptions = {
   method: string
   url: string
@@ -88,7 +86,6 @@ type GMXMLHttpRequestOptions = {
 
 // Global declarations for userscript environment
 declare global {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const GM: {
     xmlHttpRequest?: (options: GMXMLHttpRequestOptions) => void
   }
@@ -138,6 +135,7 @@ function handleHttpRequestExtension(
       id,
       payload,
     })
+    // eslint-disable-next-line promise/prefer-await-to-then
     .then((response: BackgroundResponse) => {
       if (response.success) {
         sendHttpResponse(id, response.data!, event)
@@ -145,6 +143,7 @@ function handleHttpRequestExtension(
         sendHttpError(id, response.error!, event, response.details)
       }
     })
+    // eslint-disable-next-line promise/prefer-await-to-then
     .catch((error: unknown) => {
       console.error(
         '[UTags Extension] Error communicating with background script:',
@@ -271,7 +270,7 @@ function sendHttpError(
     id: requestId,
     payload: {
       error,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       details,
     },
   }

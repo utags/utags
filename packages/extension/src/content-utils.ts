@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 const validNodeNames: Record<string, boolean> = {
   A: true,
   H1: true,
@@ -15,7 +14,6 @@ const validNodeNames: Record<string, boolean> = {
   LI: true,
   SECTION: true,
 }
-/* eslint-enable @typescript-eslint/naming-convention */
 
 export function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   const length = nodeList.length

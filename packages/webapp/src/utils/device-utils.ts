@@ -40,7 +40,6 @@ export type UploadMetadata = {
  * @returns {string} Unique device identifier
  */
 export function generateDeviceId(): string {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const STORAGE_KEY = 'utags-device-id'
 
   // Try to get existing device ID from localStorage
@@ -158,7 +157,7 @@ function getBrowserInfo(): { name: string; version: string } {
  * Detects operating system information.
  * @returns {string} Operating system name
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 function getOSInfo(): string {
   const userAgent = navigator.userAgent
   const platform = navigator.platform

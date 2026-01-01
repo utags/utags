@@ -96,13 +96,13 @@ export function getHierachyTags(
         .filter((tag) => tag.includes('/'))
         .map((tag) => normalizeHierachyPath(tag))
     )
-  ).sort((a, b) => {
-    return a.localeCompare(b, 'zh-CN', {
+  ).sort((a, b) =>
+    a.localeCompare(b, 'zh-CN', {
       sensitivity: 'base',
       ignorePunctuation: true,
       numeric: false,
     })
-  })
+  )
 
   if (tags.length === 0) return []
 
@@ -175,7 +175,7 @@ export function isBookmarkKeyValuePairArray(
  * @returns A new array of strings containing all unique tags.
  */
 export function addTags(
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
   orgTags: string[] | undefined | null, // Allow undefined or null for orgTags
   tagsToAdd: string | string[]
 ): string[] {
@@ -197,7 +197,7 @@ export function addTags(
  * @returns A new array of strings with the specified tags removed.
  */
 export function removeTags(
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
   orgTags: string[] | undefined | null, // Allow undefined or null for orgTags
   tagsToRemove: string | string[]
 ): string[] {
@@ -242,7 +242,7 @@ export function filterBookmarksByUrls(
  * @returns {boolean} True if the bookmark is marked as deleted, false otherwise.
  */
 export function isMarkedAsDeleted(
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
   data: BookmarkTagsAndMetadata | string[] | undefined | null
 ): boolean {
   if (!data) {

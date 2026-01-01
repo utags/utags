@@ -7,15 +7,14 @@ import { bookmarkStorage } from '../lib/bookmark-storage.js'
 import { addToSyncQueue, isQueueProcessing } from './sync-queue.js'
 import type { SyncManager } from './sync-manager.js'
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const CHECK_INTERVAL = 10 * 1000 // 10 seconds
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const LOCK_KEY = 'utags_auto_sync_lock_owner'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const LOCK_HEARTBEAT_KEY = 'utags_auto_sync_lock_heartbeat'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const LOCK_TIMEOUT = 30 * 1000 // 30 seconds for lock timeout
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const SYNC_COMPLETION_BUFFER_MS = 3000
 
 let intervalId: number | undefined

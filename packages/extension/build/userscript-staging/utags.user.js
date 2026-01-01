@@ -3066,9 +3066,7 @@
     if (removed.length === 0) {
       return tags
     }
-    return tags.filter((value) => {
-      return !removed.includes(value)
-    })
+    return tags.filter((value) => !removed.includes(value))
   }
   async function copyText(data) {
     const textArea = createElement("textarea", {
@@ -4219,9 +4217,7 @@
       )
     }
   }
-  var mergeData = async () => {
-    return { numberOfLinks: 0, numberOfTags: 0 }
-  }
+  var mergeData = async () => ({ numberOfLinks: 0, numberOfTags: 0 })
   async function outputData() {
     if (
       /^(utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(location.hostname)
@@ -4376,9 +4372,7 @@
     key = convertKey(key)
     const visitedLinks = getVisitedLinks()
     if (visitedLinks.includes(key)) {
-      const newVisitedLinks = visitedLinks.filter((value) => {
-        return value !== key
-      })
+      const newVisitedLinks = visitedLinks.filter((value) => value !== key)
       saveVisitedLinks(newVisitedLinks)
     }
   }
@@ -4548,7 +4542,7 @@
           eventManager2.addEventListener(target, type, listener, options)
         }
       : addEventListener
-    addListener(globalThis, "locationchange", function () {
+    addListener(globalThis, "locationchange", () => {
       hideAllUtagsInArea()
     })
   }

@@ -194,7 +194,6 @@ describe('bookmark-stats', () => {
     })
 
     it('should return zero stats for null input', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const result = calculateBookmarkStatsFromData(null as any)
       expect(result).toEqual({
         bookmarksCount: 0,
@@ -205,7 +204,6 @@ describe('bookmark-stats', () => {
     })
 
     it('should return zero stats for undefined input', () => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       const result = calculateBookmarkStatsFromData(undefined as any)
       expect(result).toEqual({
         bookmarksCount: 0,

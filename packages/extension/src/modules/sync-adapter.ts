@@ -61,8 +61,6 @@ type BrowserExtensionResponse<T extends MessageType> = {
   error?: string
 }
 
-/* eslint-disable @typescript-eslint/naming-convention */
-
 const SCRIPT_NAME = '[UTags Extension Sync Adapter]'
 
 let MY_EXTENSION_ID: string | undefined // Example ID, should be unique per script/extension
@@ -86,7 +84,6 @@ const GET_REMOTE_METADATA_MESSAGE_TYPE = 'GET_REMOTE_METADATA'
 const DOWNLOAD_MESSAGE_TYPE = 'DOWNLOAD_DATA'
 const UPLOAD_MESSAGE_TYPE = 'UPLOAD_DATA'
 const GET_AUTH_STATUS_MESSAGE_TYPE = 'GET_AUTH_STATUS'
-/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * Saves data using setValue.
@@ -138,7 +135,6 @@ async function checkUserscriptAvailable(): Promise<boolean> {
 
     // Test GM.xmlHttpRequest availability by making a simple request
     await new Promise<void>((resolve, reject) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       ;(GM as any).xmlHttpRequest({
         method: 'GET',
         url: 'http://localhost/',

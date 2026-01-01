@@ -53,7 +53,6 @@ function convertKey(url: string) {
   return url
 }
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 export const TAG_VISITED = ':visited'
 
 export function addVisited(key: string) {
@@ -76,9 +75,9 @@ export function removeVisited(key: string) {
   key = convertKey(key)
   const visitedLinks = getVisitedLinks()
   if (visitedLinks.includes(key)) {
-    const newVisitedLinks = visitedLinks.filter((value: string) => {
-      return value !== key
-    })
+    const newVisitedLinks = visitedLinks.filter(
+      (value: string) => value !== key
+    )
     saveVisitedLinks(newVisitedLinks)
   }
 }

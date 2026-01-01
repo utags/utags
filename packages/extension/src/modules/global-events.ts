@@ -26,7 +26,7 @@ const numberLimitOfShowAllUtagsInArea = 10
 let lastShownArea: HTMLElement | undefined
 let isPromptShown = false
 
-export function hideAllUtagsInArea(target?: HTMLElement | undefined) {
+export function hideAllUtagsInArea(target?: HTMLElement) {
   const element = $('.utags_show_all')
   if (!element) {
     return
@@ -303,7 +303,7 @@ export function bindWindowEvents(eventManager?: EventListenerManager) {
     : addEventListener
 
   // For SPA navigation
-  addListener(globalThis, 'locationchange', function () {
+  addListener(globalThis, 'locationchange', () => {
     hideAllUtagsInArea()
   })
 }

@@ -158,7 +158,6 @@ export function registerDebuggingHotkey() {
 
               break
             }
-            // No default
           }
         }
       } else {

@@ -71,21 +71,17 @@ const simulateExtensionResponse = (
 }
 
 // Helper to capture sent messages
-const getSentMessage = (callIndex = 0) => {
-  return mockPostMessage.mock.calls[
-    callIndex
-  ][0] as BrowserExtensionMessage<any>
-}
+const getSentMessage = (callIndex = 0) =>
+  mockPostMessage.mock.calls[callIndex][0] as BrowserExtensionMessage<any>
 
-const getTimeoutErrorMessage = (messageType: string, timeoutMs: number) => {
+const getTimeoutErrorMessage = (messageType: string, timeoutMs: number) =>
   // return new TypeError( `[BrowserExtensionSyncAdapter] Timeout waiting for response from extension mock-extension-id for request mock-uuid (type: ${messageType}, timeout: ${timeoutMs}ms)`)
-  return BrowserExtensionSyncError.timeout(
+  BrowserExtensionSyncError.timeout(
     'mock-extension-id',
     messageType,
     'mock-uuid',
     timeoutMs
   )
-}
 
 describe('BrowserExtensionSyncAdapter', () => {
   let adapter: BrowserExtensionSyncAdapter

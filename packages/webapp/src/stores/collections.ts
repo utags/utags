@@ -129,7 +129,7 @@ function validateCollectionInput(
   const trimmedPathname = pathname?.trim()
 
   // Define reserved keywords
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+
   const RESERVED_KEYWORDS = ['deleted', 'public', 'private', 'shared']
 
   // Check if pathname is a reserved keyword

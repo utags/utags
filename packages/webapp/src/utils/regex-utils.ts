@@ -97,7 +97,7 @@ export function extractValidRegex(str: string): string {
  * createRegexFromString("test /abc/idef")
  */
 // This eslint rule for keeping using null not undefined
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 export function createRegexFromString(str: string): RegExp | null {
   const regexes = extractValidRegexes(str)
   if (regexes.length === 0) return null
@@ -192,7 +192,7 @@ export function decodeRegex(encoded: string): string {
  * createRegexFromEncoded("re/ywjjw2rlzl0e/i")
  */
 // This eslint rule for keeping using null not undefined
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 export function createRegexFromEncoded(encoded: string): RegExp | null {
   const decodedStr = decodeRegex(encoded)
   if (!decodedStr) return null
@@ -210,9 +210,10 @@ function encode(str: string) {
   // First use encodeURIComponent for encoding
   let encoded = encodeURIComponent(str)
   // Convert uppercase letters to lowercase with '^' prefix
-  encoded = encoded.replaceAll(/[A-Z]/g, function (char) {
-    return '^' + String.fromCodePoint(char.codePointAt(0)! + 32)
-  })
+  encoded = encoded.replaceAll(
+    /[A-Z]/g,
+    (char) => '^' + String.fromCodePoint(char.codePointAt(0)! + 32)
+  )
   // Remove spaces and commas
   encoded = encoded.replaceAll(/[ ,]/g, '')
   return encoded
@@ -226,9 +227,9 @@ function encode(str: string) {
  */
 function decode(str: string) {
   // First restore uppercase letters from '^' prefix + lowercase
-  let decoded = str.replaceAll(/\^([a-z])/g, function (_, char: string) {
-    return String.fromCodePoint(char.codePointAt(0)! - 32)
-  })
+  let decoded = str.replaceAll(/\^([a-z])/g, (_, char: string) =>
+    String.fromCodePoint(char.codePointAt(0)! - 32)
+  )
   // Use decodeURIComponent to restore the original string
   try {
     decoded = decodeURIComponent(decoded)

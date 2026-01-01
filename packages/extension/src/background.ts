@@ -48,11 +48,10 @@ type StorageData = Record<string, number>
 console.log('UTags HTTP Proxy extension background script loaded')
 
 // Storage keys
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const STORAGE_KEYS = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   REQUEST_COUNT: 'utags_request_count',
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+
   LAST_ACTIVITY: 'utags_last_activity',
 } as const
 
@@ -172,9 +171,11 @@ chrome.runtime.onMessage.addListener(
     if (message.type === 'HTTP_REQUEST') {
       // Handle HTTP request asynchronously
       handleHttpRequest(message)
+        // eslint-disable-next-line promise/prefer-await-to-then
         .then((response) => {
           sendResponse(response)
         })
+        // eslint-disable-next-line promise/prefer-await-to-then
         .catch((error: unknown) => {
           console.error(
             '[UTags Extension Background] Error handling HTTP request:',

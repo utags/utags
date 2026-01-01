@@ -12,7 +12,7 @@ import {
 /**
  * WebDAV client configuration options
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export type WebDAVClientOptions = {
   username?: string
   password?: string
@@ -56,7 +56,7 @@ export type CreateDirectoryOptions = {
 /**
  * WebDAV client error with status code
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export class WebDAVError extends Error {
   public status: number
   public statusText: string
@@ -72,7 +72,7 @@ export class WebDAVError extends Error {
 /**
  * Lightweight WebDAV client
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export class WebDAVClient {
   private readonly baseUrl: string
   private readonly options: WebDAVClientOptions
@@ -98,7 +98,6 @@ export class WebDAVClient {
 </D:propfind>`
 
     const response = await this.makeRequest('PROPFIND', path, propfindBody, {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       Depth: '0',
     })
 
@@ -183,7 +182,6 @@ export class WebDAVClient {
 </D:propfind>`
 
     const response = await this.makeRequest('PROPFIND', path, propfindBody, {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       Depth: '1',
     })
 

@@ -13,21 +13,19 @@ import {
 } from './query-filter.js'
 
 // 模拟 console
-vi.mock('console-tagger', () => {
-  return {
-    // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-    default: class Console {
-      constructor() {
-        // eslint-disable-next-line no-constructor-return
-        return {
-          log: vi.fn(),
-          warn: vi.fn(),
-          error: vi.fn(),
-        }
+vi.mock('console-tagger', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+  default: class Console {
+    constructor() {
+      // eslint-disable-next-line no-constructor-return
+      return {
+        log: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
       }
-    },
-  }
-})
+    }
+  },
+}))
 
 describe('normalizeQueryStrings', () => {
   // Test empty string handling
@@ -1137,9 +1135,8 @@ describe('Regex Filter Tests via createQueryFilterCondition', () => {
   }
 
   describe('Title Regex Filter', () => {
-    const createParams = (query: string): URLSearchParams => {
-      return new URLSearchParams({ q: query })
-    }
+    const createParams = (query: string): URLSearchParams =>
+      new URLSearchParams({ q: query })
 
     it('should match title with basic regex pattern', () => {
       const filter = createQueryFilterCondition(

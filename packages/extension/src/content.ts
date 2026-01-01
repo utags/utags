@@ -80,10 +80,9 @@ import { getUtags } from './utils/dom-utils'
 import { EventListenerManager } from './utils/event-listener-manager'
 
 export const config: PlasmoCSConfig = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   run_at: 'document_start',
   matches: ['https://*/*', 'http://*/*'],
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+
   all_frames: true,
 }
 
@@ -430,15 +429,11 @@ if (start) {
  * Append a link to the current page at the end of the document body
  * @returns A cleanup function that removes the appended link
  */
-function appendCurrentPageLink(
-  options?:
-    | {
-        href?: string
-        title?: string
-        description?: string
-      }
-    | undefined
-): () => void {
+function appendCurrentPageLink(options?: {
+  href?: string
+  title?: string
+  description?: string
+}): () => void {
   options = options || {}
   const containerId = 'utags_current_page_link_container'
 
@@ -486,13 +481,11 @@ function appendCurrentPageLink(
 function showCurrentPageLinkUtagsPrompt(
   tag?: string,
   remove = false,
-  options?:
-    | {
-        href?: string
-        title?: string
-        description?: string
-      }
-    | undefined
+  options?: {
+    href?: string
+    title?: string
+    description?: string
+  }
 ) {
   const cleanUp = appendCurrentPageLink(options)
   createTimeout(() => {

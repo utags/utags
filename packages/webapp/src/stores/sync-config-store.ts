@@ -58,17 +58,14 @@ function loadSyncSettings(): SyncSettings {
 
         // Filter out invalid or corrupted services
         const validServices = parsed.syncServices.filter(
-          (service): service is SyncServiceConfig => {
-            return (
-              service &&
-              typeof service === 'object' &&
-              'id' in service &&
-              'type' in service &&
-              isValidType(service.type) &&
-              'target' in service &&
-              'credentials' in service
-            )
-          }
+          (service): service is SyncServiceConfig =>
+            service &&
+            typeof service === 'object' &&
+            'id' in service &&
+            'type' in service &&
+            isValidType(service.type) &&
+            'target' in service &&
+            'credentials' in service
         )
         parsed.syncServices = validServices
 

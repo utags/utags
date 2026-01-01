@@ -4051,7 +4051,7 @@ describe('mergeBookmarks', () => {
         mergeBookmarks(
           dummyLocalData,
           dummyRemoteData,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
           null as any, // Testing null strategy
           dummySyncOption
         )
@@ -4063,7 +4063,7 @@ describe('mergeBookmarks', () => {
         mergeBookmarks(
           dummyLocalData,
           dummyRemoteData,
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
           undefined as any, // Testing undefined strategy
           dummySyncOption
         )

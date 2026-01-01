@@ -153,7 +153,6 @@ describe('UserscriptHttpClient', () => {
 
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onload(mockResponse)
       }, 0)
     })
@@ -187,7 +186,6 @@ describe('UserscriptHttpClient', () => {
   it('should handle request errors', async () => {
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onerror({ statusText: 'Network Error' })
       }, 0)
     })
@@ -205,7 +203,6 @@ describe('UserscriptHttpClient', () => {
   it('should handle request timeout', async () => {
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.ontimeout()
       }, 0)
     })
@@ -243,7 +240,6 @@ describe('UserscriptHttpClient', () => {
 
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onload(mockResponse)
       }, 0)
     })
@@ -469,7 +465,6 @@ describe('HttpClient', () => {
 
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onload(mockResponse)
       }, 0)
     })
@@ -527,7 +522,6 @@ describe('HttpClient', () => {
 
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onload(mockResponse)
       }, 0)
     })
@@ -638,7 +632,6 @@ describe('HttpClient', () => {
 
     mockGM.xmlHttpRequest.mockImplementation((options: any) => {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         options.onload(mockResponse)
       }, 0)
     })
@@ -765,7 +758,6 @@ describe('HttpResponse interface compatibility', () => {
             responseHeaders: 'content-type: application/json',
           }
           mockGM.xmlHttpRequest.mockImplementation((options: any) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
             setTimeout(() => options.onload(mockResponse), 0)
           })
           return UserscriptHttpClient
@@ -840,11 +832,11 @@ describe('HttpResponse interface compatibility', () => {
       expect(typeof response.arrayBuffer).toBe('function')
 
       // Test method returns
-      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line no-await-in-loop
       expect(typeof (await response.text())).toBe('string')
-      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line no-await-in-loop
       expect(await response.text()).toEqual('{"test": true}')
-      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line no-await-in-loop
       expect(await response.arrayBuffer()).toBeInstanceOf(ArrayBuffer)
     }
   })

@@ -177,7 +177,6 @@ export class MessageProxyHttpClient {
 
     this.messageListener = (event: MessageEvent) => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const message = event.data
         if (
           !message ||
@@ -188,7 +187,6 @@ export class MessageProxyHttpClient {
           return // Not a valid message
         }
 
-        // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
         switch (message.type) {
           case 'HTTP_RESPONSE': {
             this.handleHttpResponse(message as HttpResponseMessage)
@@ -251,7 +249,6 @@ export class MessageProxyHttpClient {
 
     const error = new Error(message.payload?.error || 'HTTP request failed')
     if (message.payload?.details) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ;(error as any).details = message.payload.details
     }
 
@@ -293,7 +290,7 @@ export class MessageProxyHttpClient {
       statusText: payload.statusText,
       headers,
       text: async () => payload.body,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       json: async () => JSON.parse(payload.body),
       async arrayBuffer() {
         const encoder = new TextEncoder()

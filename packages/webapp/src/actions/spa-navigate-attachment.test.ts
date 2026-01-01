@@ -32,7 +32,7 @@ let mockLocation: MockLocation
  * @param {string | null | undefined} href - The href attribute for the anchor.
  * @returns {HTMLAnchorElement} A mock anchor element.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 const createMockAnchor = (href?: string | null): HTMLAnchorElement => {
   const anchor = document.createElement('a')
   if (href === null) {

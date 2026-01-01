@@ -5,7 +5,6 @@
 
 // Userscript environment type declarations
 declare global {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   type GM = {
     xmlHttpRequest: (details: {
       method: string
@@ -23,7 +22,6 @@ declare global {
     }) => void
   }
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   const GM: GM | undefined
 }
 
@@ -245,7 +243,7 @@ export class UserscriptHttpClient {
       statusText: response.statusText,
       headers,
       text: async () => response.responseText,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       json: async () => JSON.parse(response.responseText),
       async arrayBuffer() {
         // Convert string to ArrayBuffer
@@ -327,7 +325,7 @@ export class BrowserHttpClient {
       statusText: xhr.statusText,
       headers,
       text: async () => xhr.responseText,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       json: async () => JSON.parse(xhr.responseText),
       async arrayBuffer() {
         // Convert string to ArrayBuffer

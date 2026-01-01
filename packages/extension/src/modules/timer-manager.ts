@@ -19,7 +19,7 @@ const intervalIds = new Set<TimerId>()
  * @param args Arguments to pass to the callback function
  * @returns The timeout ID that can be used with clearTimeout
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export function createTimeout<TArgs extends any[]>(
   callback: (...args: TArgs) => void,
   delay: number,
@@ -60,7 +60,7 @@ export function createTimeout<TArgs extends any[]>(
  * @param args Arguments to pass to the callback function
  * @returns The interval ID that can be used with clearInterval
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export function createInterval<TArgs extends any[]>(
   callback: (...args: TArgs) => void,
   delay: number,

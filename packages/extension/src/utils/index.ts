@@ -107,9 +107,7 @@ export function filterTags(tags: string[], removed: string[] | string) {
     return tags
   }
 
-  return tags.filter((value) => {
-    return !removed.includes(value)
-  })
+  return tags.filter((value) => !removed.includes(value))
 }
 
 export async function copyText(data: string) {
@@ -329,10 +327,8 @@ export function normalizeBookmarkData<T>(data: T): T {
 
   // Handle arrays
   if (Array.isArray(data)) {
-    return data.map((item) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      normalizeBookmarkData(item)
-    ) as T
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return data.map((item) => normalizeBookmarkData(item)) as T
   }
 
   // Handle objects (excluding null which is already handled)

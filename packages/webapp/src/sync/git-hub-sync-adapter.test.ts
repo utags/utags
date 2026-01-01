@@ -108,7 +108,6 @@ describe('GitHubSyncAdapter', () => {
     it('should throw error for invalid config type', async () => {
       const invalidConfig = { ...mockConfig, type: 'webdav' } as any
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await expect(adapter.init(invalidConfig)).rejects.toThrow(
         'Invalid configuration type for GitHubSyncAdapter.'
       )
@@ -307,9 +306,10 @@ describe('GitHubSyncAdapter', () => {
         credentials: { token: 'network-error-token' },
       }
       server.use(
-        http.get(`${GITHUB_API_BASE_URL}/user`, () => {
-          return HttpResponse.error() // Simulate network error
-        })
+        http.get(
+          `${GITHUB_API_BASE_URL}/user`,
+          () => HttpResponse.error() // Simulate network error
+        )
       )
       await adapter.init(configForNetworkError)
       const status = await adapter.getAuthStatus()
@@ -376,9 +376,7 @@ describe('GitHubSyncAdapter', () => {
       server.use(
         http.get(
           `${GITHUB_API_BASE_URL}/repos/${mockConfig.target.repo}/contents/${filePath}`,
-          () => {
-            return new HttpResponse(null, { status: 500 })
-          }
+          () => new HttpResponse(null, { status: 500 })
         )
       )
       await expect(adapter.getRemoteMetadata()).rejects.toThrow(
@@ -777,15 +775,14 @@ describe('GitHubSyncAdapter', () => {
       server.use(
         http.put(
           `${GITHUB_API_BASE_URL}/repos/${mockConfig.target.repo}/contents/${filePath}`,
-          async () => {
-            return HttpResponse.json(
+          async () =>
+            HttpResponse.json(
               {
                 // Missing content.sha or content itself
                 commit: { sha: 'mock-commit-sha' },
               },
               { status: 200 }
             )
-          }
         )
       )
       await expect(adapter.upload(uploadData)).rejects.toThrow(
@@ -799,15 +796,14 @@ describe('GitHubSyncAdapter', () => {
       server.use(
         http.put(
           `${GITHUB_API_BASE_URL}/repos/${mockConfig.target.repo}/contents/${filePath}`,
-          async () => {
-            return HttpResponse.json(
+          async () =>
+            HttpResponse.json(
               {
                 content: { sha: 'mock-file-sha' },
                 // Missing commit.sha or commit itself
               },
               { status: 200 }
             )
-          }
         )
       )
       await expect(adapter.upload(uploadData)).rejects.toThrow(

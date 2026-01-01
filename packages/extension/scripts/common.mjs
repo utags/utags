@@ -64,24 +64,22 @@ const schemeImportPlugin = ({ compressCss }) => ({
   },
 })
 
-export const getBuildOptions = (target, tag, fileName = "content") => {
-  return {
-    entryPoints: [`src/${fileName}.ts`],
-    bundle: true,
-    plugins: [
-      schemeImportPlugin({ compressCss: tag === "prod" || tag === "staging" }),
-    ],
-    define: {
-      "process.env.PLASMO_TARGET": `"${target}"`,
-      "process.env.PLASMO_TAG": `"${tag}"`,
-    },
-    target: ["chrome58", "firefox57", "safari11", "edge18"],
-    outfile: `build/${target}-${tag}/${fileName}.js`,
-  }
-}
+export const getBuildOptions = (target, tag, fileName = "content") => ({
+  entryPoints: [`src/${fileName}.ts`],
+  bundle: true,
+  plugins: [
+    schemeImportPlugin({ compressCss: tag === "prod" || tag === "staging" }),
+  ],
+  define: {
+    "process.env.PLASMO_TARGET": `"${target}"`,
+    "process.env.PLASMO_TAG": `"${tag}"`,
+  },
+  target: ["chrome58", "firefox57", "safari11", "edge18"],
+  outfile: `build/${target}-${tag}/${fileName}.js`,
+})
 
-const waitUntilFileExists = async (path, timeout = 10_000) => {
-  return new Promise((resolve, reject) => {
+const waitUntilFileExists = async (path, timeout = 10_000) =>
+  new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
       reject(new Error("File does not exits. " + path))
     }, timeout)
@@ -98,7 +96,6 @@ const waitUntilFileExists = async (path, timeout = 10_000) => {
 
     check()
   })
-}
 
 export const runDevServer = async (buildOptions, target, tag) => {
   const log = logger(target)

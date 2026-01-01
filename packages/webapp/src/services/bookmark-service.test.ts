@@ -11,30 +11,25 @@ import type {
 import { BookmarkService } from './bookmark-service.js'
 
 // Mock console-tagger
-vi.mock('console-tagger', () => {
-  return {
-    // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-    default: class Console {
-      constructor() {
-        // eslint-disable-next-line no-constructor-return
-        return {
-          log: vi.fn((...arguments_) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            console.log(...arguments_)
-          }),
-          warn: vi.fn((...arguments_) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            console.warn(...arguments_)
-          }),
-          error: vi.fn((...arguments_) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-            console.error(...arguments_)
-          }),
-        }
+vi.mock('console-tagger', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+  default: class Console {
+    constructor() {
+      // eslint-disable-next-line no-constructor-return
+      return {
+        log: vi.fn((...arguments_) => {
+          console.log(...arguments_)
+        }),
+        warn: vi.fn((...arguments_) => {
+          console.warn(...arguments_)
+        }),
+        error: vi.fn((...arguments_) => {
+          console.error(...arguments_)
+        }),
       }
-    },
-  }
-})
+    }
+  },
+}))
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -86,7 +81,7 @@ vi.mock('svelte-persisted-store', () => {
         const newValue = updater(currentValue)
         stores.set(key, newValue)
       }),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       _getStore: () => stores.get(key), // Helper for testing
       _clearStore() {
         stores.clear()
@@ -188,7 +183,7 @@ describe('BookmarkService', () => {
 
   afterEach(() => {
     // @ts-expect-error - Accessing private static property for testing
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
     service.getStore()._clearStore()
     vi.clearAllMocks()
   })
@@ -200,12 +195,11 @@ describe('BookmarkService', () => {
    * @param statusText HTTP status text (defaults to 'OK' for 200, custom text or 'Error' for others)
    */
   function mockFetchResponse(data: any, status = 200, statusText?: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     ;(globalThis.fetch as any).mockResolvedValue({
       ok: status >= 200 && status < 300,
       status,
       statusText: statusText || (status === 200 ? 'OK' : 'Error'),
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       json: async () => data,
     })
   }
@@ -214,7 +208,6 @@ describe('BookmarkService', () => {
    * Helper function to mock fetch error
    */
   function mockFetchError(error: Error) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     ;(globalThis.fetch as any).mockRejectedValue(error)
   }
 
@@ -910,7 +903,7 @@ describe('BookmarkService', () => {
 
     afterEach(() => {
       // @ts-expect-error - Accessing private static property for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       service.getStore()._clearStore()
       // Restore console methods
       vi.restoreAllMocks()
@@ -1214,7 +1207,7 @@ describe('BookmarkService', () => {
 
     afterEach(() => {
       // @ts-expect-error - Accessing private static property for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       service.getStore()._clearStore()
       vi.clearAllMocks()
     })
@@ -1244,7 +1237,7 @@ describe('BookmarkService', () => {
       // Verify store content type
       // Use _getStore helper method to get the actual stored value
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       const storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1262,7 +1255,7 @@ describe('BookmarkService', () => {
 
       // Verify store content type
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       const storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1279,7 +1272,7 @@ describe('BookmarkService', () => {
 
       // Verify store content type
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       const storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1294,7 +1287,7 @@ describe('BookmarkService', () => {
       // Get store instance and verify type
       let store = service.getStore()
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       let storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1306,7 +1299,7 @@ describe('BookmarkService', () => {
       // Re-get store instance and verify type
       store = service.getStore()
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1319,7 +1312,7 @@ describe('BookmarkService', () => {
       // Get store instance again and verify type
       store = service.getStore()
       // @ts-expect-error - Accessing private method for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       storeValue = store._getStore()
 
       expect(storeValue).toHaveProperty('data')
@@ -1340,7 +1333,7 @@ describe('BookmarkService', () => {
 
         // Verify store content type
         // @ts-expect-error - Accessing private method for testing
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
         const storeValue = store._getStore()
 
         expect(storeValue).toHaveProperty('data')
@@ -1468,7 +1461,7 @@ describe('BookmarkService', () => {
       expect(currentData).toHaveLength(1)
 
       // @ts-expect-error - Accessing private property for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       const storeData = service.currentStore._getStore() as BookmarksStore
       expect(storeData.meta.created).toBe(originalCreationTime)
     })
@@ -1590,7 +1583,7 @@ describe('BookmarkService', () => {
 
     afterEach(() => {
       // @ts-expect-error - Accessing private static property for testing
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       service.getStore()._clearStore()
       // Restore console.error
       vi.restoreAllMocks()

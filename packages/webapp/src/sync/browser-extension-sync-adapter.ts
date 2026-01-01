@@ -10,7 +10,7 @@ import type {
 } from './types.js'
 
 // Constants for message types and sources
-/* eslint-disable @typescript-eslint/naming-convention */
+
 const SOURCE_WEBAPP = 'utags-webapp'
 const SOURCE_EXTENSION = 'utags-extension'
 const PING_MESSAGE_TYPE = 'PING'
@@ -21,7 +21,6 @@ const GET_REMOTE_METADATA_MESSAGE_TYPE = 'GET_REMOTE_METADATA'
 const DOWNLOAD_MESSAGE_TYPE = 'DOWNLOAD_DATA'
 const UPLOAD_MESSAGE_TYPE = 'UPLOAD_DATA'
 const GET_AUTH_STATUS_MESSAGE_TYPE = 'GET_AUTH_STATUS'
-/* eslint-enable @typescript-eslint/naming-convention */
 
 /**
  * Custom error class for browser extension sync adapter errors.

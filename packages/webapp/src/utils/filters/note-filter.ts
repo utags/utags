@@ -16,8 +16,7 @@ export function createNoteCondition(params: URLSearchParams) {
    * @param meta - Bookmark metadata containing the note field
    * @returns true if note exists and is not empty
    */
-  return (href: string, tags: string[], meta: BookmarkMetadata) => {
+  return (href: string, tags: string[], meta: BookmarkMetadata) =>
     // Check if note exists and is not just whitespace
-    return Boolean(meta.note?.trim())
-  }
+    Boolean(meta.note?.trim())
 }

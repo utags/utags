@@ -9,13 +9,15 @@ import express, {
   type NextFunction,
 } from 'express'
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const __filename = fileURLToPath(import.meta.url)
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const __dirname = path.dirname(__filename)
 const app = express()
 const port = process.env.PORT || 3001 // Mock server port
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const MOCK_DATA_DIR = path.join(__dirname, '.mock-data') // Directory to store mock data files
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const AUTH_TOKEN = 'test-auth-token' // Example auth token
 
 app.use(express.json()) // Middleware to parse JSON bodies
@@ -56,7 +58,7 @@ async function ensureMockDataDir(): Promise<void> {
  * @param data - The data to hash (string or Buffer).
  * @returns The hex-encoded SHA256 hash.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-restricted-types
 function calculateSha(data: string | Buffer): string {
   return crypto.createHash('sha256').update(data).digest('hex')
 }

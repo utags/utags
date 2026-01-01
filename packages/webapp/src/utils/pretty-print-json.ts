@@ -44,15 +44,13 @@ export function prettyPrintJsonSafe(value: any): string {
     }
 
     if (Array.isArray(obj)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return obj.map((item) => maskSensitiveData(item))
     }
 
     if (typeof obj === 'object') {
       const masked: any = {}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       for (const [key, val] of Object.entries(obj)) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         masked[key] = sensitiveFields.has(key.toLowerCase())
           ? '***'
           : maskSensitiveData(val)
@@ -64,7 +62,6 @@ export function prettyPrintJsonSafe(value: any): string {
     return obj
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const maskedValue = maskSensitiveData(value)
   return JSON.stringify(maskedValue, null, 2)
 }

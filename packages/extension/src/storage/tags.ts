@@ -11,11 +11,11 @@ import type { RecentTag } from '../types.js'
 /**
  * Storage keys for different tag collections
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const STORAGE_KEY_RECENT_TAGS = 'extension.utags.recenttags'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const STORAGE_KEY_MOST_USED_TAGS = 'extension.utags.mostusedtags'
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const STORAGE_KEY_RECENT_ADDED_TAGS = 'extension.utags.recentaddedtags'
 
 /**

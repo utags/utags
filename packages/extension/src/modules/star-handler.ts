@@ -12,7 +12,7 @@ type BookmarkMetadata = {
 /**
  * Star tag constant
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const STAR_TAG = '★'
 
 /**

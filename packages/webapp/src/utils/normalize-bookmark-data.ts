@@ -60,10 +60,7 @@ export function normalizeBookmarkData<T>(data: T): T {
 
   // Handle arrays
   if (Array.isArray(data)) {
-    return data.map((item) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      normalizeBookmarkData(item)
-    ) as T
+    return data.map((item) => normalizeBookmarkData(item)) as T
   }
 
   // Handle objects (excluding null which is already handled)

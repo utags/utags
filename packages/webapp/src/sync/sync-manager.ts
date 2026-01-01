@@ -690,9 +690,7 @@ export class SyncManager extends EventEmitter<SyncEvents> {
         message: string
         confirmText?: string
         cancelText?: string
-      }): Promise<boolean> => {
-        return requestConfirm(opts)
-      }
+      }): Promise<boolean> => requestConfirm(opts)
 
       // Use i18n messages
       const title = m.CONFIRM_MODAL_TITLE_SYNC_STRATEGY()

@@ -18,6 +18,7 @@ export function storageTest() {
       removeValueChangeListener,
     },
     console.log
+    // eslint-disable-next-line promise/prefer-await-to-then
   ).then((passed) => {
     if (passed) {
       console.log('所有存储测试通过！')

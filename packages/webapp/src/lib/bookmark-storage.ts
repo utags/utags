@@ -434,7 +434,7 @@ export class BookmarkStorage {
     }
 
     // Validate database version
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     const { databaseVersion } = data.meta
 
     // Check if databaseVersion is a number

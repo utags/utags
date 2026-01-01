@@ -9,7 +9,7 @@
     "format": "prettier --write . && npx prettier@2.8.8 --config .prettierrc-markdown.cjs --write '**/*.md'",
     "lint": "run-s lint:*",
     "lint:format": "pnpm -w run format",
-    "lint:code": "xo --fix",
+    "lint:code": "pnpm -r lint:code",
     "lint:type": "tsc --noemit",
     "build": "run-s build:*",
     "build:extension": "pnpm -r --filter ./packages/extension build",
@@ -46,11 +46,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4",
-    "xo": "^0.60.0"
-  },
-  "xo": {
-    "space": 2,
-    "prettier": true
+    "xo": "^1.2.3"
   },
   "pnpm": {
     "overrides": {

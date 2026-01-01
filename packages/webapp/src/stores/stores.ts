@@ -62,7 +62,7 @@ export function checkBookmarksDataReady() {
 }
 
 // 初始化书签存储
-// eslint-disable-next-line import/no-mutable-exports
+// eslint-disable-next-line import-x/no-mutable-exports
 export let bookmarks: Persisted<BookmarksStore> = persisted(
   'temporary_bookmarks',
   {

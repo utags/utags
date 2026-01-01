@@ -32,14 +32,12 @@ describe('MessageProxyHttpClient', () => {
 
     window.addEventListener = vi.fn((type: string, listener: any) => {
       if (type === 'message') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         messageListeners.push(listener)
       }
     })
 
     window.removeEventListener = vi.fn((type: string, listener: any) => {
       if (type === 'message') {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const index = messageListeners.indexOf(listener)
         if (index !== -1) {
           messageListeners.splice(index, 1)

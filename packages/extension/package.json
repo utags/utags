@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/utags/utags#readme",
   "scripts": {
+    "xo": "xo",
     "lint": "run-s lint:*",
     "lint:format": "pnpm -w run format",
     "lint:code": "xo --fix",
@@ -89,55 +90,6 @@
     "host_permissions": [
       "https://*/*",
       "http://*/*"
-    ]
-  },
-  "xo": {
-    "space": 2,
-    "prettier": true,
-    "globals": [
-      "GM",
-      "document"
-    ],
-    "envs": [
-      "browser",
-      "webextensions"
-    ],
-    "rules": {
-      "import/extensions": 0,
-      "n/file-extension-in-import": 0,
-      "import/order": 0,
-      "@typescript-eslint/prefer-nullish-coalescing": 0,
-      "@typescript-eslint/prefer-optional-chain": 0,
-      "logical-assignment-operators": 0,
-      "unicorn/prevent-abbreviations": 0,
-      "@typescript-eslint/consistent-type-assertions": 0,
-      "capitalized-comments": 0
-    },
-    "overrides": [
-      {
-        "files": "src/messages/*.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0
-        }
-      },
-      {
-        "files": "src/**/*.test.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0
-        }
-      },
-      {
-        "files": "src/sites/**/*.ts",
-        "rules": {
-          "@typescript-eslint/naming-convention": 0,
-          "n/file-extension-in-import": 0
-        }
-      }
-    ],
-    "ignores": [
-      "src/storage/index.ts",
-      "src/global.d.ts",
-      "build/**/*"
     ]
   }
 }

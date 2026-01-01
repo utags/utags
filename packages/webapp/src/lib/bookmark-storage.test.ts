@@ -10,9 +10,7 @@ import { BookmarkStorage } from './bookmark-storage.js'
 const localStorageMock = (() => {
   let store: Record<string, string> = {}
   return {
-    getItem: vi.fn((key: string) => {
-      return store[key] || null
-    }),
+    getItem: vi.fn((key: string) => store[key] || null),
     setItem: vi.fn((key: string, value: string) => {
       store[key] = value
     }),
@@ -216,7 +214,6 @@ describe('BookmarkStorage', () => {
 
       // Expect the save operation to throw an error
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         bookmarkStorage.persistBookmarksStore(invalidStore)
       ).rejects.toThrow()
     })
@@ -235,7 +232,6 @@ describe('BookmarkStorage', () => {
 
       // Expect the save operation to throw an error
       await expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         bookmarkStorage.persistBookmarksStore(invalidVersionStore)
       ).rejects.toThrow(
         'Invalid bookmark store format: databaseVersion must be a number'
