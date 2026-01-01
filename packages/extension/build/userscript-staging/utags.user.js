@@ -761,6 +761,14 @@
     }
     func()
   }
+  var runWhenBodyExists = (func) => {
+    if (!doc.body) {
+      bodyFuncArray.push(func)
+      startObserveHeadBodyExists()
+      return
+    }
+    func()
+  }
   var isVisible = (element) => {
     const el = element
     if (typeof el.checkVisibility === "function") {
@@ -1794,6 +1802,47 @@
       a.setAttribute("target", "_blank")
     }
     return a
+  }
+  var validNodeNames = {
+    A: true,
+    H1: true,
+    H2: true,
+    H3: true,
+    H4: true,
+    H5: true,
+    H6: true,
+    DIV: true,
+    SPAN: true,
+    P: true,
+    UL: true,
+    OL: true,
+    LI: true,
+    SECTION: true,
+  }
+  function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
+    const length = nodeList.length
+    for (let i3 = 0; i3 < length; i3++) {
+      const node = nodeList[i3]
+      if (node.nodeType !== 1) {
+        continue
+      }
+      const classList = node.classList
+      if (
+        classList.contains("utags_ul") ||
+        classList.contains("utags_li") ||
+        classList.contains("utags_text_tag") ||
+        classList.contains("utags_modal") ||
+        classList.contains("utags_modal_wrapper") ||
+        classList.contains("utags_modal_content") ||
+        classList.contains("browser_extension_settings_v2_container")
+      ) {
+        return false
+      }
+      if (validNodeNames[node.nodeName]) {
+        return true
+      }
+    }
+    return false
   }
   var messages14 = {
     "settings.enableCurrentSite": "UTags auf der aktuellen Website aktivieren",
@@ -12269,7 +12318,7 @@
       class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
     })
-    let li = createElement("li")
+    let li = createElement("li", { class: "utags_li" })
     const a = createElement("button", {
       type: "button",
       title: "Add tags",
@@ -12288,7 +12337,7 @@
     li.append(a)
     ul.append(li)
     for (const tag of tags) {
-      li = createElement("li")
+      li = createElement("li", { class: "utags_li" })
       const a2 = createTag(tag, {
         isEmoji: emojiTags2.includes(tag),
         noLink: isTagManager,
@@ -12422,36 +12471,6 @@
         setTimeout(displayTags)
       }
     })
-  }
-  var validNodeNames = {
-    A: true,
-    H1: true,
-    H2: true,
-    H3: true,
-    H4: true,
-    H5: true,
-    H6: true,
-    DIV: true,
-    SPAN: true,
-    P: true,
-    UL: true,
-    OL: true,
-    LI: true,
-    SECTION: true,
-  }
-  function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
-    const length = nodeList.length
-    for (let i3 = 0; i3 < length; i3++) {
-      const node = nodeList[i3]
-      if (
-        validNodeNames[node.nodeName] &&
-        !hasClass(node, "utags_ul") &&
-        !hasClass(node, "utags_modal")
-      ) {
-        return true
-      }
-    }
-    return false
   }
   function getOutermostOffsetParent(element1, element2) {
     if (
@@ -12784,10 +12803,9 @@
     onSettingsChange2()
     setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
-    await displayTags()
     eventManager.addEventListener(doc, "visibilitychange", async () => {
       if (!doc.hidden) {
-        await displayTags()
+        displayTagsThrottled()
       }
     })
     bindDocumentEvents(eventManager)
@@ -12829,9 +12847,12 @@
         hideAllUtagsInArea()
       }
     })
-    observer.observe(doc, {
-      childList: true,
-      subtree: true,
+    runWhenBodyExists(() => {
+      displayTagsThrottled()
+      observer.observe(doc.body, {
+        childList: true,
+        subtree: true,
+      })
     })
     if (false) {
     }

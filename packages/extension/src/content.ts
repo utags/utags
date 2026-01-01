@@ -20,6 +20,7 @@ import {
   hasClass,
   registerMenuCommand,
   removeClass,
+  runWhenBodyExists,
   runWhenHeadExists,
   setStyle,
   throttle,
@@ -31,6 +32,7 @@ import type { PlasmoCSConfig } from 'plasmo'
 import { splitTags } from 'utags-utils'
 
 import createTag from './components/tag'
+import { shouldUpdateUtagsWhenNodeUpdated } from './content-utils'
 import { getAvailableLocales, i, resetI18n } from './messages'
 import { clearTagManagerCache } from './modules/advanced-tag-manager'
 import { registerDebuggingHotkey } from './modules/debugging'
@@ -611,7 +613,7 @@ function appendTagsToPage(
     class: tags.length === 0 ? 'utags_ul utags_ul_0' : 'utags_ul utags_ul_1',
     'data-utags_key': key,
   })
-  let li = createElement('li')
+  let li = createElement('li', { class: 'utags_li' })
 
   const a = createElement('button', {
     type: 'button',
@@ -638,7 +640,7 @@ function appendTagsToPage(
   ul.append(li)
 
   for (const tag of tags) {
-    li = createElement('li')
+    li = createElement('li', { class: 'utags_li' })
     const a = createTag(tag, {
       isEmoji: emojiTags.includes(tag),
       noLink: isTagManager,
@@ -816,41 +818,6 @@ async function initStorage() {
       setTimeout(displayTags)
     }
   })
-}
-
-/* eslint-disable @typescript-eslint/naming-convention */
-const validNodeNames = {
-  A: true,
-  H1: true,
-  H2: true,
-  H3: true,
-  H4: true,
-  H5: true,
-  H6: true,
-  DIV: true,
-  SPAN: true,
-  P: true,
-  UL: true,
-  OL: true,
-  LI: true,
-  SECTION: true,
-}
-/* eslint-enable @typescript-eslint/naming-convention */
-
-function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
-  const length = nodeList.length
-  for (let i = 0; i < length; i++) {
-    const node = nodeList[i]
-    if (
-      validNodeNames[node.nodeName] &&
-      !hasClass(node as HTMLElement, 'utags_ul') &&
-      !hasClass(node as HTMLElement, 'utags_modal')
-    ) {
-      return true
-    }
-  }
-
-  return false
 }
 
 function getOutermostOffsetParent(
@@ -1295,11 +1262,9 @@ async function main() {
 
   await updateAddTagsToCurrentPageMenuCommand()
 
-  await displayTags()
-
   eventManager.addEventListener(doc, 'visibilitychange', async () => {
     if (!doc.hidden) {
-      await displayTags()
+      displayTagsThrottled()
     }
   })
 
@@ -1356,9 +1321,13 @@ async function main() {
       hideAllUtagsInArea()
     }
   })
-  observer.observe(doc, {
-    childList: true,
-    subtree: true,
+
+  runWhenBodyExists(() => {
+    displayTagsThrottled()
+    observer.observe(doc.body, {
+      childList: true,
+      subtree: true,
+    })
   })
 
   // To fix issues on reddit, add mouseover event
