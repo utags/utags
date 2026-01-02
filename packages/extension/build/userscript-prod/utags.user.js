@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.23.2
+// @version              0.23.3
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -673,10 +673,11 @@
     return tagName
   }
   var uniq = (array) => [...new Set(array)]
-  var $ = (selector, context = doc) => context.querySelector(selector)
+  var $ = (selector, context = doc) =>
+    (context ? context.querySelector(selector) : void 0) || void 0
   var $$ = (selector, context = doc) =>
     // @ts-ignore
-    [...context.querySelectorAll(selector)]
+    [...(context ? context.querySelectorAll(selector) : [])]
   var extendHistoryApi = () => {
     const pushState = history.pushState
     const replaceState = history.replaceState
@@ -3961,7 +3962,7 @@
     tagsValueChangeListener = func
   }
   async function reload() {
-    console.log("Current extension is outdated, page reload required")
+    console.warn("Current extension is outdated, page reload required")
     location.reload()
   }
   function isValidKey(key) {
@@ -3991,7 +3992,7 @@
   }
   async function migrateV2toV3(bookmarksStore) {
     var _a, _b, _c
-    console.log("Starting migration from V2 to V3")
+    console.info("Starting migration from V2 to V3")
     const now = Date.now()
     let minCreated = now
     const bookmarksStoreNew = createEmptyBookmarksStore()
@@ -4085,7 +4086,7 @@
     }
     bookmarksStoreNew.meta.created = minCreated
     await persistBookmarksStore(bookmarksStoreNew)
-    console.log("Migration to V3 completed successfully")
+    console.info("Migration to V3 completed successfully")
   }
   async function migrateV3_fixV0_13_0TimestampBug(bookmarksStore) {
     var _a, _b, _c
@@ -4094,7 +4095,7 @@
     if (oldMeta.extensionVersion !== "0.13.0") {
       return
     }
-    console.log(
+    console.info(
       "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
     )
     const now = Date.now()
@@ -4146,7 +4147,7 @@
     }
     bookmarksStoreNew.meta.created = oldMeta.created
     await persistBookmarksStore(bookmarksStoreNew)
-    console.log("Migration to V3 completed successfully")
+    console.info("Migration to V3 completed successfully")
   }
   async function checkVersion(meta) {
     if (meta.extensionVersion !== currentExtensionVersion) {
@@ -4171,7 +4172,10 @@
     }
     return true
   }
+  var dataUpdated = false
   async function initBookmarksStore() {
+    console.log("Start init BookmarksStore")
+    dataUpdated = false
     cachedUrlMap = {}
     const bookmarksStore = await getBookmarksStore()
     const meta = bookmarksStore.meta
@@ -4211,10 +4215,21 @@
           } else {
             console.log("Data updated, clearing cache")
           }
+          dataUpdated = true
+          if (doc.hidden) {
+            return
+          }
           cachedUrlMap = {}
           await initBookmarksStore()
         }
       )
+      addEventListener(doc, "visibilitychange", async () => {
+        console.log("visibilitychange", doc.hidden)
+        if (!doc.hidden && dataUpdated) {
+          cachedUrlMap = {}
+          await initBookmarksStore()
+        }
+      })
     }
   }
   var mergeData = async () => ({ numberOfLinks: 0, numberOfTags: 0 })
@@ -11876,6 +11891,54 @@
     }
     return [...matchedNodesSet]
   }
+  var originConsole = globalThis.console
+  var lastLogTime = Date.now()
+  var formatTime = (date) => {
+    const h = date.getHours().toString().padStart(2, "0")
+    const m = date.getMinutes().toString().padStart(2, "0")
+    const s = date.getSeconds().toString().padStart(2, "0")
+    const ms = date.getMilliseconds().toString().padStart(3, "0")
+    return "".concat(h, ":").concat(m, ":").concat(s, ".").concat(ms)
+  }
+  var getPrefix = (isDetailed) => {
+    if (isDetailed) {
+      const now = Date.now()
+      const diff = now - lastLogTime
+      lastLogTime = now
+      const timeStr = formatTime(new Date(now))
+      return [
+        "%c[utags][".concat(timeStr, "][+").concat(diff, "ms]"),
+        "color: #ff6361;",
+      ]
+    }
+    return ["%c[utags]", "color: #ff6361;"]
+  }
+  var wrapConsoleMethod =
+    (methodName, isDetailed) =>
+    (...args) => {
+      const [prefix2, style] = getPrefix(isDetailed)
+      const method = originConsole[methodName]
+      if (typeof method === "function") {
+        method(prefix2, style, ...args)
+      }
+    }
+  var isProd = true
+  var noop = () => {}
+  var consoleWrapper = __spreadProps(__spreadValues({}, originConsole), {
+    debug: isProd ? noop : wrapConsoleMethod("debug", true),
+    log: isProd ? noop : wrapConsoleMethod("log", true),
+    info: wrapConsoleMethod("info", true),
+    warn: wrapConsoleMethod("warn", false),
+    error: wrapConsoleMethod("error", false),
+    trace: wrapConsoleMethod("trace", false),
+    group: wrapConsoleMethod("group", false),
+    groupCollapsed: wrapConsoleMethod("groupCollapsed", false),
+  })
+  function setupConsole() {
+    if (globalThis.console !== consoleWrapper) {
+      globalThis.console = consoleWrapper
+    }
+  }
   var config = {
     run_at: "document_start",
     matches: ["https://*/*", "http://*/*"],
@@ -12185,10 +12248,7 @@
       }
     }
   }
-  var start = 0
-  if (start) {
-    start = Date.now()
-  }
+  var DEBUG = true
   function appendCurrentPageLink(options) {
     options = options || {}
     const containerId = "utags_current_page_link_container"
@@ -12381,8 +12441,8 @@
     if (isAllTagsHidden()) {
       return
     }
-    if (start) {
-      console.error("start of displayTags", Date.now() - start)
+    if (DEBUG) {
+      console.debug("start of displayTags")
     }
     utagsIdSet.clear()
     emojiTags2 = await getEmojiTags()
@@ -12390,12 +12450,12 @@
     for (const node of listNodes) {
       node.dataset.utags_list_node = ""
     }
-    if (start) {
-      console.error("before matchedNodes", Date.now() - start)
+    if (DEBUG) {
+      console.debug("before matchedNodes")
     }
     const nodes = matchedNodes()
-    if (start) {
-      console.error("after matchedNodes", Date.now() - start, nodes.length)
+    if (DEBUG) {
+      console.debug("after matchedNodes", nodes.length)
     }
     for (const node of nodes) {
       const utags = getUtags(node)
@@ -12418,8 +12478,8 @@
         })
       }
     }
-    if (start) {
-      console.error("after appendTagsToPage", Date.now() - start)
+    if (DEBUG) {
+      console.debug("after appendTagsToPage")
     }
     const conditionNodes = getConditionNodes()
     for (const node of conditionNodes) {
@@ -12452,8 +12512,8 @@
       await updateAddTagsToCurrentPageMenuCommand(object.tags)
     }
     cleanUnusedUtags()
-    if (start) {
-      console.error("end of displayTags", Date.now() - start)
+    if (DEBUG) {
+      console.debug("end of displayTags")
     }
   }
   var displayTagsThrottled = throttle(displayTags, 500)
@@ -12461,7 +12521,9 @@
     await initBookmarksStore()
     await initSyncAdapter()
     addTagsValueChangeListener(() => {
+      console.log("Storage updated", doc.hidden)
       if (!doc.hidden) {
+        console.log("Start re-display tags")
         setTimeout(displayTags)
       }
     })
@@ -12797,11 +12859,6 @@
     onSettingsChange2()
     setTimeout(outputData, 1)
     await updateAddTagsToCurrentPageMenuCommand()
-    eventManager.addEventListener(doc, "visibilitychange", async () => {
-      if (!doc.hidden) {
-        displayTagsThrottled()
-      }
-    })
     bindDocumentEvents(eventManager)
     bindWindowEvents(eventManager)
     const cleanup = () => {
@@ -12814,8 +12871,6 @@
       clearDomReferences()
       clearAllTimers()
     }
-    eventManager.addEventListener(globalThis, "beforeunload", cleanup)
-    eventManager.addEventListener(globalThis, "pagehide", cleanup)
     const observer = new MutationObserver(async (mutationsList) => {
       let shouldUpdate = false
       for (const mutationRecord of mutationsList) {
@@ -12851,6 +12906,8 @@
     if (false) {
     }
   }
+  setupConsole()
+  console.log("Start init ContentScript")
   runWhenHeadExists(async () => {
     if (doc.documentElement.dataset.utags === void 0) {
       doc.documentElement.dataset.utags = "".concat(host2)
