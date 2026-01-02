@@ -4,7 +4,7 @@ import {
   setPolling,
   setValue,
 } from 'browser-extension-storage'
-import { isUrl, uniq } from 'browser-extension-utils'
+import { addEventListener, doc, isUrl, uniq } from 'browser-extension-utils'
 import { normalizeCreated, normalizeUpdated, trimTitle } from 'utags-utils'
 
 import type {
@@ -348,7 +348,7 @@ export function addTagsValueChangeListener(func: () => void) {
  * TODO: Add confirmation dialog and implement reload count tracking to prevent infinite reloads
  */
 async function reload() {
-  console.log('Current extension is outdated, page reload required')
+  console.warn('Current extension is outdated, page reload required')
   location.reload()
 }
 
@@ -411,7 +411,7 @@ function filterDeleted(data: BookmarksData): BookmarksData {
  * @param bookmarksStore V2 format bookmark store
  */
 async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
-  console.log('Starting migration from V2 to V3')
+  console.info('Starting migration from V2 to V3')
   const now = Date.now()
   let minCreated = now
   const bookmarksStoreNew: BookmarksStoreV3 = createEmptyBookmarksStore()
@@ -506,7 +506,7 @@ async function migrateV2toV3(bookmarksStore: BookmarksStoreV2) {
 
   bookmarksStoreNew.meta.created = minCreated
   await persistBookmarksStore(bookmarksStoreNew)
-  console.log('Migration to V3 completed successfully')
+  console.info('Migration to V3 completed successfully')
 }
 
 /**
@@ -529,7 +529,7 @@ async function migrateV3_fixV0_13_0TimestampBug(
     return
   }
 
-  console.log(
+  console.info(
     'Starting migration from extension v0.13.0 to v' + currentExtensionVersion
   )
   const now = Date.now()
@@ -584,7 +584,7 @@ async function migrateV3_fixV0_13_0TimestampBug(
 
   bookmarksStoreNew.meta.created = oldMeta.created
   await persistBookmarksStore(bookmarksStoreNew)
-  console.log('Migration to V3 completed successfully')
+  console.info('Migration to V3 completed successfully')
 }
 
 /**
@@ -618,11 +618,15 @@ async function checkVersion(meta: BookmarksStore['meta']) {
   return true
 }
 
+let dataUpdated = false
 /**
  * Initialize the bookmarks store
  * This is the first function to be called when the extension loads
  */
 export async function initBookmarksStore(): Promise<void> {
+  console.log('Start init BookmarksStore')
+  dataUpdated = false
+
   cachedUrlMap = {}
   const bookmarksStore = await getBookmarksStore()
   const meta = bookmarksStore.meta
@@ -653,6 +657,7 @@ export async function initBookmarksStore(): Promise<void> {
   }
 
   console.log('Bookmarks store initialized')
+
   if (tagsValueChangeListener) {
     tagsValueChangeListener()
   }
@@ -670,9 +675,23 @@ export async function initBookmarksStore(): Promise<void> {
           console.log('Data updated, clearing cache')
         }
 
+        dataUpdated = true
+
+        if (doc.hidden) {
+          return
+        }
+
         cachedUrlMap = {}
         await initBookmarksStore()
       }
     )
+    addEventListener(doc, 'visibilitychange', async () => {
+      console.log('visibilitychange', doc.hidden)
+
+      if (!doc.hidden && dataUpdated) {
+        cachedUrlMap = {}
+        await initBookmarksStore()
+      }
+    })
   }
 }

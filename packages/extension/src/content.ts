@@ -76,6 +76,7 @@ import {
   getUtagsUlByTarget,
   sortTags,
 } from './utils'
+import { setupConsole } from './utils/console.js'
 import { getUtags } from './utils/dom-utils'
 import { EventListenerManager } from './utils/event-listener-manager'
 
@@ -418,12 +419,8 @@ function onSettingsChange() {
   }
 }
 
-// For debug, 0 disable, 1 enable
-let start = 0
-
-if (start) {
-  start = Date.now()
-}
+// For debug
+const DEBUG = true
 
 /**
  * Append a link to the current page at the end of the document body
@@ -699,29 +696,29 @@ async function displayTags() {
     return
   }
 
-  if (start) {
-    console.error('start of displayTags', Date.now() - start)
+  if (DEBUG) {
+    console.debug('start of displayTags')
   }
 
   utagsIdSet.clear()
 
   emojiTags = await getEmojiTags()
 
-  // console.error("displayTags")
+  // console.debug("displayTags")
   const listNodes = getListNodes()
   for (const node of listNodes) {
     // Flag list nodes first
     node.dataset.utags_list_node = ''
   }
 
-  if (start) {
-    console.error('before matchedNodes', Date.now() - start)
+  if (DEBUG) {
+    console.debug('before matchedNodes')
   }
 
   // Display tags for matched components on matched pages
   const nodes = matchedNodes()
-  if (start) {
-    console.error('after matchedNodes', Date.now() - start, nodes.length)
+  if (DEBUG) {
+    console.debug('after matchedNodes', nodes.length)
   }
 
   for (const node of nodes) {
@@ -751,8 +748,8 @@ async function displayTags() {
     }
   }
 
-  if (start) {
-    console.error('after appendTagsToPage', Date.now() - start)
+  if (DEBUG) {
+    console.debug('after appendTagsToPage')
   }
 
   const conditionNodes = getConditionNodes()
@@ -796,8 +793,8 @@ async function displayTags() {
 
   cleanUnusedUtags()
 
-  if (start) {
-    console.error('end of displayTags', Date.now() - start)
+  if (DEBUG) {
+    console.debug('end of displayTags')
   }
 }
 
@@ -807,7 +804,9 @@ async function initStorage() {
   await initBookmarksStore()
   await initSyncAdapter()
   addTagsValueChangeListener(() => {
+    console.log('Storage updated', doc.hidden)
     if (!doc.hidden) {
+      console.log('Start re-display tags')
       setTimeout(displayTags)
     }
   })
@@ -1255,12 +1254,6 @@ async function main() {
 
   await updateAddTagsToCurrentPageMenuCommand()
 
-  eventManager.addEventListener(doc, 'visibilitychange', async () => {
-    if (!doc.hidden) {
-      displayTagsThrottled()
-    }
-  })
-
   bindDocumentEvents(eventManager)
   bindWindowEvents(eventManager)
 
@@ -1281,11 +1274,12 @@ async function main() {
   }
 
   // Listen for page unload events
-  eventManager.addEventListener(globalThis, 'beforeunload', cleanup)
-  eventManager.addEventListener(globalThis, 'pagehide', cleanup)
+  // eventManager.addEventListener(globalThis, 'beforeunload', cleanup)
+  // eventManager.addEventListener(globalThis, 'pagehide', cleanup)
+  // TODO: re-init on page show event for Safari
 
   const observer = new MutationObserver(async (mutationsList) => {
-    // console.error("mutation", Date.now(), mutationsList)
+    // console.debug("mutation", Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
       if (shouldUpdateUtagsWhenNodeUpdated(mutationRecord.addedNodes)) {
@@ -1340,6 +1334,10 @@ async function main() {
     // registerDebuggingHotkey()
   }
 }
+
+setupConsole()
+
+console.log('Start init ContentScript')
 
 runWhenHeadExists(async () => {
   if (doc.documentElement.dataset.utags === undefined) {

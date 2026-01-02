@@ -110,14 +110,14 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3
       browser-extension-settings:
-        specifier: ^0.8.4
-        version: 0.8.4(react@19.2.3)
+        specifier: ^0.8.5
+        version: 0.8.5(react@19.2.3)
       browser-extension-storage:
         specifier: ^0.2.8
         version: 0.2.8(react@19.2.3)
       browser-extension-utils:
-        specifier: ^0.3.3
-        version: 0.3.3
+        specifier: ^0.3.4
+        version: 0.3.4
       focus-trap-lite:
         specifier: ^0.1.0
         version: 0.1.0
@@ -4777,8 +4777,8 @@ packages:
     resolution: {integrity: sha512-lL7FldiL+Ln4cy/DSPSPRYfkZ2MqfW9cK/qc6QYE+TpHW4dio9H3BWi/1Uz9ju+3huv1F5uyErIq8FJItnc8sg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
-  browser-extension-settings@0.8.4:
-    resolution: {integrity: sha512-xortipNfohO3OsxDWbOJkaWcSjwq4qwqaLLp15SyknZzdgLX5/WozjY210vWn+qvIVHo0tKxCRh8M/QIQRXxQA==}
+  browser-extension-settings@0.8.5:
+    resolution: {integrity: sha512-whrCPfnMSEDs9CAAehisRIPlTF+flrp52X8m/CsAjDNHsw2NNnTlQKaffH54vN2yfhu+kaAB8KISiWM2IUCgsQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
   browser-extension-storage@0.2.8:
@@ -4789,8 +4789,8 @@ packages:
     resolution: {integrity: sha512-PS28QAOmap5s/uyYMIzCN3K+24/zeBoxvJ3A4ibsX9MzbS1/av0gwqdZG4clb3YY035pyglxD/iP89knOqGY6w==}
     engines: {node: '>=16.9.0'}
 
-  browser-extension-utils@0.3.3:
-    resolution: {integrity: sha512-m7d7raREOvBfbvrJOpi8GRoeySOOlpsOxl9LM0UDwLpdCVdbYOozhRxBvU45IReqTY+geRfcSbBFbPXUG63Hsg==}
+  browser-extension-utils@0.3.4:
+    resolution: {integrity: sha512-VuZWcD4AiZOLbl0bVaE522MlgRNtH+daBqIbC9DVr3yrZAjns0Jgx3veZtAg/Q0+4f/kzIkFTpn6thsM9H/vSQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
   browserslist@4.22.1:
@@ -16540,11 +16540,11 @@ snapshots:
 
   browser-extension-i18n@0.1.3: {}
 
-  browser-extension-settings@0.8.4(react@19.2.3):
+  browser-extension-settings@0.8.5(react@19.2.3):
     dependencies:
       browser-extension-i18n: 0.1.3
       browser-extension-storage: 0.2.8(react@19.2.3)
-      browser-extension-utils: 0.3.3
+      browser-extension-utils: 0.3.4
     transitivePeerDependencies:
       - react
 
@@ -16556,7 +16556,7 @@ snapshots:
 
   browser-extension-utils@0.2.2: {}
 
-  browser-extension-utils@0.3.3: {}
+  browser-extension-utils@0.3.4: {}
 
   browserslist@4.22.1:
     dependencies:
