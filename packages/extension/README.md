@@ -82,7 +82,7 @@ For now it works on
 - Chrome: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
 - Firefox: [Firefox Addon Store](https://addons.mozilla.org/firefox/addon/utags/)
-- User Script: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links), [ScriptCat](https://scriptcat.org/en/script-show-page/2784), [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
+- User Script: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links) · [ScriptCat](https://scriptcat.org/script-show-page/2784) · [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
 - [Manually install browser extensions](../../docs/manual-installation.md)
 
 ## Usage
@@ -335,7 +335,7 @@ For now it works on
 
 ## License
 
-Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
+Copyright (c) 2023-2026 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](https://github.com/utags/utags/blob/main/LICENSE).
 
 ## >\_
 

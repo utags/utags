@@ -1,6 +1,6 @@
 # UTags Bookmark Manager
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/utags/utags/blob/main/LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags Official Site](https://img.shields.io/badge/UTags-Official_Site-brightgreen)](https://utags.link)
 
@@ -197,7 +197,7 @@ Please follow our [contribution guidelines](CONTRIBUTING.md).
 
 ## 📄 License
 
-Copyright (c) 2025 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
+Copyright (c) 2025-2026 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](https://github.com/utags/utags/blob/main/LICENSE).
 
 ---
 

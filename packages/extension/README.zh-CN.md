@@ -82,7 +82,7 @@
 - 类 Chrome 浏览器: [Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge 浏览器: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
 - Firefox 浏览器: [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)
-- 用户脚本 / 油猴脚本: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links), [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784), [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
+- 用户脚本 / 油猴脚本: [Greasy Fork](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links) · [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784) · [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
 - [手动安装浏览器扩展](../../docs/manual-installation.zh-CN.md)
 
 ## 使用方法
@@ -350,7 +350,7 @@
 
 ## License
 
-Copyright (c) 2023 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](LICENSE).
+Copyright (c) 2023-2026 [Pipecraft](https://www.pipecraft.net). Licensed under the [MIT License](https://github.com/utags/utags/blob/main/LICENSE).
 
 ## >\_
 

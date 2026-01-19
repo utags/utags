@@ -1,6 +1,6 @@
 # UTags - 通用标签系统
 
-[![开源协议](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![开源协议](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/utags/utags/blob/main/LICENSE)
 [![构建状态](https://img.shields.io/github/actions/workflow/status/utags/utags/ci-webapp.yml?branch=main)](https://github.com/utags/utags/actions)
 [![UTags 官方网站](https://img.shields.io/badge/UTags-官方站点-brightgreen)](https://utags.link)
 
@@ -273,7 +273,7 @@ _具有筛选效果的特殊标签_
 
 ## 📄 许可证
 
-版权所有 (c) 2023-2025 [Pipecraft](https://www.pipecraft.net)。基于 [MIT 许可证](LICENSE) 授权。
+版权所有 (c) 2023-2026 [Pipecraft](https://www.pipecraft.net)。基于 [MIT 许可证](https://github.com/utags/utags/blob/main/LICENSE) 授权。
 
 ## 🔗 链接
 
