@@ -1,3 +1,5 @@
+import { i } from './messages'
+
 function IndexPopup() {
   const openSettings = () => {
     const api: any = (globalThis as any).chrome ?? (globalThis as any).browser
@@ -6,9 +8,7 @@ function IndexPopup() {
         api.tabs.query({ active: true, currentWindow: true }, (tabs: any[]) => {
           const tabId = tabs?.[0]?.id
           if (tabId) {
-            api.tabs.sendMessage(tabId, {
-              type: 'utags:show-settings',
-            })
+            api.tabs.sendMessage(tabId, { type: 'utags:show-settings' })
             try {
               window.close()
             } catch {}
@@ -30,12 +30,16 @@ function IndexPopup() {
       style={{
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
         padding: 16,
         width: '300px',
       }}>
-      <h1>小鱼标签 (UTags)</h1>
-      <button onClick={openSettings} style={{ marginTop: 8, marginBottom: 20 }}>
-        设置
+      <h1>{i('settings.title')}</h1>
+      <button
+        onClick={openSettings}
+        style={{ marginTop: 8, marginBottom: 20, width: '100%' }}>
+        {i('prompt.settings')}
       </button>
       <ul
         style={{
@@ -48,12 +52,6 @@ function IndexPopup() {
           🔖{' '}
           <a href="https://utags.link/" target="_blank">
             书签列表
-          </a>
-        </li>
-        <li>
-          📤{' '}
-          <a href="https://utags.link/" target="_blank">
-            导出数据/导入数据
           </a>
         </li>
       </ul>
