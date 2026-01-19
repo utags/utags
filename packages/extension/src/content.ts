@@ -348,12 +348,12 @@ const addUtagsStyle = () => {
 }
 
 function updateCustomStyle() {
-  const customStyleValue = getSettingsValue('customStyleValue') || ''
+  const customStyleValue = getSettingsValue<string>('customStyleValue') || ''
   if (getSettingsValue('customStyle') && customStyleValue) {
     if ($('#utags_custom_style')) {
       $('#utags_custom_style')!.textContent = customStyleValue
     } else {
-      addElement('style', {
+      addElement(doc.head, 'style', {
         id: 'utags_custom_style',
         textContent: customStyleValue,
       })
@@ -365,12 +365,13 @@ function updateCustomStyle() {
     $('#utags_custom_style')!.remove()
   }
 
-  const customStyleValue2 = getSettingsValue(`customStyleValue_${host}`) || ''
+  const customStyleValue2 =
+    getSettingsValue<string>(`customStyleValue_${host}`) || ''
   if (getSettingsValue(`customStyle_${host}`) && customStyleValue2) {
     if ($('#utags_custom_style_2')) {
       $('#utags_custom_style_2')!.textContent = customStyleValue2
     } else {
-      addElement('style', {
+      addElement(doc.head, 'style', {
         id: 'utags_custom_style_2',
         textContent: customStyleValue2,
       })
@@ -381,7 +382,7 @@ function updateCustomStyle() {
 }
 
 function onSettingsChange() {
-  const locale = getSettingsValue('locale') || getPrefferedLocale()
+  const locale = getSettingsValue<string>('locale') || getPrefferedLocale()
   resetI18n(locale)
 
   if (getSettingsValue('showHidedItems')) {
@@ -647,7 +648,9 @@ function appendTagsToPage(
       addElement(document.body, 'div', {
         id: 'utags_absolute_ul_container',
       })
-    container.append(ul)
+    if (container) {
+      container.append(ul)
+    }
   } else {
     element.after(ul)
   }

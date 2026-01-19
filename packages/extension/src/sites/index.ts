@@ -2,6 +2,7 @@ import {
   $,
   $$,
   addElement,
+  doc,
   getAttribute,
   isUrl,
   uniq,
@@ -217,7 +218,7 @@ export function getListNodes() {
   if (typeof currentSite.getStyle === 'function' && !$('#utags_site_style')) {
     const styleText = currentSite.getStyle()
     if (styleText) {
-      addElement('style', {
+      addElement(doc.head, 'style', {
         textContent: styleText,
         id: 'utags_site_style',
       })

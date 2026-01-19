@@ -9,6 +9,7 @@ import {
   expect,
   test,
   vi,
+  type Mock,
 } from 'vitest'
 
 import { addRecentTags, getMostUsedTags, getRecentAddedTags } from './tags'
@@ -82,8 +83,8 @@ vi.mock('browser-extension-settings', () => ({
 
 describe('addRecentTags', () => {
   // Import mocked functions
-  let getValue: ReturnType<typeof vi.fn>
-  let setValue: ReturnType<typeof vi.fn>
+  let getValue: Mock
+  let setValue: Mock
 
   beforeAll(async () => {
     const browserExtensionStorage = await import('browser-extension-storage')
