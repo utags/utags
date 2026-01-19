@@ -135,6 +135,7 @@ function createEmptyBookmarksStore(): BookmarksStore {
 }
 
 async function getBookmarksStore(): Promise<BookmarksStore> {
+  console.log('Start getBookmarksStore')
   try {
     const bookmarksStore: BookmarksStore =
       (await getValue(storageKey))! || createEmptyBookmarksStore()
@@ -153,6 +154,23 @@ async function getBookmarksStore(): Promise<BookmarksStore> {
     console.error('Error getting bookmarks store:', error)
     cachedUrlMap = {}
     return createEmptyBookmarksStore()
+  }
+}
+
+async function getBookmarksStoreFromRemote(
+  bookmarksStore: BookmarksStore
+): Promise<BookmarksStore> {
+  console.log('Start getBookmarksStoreFromRemote')
+  try {
+    if (!bookmarksStore || !bookmarksStore.data || !bookmarksStore.meta) {
+      return await getBookmarksStore()
+    }
+
+    cachedUrlMap = filterDeleted(bookmarksStore.data)
+    return bookmarksStore
+  } catch (error) {
+    console.error('Error getting bookmarks store:', error)
+    return getBookmarksStore()
   }
 }
 
@@ -176,8 +194,10 @@ export async function serializeBookmarks(): Promise<string> {
 async function persistBookmarksStore(
   bookmarksStore: BookmarksStore | undefined
 ) {
+  console.log('Start persistBookmarksStore')
   await setValue(storageKey, bookmarksStore)
   cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
+  console.log('Finish persistBookmarksStore')
 }
 
 /**
@@ -248,6 +268,7 @@ export async function saveBookmark(
   tags: string[],
   meta: Record<string, any> | undefined
 ): Promise<void> {
+  console.log('saveBookmark', key, tags, meta)
   const now = Date.now()
   const bookmarksStore = await getBookmarksStore()
   const urlMap = bookmarksStore.data
@@ -619,6 +640,8 @@ async function checkVersion(meta: BookmarksStore['meta']) {
 }
 
 let dataUpdated = false
+let cachedRemoteData: BookmarksStore | undefined
+
 /**
  * Initialize the bookmarks store
  * This is the first function to be called when the extension loads
@@ -628,7 +651,11 @@ export async function initBookmarksStore(): Promise<void> {
   dataUpdated = false
 
   cachedUrlMap = {}
-  const bookmarksStore = await getBookmarksStore()
+  const bookmarksStore = cachedRemoteData
+    ? await getBookmarksStoreFromRemote(cachedRemoteData)
+    : await getBookmarksStore()
+
+  cachedRemoteData = undefined
   const meta = bookmarksStore.meta
 
   const isVersionCompatible = await checkVersion(meta)
@@ -668,7 +695,7 @@ export async function initBookmarksStore(): Promise<void> {
     // When data is updated in other tabs, clear cache and check version
     await addValueChangeListener(
       storageKey,
-      async (_key, _oldValue, _newValue, remote) => {
+      async (_key, _oldValue, newValue, remote) => {
         if (remote) {
           console.log('Data updated in other tab, clearing cache')
         } else {
@@ -676,21 +703,26 @@ export async function initBookmarksStore(): Promise<void> {
         }
 
         dataUpdated = true
+        cachedRemoteData = newValue as BookmarksStore
 
         if (doc.hidden) {
           return
         }
 
-        cachedUrlMap = {}
-        await initBookmarksStore()
+        requestAnimationFrame(() => {
+          cachedUrlMap = {}
+          void initBookmarksStore()
+        })
       }
     )
     addEventListener(doc, 'visibilitychange', async () => {
-      console.log('visibilitychange', doc.hidden)
+      console.log('visibilitychange: hidden -', doc.hidden)
 
       if (!doc.hidden && dataUpdated) {
-        cachedUrlMap = {}
-        await initBookmarksStore()
+        requestAnimationFrame(() => {
+          cachedUrlMap = {}
+          void initBookmarksStore()
+        })
       }
     })
   }

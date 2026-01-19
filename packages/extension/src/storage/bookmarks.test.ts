@@ -75,8 +75,8 @@ vi.mock('browser-extension-storage', () => {
     resetStorage: vi.fn().mockImplementation(() => {
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       for (const key of Object.keys(mockStorage)) delete mockStorage[key]
-      // Should'nt reset listeners, as it's added only once
-      // Object.keys(listeners).forEach((key) => delete listeners[key])
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      for (const key of Object.keys(listeners)) delete listeners[key]
     }),
     setPolling: vi.fn(),
   }
@@ -596,7 +596,7 @@ describe('bookmarks', () => {
     await initBookmarksStore()
 
     // Verify migration process
-    expect(getValue).toHaveBeenCalledTimes(3) // First call in initBookmarksStore, second call in addTagsValueChangeListener, third call after migration
+    expect(getValue).toHaveBeenCalledTimes(2) // First call in initBookmarksStore, second call after migration
     expect(setValue).toHaveBeenCalledTimes(1) // Should only write store once
     expect(getValue).toHaveBeenCalledBefore(setValue) // Should read before write
 

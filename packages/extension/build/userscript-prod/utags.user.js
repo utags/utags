@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.23.3
+// @version              0.23.4
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -3837,6 +3837,7 @@
     return store
   }
   async function getBookmarksStore() {
+    console.log("Start getBookmarksStore")
     try {
       const bookmarksStore =
         (await getValue2(storageKey2)) || createEmptyBookmarksStore()
@@ -3854,13 +3855,28 @@
       return createEmptyBookmarksStore()
     }
   }
+  async function getBookmarksStoreFromRemote(bookmarksStore) {
+    console.log("Start getBookmarksStoreFromRemote")
+    try {
+      if (!bookmarksStore || !bookmarksStore.data || !bookmarksStore.meta) {
+        return await getBookmarksStore()
+      }
+      cachedUrlMap = filterDeleted(bookmarksStore.data)
+      return bookmarksStore
+    } catch (error) {
+      console.error("Error getting bookmarks store:", error)
+      return getBookmarksStore()
+    }
+  }
   async function serializeBookmarks() {
     const bookmarksStore = await getBookmarksStore()
     return JSON.stringify(bookmarksStore)
   }
   async function persistBookmarksStore(bookmarksStore) {
+    console.log("Start persistBookmarksStore")
     await setValue2(storageKey2, bookmarksStore)
     cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
+    console.log("Finish persistBookmarksStore")
   }
   async function deserializeBookmarks(data) {
     const bookmarksStore = data ? JSON.parse(data) : void 0
@@ -3881,6 +3897,7 @@
   var getTags = getBookmark
   async function saveBookmark(key, tags, meta) {
     var _a, _b, _c, _d
+    console.log("saveBookmark", key, tags, meta)
     const now = Date.now()
     const bookmarksStore = await getBookmarksStore()
     const urlMap = bookmarksStore.data
@@ -4173,11 +4190,15 @@
     return true
   }
   var dataUpdated = false
+  var cachedRemoteData
   async function initBookmarksStore() {
     console.log("Start init BookmarksStore")
     dataUpdated = false
     cachedUrlMap = {}
-    const bookmarksStore = await getBookmarksStore()
+    const bookmarksStore = cachedRemoteData
+      ? await getBookmarksStoreFromRemote(cachedRemoteData)
+      : await getBookmarksStore()
+    cachedRemoteData = void 0
     const meta = bookmarksStore.meta
     const isVersionCompatible = await checkVersion(meta)
     if (!isVersionCompatible) {
@@ -4209,25 +4230,30 @@
       setPolling(true)
       await addValueChangeListener2(
         storageKey2,
-        async (_key, _oldValue, _newValue, remote) => {
+        async (_key, _oldValue, newValue, remote) => {
           if (remote) {
             console.log("Data updated in other tab, clearing cache")
           } else {
             console.log("Data updated, clearing cache")
           }
           dataUpdated = true
+          cachedRemoteData = newValue
           if (doc.hidden) {
             return
           }
-          cachedUrlMap = {}
-          await initBookmarksStore()
+          requestAnimationFrame(() => {
+            cachedUrlMap = {}
+            void initBookmarksStore()
+          })
         }
       )
       addEventListener(doc, "visibilitychange", async () => {
-        console.log("visibilitychange", doc.hidden)
+        console.log("visibilitychange: hidden -", doc.hidden)
         if (!doc.hidden && dataUpdated) {
-          cachedUrlMap = {}
-          await initBookmarksStore()
+          requestAnimationFrame(() => {
+            cachedUrlMap = {}
+            void initBookmarksStore()
+          })
         }
       })
     }
@@ -12521,10 +12547,10 @@
     await initBookmarksStore()
     await initSyncAdapter()
     addTagsValueChangeListener(() => {
-      console.log("Storage updated", doc.hidden)
+      console.log("Storage updated, hidden -", doc.hidden)
       if (!doc.hidden) {
         console.log("Start re-display tags")
-        setTimeout(displayTags)
+        void displayTags()
       }
     })
   }

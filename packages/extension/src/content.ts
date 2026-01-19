@@ -804,10 +804,10 @@ async function initStorage() {
   await initBookmarksStore()
   await initSyncAdapter()
   addTagsValueChangeListener(() => {
-    console.log('Storage updated', doc.hidden)
+    console.log('Storage updated, hidden -', doc.hidden)
     if (!doc.hidden) {
       console.log('Start re-display tags')
-      setTimeout(displayTags)
+      void displayTags()
     }
   })
 }
@@ -1274,6 +1274,7 @@ async function main() {
   }
 
   // Listen for page unload events
+  // FIXME: issue on safari
   // eventManager.addEventListener(globalThis, 'beforeunload', cleanup)
   // eventManager.addEventListener(globalThis, 'pagehide', cleanup)
   // TODO: re-init on page show event for Safari
