@@ -142,6 +142,7 @@
 // @include              https://simpcity.hk/*
 // @include              https://simpcity.rs/*
 // @include              https://simpcity.ax/*
+// @include              https://*.asia/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *

@@ -67,6 +67,7 @@ import kemono_su from './z999/005-kemono.su'
 import rule34video_com from './z999/006-rule34video.com'
 import xsijishe from './z999/007-xsijishe.net'
 import simpcity from './z999/008-simpcity.cr'
+import hotgirl_asia from './z999/009-hotgirl.asia'
 
 type Site = {
   matches: RegExp
@@ -136,6 +137,7 @@ const sites: Site[] = [
   rule34video_com,
   xsijishe,
   simpcity,
+  hotgirl_asia,
 ]
 
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
