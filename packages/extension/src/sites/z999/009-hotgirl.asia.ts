@@ -48,7 +48,7 @@ export default (() => {
         return true
       }
 
-      let key = getVideoUrl(href)
+      const key = getVideoUrl(href)
       if (key) {
         const title = getTrimmedTitle(element)
         if (!title) {
@@ -107,7 +107,7 @@ export default (() => {
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const href = location.href
-      let key = getVideoUrl(href)
+      const key = getVideoUrl(href)
       if (key) {
         addVisited(key)
         const element = $('.mvic-desc h3')

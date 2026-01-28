@@ -685,7 +685,7 @@ function cleanUnusedUtags() {
       }
     } else {
       const element = utagsUl.previousSibling as HTMLElement
-      if (element && getAttribute(element, 'data-utags') !== null) {
+      if (element && element.hasAttribute('data-utags')) {
         continue
       }
     }
@@ -757,7 +757,7 @@ async function displayTags() {
 
   const conditionNodes = getConditionNodes()
   for (const node of conditionNodes) {
-    if (getAttribute(node, 'data-utags') !== null) {
+    if (getAttribute(node, 'data-utags')) {
       // Flag condition nodes
       node.dataset.utags_condition_node = ''
     }
@@ -1283,7 +1283,7 @@ async function main() {
   // TODO: re-init on page show event for Safari
 
   const observer = new MutationObserver(async (mutationsList) => {
-    // console.debug("mutation", Date.now(), mutationsList)
+    // console.debug('mutation', Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
       if (shouldUpdateUtagsWhenNodeUpdated(mutationRecord.addedNodes)) {

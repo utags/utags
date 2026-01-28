@@ -50,6 +50,7 @@ const xoConfig = [
       'unicorn/prefer-at': 0,
       'unicorn/prevent-abbreviations': 0,
       'unicorn/prefer-string-raw': 0,
+      'unicorn/prefer-dom-node-dataset': 0,
       'capitalized-comments': 0,
       '@stylistic/indent': 0,
       '@stylistic/indent-binary-ops': 0,
