@@ -381,31 +381,49 @@ function updateCustomStyle() {
   }
 }
 
-function onSettingsChange() {
-  const locale = getSettingsValue<string>('locale') || getPrefferedLocale()
-  resetI18n(locale)
-
+function updateDocumentElementAttributes() {
   if (getSettingsValue('showHidedItems')) {
-    addClass(doc.documentElement, 'utags_no_hide')
-  } else {
+    if (!hasClass(doc.documentElement, 'utags_no_hide')) {
+      addClass(doc.documentElement, 'utags_no_hide')
+    }
+  } else if (hasClass(doc.documentElement, 'utags_no_hide')) {
     removeClass(doc.documentElement, 'utags_no_hide')
   }
 
   if (getSettingsValue('noOpacityEffect')) {
-    addClass(doc.documentElement, 'utags_no_opacity_effect')
-  } else {
+    if (!hasClass(doc.documentElement, 'utags_no_opacity_effect')) {
+      addClass(doc.documentElement, 'utags_no_opacity_effect')
+    }
+  } else if (hasClass(doc.documentElement, 'utags_no_opacity_effect')) {
     removeClass(doc.documentElement, 'utags_no_opacity_effect')
   }
 
-  doc.documentElement.dataset.utags_displayEffectOfTheVisitedContent =
-    getSettingsValue(`displayEffectOfTheVisitedContent_${host}`)
+  {
+    const newValue =
+      getSettingsValue<string>(`displayEffectOfTheVisitedContent_${host}`) || ''
+    if (newValue !== doc.documentElement.dataset.utagsVisited) {
+      doc.documentElement.dataset.utagsVisited = newValue
+    }
+  }
+
+  {
+    const newValue = getSettingsValue(`enableCurrentSite_${host}`) ? '1' : 'off'
+    if (newValue !== doc.documentElement.dataset.utags) {
+      doc.documentElement.dataset.utags = newValue
+    }
+  }
+}
+
+function onSettingsChange() {
+  updateDocumentElementAttributes()
+
+  const locale = getSettingsValue<string>('locale') || getPrefferedLocale()
+  resetI18n(locale)
 
   if (getSettingsValue(`enableCurrentSite_${host}`)) {
-    doc.documentElement.dataset.utags = `${host}`
     displayTagsThrottled()
     updateCustomStyle()
   } else {
-    doc.documentElement.dataset.utags = 'off'
     if ($('#utags_custom_style')) {
       $('#utags_custom_style')!.remove()
     }
@@ -1286,6 +1304,14 @@ async function main() {
     // console.debug('mutation', Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
+      if (
+        mutationRecord.type === 'attributes' &&
+        mutationRecord.attributeName === 'href'
+      ) {
+        shouldUpdate = true
+        break
+      }
+
       if (shouldUpdateUtagsWhenNodeUpdated(mutationRecord.addedNodes)) {
         shouldUpdate = true
         break
@@ -1318,7 +1344,21 @@ async function main() {
     observer.observe(doc.body, {
       childList: true,
       subtree: true,
+      attributeFilter: ['href'],
     })
+  })
+
+  const documentElementObserver = new MutationObserver((mutationsList) => {
+    for (const mutationRecord of mutationsList) {
+      if (mutationRecord.type === 'attributes') {
+        updateDocumentElementAttributes()
+        break
+      }
+    }
+  })
+
+  documentElementObserver.observe(doc.documentElement, {
+    attributes: true,
   })
 
   // To fix issues on reddit, add mouseover event
@@ -1343,9 +1383,7 @@ setupConsole()
 
 console.log('Start init ContentScript')
 
-runWhenHeadExists(async () => {
-  if (doc.documentElement.dataset.utags === undefined) {
-    doc.documentElement.dataset.utags = `${host}`
-    void main()
-  }
-})
+if (doc.documentElement.dataset.utags === undefined) {
+  doc.documentElement.dataset.utags = '1'
+  void main()
+}

@@ -662,20 +662,17 @@
   }
 }
 
-[data-utags_display-effect-of-the-visited-content="4"]
-  [data-utags_list_node*=",:visited,"] {
+[data-utags-visited="4"] [data-utags_list_node*=",:visited,"] {
   [data-utags_condition_node][data-utags_visited="1"] {
     color: var(--utags-visited-title-color) !important;
   }
 }
 
-[data-utags_display-effect-of-the-visited-content="2"]
-  [data-utags_list_node*=",:visited,"] {
+[data-utags-visited="2"] [data-utags_list_node*=",:visited,"] {
   opacity: var(--utags-visited-opacity);
 }
 
-[data-utags_display-effect-of-the-visited-content="3"]
-  [data-utags_list_node*=",:visited,"] {
+[data-utags-visited="3"] [data-utags_list_node*=",:visited,"] {
   opacity: 5%;
   display: none;
 }

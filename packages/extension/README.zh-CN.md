@@ -133,11 +133,18 @@
 
 ## 更新记录
 
+- 0.24
+  - 修复部分网站（如水合过程）移除 `document.documentElement` 属性（如 `data-utags`）导致插件失效的问题。
+  - 监听 A 标签 `href` 属性变化触发标签更新，提升对单页应用（SPA）的支持。
+
 - 0.23
   - 优化 GM.\* API fallback 逻辑
   - 提升 Greasymonkey, quoid-userscripts, Stay 等脚本管理器的兼容性
   - 优化 Escape 和 Tab 键的交互体验
   - 修复 Safari 中关闭标签输入面板时页面滚动到底部的问题
+  - 优化控制台日志：为 [utags] 前缀添加颜色（#ff6361）。debug/log/info 日志附加时间与相邻日志耗时差；warn/error 等方法使用简化有色前缀。
+  - 生产环境静默：当 PLASMO_TAG='prod' 时禁用 debug/log/info，减少生产环境日志噪音。
+  - 初始化函数重命名：useGlobalConsole 更名为 setupConsole，并完善注释；只影响内容脚本的作用域，不干扰宿主页面的 console。
 - 0.22
   - 移除 `// @noframes` 指令并启用 `all_frames: true`，支持在 iframe 中运行，以兼容 utags-shortcuts 扩展及用户脚本。
   - 优化设置模块。

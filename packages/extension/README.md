@@ -128,11 +128,18 @@ For now it works on
 
 ## Release Notes
 
+- 0.24
+  - Fix the issue where `document.documentElement` attributes (like `data-utags`) are removed by some websites (e.g., hydration processes).
+  - Watch for `href` attribute changes on anchor tags to trigger tag updates, improving support for single-page applications (SPAs).
+
 - 0.23
   - Optimize GM.\* API fallback logic.
   - Improve compatibility with script managers such as Greasymonkey, quoid-userscripts, Stay, etc.
   - Improve keyboard interaction for Escape and Tab keys.
   - Fix Safari issue where closing the tag input panel scrolls page to bottom.
+  - Add colored console prefix for UTags logs. The prefix [utags] is now styled with color #ff6361 and includes timestamp plus time delta for debug/log/info, while warn/error and other methods use a simple colored prefix.
+  - Silence verbose logging in production: when PLASMO_TAG='prod', disable debug/log/info to reduce noise.
+  - Rename initialization helper from useGlobalConsole to setupConsole and improve documentation comments; injecting the console wrapper affects only the content script scope and does not interfere with the host page.
 - 0.22
   - Removed `// @noframes` and enabled `all_frames: true` to allow UTags to run within iframes, improving compatibility with the utags-shortcuts extension and userscripts.
   - Updated the settings module.
