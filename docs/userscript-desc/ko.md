@@ -130,6 +130,9 @@
 
 ## 릴리스 노트
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.23
   - GM.\* API 폴백 로직 최적화.
   - Greasymonkey, quoid-userscripts, Stay 등 스크립트 관리자와의 호환성 향상.

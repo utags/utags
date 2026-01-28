@@ -130,6 +130,9 @@ Thông tin thêm: [https://github.com/utags/utags](https://github.com/utags/utag
 
 ## Ghi chú phát hành
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.23
   - Tối ưu hóa logic dự phòng (fallback) của GM.\* API.
   - Cải thiện khả năng tương thích với các trình quản lý script như Greasymonkey, quoid-userscripts, Stay, v.v.

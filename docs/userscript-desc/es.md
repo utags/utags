@@ -130,6 +130,9 @@ Más información: [https://github.com/utags/utags](https://github.com/utags/uta
 
 ## Notas de la versión
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.23
   - Optimizar la lógica de respaldo de la API GM.\*.
   - Mejorar la compatibilidad con administradores de scripts como Greasymonkey, quoid-userscripts, Stay, etc.

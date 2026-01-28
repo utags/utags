@@ -130,6 +130,8 @@
 
 ## 版本說明
 
+新的變更日誌將在 [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes) 發布，此文件不再更新變更日誌。
+
 - 0.23
   - 優化 GM.\* API fallback 邏輯。
   - 提升 Greasymonkey, quoid-userscripts, Stay 等腳本管理器的相容性。

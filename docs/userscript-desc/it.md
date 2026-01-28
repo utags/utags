@@ -130,6 +130,9 @@ Maggiori informazioni: [https://github.com/utags/utags](https://github.com/utags
 
 ## Note di rilascio
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.23
   - Ottimizzare la logica di fallback dell'API GM.\*.
   - Migliorare la compatibilità con gestori di script come Greasymonkey, quoid-userscripts, Stay, ecc.

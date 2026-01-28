@@ -133,7 +133,10 @@
 
 ## 更新记录
 
+新的变更日志将在 [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes) 发布，此文档不再更新变更日志。
+
 - 0.24
+
   - 修复部分网站（如水合过程）移除 `document.documentElement` 属性（如 `data-utags`）导致插件失效的问题。
   - 监听 A 标签 `href` 属性变化触发标签更新，提升对单页应用（SPA）的支持。
 

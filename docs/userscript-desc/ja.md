@@ -130,6 +130,9 @@
 
 ## リリースノート
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.23
   - GM.\* API のフォールバックロジックを最適化。
   - Greasymonkey、quoid-userscripts、Stay などのスクリプトマネージャーとの互換性を向上。

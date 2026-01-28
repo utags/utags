@@ -128,7 +128,11 @@ For now it works on
 
 ## Release Notes
 
+New release notes will be published at [https://github.com/utags/utags/tree/main/docs/release-notes](https://github.com/utags/utags/tree/main/docs/release-notes).
+This document will no longer be updated with release notes.
+
 - 0.24
+
   - Fix the issue where `document.documentElement` attributes (like `data-utags`) are removed by some websites (e.g., hydration processes).
   - Watch for `href` attribute changes on anchor tags to trigger tag updates, improving support for single-page applications (SPAs).
 
