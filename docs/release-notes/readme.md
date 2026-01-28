@@ -5,6 +5,7 @@
 - Fix the issue where `document.documentElement` attributes (like `data-utags`) are removed by some websites (e.g., hydration processes).
 - Watch for `href` attribute changes on anchor tags to trigger tag updates, improving support for single-page applications (SPAs).
 - Ensure the `utags_style` element is automatically restored if removed, guaranteeing consistent UI styling.
+- When toggling "Hide/Unhide All Tags", apply the change to all iframes in the page as well.
 
 ## v0.23
 

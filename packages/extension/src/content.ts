@@ -118,11 +118,31 @@ function isAllTagsHidden(): boolean {
 
 // Click handler to toggle class and refresh menu title
 async function onClickHideAllTags() {
-  if (isAllTagsHidden()) {
-    removeClass(doc.documentElement, 'utags_hide_all_tags')
+  const isHidden = isAllTagsHidden()
+  const toggle = (element: HTMLElement) => {
+    if (isHidden) {
+      removeClass(element, 'utags_hide_all_tags')
+    } else {
+      addClass(element, 'utags_hide_all_tags')
+    }
+  }
+
+  toggle(doc.documentElement)
+
+  const iframes = doc.querySelectorAll('iframe')
+  for (const iframe of iframes) {
+    try {
+      const iframeDoc = iframe.contentDocument
+      if (iframeDoc) {
+        toggle(iframeDoc.documentElement)
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  if (isHidden) {
     displayTagsThrottled()
-  } else {
-    addClass(doc.documentElement, 'utags_hide_all_tags')
   }
 
   await registerOrUpdateHideAllTagsMenu()
