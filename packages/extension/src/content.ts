@@ -343,8 +343,14 @@ const getSettingsTable = (): SettingsTable => {
 }
 
 const addUtagsStyle = () => {
-  const style = addStyle(styleText)
-  style.id = 'utags_style'
+  if ($('#utags_style')) {
+    return
+  }
+
+  addElement(doc.documentElement, 'style', {
+    id: 'utags_style',
+    textContent: styleText,
+  })
 }
 
 function updateCustomStyle() {
@@ -713,6 +719,8 @@ function cleanUnusedUtags() {
 }
 
 async function displayTags() {
+  addUtagsStyle()
+
   if (isAllTagsHidden()) {
     return
   }
@@ -1355,10 +1363,13 @@ async function main() {
         break
       }
     }
+
+    addUtagsStyle()
   })
 
   documentElementObserver.observe(doc.documentElement, {
     attributes: true,
+    childList: true,
   })
 
   // To fix issues on reddit, add mouseover event
