@@ -411,9 +411,11 @@ function updateDocumentElementAttributes() {
   if (getSettingsValue('showHidedItems')) {
     if (!hasClass(doc.documentElement, 'utags_no_hide')) {
       addClass(doc.documentElement, 'utags_no_hide')
+      updateTagPositionForAllTargets()
     }
   } else if (hasClass(doc.documentElement, 'utags_no_hide')) {
     removeClass(doc.documentElement, 'utags_no_hide')
+    updateTagPositionForAllTargets()
   }
 
   if (getSettingsValue('noOpacityEffect')) {
@@ -825,6 +827,11 @@ async function displayTags() {
       tagsArray.push(node2.dataset.utags)
     }
 
+    // The list node and the condition node are the same element
+    if (node.dataset.utags_condition_node !== undefined && node.dataset.utags) {
+      tagsArray.push(node.dataset.utags)
+    }
+
     if (tagsArray.length === 1) {
       node.dataset.utags_list_node = ',' + tagsArray[0] + ','
     } else if (tagsArray.length > 1) {
@@ -991,6 +998,7 @@ function updateTagPosition(element: HTMLElement) {
 
   // element is hidden
   if (!element.offsetWidth && !element.clientWidth) {
+    utags.style.top = '-9999px'
     return
   }
 
@@ -1200,6 +1208,19 @@ function updateTagPositionForAllTargets() {
   }
 }
 
+function checkVimiumHint() {
+  if ($('#vimium-hint-marker-container,#vimiumHintMarkerContainer')) {
+    addClass(doc.body, 'utags_show_all')
+    if (!hasClass(doc.documentElement, 'utags_vimium_hint')) {
+      addClass(doc.documentElement, 'utags_vimium_hint')
+      updateTagPositionForAllTargets()
+    }
+  } else if (hasClass(doc.documentElement, 'utags_vimium_hint')) {
+    removeClass(doc.documentElement, 'utags_vimium_hint')
+    hideAllUtagsInArea()
+  }
+}
+
 async function main() {
   addUtagsStyle()
 
@@ -1357,14 +1378,7 @@ async function main() {
       displayTagsThrottled()
     }
 
-    if ($('#vimium-hint-marker-container,#vimiumHintMarkerContainer')) {
-      addClass(doc.body, 'utags_show_all')
-      addClass(doc.documentElement, 'utags_vimium_hint')
-      updateTagPositionForAllTargets()
-    } else if (hasClass(doc.documentElement, 'utags_vimium_hint')) {
-      removeClass(doc.documentElement, 'utags_vimium_hint')
-      hideAllUtagsInArea()
-    }
+    checkVimiumHint()
   })
 
   runWhenBodyExists(() => {
@@ -1385,6 +1399,7 @@ async function main() {
     }
 
     addUtagsStyle()
+    checkVimiumHint()
   })
 
   documentElementObserver.observe(doc.documentElement, {

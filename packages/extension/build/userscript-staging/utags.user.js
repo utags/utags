@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.24.2
+// @version              0.25.0
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -11000,7 +11000,7 @@
     }
   })()
   var kemono_su_default =
-    ":not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_0,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_0,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap );transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1{object-position:0% 100%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important;margin-left:4px !important;transition:top ease .1s,left ease .1s}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1 .utags_text_tag{--utags-text-tag-background-color: yellow}"
+    ":not(#a):not(#b):not(#c) .card-list__items>a.user-card{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_0,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_0,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1{object-position:0% 100%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important;margin-left:4px !important}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1 .utags_text_tag{--utags-text-tag-background-color: yellow}"
   var kemono_su_default2 = (() => {
     const prefix2 = location.origin + "/"
     function getPostUrl(url) {
@@ -11014,6 +11014,11 @@
     }
     return {
       matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
+      listNodesSelectors: [".card-list__items > a.user-card", ".post-card"],
+      conditionNodesSelectors: [
+        ".card-list__items > a.user-card",
+        ".post-card a",
+      ],
       validate(element) {
         const hrefAttr = getAttribute(element, "href")
         if (!hrefAttr || hrefAttr.startsWith("#")) {
@@ -11042,7 +11047,9 @@
       excludeSelectors: [
         ...default_default2.excludeSelectors,
         ".global-sidebar",
-        ".paginator",
+        ".paginator small",
+        ".paginator menu",
+        '.paginator [aria-current="page"]',
         ".post__nav-links",
         ".scrape__nav-links",
         ".tabs",
@@ -11050,6 +11057,7 @@
         ".posts-board__sidebar",
         "#add-new-link",
         'a[href^="/authentication/"]',
+        "#announcement-banner",
       ],
       addExtraMatchedNodes(matchedNodesSet) {
         const key = getPostUrl(location.href)
@@ -12349,9 +12357,11 @@
     if (getSettingsValue("showHidedItems")) {
       if (!hasClass(doc.documentElement, "utags_no_hide")) {
         addClass(doc.documentElement, "utags_no_hide")
+        updateTagPositionForAllTargets()
       }
     } else if (hasClass(doc.documentElement, "utags_no_hide")) {
       removeClass(doc.documentElement, "utags_no_hide")
+      updateTagPositionForAllTargets()
     }
     if (getSettingsValue("noOpacityEffect")) {
       if (!hasClass(doc.documentElement, "utags_no_opacity_effect")) {
@@ -12650,6 +12660,9 @@
         }
         tagsArray.push(node2.dataset.utags)
       }
+      if (node.dataset.utags_condition_node !== void 0 && node.dataset.utags) {
+        tagsArray.push(node.dataset.utags)
+      }
       if (tagsArray.length === 1) {
         node.dataset.utags_list_node = "," + tagsArray[0] + ","
       } else if (tagsArray.length > 1) {
@@ -12751,6 +12764,7 @@
       offset.left -= offset2.left
     }
     if (!element.offsetWidth && !element.clientWidth) {
+      utags.style.top = "-9999px"
       return
     }
     const objectPosition = style.objectPosition
@@ -12925,6 +12939,18 @@
       }
     }
   }
+  function checkVimiumHint() {
+    if ($("#vimium-hint-marker-container,#vimiumHintMarkerContainer")) {
+      addClass(doc.body, "utags_show_all")
+      if (!hasClass(doc.documentElement, "utags_vimium_hint")) {
+        addClass(doc.documentElement, "utags_vimium_hint")
+        updateTagPositionForAllTargets()
+      }
+    } else if (hasClass(doc.documentElement, "utags_vimium_hint")) {
+      removeClass(doc.documentElement, "utags_vimium_hint")
+      hideAllUtagsInArea()
+    }
+  }
   async function main() {
     addUtagsStyle()
     await initSettings(() => {
@@ -13045,14 +13071,7 @@
         cleanUnusedUtags()
         displayTagsThrottled()
       }
-      if ($("#vimium-hint-marker-container,#vimiumHintMarkerContainer")) {
-        addClass(doc.body, "utags_show_all")
-        addClass(doc.documentElement, "utags_vimium_hint")
-        updateTagPositionForAllTargets()
-      } else if (hasClass(doc.documentElement, "utags_vimium_hint")) {
-        removeClass(doc.documentElement, "utags_vimium_hint")
-        hideAllUtagsInArea()
-      }
+      checkVimiumHint()
     })
     runWhenBodyExists(() => {
       displayTagsThrottled()
@@ -13070,6 +13089,7 @@
         }
       }
       addUtagsStyle()
+      checkVimiumHint()
     })
     documentElementObserver.observe(doc.documentElement, {
       attributes: true,

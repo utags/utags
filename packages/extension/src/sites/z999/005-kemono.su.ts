@@ -21,6 +21,16 @@ export default (() => {
 
   return {
     matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
+    listNodesSelectors: [
+      // Artists
+      '.card-list__items > a.user-card',
+      '.post-card',
+    ],
+    conditionNodesSelectors: [
+      // Artists
+      '.card-list__items > a.user-card',
+      '.post-card a',
+    ],
     validate(element: HTMLAnchorElement) {
       const hrefAttr = getAttribute(element, 'href')
 
@@ -55,7 +65,9 @@ export default (() => {
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
       '.global-sidebar',
-      '.paginator',
+      '.paginator small',
+      '.paginator menu',
+      '.paginator [aria-current="page"]',
       '.post__nav-links',
       '.scrape__nav-links',
       '.tabs',
@@ -63,6 +75,7 @@ export default (() => {
       '.posts-board__sidebar',
       '#add-new-link',
       'a[href^="/authentication/"]',
+      '#announcement-banner',
     ],
     addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
       const key = getPostUrl(location.href)

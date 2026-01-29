@@ -1,5 +1,12 @@
 # RELEASE NOTES
 
+## v0.25
+
+- Recalculate tag positions when the "Show hidden items" setting is toggled to ensure correct display.
+- Optimize tag position updating: automatically hide tags if their target elements are invisible.
+- Refactor Vimium hint marker detection logic.
+- Add special tag filtering functionality for kemono.cr website
+
 ## v0.24
 
 - Fix the issue where `document.documentElement` attributes (like `data-utags`) are removed by some websites (e.g., hydration processes).
