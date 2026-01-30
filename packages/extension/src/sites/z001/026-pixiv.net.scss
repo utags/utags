@@ -25,4 +25,9 @@
   .charcoal-modal-body .overflow-y-auto {
     position: relative;
   }
+
+  /* Compatibility with https://greasyfork.org/scripts/525211-bobby-s-pixiv-utils */
+  [data-utags_list_node][data-pixiv_utils_blocked] {
+    display: var(--utags-list-node-display);
+  }
 }

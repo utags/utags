@@ -7,6 +7,7 @@
 - Refactor Vimium hint marker detection logic.
 - Add special tag filtering functionality for kemono.cr website
 - Add special tag filtering functionality for www.pixiv.net website
+- Support the hidden image feature of [Bobby's Pixiv Utils](https://greasyfork.org/scripts/525211-bobby-s-pixiv-utils) on pixiv.net.
 
 ## v0.24
 
