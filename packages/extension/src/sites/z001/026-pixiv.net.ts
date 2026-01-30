@@ -28,6 +28,29 @@ export default (() => {
 
   return {
     matches: /pixiv\.net/,
+    listNodesSelectors: [
+      // Thumbnail
+      'li.list-none',
+      // Home recommend
+      '[data-ga4-label="home_recommend"] > div.w-full',
+      // Comments
+      '.charcoal-modal-body section[role="feed"] > article',
+      // Artworks > Related works
+      '.gtm-illust-recommend-zone li',
+      // Tags
+      'section ul li',
+    ],
+    conditionNodesSelectors: [
+      'li.list-none a',
+      // Home recommend
+      '[data-ga4-label="home_recommend"] > div.w-full a[data-ga4-label="user_name_link"]',
+      // Comments
+      '.charcoal-modal-body section[role="feed"] > article a',
+      // Artworks > Related works
+      '.gtm-illust-recommend-zone li a',
+      // Tags
+      'section ul li a',
+    ],
     validate(element: HTMLAnchorElement) {
       const href = element.href
 

@@ -6,6 +6,7 @@
 - Optimize tag position updating: automatically hide tags if their target elements are invisible.
 - Refactor Vimium hint marker detection logic.
 - Add special tag filtering functionality for kemono.cr website
+- Add special tag filtering functionality for www.pixiv.net website
 
 ## v0.24
 
