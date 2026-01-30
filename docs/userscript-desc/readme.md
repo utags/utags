@@ -73,6 +73,8 @@ For now it works on
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
+- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
+- nhentai ([nhentai.net](https://nhentai.net/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 If you want to use UTags on other sites, simply add a `user matches` rule for the target site in the script settings.

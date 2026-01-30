@@ -73,6 +73,8 @@ Derzeit unterstützte Websites:
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
+- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
+- nhentai ([nhentai.net](https://nhentai.net/))
 - Und viele mehr. Klicken Sie [hier](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), um neue Websites vorzuschlagen.
 
 Wenn Sie UTags auch auf anderen Websites verwenden möchten, fügen Sie in den Skripteinstellungen einfach eine `user matches`-Regel für die Zielseite hinzu.

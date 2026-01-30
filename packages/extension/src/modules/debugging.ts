@@ -1,4 +1,6 @@
 import {
+  $,
+  addElement,
   addEventListener,
   doc,
   removeEventListener,
@@ -74,8 +76,17 @@ function startAutoShowAllUtags() {
 
   console.log('startAutoShowAllUtags')
   document.body.classList.add('utags_show_all')
+  addElement(doc.documentElement, 'div', {
+    id: 'vimium-hint-marker-container',
+    class: 'debug',
+  })
   intervalId = createInterval(() => {
     document.body.classList.add('utags_show_all')
+    $('#vimium-hint-marker-container.debug')?.remove()
+    addElement(doc.documentElement, 'div', {
+      id: 'vimium-hint-marker-container',
+      class: 'debug',
+    })
   }, 5000)
 }
 

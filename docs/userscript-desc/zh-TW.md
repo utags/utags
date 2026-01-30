@@ -73,6 +73,8 @@
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
 - 今日头条 ([toutiao.com](https://www.toutiao.com/))
+- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
+- nhentai ([nhentai.net](https://nhentai.net/))
 - 還有更多。點擊[這裡](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)建議新網站。
 
 若您也想在其他網站使用小魚標籤，只需在腳本設定中為目標網站手動加入 `user matches` 規則即可。

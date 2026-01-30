@@ -73,6 +73,8 @@ Các trang web hiện được hỗ trợ:
 - SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
+- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
+- nhentai ([nhentai.net](https://nhentai.net/))
 - Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
 
 Nếu bạn muốn dùng UTags trên các trang web khác, chỉ cần thêm một quy tắc `user matches` cho trang đích trong phần cài đặt script.

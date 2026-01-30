@@ -18,10 +18,10 @@ export default (() => {
       const href2 = url.slice(prefix.length)
       if (exact) {
         if (/^videos\/[\w-]+\/?$/.test(href2)) {
-          return prefix + href2.replace(/^(videos\/[\w-]+)\/?/, '$1/')
+          return prefix + href2.replace(/^(videos\/[\w-]+)\/?.*/, '$1/')
         }
       } else if (/^videos\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/^(videos\/[\w-]+)\/?/, '$1/')
+        return prefix + href2.replace(/^(videos\/[\w-]+)\/?.*/, '$1/')
       }
     }
 
