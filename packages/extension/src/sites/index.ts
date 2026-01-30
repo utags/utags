@@ -74,7 +74,7 @@ type Site = {
   listNodesSelectors?: string[]
   conditionNodesSelectors?: string[]
   matchedNodesSelectors?: string[]
-  validate?: (element: UtagsHTMLElement) => boolean
+  validate?: (element: UtagsHTMLElement, href: string) => boolean
   map?: (element: UtagsHTMLElement) => UtagsHTMLElement
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
@@ -140,6 +140,8 @@ const sites: Site[] = [
   hotgirl_asia,
 ]
 
+const BASE_EXCLUDE_SELECTOR =
+  '.utags_text_tag,.browser_extension_settings_container,a a,[data-utags_exclude]'
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
   .filter((v) => typeof v === 'function')
@@ -195,7 +197,10 @@ const matchedNodesSelector = joinSelectors(
     (currentSite.matches ? defaultSite.matchedNodesSelectors : undefined)
 )
 
-const excludeSelector = joinSelectors(currentSite.excludeSelectors)
+const excludeSelector = joinSelectors([
+  BASE_EXCLUDE_SELECTOR,
+  ...(currentSite.excludeSelectors || []),
+])
 
 const validMediaSelector = joinSelectors(currentSite.validMediaSelectors)
 
@@ -260,6 +265,7 @@ export function getCanonicalUrl(url: string | undefined) {
 }
 
 // pre-validation function
+// check href attribute and protocol
 const preValidate = (element: HTMLElement) => {
   if (!element) {
     return false
@@ -282,16 +288,11 @@ const preValidate = (element: HTMLElement) => {
     }
   }
 
-  if (
-    element.closest('.utags_text_tag,.browser_extension_settings_container,a a')
-  ) {
-    return false
-  }
-
   return true
 }
 
 // post-validation function
+// check title and media object
 const isValidUtagsElement = (element: HTMLElement) => {
   if (element.dataset.utags !== undefined) {
     return true
@@ -324,7 +325,12 @@ const isValidUtagsElement = (element: HTMLElement) => {
   return true
 }
 
+// check parent element and ancestor elements
 const isExcludedUtagsElement = (element: HTMLElement) => {
+  if (!doc.body.contains(element)) {
+    return false
+  }
+
   return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
 }
 
@@ -354,7 +360,15 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   }
 
   const process = (element: UtagsHTMLElement) => {
-    if (!preValidate(element) || !validateFunction(element)) {
+    if (!preValidate(element)) {
+      // It's not a candidate
+      deleteElementUtags(element)
+      return
+    }
+
+    const href = element.href || element.dataset.utags_link
+    // check url
+    if (!href || !validateFunction(element, href)) {
       // It's not a candidate
       deleteElementUtags(element)
       return
@@ -375,7 +389,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    const originalKey = element.href
+    const originalKey = href
     let utags = getElementUtags(element)
     // vue 等框架会重复利用 element 对象，只修改 href 属性。每次需要验证 href 值是否与缓存的 utags.originalKey 值一致
     if (!utags || (utags.originalKey && utags.originalKey !== originalKey)) {
@@ -387,10 +401,16 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    const title = getTrimmedTitle(element)
+    const title =
+      trimTitle(element.dataset.utags_title) || getTrimmedTitle(element)
     const meta: UserTagMeta = {}
     if (title && !isUrl(title)) {
       meta.title = title
+    }
+
+    const type = element.dataset.utags_type
+    if (type) {
+      meta.type = type
     }
 
     if (utags.meta?.title) {

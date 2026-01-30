@@ -461,3 +461,7 @@ export function getDirectChildText(element: Element): string {
 
   return parts.join(' ').replaceAll(/\s+/g, ' ').trim()
 }
+
+export function getHrefAttribute(element: HTMLElement) {
+  return element.getAttribute('href') || element.getAttribute('data-utags_link')
+}

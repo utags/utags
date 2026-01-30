@@ -1,4 +1,25 @@
 :not(#a):not(#b):not(#c) {
+  * + {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      /* left-bottom */
+      object-position: 0% 200%;
+    }
+  }
+
   /* Artists */
   .card-list__items > a.user-card {
     --utags-list-node-display: flex;
@@ -32,6 +53,17 @@
       .utags_text_tag {
         --utags-text-tag-background-color: yellow;
       }
+    }
+  }
+
+  article.post-card + .utags_ul {
+    display: none !important;
+  }
+
+  /* Post title */
+  h1[data-utags_link] {
+    &[data-utags_fit_content="1"] {
+      max-width: fit-content !important;
     }
   }
 }

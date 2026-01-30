@@ -1,8 +1,9 @@
-import { $, getAttribute, hasClass } from 'browser-extension-utils'
+import { $, $$, getAttribute, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./005-kemono.su.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { getHrefAttribute } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -21,6 +22,32 @@ export default (() => {
 
   return {
     matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
+    preProcess() {
+      for (const element of $$('.post-card[data-user]')) {
+        const service = getAttribute(element, 'data-service')
+        const user = getAttribute(element, 'data-user')
+        if (service && user) {
+          const href = `${prefix}${service}/user/${user}`
+          if (location.href !== href) {
+            ;(element as any).href = href
+            element.dataset.utags_link = href
+            element.dataset.utags_type = 'user'
+          }
+        }
+      }
+
+      const key = getPostUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('h1.post__title,h1.scrape__title')
+        if (element) {
+          ;(element as any).href = key
+          element.dataset.utags_link = key
+          element.dataset.utags_type = 'post'
+          element.dataset.utags_node_type = 'link'
+        }
+      }
+    },
     listNodesSelectors: [
       // Artists
       '.card-list__items > a.user-card',
@@ -30,16 +57,16 @@ export default (() => {
       // Artists
       '.card-list__items > a.user-card',
       '.post-card a',
+      // post card with user id
+      '.post-card[data-user]',
     ],
-    validate(element: HTMLAnchorElement) {
-      const hrefAttr = getAttribute(element, 'href')
+    validate(element: HTMLAnchorElement, href: string) {
+      const hrefAttr = getHrefAttribute(element)
 
       // Comments
       if (!hrefAttr || hrefAttr.startsWith('#')) {
         return false
       }
-
-      const href = element.href
 
       if (!href.startsWith(prefix)) {
         return true
@@ -77,21 +104,6 @@ export default (() => {
       'a[href^="/authentication/"]',
       '#announcement-banner',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getPostUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('h1.post__title,h1.scrape__title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

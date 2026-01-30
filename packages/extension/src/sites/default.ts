@@ -5,7 +5,10 @@ import { deleteUrlParameters } from '../utils'
 export default (() => {
   return {
     matches: /.*/,
-    matchedNodesSelectors: ['a[href]:not(.utags_text_tag)'],
+    matchedNodesSelectors: [
+      'a[href]:not(.utags_text_tag)',
+      '[data-utags_link]',
+    ],
     validate(element: HTMLElement) {
       return true
     },

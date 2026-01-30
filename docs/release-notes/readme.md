@@ -8,6 +8,7 @@
 - Add special tag filtering functionality for kemono.cr website
 - Add special tag filtering functionality for www.pixiv.net website
 - Support the hidden image feature of [Bobby's Pixiv Utils](https://greasyfork.org/scripts/525211-bobby-s-pixiv-utils) on pixiv.net.
+- Add support for custom attributes: `data-utags_link`, `data-utags_title`, `data-utags_type`, `data-utags_exclude`, etc.
 
 ## v0.24
 
