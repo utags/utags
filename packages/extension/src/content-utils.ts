@@ -13,6 +13,10 @@ const validNodeNames: Record<string, boolean> = {
   OL: true,
   LI: true,
   SECTION: true,
+  ARTICLE: true,
+  ASIDE: true,
+  DETAILS: true,
+  TABLE: true,
 }
 
 export function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {

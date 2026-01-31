@@ -1823,6 +1823,10 @@
     OL: true,
     LI: true,
     SECTION: true,
+    ARTICLE: true,
+    ASIDE: true,
+    DETAILS: true,
+    TABLE: true,
   }
   function shouldUpdateUtagsWhenNodeUpdated(nodeList) {
     const length = nodeList.length
