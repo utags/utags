@@ -77,6 +77,7 @@ For now it works on
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
+- hitomi.la ([hitomi.la](https://hitomi.la/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

@@ -144,6 +144,7 @@
 // @include              https://simpcity.ax/*
 // @include              https://*.asia/*
 // @include              https://*entai.net/*
+// @include              https://*itomi.la/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *

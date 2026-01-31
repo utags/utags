@@ -75,6 +75,7 @@ For now it works on
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
+- hitomi.la ([hitomi.la](https://hitomi.la/))
 - And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
 
 If you want to use UTags on other sites, simply add a `user matches` rule for the target site in the script settings.

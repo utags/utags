@@ -75,6 +75,7 @@
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
+- hitomi.la ([hitomi.la](https://hitomi.la/))
 - 기타 다수. 새로운 사이트 추가를 제안하려면 [여기](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)를 클릭하세요.
 
 다른 웹사이트에서도 UTags를 사용하고 싶다면, 스크립트 설정에서 대상 사이트에 대한 `user matches` 규칙을 직접 추가하면 됩니다.

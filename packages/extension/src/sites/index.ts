@@ -69,6 +69,7 @@ import xsijishe from './z999/007-xsijishe.net'
 import simpcity from './z999/008-simpcity.cr'
 import hotgirl_asia from './z999/009-hotgirl.asia'
 import nhentai_net from './z999/010-nhentai.net'
+import hitomi_la from './z999/011-hitomi.la'
 
 type Site = {
   matches: RegExp
@@ -140,6 +141,7 @@ const sites: Site[] = [
   simpcity,
   hotgirl_asia,
   nhentai_net,
+  hitomi_la,
 ]
 
 const BASE_EXCLUDE_SELECTOR =

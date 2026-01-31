@@ -75,6 +75,7 @@ Sitios actualmente soportados:
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
+- hitomi.la ([hitomi.la](https://hitomi.la/))
 - Y muchos más. Haga clic [aquí](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) para sugerir nuevos sitios.
 
 Si desea usar UTags en otros sitios, simplemente agregue en la configuración del script una regla `user matches` para el sitio objetivo.

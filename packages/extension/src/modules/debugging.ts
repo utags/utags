@@ -3,6 +3,7 @@ import {
   addElement,
   addEventListener,
   doc,
+  removeClass,
   removeEventListener,
 } from 'browser-extension-utils'
 
@@ -76,18 +77,20 @@ function startAutoShowAllUtags() {
 
   console.log('startAutoShowAllUtags')
   document.body.classList.add('utags_show_all')
+  removeClass(doc.documentElement, 'utags_vimium_hint')
   addElement(doc.documentElement, 'div', {
     id: 'vimium-hint-marker-container',
     class: 'debug',
   })
   intervalId = createInterval(() => {
     document.body.classList.add('utags_show_all')
+    removeClass(doc.documentElement, 'utags_vimium_hint')
     $('#vimium-hint-marker-container.debug')?.remove()
     addElement(doc.documentElement, 'div', {
       id: 'vimium-hint-marker-container',
       class: 'debug',
     })
-  }, 5000)
+  }, 3000)
 }
 
 function stopAutoShowAllUtags() {
