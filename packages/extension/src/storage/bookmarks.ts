@@ -716,7 +716,12 @@ export async function initBookmarksStore(): Promise<void> {
       }
     )
     addEventListener(doc, 'visibilitychange', async () => {
-      console.log('visibilitychange: hidden -', doc.hidden)
+      console.log(
+        '[bookmarks] visibilitychange: hidden -',
+        doc.hidden,
+        'dataUpdated -',
+        dataUpdated
+      )
 
       if (!doc.hidden && dataUpdated) {
         requestAnimationFrame(() => {

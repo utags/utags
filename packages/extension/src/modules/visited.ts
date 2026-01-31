@@ -1,10 +1,15 @@
 import { getSettingsValue } from 'browser-extension-settings'
+import { addEventListener, doc } from 'browser-extension-utils'
 
+const TAG_VISITED_KEY = 'utags_visited'
 const host = location.host
 let useVisitedFunction = false
 let displayMark = false
 let isAvailable = false
 let cache: Record<string, number> = {}
+let dataUpdated = false
+let visitedValueChangeListener: () => void | undefined
+let eventListenerInited = false
 
 /**
  * Clears the visited links cache to free memory
@@ -26,6 +31,36 @@ export function onSettingsChange() {
   useVisitedFunction = getSettingsValue(`useVisitedFunction_${host}`)
   displayMark =
     getSettingsValue(`displayEffectOfTheVisitedContent_${host}`) !== '0'
+
+  if (!useVisitedFunction || eventListenerInited) {
+    return
+  }
+
+  eventListenerInited = true
+
+  addEventListener(globalThis, 'storage', (event: StorageEvent) => {
+    if (event.key === TAG_VISITED_KEY) {
+      dataUpdated = true
+      if (doc.hidden) {
+        return
+      }
+
+      valueChangeHandler()
+    }
+  })
+
+  addEventListener(doc, 'visibilitychange', async () => {
+    console.log(
+      '[visited] visibilitychange: hidden -',
+      doc.hidden,
+      'dataUpdated -',
+      dataUpdated
+    )
+
+    if (!doc.hidden && dataUpdated) {
+      valueChangeHandler()
+    }
+  })
 }
 
 function getVisitedLinks(): string[] {
@@ -34,14 +69,16 @@ function getVisitedLinks(): string[] {
   }
 
   return (
-    (JSON.parse(localStorage.getItem('utags_visited') || '[]') as string[]) ||
+    (JSON.parse(localStorage.getItem(TAG_VISITED_KEY) || '[]') as string[]) ||
     []
   )
 }
 
 function saveVisitedLinks(newVisitedLinks: string[]) {
   if (useVisitedFunction) {
-    localStorage.setItem('utags_visited', JSON.stringify(newVisitedLinks))
+    localStorage.setItem(TAG_VISITED_KEY, JSON.stringify(newVisitedLinks))
+    dataUpdated = true
+    valueChangeHandler()
   }
 }
 
@@ -97,5 +134,18 @@ export function markElementWhetherVisited(key: string, element: HTMLElement) {
     element.dataset.utags_visited = '1'
   } else if (element.dataset.utags_visited === '1') {
     delete element.dataset.utags_visited
+  }
+}
+
+export function addVisitedValueChangeListener(func: () => void) {
+  visitedValueChangeListener = func
+}
+
+const valueChangeHandler = () => {
+  dataUpdated = false
+  if (typeof visitedValueChangeListener === 'function') {
+    requestAnimationFrame(() => {
+      visitedValueChangeListener()
+    })
   }
 }

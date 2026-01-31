@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.25.5
+// @version              0.25.6
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -4257,7 +4257,12 @@
         }
       )
       addEventListener(doc, "visibilitychange", async () => {
-        console.log("visibilitychange: hidden -", doc.hidden)
+        console.log(
+          "[bookmarks] visibilitychange: hidden -",
+          doc.hidden,
+          "dataUpdated -",
+          dataUpdated
+        )
         if (!doc.hidden && dataUpdated) {
           requestAnimationFrame(() => {
             cachedUrlMap = {}
@@ -4368,11 +4373,15 @@
   async function simplePrompt(message, value) {
     return prompt(message, value)
   }
+  var TAG_VISITED_KEY = "utags_visited"
   var host = location.host
   var useVisitedFunction = false
   var displayMark = false
   var isAvailable = false
   var cache = {}
+  var dataUpdated2 = false
+  var visitedValueChangeListener
+  var eventListenerInited = false
   function clearVisitedCache() {
     cache = {}
   }
@@ -4386,16 +4395,42 @@
     useVisitedFunction = getSettingsValue("useVisitedFunction_".concat(host))
     displayMark =
       getSettingsValue("displayEffectOfTheVisitedContent_".concat(host)) !== "0"
+    if (!useVisitedFunction || eventListenerInited) {
+      return
+    }
+    eventListenerInited = true
+    addEventListener(globalThis, "storage", (event) => {
+      if (event.key === TAG_VISITED_KEY) {
+        dataUpdated2 = true
+        if (doc.hidden) {
+          return
+        }
+        valueChangeHandler()
+      }
+    })
+    addEventListener(doc, "visibilitychange", async () => {
+      console.log(
+        "[visited] visibilitychange: hidden -",
+        doc.hidden,
+        "dataUpdated -",
+        dataUpdated2
+      )
+      if (!doc.hidden && dataUpdated2) {
+        valueChangeHandler()
+      }
+    })
   }
   function getVisitedLinks() {
     if (!useVisitedFunction) {
       return []
     }
-    return JSON.parse(localStorage.getItem("utags_visited") || "[]") || []
+    return JSON.parse(localStorage.getItem(TAG_VISITED_KEY) || "[]") || []
   }
   function saveVisitedLinks(newVisitedLinks) {
     if (useVisitedFunction) {
-      localStorage.setItem("utags_visited", JSON.stringify(newVisitedLinks))
+      localStorage.setItem(TAG_VISITED_KEY, JSON.stringify(newVisitedLinks))
+      dataUpdated2 = true
+      valueChangeHandler()
     }
   }
   function convertKey(url) {
@@ -4439,6 +4474,17 @@
       element.dataset.utags_visited = "1"
     } else if (element.dataset.utags_visited === "1") {
       delete element.dataset.utags_visited
+    }
+  }
+  function addVisitedValueChangeListener(func) {
+    visitedValueChangeListener = func
+  }
+  var valueChangeHandler = () => {
+    dataUpdated2 = false
+    if (typeof visitedValueChangeListener === "function") {
+      requestAnimationFrame(() => {
+        visitedValueChangeListener()
+      })
     }
   }
   var lastShownArea
@@ -12906,13 +12952,15 @@
   async function initStorage() {
     await initBookmarksStore()
     await initSyncAdapter()
-    addTagsValueChangeListener(() => {
+    const onStorageChange = () => {
       console.log("Storage updated, hidden -", doc.hidden)
       if (!doc.hidden) {
         console.log("Start re-display tags")
         void displayTags()
       }
-    })
+    }
+    addTagsValueChangeListener(onStorageChange)
+    addVisitedValueChangeListener(onStorageChange)
   }
   function getOutermostOffsetParent(element1, element2) {
     if (
@@ -13321,8 +13369,8 @@
     }
   }
   setupConsole()
-  console.log("Start init ContentScript")
   if (doc.documentElement.dataset.utags === void 0) {
+    console.log("Start init ContentScript")
     doc.documentElement.dataset.utags = "1"
     void main()
   }

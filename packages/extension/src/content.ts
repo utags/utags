@@ -48,6 +48,7 @@ import { initStarHandler, toggleStarHandler } from './modules/star-handler'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import { clearAllTimers, createTimeout } from './modules/timer-manager'
 import {
+  addVisitedValueChangeListener,
   clearVisitedCache,
   isAvailableOnCurrentSite,
   TAG_VISITED,
@@ -859,13 +860,17 @@ const displayTagsThrottled = throttle(displayTags, 500)
 async function initStorage() {
   await initBookmarksStore()
   await initSyncAdapter()
-  addTagsValueChangeListener(() => {
+
+  const onStorageChange = () => {
     console.log('Storage updated, hidden -', doc.hidden)
     if (!doc.hidden) {
       console.log('Start re-display tags')
       void displayTags()
     }
-  })
+  }
+
+  addTagsValueChangeListener(onStorageChange)
+  addVisitedValueChangeListener(onStorageChange)
 }
 
 function getOutermostOffsetParent(
@@ -1427,9 +1432,8 @@ async function main() {
 
 setupConsole()
 
-console.log('Start init ContentScript')
-
 if (doc.documentElement.dataset.utags === undefined) {
+  console.log('Start init ContentScript')
   doc.documentElement.dataset.utags = '1'
   void main()
 }

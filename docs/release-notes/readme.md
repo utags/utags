@@ -11,6 +11,7 @@
 - Add support for custom attributes: `data-utags_link`, `data-utags_title`, `data-utags_type`, `data-utags_exclude`, etc.
 - Apply utags to nhentai.net
 - Apply utags to hitomi.la
+- Optimize the synchronization of visited link status: ensure real-time updates across tabs and delay UI updates when the page is hidden to improve performance.
 
 ## v0.24
 
