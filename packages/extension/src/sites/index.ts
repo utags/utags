@@ -48,17 +48,16 @@ import discourse from './z001/027-discourse'
 import nga from './z001/028-nga.cn'
 import dlsite_com from './z001/029-dlsite.com'
 import keylol_com from './z001/030-keylol.com'
-import tampermonkey_net_cn from './z001/031-tampermonkey.net.cn'
 import flarum from './z001/032-flarum'
 import nodeseek_com from './z001/033-nodeseek.com'
 import inoreader_com from './z001/034-inoreader.com'
 import zhipin_com from './z001/035-zhipin.com'
 import twitch_tv from './z001/036-twitch.tv'
-import yamibo_com from './z001/037-yamibo.com'
 import flickr_com from './z001/038-flickr.com'
 import ruanyifeng_com from './z001/039-ruanyifeng.com'
 import _2libra_com from './z001/040-2libra.com'
 import toutiao_com from './z001/041-toutiao.com'
+import discuz from './z001/042-discuz'
 import pxxnhub from './z999/001-pxxnhub.com'
 import ehentxx from './z999/002-e-hentxx.org'
 import panda_chaika_moe from './z999/003-panda.chaika.moe'
@@ -82,7 +81,8 @@ type Site = {
   validMediaSelectors?: string[]
   addExtraMatchedNodes?: (matchedNodesSet: Set<UtagsHTMLElement>) => void
   getCanonicalUrl?: (
-    url: string
+    url: string,
+    hostname: string
   ) => string | { url: string; domainChanged: boolean }
   getStyle?: () => string
   preProcess?: () => void
@@ -119,17 +119,16 @@ const sites: Site[] = [
   discourse,
   nga,
   keylol_com,
-  tampermonkey_net_cn,
   flarum,
   nodeseek_com,
   inoreader_com,
   zhipin_com,
   twitch_tv,
-  yamibo_com,
   flickr_com,
   ruanyifeng_com,
   _2libra_com,
   toutiao_com,
+  discuz,
   pxxnhub,
   ehentxx,
   panda_chaika_moe,
@@ -248,21 +247,28 @@ export function getCanonicalUrl(url: string | undefined) {
     return undefined
   }
 
-  for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
-    if (getCanonicalUrlFunc) {
-      const newUrl: string | { url: string; domainChanged: boolean } =
-        getCanonicalUrlFunc(url)
+  try {
+    const hostname = new URL(url).hostname
 
-      if (typeof newUrl === 'object') {
-        if (newUrl.domainChanged) {
-          return getCanonicalUrl(newUrl.url)
+    for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
+      if (getCanonicalUrlFunc) {
+        const newUrl: string | { url: string; domainChanged: boolean } =
+          getCanonicalUrlFunc(url, hostname)
+
+        if (typeof newUrl === 'object') {
+          if (newUrl.domainChanged) {
+            return getCanonicalUrl(newUrl.url)
+          }
+
+          url = newUrl.url
+        } else {
+          url = newUrl
         }
-
-        url = newUrl.url
-      } else {
-        url = newUrl
       }
     }
+  } catch (error) {
+    console.error('Error in getCanonicalUrl:', error)
+    return undefined
   }
 
   return url
@@ -370,7 +376,8 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    const href = element.href || element.dataset.utags_link
+    // dataset.utags_link takes precedence over the href attribute; normalized href can be saved in dataset.utags_link.
+    const href = element.dataset.utags_link || element.href
     // check url
     if (!href || !validateFunction(element, href)) {
       // It's not a candidate

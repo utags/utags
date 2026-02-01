@@ -436,7 +436,9 @@ function updateDocumentElementAttributes() {
   }
 
   {
-    const newValue = getSettingsValue(`enableCurrentSite_${host}`) ? '1' : 'off'
+    const newValue = getSettingsValue(`enableCurrentSite_${host}`)
+      ? host
+      : 'off'
     if (newValue !== doc.documentElement.dataset.utags) {
       doc.documentElement.dataset.utags = newValue
     }
@@ -1434,6 +1436,6 @@ setupConsole()
 
 if (doc.documentElement.dataset.utags === undefined) {
   console.log('Start init ContentScript')
-  doc.documentElement.dataset.utags = '1'
+  doc.documentElement.dataset.utags = host
   void main()
 }

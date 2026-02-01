@@ -339,32 +339,6 @@ describe('getCanonicalUrl', () => {
     })
   })
 
-  describe('tampermonkey.net.cn', () => {
-    it('should normalize user profile url', () => {
-      expect(
-        getCanonicalUrl('https://bbs.tampermonkey.net.cn/space-uid-123.html')
-      ).toBe('https://bbs.tampermonkey.net.cn/home.php?mod=space&uid=123')
-      expect(
-        getCanonicalUrl(
-          'https://bbs.tampermonkey.net.cn/home.php?mod=space&uid=123&do=profile'
-        )
-      ).toBe('https://bbs.tampermonkey.net.cn/home.php?mod=space&uid=123')
-    })
-
-    it('should normalize post url', () => {
-      expect(
-        getCanonicalUrl('https://bbs.tampermonkey.net.cn/thread-123-1-1.html')
-      ).toBe('https://bbs.tampermonkey.net.cn/forum.php?mod=viewthread&tid=123')
-      expect(
-        getCanonicalUrl(
-          'https://bbs.tampermonkey.net.cn/forum.php?mod=viewthread&tid=123&extra=page%3D1'
-        )
-      ).toBe(
-        'https://bbs.tampermonkey.net.cn/forum.php?mod=viewthread&tid=123&extra=page%3D1'
-      )
-    })
-  })
-
   describe('zhipin.com', () => {
     it('should remove query parameters and hash', () => {
       expect(
@@ -380,24 +354,75 @@ describe('getCanonicalUrl', () => {
     })
   })
 
-  describe('yamibo.com', () => {
-    it('should normalize user profile url', () => {
-      expect(getCanonicalUrl('https://bbs.yamibo.com/space-uid-123.html')).toBe(
-        'https://bbs.yamibo.com/home.php?mod=space&uid=123'
-      )
-    })
+  describe('discuz', () => {
+    const domains = [
+      { domain: 'bbs.tampermonkey.net.cn' },
+      { domain: 'bbs.yamibo.com' },
+      { domain: 'www.tsdm39.com' },
+      { domain: 'tsdm39.com', outputDomain: 'www.tsdm39.com' },
+    ]
 
-    it('should normalize post url', () => {
-      expect(
-        getCanonicalUrl('https://bbs.yamibo.com/thread-123-1-1.html')
-      ).toBe('https://bbs.yamibo.com/forum.php?mod=viewthread&tid=123')
-    })
+    for (const { domain, outputDomain: out } of domains) {
+      const outputDomain = out || domain
+      describe(domain, () => {
+        it('should normalize user profile url', () => {
+          expect(getCanonicalUrl(`https://${domain}/space-uid-123.html`)).toBe(
+            `https://${outputDomain}/home.php?mod=space&uid=123`
+          )
+          expect(
+            getCanonicalUrl(`https://${domain}/home.php?mod=space&uid=123`)
+          ).toBe(`https://${outputDomain}/home.php?mod=space&uid=123`)
+          expect(getCanonicalUrl(`https://${domain}/?123`)).toBe(
+            `https://${outputDomain}/home.php?mod=space&uid=123`
+          )
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/home.php?mod=space&uid=123#comment`
+            )
+          ).toBe(`https://${outputDomain}/home.php?mod=space&uid=123`)
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/home.php?mod=space&uid=123&do=profile`
+            )
+          ).toBe(`https://${outputDomain}/home.php?mod=space&uid=123`)
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/home.php?mod=space&uid=123&view=me`
+            )
+          ).toBe(`https://${outputDomain}/home.php?mod=space&uid=123&view=me`)
+        })
 
-    it('should return original url for u/username (not handled in strict mode)', () => {
-      expect(getCanonicalUrl('https://bbs.yamibo.com/u/username/')).toBe(
-        'https://bbs.yamibo.com/u/username/'
-      )
-    })
+        it('should normalize post url', () => {
+          expect(getCanonicalUrl(`https://${domain}/thread-123-1-1.html`)).toBe(
+            `https://${outputDomain}/forum.php?mod=viewthread&tid=123`
+          )
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/forum.php?mod=redirect&tid=123&goto=lastpost#lastpost`
+            )
+          ).toBe(`https://${outputDomain}/forum.php?mod=viewthread&tid=123`)
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/forum.php?mod=viewthread&tid=123&extra=page%3D1`
+            )
+          ).toBe(`https://${outputDomain}/forum.php?mod=viewthread&tid=123`)
+        })
+
+        it('should return original url for other pages', () => {
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/forum.php?mod=forumdisplay&fid=1`
+            )
+          ).toBe(`https://${outputDomain}/forum.php?mod=forumdisplay&fid=1`)
+          expect(getCanonicalUrl(`https://${domain}/archiver/`)).toBe(
+            `https://${outputDomain}/archiver/`
+          )
+          expect(getCanonicalUrl(`https://${domain}/misc.php?mod=faq`)).toBe(
+            `https://${outputDomain}/misc.php?mod=faq`
+          )
+        })
+      })
+    }
   })
 
   describe('flickr.com', () => {

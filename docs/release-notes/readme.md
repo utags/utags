@@ -1,5 +1,11 @@
 # RELEASE NOTES
 
+## v0.26
+
+- Integrate Discuz! sites support and merge existing implementations.
+- Support new website: www.tsdm39.com.
+- Add comprehensive test cases for `getCanonicalUrl` function.
+
 ## v0.25
 
 - Recalculate tag positions when the "Show hidden items" setting is toggled to ensure correct display.

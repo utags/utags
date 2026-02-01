@@ -25,12 +25,12 @@ export default defineConfig({
   plugins: [
     {
       name: 'plasmo-data-text-loader',
-      resolveId(id) {
+      resolveId(id: string) {
         if (id.startsWith('data-text:')) {
           return id
         }
       },
-      load(id) {
+      load(id: string) {
         if (id.startsWith('data-text:')) {
           return `export default ''`
         }

@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.25.6
+// @version              0.26.0
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -108,7 +108,9 @@
 // @match                https://bbs.viva-la-vita.org/*
 // @match                https://www.zhipin.com/*
 // @match                https://*.twitch.tv/*
-// @match                https://*.yamibo.com/*
+// @match                https://bbs.yamibo.com/*
+// @match                https://www.tsdm39.com/*
+// @match                https://tsdm39.com/*
 // @match                https://*.flickr.com/*
 // @match                https://*.ruanyifeng.com/*
 // @match                https://www.uscardforum.com/*
@@ -6047,7 +6049,7 @@
       if (url.startsWith(prefix2)) {
         const href2 = url.slice(prefix2.length)
         if (exact) {
-          if (/^r\/\w+\/?(#.*)?$/.test(href2)) {
+          if (/^r\/\w+\/?([?#].*)?$/.test(href2)) {
             return prefix2 + href2.replace(/^(r\/\w+).*/, "$1") + "/"
           }
         } else if (/^r\/\w+/.test(href2)) {
@@ -6060,7 +6062,9 @@
       if (url.startsWith(prefix2)) {
         const href2 = url.slice(prefix2.length)
         if (exact) {
-          if (/^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)$/.test(href2)) {
+          if (
+            /^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)([?#].*)?$/.test(href2)
+          ) {
             return (
               prefix2 +
               href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, "$1") +
@@ -7066,7 +7070,7 @@
       if (url.startsWith(prefix22)) {
         const href2 = url.slice(prefix22.length)
         if (exact) {
-          if (/^p\/\d+$/.test(href2)) {
+          if (/^p\/\d+(\?.*)?$/.test(href2)) {
             return prefix22 + href2.replace(/^(p\/\d+).*/, "$1")
           }
         } else if (/^p\/\d+/.test(href2)) {
@@ -8608,249 +8612,6 @@
       getStyle: () => keylol_com_default,
     }
   })()
-  var tampermonkey_net_cn_default =
-    ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:-64px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}"
-  var tampermonkey_net_cn_default2 = (() => {
-    const prefix2 = "https://bbs.tampermonkey.net.cn/"
-    function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix2)) {
-        let href2 = getUserProfileUrl(url, true)
-        if (href2) {
-          return href2
-        }
-        href2 = getPostUrl(url)
-        if (href2) {
-          return href2
-        }
-      }
-      return url
-    }
-    function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix2)) {
-        url = deleteUrlParameters(url, "do")
-        const href2 = url.slice(prefix2.length).toLowerCase()
-        if (exact) {
-          if (/^\?\d+(#.*)?$/.test(href2)) {
-            return (
-              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
-            )
-          }
-          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
-            return (
-              prefix2 +
-              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
-            )
-          }
-          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
-            return (
-              prefix2 +
-              href2.replace(
-                /^home\.php\?mod=space&uid=(\d+).*/,
-                "home.php?mod=space&uid=$1"
-              )
-            )
-          }
-        } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
-        }
-      }
-      return void 0
-    }
-    function getPostUrl(url) {
-      if (url.startsWith(prefix2)) {
-        const href2 = url.slice(prefix2.length).toLowerCase()
-        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
-          )
-        }
-        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(
-              /^forum\.php\?mod=redirect&tid=(\d+).*/,
-              "forum.php?mod=viewthread&tid=$1"
-            )
-          )
-        }
-        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(
-              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
-              "forum.php?mod=viewthread&tid=$1"
-            )
-          )
-        }
-      }
-      return void 0
-    }
-    return {
-      matches: /bbs\.tampermonkey\.net\.cn/,
-      preProcess() {
-        setVisitedAvailable(true)
-      },
-      listNodesSelectors: [
-        //
-        "#threadlist table tbody",
-        "#postlist .comiis_vrx",
-      ],
-      conditionNodesSelectors: [
-        //
-        "#threadlist table tbody h2 a",
-        "#threadlist table tbody .km_user a",
-        "#postlist .comiis_vrx .authi a",
-      ],
-      validate(element) {
-        const href = element.href
-        if (!href.startsWith(prefix2)) {
-          return true
-        }
-        let key = getUserProfileUrl(href, true)
-        if (key) {
-          let title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title2)) {
-            const titleElement = $("#uhd h2")
-            if (titleElement) {
-              title2 = getTrimmedTitle(titleElement)
-            }
-          }
-          if (
-            /^\d+$/.test(title2) &&
-            element.parentElement.parentElement.textContent.includes(
-              "\u79EF\u5206"
-            )
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "user" } : { type: "user", title: title2 }
-          setUtags(element, key, meta)
-          element.dataset.utags = element.dataset.utags || ""
-          return true
-        }
-        key = getPostUrl(href)
-        if (key) {
-          const title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (
-            title2 === "New" ||
-            title2 === "\u7F6E\u9876" ||
-            /^\d+$/.test(title2) ||
-            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title2)
-          ) {
-            return false
-          }
-          if ($('span[title^="20"]', element)) {
-            return false
-          }
-          if (
-            element.parentElement.textContent.includes(
-              "\u6700\u540E\u56DE\u590D\u4E8E"
-            )
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "post" } : { type: "post", title: title2 }
-          setUtags(element, key, meta)
-          markElementWhetherVisited(key, element)
-          return true
-        }
-        const title = getTrimmedTitle(element)
-        if (!title) {
-          return false
-        }
-        if (
-          title === "New" ||
-          title === "\u7F6E\u9876" ||
-          /^\d+$/.test(title)
-        ) {
-          return false
-        }
-        return true
-      },
-      excludeSelectors: [
-        ...default_default2.excludeSelectors,
-        "#hd",
-        ".comiis_pgs",
-        "#scrolltop",
-        "#fd_page_bottom",
-        "#visitedforums",
-        "#pt",
-        ".tps",
-        ".pgbtn",
-        ".pgs",
-        "#f_pst",
-        'a[href*="member.php?mod=logging"]',
-        'a[href*="member.php?mod=register"]',
-        'a[href*="login/oauth/"]',
-        'a[href*="mod=spacecp&ac=usergroup"]',
-        'a[href*="home.php?mod=spacecp"]',
-        "#gadmin_menu",
-        "#guser_menu",
-        "#gupgrade_menu",
-        "#gmy_menu",
-        ".showmenu",
-        "ul.tb.cl",
-        ".comiis_irbox_tit",
-        "#thread_types",
-        "#filter_special_menu",
-        'a[title="RSS"]',
-        ".fa_fav",
-        ".p_pop",
-        ".comiis_topinfo",
-        ".bm .bm_h .kmfz",
-        "td.num a",
-        "td.plc .pi",
-        "td.plc .po.hin",
-        "td.pls .tns",
-        "ul.comiis_o",
-        'a[onclick*="showMenu"]',
-        'a[onclick*="showWindow"]',
-        ".toplist_7ree",
-      ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element =
-            $(".user-profile-names .username") ||
-            $(
-              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-            )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $("#thread_subject")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
-      getStyle: () => tampermonkey_net_cn_default,
-      getCanonicalUrl: getCanonicalUrl2,
-    }
-  })()
   var flarum_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) a.DiscussionListItem-main+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) a.DiscussionListItem-author+.utags_ul_0{object-position:0% 0%;--utags-notag-captain-tag-top: -22px}:not(#a):not(#b):not(#c) a.DiscussionListItem-author+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:-18px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .DiscussionList--searchResults a.DiscussionListItem-main+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -18px}:not(#a):not(#b):not(#c) .DiscussionList--searchResults a.DiscussionListItem-main+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-14px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-info+.utags_ul_0{object-position:0% 0%}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-info+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .TagTiles a.TagTile-lastPostedDiscussion+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) h1.Hero-title[data-utags_fit_content="1"]{display:inline-block !important;width:fit-content !important}:not(#a):not(#b):not(#c) h1.Hero-title[data-utags_fit_content="1"] *:not(svg){width:fit-content !important}:not(#a):not(#b):not(#c) h1.Hero-title+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) h1.Hero-title+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) .PostStream .PostStream-item[data-index="0"]{display:block !important}:not(#a):not(#b):not(#c) .UserBio .UserBio-content p{position:relative}'
   var flarum_default2 = (() => {
@@ -9597,250 +9358,6 @@
       getStyle: () => twitch_tv_default,
     }
   })()
-  var yamibo_com_default =
-    ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
-  var yamibo_com_default2 = (() => {
-    const prefix2 = "https://bbs.yamibo.com/"
-    function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix2)) {
-        let href2 = getUserProfileUrl(url, true)
-        if (href2) {
-          return href2
-        }
-        href2 = getPostUrl(url)
-        if (href2) {
-          return href2
-        }
-      }
-      return url
-    }
-    function getUserProfileUrl(url, exact = false) {
-      if (url.startsWith(prefix2)) {
-        url = deleteUrlParameters(url, "do")
-        const href2 = url.slice(prefix2.length).toLowerCase()
-        if (exact) {
-          if (/^\?\d+(#.*)?$/.test(href2)) {
-            return (
-              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
-            )
-          }
-          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
-            return (
-              prefix2 +
-              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
-            )
-          }
-          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
-            return (
-              prefix2 +
-              href2.replace(
-                /^home\.php\?mod=space&uid=(\d+).*/,
-                "home.php?mod=space&uid=$1"
-              )
-            )
-          }
-        } else if (/^u\/[\w.-]+/.test(href2)) {
-          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
-        }
-      }
-      return void 0
-    }
-    function getPostUrl(url) {
-      if (url.startsWith(prefix2)) {
-        const href2 = url.slice(prefix2.length).toLowerCase()
-        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
-          )
-        }
-        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(
-              /^forum\.php\?mod=redirect&tid=(\d+).*/,
-              "forum.php?mod=viewthread&tid=$1"
-            )
-          )
-        }
-        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
-          return (
-            prefix2 +
-            href2.replace(
-              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
-              "forum.php?mod=viewthread&tid=$1"
-            )
-          )
-        }
-      }
-      return void 0
-    }
-    return {
-      matches: /yamibo\.com/,
-      preProcess() {
-        setVisitedAvailable(true)
-      },
-      listNodesSelectors: [
-        //
-        "#threadlist table tbody",
-        "#postlist .comiis_vrx",
-      ],
-      conditionNodesSelectors: [
-        //
-        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
-        '#threadlist table tbody a[href^="thread-"]',
-        '#threadlist table tbody a[href^="space-uid-"]',
-        "#postlist .comiis_vrx .authi a",
-      ],
-      validate(element) {
-        const href = element.href
-        if (!href.startsWith(prefix2)) {
-          return true
-        }
-        let key = getUserProfileUrl(href, true)
-        if (key) {
-          const title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (
-            /^\d+$/.test(title2) &&
-            element.parentElement.parentElement.textContent.includes(
-              "\u79EF\u5206"
-            )
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "user" } : { type: "user", title: title2 }
-          setUtags(element, key, meta)
-          element.dataset.utags = element.dataset.utags || ""
-          return true
-        }
-        key = getPostUrl(href)
-        if (key) {
-          const title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (
-            title2 === "New" ||
-            title2 === "\u7F6E\u9876" ||
-            /^\d+$/.test(title2) ||
-            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}$/.test(title2)
-          ) {
-            return false
-          }
-          if ($('span[title^="20"]', element)) {
-            return false
-          }
-          if (
-            element.parentElement.textContent.includes(
-              "\u6700\u540E\u56DE\u590D\u4E8E"
-            )
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "post" } : { type: "post", title: title2 }
-          setUtags(element, key, meta)
-          markElementWhetherVisited(key, element)
-          return true
-        }
-        const title = getTrimmedTitle(element)
-        if (!title) {
-          return false
-        }
-        if (
-          title === "New" ||
-          title === "\u7F6E\u9876" ||
-          /^\d+$/.test(title)
-        ) {
-          return false
-        }
-        return true
-      },
-      excludeSelectors: [
-        ...default_default2.excludeSelectors,
-        "#hd",
-        ".oyheader",
-        "#scrolltop",
-        "#fd_page_bottom",
-        "#visitedforums",
-        "#pt",
-        ".tps",
-        ".pgbtn",
-        ".pgs",
-        "#f_pst",
-        'a[href*="member.php?mod=logging"]',
-        'a[href*="member.php?mod=register"]',
-        'a[href*="login/oauth/"]',
-        'a[href*="mod=spacecp&ac=usergroup"]',
-        'a[href*="home.php?mod=spacecp"]',
-        'a[href*="goto=lastpost#lastpost"]',
-        'a[onclick*="copyThreadUrl"]',
-        "#gadmin_menu",
-        "#guser_menu",
-        "#gupgrade_menu",
-        "#gmy_menu",
-        ".showmenu",
-        "ul.tb.cl",
-        ".comiis_irbox_tit",
-        "#thread_types",
-        "#threadlist .th",
-        "#filter_special_menu",
-        'a[title="RSS"]',
-        ".fa_fav",
-        ".p_pop",
-        ".comiis_topinfo",
-        ".bm .bm_h .kmfz",
-        "td.num a",
-        "td.plc .pi",
-        "td.plc .po.hin",
-        "td.pls .tns",
-        "ul.comiis_o",
-        'a[onclick*="showMenu"]',
-        'a[onclick*="showWindow"]',
-        ".toplist_7ree",
-        "nav",
-        ".btn",
-      ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element =
-            $(".user-profile-names .username") ||
-            $(
-              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-            )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $("#thread_subject")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
-      getStyle: () => yamibo_com_default,
-      getCanonicalUrl: getCanonicalUrl2,
-    }
-  })()
   var flickr_com_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .photo-list-view a[href^="/photos/"][data-utags_fit_content="1"],:not(#a):not(#b):not(#c) [data-component=JustifiedPhotoLayout] a[href^="/photos/"][data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) .subview-modal .utags_ul_0{--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}'
   var flickr_com_default2 = /* @__PURE__ */ (() => {
@@ -10482,6 +9999,265 @@
       },
       postProcess() {},
       getStyle: () => toutiao_com_default,
+      getCanonicalUrl: getCanonicalUrl2,
+    }
+  })()
+  var discuz_default =
+    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c)[data-utags="bbs.tampermonkey.net.cn"] .favatar .authi a+.utags_ul_1{margin-left:-64px !important}:not(#a):not(#b):not(#c)[data-utags="bbs.yamibo.com"] .favatar .authi a+.utags_ul_1{margin-left:-18px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}'
+  var discuz_default2 = (() => {
+    const matchesPattern =
+      /bbs\.tampermonkey\.net\.cn|bbs\.yamibo\.com|(www\.)?tsdm39\.com/
+    const currentPrefix = location.origin + "/"
+    const normalizedPrefix = normalizeDomain(currentPrefix)
+    function normalizeDomain(url) {
+      return url.replace("https://tsdm39.com", "https://www.tsdm39.com")
+    }
+    function getCanonicalUrl2(url, hostname2) {
+      if (!matchesPattern.test(hostname2)) {
+        return url
+      }
+      url = normalizeDomain(url)
+      const prefix2 = normalizeDomain("https://".concat(hostname2, "/"))
+      let href2 = getUserProfileUrl(prefix2, url, true)
+      if (href2) {
+        return href2
+      }
+      href2 = getPostUrl(prefix2, url)
+      if (href2) {
+        return href2
+      }
+      return url
+    }
+    function getUserProfileUrl(prefix2, url, exact = false) {
+      if (url.startsWith(prefix2)) {
+        url = deleteUrlParameters(url, "do")
+        const href2 = url.slice(prefix2.length).toLowerCase()
+        if (exact) {
+          if (/^\?\d+(=)?(#.*)?$/.test(href2)) {
+            return (
+              prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^space-uid-\d+\.html([?#].*)?$/.test(href2)) {
+            return (
+              prefix2 +
+              href2.replace(/^space-uid-(\d+).*/, "home.php?mod=space&uid=$1")
+            )
+          }
+          if (/^home\.php\?mod=space&uid=\d+(#.*)?$/.test(href2)) {
+            return (
+              prefix2 +
+              href2.replace(
+                /^home\.php\?mod=space&uid=(\d+).*/,
+                "home.php?mod=space&uid=$1"
+              )
+            )
+          }
+        } else if (/^u\/[\w.-]+/.test(href2)) {
+          return prefix2 + href2.replace(/^(u\/[\w.-]+).*/, "$1")
+        }
+      }
+      return void 0
+    }
+    function getPostUrl(prefix2, url) {
+      if (url.startsWith(prefix2)) {
+        const href2 = url.slice(prefix2.length).toLowerCase()
+        if (/^thread(?:-\d+){3}\.html([?#].*)?$/.test(href2)) {
+          return (
+            prefix2 +
+            href2.replace(/^thread-(\d+).*/, "forum.php?mod=viewthread&tid=$1")
+          )
+        }
+        if (/^forum\.php\?mod=redirect&tid=\d+([&#].*)?$/.test(href2)) {
+          return (
+            prefix2 +
+            href2.replace(
+              /^forum\.php\?mod=redirect&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+        if (/^forum\.php\?mod=viewthread&tid=\d+([&#].*)?$/.test(href2)) {
+          return (
+            prefix2 +
+            href2.replace(
+              /^forum\.php\?mod=viewthread&tid=(\d+).*/,
+              "forum.php?mod=viewthread&tid=$1"
+            )
+          )
+        }
+      }
+      return void 0
+    }
+    return {
+      matches: matchesPattern,
+      preProcess() {
+        setVisitedAvailable(true)
+      },
+      listNodesSelectors: [
+        //
+        "#threadlist table tbody",
+        "#postlist .comiis_vrx",
+      ],
+      conditionNodesSelectors: [
+        "#threadlist table tbody h2 a",
+        "#threadlist table tbody .km_user a",
+        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
+        '#threadlist table tbody a[href*="thread-"]',
+        '#threadlist table tbody a[href*="forum.php?mod=viewthread&tid="]',
+        '#threadlist table tbody a[href*="space-uid-"]',
+        '#threadlist table tbody a[href*="home.php?mod=space&uid="]',
+        "#postlist .comiis_vrx .authi a",
+      ],
+      validate(element, href) {
+        if (!href.startsWith(currentPrefix)) {
+          return true
+        }
+        href = normalizeDomain(href)
+        let key = getUserProfileUrl(normalizedPrefix, href, true)
+        if (key) {
+          let title2 = getTrimmedTitle(element)
+          if (!title2) {
+            return false
+          }
+          if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title2)) {
+            const titleElement = $("#uhd h2")
+            if (titleElement) {
+              title2 = getTrimmedTitle(titleElement)
+            }
+          }
+          if (
+            /^\d+$/.test(title2) &&
+            element.parentElement.parentElement.textContent.includes(
+              "\u79EF\u5206"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "user" } : { type: "user", title: title2 }
+          setUtags(element, key, meta)
+          element.dataset.utags = element.dataset.utags || ""
+          return true
+        }
+        key = getPostUrl(normalizedPrefix, href)
+        if (key) {
+          const title2 = getTrimmedTitle(element)
+          if (!title2) {
+            return false
+          }
+          if (
+            title2 === "New" ||
+            title2 === "\u7F6E\u9876" ||
+            /^\d+$/.test(title2) ||
+            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(:\d{2})?$/.test(title2)
+          ) {
+            return false
+          }
+          if ($('span[title^="20"]', element)) {
+            return false
+          }
+          if (
+            element.parentElement.textContent.includes(
+              "\u6700\u540E\u56DE\u590D\u4E8E"
+            )
+          ) {
+            return false
+          }
+          const meta =
+            href === title2 ? { type: "post" } : { type: "post", title: title2 }
+          setUtags(element, key, meta)
+          markElementWhetherVisited(key, element)
+          return true
+        }
+        const title = getTrimmedTitle(element)
+        if (!title) {
+          return false
+        }
+        if (title === "New" || title === "\u7F6E\u9876") {
+          return false
+        }
+        return true
+      },
+      excludeSelectors: [
+        ...default_default2.excludeSelectors,
+        "#hd",
+        ".comiis_pgs",
+        ".oyheader",
+        "#scrolltop",
+        "#fd_page_bottom",
+        "#visitedforums",
+        "#pt",
+        ".tps",
+        ".pgbtn",
+        ".pgs",
+        "#f_pst",
+        'a[href*="member.php?mod=logging"]',
+        'a[href*="member.php?mod=register"]',
+        'a[href*="login/oauth/"]',
+        'a[href*="mod=spacecp&ac=usergroup"]',
+        'a[href*="home.php?mod=spacecp"]',
+        'a[onclick*="copyThreadUrl"]',
+        "#gadmin_menu",
+        "#guser_menu",
+        "#gupgrade_menu",
+        "#gmy_menu",
+        ".showmenu",
+        "ul.tb.cl",
+        ".comiis_irbox_tit",
+        "#thread_types",
+        "#threadlist .th",
+        "#filter_special_menu",
+        'a[title="RSS"]',
+        ".fa_fav",
+        ".p_pop",
+        ".comiis_topinfo",
+        ".bm .bm_h .kmfz",
+        "td.num a",
+        "td.plc .pi",
+        "td.plc .po.hin",
+        "td.pls .tns",
+        "ul.comiis_o",
+        'a[onclick*="showMenu"]',
+        'a[onclick*="showWindow"]',
+        ".toplist_7ree",
+        "nav",
+        ".btn",
+      ],
+      addExtraMatchedNodes(matchedNodesSet) {
+        const href = normalizeDomain(location.href)
+        let key = getUserProfileUrl(normalizedPrefix, href)
+        if (key) {
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "user" }
+              setUtags(element, key, meta)
+              matchedNodesSet.add(element)
+            }
+          }
+        }
+        key = getPostUrl(normalizedPrefix, href)
+        if (key) {
+          addVisited(key)
+          const element = $("#thread_subject")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const meta = { title, type: "post" }
+              setUtags(element, key, meta)
+              matchedNodesSet.add(element)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+      },
+      getStyle: () => discuz_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
@@ -11349,7 +11125,7 @@
         url = deleteUrlParameters(url, "do")
         const href2 = url.slice(prefix2.length).toLowerCase()
         if (exact) {
-          if (/^\?\d+(#.*)?$/.test(href2)) {
+          if (/^\?\d+(=)?(#.*)?$/.test(href2)) {
             return (
               prefix2 + href2.replace(/^\?(\d+).*/, "home.php?mod=space&uid=$1")
             )
@@ -11393,7 +11169,7 @@
             )
           )
         }
-        if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
+        if (/^forum\.php\?mod=viewthread&tid=\d+([&#].*)?$/.test(href2)) {
           return (
             prefix2 +
             href2.replace(
@@ -12022,17 +11798,16 @@
     discourse_default2,
     nga_cn_default2,
     keylol_com_default2,
-    tampermonkey_net_cn_default2,
     flarum_default2,
     nodeseek_com_default2,
     inoreader_com_default2,
     zhipin_com_default2,
     twitch_tv_default2,
-    yamibo_com_default2,
     flickr_com_default2,
     ruanyifeng_com_default2,
     libra_com_default2,
     toutiao_com_default2,
+    discuz_default2,
     pxxnhub_com_default2,
     e_hentxx_org_default2,
     panda_chaika_moe_default2,
@@ -12105,18 +11880,24 @@
     if (!url) {
       return void 0
     }
-    for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
-      if (getCanonicalUrlFunc) {
-        const newUrl = getCanonicalUrlFunc(url)
-        if (typeof newUrl === "object") {
-          if (newUrl.domainChanged) {
-            return getCanonicalUrl(newUrl.url)
+    try {
+      const hostname2 = new URL(url).hostname
+      for (const getCanonicalUrlFunc of getCanonicalUrlFunctionList) {
+        if (getCanonicalUrlFunc) {
+          const newUrl = getCanonicalUrlFunc(url, hostname2)
+          if (typeof newUrl === "object") {
+            if (newUrl.domainChanged) {
+              return getCanonicalUrl(newUrl.url)
+            }
+            url = newUrl.url
+          } else {
+            url = newUrl
           }
-          url = newUrl.url
-        } else {
-          url = newUrl
         }
       }
+    } catch (error) {
+      console.error("Error in getCanonicalUrl:", error)
+      return void 0
     }
     return url
   }
@@ -12184,7 +11965,7 @@
         deleteElementUtags(element)
         return
       }
-      const href = element.href || element.dataset.utags_link
+      const href = element.dataset.utags_link || element.href
       if (!href || !validateFunction(element, href)) {
         deleteElementUtags(element)
         return
@@ -12652,7 +12433,7 @@
     }
     {
       const newValue = getSettingsValue("enableCurrentSite_".concat(host2))
-        ? "1"
+        ? host2
         : "off"
       if (newValue !== doc.documentElement.dataset.utags) {
         doc.documentElement.dataset.utags = newValue
@@ -13375,7 +13156,7 @@
   setupConsole()
   if (doc.documentElement.dataset.utags === void 0) {
     console.log("Start init ContentScript")
-    doc.documentElement.dataset.utags = "1"
+    doc.documentElement.dataset.utags = host2
     void main()
   }
 })()

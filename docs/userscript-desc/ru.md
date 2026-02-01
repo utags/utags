@@ -77,6 +77,7 @@
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
 - hitomi.la ([hitomi.la](https://hitomi.la/))
+- www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - И многие другие. Нажмите [здесь](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback), чтобы предложить добавление новых сайтов.
 
 Если вы хотите использовать UTags и на других сайтах, просто добавьте в настройках скрипта правило `user matches` для нужного сайта.

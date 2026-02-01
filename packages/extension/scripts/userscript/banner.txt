@@ -108,7 +108,9 @@
 // @match                https://bbs.viva-la-vita.org/*
 // @match                https://www.zhipin.com/*
 // @match                https://*.twitch.tv/*
-// @match                https://*.yamibo.com/*
+// @match                https://bbs.yamibo.com/*
+// @match                https://www.tsdm39.com/*
+// @match                https://tsdm39.com/*
 // @match                https://*.flickr.com/*
 // @match                https://*.ruanyifeng.com/*
 // @match                https://www.uscardforum.com/*

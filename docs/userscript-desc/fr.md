@@ -76,6 +76,7 @@ Sites actuellement pris en charge :
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
 - hitomi.la ([hitomi.la](https://hitomi.la/))
+- www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - Et bien d'autres. Cliquez [ici](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) pour suggérer de nouveaux sites.
 
 Si vous souhaitez utiliser UTags sur d'autres sites, ajoutez simplement une règle `user matches` pour le site cible dans les paramètres du script.

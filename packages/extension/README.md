@@ -78,6 +78,7 @@ For now it works on
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
 - hitomi.la ([hitomi.la](https://hitomi.la/))
+- www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 ## Installation

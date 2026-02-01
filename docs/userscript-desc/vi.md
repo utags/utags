@@ -76,6 +76,7 @@ Các trang web hiện được hỗ trợ:
 - Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
 - nhentai ([nhentai.net](https://nhentai.net/))
 - hitomi.la ([hitomi.la](https://hitomi.la/))
+- www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
 
 Nếu bạn muốn dùng UTags trên các trang web khác, chỉ cần thêm một quy tắc `user matches` cho trang đích trong phần cài đặt script.
