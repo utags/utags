@@ -13,12 +13,17 @@ import defaultSite from '../default'
 
 export default (() => {
   const matchesPattern =
-    /bbs\.tampermonkey\.net\.cn|bbs\.yamibo\.com|(www\.)?tsdm39\.com/
+    /bbs\.tampermonkey\.net\.cn|bbs\.yamibo\.com|(www\.)?tsdm39\.com|xsijishe\.\w+|sjs47\.\w+|sjslt\.cc/
   const currentPrefix = location.origin + '/'
   const normalizedPrefix = normalizeDomain(currentPrefix)
 
   function normalizeDomain(url: string) {
-    return url.replace('https://tsdm39.com', 'https://www.tsdm39.com')
+    return url
+      .replace('https://tsdm39.com', 'https://www.tsdm39.com')
+      .replace(
+        /^https:\/\/(xsijishe\.\w+|sjs47\.\w+|sjslt\.cc)/,
+        'https://xsijishe.net'
+      )
   }
 
   function getCanonicalUrl(url: string, hostname: string) {
@@ -131,6 +136,10 @@ export default (() => {
       //
       '#threadlist table tbody',
       '#postlist .comiis_vrx',
+      // xsijishe.net > comments
+      '#postlist .otherfloor',
+      // xsijishe.net
+      '.nex_forum_lists',
     ],
     conditionNodesSelectors: [
       // bbs.tampermonkey.net.cn
@@ -145,6 +154,14 @@ export default (() => {
       // www.tsdm39.com
       '#threadlist table tbody a[href*="home.php?mod=space&uid="]',
       '#postlist .comiis_vrx .authi a',
+      // xsijishe.net > comments
+      '#postlist .otherfloor .authi a',
+      // xsijishe.net
+      // author
+      '.nex_forum_lists .nex_threads_author a',
+      // xsijishe.net
+      // post title
+      '.nex_forum_lists .nex_forumtit_top a',
     ],
     validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(currentPrefix)) {
@@ -229,7 +246,7 @@ export default (() => {
         return false
       }
 
-      return true
+      return !normalizedPrefix.includes('xsijishe.net')
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
@@ -251,7 +268,14 @@ export default (() => {
       'a[href*="mod=spacecp&ac=usergroup"]',
       'a[href*="home.php?mod=spacecp"]',
       // 'a[href*="goto=lastpost#lastpost"]',
+      // 只看该作者
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&authorid="]',
+      // 只看大图
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&from=album"]',
+      // 倒序浏览
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&ordertype="]',
       'a[onclick*="copyThreadUrl"]',
+      'a[onclick*="setCopy"]',
       '#gadmin_menu',
       '#guser_menu',
       '#gupgrade_menu',
@@ -269,10 +293,15 @@ export default (() => {
       '.comiis_topinfo',
       '.bm .bm_h .kmfz',
       'td.num a',
-      'td.plc .pi',
       'td.plc .po.hin',
       'td.pls .tns',
       'ul.comiis_o',
+      // xsijishe.net
+      // 详情按钮
+      '.nex_member_more',
+      // xsijishe.net
+      // 详情按钮
+      '.nex_member_hids',
       'a[onclick*="showMenu"]',
       'a[onclick*="showWindow"]',
       // 换行问题 CSS 搞不定
@@ -311,6 +340,7 @@ export default (() => {
           if (title) {
             const meta = { title, type: 'post' }
             setUtags(element, key, meta)
+            element.dataset.utags_node_type = 'link'
             matchedNodesSet.add(element)
             markElementWhetherVisited(key, element)
           }

@@ -64,7 +64,6 @@ import panda_chaika_moe from './z999/003-panda.chaika.moe'
 import dmm_co_jp from './z999/004-dmm.co.jp'
 import kemono_su from './z999/005-kemono.su'
 import rule34video_com from './z999/006-rule34video.com'
-import xsijishe from './z999/007-xsijishe.net'
 import simpcity from './z999/008-simpcity.cr'
 import hotgirl_asia from './z999/009-hotgirl.asia'
 import nhentai_net from './z999/010-nhentai.net'
@@ -136,7 +135,6 @@ const sites: Site[] = [
   dmm_co_jp,
   kemono_su,
   rule34video_com,
-  xsijishe,
   simpcity,
   hotgirl_asia,
   nhentai_net,

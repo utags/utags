@@ -360,18 +360,23 @@ describe('getCanonicalUrl', () => {
       { domain: 'bbs.yamibo.com' },
       { domain: 'www.tsdm39.com' },
       { domain: 'tsdm39.com', outputDomain: 'www.tsdm39.com' },
+      { domain: 'xsijishe.net' },
+      { domain: 'xsijishe.com', outputDomain: 'xsijishe.net' },
+      { domain: 'sjs47.net', outputDomain: 'xsijishe.net' },
+      { domain: 'sjs47.com', outputDomain: 'xsijishe.net' },
+      { domain: 'sjslt.cc', outputDomain: 'xsijishe.net' },
     ]
 
     for (const { domain, outputDomain: out } of domains) {
       const outputDomain = out || domain
       describe(domain, () => {
         it('should normalize user profile url', () => {
-          expect(getCanonicalUrl(`https://${domain}/space-uid-123.html`)).toBe(
-            `https://${outputDomain}/home.php?mod=space&uid=123`
-          )
           expect(
             getCanonicalUrl(`https://${domain}/home.php?mod=space&uid=123`)
           ).toBe(`https://${outputDomain}/home.php?mod=space&uid=123`)
+          expect(getCanonicalUrl(`https://${domain}/space-uid-123.html`)).toBe(
+            `https://${outputDomain}/home.php?mod=space&uid=123`
+          )
           expect(getCanonicalUrl(`https://${domain}/?123`)).toBe(
             `https://${outputDomain}/home.php?mod=space&uid=123`
           )
@@ -393,6 +398,11 @@ describe('getCanonicalUrl', () => {
         })
 
         it('should normalize post url', () => {
+          expect(
+            getCanonicalUrl(
+              `https://${domain}/forum.php?mod=viewthread&tid=123`
+            )
+          ).toBe(`https://${outputDomain}/forum.php?mod=viewthread&tid=123`)
           expect(getCanonicalUrl(`https://${domain}/thread-123-1-1.html`)).toBe(
             `https://${outputDomain}/forum.php?mod=viewthread&tid=123`
           )
@@ -544,59 +554,6 @@ describe('getCanonicalUrl', () => {
           'https://video.dmm.co.jp/av/content/?id=kwbd00232&i3_ref=list'
         )
       ).toBe('https://video.dmm.co.jp/av/content/?id=kwbd00232')
-    })
-  })
-
-  describe('xsijishe.net', () => {
-    it('should normalize domain aliases', () => {
-      expect(getCanonicalUrl('https://sjs47.net/forum.php')).toBe(
-        'https://xsijishe.net/forum.php'
-      )
-      expect(getCanonicalUrl('https://sjslt.cc/forum.php')).toBe(
-        'https://xsijishe.net/forum.php'
-      )
-    })
-
-    it('should normalize user profile url', () => {
-      expect(getCanonicalUrl('https://xsijishe.net/?1234567')).toBe(
-        'https://xsijishe.net/home.php?mod=space&uid=1234567'
-      )
-      expect(
-        getCanonicalUrl('https://xsijishe.net/space-uid-1234567.html')
-      ).toBe('https://xsijishe.net/home.php?mod=space&uid=1234567')
-      expect(
-        getCanonicalUrl(
-          'https://xsijishe.net/home.php?mod=space&uid=1234567&do=profile'
-        )
-      ).toBe('https://xsijishe.net/home.php?mod=space&uid=1234567')
-
-      expect(getCanonicalUrl('https://sjs47.net/?1234567')).toBe(
-        'https://xsijishe.net/home.php?mod=space&uid=1234567'
-      )
-      expect(getCanonicalUrl('https://sjslt.cc/space-uid-1234567.html')).toBe(
-        'https://xsijishe.net/home.php?mod=space&uid=1234567'
-      )
-      expect(
-        getCanonicalUrl(
-          'https://sjslt.cc/home.php?mod=space&uid=1234567&do=profile'
-        )
-      ).toBe('https://xsijishe.net/home.php?mod=space&uid=1234567')
-    })
-
-    it('should normalize post url', () => {
-      expect(
-        getCanonicalUrl('https://xsijishe.net/thread-1234567-1-1.html')
-      ).toBe('https://xsijishe.net/forum.php?mod=viewthread&tid=1234567')
-      expect(
-        getCanonicalUrl(
-          'https://xsijishe.net/forum.php?mod=redirect&tid=1234567&goto=lastpost'
-        )
-      ).toBe('https://xsijishe.net/forum.php?mod=viewthread&tid=1234567')
-      expect(
-        getCanonicalUrl(
-          'https://xsijishe.net/forum.php?mod=viewthread&tid=1234567&extra=page%3D1'
-        )
-      ).toBe('https://xsijishe.net/forum.php?mod=viewthread&tid=1234567')
     })
   })
 
