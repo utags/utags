@@ -50,7 +50,7 @@ export default (() => {
     if (url.startsWith(prefix2)) {
       const href2 = url.slice(prefix2.length)
       if (exact) {
-        if (/^p\/\d+$/.test(href2)) {
+        if (/^p\/\d+(\?.*)?$/.test(href2)) {
           return prefix2 + href2.replace(/^(p\/\d+).*/, '$1')
         }
       } else if (/^p\/\d+/.test(href2)) {

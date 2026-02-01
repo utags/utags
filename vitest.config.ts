@@ -20,5 +20,21 @@ export default defineConfig({
     ],
     // Setup test environment
     environment: 'jsdom',
+    globals: true,
   },
+  plugins: [
+    {
+      name: 'plasmo-data-text-loader',
+      resolveId(id) {
+        if (id.startsWith('data-text:')) {
+          return id
+        }
+      },
+      load(id) {
+        if (id.startsWith('data-text:')) {
+          return `export default ''`
+        }
+      },
+    },
+  ],
 })

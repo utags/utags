@@ -70,6 +70,7 @@ export default (() => {
   }
 
   return {
+    // simpcity.cr | simpcity.ax | ...
     matches: /simpcity\.\w+/,
     preProcess() {
       setVisitedAvailable(true)

@@ -56,7 +56,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
-        if (/^r\/\w+\/?(#.*)?$/.test(href2)) {
+        if (/^r\/\w+\/?([?#].*)?$/.test(href2)) {
           return prefix + href2.replace(/^(r\/\w+).*/, '$1') + '/'
         }
       } else if (/^r\/\w+/.test(href2)) {
@@ -71,7 +71,7 @@ export default (() => {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
-        if (/^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)$/.test(href2)) {
+        if (/^(r\/\w+\/comments\/\w+(\/([^/]*\/?)?)?)([?#].*)?$/.test(href2)) {
           return (
             prefix +
             href2.replace(/^(r\/\w+\/comments\/\w+(\/([^/]*)?)?).*/, '$1') +

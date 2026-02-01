@@ -33,6 +33,11 @@ export default (() => {
         return undefined
       }
 
+      // https://hitomi.la/imageset/%E7%A5%9E%E5%A5%87%E7%81%AB%E9%9B%9E-%E6%97%A5%E6%9C%AC%E8%AA%9E-3767194.html
+      // https://hitomi.la/doujinshi/adventurous-affair-english-3767175.html
+      // ->
+      // https://hitomi.la/imageset/3767194.html
+      // https://hitomi.la/doujinshi/3767175.html
       if (exact) {
         if (/^(\w+)\/([^/]+-)?(\d+\.html)$/.test(href2)) {
           return (

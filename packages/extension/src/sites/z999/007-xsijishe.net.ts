@@ -54,7 +54,7 @@ export default (() => {
       const href2 = url.slice(prefix.length).toLowerCase()
       if (exact) {
         // https://xsijishe.net/?1234567
-        if (/^\?\d+(#.*)?$/.test(href2)) {
+        if (/^\?\d+(=)?(#.*)?$/.test(href2)) {
           return (
             prefix + href2.replace(/^\?(\d+).*/, 'home.php?mod=space&uid=$1')
           )
@@ -110,7 +110,7 @@ export default (() => {
       }
 
       // https://xsijishe.net/forum.php?mod=viewthread&tid=1234567
-      if (/^forum\.php\?mod=viewthread&tid=\d+(#.*)?$/.test(href2)) {
+      if (/^forum\.php\?mod=viewthread&tid=\d+([&#].*)?$/.test(href2)) {
         return (
           prefix +
           href2.replace(
