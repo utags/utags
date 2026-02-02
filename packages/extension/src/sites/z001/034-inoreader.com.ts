@@ -41,9 +41,7 @@ export default (() => {
       '.ar.article_card .article_sub_title a',
       '.ar.article_card a.article_title_link',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

@@ -118,8 +118,8 @@ export default (() => {
       // ".column .latest-topic-list .latest-topic-list-item .main-link .discourse-tag",
     ],
 
-    validate(element: HTMLAnchorElement) {
-      const href = getCanonicalUrl(element.href)
+    validate(element: HTMLAnchorElement, href: string) {
+      href = getCanonicalUrl(href)
 
       if (!href.startsWith(CANONICAL_BASE_URL)) {
         return true

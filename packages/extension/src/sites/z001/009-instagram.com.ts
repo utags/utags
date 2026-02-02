@@ -7,8 +7,7 @@ import defaultSite from '../default'
 export default (() => {
   return {
     matches: /instagram\.com/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith('https://www.instagram.com/')) {
         // Remove "https://www.instagram.com/"
         const href2 = href.slice(26)

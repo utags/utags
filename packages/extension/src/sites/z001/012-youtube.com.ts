@@ -89,13 +89,7 @@ export default (() => {
       // Suggests
       'yt-lockup-view-model h3.yt-lockup-metadata-view-model__heading-reset a',
     ],
-    validate(element: HTMLAnchorElement) {
-      // const hrefAttr = getAttribute(element, 'href')
-      // if (!hrefAttr || hrefAttr === 'null' || hrefAttr === '#') {
-      //   return false
-      // }
-
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith(prefix) || href.startsWith(prefix2)) {
         let key = getUserProfileUrl(href, true)
         if (key) {

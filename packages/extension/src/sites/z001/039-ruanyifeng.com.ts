@@ -83,9 +83,7 @@ export default (() => {
       // related posts
       '#related_entries ul li a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (
         !href.startsWith(CANONICAL_BASE_URL) &&
         !href.startsWith(location.origin)

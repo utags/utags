@@ -51,9 +51,7 @@ export default (() => {
       // Tags
       'section ul li a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.includes('www.pixiv.net')) {
         return true
       }

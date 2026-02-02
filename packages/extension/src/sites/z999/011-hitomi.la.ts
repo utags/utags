@@ -78,9 +78,7 @@ export default (() => {
       // thumb title
       '.gallery-content > div a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

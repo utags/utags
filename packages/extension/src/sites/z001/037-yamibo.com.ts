@@ -128,9 +128,7 @@ export default (() => {
       // "#threadlist table tbody .km_user a",
       '#postlist .comiis_vrx .authi a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

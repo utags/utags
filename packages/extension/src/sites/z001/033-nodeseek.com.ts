@@ -77,9 +77,7 @@ export default (() => {
       // comments
       'ul.comments li.content-item a.author-name',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

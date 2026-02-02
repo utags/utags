@@ -116,8 +116,8 @@ export default (() => {
     //   // Right sidebar
     //   '[data-right-sidebar] .card-body > h4 + div > div a',
     // ],
-    validate(element: HTMLAnchorElement) {
-      let href = normalizeDomain(element.href)
+    validate(element: HTMLAnchorElement, href: string) {
+      href = normalizeDomain(href)
 
       if (!href.startsWith(prefix)) {
         return true

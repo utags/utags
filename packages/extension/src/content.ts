@@ -1356,13 +1356,26 @@ async function main() {
   // eventManager.addEventListener(globalThis, 'pagehide', cleanup)
   // TODO: re-init on page show event for Safari
 
+  const monitoredAttributes = new Set([
+    'href',
+    'data-utags_link',
+    'data-utags_title',
+    'data-utags_type',
+    'data-utags_exclude',
+  ])
+
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
+  function isMonitoredAttribute(attributeName: string | null | undefined) {
+    return attributeName && monitoredAttributes.has(attributeName)
+  }
+
   const observer = new MutationObserver(async (mutationsList) => {
     // console.debug('mutation', Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
       if (
         mutationRecord.type === 'attributes' &&
-        mutationRecord.attributeName === 'href'
+        isMonitoredAttribute(mutationRecord.attributeName)
       ) {
         shouldUpdate = true
         break
@@ -1393,7 +1406,13 @@ async function main() {
     observer.observe(doc.body, {
       childList: true,
       subtree: true,
-      attributeFilter: ['href'],
+      attributeFilter: [
+        'href',
+        'data-utags_link',
+        'data-utags_title',
+        'data-utags_type',
+        'data-utags_exclude',
+      ],
     })
   })
 

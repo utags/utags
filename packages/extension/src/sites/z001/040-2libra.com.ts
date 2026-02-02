@@ -83,9 +83,7 @@ export default (() => {
       // Right sidebar
       '[data-right-sidebar] .card-body > h4 + div > div a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

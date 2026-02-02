@@ -18,8 +18,7 @@ export default (() => {
       // feed
       '[data-testid="cellInnerDiv"] [data-testid="User-Name"] a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith(prefix) || href.startsWith(prefix2)) {
         // Remove prefix
         const href2 = href.startsWith(prefix2) ? href.slice(20) : href.slice(14)

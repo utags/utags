@@ -194,8 +194,12 @@ const conditionNodesSelector = joinSelectors(
 )
 
 const matchedNodesSelector = joinSelectors(
-  currentSite.matchedNodesSelectors ||
-    (currentSite.matches ? defaultSite.matchedNodesSelectors : undefined)
+  currentSite.matchedNodesSelectors &&
+    currentSite.matchedNodesSelectors.length > 0
+    ? [...currentSite.matchedNodesSelectors, '[data-utags_link]']
+    : currentSite.matches
+      ? defaultSite.matchedNodesSelectors
+      : undefined
 )
 
 const excludeSelector = joinSelectors([

@@ -130,13 +130,11 @@ export default (() => {
       // Categories
       'ul.categoriesListSection li .categoryTitleWrapper a',
     ],
-    validate(element: HTMLAnchorElement) {
+    validate(element: HTMLAnchorElement, href: string) {
       const hrefAttr = getAttribute(element, 'href')
       if (!hrefAttr || hrefAttr === 'null' || hrefAttr === '#') {
         return false
       }
-
-      const href = element.href
 
       let key = getChannelUrl(href, true)
       if (key) {

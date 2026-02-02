@@ -149,8 +149,8 @@ export default (() => {
       // post title
       '.nex_forum_lists .nex_forumtit_top a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = normalizeDomain(element.href)
+    validate(element: HTMLAnchorElement, href: string) {
+      href = normalizeDomain(href)
 
       if (!href.startsWith(prefix)) {
         return true

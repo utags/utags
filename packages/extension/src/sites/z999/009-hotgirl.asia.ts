@@ -41,9 +41,7 @@ export default (() => {
       // Vidio thumb title
       '.vl-item a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

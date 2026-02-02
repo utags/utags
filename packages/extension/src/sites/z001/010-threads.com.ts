@@ -22,8 +22,7 @@ export default (() => {
 
   return {
     matches: /threads\.com/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith('https://www.threads.com/')) {
         // Remove "https://www.threads.com/"
         const href2 = href.slice(24)

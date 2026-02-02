@@ -145,9 +145,7 @@ export default (() => {
     matches: /github\.com/,
     listNodesSelectors: [],
     conditionNodesSelectors: [],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith(prefix)) {
         if (/since|until/.test(href)) {
           return false

@@ -20,12 +20,11 @@ export default (() => {
 
   return {
     matches: /juejin\.cn/,
-    validate(element: HTMLAnchorElement) {
+    validate(element: HTMLAnchorElement, href: string) {
       if ($('.avatar', element)) {
         return false
       }
 
-      const href = element.href
       if (href.startsWith(prefix)) {
         const key = getUserProfileUrl(href)
         if (key) {

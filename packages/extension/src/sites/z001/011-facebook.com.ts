@@ -63,9 +63,7 @@ export default (() => {
 
   return {
     matches: /^(www|m)\.facebook\.com$/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (
         !href.startsWith('https://www.facebook.com/') &&
         !href.startsWith('https://m.facebook.com/') &&

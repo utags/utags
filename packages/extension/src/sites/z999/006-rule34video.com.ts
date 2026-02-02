@@ -64,9 +64,7 @@ export default (() => {
       '.list-comments .item .comment-info .inner a',
       '.thumbs .item a.th',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         if ($('header', element.parentElement!)) {
           // AD

@@ -55,8 +55,7 @@ export default (() => {
 
   return {
     matches: /sspai\.com/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       for (const link of excludeLinks) {
         if (href.includes(link)) {
           return false

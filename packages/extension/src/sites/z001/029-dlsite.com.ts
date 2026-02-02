@@ -32,12 +32,10 @@ export default (() => {
 
   return {
     matches: /dlsite\.com/,
-    validate(element: HTMLAnchorElement) {
+    validate(element: HTMLAnchorElement, href: string) {
       if (element.tagName !== 'A') {
         return true
       }
-
-      const href = element.href
 
       if (!href.startsWith(prefix)) {
         return true

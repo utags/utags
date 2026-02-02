@@ -128,9 +128,7 @@ export default (() => {
       '.column .latest-topic-list .latest-topic-list-item .main-link .badge-category__wrapper',
       '.column .latest-topic-list .latest-topic-list-item .main-link .discourse-tag',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

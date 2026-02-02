@@ -5,6 +5,8 @@
 - Integrate Discuz! sites support and merge existing implementations.
 - Support new website: www.tsdm39.com.
 - Add comprehensive test cases for `getCanonicalUrl` function.
+- Optimize `MutationObserver` to monitor changes in `data-utags_*` attributes, ensuring tags update when these attributes change dynamically.
+- Ensure elements with `data-utags_link` are correctly matched even when custom site selectors are defined.
 
 ## v0.25
 

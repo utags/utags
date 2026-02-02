@@ -21,9 +21,7 @@ export default (() => {
 
   return {
     matches: /bbs\.nga\.cn|nga\.178\.com|ngabbs\.com/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

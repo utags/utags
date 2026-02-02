@@ -98,9 +98,7 @@ export default (() => {
 
   return {
     matches: /dmm\.co\.jp/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

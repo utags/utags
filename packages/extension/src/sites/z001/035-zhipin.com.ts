@@ -162,9 +162,7 @@ export default (() => {
         }
       }
     },
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href) {
         return false
       }

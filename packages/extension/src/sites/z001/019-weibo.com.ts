@@ -54,9 +54,7 @@ export default (() => {
 
   return {
     matches: /weibo\.com|weibo\.cn/,
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.includes('weibo.com') && !href.includes('weibo.cn')) {
         return true
       }

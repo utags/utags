@@ -112,8 +112,7 @@ export default (() => {
       'shreddit-comment-tree-ad .promoted-name-container a',
       'shreddit-comments-page-ad .promoted-name-container a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }

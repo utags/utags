@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.26.1
+// @version              0.26.2
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -5899,8 +5899,7 @@
       matches: /github\.com/,
       listNodesSelectors: [],
       conditionNodesSelectors: [],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (href.startsWith(prefix2)) {
           if (/since|until/.test(href)) {
             return false
@@ -6101,8 +6100,7 @@
         "shreddit-comment-tree-ad .promoted-name-container a",
         "shreddit-comments-page-ad .promoted-name-container a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -6210,8 +6208,7 @@
       conditionNodesSelectors: [
         '[data-testid="cellInnerDiv"] [data-testid="User-Name"] a',
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
           const href2 = href.startsWith(prefix22)
             ? href.slice(20)
@@ -6286,8 +6283,7 @@
   var instagram_com_default2 = (() => {
     return {
       matches: /instagram\.com/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (href.startsWith("https://www.instagram.com/")) {
           const href2 = href.slice(26)
           if (/^[\w.]+\/$/.test(href2)) {
@@ -6325,8 +6321,7 @@
     }
     return {
       matches: /threads\.com/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (href.startsWith("https://www.threads.com/")) {
           const href2 = href.slice(24)
           if (/^@[\w.]+$/.test(href2)) {
@@ -6405,8 +6400,7 @@
     }
     return {
       matches: /^(www|m)\.facebook\.com$/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (
           !href.startsWith("https://www.facebook.com/") &&
           !href.startsWith("https://m.facebook.com/") &&
@@ -6523,8 +6517,7 @@
         "ytd-video-renderer .ytd-channel-name, a",
         "yt-lockup-view-model h3.yt-lockup-metadata-view-model__heading-reset a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (href.startsWith(prefix2) || href.startsWith(prefix22)) {
           let key = getUserProfileUrl(href, true)
           if (key) {
@@ -6893,8 +6886,7 @@
         '.css-1gstnae-DivCommentItemWrapper a[href^="/@"]',
         '.css-x6y88p-DivItemContainerV2 a[href^="/@"]',
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -6970,11 +6962,10 @@
     }
     return {
       matches: /juejin\.cn/,
-      validate(element) {
+      validate(element, href) {
         if ($(".avatar", element)) {
           return false
         }
-        const href = element.href
         if (href.startsWith(prefix2)) {
           const key = getUserProfileUrl(href)
           if (key) {
@@ -7094,11 +7085,10 @@
     }
     return {
       matches: /zhihu\.com/,
-      validate(element) {
+      validate(element, href) {
         if ($(".avatar", element)) {
           return false
         }
-        const href = element.href
         if (
           !href.includes("zhihu.com") ||
           href.startsWith("https://link.zhihu.com/")
@@ -7251,8 +7241,7 @@
         ".feeds-container section .cover",
         ".comment-item .author-wrapper .author a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -7373,8 +7362,7 @@
     }
     return {
       matches: /weibo\.com|weibo\.cn/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.includes("weibo.com") && !href.includes("weibo.cn")) {
           return true
         }
@@ -7457,8 +7445,7 @@
     }
     return {
       matches: /sspai\.com/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         for (const link of excludeLinks) {
           if (href.includes(link)) {
             return false
@@ -7553,8 +7540,7 @@
       conditionNodesSelectors: [
         '[data-e2e="comment-item"] .comment-item-info-wrap a',
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.includes("www.douyin.com")) {
           return true
         }
@@ -7930,8 +7916,7 @@
         ".gtm-illust-recommend-zone li a",
         "section ul li a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.includes("www.pixiv.net")) {
           return true
         }
@@ -8062,8 +8047,7 @@
         ".column .latest-topic-list .latest-topic-list-item .main-link .badge-category__wrapper",
         ".column .latest-topic-list .latest-topic-list-item .main-link .discourse-tag",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8350,8 +8334,7 @@
     }
     return {
       matches: /bbs\.nga\.cn|nga\.178\.com|ngabbs\.com/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8422,11 +8405,10 @@
     }
     return {
       matches: /dlsite\.com/,
-      validate(element) {
+      validate(element, href) {
         if (element.tagName !== "A") {
           return true
         }
-        const href = element.href
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8582,8 +8564,7 @@
     }
     return {
       matches: /keylol\.com/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8671,8 +8652,7 @@
         ".hotDiscussion-content ul li a",
         ".PostStream .PostStream-item .PostUser-name a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8835,8 +8815,7 @@
         "ul.post-list li.post-list-item a.post-category",
         "ul.comments li.content-item a.author-name",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -8939,8 +8918,7 @@
         ".ar.article_card .article_sub_title a",
         ".ar.article_card a.article_title_link",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -9080,8 +9058,7 @@
           }
         }
       },
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href) {
           return false
         }
@@ -9278,8 +9255,7 @@
         '.tw-tower [data-a-target^="video-tower-card-"] a',
         ".tw-transition-group .tw-transition a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -9405,8 +9381,8 @@
       matches: /flickr\.com/,
       listNodesSelectors: [],
       conditionNodesSelectors: [],
-      validate(element) {
-        const href = getCanonicalUrl2(element.href)
+      validate(element, href) {
+        href = getCanonicalUrl2(href)
         if (!href.startsWith(CANONICAL_BASE_URL)) {
           return true
         }
@@ -9602,8 +9578,7 @@
         "ul li.module-list-item a",
         "#related_entries ul li a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (
           !href.startsWith(CANONICAL_BASE_URL) &&
           !href.startsWith(location.origin)
@@ -9713,8 +9688,7 @@
         '[data-main-left]:not(.utags_no_hide) > div > div.card article address > div > a[rel="author"]',
         "[data-right-sidebar] .card-body > h4 + div > div a",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -9889,8 +9863,8 @@
       preProcess() {
         setVisitedAvailable(true)
       },
-      validate(element) {
-        let href = normalizeDomain(element.href)
+      validate(element, href) {
+        href = normalizeDomain(href)
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -10362,12 +10336,11 @@
         ".videoViewPage .commentBlock .usernameWrap a",
         "ul.categoriesListSection li .categoryTitleWrapper a",
       ],
-      validate(element) {
+      validate(element, href) {
         const hrefAttr = getAttribute(element, "href")
         if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
           return false
         }
-        const href = element.href
         let key = getChannelUrl(href, true)
         if (key) {
           const meta = { type: "channel" }
@@ -10743,8 +10716,7 @@
     }
     return {
       matches: /dmm\.co\.jp/,
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -11010,8 +10982,7 @@
         ".list-comments .item .comment-info .inner a",
         ".thumbs .item a.th",
       ],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           if ($("header", element.parentElement)) {
             const key2 = href.replace(/(https?:\/\/[^/]+\/).*/, "$1")
@@ -11169,8 +11140,8 @@
         ".structItem--thread .structItem-cell--main a",
         'article.message--post[itemtype="https://schema.org/Comment"] .message-userDetails a.username',
       ],
-      validate(element) {
-        const href = normalizeDomain(element.href)
+      validate(element, href) {
+        href = normalizeDomain(href)
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -11293,8 +11264,7 @@
       },
       listNodesSelectors: [".vl-item"],
       conditionNodesSelectors: [".vl-item a"],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -11386,8 +11356,7 @@
       },
       listNodesSelectors: [".gallery"],
       conditionNodesSelectors: [".gallery a.cover"],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -11482,8 +11451,7 @@
       },
       listNodesSelectors: [".gallery-content > div"],
       conditionNodesSelectors: [".gallery-content > div a"],
-      validate(element) {
-        const href = element.href
+      validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
         }
@@ -11598,8 +11566,12 @@
     currentSite.conditionNodesSelectors
   )
   var matchedNodesSelector = joinSelectors(
-    currentSite.matchedNodesSelectors ||
-      (currentSite.matches ? default_default2.matchedNodesSelectors : void 0)
+    currentSite.matchedNodesSelectors &&
+      currentSite.matchedNodesSelectors.length > 0
+      ? [...currentSite.matchedNodesSelectors, "[data-utags_link]"]
+      : currentSite.matches
+        ? default_default2.matchedNodesSelectors
+        : void 0
   )
   var excludeSelector = joinSelectors([
     BASE_EXCLUDE_SELECTOR,
@@ -12854,12 +12826,22 @@
       clearDomReferences()
       clearAllTimers()
     }
+    const monitoredAttributes = /* @__PURE__ */ new Set([
+      "href",
+      "data-utags_link",
+      "data-utags_title",
+      "data-utags_type",
+      "data-utags_exclude",
+    ])
+    function isMonitoredAttribute(attributeName) {
+      return attributeName && monitoredAttributes.has(attributeName)
+    }
     const observer = new MutationObserver(async (mutationsList) => {
       let shouldUpdate = false
       for (const mutationRecord of mutationsList) {
         if (
           mutationRecord.type === "attributes" &&
-          mutationRecord.attributeName === "href"
+          isMonitoredAttribute(mutationRecord.attributeName)
         ) {
           shouldUpdate = true
           break
@@ -12884,7 +12866,13 @@
       observer.observe(doc.body, {
         childList: true,
         subtree: true,
-        attributeFilter: ["href"],
+        attributeFilter: [
+          "href",
+          "data-utags_link",
+          "data-utags_title",
+          "data-utags_type",
+          "data-utags_exclude",
+        ],
       })
     })
     const documentElementObserver = new MutationObserver((mutationsList) => {

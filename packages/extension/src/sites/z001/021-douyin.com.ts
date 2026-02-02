@@ -59,9 +59,7 @@ export default (() => {
       // 视频评论区 > 用户名
       '[data-e2e="comment-item"] .comment-item-info-wrap a',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
-
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.includes('www.douyin.com')) {
         return true
       }

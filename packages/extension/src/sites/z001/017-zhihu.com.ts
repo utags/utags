@@ -78,12 +78,10 @@ export default (() => {
 
   return {
     matches: /zhihu\.com/,
-    validate(element: HTMLAnchorElement) {
+    validate(element: HTMLAnchorElement, href: string) {
       if ($('.avatar', element)) {
         return false
       }
-
-      const href = element.href
 
       if (
         !href.includes('zhihu.com') ||

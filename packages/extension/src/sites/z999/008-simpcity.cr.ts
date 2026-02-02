@@ -87,8 +87,8 @@ export default (() => {
       // Comments
       'article.message--post[itemtype="https://schema.org/Comment"] .message-userDetails a.username',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = normalizeDomain(element.href)
+    validate(element: HTMLAnchorElement, href: string) {
+      href = normalizeDomain(href)
 
       if (!href.startsWith(prefix)) {
         return true

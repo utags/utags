@@ -35,8 +35,7 @@ export default (() => {
       '.css-1gstnae-DivCommentItemWrapper a[href^="/@"]',
       '.css-x6y88p-DivItemContainerV2 a[href^="/@"]',
     ],
-    validate(element: HTMLAnchorElement) {
-      const href = element.href
+    validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }
