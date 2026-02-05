@@ -84,8 +84,7 @@
   },
   "manifest": {
     "permissions": [
-      "storage",
-      "<all_urls>"
+      "storage"
     ],
     "host_permissions": [
       "https://*/*",
