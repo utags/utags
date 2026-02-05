@@ -1,4 +1,4 @@
-import { $$ } from 'browser-extension-utils'
+import { setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./030-keylol.com.scss'
 
 import { setUtags } from '../../utils/dom-utils'
@@ -61,7 +61,7 @@ export default (() => {
         const meta = { type: 'user', title }
 
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         return true
       }
 

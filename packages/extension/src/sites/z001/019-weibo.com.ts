@@ -64,7 +64,7 @@ export default (() => {
         const meta = { type: 'user' }
         setUtags(element, key, meta)
         if ($('.m-icon.vipicon', element)) {
-          element.dataset.utags = element.dataset.utags || ''
+          setAttribute(element, 'data-utags', element.dataset.utags || '')
         }
 
         return true

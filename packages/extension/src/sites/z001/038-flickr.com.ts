@@ -1,4 +1,4 @@
-import { $, $$, doc } from 'browser-extension-utils'
+import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./038-flickr.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -149,7 +149,7 @@ export default (() => {
         const meta = { type: 'user', title }
 
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }

@@ -22,6 +22,7 @@ import {
   removeClass,
   runWhenBodyExists,
   runWhenHeadExists,
+  setAttribute,
   setStyle,
   throttle,
   uniq,
@@ -706,7 +707,7 @@ function appendTagsToPage(
     element.after(ul)
   }
 
-  element.dataset.utags = tags.join(',')
+  setAttribute(element, 'data-utags', tags.join(','))
   /* Fix v2ex polish start */
   // 为了防止阻塞渲染页面，延迟执行
   createTimeout(() => {

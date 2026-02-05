@@ -66,7 +66,7 @@ export default (() => {
         hasClass(element, 'ss__user__nickname__wrapper') ||
         element.closest('.card_bottom > a[href^="/u/"]')
       ) {
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         return true
       }
 

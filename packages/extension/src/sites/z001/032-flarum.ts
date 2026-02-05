@@ -1,4 +1,4 @@
-import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./032-flarum.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -96,7 +96,7 @@ export default (() => {
         const meta = { type: 'user', title }
 
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         if (titleElement) {
           element.dataset.utags_position_selector =
@@ -120,7 +120,7 @@ export default (() => {
 
         const meta = { type: 'post', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         markElementWhetherVisited(key, element)
         if (titleElement) {
           element.dataset.utags_position_selector = hasClass(
@@ -143,7 +143,7 @@ export default (() => {
 
         const meta = { type: 'tag', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         return true
       }
 

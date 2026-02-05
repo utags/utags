@@ -1,4 +1,4 @@
-import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./008-simpcity.cr.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -108,7 +108,7 @@ export default (() => {
         const meta = { type: 'post', title }
         setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }
@@ -122,7 +122,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }

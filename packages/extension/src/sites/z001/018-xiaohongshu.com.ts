@@ -100,7 +100,7 @@ export default (() => {
 
         const meta = { type: 'user', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }
@@ -121,7 +121,7 @@ export default (() => {
             }
 
             // 没有标题的笔记
-            element.dataset.utags = element.dataset.utags || ''
+            setAttribute(element, 'data-utags', element.dataset.utags || '')
           }
         }
 

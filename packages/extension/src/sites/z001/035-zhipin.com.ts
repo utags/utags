@@ -1,4 +1,4 @@
-import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./035-zhipin.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -192,7 +192,7 @@ export default (() => {
 
         const meta = { type: 'company', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         if (element.closest('.sub-li-bottom a.user-info')) {
           element.dataset.utags_position_selector = 'a > p'
         } else if (element.closest('.company-search a.company-info')) {
@@ -217,7 +217,7 @@ export default (() => {
         title = title.replace(' 在线 ', '')
         const meta = { type: 'job-detail', title }
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         element.dataset.utags_position_selector =
           '.job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h'
 

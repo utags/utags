@@ -1,4 +1,4 @@
-import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./036-twitch.tv.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -116,7 +116,7 @@ export default (() => {
         const meta = { type: 'user', title }
 
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         // if (element.closest(".topic-body .names a")) {
         //   element.dataset.utags_position_selector = ".topic-body .names"
@@ -145,7 +145,7 @@ export default (() => {
         setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
 
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }
@@ -225,7 +225,7 @@ export default (() => {
           const meta = { type: 'user', title }
 
           setUtags(element, key, meta)
-          element.dataset.utags = element.dataset.utags || ''
+          setAttribute(element, 'data-utags', element.dataset.utags || '')
           element.dataset.utags_node_type = 'link'
 
           matchedNodesSet.add(element)

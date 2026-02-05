@@ -1,4 +1,4 @@
-import { $, $$ } from 'browser-extension-utils'
+import { $, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./006-rule34video.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -72,7 +72,7 @@ export default (() => {
           const meta = { type: 'AD', title: 'AD' }
 
           setUtags(element, key, meta)
-          element.dataset.utags = element.dataset.utags || ''
+          setAttribute(element, 'data-utags', element.dataset.utags || '')
         }
 
         return true
@@ -92,12 +92,12 @@ export default (() => {
         const meta = { type: 'video', title }
 
         setUtags(element, key, meta)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }
 
-      element.dataset.utags = element.dataset.utags || ''
+      setAttribute(element, 'data-utags', element.dataset.utags || '')
 
       return true
     },

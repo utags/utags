@@ -120,7 +120,7 @@ export default (() => {
         const meta = { type: 'post', title }
         setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
       }

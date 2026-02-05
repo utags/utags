@@ -1,4 +1,10 @@
-import { $, $$, getAttribute, hasClass } from 'browser-extension-utils'
+import {
+  $,
+  $$,
+  getAttribute,
+  hasClass,
+  setAttribute,
+} from 'browser-extension-utils'
 import styleText from 'data-text:./005-kemono.su.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -77,7 +83,7 @@ export default (() => {
         hasClass(element, 'user-header__avatar') ||
         element.closest('.post-card')
       ) {
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
       }
 
       return true

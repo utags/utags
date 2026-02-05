@@ -1,4 +1,4 @@
-import { $, $$, doc, hasClass } from 'browser-extension-utils'
+import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./009-hotgirl.asia.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -56,7 +56,7 @@ export default (() => {
         const meta = { type: 'video', title }
         setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
-        element.dataset.utags = element.dataset.utags || ''
+        setAttribute(element, 'data-utags', element.dataset.utags || '')
         if ($('.vli-info h2', element)) {
           element.dataset.utags_position_selector = '.vli-info h2'
         }
