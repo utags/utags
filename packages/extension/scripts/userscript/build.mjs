@@ -26,6 +26,8 @@ buildOptions.alias = {
   ...buildOptions.alias,
   "browser-extension-storage": "browser-extension-storage/userscript-string",
   "browser-extension-utils": "browser-extension-utils/userscript",
+  "browser-extension-utils/request-idle-callback-polyfill":
+    "browser-extension-utils/request-idle-callback-polyfill",
 }
 
 await esbuild.build(buildOptions)

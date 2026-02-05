@@ -28,6 +28,7 @@ import {
   uniq,
   type RegisterMenuCommandOptions,
 } from 'browser-extension-utils'
+import polyfillRequestIdleCallback from 'browser-extension-utils/request-idle-callback-polyfill'
 import styleText from 'data-text:./content.scss'
 import type { PlasmoCSConfig } from 'plasmo'
 import { splitTags } from 'utags-utils'
@@ -81,6 +82,8 @@ import {
 import { setupConsole } from './utils/console.js'
 import { getUtags } from './utils/dom-utils'
 import { EventListenerManager } from './utils/event-listener-manager'
+
+polyfillRequestIdleCallback()
 
 export const config: PlasmoCSConfig = {
   run_at: 'document_start',
