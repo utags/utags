@@ -9,6 +9,7 @@ export default function createTag(
     class: options.isEmoji
       ? 'utags_text_tag utags_emoji_tag'
       : 'utags_text_tag',
+    'data-utags_exclude': '',
   })
 
   if (options.enableSelect) {

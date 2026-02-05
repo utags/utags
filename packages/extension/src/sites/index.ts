@@ -346,6 +346,12 @@ const isExcludedUtagsElement = (element: HTMLElement) => {
   return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
 }
 
+const cleanupUtags = (element: UtagsHTMLElement) => {
+  deleteElementUtags(element)
+  delete element.dataset.utags
+  delete element.dataset.utags_id
+}
+
 const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   if (!matchedNodesSelector) {
     return
@@ -374,7 +380,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
   const process = (element: UtagsHTMLElement) => {
     if (!preValidate(element)) {
       // It's not a candidate
-      deleteElementUtags(element)
+      cleanupUtags(element)
       return
     }
 
@@ -383,7 +389,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
     // check url
     if (!href || !validateFunction(element, href)) {
       // It's not a candidate
-      deleteElementUtags(element)
+      cleanupUtags(element)
       return
     }
 
@@ -391,6 +397,8 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       // Map to another element, which could be a child, parent, or sibling element.
       const newElement = mappingFunction(element)
       if (newElement && newElement !== element) {
+        // It's not a candidate
+        cleanupUtags(element)
         process(newElement)
         return
       }
@@ -398,7 +406,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
 
     if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
       // It's not a candidate
-      deleteElementUtags(element)
+      cleanupUtags(element)
       return
     }
 
@@ -411,6 +419,8 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
 
     const key = utags.key || getCanonicalUrl(originalKey)
     if (!key) {
+      // It's not a candidate
+      cleanupUtags(element)
       return
     }
 

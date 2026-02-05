@@ -470,7 +470,7 @@ function onSettingsChange() {
 }
 
 // For debug
-const DEBUG = true
+const DEBUG = false
 
 /**
  * Append a link to the current page at the end of the document body
@@ -652,8 +652,9 @@ function appendTagsToPage(
   const ul = createElement(tagName, {
     class: tags.length === 0 ? 'utags_ul utags_ul_0' : 'utags_ul utags_ul_1',
     'data-utags_key': key,
+    'data-utags_exclude': '',
   })
-  let li = createElement('li', { class: 'utags_li' })
+  let li = createElement('li', { class: 'utags_li', 'data-utags_exclude': '' })
 
   const a = createElement('button', {
     type: 'button',
@@ -664,6 +665,7 @@ function appendTagsToPage(
     'data-utags_key': key,
     'data-utags_tags': tags.join(', '),
     'data-utags_meta': meta ? JSON.stringify(meta) : '',
+    'data-utags_exclude': '',
     class:
       tags.length === 0
         ? 'utags_text_tag utags_captain_tag'
@@ -680,7 +682,7 @@ function appendTagsToPage(
   ul.append(li)
 
   for (const tag of tags) {
-    li = createElement('li', { class: 'utags_li' })
+    li = createElement('li', { class: 'utags_li', 'data-utags_exclude': '' })
     const a = createTag(tag, {
       isEmoji: emojiTags.includes(tag),
       noLink: isTagManager,
@@ -734,7 +736,12 @@ function cleanUnusedUtags() {
       }
     } else {
       const element = utagsUl.previousSibling as HTMLElement
-      if (element && element.hasAttribute('data-utags')) {
+      if (
+        element &&
+        element.hasAttribute('data-utags') &&
+        element.dataset.utags_id &&
+        utagsIdSet.has(element.dataset.utags_id)
+      ) {
         continue
       }
     }
@@ -803,7 +810,7 @@ async function displayTags() {
   }
 
   if (DEBUG) {
-    console.debug('after appendTagsToPage')
+    console.debug('after appendTagsToPage', utagsIdSet.size)
   }
 
   const conditionNodes = getConditionNodes()

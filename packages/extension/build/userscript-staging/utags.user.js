@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.26.2
+// @version              0.26.3
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -1795,6 +1795,7 @@
       class: options.isEmoji
         ? "utags_text_tag utags_emoji_tag"
         : "utags_text_tag",
+      "data-utags_exclude": "",
     })
     if (options.enableSelect) {
       a.textContent = tagName
@@ -11674,6 +11675,11 @@
     }
     return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
   }
+  var cleanupUtags = (element) => {
+    deleteElementUtags(element)
+    delete element.dataset.utags
+    delete element.dataset.utags_id
+  }
   var addMatchedNodes = (matchedNodesSet) => {
     if (!matchedNodesSelector) {
       return
@@ -11685,23 +11691,24 @@
     const process2 = (element) => {
       var _a
       if (!preValidate(element)) {
-        deleteElementUtags(element)
+        cleanupUtags(element)
         return
       }
       const href = element.dataset.utags_link || element.href
       if (!href || !validateFunction(element, href)) {
-        deleteElementUtags(element)
+        cleanupUtags(element)
         return
       }
       if (mappingFunction) {
         const newElement = mappingFunction(element)
         if (newElement && newElement !== element) {
+          cleanupUtags(element)
           process2(newElement)
           return
         }
       }
       if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
-        deleteElementUtags(element)
+        cleanupUtags(element)
         return
       }
       const originalKey = href
@@ -11711,6 +11718,7 @@
       }
       const key = utags.key || getCanonicalUrl(originalKey)
       if (!key) {
+        cleanupUtags(element)
         return
       }
       const title =
@@ -12182,7 +12190,7 @@
       }
     }
   }
-  var DEBUG = true
+  var DEBUG = false
   function appendCurrentPageLink(options) {
     options = options || {}
     const containerId = "utags_current_page_link_container"
@@ -12305,8 +12313,12 @@
     const ul = createElement(tagName, {
       class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
+      "data-utags_exclude": "",
     })
-    let li = createElement("li", { class: "utags_li" })
+    let li = createElement("li", {
+      class: "utags_li",
+      "data-utags_exclude": "",
+    })
     const a = createElement("button", {
       type: "button",
       title: "Add tags",
@@ -12314,6 +12326,7 @@
       "data-utags_key": key,
       "data-utags_tags": tags.join(", "),
       "data-utags_meta": meta ? JSON.stringify(meta) : "",
+      "data-utags_exclude": "",
       class:
         tags.length === 0
           ? "utags_text_tag utags_captain_tag"
@@ -12325,7 +12338,7 @@
     li.append(a)
     ul.append(li)
     for (const tag of tags) {
-      li = createElement("li", { class: "utags_li" })
+      li = createElement("li", { class: "utags_li", "data-utags_exclude": "" })
       const a2 = createTag(tag, {
         isEmoji: emojiTags2.includes(tag),
         noLink: isTagManager,
@@ -12366,7 +12379,12 @@
         }
       } else {
         const element = utagsUl.previousSibling
-        if (element && element.hasAttribute("data-utags")) {
+        if (
+          element &&
+          element.hasAttribute("data-utags") &&
+          element.dataset.utags_id &&
+          utagsIdSet.has(element.dataset.utags_id)
+        ) {
           continue
         }
       }
@@ -12416,7 +12434,7 @@
       }
     }
     if (DEBUG) {
-      console.debug("after appendTagsToPage")
+      console.debug("after appendTagsToPage", utagsIdSet.size)
     }
     const conditionNodes = getConditionNodes()
     for (const node of conditionNodes) {

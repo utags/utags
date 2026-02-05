@@ -7,6 +7,9 @@
 - Add comprehensive test cases for `getCanonicalUrl` function.
 - Optimize `MutationObserver` to monitor changes in `data-utags_*` attributes, ensuring tags update when these attributes change dynamically.
 - Ensure elements with `data-utags_link` are correctly matched even when custom site selectors are defined.
+- Add `data-utags_exclude` attribute to UTags UI elements (tags, buttons, lists) to prevent self-tagging.
+- Fix logic issue in `cleanUnusedUtags` where elements were incorrectly identified as valid UTags targets.
+- Refactor repetitive cleanup logic in `sites/index.ts` into a `cleanupUtags` helper function.
 
 ## v0.25
 
