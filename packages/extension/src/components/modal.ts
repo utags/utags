@@ -9,10 +9,12 @@ import { initFocusTrap } from 'focus-trap-lite'
 export default function createModal(attributes?: Record<string, unknown>) {
   const div = createElement('div', {
     class: 'utags_modal',
+    'data-utags_exclude': '',
   })
 
   const wrapper = addElement(div, 'div', {
     class: 'utags_modal_wrapper',
+    'data-utags_exclude': '',
   })
 
   const content = addElement(wrapper, 'div', attributes)

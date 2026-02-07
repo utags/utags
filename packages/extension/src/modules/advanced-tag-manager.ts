@@ -228,6 +228,7 @@ function createPromptView(
   })
   addElement(currentTagsWrapper, 'ul', {
     class: 'utags_current_tags utags_ul',
+    'data-utags_exclude': '',
   })
 
   const input = addElement(content, 'input', {

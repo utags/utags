@@ -731,7 +731,11 @@ function appendTagsToPage(
  * Fix mp.weixin.qq.com issue, 有推荐阅读, 往期推荐内容时，utags_ul 和子元素的 class 都会被清空。https://github.com/utags/utags/issues/29
  */
 function cleanUnusedUtags() {
-  const utagsUlList = $$('.utags_ul,ul[data-utags_key],ol[data-utags_key]')
+  // exclude .utags_prompt
+  const utagsUlList = $$(
+    '.utags_ul,ul[data-utags_key],ol[data-utags_key]',
+    doc.body
+  )
   for (const utagsUl of utagsUlList) {
     const utagsId = utagsUl.dataset.utags_for_id
     if (utagsId) {
