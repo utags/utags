@@ -1,4 +1,4 @@
-import { $, $$, hasClass } from 'browser-extension-utils'
+import { $, $$, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./020-sspai.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 

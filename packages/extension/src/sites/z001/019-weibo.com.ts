@@ -1,4 +1,4 @@
-import { $, $$, hasClass } from 'browser-extension-utils'
+import { $, $$, hasClass, setAttribute } from 'browser-extension-utils'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'

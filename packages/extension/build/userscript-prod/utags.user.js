@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.26.5
+// @version              0.26.6
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -577,7 +577,7 @@
         : void 0
       : void 0
   }
-  var setAttribute2 = (element, name, value) => {
+  var setAttribute = (element, name, value) => {
     if (element && element.setAttribute) {
       const orgValue = getAttribute(element, name)
       if (orgValue !== value) {
@@ -654,7 +654,7 @@
             const type = name.slice(2)
             addEventListener(element, type, value)
           } else {
-            setAttribute2(element, name, String(value))
+            setAttribute(element, name, String(value))
           }
         }
       }
@@ -6186,7 +6186,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getCommunityUrl(href, true)
@@ -6197,7 +6197,7 @@
           }
           const meta = { type: "community", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getCommentsUrl(href, true)
@@ -6208,7 +6208,7 @@
           }
           const meta = { type: "comments", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -6490,7 +6490,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return false
@@ -7050,7 +7050,7 @@
               meta.title = title
             }
             setUtags(element, key, meta)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
             return true
           }
         }
@@ -8004,7 +8004,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return false
@@ -8143,7 +8143,7 @@
           }
           const meta = title ? { type: "user", title } : { type: "user" }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if (element.closest(".topic-body .names a")) {
             element.dataset.utags_position_selector = ".topic-body .names"
           } else if (element.closest(".user-card .names a")) {
@@ -8164,7 +8164,7 @@
             key = prefix2 + "u/" + title2.toLowerCase()
             const meta2 = { type: "user", title: title2 }
             setUtags(element, key, meta2)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
             return true
           }
           if (!title) {
@@ -8179,7 +8179,7 @@
           const meta = { type: "post", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getCategoryUrl(href)
@@ -8289,7 +8289,7 @@
             key = prefix2 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
             element.dataset.utags_node_type = "link"
             element.dataset.utags_position_selector = element.closest(".winner")
               ? ".winner"
@@ -8303,7 +8303,7 @@
             key = prefix2 + "u/" + title.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
             element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
           }
@@ -8417,7 +8417,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return false
@@ -8647,7 +8647,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return false
@@ -8733,7 +8733,7 @@
           const title = getTrimmedTitle(titleElement || element)
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if (titleElement) {
             element.dataset.utags_position_selector =
               ".GroupList-UserList-user .username"
@@ -8753,7 +8753,7 @@
           }
           const meta = { type: "post", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           markElementWhetherVisited(key, element)
           if (titleElement) {
             element.dataset.utags_position_selector = hasClass(
@@ -8773,7 +8773,7 @@
           }
           const meta = { type: "tag", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -9004,7 +9004,7 @@
           }
           const meta = { type: "article", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if (element.closest(".search_feed_article")) {
             element.dataset.utags_position_selector = "h6"
           }
@@ -9151,7 +9151,7 @@
           }
           const meta = { type: "company", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if (element.closest(".sub-li-bottom a.user-info")) {
             element.dataset.utags_position_selector = "a > p"
           } else if (element.closest(".company-search a.company-info")) {
@@ -9172,7 +9172,7 @@
           title = title.replace(" \u5728\u7EBF ", "")
           const meta = { type: "job-detail", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           element.dataset.utags_position_selector =
             ".job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h"
           markElementWhetherVisited(key, element)
@@ -9345,7 +9345,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getVideoUrl(href)
@@ -9360,7 +9360,7 @@
           const meta = { type: "video", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -9396,7 +9396,7 @@
             key = prefix2 + id.toLowerCase()
             const meta = { type: "user", title }
             setUtags(element, key, meta)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
             element.dataset.utags_node_type = "link"
             matchedNodesSet.add(element)
           }
@@ -9476,7 +9476,7 @@
           }
           const meta = { type: "user", title: title2 }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         const title = getTrimmedTitle(element)
@@ -9665,7 +9665,7 @@
           const meta = { title, type: "post" }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -9775,7 +9775,7 @@
           const meta = { type: "post", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getUserProfileUrl(href)
@@ -9786,7 +9786,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -9950,7 +9950,7 @@
           const meta = { type: "news", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getVideoUrl(href)
@@ -9963,7 +9963,7 @@
           const meta = { type: "video", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getUserProfileUrl(href)
@@ -9979,7 +9979,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -10192,7 +10192,7 @@
           const meta =
             href === title2 ? { type: "user" } : { type: "user", title: title2 }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getPostUrl(normalizedPrefix, href)
@@ -10970,7 +10970,7 @@
           hasClass(element, "user-header__avatar") ||
           element.closest(".post-card")
         ) {
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
         }
         return true
       },
@@ -11059,7 +11059,7 @@
             const key2 = href.replace(/(https?:\/\/[^/]+\/).*/, "$1")
             const meta = { type: "AD", title: "AD" }
             setUtags(element, key2, meta)
-            setAttribute2(element, "data-utags", element.dataset.utags || "")
+            setAttribute(element, "data-utags", element.dataset.utags || "")
           }
           return true
         }
@@ -11074,10 +11074,10 @@
           }
           const meta = { type: "video", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
-        setAttribute2(element, "data-utags", element.dataset.utags || "")
+        setAttribute(element, "data-utags", element.dataset.utags || "")
         return true
       },
       excludeSelectors: [
@@ -11228,7 +11228,7 @@
           const meta = { type: "post", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         key = getUserProfileUrl(href)
@@ -11239,7 +11239,7 @@
           }
           const meta = { type: "user", title }
           setUtags(element, key, meta)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -11348,7 +11348,7 @@
           const meta = { type: "video", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if ($(".vli-info h2", element)) {
             element.dataset.utags_position_selector = ".vli-info h2"
           }
@@ -11441,7 +11441,7 @@
           const meta = { type: "gallery", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           if ($(".vli-info h2", element)) {
             element.dataset.utags_position_selector = ".vli-info h2"
           }
@@ -11535,7 +11535,7 @@
           const meta = { type: "gallery", title }
           setUtags(element, key, meta)
           markElementWhetherVisited(key, element)
-          setAttribute2(element, "data-utags", element.dataset.utags || "")
+          setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
         return true
@@ -12431,7 +12431,7 @@
     } else {
       element.after(ul)
     }
-    setAttribute2(element, "data-utags", tags.join(","))
+    setAttribute(element, "data-utags", tags.join(","))
     createTimeout(() => {
       const style = getComputedStyle(element)
       const zIndex = style.zIndex
