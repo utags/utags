@@ -141,8 +141,7 @@ const sites: Site[] = [
   hitomi_la,
 ]
 
-const BASE_EXCLUDE_SELECTOR =
-  '.utags_text_tag,.browser_extension_settings_container,a a,[data-utags_exclude]'
+const BASE_EXCLUDE_SELECTOR = '[data-utags_exclude],svg'
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
   .filter((v) => typeof v === 'function')
@@ -387,7 +386,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
     // dataset.utags_link takes precedence over the href attribute; normalized href can be saved in dataset.utags_link.
     const href = element.dataset.utags_link || element.href
     // check url
-    if (!href || !validateFunction(element, href)) {
+    if (!href || typeof href !== 'string' || !validateFunction(element, href)) {
       // It's not a candidate
       cleanupUtags(element)
       return
