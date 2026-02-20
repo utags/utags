@@ -52,7 +52,7 @@
     "node-fetch": "^3.3.2",
     "postcss": "^8.5.6",
     "postcss-load-config": "^6.0.1",
-    "svelte": "5.35.7",
+    "svelte": "5.51.5",
     "svelte-check": "^4.3.3",
     "svelte-persisted-store": "^0.12.0",
     "svelte-virtual-list": "^3.0.1",

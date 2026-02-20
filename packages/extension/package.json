@@ -77,7 +77,7 @@
     "addons-linter": "^9.4.0",
     "bookmarkleter": "^1.1.0",
     "cross-env": "^10.1.0",
-    "esbuild": "^0.27.2",
+    "esbuild": "^0.27.3",
     "jsdom": "^27.4.0",
     "sass": "^1.97.2",
     "vitest": "^4.0.18"
