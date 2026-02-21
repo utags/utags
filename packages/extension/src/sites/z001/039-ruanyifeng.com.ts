@@ -9,6 +9,7 @@ import {
 } from '../../modules/visited'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   // Constants
@@ -70,6 +71,16 @@ export default (() => {
     matches: /ruanyifeng\.com/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const key = getPostUrl(location.href)
+      if (key) {
+        const element = $('h1#page-title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
     },
     listNodesSelectors: [
       // blog title
@@ -116,22 +127,6 @@ export default (() => {
       '.comment-footer-inner',
       '#latest-comments',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const key = getPostUrl(location.href)
-      if (key) {
-        addVisited(key)
-        const element = $('h1#page-title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
     getCanonicalUrl,
   }

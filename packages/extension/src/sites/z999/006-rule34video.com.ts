@@ -3,6 +3,7 @@ import styleText from 'data-text:./006-rule34video.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -54,6 +55,43 @@ export default (() => {
 
   return {
     matches: /rule34video\.com|rule34gen\.com/,
+    preProcess() {
+      let key = getModelUrl(location.href)
+      if (key) {
+        // title
+        const element = $('.brand_inform .title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'model' })
+        }
+      }
+
+      key = getMemberUrl(location.href)
+      if (key) {
+        // title
+        const element = $('.channel_logo .title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      key = getCategoryUrl(location.href)
+      if (key) {
+        // title
+        const element = $('.brand_inform .title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'category' })
+        }
+      }
+
+      key = getVideoUrl(location.href)
+      if (key) {
+        // title
+        const element = $('h1.title_video')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+        }
+      }
+    },
     listNodesSelectors: [
       //
       '.list-comments .item',
@@ -116,63 +154,6 @@ export default (() => {
       'a[href*="download"]',
       '.list-comments .wrap_image',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getModelUrl(location.href)
-      if (key) {
-        // title
-        const element = $('.brand_inform .title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'model' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getMemberUrl(location.href)
-      if (key) {
-        // title
-        const element = $('.channel_logo .title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getCategoryUrl(location.href)
-      if (key) {
-        // title
-        const element = $('.brand_inform .title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'category' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getVideoUrl(location.href)
-      if (key) {
-        // title
-        const element = $('h1.title_video')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

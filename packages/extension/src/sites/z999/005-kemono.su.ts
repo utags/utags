@@ -9,7 +9,7 @@ import styleText from 'data-text:./005-kemono.su.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
-import { getHrefAttribute } from '../../utils/index'
+import { getHrefAttribute, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -29,15 +29,15 @@ export default (() => {
   return {
     matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
     preProcess() {
+      // Posts > search
+      // Posts > popular
       for (const element of $$('.post-card[data-user]')) {
         const service = getAttribute(element, 'data-service')
         const user = getAttribute(element, 'data-user')
         if (service && user) {
           const href = `${prefix}${service}/user/${user}`
           if (location.href !== href) {
-            ;(element as any).href = href
-            element.dataset.utags_link = href
-            element.dataset.utags_type = 'user'
+            setUtagsAttributes(element, { key: href, type: 'user' })
           }
         }
       }
@@ -47,10 +47,7 @@ export default (() => {
         // post title
         const element = $('h1.post__title,h1.scrape__title')
         if (element) {
-          ;(element as any).href = key
-          element.dataset.utags_link = key
-          element.dataset.utags_type = 'post'
-          element.dataset.utags_node_type = 'link'
+          setUtagsAttributes(element, { key, type: 'post' })
         }
       }
     },

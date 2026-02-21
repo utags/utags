@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -64,6 +65,47 @@ export default (() => {
 
   return {
     matches: /www\.zhipin\.com/,
+    preProcess() {
+      setVisitedAvailable(true)
+
+      for (const element of $$(
+        '.info-company div[data-url],.similar-job-list .similar-job-company[data-url]'
+      ) as HTMLAnchorElement[]) {
+        if (element.dataset.url) {
+          element.href =
+            location.origin + element.dataset.url.replace('/job/', '/')
+          element.dataset.utags_node_type = 'link'
+        }
+      }
+
+      let key = getCompanyUrl(location.href)
+      if (key) {
+        const element = $('.company-banner h1')
+        if (element) {
+          const title = element.childNodes[0].textContent!.trim()
+          if (title) {
+            setUtagsAttributes(element, { key, title, type: 'company' })
+          }
+        }
+      }
+
+      key = getJobDetailUrl(location.href)
+      if (key) {
+        let element = $('.job-banner .info-primary .name')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'job-detail' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+
+        element = $('.smallbanner .company-info .name')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'job-detail' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
+    },
     listNodesSelectors: [
       // 首页 > 精选职位/热招职位
       '.common-tab-box ul li',
@@ -149,19 +191,6 @@ export default (() => {
       // 相似职位, 没有 A 标签的公司名
       '.similar-job-list .similar-job-company[data-url]',
     ],
-    preProcess() {
-      setVisitedAvailable(true)
-
-      for (const element of $$(
-        '.info-company div[data-url],.similar-job-list .similar-job-company[data-url]'
-      ) as HTMLAnchorElement[]) {
-        if (element.dataset.url) {
-          element.href =
-            location.origin + element.dataset.url.replace('/job/', '/')
-          element.dataset.utags_node_type = 'link'
-        }
-      }
-    },
     validate(element: HTMLAnchorElement, href: string) {
       if (!href) {
         return false
@@ -185,7 +214,7 @@ export default (() => {
           '.name,.company-info-top h3,.card-desc .title,h4',
           element
         )
-        const title = getTrimmedTitle(titleElement || element)
+        const title = getUtagsTitle(titleElement || element)
         if (!title) {
           return false
         }
@@ -266,47 +295,6 @@ export default (() => {
       // 分页
       '.page',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getCompanyUrl(location.href)
-      if (key) {
-        const element = $('.company-banner h1')
-        if (element) {
-          const title = element.childNodes[0].textContent!.trim()
-          if (title) {
-            const meta = { title, type: 'company' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getJobDetailUrl(location.href)
-      if (key) {
-        addVisited(key)
-
-        let element = $('.job-banner .info-primary .name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'job-detail' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-
-        element = $('.smallbanner .company-info .name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'job-detail' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-    },
     postProcess() {
       const isDarkMode = hasClass(doc.body, 'theme_dark')
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'

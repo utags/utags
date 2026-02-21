@@ -8,6 +8,7 @@ import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta } from '../../types'
 import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
+import { getHrefAttribute, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -97,6 +98,34 @@ export default (() => {
   return {
     // magix to match pxxnhub.com
     matches: /p[ro_][r_]nhub\.com/,
+    preProcess() {
+      let key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $('.name h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      key = getChannelUrl(location.href)
+      if (key) {
+        // video title or shorts title
+        const element = $('.title h1')
+        if (element && !$('a', element)) {
+          setUtagsAttributes(element, { key, type: 'channel' })
+        }
+      }
+
+      key = getVideoUrl(location.href)
+      if (key) {
+        // video title or shorts title
+        const element = $('h1.title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+        }
+      }
+    },
     listNodesSelectors: [
       // Search result
       'ul.search-video-thumbs li',
@@ -131,7 +160,7 @@ export default (() => {
       'ul.categoriesListSection li .categoryTitleWrapper a',
     ],
     validate(element: HTMLAnchorElement, href: string) {
-      const hrefAttr = getAttribute(element, 'href')
+      const hrefAttr = getHrefAttribute(element)
       if (!hrefAttr || hrefAttr === 'null' || hrefAttr === '#') {
         return false
       }
@@ -189,49 +218,6 @@ export default (() => {
       // Login, Sign up
       'a[onclick]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $('.name h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getChannelUrl(location.href)
-      if (key) {
-        // video title or shorts title
-        const element = $('.title h1')
-        if (element && !$('a', element)) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'channel' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getVideoUrl(location.href)
-      if (key) {
-        // video title or shorts title
-        const element = $('h1.title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       const host = location.host
       const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)

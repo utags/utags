@@ -3,6 +3,7 @@ import styleText from 'data-text:./018-xiaohongshu.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -68,6 +69,25 @@ export default (() => {
 
   return {
     matches: /www\.xiaohongshu\.com/,
+    preProcess() {
+      let key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $('.user-info .user-name')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      key = getPostUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('.note-content .title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+        }
+      }
+    },
     listNodesSelectors: [
       '.feeds-container section',
       // replies
@@ -107,7 +127,7 @@ export default (() => {
 
       key = getPostUrl(href)
       if (key) {
-        const meta = { type: 'post' }
+        const meta: Record<string, string> = { type: 'post' }
 
         if (hasClass(element, 'cover')) {
           const sibling = element.nextElementSibling as HTMLElement
@@ -138,36 +158,6 @@ export default (() => {
       '.dropdown-container',
       '.interaction-info',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $('.user-info .user-name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getPostUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('.note-content .title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getCanonicalUrl,
     getStyle: () => styleText,
   }

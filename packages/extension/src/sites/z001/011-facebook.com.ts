@@ -4,6 +4,7 @@ import { getTrimmedTitle } from 'utags-utils'
 
 import { getFirstHeadElement, getUrlParameters } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -63,6 +64,17 @@ export default (() => {
 
   return {
     matches: /^(www|m)\.facebook\.com$/,
+    preProcess() {
+      // profile header
+      const element = getFirstHeadElement('div[role="main"] h1')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getUserProfileUrl(location.href)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (
         !href.startsWith('https://www.facebook.com/') &&
@@ -98,19 +110,6 @@ export default (() => {
       ...defaultSite.excludeSelectors,
       'div[data-pagelet="ProfileTabs"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // profile header
-      const element = getFirstHeadElement('div[role="main"] h1')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getUserProfileUrl(location.href)
-        if (title && key) {
-          const meta = { title, type: 'user' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

@@ -2,6 +2,7 @@ import { $ } from 'browser-extension-utils'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   function getCanonicalUrl(url: string) {
@@ -22,15 +23,13 @@ export default (() => {
 
   return {
     matches: /mp\.weixin\.qq\.com/,
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
+    preProcess() {
       const element = $('h1.rich_media_title')
       if (element) {
         const title = getTrimmedTitle(element)
         if (title) {
           const key = getCanonicalUrl(location.href)
-          const meta = { title }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
+          setUtagsAttributes(element, { key, type: 'article' })
         }
       }
     },

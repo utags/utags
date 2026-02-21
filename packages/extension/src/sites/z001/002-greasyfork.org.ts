@@ -2,6 +2,7 @@ import { $ } from 'browser-extension-utils'
 import styleText from 'data-text:./002-greasyfork.org.scss'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -29,6 +30,27 @@ export default (() => {
 
   return {
     matches: /(greasyfork|sleazyfork)\.org/,
+    preProcess() {
+      if (location.pathname.includes('/scripts/')) {
+        // script name
+        const element = $('#script-info header h2')
+        if (element) {
+          const key = getScriptUrl(location.href)
+          if (key) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+      } else if (location.pathname.includes('/users/')) {
+        // user name
+        const element = $('#about-user h2')
+        if (element) {
+          const key = getCanonicalUrl(location.href)
+          if (key) {
+            setUtagsAttributes(element, { key, type: 'user' })
+          }
+        }
+      }
+    },
     listNodesSelectors: ['.script-list > li', '.discussion-list-container'],
     conditionNodesSelectors: [
       // script title
@@ -61,33 +83,6 @@ export default (() => {
       // Show results for all languages OR Show xxx results only
       'div.sidebarred-main-content > p:nth-child(3) > a',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      if (location.pathname.includes('/scripts/')) {
-        // script name
-        const element = $('#script-info header h2')
-        if (element) {
-          const title = element.textContent
-          if (title) {
-            const key = getScriptUrl(location.href)
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      } else if (location.pathname.includes('/users/')) {
-        // user name
-        const element = $('#about-user h2')
-        if (element) {
-          const title = element.textContent
-          if (title) {
-            const key = getCanonicalUrl(location.href)
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getCanonicalUrl,
     getStyle: () => styleText,
   }

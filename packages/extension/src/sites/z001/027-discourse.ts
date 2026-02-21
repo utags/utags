@@ -12,6 +12,7 @@ import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
 import { removeUtags, setUtags } from '../../utils/dom-utils'
+import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   const prefix = location.origin + '/'
@@ -91,6 +92,66 @@ export default (() => {
       /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md|www\.uscardforum\.com/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const isDarkMode =
+        doc.documentElement.dataset.themeType === 'dark' ||
+        // linux.do
+        ($('header picture > source') as HTMLLinkElement)?.media === 'all'
+      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
+
+      let key = getUserProfileUrl(location.href)
+      if (key) {
+        // Clear cache
+        let index = 0
+        for (const element of $$(
+          '.user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
+        ) as UtagsHTMLElement[]) {
+          index++
+          if (key !== element.dataset.utags_key || index === 2) {
+            delete element.dataset.utags
+            removeUtags(element)
+          }
+        }
+
+        // profile header
+        const element: UtagsHTMLElement =
+          ($('.user-profile-names .username') as UtagsHTMLElement) ||
+          ($(
+            '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
+          ) as UtagsHTMLElement)
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      key = getPostUrl(location.href)
+      if (key) {
+        addVisited(key)
+      }
+
+      // Leader board
+      for (const element of $$('.leaderboard div[data-user-card]')) {
+        const title = element.dataset.userCard
+        if (title) {
+          key = prefix + 'u/' + title.toLowerCase()
+
+          element.dataset.utags_position_selector = element.closest('.winner')
+            ? '.winner'
+            : '.user__name'
+
+          setUtagsAttributes(element, { key, title, type: 'user' })
+        }
+      }
+
+      // chat
+      for (const element of $$('.chat-message span[data-user-card]')) {
+        const title = element.dataset.userCard
+        if (title) {
+          key = prefix + 'u/' + title.toLowerCase()
+
+          setUtagsAttributes(element, { key, title, type: 'user' })
+        }
+      }
     },
     listNodesSelectors: [
       '.topic-list .topic-list-body tr',
@@ -137,7 +198,7 @@ export default (() => {
       if (key) {
         // span.username -> https://meta.discourse.org/u
         const titleElement = $('span.username', element)
-        const title = getTrimmedTitle(titleElement || element)
+        const title = getUtagsTitle(titleElement || element)
         if (
           !title &&
           !element.closest('.topic-list tr .posters a:first-of-type') &&
@@ -281,81 +342,6 @@ export default (() => {
       '.topic-list tr .posters a:first-of-type',
       '.search-results .author a .avatar',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const isDarkMode =
-        doc.documentElement.dataset.themeType === 'dark' ||
-        // linux.do
-        ($('header picture > source') as HTMLLinkElement)?.media === 'all'
-      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
-
-      let key = getUserProfileUrl(location.href)
-      if (key) {
-        // Clear cache
-        let index = 0
-        for (const element of $$(
-          '.user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
-        ) as UtagsHTMLElement[]) {
-          index++
-          if (key !== element.dataset.utags_key || index === 2) {
-            delete element.dataset.utags
-            removeUtags(element)
-          }
-        }
-
-        // profile header
-        const element: UtagsHTMLElement =
-          ($('.user-profile-names .username') as UtagsHTMLElement) ||
-          ($(
-            '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
-          ) as UtagsHTMLElement)
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_key = key
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getPostUrl(location.href)
-      if (key) {
-        addVisited(key)
-      }
-
-      // Leader board
-      for (const element of $$('.leaderboard div[data-user-card]')) {
-        const title = element.dataset.userCard
-        if (title) {
-          key = prefix + 'u/' + title.toLowerCase()
-          const meta = { type: 'user', title }
-
-          setUtags(element, key, meta)
-          setAttribute(element, 'data-utags', element.dataset.utags || '')
-          element.dataset.utags_node_type = 'link'
-          element.dataset.utags_position_selector = element.closest('.winner')
-            ? '.winner'
-            : '.user__name'
-          matchedNodesSet.add(element)
-        }
-      }
-
-      // chat
-      for (const element of $$('.chat-message span[data-user-card]')) {
-        const title = element.dataset.userCard
-        if (title) {
-          key = prefix + 'u/' + title.toLowerCase()
-          const meta = { type: 'user', title }
-
-          setUtags(element, key, meta)
-          setAttribute(element, 'data-utags', element.dataset.utags || '')
-          element.dataset.utags_node_type = 'link'
-
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     postProcess() {
       const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)
       if (!enableQuickStar) {

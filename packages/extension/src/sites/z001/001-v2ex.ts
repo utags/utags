@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -49,6 +50,125 @@ export default (() => {
     matches: /v2ex\.com|v2hot\.|v2ex\.co/,
     preProcess() {
       setVisitedAvailable(true)
+
+      if (location.pathname.includes('/member/')) {
+        // 个人主页
+        const profile = $('.content h1')
+        if (profile) {
+          const username = profile.textContent
+          if (username) {
+            const key = `https://www.v2ex.com/member/${username}`
+            setUtagsAttributes(profile, { key, type: 'user' })
+          }
+        }
+      }
+
+      if (location.pathname.includes('/t/')) {
+        // 帖子详细页
+        const header = $('.header h1')
+        if (header) {
+          const key = getCanonicalUrl(
+            'https://www.v2ex.com' + location.pathname
+          )
+          setUtagsAttributes(header, { key, type: 'topic' })
+          addVisited(key)
+          markElementWhetherVisited(key, header)
+        }
+
+        const main = $('#Main') || $('.content')
+        const replyElements = $$(
+          '.box .cell[id^="r_"],.box .cell[id^="related_r_"]',
+          main
+        )
+        for (const reply of replyElements) {
+          const replyId = reply.id.replace('related_', '')
+          const floorNoElement = $('.no', reply)
+          const replyContentElement = $('.reply_content', reply)
+          const agoElement = $('.ago,.fade.small', reply)
+          if (replyId && floorNoElement && replyContentElement && agoElement) {
+            let newAgoElement = $('a', agoElement)
+            if (!newAgoElement) {
+              newAgoElement = createElement('a', {
+                textContent: agoElement.textContent,
+                href: '#' + replyId,
+              })
+              agoElement.textContent = ''
+              agoElement.append(newAgoElement)
+            }
+
+            const floorNo = parseInt10(floorNoElement.textContent || '1', 1)
+            const pageNo = Math.floor((floorNo - 1) / 100) + 1
+            const key =
+              getCanonicalUrl('https://www.v2ex.com' + location.pathname) +
+              '?p=' +
+              String(pageNo) +
+              '#' +
+              replyId
+            const title = getTrimmedTitle(
+              cloneWithoutCitedReplies(replyContentElement)
+            )
+
+            setUtagsAttributes(newAgoElement, { key, title, type: 'reply' })
+          }
+        }
+
+        // v2ex 超级增强回复
+        // const replyElements2 = $$(".my-box .comment", main)
+        // for (const reply of replyElements2) {
+        //   const replyId = reply.id // 目前 v2ex 超级增强版本无法获得 ID
+        //   const floorNoString = reply.dataset.floor
+        //   const replyContentElement = $(".reply_content", reply)
+        //   const agoElement = $(".ago", reply)
+        //   if (replyId && floorNoString && replyContentElement && agoElement) {
+        //     let newAgoElement = $("a", agoElement)
+        //     if (!newAgoElement) {
+        //       newAgoElement = createElement("a", {
+        //         textContent: agoElement.textContent,
+        //         href: "#" + replyId,
+        //       })
+        //       agoElement.textContent = ""
+        //       agoElement.append(newAgoElement)
+        //     }
+
+        //     const floorNo = parseInt10(floorNoString, 1)
+        //     const pageNo = Math.floor((floorNo - 1) / 100) + 1
+        //     const key =
+        //       getCanonicalUrl("https://www.v2ex.com" + location.pathname) +
+        //       "?p=" +
+        //       String(pageNo) +
+        //       "#" +
+        //       replyId
+        //     const title =
+        //       cloneWithoutCitedReplies(replyContentElement).textContent
+        //     const meta = { title, type: "reply" }
+        //     setUtags(newAgoElement, key, meta)
+        //     matchedNodesSet.add(newAgoElement)
+        //   }
+        // }
+      }
+
+      if (location.pathname.includes('/go/')) {
+        // 节点页面
+        const header = $('.title .node-breadcrumb')
+        if (header) {
+          const key = getCanonicalUrl(
+            'https://www.v2ex.com' + location.pathname
+          )
+          setUtagsAttributes(header, { key, type: 'node' })
+        }
+      }
+
+      if (location.pathname.includes('/tag/')) {
+        // 标签页面
+        const header = $('.box .header > span')
+        if (header) {
+          const key = getCanonicalUrl(
+            'https://www.v2ex.com' + location.pathname
+          )
+          header.dataset.utags_flag = 'tag_page'
+          setUtagsAttributes(header, { key, type: 'tag' })
+        }
+      }
     },
     listNodesSelectors: [
       '.box .cell',
@@ -116,139 +236,6 @@ export default (() => {
       // planet 帖子时间
       '.planet-post-time',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      if (location.pathname.includes('/member/')) {
-        // 个人主页
-        const profile = $('.content h1')
-        if (profile) {
-          const username = profile.textContent
-          if (username) {
-            const key = `https://www.v2ex.com/member/${username}`
-            const meta = { title: username, type: 'user' }
-            setUtags(profile, key, meta)
-            matchedNodesSet.add(profile)
-          }
-        }
-      }
-
-      if (location.pathname.includes('/t/')) {
-        // 帖子详细页
-        const header = $('.header h1')
-        if (header) {
-          const key = getCanonicalUrl(
-            'https://www.v2ex.com' + location.pathname
-          )
-          const title = $('h1').textContent
-          const meta = { title, type: 'topic' }
-          setUtags(header, key, meta)
-          matchedNodesSet.add(header)
-
-          addVisited(key)
-
-          markElementWhetherVisited(key, header)
-        }
-
-        const main = $('#Main') || $('.content')
-        const replyElements = $$(
-          '.box .cell[id^="r_"],.box .cell[id^="related_r_"]',
-          main
-        )
-        for (const reply of replyElements) {
-          const replyId = reply.id.replace('related_', '')
-          const floorNoElement = $('.no', reply)
-          const replyContentElement = $('.reply_content', reply)
-          const agoElement = $('.ago,.fade.small', reply)
-          if (replyId && floorNoElement && replyContentElement && agoElement) {
-            let newAgoElement = $('a', agoElement)
-            if (!newAgoElement) {
-              newAgoElement = createElement('a', {
-                textContent: agoElement.textContent,
-                href: '#' + replyId,
-              })
-              agoElement.textContent = ''
-              agoElement.append(newAgoElement)
-            }
-
-            const floorNo = parseInt10(floorNoElement.textContent, 1)
-            const pageNo = Math.floor((floorNo - 1) / 100) + 1
-            const key =
-              getCanonicalUrl('https://www.v2ex.com' + location.pathname) +
-              '?p=' +
-              String(pageNo) +
-              '#' +
-              replyId
-            const title =
-              cloneWithoutCitedReplies(replyContentElement).textContent
-            const meta = { title, type: 'reply' }
-            setUtags(newAgoElement, key, meta)
-            matchedNodesSet.add(newAgoElement)
-          }
-        }
-
-        // v2ex 超级增强回复
-        // const replyElements2 = $$(".my-box .comment", main)
-        // for (const reply of replyElements2) {
-        //   const replyId = reply.id // 目前 v2ex 超级增强版本无法获得 ID
-        //   const floorNoString = reply.dataset.floor
-        //   const replyContentElement = $(".reply_content", reply)
-        //   const agoElement = $(".ago", reply)
-        //   if (replyId && floorNoString && replyContentElement && agoElement) {
-        //     let newAgoElement = $("a", agoElement)
-        //     if (!newAgoElement) {
-        //       newAgoElement = createElement("a", {
-        //         textContent: agoElement.textContent,
-        //         href: "#" + replyId,
-        //       })
-        //       agoElement.textContent = ""
-        //       agoElement.append(newAgoElement)
-        //     }
-
-        //     const floorNo = parseInt10(floorNoString, 1)
-        //     const pageNo = Math.floor((floorNo - 1) / 100) + 1
-        //     const key =
-        //       getCanonicalUrl("https://www.v2ex.com" + location.pathname) +
-        //       "?p=" +
-        //       String(pageNo) +
-        //       "#" +
-        //       replyId
-        //     const title =
-        //       cloneWithoutCitedReplies(replyContentElement).textContent
-        //     const meta = { title, type: "reply" }
-        //     setUtags(newAgoElement, key, meta)
-        //     matchedNodesSet.add(newAgoElement)
-        //   }
-        // }
-      }
-
-      if (location.pathname.includes('/go/')) {
-        // 节点页面
-        const header = $('.title .node-breadcrumb')
-        if (header) {
-          const key = getCanonicalUrl(
-            'https://www.v2ex.com' + location.pathname
-          )
-          const title = getTrimmedTitle(header)
-          const meta = { title, type: 'node' }
-          setUtags(header, key, meta)
-          matchedNodesSet.add(header)
-        }
-      }
-
-      if (location.pathname.includes('/tag/')) {
-        // 标签页面
-        const header = $('.box .header > span')
-        if (header) {
-          const key = getCanonicalUrl(
-            'https://www.v2ex.com' + location.pathname
-          )
-          const title = getTrimmedTitle(header)
-          const meta = { title, type: 'tag' }
-          setUtags(header, key, meta)
-          header.dataset.utags_flag = 'tag_page'
-          matchedNodesSet.add(header)
-        }
-      }
-    },
     getStyle: () => styleText,
     getCanonicalUrl,
     postProcess() {

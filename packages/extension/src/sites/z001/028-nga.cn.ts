@@ -3,6 +3,7 @@ import styleText from 'data-text:./028-nga.cn.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -21,6 +22,24 @@ export default (() => {
 
   return {
     matches: /bbs\.nga\.cn|nga\.178\.com|ngabbs\.com/,
+    preProcess() {
+      const key = getUserProfileUrl(location.href)
+      if (key) {
+        // user name
+        const label = $(
+          '#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label'
+        )
+        if (label) {
+          const title = getTrimmedTitle(label)
+          if (title === '用 户 名') {
+            const element = label.nextElementSibling as HTMLElement
+            if (element) {
+              setUtagsAttributes(element, { key, type: 'user' })
+            }
+          }
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
@@ -48,29 +67,6 @@ export default (() => {
       '.xxxxxxxxxx',
       '.xxxxxxxxxx',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getUserProfileUrl(location.href)
-      if (key) {
-        // user name
-        const label = $(
-          '#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label'
-        )
-        if (label) {
-          const title = getTrimmedTitle(label)
-          if (title === '用 户 名') {
-            const element = label.nextElementSibling as HTMLElement
-            if (element) {
-              const title = getTrimmedTitle(element)
-              if (title) {
-                const meta = { title, type: 'user' }
-                setUtags(element, key, meta)
-                matchedNodesSet.add(element)
-              }
-            }
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

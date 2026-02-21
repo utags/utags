@@ -3,6 +3,7 @@ import styleText from 'data-text:./020-sspai.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -55,6 +56,27 @@ export default (() => {
 
   return {
     matches: /sspai\.com/,
+    preProcess() {
+      let key = getPostUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('.article-header .title')
+        if (element && !element.closest('.pai_title')) {
+          setUtagsAttributes(element, { key, type: 'post' })
+        }
+      }
+
+      key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $(
+          '.user_content .user__info__card .ss__user__card__nickname'
+        )
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       for (const link of excludeLinks) {
         if (href.includes(link)) {
@@ -79,37 +101,6 @@ export default (() => {
       '.pai_abstract',
       '.pai_title .link',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getPostUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('.article-header .title')
-        if (element && !element.closest('.pai_title')) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $(
-          '.user_content .user__info__card .ss__user__card__nickname'
-        )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getCanonicalUrl,
     getStyle: () => styleText,
   }

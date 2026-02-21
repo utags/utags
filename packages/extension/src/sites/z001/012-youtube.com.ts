@@ -8,6 +8,7 @@ import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta } from '../../types'
 import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -65,6 +66,29 @@ export default (() => {
 
   return {
     matches: /youtube\.com/,
+    preProcess() {
+      let key = getUserProfileUrl(location.href) || getChannelUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $(
+          '#inner-header-container #container.ytd-channel-name #text,yt-page-header-renderer yt-content-metadata-view-model span > span'
+        )
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+
+      key = getVideoUrl(location.href)
+      if (key) {
+        // video title or shorts title
+        const element = $(
+          '#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title'
+        )
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+        }
+      }
+    },
     listNodesSelectors: [
       // Main page
       'ytd-rich-item-renderer',
@@ -129,41 +153,6 @@ export default (() => {
       // Validated user icon
       'a span.ytSpecIconShapeHost svg',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href) || getChannelUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $(
-          '#inner-header-container #container.ytd-channel-name #text,yt-page-header-renderer yt-content-metadata-view-model span > span'
-        )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getVideoUrl(location.href)
-      if (key) {
-        // video title or shorts title
-        const element = $(
-          '#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title'
-        )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       const host = location.host
       const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)

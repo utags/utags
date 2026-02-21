@@ -3,6 +3,7 @@ import styleText from 'data-text:./034-inoreader.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -21,6 +22,15 @@ export default (() => {
 
   return {
     matches: /\w+\.inoreader\.com/,
+    preProcess() {
+      const key = getArticleUrl(location.href)
+      if (key) {
+        const element = $('.article_full_contents div.article_title')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'article' })
+        }
+      }
+    },
     listNodesSelectors: [
       // ".article_tile",
       // ".article_magazine",
@@ -86,20 +96,6 @@ export default (() => {
       '.gadget_overview_feed_title',
       '.header_name',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getArticleUrl(location.href)
-      if (key) {
-        const element = $('.article_full_contents div.article_title')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'article' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       const isDarkMode = hasClass(doc.body, 'theme_dark')
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'

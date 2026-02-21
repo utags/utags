@@ -39,7 +39,6 @@ import xiaohongshu from './z001/018-xiaohongshu.com'
 import weibo from './z001/019-weibo.com'
 import sspai from './z001/020-sspai.com'
 import douyin from './z001/021-douyin.com'
-import podcasts_google_com from './z001/022-podcasts.google.com'
 import rebang_today from './z001/023-rebang.today'
 import myanimelist_net from './z001/024-myanimelist.net'
 import douban from './z001/025-douban.com'
@@ -110,7 +109,6 @@ const sites: Site[] = [
   weibo,
   sspai,
   douyin,
-  podcasts_google_com,
   rebang_today,
   myanimelist_net,
   douban,

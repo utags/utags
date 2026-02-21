@@ -7,6 +7,7 @@ import {
   getFirstHeadElement,
 } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -51,6 +52,41 @@ export default (() => {
 
   return {
     matches: /www\.douyin\.com/,
+    preProcess() {
+      let key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = getFirstHeadElement('h1')
+        if (element) {
+          const title = extractTrimmedTextWithImageAlt(element)
+          if (title) {
+            setUtagsAttributes(element, { key, title, type: 'user' })
+          }
+        }
+      }
+
+      key = getVideoUrl(location.href)
+      if (key) {
+        // post title
+        const element = getFirstHeadElement('h1')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const target = element.parentElement!.parentElement!
+          if (title) {
+            setUtagsAttributes(target, { key, title, type: 'video' })
+          }
+        }
+      }
+
+      key = getNoteUrl(location.href)
+      if (key) {
+        // post title
+        const element = getFirstHeadElement('h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+        }
+      }
+    },
     listNodesSelectors: [
       // 视频评论区
       '[data-e2e="comment-item"]',
@@ -100,51 +136,6 @@ export default (() => {
       // 昵称中的 emoji 图片
       'img[src*="twemoji"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = getFirstHeadElement('h1')
-        if (element) {
-          const title = extractTrimmedTextWithImageAlt(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getVideoUrl(location.href)
-      if (key) {
-        // post title
-        const element = getFirstHeadElement('h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const target = element.parentElement!.parentElement!
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(target, key, meta)
-            target.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(target)
-          }
-        }
-      }
-
-      key = getNoteUrl(location.href)
-      if (key) {
-        // post title
-        const element = getFirstHeadElement('h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

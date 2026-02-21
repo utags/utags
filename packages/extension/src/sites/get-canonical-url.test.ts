@@ -280,43 +280,6 @@ describe('getCanonicalUrl', () => {
     })
   })
 
-  describe('podcasts.google.com', () => {
-    it('should normalize feed url', () => {
-      expect(
-        getCanonicalUrl(
-          'https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZGNsb3VkLmNvbS91c2Vycy9zb3VuZGNsb3VkOnVzZXJzOjIxNDg5MzEvc291bmRzLnJzcw'
-        )
-      ).toBe(
-        'https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZGNsb3VkLmNvbS91c2Vycy9zb3VuZGNsb3VkOnVzZXJzOjIxNDg5MzEvc291bmRzLnJzcw'
-      )
-      expect(
-        getCanonicalUrl(
-          'https://podcasts.google.com/feed/xxx?sa=X&ved=0CAMQ4aUDahcKEwjQ_5_5_5_5AhUAAAAAHQAAAAAQAQ'
-        )
-      ).toBe('https://podcasts.google.com/feed/xxx')
-    })
-
-    it('should normalize episode url', () => {
-      expect(
-        getCanonicalUrl(
-          'https://podcasts.google.com/feed/xxx/episode/yyy?sa=X&ved=0CAMQ4aUDahcKEwjQ_5_5_5_5AhUAAAAAHQAAAAAQAQ'
-        )
-      ).toBe('https://podcasts.google.com/feed/xxx/episode/yyy')
-    })
-
-    it('should return original url for urls with trailing slash (not handled)', () => {
-      expect(getCanonicalUrl('https://podcasts.google.com/feed/xxx/')).toBe(
-        'https://podcasts.google.com/feed/xxx/'
-      )
-    })
-
-    it('should strip trailing slash for episode url', () => {
-      expect(
-        getCanonicalUrl('https://podcasts.google.com/feed/xxx/episode/yyy/')
-      ).toBe('https://podcasts.google.com/feed/xxx/episode/yyy')
-    })
-  })
-
   describe('douban.com', () => {
     it('should remove specific query parameters', () => {
       expect(

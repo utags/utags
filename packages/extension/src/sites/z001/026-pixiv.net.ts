@@ -3,6 +3,7 @@ import styleText from 'data-text:./026-pixiv.net.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   const prefix = 'https://www.pixiv.net/'
@@ -28,6 +29,16 @@ export default (() => {
 
   return {
     matches: /pixiv\.net/,
+    preProcess() {
+      const key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $('h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     listNodesSelectors: [
       // Thumbnail
       'li.list-none',
@@ -84,21 +95,6 @@ export default (() => {
       // }
 
       return false
-    },
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $('h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
     },
     getStyle: () => styleText,
   }

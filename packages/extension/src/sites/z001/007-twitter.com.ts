@@ -3,6 +3,7 @@ import styleText from 'data-text:./007-twitter.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   const prefix = 'https://x.com/'
@@ -10,6 +11,19 @@ export default (() => {
 
   return {
     matches: /x\.com|twitter\.com/,
+    preProcess() {
+      // profile header
+      const elements = $$('[data-testid="UserName"] span')
+      for (const element of elements) {
+        const title = getTrimmedTitle(element)
+        if (!title || !title.startsWith('@')) {
+          continue
+        }
+
+        const key = prefix + title.slice(1)
+        setUtagsAttributes(element, { key, type: 'user' })
+      }
+    },
     listNodesSelectors: [
       // feed
       '[data-testid="cellInnerDiv"]',
@@ -46,21 +60,6 @@ export default (() => {
       }
 
       return false
-    },
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // profile header
-      const elements = $$('[data-testid="UserName"] span')
-      for (const element of elements) {
-        const title = getTrimmedTitle(element)
-        if (!title || !title.startsWith('@')) {
-          continue
-        }
-
-        const key = prefix + title.slice(1)
-        const meta = { title, type: 'user' }
-        setUtags(element, key, meta)
-        matchedNodesSet.add(element)
-      }
     },
     getStyle: () => styleText,
   }

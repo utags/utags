@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -32,6 +33,17 @@ export default (() => {
     matches: /hotgirl\.asia/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const href = location.href
+      const key = getVideoUrl(href)
+      if (key) {
+        const element = $('.mvic-desc h3')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
     },
     listNodesSelectors: [
       // Vidio thumb
@@ -103,24 +115,6 @@ export default (() => {
       // Vidio thumb
       '.vl-item',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const href = location.href
-      const key = getVideoUrl(href)
-      if (key) {
-        addVisited(key)
-        const element = $('.mvic-desc h3')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-    },
     postProcess() {
       const isDarkMode = true
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'

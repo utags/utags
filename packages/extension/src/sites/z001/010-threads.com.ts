@@ -3,6 +3,7 @@ import styleText from 'data-text:./010-threads.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -22,6 +23,17 @@ export default (() => {
 
   return {
     matches: /threads\.com/,
+    preProcess() {
+      // profile header
+      const element = $('h1+div>div>span,h2+div>div>span')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getUserProfileUrl(location.href)
+        if (title && key && key === 'https://www.threads.com/@' + title) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (href.startsWith('https://www.threads.com/')) {
         // Remove "https://www.threads.com/"
@@ -44,19 +56,6 @@ export default (() => {
       // Title, Tabs
       'a[aria-label]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // profile header
-      const element = $('h1+div>div>span,h2+div>div>span')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getUserProfileUrl(location.href)
-        if (title && key && key === 'https://www.threads.com/@' + title) {
-          const meta = { title, type: 'user' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

@@ -3,6 +3,7 @@ import styleText from 'data-text:./029-dlsite.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -32,6 +33,25 @@ export default (() => {
 
   return {
     matches: /dlsite\.com/,
+    preProcess() {
+      let key = getProductUrl(location.href)
+      if (key) {
+        // product title
+        const element = $('h1#work_name')
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+
+      key = getMakerUrl(location.href)
+      if (key) {
+        // maker title
+        const element = $('.prof_maker_name')
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (element.tagName !== 'A') {
         return true
@@ -131,37 +151,6 @@ export default (() => {
       '.prof_label_list',
       '.type_btn',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getProductUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('h1#work_name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getMakerUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('.prof_maker_name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

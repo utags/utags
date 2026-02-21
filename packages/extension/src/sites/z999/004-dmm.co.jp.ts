@@ -3,6 +3,7 @@ import styleText from 'data-text:./004-dmm.co.jp.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -98,6 +99,34 @@ export default (() => {
 
   return {
     matches: /dmm\.co\.jp/,
+    preProcess() {
+      let key = getProductUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('h1.productTitle__txt')
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+
+      key = getMakerUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('.circleProfile__name span')
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+
+      key = getVideoProductUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('main h1')
+        if (element) {
+          setUtagsAttributes(element, { key })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
@@ -183,49 +212,6 @@ export default (() => {
       '[data-e2eid="list-actress-root"] li a',
       '[href^="/av/content/?id="]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getProductUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('h1.productTitle__txt')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getMakerUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('.circleProfile__name span')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getVideoProductUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('main h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getCanonicalUrl,
     getStyle: () => styleText,
   }

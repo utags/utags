@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.27
+
+- Refactor addExtraMatchedNodes to set element `data-utags_link` with setUtagsAttributes.
+
 ## v0.26
 
 - Integrate Discuz! sites support and merge existing implementations.

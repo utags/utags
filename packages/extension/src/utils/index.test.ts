@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 import {
+  ancestorTextIncludes,
   containsStarRatingTag,
   normalizeBookmarkData,
   removeStarRatingTags,
@@ -1273,5 +1274,51 @@ describe('sortTags', () => {
       expect(result).not.toBe(originalTags)
       expect(result).toEqual(['javascript', 'tutorial'])
     })
+  })
+})
+
+describe('ancestorTextIncludes', () => {
+  it('should return true when ancestor at depth 1 contains the text', () => {
+    const root = document.createElement('div')
+    const parent = document.createElement('div')
+    const child = document.createElement('a')
+
+    parent.textContent = '这是最后回复于 时间'
+    parent.append(child)
+    root.append(parent)
+
+    expect(ancestorTextIncludes(child, '最后回复于', 1)).toBe(true)
+  })
+
+  it('should return true when ancestor at depth 2 contains the text', () => {
+    const grandParent = document.createElement('div')
+    const parent = document.createElement('div')
+    const child = document.createElement('a')
+
+    grandParent.textContent = '用户积分 100'
+    grandParent.append(parent)
+    parent.append(child)
+
+    expect(ancestorTextIncludes(child, '积分', 2)).toBe(true)
+  })
+
+  it('should return false when ancestor text does not contain the text', () => {
+    const root = document.createElement('div')
+    const parent = document.createElement('div')
+    const child = document.createElement('a')
+
+    parent.textContent = 'no related text'
+    parent.append(child)
+    root.append(parent)
+
+    expect(ancestorTextIncludes(child, '积分', 1)).toBe(false)
+  })
+
+  it('should return false when depth is larger than ancestor chain', () => {
+    const root = document.createElement('div')
+    const child = document.createElement('a')
+    root.append(child)
+
+    expect(ancestorTextIncludes(child, '积分', 3)).toBe(false)
   })
 })

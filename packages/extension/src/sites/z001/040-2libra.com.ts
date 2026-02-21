@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -61,6 +62,16 @@ export default (() => {
       ) {
         // 楼中楼回复模式添加 utags_no_hide 类名，防止被隐藏
         $('[data-main-left]')?.classList.add('utags_no_hide')
+      }
+
+      const key = getPostUrl(location.href)
+      if (key) {
+        const element = $('[data-main-left] h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
       }
     },
     listNodesSelectors: [
@@ -137,39 +148,6 @@ export default (() => {
       'a[href$="/history"]',
       'a[href^="/auth"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getPostUrl(location.href)
-      if (key) {
-        addVisited(key)
-        const element = $('[data-main-left] h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-
-      key = getUserProfileUrl(location.href)
-      if (key) {
-        const element = $(
-          '[data-main-left] div.w-full > div.w-full > div:first-child > div'
-        )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       const theme = doc.documentElement.dataset.theme || ''
       const isDarkMode = [

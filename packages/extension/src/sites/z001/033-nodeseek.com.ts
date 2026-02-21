@@ -8,6 +8,11 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import {
+  getDirectChildText,
+  getUtagsTitle,
+  setUtagsAttributes,
+} from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -62,6 +67,24 @@ export default (() => {
     matches: /www\.nodeseek\.com|www\.deepflood\.com/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const isDarkMode = hasClass(doc.body, 'dark-layout')
+      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
+
+      let key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $('h1.username')
+        if (element) {
+          const title = getDirectChildText(element)
+          setUtagsAttributes(element, { key, title, type: 'user' })
+        }
+      }
+
+      key = getPostUrl(location.href)
+      if (key) {
+        addVisited(key)
+      }
     },
     listNodesSelectors: [
       'ul.post-list li.post-list-item',
@@ -84,7 +107,7 @@ export default (() => {
 
       let key = getUserProfileUrl(href, true)
       if (key) {
-        const title = getTrimmedTitle(element)
+        const title = getUtagsTitle(element)
 
         if (!title) {
           return false
@@ -144,29 +167,6 @@ export default (() => {
       '.btn',
     ],
     validMediaSelectors: ['svg.iconpark-icon'],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const isDarkMode = hasClass(doc.body, 'dark-layout')
-      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
-
-      let key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $('h1.username')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getPostUrl(location.href)
-      if (key) {
-        addVisited(key)
-      }
-    },
     getStyle: () => styleText,
   }
 })()

@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -62,9 +63,7 @@ export default (() => {
       if (key) {
         const element = $('h1#gallery-brand a')
         if (element) {
-          ;(element as any).href = key
-          element.dataset.utags_link = key
-          element.dataset.utags_type = 'gallery'
+          setUtagsAttributes(element, { key, type: 'gallery' })
           addVisited(key)
           markElementWhetherVisited(key, element)
         }

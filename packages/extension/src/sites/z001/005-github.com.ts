@@ -4,6 +4,7 @@ import { getTrimmedTitle } from 'utags-utils'
 
 import type { UtagsHTMLElement } from '../../types'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -143,6 +144,27 @@ export default (() => {
 
   return {
     matches: /github\.com/,
+    preProcess() {
+      let key = getIssuesUrl(location.href)
+      if (key) {
+        const element = $('[data-testid="issue-header"] h1,.gh-header-show h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'issue' })
+        }
+      }
+
+      key = getFileUrl(location.href)
+      if (key) {
+        const element = $('h1#file-name-id-wide')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          if (title) {
+            const type = key.includes('/blob/') ? 'file' : 'dir'
+            setUtagsAttributes(element, { key, type })
+          }
+        }
+      }
+    },
     listNodesSelectors: [],
     conditionNodesSelectors: [],
     validate(element: HTMLAnchorElement, href: string) {
@@ -227,34 +249,6 @@ export default (() => {
       // Discussion poster and comment poster
       '[data-hovercard-type="user"] img',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      let key = getIssuesUrl(location.href)
-      if (key) {
-        const element = $('[data-testid="issue-header"] h1,.gh-header-show h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'issue' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getFileUrl(location.href)
-      if (key) {
-        const element = $('h1#file-name-id-wide')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const type = key.includes('/blob/') ? 'file' : 'dir'
-            const meta = { title, type }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
     getCanonicalUrl,
   }

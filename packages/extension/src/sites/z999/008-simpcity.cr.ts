@@ -8,7 +8,11 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
-import { getDirectChildText } from '../../utils/index'
+import {
+  getDirectChildText,
+  getUtagsTitle,
+  setUtagsAttributes,
+} from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -74,6 +78,28 @@ export default (() => {
     matches: /simpcity\.\w+/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const href = normalizeDomain(location.href)
+      let key = getPostUrl(href)
+      if (key) {
+        const element = $('h1.p-title-value')
+        if (element) {
+          const title = getDirectChildText(element)
+          if (title) {
+            setUtagsAttributes(element, { key, title, type: 'post' })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+      }
+
+      key = getUserProfileUrl(href)
+      if (key) {
+        const element = $('h1.memberHeader-name')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
     },
     listNodesSelectors: [
       // Post list
@@ -100,7 +126,7 @@ export default (() => {
           return false
         }
 
-        const title = getTrimmedTitle(element)
+        const title = getUtagsTitle(element)
         if (!title) {
           return false
         }
@@ -160,38 +186,6 @@ export default (() => {
       'a[href^="/direct-messages/"]',
       'a[href^="/account/"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const href = normalizeDomain(location.href)
-      let key = getPostUrl(href)
-      if (key) {
-        addVisited(key)
-        const element = $('h1.p-title-value')
-        if (element) {
-          const title = getDirectChildText(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-
-      key = getUserProfileUrl(href)
-      if (key) {
-        const element = $('h1.memberHeader-name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       const isDarkMode = true
       doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'

@@ -2,6 +2,7 @@ import { $, $$, hasClass, setAttribute } from 'browser-extension-utils'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -54,6 +55,18 @@ export default (() => {
 
   return {
     matches: /weibo\.com|weibo\.cn/,
+    preProcess() {
+      const key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $(
+          '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
+        )
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if (!href.includes('weibo.com') && !href.includes('weibo.cn')) {
         return true
@@ -77,23 +90,6 @@ export default (() => {
       '[class^="Frame_side_"]',
       'a[href*="promote.biz.weibo.cn"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $(
-          '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
-        )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getCanonicalUrl,
   }
 })()

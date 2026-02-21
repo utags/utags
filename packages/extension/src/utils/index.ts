@@ -1,5 +1,5 @@
 import { $, $$, createElement } from 'browser-extension-utils'
-import { trimTitle } from 'utags-utils'
+import { getTrimmedTitle, trimTitle } from 'utags-utils'
 
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
@@ -406,6 +406,29 @@ export function getUtagsTargetFromEvent(event: Event): HTMLElement | undefined {
   return ancestor || undefined
 }
 
+export function ancestorTextIncludes(
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
+  element: Element | null | undefined,
+  text: string,
+  depth: number
+): boolean {
+  if (!element || depth <= 0) {
+    return false
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-restricted-types
+  let current: Element | null | undefined = element
+  for (let index = 0; index < depth && current; index++) {
+    current = current.parentElement
+  }
+
+  if (!current || current.textContent === null) {
+    return false
+  }
+
+  return current.textContent.includes(text)
+}
+
 /**
  * Extracts text content from an element, including alt text from images
  * @param element - The DOM element to extract text from
@@ -459,9 +482,45 @@ export function getDirectChildText(element: Element): string {
     }
   }
 
-  return parts.join(' ').replaceAll(/\s+/g, ' ').trim()
+  return trimTitle(parts.join(' '))
+}
+
+export function getUtagsTitle(element: HTMLElement) {
+  return (
+    trimTitle(element.getAttribute('data-utags_title')) ||
+    getTrimmedTitle(element)
+  )
 }
 
 export function getHrefAttribute(element: HTMLElement) {
   return element.getAttribute('href') || element.getAttribute('data-utags_link')
+}
+
+export function setUtagsAttributes(
+  element: HTMLElement,
+  attributes: { key?: string; title?: string; type?: string }
+) {
+  if (!element || !(element instanceof HTMLElement)) {
+    return
+  }
+
+  const { key, title, type } = attributes
+  if (key && element.dataset.utags_link !== key) {
+    element.dataset.utags_link = key
+  }
+
+  if (title && element.dataset.utags_title !== title) {
+    element.dataset.utags_title = title
+  }
+
+  if (type && element.dataset.utags_type !== type) {
+    element.dataset.utags_type = type
+  }
+
+  if (
+    element.dataset.utags_node_type !== 'link' &&
+    !(element instanceof HTMLAnchorElement)
+  ) {
+    element.dataset.utags_node_type = 'link'
+  }
 }

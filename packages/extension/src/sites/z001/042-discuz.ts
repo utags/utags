@@ -9,6 +9,7 @@ import {
 } from '../../modules/visited'
 import { deleteUrlParameters } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
+import { ancestorTextIncludes, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -131,6 +132,30 @@ export default (() => {
     matches: matchesPattern,
     preProcess() {
       setVisitedAvailable(true)
+
+      const href = normalizeDomain(location.href)
+      let key = getUserProfileUrl(normalizedPrefix, href)
+      if (key) {
+        // profile header
+        const element =
+          $('.user-profile-names .username') ||
+          $(
+            '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
+          )
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      key = getPostUrl(normalizedPrefix, href)
+      if (key) {
+        const element = $('#thread_subject')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
     },
     listNodesSelectors: [
       //
@@ -185,10 +210,7 @@ export default (() => {
           }
         }
 
-        if (
-          /^\d+$/.test(title) &&
-          element.parentElement!.parentElement!.textContent.includes('积分')
-        ) {
+        if (/^\d+$/.test(title) && ancestorTextIncludes(element, '积分', 2)) {
           return false
         }
 
@@ -221,7 +243,7 @@ export default (() => {
           return false
         }
 
-        if (element.parentElement!.textContent.includes('最后回复于')) {
+        if (ancestorTextIncludes(element, '最后回复于', 1)) {
           return false
         }
 
@@ -310,43 +332,6 @@ export default (() => {
       'nav',
       '.btn',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const href = normalizeDomain(location.href)
-      let key = getUserProfileUrl(normalizedPrefix, href)
-      if (key) {
-        // profile header
-        const element =
-          $('.user-profile-names .username') ||
-          $(
-            '.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
-          )
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      key = getPostUrl(normalizedPrefix, href)
-      if (key) {
-        addVisited(key)
-
-        const element = $('#thread_subject')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
     getCanonicalUrl,
   }

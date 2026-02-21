@@ -5,6 +5,7 @@ import { getTrimmedTitle } from 'utags-utils'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { getFirstHeadElement } from '../../utils'
 import { getUtags, setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -47,6 +48,16 @@ export default (() => {
 
   return {
     matches: /(e-hen|exhen)tai\.org/,
+    preProcess() {
+      const key = getPostUrl(location.href)
+      if (key) {
+        // post title
+        const element = getFirstHeadElement() as UtagsHTMLElement
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+        }
+      }
+    },
     validate(element: UtagsHTMLElement) {
       if (element.tagName !== 'A') {
         return true
@@ -102,21 +113,6 @@ export default (() => {
       'a[href*="report=select"]',
       'a[href*="act=expunge"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const key = getPostUrl(location.href)
-      if (key) {
-        // post title
-        const element = getFirstHeadElement() as UtagsHTMLElement
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

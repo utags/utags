@@ -3,6 +3,7 @@ import styleText from 'data-text:./003-panda.chaika.moe.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -25,6 +26,36 @@ export default (() => {
 
   return {
     matches: /panda\.chaika\.moe/,
+    preProcess() {
+      const key = getPostUrl(location.href)
+      if (key) {
+        // post title
+        const element = $('h5')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'post' })
+        }
+      }
+
+      // https://panda.chaika.moe/?view=cover
+      for (const element of $$('.gallery a.cover') as HTMLAnchorElement[]) {
+        const key = element.href
+        const titleElement = $('.cover-title', element)
+        if (titleElement) {
+          setUtagsAttributes(titleElement, { key, type: 'post' })
+        }
+      }
+
+      // https://panda.chaika.moe/?view=extended
+      for (const element of $$(
+        '.td-extended > a[href^="/archive/"]'
+      ) as HTMLAnchorElement[]) {
+        const key = element.href
+        const titleElement = $('h5', element.parentElement!.parentElement!)
+        if (titleElement) {
+          setUtagsAttributes(titleElement, { key, type: 'post' })
+        }
+      }
+    },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
       '.navbar',
@@ -33,49 +64,6 @@ export default (() => {
       '.btn',
       '.caption',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getPostUrl(location.href)
-      if (key) {
-        // post title
-        const element = $('h5')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'post' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      for (const element of $$('.gallery a.cover') as HTMLAnchorElement[]) {
-        const key = element.href
-        const titleElement = $('.cover-title', element)
-        if (titleElement) {
-          const title = getTrimmedTitle(titleElement)
-          const meta = { title, type: 'post' }
-
-          setUtags(titleElement, key, meta)
-          titleElement.dataset.utags_node_type = 'link'
-          matchedNodesSet.add(titleElement)
-        }
-      }
-
-      for (const element of $$(
-        '.td-extended > a[href^="/archive/"]'
-      ) as HTMLAnchorElement[]) {
-        const key = element.href
-        const titleElement = $('h5', element.parentElement!.parentElement!)
-        if (titleElement) {
-          const title = titleElement.textContent
-          const meta = { title, type: 'post' }
-
-          setUtags(titleElement, key, meta)
-          titleElement.dataset.utags_node_type = 'link'
-          matchedNodesSet.add(titleElement)
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

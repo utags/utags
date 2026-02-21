@@ -8,7 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
-import { deleteUrlParameters } from '../../utils/index'
+import { deleteUrlParameters, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -95,6 +95,42 @@ export default (() => {
     matches: /toutiao\.com/,
     preProcess() {
       setVisitedAvailable(true)
+
+      let href = normalizeDomain(location.href)
+
+      if (!href.startsWith(prefix)) {
+        return
+      }
+
+      href = deleteUrlParameters(href, '*')
+
+      let key = getPostUrl(href)
+      if (key) {
+        const element = $('h2.title,.article-content h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'news' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
+
+      key = getVideoUrl(href)
+      if (key) {
+        const element = $('.ttp-video-extras-title h1')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
+
+      key = getUserProfileUrl(href)
+      if (key) {
+        const element = $('.profile-info-wrapper .name')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
     },
     // listNodesSelectors: [
     //   // Post list
@@ -188,61 +224,6 @@ export default (() => {
       '[aria-label^="评论数"]',
       '.action-item',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let href = normalizeDomain(location.href)
-
-      if (!href.startsWith(prefix)) {
-        return
-      }
-
-      href = deleteUrlParameters(href, '*')
-
-      let key = getPostUrl(href)
-      if (key) {
-        addVisited(key)
-        const element = $('h2.title,.article-content h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'news' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-
-      key = getVideoUrl(href)
-      if (key) {
-        addVisited(key)
-        const element = $('.ttp-video-extras-title h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-
-      key = getUserProfileUrl(href)
-      if (key) {
-        const element = $('.profile-info-wrapper .name')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-    },
     postProcess() {
       // const isDarkMode = false
       // doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'

@@ -3,6 +3,7 @@ import styleText from 'data-text:./013-bilibili.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import { traverseAllShadowRoots } from '../../utils/shadow-root-traverser'
 
 export default (() => {

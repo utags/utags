@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.26.7
+// @version              0.27.0
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -773,13 +773,6 @@
       return
     }
     func()
-  }
-  var isVisible = (element) => {
-    const el = element
-    if (typeof el.checkVisibility === "function") {
-      return el.checkVisibility()
-    }
-    return element.offsetParent !== null
   }
   var isTouchScreen = () => "ontouchstart" in win
   var isUrl = (text) => /^https?:\/\//.test(text)
@@ -3313,6 +3306,19 @@
     const ancestor = target.closest("[data-utags_id]")
     return ancestor || void 0
   }
+  function ancestorTextIncludes(element, text, depth) {
+    if (!element || depth <= 0) {
+      return false
+    }
+    let current = element
+    for (let index = 0; index < depth && current; index++) {
+      current = current.parentElement
+    }
+    if (!current || current.textContent === null) {
+      return false
+    }
+    return current.textContent.includes(text)
+  }
   function extractTextWithImageAlt(element) {
     let text = ""
     for (const node of Array.from(element.childNodes)) {
@@ -3340,12 +3346,39 @@
         if (text) parts.push(text)
       }
     }
-    return parts.join(" ").replaceAll(/\s+/g, " ").trim()
+    return trimTitle(parts.join(" "))
+  }
+  function getUtagsTitle(element) {
+    return (
+      trimTitle(element.getAttribute("data-utags_title")) ||
+      getTrimmedTitle(element)
+    )
   }
   function getHrefAttribute(element) {
     return (
       element.getAttribute("href") || element.getAttribute("data-utags_link")
     )
+  }
+  function setUtagsAttributes(element, attributes) {
+    if (!element || !(element instanceof HTMLElement)) {
+      return
+    }
+    const { key, title, type } = attributes
+    if (key && element.dataset.utags_link !== key) {
+      element.dataset.utags_link = key
+    }
+    if (title && element.dataset.utags_title !== title) {
+      element.dataset.utags_title = title
+    }
+    if (type && element.dataset.utags_type !== type) {
+      element.dataset.utags_type = type
+    }
+    if (
+      element.dataset.utags_node_type !== "link" &&
+      !(element instanceof HTMLAnchorElement)
+    ) {
+      element.dataset.utags_node_type = "link"
+    }
   }
   var timeoutIds = /* @__PURE__ */ new Set()
   var intervalIds = /* @__PURE__ */ new Set()
@@ -5463,7 +5496,7 @@
     }
   })()
   var v2ex_default =
-    ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .header h1+.utags_ul_0+.votes{margin-left:24px}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .xna-entry,:not(#a):not(#b):not(#c) .planet-post{--utags-list-node-display: flex}'
+    ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .xna-entry,:not(#a):not(#b):not(#c) .planet-post{--utags-list-node-display: flex}'
   function setUtags(element, keyOrUserTag, meta) {
     if (typeof keyOrUserTag === "string") {
       setElementUtags(element, { key: keyOrUserTag, meta: meta || {} })
@@ -5505,6 +5538,85 @@
       matches: /v2ex\.com|v2hot\.|v2ex\.co/,
       preProcess() {
         setVisitedAvailable(true)
+        if (location.pathname.includes("/member/")) {
+          const profile = $(".content h1")
+          if (profile) {
+            const username = profile.textContent
+            if (username) {
+              const key = "https://www.v2ex.com/member/".concat(username)
+              setUtagsAttributes(profile, { key, type: "user" })
+            }
+          }
+        }
+        if (location.pathname.includes("/t/")) {
+          const header = $(".header h1")
+          if (header) {
+            const key = getCanonicalUrl2(
+              "https://www.v2ex.com" + location.pathname
+            )
+            setUtagsAttributes(header, { key, type: "topic" })
+            addVisited(key)
+            markElementWhetherVisited(key, header)
+          }
+          const main2 = $("#Main") || $(".content")
+          const replyElements = $$(
+            '.box .cell[id^="r_"],.box .cell[id^="related_r_"]',
+            main2
+          )
+          for (const reply of replyElements) {
+            const replyId = reply.id.replace("related_", "")
+            const floorNoElement = $(".no", reply)
+            const replyContentElement = $(".reply_content", reply)
+            const agoElement = $(".ago,.fade.small", reply)
+            if (
+              replyId &&
+              floorNoElement &&
+              replyContentElement &&
+              agoElement
+            ) {
+              let newAgoElement = $("a", agoElement)
+              if (!newAgoElement) {
+                newAgoElement = createElement("a", {
+                  textContent: agoElement.textContent,
+                  href: "#" + replyId,
+                })
+                agoElement.textContent = ""
+                agoElement.append(newAgoElement)
+              }
+              const floorNo = parseInt10(floorNoElement.textContent || "1", 1)
+              const pageNo = Math.floor((floorNo - 1) / 100) + 1
+              const key =
+                getCanonicalUrl2("https://www.v2ex.com" + location.pathname) +
+                "?p=" +
+                String(pageNo) +
+                "#" +
+                replyId
+              const title = getTrimmedTitle(
+                cloneWithoutCitedReplies(replyContentElement)
+              )
+              setUtagsAttributes(newAgoElement, { key, title, type: "reply" })
+            }
+          }
+        }
+        if (location.pathname.includes("/go/")) {
+          const header = $(".title .node-breadcrumb")
+          if (header) {
+            const key = getCanonicalUrl2(
+              "https://www.v2ex.com" + location.pathname
+            )
+            setUtagsAttributes(header, { key, type: "node" })
+          }
+        }
+        if (location.pathname.includes("/tag/")) {
+          const header = $(".box .header > span")
+          if (header) {
+            const key = getCanonicalUrl2(
+              "https://www.v2ex.com" + location.pathname
+            )
+            header.dataset.utags_flag = "tag_page"
+            setUtagsAttributes(header, { key, type: "tag" })
+          }
+        }
       },
       listNodesSelectors: [".box .cell", ".my-box .comment"],
       conditionNodesSelectors: [
@@ -5542,99 +5654,6 @@
         ".post-item a.post-content",
         ".planet-post-time",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        if (location.pathname.includes("/member/")) {
-          const profile = $(".content h1")
-          if (profile) {
-            const username = profile.textContent
-            if (username) {
-              const key = "https://www.v2ex.com/member/".concat(username)
-              const meta = { title: username, type: "user" }
-              setUtags(profile, key, meta)
-              matchedNodesSet.add(profile)
-            }
-          }
-        }
-        if (location.pathname.includes("/t/")) {
-          const header = $(".header h1")
-          if (header) {
-            const key = getCanonicalUrl2(
-              "https://www.v2ex.com" + location.pathname
-            )
-            const title = $("h1").textContent
-            const meta = { title, type: "topic" }
-            setUtags(header, key, meta)
-            matchedNodesSet.add(header)
-            addVisited(key)
-            markElementWhetherVisited(key, header)
-          }
-          const main2 = $("#Main") || $(".content")
-          const replyElements = $$(
-            '.box .cell[id^="r_"],.box .cell[id^="related_r_"]',
-            main2
-          )
-          for (const reply of replyElements) {
-            const replyId = reply.id.replace("related_", "")
-            const floorNoElement = $(".no", reply)
-            const replyContentElement = $(".reply_content", reply)
-            const agoElement = $(".ago,.fade.small", reply)
-            if (
-              replyId &&
-              floorNoElement &&
-              replyContentElement &&
-              agoElement
-            ) {
-              let newAgoElement = $("a", agoElement)
-              if (!newAgoElement) {
-                newAgoElement = createElement("a", {
-                  textContent: agoElement.textContent,
-                  href: "#" + replyId,
-                })
-                agoElement.textContent = ""
-                agoElement.append(newAgoElement)
-              }
-              const floorNo = parseInt10(floorNoElement.textContent, 1)
-              const pageNo = Math.floor((floorNo - 1) / 100) + 1
-              const key =
-                getCanonicalUrl2("https://www.v2ex.com" + location.pathname) +
-                "?p=" +
-                String(pageNo) +
-                "#" +
-                replyId
-              const title =
-                cloneWithoutCitedReplies(replyContentElement).textContent
-              const meta = { title, type: "reply" }
-              setUtags(newAgoElement, key, meta)
-              matchedNodesSet.add(newAgoElement)
-            }
-          }
-        }
-        if (location.pathname.includes("/go/")) {
-          const header = $(".title .node-breadcrumb")
-          if (header) {
-            const key = getCanonicalUrl2(
-              "https://www.v2ex.com" + location.pathname
-            )
-            const title = getTrimmedTitle(header)
-            const meta = { title, type: "node" }
-            setUtags(header, key, meta)
-            matchedNodesSet.add(header)
-          }
-        }
-        if (location.pathname.includes("/tag/")) {
-          const header = $(".box .header > span")
-          if (header) {
-            const key = getCanonicalUrl2(
-              "https://www.v2ex.com" + location.pathname
-            )
-            const title = getTrimmedTitle(header)
-            const meta = { title, type: "tag" }
-            setUtags(header, key, meta)
-            header.dataset.utags_flag = "tag_page"
-            matchedNodesSet.add(header)
-          }
-        }
-      },
       getStyle: () => v2ex_default,
       getCanonicalUrl: getCanonicalUrl2,
       postProcess() {
@@ -5668,6 +5687,25 @@
     }
     return {
       matches: /(greasyfork|sleazyfork)\.org/,
+      preProcess() {
+        if (location.pathname.includes("/scripts/")) {
+          const element = $("#script-info header h2")
+          if (element) {
+            const key = getScriptUrl(location.href)
+            if (key) {
+              setUtagsAttributes(element, { key })
+            }
+          }
+        } else if (location.pathname.includes("/users/")) {
+          const element = $("#about-user h2")
+          if (element) {
+            const key = getCanonicalUrl2(location.href)
+            if (key) {
+              setUtagsAttributes(element, { key, type: "user" })
+            }
+          }
+        }
+      },
       listNodesSelectors: [".script-list > li", ".discussion-list-container"],
       conditionNodesSelectors: [
         ".script-list li .script-link",
@@ -5695,31 +5733,6 @@
         'a[href*="/discussions/new"]',
         "div.sidebarred-main-content > p:nth-child(3) > a",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        if (location.pathname.includes("/scripts/")) {
-          const element = $("#script-info header h2")
-          if (element) {
-            const title = element.textContent
-            if (title) {
-              const key = getScriptUrl(location.href)
-              const meta = { title }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        } else if (location.pathname.includes("/users/")) {
-          const element = $("#about-user h2")
-          if (element) {
-            const title = element.textContent
-            if (title) {
-              const key = getCanonicalUrl2(location.href)
-              const meta = { title }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getCanonicalUrl: getCanonicalUrl2,
       getStyle: () => greasyfork_org_default,
     }
@@ -5734,6 +5747,65 @@
     }
     return {
       matches: /news\.ycombinator\.com/,
+      preProcess() {
+        if (location.pathname === "/item") {
+          const comments = $$(".comment-tree .comtr[id]")
+          for (const comment of comments) {
+            const commentText = $(".commtext", comment)
+            const target = $(".age a", comment)
+            if (commentText && target) {
+              const key = target.href
+              const title = cloneComment(commentText).textContent
+              if (key && title) {
+                setUtagsAttributes(target, { key, title, type: "comment" })
+              }
+            }
+          }
+          const fatitem = $(".fatitem")
+          if (fatitem) {
+            const titleElement = $(".titleline a", fatitem)
+            const commentText = titleElement || $(".commtext", fatitem)
+            const type = titleElement ? "topic" : "comment"
+            const target = $(".age a", fatitem)
+            if (commentText && target) {
+              const key = target.href
+              const title = cloneComment(commentText).textContent
+              if (key && title) {
+                setUtagsAttributes(target, { key, title, type })
+              }
+            }
+          }
+        } else if (location.pathname === "/newcomments") {
+          const comments = $$(".athing[id]")
+          for (const comment of comments) {
+            const commentText = $(".commtext", comment)
+            const target = $(".age a", comment)
+            if (commentText && target) {
+              const key = target.href
+              const title = cloneComment(commentText).textContent
+              if (key && title) {
+                setUtagsAttributes(target, { key, title, type: "comment" })
+              }
+            }
+          }
+        } else {
+          const topics = $$(".athing[id]")
+          for (const topic of topics) {
+            const titleElement = $(".titleline a", topic)
+            const subtext = topic.nextElementSibling
+            if (subtext) {
+              const target = $(".age a", subtext)
+              if (titleElement && target) {
+                const key = target.href
+                const title = titleElement.textContent
+                if (key && title) {
+                  setUtagsAttributes(target, { key, title, type: "topic" })
+                }
+              }
+            }
+          }
+        }
+      },
       listNodesSelectors: [".script-list li", ".discussion-list-container"],
       conditionNodesSelectors: [],
       excludeSelectors: [
@@ -5756,73 +5828,6 @@
         'a[href^="#"]',
         '.subline > a[href^="item"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        if (location.pathname === "/item") {
-          const comments = $$(".comment-tree .comtr[id]")
-          for (const comment of comments) {
-            const commentText = $(".commtext", comment)
-            const target = $(".age a", comment)
-            if (commentText && target) {
-              const key = target.href
-              const title = cloneComment(commentText).textContent
-              if (key && title) {
-                const meta = { title, type: "comment" }
-                setUtags(target, key, meta)
-                matchedNodesSet.add(target)
-              }
-            }
-          }
-          const fatitem = $(".fatitem")
-          if (fatitem) {
-            const titleElement = $(".titleline a", fatitem)
-            const commentText = titleElement || $(".commtext", fatitem)
-            const type = titleElement ? "topic" : "comment"
-            const target = $(".age a", fatitem)
-            if (commentText && target) {
-              const key = target.href
-              const title = cloneComment(commentText).textContent
-              if (key && title) {
-                const meta = { title, type }
-                setUtags(target, key, meta)
-                matchedNodesSet.add(target)
-              }
-            }
-          }
-        } else if (location.pathname === "/newcomments") {
-          const comments = $$(".athing[id]")
-          for (const comment of comments) {
-            const commentText = $(".commtext", comment)
-            const target = $(".age a", comment)
-            if (commentText && target) {
-              const key = target.href
-              const title = cloneComment(commentText).textContent
-              if (key && title) {
-                const meta = { title, type: "comment" }
-                setUtags(target, key, meta)
-                matchedNodesSet.add(target)
-              }
-            }
-          }
-        } else {
-          const topics = $$(".athing[id]")
-          for (const topic of topics) {
-            const titleElement = $(".titleline a", topic)
-            const subtext = topic.nextElementSibling
-            if (subtext) {
-              const target = $(".age a", subtext)
-              if (titleElement && target) {
-                const key = target.href
-                const title = titleElement.textContent
-                if (key && title) {
-                  const meta = { title, type: "topic" }
-                  setUtags(target, key, meta)
-                  matchedNodesSet.add(target)
-                }
-              }
-            }
-          }
-        }
-      },
     }
   })()
   var lobste_rs_default = (() => {
@@ -5968,6 +5973,28 @@
     }
     return {
       matches: /github\.com/,
+      preProcess() {
+        let key = getIssuesUrl(location.href)
+        if (key) {
+          const element = $(
+            '[data-testid="issue-header"] h1,.gh-header-show h1'
+          )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "issue" })
+          }
+        }
+        key = getFileUrl(location.href)
+        if (key) {
+          const element = $("h1#file-name-id-wide")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              const type = key.includes("/blob/") ? "file" : "dir"
+              setUtagsAttributes(element, { key, type })
+            }
+          }
+        }
+      },
       listNodesSelectors: [],
       conditionNodesSelectors: [],
       validate(element, href) {
@@ -6038,35 +6065,6 @@
         "svg.octicon-repo",
         '[data-hovercard-type="user"] img',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getIssuesUrl(location.href)
-        if (key) {
-          const element = $(
-            '[data-testid="issue-header"] h1,.gh-header-show h1'
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "issue" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getFileUrl(location.href)
-        if (key) {
-          const element = $("h1#file-name-id-wide")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const type = key.includes("/blob/") ? "file" : "dir"
-              const meta = { title, type }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => github_com_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
@@ -6153,6 +6151,32 @@
     }
     return {
       matches: /reddit\.com/,
+      preProcess() {
+        let element = $('[data-testid="profile-main"] .w-full p')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getUserProfileUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        element = $(".w-full h1")
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getCommunityUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "community" })
+          }
+        }
+        element = $('h1[slot="title"]')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getCommentsUrl(location.href, true)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "comments" })
+          }
+        }
+      },
       listNodesSelectors: [
         "shreddit-feed article",
         "shreddit-feed shreddit-ad-post",
@@ -6223,38 +6247,6 @@
         '[bundlename="shreddit_sort_dropdown"]',
         '[slot="tabs"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let element = $('[data-testid="profile-main"] .w-full p')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getUserProfileUrl(location.href)
-          if (title && key) {
-            const meta = { title, type: "user" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-        element = $(".w-full h1")
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getCommunityUrl(location.href)
-          if (title && key) {
-            const meta = { title, type: "community" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-        element = $('h1[slot="title"]')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getCommentsUrl(location.href, true)
-          if (title && key) {
-            const meta = { title, type: "comments" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       getStyle: () => reddit_com_default,
       postProcess() {
         createTimeout(() => {
@@ -6275,6 +6267,17 @@
     const prefix22 = "https://twitter.com/"
     return {
       matches: /x\.com|twitter\.com/,
+      preProcess() {
+        const elements = $$('[data-testid="UserName"] span')
+        for (const element of elements) {
+          const title = getTrimmedTitle(element)
+          if (!title || !title.startsWith("@")) {
+            continue
+          }
+          const key = prefix2 + title.slice(1)
+          setUtagsAttributes(element, { key, type: "user" })
+        }
+      },
       listNodesSelectors: ['[data-testid="cellInnerDiv"]'],
       conditionNodesSelectors: [
         '[data-testid="cellInnerDiv"] [data-testid="User-Name"] a',
@@ -6303,19 +6306,6 @@
         }
         return false
       },
-      addExtraMatchedNodes(matchedNodesSet) {
-        const elements = $$('[data-testid="UserName"] span')
-        for (const element of elements) {
-          const title = getTrimmedTitle(element)
-          if (!title || !title.startsWith("@")) {
-            continue
-          }
-          const key = prefix2 + title.slice(1)
-          const meta = { title, type: "user" }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      },
       getStyle: () => twitter_com_default,
     }
   })()
@@ -6334,15 +6324,13 @@
     }
     return {
       matches: /mp\.weixin\.qq\.com/,
-      addExtraMatchedNodes(matchedNodesSet) {
+      preProcess() {
         const element = $("h1.rich_media_title")
         if (element) {
           const title = getTrimmedTitle(element)
           if (title) {
             const key = getCanonicalUrl2(location.href)
-            const meta = { title }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
+            setUtagsAttributes(element, { key, type: "article" })
           }
         }
       },
@@ -6392,6 +6380,16 @@
     }
     return {
       matches: /threads\.com/,
+      preProcess() {
+        const element = $("h1+div>div>span,h2+div>div>span")
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getUserProfileUrl(location.href)
+          if (title && key && key === "https://www.threads.com/@" + title) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       validate(element, href) {
         if (href.startsWith("https://www.threads.com/")) {
           const href2 = href.slice(24)
@@ -6408,18 +6406,6 @@
         '[role="tablist"]',
         "a[aria-label]",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const element = $("h1+div>div>span,h2+div>div>span")
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getUserProfileUrl(location.href)
-          if (title && key && key === "https://www.threads.com/@" + title) {
-            const meta = { title, type: "user" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       getStyle: () => threads_com_default,
     }
   })()
@@ -6471,6 +6457,16 @@
     }
     return {
       matches: /^(www|m)\.facebook\.com$/,
+      preProcess() {
+        const element = getFirstHeadElement('div[role="main"] h1')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getUserProfileUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       validate(element, href) {
         if (
           !href.startsWith("https://www.facebook.com/") &&
@@ -6499,18 +6495,6 @@
         ...default_default2.excludeSelectors,
         'div[data-pagelet="ProfileTabs"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const element = getFirstHeadElement('div[role="main"] h1')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getUserProfileUrl(location.href)
-          if (title && key) {
-            const meta = { title, type: "user" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       getStyle: () => facebook_com_default,
     }
   })()
@@ -6576,6 +6560,27 @@
     }
     return {
       matches: /youtube\.com/,
+      preProcess() {
+        let key =
+          getUserProfileUrl(location.href) || getChannelUrl(location.href)
+        if (key) {
+          const element = $(
+            "#inner-header-container #container.ytd-channel-name #text,yt-page-header-renderer yt-content-metadata-view-model span > span"
+          )
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+        key = getVideoUrl(location.href)
+        if (key) {
+          const element = $(
+            "#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title"
+          )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+          }
+        }
+      },
       listNodesSelectors: [
         "ytd-rich-item-renderer",
         "ytd-video-renderer",
@@ -6618,39 +6623,6 @@
       },
       excludeSelectors: [...default_default2.excludeSelectors],
       validMediaSelectors: ["a span.ytSpecIconShapeHost svg"],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key =
-          getUserProfileUrl(location.href) || getChannelUrl(location.href)
-        if (key) {
-          const element = $(
-            "#inner-header-container #container.ytd-channel-name #text,yt-page-header-renderer yt-content-metadata-view-model span > span"
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getVideoUrl(location.href)
-        if (key) {
-          const element = $(
-            "#title h1.ytd-watch-metadata,ytd-reel-video-renderer[is-active] h2.title"
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {
         const host3 = location.host
         const enableQuickStar = getSettingsValue(
@@ -6947,6 +6919,16 @@
     }
     return {
       matches: /tiktok\.com/,
+      preProcess() {
+        const element = $('h1[data-e2e="user-title"]')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getUserProfileUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       listNodesSelectors: [
         ".css-ulyotp-DivCommentContentContainer",
         ".css-1gstnae-DivCommentItemWrapper",
@@ -6964,9 +6946,7 @@
         const key = getUserProfileUrl(href, true)
         if (key) {
           const titleElement = $('h3,[data-e2e="browse-username"]', element)
-          const title = titleElement
-            ? getTrimmedTitle(titleElement)
-            : getTrimmedTitle(element)
+          const title = getTrimmedTitle(titleElement || element)
           if (!title) {
             return false
           }
@@ -6986,18 +6966,6 @@
         '[data-e2e="browse-bluev"]',
         '[data-e2e="recommend-card"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const element = $('h1[data-e2e="user-title"]')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getUserProfileUrl(location.href)
-          if (title && key) {
-            const meta = { title, type: "user" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       getStyle: () => tiktok_com_default,
     }
   })()
@@ -7033,6 +7001,29 @@
     }
     return {
       matches: /juejin\.cn/,
+      preProcess() {
+        const key = getUserProfileUrl(location.href)
+        if (key) {
+          const element2 = $("h1.username")
+          if (element2) {
+            setUtagsAttributes(element2, { key, type: "user" })
+          }
+        }
+        const element = $(".sidebar-block.author-block a .username")
+        if (element) {
+          const anchor = element.closest("a")
+          if (anchor) {
+            const key2 = getUserProfileUrl(anchor.href)
+            if (key2) {
+              const titleElement = $(".name", element)
+              const title = getTrimmedTitle(titleElement || element)
+              if (title) {
+                setUtagsAttributes(element, { key: key2, title, type: "user" })
+              }
+            }
+          }
+        }
+      },
       validate(element, href) {
         if ($(".avatar", element)) {
           return false
@@ -7043,7 +7034,7 @@
             const titleElement = $(".name", element)
             let title
             if (titleElement) {
-              title = titleElement.textContent
+              title = getTrimmedTitle(titleElement)
             }
             const meta = { type: "user" }
             if (title) {
@@ -7064,38 +7055,6 @@
         ".follow-item",
         ".more-item",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getUserProfileUrl(location.href)
-        if (key) {
-          const element2 = $("h1.username")
-          if (element2) {
-            const title = getTrimmedTitle(element2)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element2, key, meta)
-              matchedNodesSet.add(element2)
-            }
-          }
-        }
-        const element = $(".sidebar-block.author-block a .username")
-        if (element) {
-          const anchor = element.closest("a")
-          if (anchor) {
-            const key2 = getUserProfileUrl(anchor.href)
-            if (key2) {
-              const titleElement = $(".name", element)
-              const title = titleElement
-                ? titleElement.textContent
-                : element.textContent
-              if (title) {
-                const meta = { title, type: "user" }
-                setUtags(element, key2, meta)
-                matchedNodesSet.add(element)
-              }
-            }
-          }
-        }
-      },
     }
   })()
   var zhihu_com_default =
@@ -7156,6 +7115,24 @@
     }
     return {
       matches: /zhihu\.com/,
+      preProcess() {
+        let key = getPostUrl(location.href)
+        if (key) {
+          const element = $("h1.Post-Title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+        key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $("h1.ProfileHeader-title .ProfileHeader-name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       validate(element, href) {
         if ($(".avatar", element)) {
           return false
@@ -7217,35 +7194,6 @@
         ".ContentItem-time",
       ],
       validMediaSelectors: ["a.LinkCard"],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $("h1.Post-Title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $("h1.ProfileHeader-title .ProfileHeader-name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => zhihu_com_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
@@ -7306,6 +7254,22 @@
     }
     return {
       matches: /www\.xiaohongshu\.com/,
+      preProcess() {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $(".user-info .user-name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          const element = $(".note-content .title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+          }
+        }
+      },
       listNodesSelectors: [".feeds-container section", ".comment-item"],
       conditionNodesSelectors: [
         ".feeds-container section .author-wrapper .author",
@@ -7361,33 +7325,6 @@
         ".dropdown-container",
         ".interaction-info",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $(".user-info .user-name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(location.href)
-        if (key) {
-          const element = $(".note-content .title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getCanonicalUrl: getCanonicalUrl2,
       getStyle: () => xiaohongshu_com_default,
     }
@@ -7433,6 +7370,17 @@
     }
     return {
       matches: /weibo\.com|weibo\.cn/,
+      preProcess() {
+        const key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $(
+            '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
+          )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       validate(element, href) {
         if (!href.includes("weibo.com") && !href.includes("weibo.cn")) {
           return true
@@ -7453,22 +7401,6 @@
         '[class^="Frame_side_"]',
         'a[href*="promote.biz.weibo.cn"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $(
-            '[class^="ProfileHeader_name_"],.profile-cover .mod-fil-name .txt-shadow'
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
@@ -7516,6 +7448,24 @@
     }
     return {
       matches: /sspai\.com/,
+      preProcess() {
+        let key = getPostUrl(location.href)
+        if (key) {
+          const element = $(".article-header .title")
+          if (element && !element.closest(".pai_title")) {
+            setUtagsAttributes(element, { key, type: "post" })
+          }
+        }
+        key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $(
+            ".user_content .user__info__card .ss__user__card__nickname"
+          )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       validate(element, href) {
         for (const link of excludeLinks) {
           if (href.includes(link)) {
@@ -7538,34 +7488,6 @@
         ".pai_abstract",
         ".pai_title .link",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getPostUrl(location.href)
-        if (key) {
-          const element = $(".article-header .title")
-          if (element && !element.closest(".pai_title")) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $(
-            ".user_content .user__info__card .ss__user__card__nickname"
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getCanonicalUrl: getCanonicalUrl2,
       getStyle: () => sspai_com_default,
     }
@@ -7607,6 +7529,36 @@
     }
     return {
       matches: /www\.douyin\.com/,
+      preProcess() {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = getFirstHeadElement("h1")
+          if (element) {
+            const title = extractTrimmedTextWithImageAlt(element)
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: "user" })
+            }
+          }
+        }
+        key = getVideoUrl(location.href)
+        if (key) {
+          const element = getFirstHeadElement("h1")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            const target = element.parentElement.parentElement
+            if (title) {
+              setUtagsAttributes(target, { key, title, type: "video" })
+            }
+          }
+        }
+        key = getNoteUrl(location.href)
+        if (key) {
+          const element = getFirstHeadElement("h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+          }
+        }
+      },
       listNodesSelectors: ['[data-e2e="comment-item"]'],
       conditionNodesSelectors: [
         '[data-e2e="comment-item"] .comment-item-info-wrap a',
@@ -7644,159 +7596,7 @@
         '[data-e2e="douyin-navigation"]',
       ],
       validMediaSelectors: ['img[src*="twemoji"]'],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = getFirstHeadElement("h1")
-          if (element) {
-            const title = extractTrimmedTextWithImageAlt(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getVideoUrl(location.href)
-        if (key) {
-          const element = getFirstHeadElement("h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            const target = element.parentElement.parentElement
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(target, key, meta)
-              target.dataset.utags_node_type = "link"
-              matchedNodesSet.add(target)
-            }
-          }
-        }
-        key = getNoteUrl(location.href)
-        if (key) {
-          const element = getFirstHeadElement("h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => douyin_com_default,
-    }
-  })()
-  var podcasts_google_com_default = ""
-  var podcasts_google_com_default2 = (() => {
-    const prefix2 = "https://podcasts.google.com/"
-    function getEpisodeUrl(url, exact = false) {
-      if (url.startsWith(prefix2)) {
-        const href2 = url.slice(28)
-        if (exact) {
-          if (/^feed\/\w+\/episode\/\w+(\?.*)?$/.test(href2)) {
-            return prefix2 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
-          }
-        } else if (/^feed\/\w+\/episode\/\w+/.test(href2)) {
-          return prefix2 + href2.replace(/^(feed\/\w+\/episode\/\w+).*/, "$1")
-        }
-      }
-      return void 0
-    }
-    function getFeedUrl(url) {
-      if (url.startsWith(prefix2)) {
-        const href2 = url.slice(28)
-        if (/^feed\/\w+(\?.*)?$/.test(href2)) {
-          return prefix2 + href2.replace(/^(feed\/\w+).*/, "$1")
-        }
-      }
-      return void 0
-    }
-    function getCanonicalUrl2(url) {
-      if (url.startsWith(prefix2)) {
-        let url2 = getFeedUrl(url)
-        if (url2) {
-          return url2
-        }
-        url2 = getEpisodeUrl(url)
-        if (url2) {
-          return url2
-        }
-      }
-      return url
-    }
-    return {
-      matches: /podcasts\.google\.com/,
-      excludeSelectors: [
-        ...default_default2.excludeSelectors,
-        "header",
-        "gm-coplanar-drawer",
-      ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getEpisodeUrl(location.href)
-        if (key) {
-          const element = $("h5")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "episode" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getFeedUrl(location.href)
-        if (key) {
-          for (const container of $$("[data-encoded-feed]")) {
-            if (isVisible(container)) {
-              const element = $(
-                "div:first-child > div:first-child > div:first-child > div:first-child",
-                container
-              )
-              if (element) {
-                const title = getTrimmedTitle(element)
-                if (title) {
-                  const meta = { title, type: "feed" }
-                  setUtags(element, key, meta)
-                  matchedNodesSet.add(element)
-                }
-              }
-            }
-          }
-        }
-        for (const element of $$('a[role="listitem"]')) {
-          const key2 = getEpisodeUrl(element.href)
-          const titleElement = $(
-            'div[role="navigation"] div div[role="presentation"]',
-            element
-          )
-          if (key2 && titleElement) {
-            const title = titleElement.textContent
-            const meta = { title, type: "episode" }
-            setUtags(titleElement, key2, meta)
-            titleElement.dataset.utags_node_type = "link"
-            matchedNodesSet.add(titleElement)
-          }
-        }
-        for (const element of $$(
-          'a[href^="./feed/"]:not(a[href*="/episode/"])'
-        )) {
-          if (!isVisible(element)) {
-            continue
-          }
-          const key2 = getFeedUrl(element.href)
-          const titleElement = $("div > div", element)
-          if (key2 && titleElement) {
-            const title = titleElement.textContent
-            const meta = { title, type: "feed" }
-            setUtags(titleElement, key2, meta)
-            titleElement.dataset.utags_node_type = "link"
-            matchedNodesSet.add(titleElement)
-          }
-        }
-      },
-      getCanonicalUrl: getCanonicalUrl2,
-      getStyle: () => podcasts_google_com_default,
     }
   })()
   var rebang_today_default =
@@ -7973,6 +7773,15 @@
     }
     return {
       matches: /pixiv\.net/,
+      preProcess() {
+        const key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $("h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+      },
       listNodesSelectors: [
         "li.list-none",
         '[data-ga4-label="home_recommend"] > div.w-full',
@@ -8008,20 +7817,6 @@
           return true
         }
         return false
-      },
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $("h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
       },
       getStyle: () => pixiv_net_default,
     }
@@ -8096,7 +7891,55 @@
       matches:
         /meta\.discourse\.org|^linux\.do$|^idcflare\.com|meta\.appinn\.net|community\.openai\.com|community\.cloudflare\.com|community\.wanikani\.com|forum\.cursor\.com|www\.nodeloc\.com|forum\.obsidian\.md|forum-zh\.obsidian\.md|www\.uscardforum\.com/,
       preProcess() {
+        var _a
         setVisitedAvailable(true)
+        const isDarkMode =
+          doc.documentElement.dataset.themeType === "dark" || // linux.do
+          ((_a = $("header picture > source")) == null ? void 0 : _a.media) ===
+            "all"
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          let index = 0
+          for (const element2 of $$(
+            ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+          )) {
+            index++
+            if (key !== element2.dataset.utags_key || index === 2) {
+              delete element2.dataset.utags
+              removeUtags(element2)
+            }
+          }
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+        }
+        for (const element of $$(".leaderboard div[data-user-card]")) {
+          const title = element.dataset.userCard
+          if (title) {
+            key = prefix2 + "u/" + title.toLowerCase()
+            element.dataset.utags_position_selector = element.closest(".winner")
+              ? ".winner"
+              : ".user__name"
+            setUtagsAttributes(element, { key, title, type: "user" })
+          }
+        }
+        for (const element of $$(".chat-message span[data-user-card]")) {
+          const title = element.dataset.userCard
+          if (title) {
+            key = prefix2 + "u/" + title.toLowerCase()
+            setUtagsAttributes(element, { key, title, type: "user" })
+          }
+        }
       },
       listNodesSelectors: [
         ".topic-list .topic-list-body tr",
@@ -8125,7 +7968,7 @@
         let key = getUserProfileUrl(href, true)
         if (key) {
           const titleElement = $("span.username", element)
-          const title = getTrimmedTitle(titleElement || element)
+          const title = getUtagsTitle(titleElement || element)
           if (
             !title &&
             !element.closest(".topic-list tr .posters a:first-of-type") &&
@@ -8245,70 +8088,6 @@
         ".topic-list tr .posters a:first-of-type",
         ".search-results .author a .avatar",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        var _a
-        const isDarkMode =
-          doc.documentElement.dataset.themeType === "dark" || // linux.do
-          ((_a = $("header picture > source")) == null ? void 0 : _a.media) ===
-            "all"
-        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          let index = 0
-          for (const element2 of $$(
-            ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-          )) {
-            index++
-            if (key !== element2.dataset.utags_key || index === 2) {
-              delete element2.dataset.utags
-              removeUtags(element2)
-            }
-          }
-          const element =
-            $(".user-profile-names .username") ||
-            $(
-              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-            )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              element.dataset.utags_key = key
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-        }
-        for (const element of $$(".leaderboard div[data-user-card]")) {
-          const title = element.dataset.userCard
-          if (title) {
-            key = prefix2 + "u/" + title.toLowerCase()
-            const meta = { type: "user", title }
-            setUtags(element, key, meta)
-            setAttribute(element, "data-utags", element.dataset.utags || "")
-            element.dataset.utags_node_type = "link"
-            element.dataset.utags_position_selector = element.closest(".winner")
-              ? ".winner"
-              : ".user__name"
-            matchedNodesSet.add(element)
-          }
-        }
-        for (const element of $$(".chat-message span[data-user-card]")) {
-          const title = element.dataset.userCard
-          if (title) {
-            key = prefix2 + "u/" + title.toLowerCase()
-            const meta = { type: "user", title }
-            setUtags(element, key, meta)
-            setAttribute(element, "data-utags", element.dataset.utags || "")
-            element.dataset.utags_node_type = "link"
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       postProcess() {
         const enableQuickStar = getSettingsValue(
           "enableQuickStar_".concat(host3)
@@ -8405,6 +8184,23 @@
     }
     return {
       matches: /bbs\.nga\.cn|nga\.178\.com|ngabbs\.com/,
+      preProcess() {
+        const key = getUserProfileUrl(location.href)
+        if (key) {
+          const label = $(
+            "#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label"
+          )
+          if (label) {
+            const title = getTrimmedTitle(label)
+            if (title === "\u7528\u2002\u6237\u2002\u540D") {
+              const element = label.nextElementSibling
+              if (element) {
+                setUtagsAttributes(element, { key, type: "user" })
+              }
+            }
+          }
+        }
+      },
       validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
@@ -8427,28 +8223,6 @@
         ".xxxxxxxxxx",
         ".xxxxxxxxxx",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getUserProfileUrl(location.href)
-        if (key) {
-          const label = $(
-            "#ucpuser_info_blockContent > div > span > div:nth-child(2) > div:nth-child(3) > label"
-          )
-          if (label) {
-            const title = getTrimmedTitle(label)
-            if (title === "\u7528\u2002\u6237\u2002\u540D") {
-              const element = label.nextElementSibling
-              if (element) {
-                const title2 = getTrimmedTitle(element)
-                if (title2) {
-                  const meta = { title: title2, type: "user" }
-                  setUtags(element, key, meta)
-                  matchedNodesSet.add(element)
-                }
-              }
-            }
-          }
-        }
-      },
       getStyle: () => nga_cn_default,
     }
   })()
@@ -8476,6 +8250,22 @@
     }
     return {
       matches: /dlsite\.com/,
+      preProcess() {
+        let key = getProductUrl(location.href)
+        if (key) {
+          const element = $("h1#work_name")
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+        key = getMakerUrl(location.href)
+        if (key) {
+          const element = $(".prof_maker_name")
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+      },
       validate(element, href) {
         if (element.tagName !== "A") {
           return true
@@ -8568,34 +8358,6 @@
         ".prof_label_list",
         ".type_btn",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getProductUrl(location.href)
-        if (key) {
-          const element = $("h1#work_name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getMakerUrl(location.href)
-        if (key) {
-          const element = $(".prof_maker_name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => dlsite_com_default,
     }
   })()
@@ -8711,7 +8473,29 @@
       matches:
         /discuss\.flarum\.org|discuss\.flarum\.org\.cn|yuanliao\.info|veryfb\.com|kater\.me|bbs\.viva-la-vita\.org/,
       preProcess() {
+        var _a
         setVisitedAvailable(true)
+        const isDarkMode =
+          ((_a = $('meta[name="color-scheme"]')) == null
+            ? void 0
+            : _a.getAttribute("content")) === "dark"
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getPostUrl(location.href)
+        if (key) {
+          const element = $(".item-title h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+        key = getTagUrl(location.href)
+        if (key) {
+          const element = $("h1.Hero-title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "tag" })
+          }
+        }
       },
       listNodesSelectors: [
         "ul.DiscussionList-discussions li",
@@ -8789,42 +8573,6 @@
         ".Dropdown-menu",
         ".Button",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        var _a
-        const isDarkMode =
-          ((_a = $('meta[name="color-scheme"]')) == null
-            ? void 0
-            : _a.content) === "dark"
-        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
-        let key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $(".item-title h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getTagUrl(location.href)
-        if (key) {
-          const element = $("h1.Hero-title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "tag" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => flarum_default,
     }
   })()
@@ -8875,6 +8623,20 @@
       matches: /www\.nodeseek\.com|www\.deepflood\.com/,
       preProcess() {
         setVisitedAvailable(true)
+        const isDarkMode = hasClass(doc.body, "dark-layout")
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $("h1.username")
+          if (element) {
+            const title = getDirectChildText(element)
+            setUtagsAttributes(element, { key, title, type: "user" })
+          }
+        }
+        key = getPostUrl(location.href)
+        if (key) {
+          addVisited(key)
+        }
       },
       listNodesSelectors: [
         "ul.post-list li.post-list-item",
@@ -8892,7 +8654,7 @@
         }
         let key = getUserProfileUrl(href, true)
         if (key) {
-          const title = getTrimmedTitle(element)
+          const title = getUtagsTitle(element)
           if (!title) {
             return false
           }
@@ -8940,26 +8702,6 @@
         ".btn",
       ],
       validMediaSelectors: ["svg.iconpark-icon"],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const isDarkMode = hasClass(doc.body, "dark-layout")
-        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $("h1.username")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-        }
-      },
       getStyle: () => nodeseek_com_default,
     }
   })()
@@ -8978,6 +8720,15 @@
     }
     return {
       matches: /\w+\.inoreader\.com/,
+      preProcess() {
+        const key = getArticleUrl(location.href)
+        if (key) {
+          const element = $(".article_full_contents div.article_title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "article" })
+          }
+        }
+      },
       listNodesSelectors: [".ar"],
       conditionNodesSelectors: [
         ".article_tile .article_tile_footer_feed_title a",
@@ -9028,20 +8779,6 @@
         ".gadget_overview_feed_title",
         ".header_name",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getArticleUrl(location.href)
-        if (key) {
-          const element = $(".article_full_contents div.article_title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "article" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {
         const isDarkMode = hasClass(doc.body, "theme_dark")
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
@@ -9079,6 +8816,43 @@
     }
     return {
       matches: /www\.zhipin\.com/,
+      preProcess() {
+        setVisitedAvailable(true)
+        for (const element of $$(
+          ".info-company div[data-url],.similar-job-list .similar-job-company[data-url]"
+        )) {
+          if (element.dataset.url) {
+            element.href =
+              location.origin + element.dataset.url.replace("/job/", "/")
+            element.dataset.utags_node_type = "link"
+          }
+        }
+        let key = getCompanyUrl(location.href)
+        if (key) {
+          const element = $(".company-banner h1")
+          if (element) {
+            const title = element.childNodes[0].textContent.trim()
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: "company" })
+            }
+          }
+        }
+        key = getJobDetailUrl(location.href)
+        if (key) {
+          let element = $(".job-banner .info-primary .name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "job-detail" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+          element = $(".smallbanner .company-info .name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "job-detail" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+      },
       listNodesSelectors: [
         ".common-tab-box ul li",
         ".hot-company-wrapper ul li",
@@ -9117,18 +8891,6 @@
         ".info-company div[data-url]",
         ".similar-job-list .similar-job-company[data-url]",
       ],
-      preProcess() {
-        setVisitedAvailable(true)
-        for (const element of $$(
-          ".info-company div[data-url],.similar-job-list .similar-job-company[data-url]"
-        )) {
-          if (element.dataset.url) {
-            element.href =
-              location.origin + element.dataset.url.replace("/job/", "/")
-            element.dataset.utags_node_type = "link"
-          }
-        }
-      },
       validate(element, href) {
         if (!href) {
           return false
@@ -9145,7 +8907,7 @@
             ".name,.company-info-top h3,.card-desc .title,h4",
             element
           )
-          const title = getTrimmedTitle(titleElement || element)
+          const title = getUtagsTitle(titleElement || element)
           if (!title) {
             return false
           }
@@ -9206,44 +8968,6 @@
         'a[href*="/web/geek/job"]',
         ".page",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getCompanyUrl(location.href)
-        if (key) {
-          const element = $(".company-banner h1")
-          if (element) {
-            const title = element.childNodes[0].textContent.trim()
-            if (title) {
-              const meta = { title, type: "company" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getJobDetailUrl(location.href)
-        if (key) {
-          addVisited(key)
-          let element = $(".job-banner .info-primary .name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "job-detail" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-          element = $(".smallbanner .company-info .name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "job-detail" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
       postProcess() {
         const isDarkMode = hasClass(doc.body, "theme_dark")
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
@@ -9317,6 +9041,27 @@
       matches: /twitch\.tv/,
       preProcess() {
         setVisitedAvailable(true)
+        const isDarkMode = hasClass(doc.documentElement, "tw-root--theme-dark")
+        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
+        let key = getVideoUrl(location.href)
+        if (key) {
+          const element = $('[data-a-target="stream-title"]')
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+        for (const element of $$(
+          '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
+        )) {
+          const id = element.dataset.aUser
+          const title = getTrimmedTitle(element)
+          if (id && title) {
+            key = prefix2 + id.toLowerCase()
+            setUtagsAttributes(element, { key, title, type: "user" })
+          }
+        }
       },
       listNodesSelectors: [
         '.tw-tower [data-a-target^="video-tower-card-"]',
@@ -9336,7 +9081,7 @@
             'p[data-a-target="preview-card-channel-link"] p',
             element
           )
-          const title = getTrimmedTitle(titleElement || element)
+          const title = getUtagsTitle(titleElement || element)
           if (!title) {
             return false
           }
@@ -9370,38 +9115,6 @@
         //
       ],
       validMediaSelectors: [],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const isDarkMode = hasClass(doc.documentElement, "tw-root--theme-dark")
-        doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
-        let key = getVideoUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $('[data-a-target="stream-title"]')
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        for (const element of $$(
-          '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
-        )) {
-          const id = element.dataset.aUser
-          const title = getTrimmedTitle(element)
-          if (id && title) {
-            key = prefix2 + id.toLowerCase()
-            const meta = { type: "user", title }
-            setUtags(element, key, meta)
-            setAttribute(element, "data-utags", element.dataset.utags || "")
-            element.dataset.utags_node_type = "link"
-            matchedNodesSet.add(element)
-          }
-        }
-      },
       getStyle: () => twitch_tv_default,
     }
   })()
@@ -9450,6 +9163,24 @@
     }
     return {
       matches: /flickr\.com/,
+      preProcess() {
+        var _a
+        let key = getUserProfileUrl(location.href)
+        key = getGroupUrl(location.href)
+        if (key) {
+          const element = $("h1.group-title")
+          const titleElement =
+            (_a = $("h1.group-title .group-title-holder")) == null
+              ? void 0
+              : _a.childNodes[0]
+          if (element && titleElement) {
+            const title = titleElement.textContent.trim()
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: "group" })
+            }
+          }
+        }
+      },
       listNodesSelectors: [],
       conditionNodesSelectors: [],
       validate(element, href) {
@@ -9479,7 +9210,7 @@
           setAttribute(element, "data-utags", element.dataset.utags || "")
           return true
         }
-        const title = getTrimmedTitle(element)
+        const title = getUtagsTitle(element)
         if (!title) {
           return false
         }
@@ -9578,28 +9309,6 @@
         "#feeds-xml a",
         ".slideshow-bottom a",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        var _a
-        let key = getUserProfileUrl(location.href)
-        key = getGroupUrl(location.href)
-        if (key) {
-          const element = $("h1.group-title")
-          const titleElement =
-            (_a = $("h1.group-title .group-title-holder")) == null
-              ? void 0
-              : _a.childNodes[0]
-          if (element && titleElement) {
-            const title = titleElement.textContent.trim()
-            if (title) {
-              const meta = { title, type: "group" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
       getStyle: () => flickr_com_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
@@ -9643,6 +9352,15 @@
       matches: /ruanyifeng\.com/,
       preProcess() {
         setVisitedAvailable(true)
+        const key = getPostUrl(location.href)
+        if (key) {
+          const element = $("h1#page-title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
       },
       listNodesSelectors: ["ul li.module-list-item", "#related_entries ul li"],
       conditionNodesSelectors: [
@@ -9676,22 +9394,6 @@
         ".comment-footer-inner",
         "#latest-comments",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $("h1#page-title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
       getStyle: () => ruanyifeng_com_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
@@ -9745,6 +9447,15 @@
           ;(_a = $("[data-main-left]")) == null
             ? void 0
             : _a.classList.add("utags_no_hide")
+        }
+        const key = getPostUrl(location.href)
+        if (key) {
+          const element = $("[data-main-left] h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
         }
       },
       listNodesSelectors: [
@@ -9804,38 +9515,6 @@
         'a[href$="/history"]',
         'a[href^="/auth"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getPostUrl(location.href)
-        if (key) {
-          addVisited(key)
-          const element = $("[data-main-left] h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $(
-            "[data-main-left] div.w-full > div.w-full > div:first-child > div"
-          )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {
         const theme = doc.documentElement.dataset.theme || ""
         const isDarkMode = [
@@ -9933,6 +9612,36 @@
       matches: /toutiao\.com/,
       preProcess() {
         setVisitedAvailable(true)
+        let href = normalizeDomain(location.href)
+        if (!href.startsWith(prefix2)) {
+          return
+        }
+        href = deleteUrlParameters(href, "*")
+        let key = getPostUrl(href)
+        if (key) {
+          const element = $("h2.title,.article-content h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "news" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          const element = $(".ttp-video-extras-title h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
+        key = getUserProfileUrl(href)
+        if (key) {
+          const element = $(".profile-info-wrapper .name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
       },
       validate(element, href) {
         href = normalizeDomain(href)
@@ -9992,56 +9701,6 @@
         '[aria-label^="\u8BC4\u8BBA\u6570"]',
         ".action-item",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let href = normalizeDomain(location.href)
-        if (!href.startsWith(prefix2)) {
-          return
-        }
-        href = deleteUrlParameters(href, "*")
-        let key = getPostUrl(href)
-        if (key) {
-          addVisited(key)
-          const element = $("h2.title,.article-content h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "news" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getVideoUrl(href)
-        if (key) {
-          addVisited(key)
-          const element = $(".ttp-video-extras-title h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getUserProfileUrl(href)
-        if (key) {
-          const element = $(".profile-info-wrapper .name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {},
       getStyle: () => toutiao_com_default,
       getCanonicalUrl: getCanonicalUrl2,
@@ -10143,6 +9802,27 @@
       matches: matchesPattern,
       preProcess() {
         setVisitedAvailable(true)
+        const href = normalizeDomain(location.href)
+        let key = getUserProfileUrl(normalizedPrefix, href)
+        if (key) {
+          const element =
+            $(".user-profile-names .username") ||
+            $(
+              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+            )
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        key = getPostUrl(normalizedPrefix, href)
+        if (key) {
+          const element = $("#thread_subject")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
       },
       listNodesSelectors: [
         //
@@ -10183,9 +9863,7 @@
           }
           if (
             /^\d+$/.test(title2) &&
-            element.parentElement.parentElement.textContent.includes(
-              "\u79EF\u5206"
-            )
+            ancestorTextIncludes(element, "\u79EF\u5206", 2)
           ) {
             return false
           }
@@ -10213,9 +9891,7 @@
             return false
           }
           if (
-            element.parentElement.textContent.includes(
-              "\u6700\u540E\u56DE\u590D\u4E8E"
-            )
+            ancestorTextIncludes(element, "\u6700\u540E\u56DE\u590D\u4E8E", 1)
           ) {
             return false
           }
@@ -10284,40 +9960,6 @@
         "nav",
         ".btn",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const href = normalizeDomain(location.href)
-        let key = getUserProfileUrl(normalizedPrefix, href)
-        if (key) {
-          const element =
-            $(".user-profile-names .username") ||
-            $(
-              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-            )
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getPostUrl(normalizedPrefix, href)
-        if (key) {
-          addVisited(key)
-          const element = $("#thread_subject")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
       getStyle: () => discuz_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
@@ -10392,6 +10034,29 @@
     }
     return {
       matches: /p[ro_][r_]nhub\.com/,
+      preProcess() {
+        let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $(".name h1")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        key = getChannelUrl(location.href)
+        if (key) {
+          const element = $(".title h1")
+          if (element && !$("a", element)) {
+            setUtagsAttributes(element, { key, type: "channel" })
+          }
+        }
+        key = getVideoUrl(location.href)
+        if (key) {
+          const element = $("h1.title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+          }
+        }
+      },
       listNodesSelectors: [
         "ul.search-video-thumbs li",
         "ul.videos li",
@@ -10408,7 +10073,7 @@
         "ul.categoriesListSection li .categoryTitleWrapper a",
       ],
       validate(element, href) {
-        const hrefAttr = getAttribute(element, "href")
+        const hrefAttr = getHrefAttribute(element)
         if (!hrefAttr || hrefAttr === "null" || hrefAttr === "#") {
           return false
         }
@@ -10458,44 +10123,6 @@
         ".orangeButton",
         "a[onclick]",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getUserProfileUrl(location.href)
-        if (key) {
-          const element = $(".name h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getChannelUrl(location.href)
-        if (key) {
-          const element = $(".title h1")
-          if (element && !$("a", element)) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "channel" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getVideoUrl(location.href)
-        if (key) {
-          const element = $("h1.title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {
         const host3 = location.host
         const enableQuickStar = getSettingsValue(
@@ -10589,6 +10216,15 @@
     }
     return {
       matches: /(e-hen|exhen)tai\.org/,
+      preProcess() {
+        const key = getPostUrl(location.href)
+        if (key) {
+          const element = getFirstHeadElement()
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+          }
+        }
+      },
       validate(element) {
         if (element.tagName !== "A") {
           return true
@@ -10636,20 +10272,6 @@
         'a[href*="report=select"]',
         'a[href*="act=expunge"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getPostUrl(location.href)
-        if (key) {
-          const element = getFirstHeadElement()
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => e_hentxx_org_default,
     }
   })()
@@ -10672,6 +10294,29 @@
     }
     return {
       matches: /panda\.chaika\.moe/,
+      preProcess() {
+        const key = getPostUrl(location.href)
+        if (key) {
+          const element = $("h5")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "post" })
+          }
+        }
+        for (const element of $$(".gallery a.cover")) {
+          const key2 = element.href
+          const titleElement = $(".cover-title", element)
+          if (titleElement) {
+            setUtagsAttributes(titleElement, { key: key2, type: "post" })
+          }
+        }
+        for (const element of $$('.td-extended > a[href^="/archive/"]')) {
+          const key2 = element.href
+          const titleElement = $("h5", element.parentElement.parentElement)
+          if (titleElement) {
+            setUtagsAttributes(titleElement, { key: key2, type: "post" })
+          }
+        }
+      },
       excludeSelectors: [
         ...default_default2.excludeSelectors,
         ".navbar",
@@ -10680,42 +10325,6 @@
         ".btn",
         ".caption",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const key = getPostUrl(location.href)
-        if (key) {
-          const element = $("h5")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        for (const element of $$(".gallery a.cover")) {
-          const key2 = element.href
-          const titleElement = $(".cover-title", element)
-          if (titleElement) {
-            const title = getTrimmedTitle(titleElement)
-            const meta = { title, type: "post" }
-            setUtags(titleElement, key2, meta)
-            titleElement.dataset.utags_node_type = "link"
-            matchedNodesSet.add(titleElement)
-          }
-        }
-        for (const element of $$('.td-extended > a[href^="/archive/"]')) {
-          const key2 = element.href
-          const titleElement = $("h5", element.parentElement.parentElement)
-          if (titleElement) {
-            const title = titleElement.textContent
-            const meta = { title, type: "post" }
-            setUtags(titleElement, key2, meta)
-            titleElement.dataset.utags_node_type = "link"
-            matchedNodesSet.add(titleElement)
-          }
-        }
-      },
       getStyle: () => panda_chaika_moe_default,
     }
   })()
@@ -10787,6 +10396,29 @@
     }
     return {
       matches: /dmm\.co\.jp/,
+      preProcess() {
+        let key = getProductUrl(location.href)
+        if (key) {
+          const element = $("h1.productTitle__txt")
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+        key = getMakerUrl(location.href)
+        if (key) {
+          const element = $(".circleProfile__name span")
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+        key = getVideoProductUrl(location.href)
+        if (key) {
+          const element = $("main h1")
+          if (element) {
+            setUtagsAttributes(element, { key })
+          }
+        }
+      },
       validate(element, href) {
         if (!href.startsWith(prefix2)) {
           return true
@@ -10867,44 +10499,6 @@
         '[data-e2eid="list-actress-root"] li a',
         '[href^="/av/content/?id="]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getProductUrl(location.href)
-        if (key) {
-          const element = $("h1.productTitle__txt")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getMakerUrl(location.href)
-        if (key) {
-          const element = $(".circleProfile__name span")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getVideoProductUrl(location.href)
-        if (key) {
-          const element = $("main h1")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getCanonicalUrl: getCanonicalUrl2,
       getStyle: () => dmm_co_jp_default,
     }
@@ -10934,9 +10528,7 @@
               .concat(service, "/user/")
               .concat(user)
             if (location.href !== href) {
-              element.href = href
-              element.dataset.utags_link = href
-              element.dataset.utags_type = "user"
+              setUtagsAttributes(element, { key: href, type: "user" })
             }
           }
         }
@@ -10944,10 +10536,7 @@
         if (key) {
           const element = $("h1.post__title,h1.scrape__title")
           if (element) {
-            element.href = key
-            element.dataset.utags_link = key
-            element.dataset.utags_type = "post"
-            element.dataset.utags_node_type = "link"
+            setUtagsAttributes(element, { key, type: "post" })
           }
         }
       },
@@ -11043,6 +10632,36 @@
     }
     return {
       matches: /rule34video\.com|rule34gen\.com/,
+      preProcess() {
+        let key = getModelUrl(location.href)
+        if (key) {
+          const element = $(".brand_inform .title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "model" })
+          }
+        }
+        key = getMemberUrl(location.href)
+        if (key) {
+          const element = $(".channel_logo .title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
+        key = getCategoryUrl(location.href)
+        if (key) {
+          const element = $(".brand_inform .title")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "category" })
+          }
+        }
+        key = getVideoUrl(location.href)
+        if (key) {
+          const element = $("h1.title_video")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+          }
+        }
+      },
       listNodesSelectors: [
         //
         ".list-comments .item",
@@ -11095,56 +10714,6 @@
         'a[href*="download"]',
         ".list-comments .wrap_image",
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        let key = getModelUrl(location.href)
-        if (key) {
-          const element = $(".brand_inform .title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "model" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getMemberUrl(location.href)
-        if (key) {
-          const element = $(".channel_logo .title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getCategoryUrl(location.href)
-        if (key) {
-          const element = $(".brand_inform .title")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "category" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-        key = getVideoUrl(location.href)
-        if (key) {
-          const element = $("h1.title_video")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       getStyle: () => rule34video_com_default,
     }
   })()
@@ -11202,6 +10771,26 @@
       matches: /simpcity\.\w+/,
       preProcess() {
         setVisitedAvailable(true)
+        const href = normalizeDomain(location.href)
+        let key = getPostUrl(href)
+        if (key) {
+          const element = $("h1.p-title-value")
+          if (element) {
+            const title = getDirectChildText(element)
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: "post" })
+              addVisited(key)
+              markElementWhetherVisited(key, element)
+            }
+          }
+        }
+        key = getUserProfileUrl(href)
+        if (key) {
+          const element = $("h1.memberHeader-name")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "user" })
+          }
+        }
       },
       listNodesSelectors: [
         ".structItem--thread",
@@ -11221,7 +10810,7 @@
           if ($("time", element)) {
             return false
           }
-          const title = getTrimmedTitle(element)
+          const title = getUtagsTitle(element)
           if (!title) {
             return false
           }
@@ -11272,37 +10861,6 @@
         'a[href^="/direct-messages/"]',
         'a[href^="/account/"]',
       ],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const href = normalizeDomain(location.href)
-        let key = getPostUrl(href)
-        if (key) {
-          addVisited(key)
-          const element = $("h1.p-title-value")
-          if (element) {
-            const title = getDirectChildText(element)
-            if (title) {
-              const meta = { title, type: "post" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-        key = getUserProfileUrl(href)
-        if (key) {
-          const element = $("h1.memberHeader-name")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "user" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      },
       postProcess() {
         const isDarkMode = true
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
@@ -11332,6 +10890,16 @@
       matches: /hotgirl\.asia/,
       preProcess() {
         setVisitedAvailable(true)
+        const href = location.href
+        const key = getVideoUrl(href)
+        if (key) {
+          const element = $(".mvic-desc h3")
+          if (element) {
+            setUtagsAttributes(element, { key, type: "video" })
+            addVisited(key)
+            markElementWhetherVisited(key, element)
+          }
+        }
       },
       listNodesSelectors: [".vl-item"],
       conditionNodesSelectors: [".vl-item a"],
@@ -11365,24 +10933,6 @@
         ".breadcrumb",
       ],
       validMediaSelectors: [".vl-item"],
-      addExtraMatchedNodes(matchedNodesSet) {
-        const href = location.href
-        const key = getVideoUrl(href)
-        if (key) {
-          addVisited(key)
-          const element = $(".mvic-desc h3")
-          if (element) {
-            const title = getTrimmedTitle(element)
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(element, key, meta)
-              element.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element)
-              markElementWhetherVisited(key, element)
-            }
-          }
-        }
-      },
       postProcess() {
         const isDarkMode = true
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
@@ -11416,10 +10966,7 @@
         if (key) {
           const element = $("h1.title")
           if (element) {
-            element.href = key
-            element.dataset.utags_link = key
-            element.dataset.utags_type = "gallery"
-            element.dataset.utags_node_type = "link"
+            setUtagsAttributes(element, { key, type: "gallery" })
             addVisited(key)
             markElementWhetherVisited(key, element)
           }
@@ -11512,9 +11059,7 @@
         if (key) {
           const element = $("h1#gallery-brand a")
           if (element) {
-            element.href = key
-            element.dataset.utags_link = key
-            element.dataset.utags_type = "gallery"
+            setUtagsAttributes(element, { key, type: "gallery" })
             addVisited(key)
             markElementWhetherVisited(key, element)
           }
@@ -11581,7 +11126,6 @@
     weibo_com_default,
     sspai_com_default2,
     douyin_com_default2,
-    podcasts_google_com_default2,
     rebang_today_default2,
     myanimelist_net_default2,
     douban_com_default,

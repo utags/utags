@@ -1,9 +1,11 @@
+import type { prependListener } from 'node:cluster'
 import { $, $$, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./006-reddit.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { createTimeout } from '../../modules/timer-manager'
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -92,6 +94,35 @@ export default (() => {
 
   return {
     matches: /reddit\.com/,
+    preProcess() {
+      // profile header
+      let element = $('[data-testid="profile-main"] .w-full p')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getUserProfileUrl(location.href)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      element = $('.w-full h1')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getCommunityUrl(location.href)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'community' })
+        }
+      }
+
+      element = $('h1[slot="title"]')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getCommentsUrl(location.href, true)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'comments' })
+        }
+      }
+    },
     listNodesSelectors: [
       'shreddit-feed article',
       'shreddit-feed shreddit-ad-post',
@@ -179,41 +210,6 @@ export default (() => {
       '[bundlename="shreddit_sort_dropdown"]',
       '[slot="tabs"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // profile header
-      let element = $('[data-testid="profile-main"] .w-full p')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getUserProfileUrl(location.href)
-        if (title && key) {
-          const meta = { title, type: 'user' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-
-      element = $('.w-full h1')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getCommunityUrl(location.href)
-        if (title && key) {
-          const meta = { title, type: 'community' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-
-      element = $('h1[slot="title"]')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getCommentsUrl(location.href, true)
-        if (title && key) {
-          const meta = { title, type: 'comments' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     getStyle: () => styleText,
     postProcess() {
       createTimeout(() => {

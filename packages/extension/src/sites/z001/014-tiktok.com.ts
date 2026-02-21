@@ -3,6 +3,7 @@ import styleText from 'data-text:./014-tiktok.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -25,6 +26,17 @@ export default (() => {
 
   return {
     matches: /tiktok\.com/,
+    preProcess() {
+      // profile header
+      const element = $('h1[data-e2e="user-title"]')
+      if (element) {
+        const title = getTrimmedTitle(element)
+        const key = getUserProfileUrl(location.href)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+    },
     listNodesSelectors: [
       '.css-ulyotp-DivCommentContentContainer',
       '.css-1gstnae-DivCommentItemWrapper',
@@ -43,9 +55,7 @@ export default (() => {
       const key = getUserProfileUrl(href, true)
       if (key) {
         const titleElement = $('h3,[data-e2e="browse-username"]', element)
-        const title = titleElement
-          ? getTrimmedTitle(titleElement)
-          : getTrimmedTitle(element)
+        const title = getTrimmedTitle(titleElement || element)
 
         if (!title) {
           return false
@@ -71,19 +81,6 @@ export default (() => {
       '[data-e2e="browse-bluev"]',
       '[data-e2e="recommend-card"]',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // profile header
-      const element = $('h1[data-e2e="user-title"]')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getUserProfileUrl(location.href)
-        if (title && key) {
-          const meta = { title, type: 'user' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

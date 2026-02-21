@@ -9,6 +9,7 @@ import {
 } from '../../modules/visited'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { setUtags } from '../../utils/dom-utils'
+import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   const prefix = location.origin + '/'
@@ -81,6 +82,32 @@ export default (() => {
     matches: /twitch\.tv/,
     preProcess() {
       setVisitedAvailable(true)
+
+      const isDarkMode = hasClass(doc.documentElement, 'tw-root--theme-dark')
+      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
+
+      let key = getVideoUrl(location.href)
+      if (key) {
+        const element = $('[data-a-target="stream-title"]')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'video' })
+          addVisited(key)
+          markElementWhetherVisited(key, element)
+        }
+      }
+
+      // Chat
+      for (const element of $$(
+        '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
+      )) {
+        const id = element.dataset.aUser
+        const title = getTrimmedTitle(element)
+        if (id && title) {
+          key = prefix + id.toLowerCase()
+
+          setUtagsAttributes(element, { key, title, type: 'user' })
+        }
+      }
     },
     listNodesSelectors: [
       // videos
@@ -103,7 +130,7 @@ export default (() => {
           'p[data-a-target="preview-card-channel-link"] p',
           element
         )
-        const title = getTrimmedTitle(titleElement || element)
+        const title = getUtagsTitle(titleElement || element)
 
         if (!title) {
           return false
@@ -194,44 +221,6 @@ export default (() => {
       // ".search-results .author a .avatar",
       // '[data-a-target="preview-card-image-link"]'
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<UtagsHTMLElement>) {
-      const isDarkMode = hasClass(doc.documentElement, 'tw-root--theme-dark')
-      doc.documentElement.dataset.utags_darkmode = isDarkMode ? '1' : '0'
-
-      let key = getVideoUrl(location.href)
-      if (key) {
-        addVisited(key)
-
-        const element = $('[data-a-target="stream-title"]')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-
-      // Chat
-      for (const element of $$(
-        '[data-test-selector="chat-room-component-layout"] [data-test-selector="message-username"]'
-      )) {
-        const id = element.dataset.aUser
-        const title = getTrimmedTitle(element)
-        if (id && title) {
-          key = prefix + id.toLowerCase()
-          const meta = { type: 'user', title }
-
-          setUtags(element, key, meta)
-          setAttribute(element, 'data-utags', element.dataset.utags || '')
-          element.dataset.utags_node_type = 'link'
-
-          matchedNodesSet.add(element)
-        }
-      }
-    },
     getStyle: () => styleText,
   }
 })()

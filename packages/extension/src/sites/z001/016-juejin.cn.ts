@@ -2,6 +2,7 @@ import { $, setAttribute } from 'browser-extension-utils'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
+import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
@@ -20,6 +21,33 @@ export default (() => {
 
   return {
     matches: /juejin\.cn/,
+    preProcess() {
+      const key = getUserProfileUrl(location.href)
+      if (key) {
+        // profile header
+        const element = $('h1.username')
+        if (element) {
+          setUtagsAttributes(element, { key, type: 'user' })
+        }
+      }
+
+      // 文章右侧栏作者信息
+      const element = $('.sidebar-block.author-block a .username')
+      if (element) {
+        const anchor = element.closest('a')
+        if (anchor) {
+          const key = getUserProfileUrl(anchor.href)
+          if (key) {
+            const titleElement = $('.name', element)
+            const title = getTrimmedTitle(titleElement || element)
+
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: 'user' })
+            }
+          }
+        }
+      }
+    },
     validate(element: HTMLAnchorElement, href: string) {
       if ($('.avatar', element)) {
         return false
@@ -31,10 +59,10 @@ export default (() => {
           const titleElement = $('.name', element)
           let title: string | undefined
           if (titleElement) {
-            title = titleElement.textContent!
+            title = getTrimmedTitle(titleElement)
           }
 
-          const meta = { type: 'user' }
+          const meta: Record<string, string> = { type: 'user' }
           if (title) {
             meta.title = title
           }
@@ -56,41 +84,5 @@ export default (() => {
       '.follow-item',
       '.more-item',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      const key = getUserProfileUrl(location.href)
-      if (key) {
-        // profile header
-        const element = $('h1.username')
-        if (element) {
-          const title = getTrimmedTitle(element)
-          if (title) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-      }
-
-      // 文章右侧栏作者信息
-      const element = $('.sidebar-block.author-block a .username')
-      if (element) {
-        const anchor = element.closest('a')
-        if (anchor) {
-          const key = getUserProfileUrl(anchor.href)
-          if (key) {
-            const titleElement = $('.name', element)
-            const title = titleElement
-              ? titleElement.textContent
-              : element.textContent
-
-            if (title) {
-              const meta = { title, type: 'user' }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      }
-    },
   }
 })()

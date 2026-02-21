@@ -8,6 +8,7 @@ import {
   setVisitedAvailable,
 } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
+import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 
 export default (() => {
   // Constants
@@ -84,6 +85,38 @@ export default (() => {
 
   return {
     matches: /flickr\.com/,
+    preProcess() {
+      let key = getUserProfileUrl(location.href)
+      // if (key) {
+      //   // profile header
+      //   const element =
+      //     $(".user-profile-names .username") ||
+      //     $(
+      //       ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+      //     )
+      //   if (element) {
+      //     const title = element.textContent!.trim()
+      //     if (title) {
+      //       const meta = { title, type: "user" }
+      //       setUtags(element, key, meta)
+      //       matchedNodesSet.add(element)
+      //     }
+      //   }
+      // }
+
+      key = getGroupUrl(location.href)
+      if (key) {
+        const element = $('h1.group-title')
+        const titleElement = $('h1.group-title .group-title-holder')
+          ?.childNodes[0]
+        if (element && titleElement) {
+          const title = titleElement.textContent!.trim()
+          if (title) {
+            setUtagsAttributes(element, { key, title, type: 'group' })
+          }
+        }
+      }
+    },
     listNodesSelectors: [
       // ".topic-list .topic-list-body tr",
       // // replies
@@ -154,7 +187,7 @@ export default (() => {
         return true
       }
 
-      const title = getTrimmedTitle(element)
+      const title = getUtagsTitle(element)
 
       if (!title) {
         return false
@@ -261,42 +294,6 @@ export default (() => {
       '#feeds-xml a',
       '.slideshow-bottom a',
     ],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      let key = getUserProfileUrl(location.href)
-      // if (key) {
-      //   // profile header
-      //   const element =
-      //     $(".user-profile-names .username") ||
-      //     $(
-      //       ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-      //     )
-      //   if (element) {
-      //     const title = element.textContent!.trim()
-      //     if (title) {
-      //       const meta = { title, type: "user" }
-      //       setUtags(element, key, meta)
-      //       matchedNodesSet.add(element)
-      //     }
-      //   }
-      // }
-
-      key = getGroupUrl(location.href)
-      if (key) {
-        const element = $('h1.group-title')
-        const titleElement = $('h1.group-title .group-title-holder')
-          ?.childNodes[0]
-        if (element && titleElement) {
-          const title = titleElement.textContent!.trim()
-          if (title) {
-            const meta = { title, type: 'group' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      }
-    },
     getStyle: () => styleText,
     getCanonicalUrl,
   }
