@@ -1,5 +1,5 @@
 import { $, setAttribute } from 'browser-extension-utils'
-import styleText from 'data-text:./006-rule34video.com.scss'
+import styleText from 'data-text:./006-rule99video.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
@@ -54,7 +54,7 @@ export default (() => {
   }
 
   return {
-    matches: /rule34video\.com|rule34gen\.com/,
+    matches: /rule34(video|gen)\.com/,
     preProcess() {
       let key = getModelUrl(location.href)
       if (key) {

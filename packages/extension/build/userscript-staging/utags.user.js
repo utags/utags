@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.27.0
+// @version              0.28.4
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -34,119 +34,8 @@
 // @icon                 data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23ff6361' class='bi bi-tags-fill' viewBox='0 0 16 16'%3E %3Cpath d='M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z'/%3E %3Cpath d='M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z'/%3E %3C/svg%3E
 // @author               Pipecraft
 // @license              MIT
-// @match                https://*.utags.link/*
-// @match                https://*.utags.top/*
-// @match                https://*.utags.plus/*
-// @match                https://*.utags.vip/*
-// @match                https://x.com/*
-// @match                https://twitter.com/*
-// @match                https://github.com/*
-// @match                https://www.reddit.com/*
-// @match                https://www.instagram.com/*
-// @match                https://www.threads.com/*
-// @match                https://www.threads.net/*
-// @match                https://*.facebook.com/*
-// @match                https://*.youtube.com/*
-// @match                https://www.tiktok.com/*
-// @match                https://*.bilibili.com/*
-// @match                https://*.biligame.com/*
-// @match                https://greasyfork.org/*
-// @match                https://lobste.rs/*
-// @match                https://news.ycombinator.com/*
-// @match                https://*.v2ex.com/*
-// @match                https://*.v2ex.co/*
-// @match                https://*.zhihu.com/*
-// @match                https://*.weibo.com/*
-// @match                https://*.weibo.cn/*
-// @match                https://*.douban.com/*
-// @match                https://www.52pojie.cn/*
-// @match                https://juejin.cn/*
-// @match                https://mp.weixin.qq.com/*
-// @match                https://www.xiaohongshu.com/*
-// @match                https://sspai.com/*
-// @match                https://www.douyin.com/*
-// @match                https://podcasts.google.com/*
-// @match                https://sleazyfork.org/*
-// @match                https://tilde.news/*
-// @match                https://www.journalduhacker.net/*
-// @match                https://rebang.today/*
-// @match                https://myanimelist.net/*
-// @match                https://www.pixiv.net/*
-// @match                https://meta.discourse.org/*
-// @match                https://linux.do/*
-// @match                https://idcflare.com/*
-// @match                https://meta.appinn.net/*
-// @match                https://community.openai.com/*
-// @match                https://community.cloudflare.com/*
-// @match                https://community.wanikani.com/*
-// @match                https://forum.cursor.com/*
-// @match                https://forum.obsidian.md/*
-// @match                https://forum-zh.obsidian.md/*
-// @match                https://bbs.nga.cn/*
-// @match                https://nga.178.com/*
-// @match                https://ngabbs.com/*
-// @match                https://www.dlsite.com/*
-// @match                https://keylol.com/*
-// @match                https://kemono.cr/*
-// @match                https://kemono.su/*
-// @match                https://coomer.st/*
-// @match                https://coomer.su/*
-// @match                https://nekohouse.su/*
-// @match                https://rule34video.com/*
-// @match                https://rule34gen.com/*
-// @match                https://panda.chaika.moe/*
-// @match                https://bbs.tampermonkey.net.cn/*
-// @match                https://discuss.flarum.org/*
-// @match                https://discuss.flarum.org.cn/*
-// @match                https://yuanliao.info/*
-// @match                https://www.nodeloc.com/*
-// @match                https://veryfb.com/*
-// @match                https://www.nodeseek.com/*
-// @match                https://www.deepflood.com/*
-// @match                https://*.inoreader.com/*
-// @match                https://kater.me/*
-// @match                https://bbs.viva-la-vita.org/*
-// @match                https://www.zhipin.com/*
-// @match                https://*.twitch.tv/*
-// @match                https://bbs.yamibo.com/*
-// @match                https://www.tsdm39.com/*
-// @match                https://tsdm39.com/*
-// @match                https://*.flickr.com/*
-// @match                https://*.ruanyifeng.com/*
-// @match                https://www.uscardforum.com/*
-// @match                https://2libra.com/*
-// @match                https://www.toutiao.com/*
-// @match                https://v2hot.pipecraft.net/*
-// @match                https://utags.pipecraft.net/*
-// @match                https://*.pipecraft.net/*
-// @include              https://*.utags.link/*
-// @include              https://x.com/*
-// @include              https://www.reddit.com/*
-// @include              https://github.com/*
-// @include              https://www.instagram.com/*
-// @include              https://www.tiktok.com/*
-// @include              https://*.youtube.com/*
-// @include              https://greasyfork.org/*
-// @include              https://*.dmm.co.j*/*
-// @include              https://e*hentai.org/*
-// @include              https://*.p*nhub.com/*
-// @include              https://*.e*hentai.org/*
-// @include              https://xsijishe.net/*
-// @include              https://xsijishe.com/*
-// @include              https://xsijishe.ink/*
-// @include              https://sjs47.com/*
-// @include              https://sjs47.net/*
-// @include              https://sjslt.cc/*
-// @include              https://simpcity.cr/*
-// @include              https://simpcity.su/*
-// @include              https://simpcity.is/*
-// @include              https://simpcity.cz/*
-// @include              https://simpcity.hk/*
-// @include              https://simpcity.rs/*
-// @include              https://simpcity.ax/*
-// @include              https://*.asia/*
-// @include              https://*entai.net/*
-// @include              https://*itomi.la/*
+// @match                https://*/*
+// @match                http://*/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *
@@ -10275,9 +10164,9 @@
       getStyle: () => e_hentxx_org_default,
     }
   })()
-  var panda_chaika_moe_default =
+  var panda_chai99ka_moe_default =
     ":not(#a):not(#b):not(#c) h5+.utags_ul{display:block !important;margin-top:-4px !important;margin-bottom:6px !important}"
-  var panda_chaika_moe_default2 = (() => {
+  var panda_chai99ka_moe_default2 = (() => {
     const prefix2 = "https://panda.chaika.moe/"
     function getPostUrl(url, exact = false) {
       if (url.startsWith(prefix2)) {
@@ -10325,12 +10214,12 @@
         ".btn",
         ".caption",
       ],
-      getStyle: () => panda_chaika_moe_default,
+      getStyle: () => panda_chai99ka_moe_default,
     }
   })()
-  var dmm_co_jp_default =
+  var dxx_co_jp_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{background-color:var(--utags-captain-tag-background-color) !important;border-radius:3px !important;--utags-emoji-tag-background-color: #fff0}:not(#a):not(#b):not(#c) .mainList__item a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -90px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) .mainList__item a+.utags_ul_1{margin-top:6px !important;width:100%}:not(#a):not(#b):not(#c) .pickup .fn-responsiveImg a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -70px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) .pickup .fn-responsiveImg a+.utags_ul_1{margin-top:6px !important;width:100%}:not(#a):not(#b):not(#c) .productList .tileListTtl__txt{height:unset}:not(#a):not(#b):not(#c) .productList .tileListTtl__txt--author{white-space:normal}:not(#a):not(#b):not(#c) #l-areaRecommendProduct a+.utags_ul_0{object-position:0% 100%;--utags-notag-captain-tag-top: -80px;--utags-notag-captain-tag-left: 4px}:not(#a):not(#b):not(#c) #l-areaRecommendProduct a+.utags_ul_1{margin-top:6px !important;width:100%}"
-  var dmm_co_jp_default2 = (() => {
+  var dxx_co_jp_default2 = (() => {
     const prefix2 = "https://www.dmm.co.jp/"
     function getCanonicalUrl2(url) {
       if (url.startsWith(prefix2)) {
@@ -10500,12 +10389,12 @@
         '[href^="/av/content/?id="]',
       ],
       getCanonicalUrl: getCanonicalUrl2,
-      getStyle: () => dmm_co_jp_default,
+      getStyle: () => dxx_co_jp_default,
     }
   })()
-  var kemono_su_default =
+  var kemoxx_su_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .card-list__items>a.user-card{--utags-list-node-display: flex}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_0,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_0,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_0{object-position:0% 100%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: -4px;--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1{object-position:0% 100%;position:absolute;top:-9999px;z-index:100;margin-top:-6px !important;margin-left:4px !important}:not(#a):not(#b):not(#c) a.user-header__avatar+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) a.user-card+.utags_ul_1 .utags_text_tag,:not(#a):not(#b):not(#c) .post-card a+.utags_ul_1 .utags_text_tag{--utags-text-tag-background-color: yellow}:not(#a):not(#b):not(#c) article.post-card+.utags_ul{display:none !important}:not(#a):not(#b):not(#c) h1[data-utags_link][data-utags_fit_content="1"]{max-width:fit-content !important}'
-  var kemono_su_default2 = (() => {
+  var kemoxx_su_default2 = (() => {
     const prefix2 = location.origin + "/"
     function getPostUrl(url) {
       if (url.startsWith(prefix2)) {
@@ -10517,7 +10406,7 @@
       return void 0
     }
     return {
-      matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
+      matches: /(kemono|coomer|nekohouse)\.(su|cr|st)/,
       preProcess() {
         for (const element of $$(".post-card[data-user]")) {
           const service = getAttribute(element, "data-service")
@@ -10585,12 +10474,12 @@
         'a[href^="/authentication/"]',
         "#announcement-banner",
       ],
-      getStyle: () => kemono_su_default,
+      getStyle: () => kemoxx_su_default,
     }
   })()
-  var rule34video_com_default =
+  var rule99video_com_default =
     ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .thumbs .thumb a+.utags_ul_0{object-position:0% 200%;--utags-notag-captain-tag-top: -2px;--utags-notag-captain-tag-left: -4px}:not(#a):not(#b):not(#c) .list_items .item a.wrap_item+.utags_ul_0,:not(#a):not(#b):not(#c) .aside_wrap a.item+.utags_ul_0{object-position:100% 50%}"
-  var rule34video_com_default2 = (() => {
+  var rule99video_com_default2 = (() => {
     const prefix2 = location.origin + "/"
     function getModelUrl(url) {
       if (url.startsWith(prefix2)) {
@@ -10631,7 +10520,7 @@
       return void 0
     }
     return {
-      matches: /rule34video\.com|rule34gen\.com/,
+      matches: /rule34(video|gen)\.com/,
       preProcess() {
         let key = getModelUrl(location.href)
         if (key) {
@@ -10714,12 +10603,12 @@
         'a[href*="download"]',
         ".list-comments .wrap_image",
       ],
-      getStyle: () => rule34video_com_default,
+      getStyle: () => rule99video_com_default,
     }
   })()
-  var simpcity_cr_default =
+  var simpxxcity_cr_default =
     ":not(#a):not(#b):not(#c) .structItem.structItem--thread{--utags-list-node-display: table}"
-  var simpcity_cr_default2 = (() => {
+  var simpxxcity_cr_default2 = (() => {
     const prefix2 = "https://simpcity.cr/"
     function normalizeDomain(url) {
       if (!url.startsWith(prefix2) && url.includes("simpcity")) {
@@ -10865,14 +10754,17 @@
         const isDarkMode = true
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
-      getStyle: () => simpcity_cr_default,
+      getStyle: () => simpxxcity_cr_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
-  var hotgirl_asia_default =
+  var hotgixx_asia_default =
     ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .vl-item .utags_ul_1{position:absolute;top:-9999px;margin-top:-4px !important;z-index:6}"
-  var hotgirl_asia_default2 = (() => {
-    const prefix2 = "https://hotgirl.asia/"
+  var xaxi = atob("YWk=")
+  var xgxixrl = atob("Z2lybA==")
+  var xmxi = atob("bWk=")
+  var hotgixx_asia_default2 = (() => {
+    const prefix2 = "https://hot".concat(xgxixrl, ".asia/")
     function getVideoUrl(url, exact = false) {
       if (url.startsWith(prefix2)) {
         const href2 = url.slice(prefix2.length)
@@ -10937,13 +10829,13 @@
         const isDarkMode = true
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
-      getStyle: () => hotgirl_asia_default,
+      getStyle: () => hotgixx_asia_default,
     }
   })()
-  var nhentai_net_default =
+  var nhentxx_net_default =
     ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .gallery{--utags-list-node-display: inline-block}"
-  var nhentai_net_default2 = (() => {
-    const prefix2 = "https://nhentai.net/"
+  var nhentxx_net_default2 = (() => {
+    const prefix2 = "https://nhent".concat(xaxi, ".net/")
     function getGalleryUrl(url, exact = false) {
       if (url.startsWith(prefix2)) {
         const href2 = url.slice(prefix2.length)
@@ -10958,7 +10850,7 @@
       return void 0
     }
     return {
-      matches: /nhentai\.net/,
+      matches: /nhent[_a]i\.net/,
       preProcess() {
         setVisitedAvailable(true)
         const href = location.href
@@ -11013,13 +10905,13 @@
         const isDarkMode = true
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
-      getStyle: () => nhentai_net_default,
+      getStyle: () => nhentxx_net_default,
     }
   })()
-  var hitomi_la_default =
+  var hito99mi_la_default =
     ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}"
-  var hitomi_la_default2 = (() => {
-    const prefix2 = "https://hitomi.la/"
+  var hito99mi_la_default2 = (() => {
+    const prefix2 = "https://hito".concat(xmxi, ".la/")
     const galleryExcludePrefixPattern = /^(reader|tag|artist|group|type|series)/
     function getCanonicalUrl2(url) {
       if (url.startsWith(prefix2)) {
@@ -11100,7 +10992,7 @@
         const isDarkMode = false
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
       },
-      getStyle: () => hitomi_la_default,
+      getStyle: () => hito99mi_la_default,
       getCanonicalUrl: getCanonicalUrl2,
     }
   })()
@@ -11145,15 +11037,15 @@
     discuz_default2,
     pxxnhub_com_default2,
     e_hentxx_org_default2,
-    panda_chaika_moe_default2,
+    panda_chai99ka_moe_default2,
     dlsite_com_default2,
-    dmm_co_jp_default2,
-    kemono_su_default2,
-    rule34video_com_default2,
-    simpcity_cr_default2,
-    hotgirl_asia_default2,
-    nhentai_net_default2,
-    hitomi_la_default2,
+    dxx_co_jp_default2,
+    kemoxx_su_default2,
+    rule99video_com_default2,
+    simpxxcity_cr_default2,
+    hotgixx_asia_default2,
+    nhentxx_net_default2,
+    hito99mi_la_default2,
   ]
   var BASE_EXCLUDE_SELECTOR = "[data-utags_exclude],svg"
   var getCanonicalUrlFunctionList = [default_default2, ...sites]
@@ -11168,7 +11060,7 @@
     if (false) {
       return siteForExtensions(hostname2)
     }
-    return default_default2
+    return {}
   }
   function joinSelectors(selectors) {
     return selectors ? selectors.join(",") : void 0

@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.28
+
+- Change `@match` rule to match all websites (`*://*/*`). Previously, it listed all adapted websites individually.
+
 ## v0.27
 
 - Refactor addExtraMatchedNodes to set element `data-utags_link` with setUtagsAttributes.

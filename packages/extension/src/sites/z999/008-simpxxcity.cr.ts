@@ -1,5 +1,5 @@
 import { $, $$, doc, setAttribute } from 'browser-extension-utils'
-import styleText from 'data-text:./008-simpcity.cr.scss'
+import styleText from 'data-text:./008-simpxxcity.cr.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import {

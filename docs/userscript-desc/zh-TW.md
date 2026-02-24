@@ -37,18 +37,9 @@
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -57,7 +48,6 @@
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -69,15 +59,10 @@
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- 司机社 ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
 - 今日头条 ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - 天使动漫论坛 ([tsdm39.com](https://www.tsdm39.com/))
-- 還有更多。點擊[這裡](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)建議新網站。
+- 還有更多。點擊[這裡](https://github.com/utags/utags/issues)建議新網站。
 
 若您也想在其他網站使用小魚標籤，只需在腳本設定中為目標網站手動加入 `user matches` 規則即可。
 
@@ -150,13 +135,11 @@
 - 0.20
   - 新增 shadowRoot 遍歷功能，支援在 Shadow DOM 內查找和標記元素
   - 優化 bilibili.com 網站支援，提升平台上標籤功能的相容性和效能
-  - 為 pornhub.com 網站添加特殊標籤過濾和快速星標功能
   - 為 youtube.com 網站添加特殊標籤過濾和快速星標功能，優化用戶名匹配邏輯
   - 新增以驚嘆號開頭的特殊標籤：!、!!、!!!、!important，用於優先級標記
 - 0.19.x
   - 為 linux.do 網站新增快速星標功能 - 可在設定中啟用快速新增星標選項，提升收藏效率
   - 優化資料同步邏輯，解決資料不一致問題
-  - 更新 dmm.co.jp 網站支援
   - 新增語言切換功能
   - 支援更多語言，包括日語、韓語、德語、法語、西班牙語、義大利語、葡萄牙語、俄語、越南語和繁體中文
   - 新增選單命令以為當前頁面添加標籤
@@ -187,7 +170,6 @@
   - 新增對 www.zhipin.com 網站的支援
 - 0.12.5
   - 改善 Discourse 行動體驗
-  - 新增對 kater.me 和 bbs.viva-la-vita.org 網站的支援
 - 0.12.4
   - 新增對 www.inoreader.com 網站的支援
 - 0.12.3
@@ -211,7 +193,6 @@
 - 0.10.6
   - 新增對 community.wanikani.com 的支援
 - 0.10.4
-  - 新增對 rule34video.com、rule34gen.com 的支援
 - 0.10.3
   - 在 Reddit 中，標籤可以添加到社群、貼文和用戶。過濾具有特殊標籤的貼文和評論
   - 在 TikTok 中，標籤可以添加到影片和用戶。過濾具有特殊標籤的影片和回覆
@@ -222,9 +203,6 @@
   - 在 linux.do 和其他 Discourse 網站中，標籤可以添加到貼文、分類和標籤。過濾具有特殊標籤的貼文和回覆
 - 0.9.10
   - 新增對 dlsite.com 的支援
-  - 新增對 dmm.co.jp 的支援
-  - 新增對 kemono.su 的支援
-  - 新增對 coomer.su 的支援
   - 新增對 keylol.com 的支援
 - 0.9.9
   - 新增對 www.pixiv.net 的支援
@@ -233,7 +211,7 @@
   - 新增對 NGA 的支援
 - 0.9.8
   - twitter.com -> x.com
-  - 修復 github.com、threads.net、e-hentai.org 的問題
+  - 修復 github.com、threads.net 的問題
 - 0.9.5
   - 新增 emoji 標籤 👍
   - 增加候選標籤列表大小
@@ -255,14 +233,13 @@
 - 0.8.10
   - 新增對 rebang.today 的支援
 - 0.8.9
-  - 更新 bilibili.com、greasyfork.org、youtube.com、douyin.com、pornhub.com 的樣式和匹配規則
+  - 更新 bilibili.com、greasyfork.org、youtube.com、douyin.com 的樣式和匹配規則
 - 0.8.8
   - 新增對 podcasts.google.com 的支援
   - 新增對 douyin.com 的支援
   - 新增對 sspai.com 的支援
 - 0.8.7
   - 新增對 weibo.com、weibo.cn 的支援
-  - 新增對 pornhub.com 的支援
 - 0.8.6
   - 新增對 xiaohongshu.com 的支援
 - 0.8.5

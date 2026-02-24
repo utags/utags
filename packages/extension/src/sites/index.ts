@@ -59,14 +59,14 @@ import toutiao_com from './z001/041-toutiao.com'
 import discuz from './z001/042-discuz'
 import pxxnhub from './z999/001-pxxnhub.com'
 import ehentxx from './z999/002-e-hentxx.org'
-import panda_chaika_moe from './z999/003-panda.chaika.moe'
-import dmm_co_jp from './z999/004-dmm.co.jp'
-import kemono_su from './z999/005-kemono.su'
-import rule34video_com from './z999/006-rule34video.com'
-import simpcity from './z999/008-simpcity.cr'
-import hotgirl_asia from './z999/009-hotgirl.asia'
-import nhentai_net from './z999/010-nhentai.net'
-import hitomi_la from './z999/011-hitomi.la'
+import panda_chai99ka_moe from './z999/003-panda.chai99ka.moe'
+import dmm_co_jp from './z999/004-dxx.co.jp'
+import kemoxx_su from './z999/005-kemoxx.su'
+import rule99video_com from './z999/006-rule99video.com'
+import simpxxcity from './z999/008-simpxxcity.cr'
+import hotgixx_asia from './z999/009-hotgixx.asia'
+import nhentxx_net from './z999/010-nhentxx.net'
+import hito99mi_la from './z999/011-hito99mi.la'
 
 type Site = {
   matches: RegExp
@@ -128,15 +128,15 @@ const sites: Site[] = [
   discuz,
   pxxnhub,
   ehentxx,
-  panda_chaika_moe,
+  panda_chai99ka_moe,
   dlsite_com,
   dmm_co_jp,
-  kemono_su,
-  rule34video_com,
-  simpcity,
-  hotgirl_asia,
-  nhentai_net,
-  hitomi_la,
+  kemoxx_su,
+  rule99video_com,
+  simpxxcity,
+  hotgixx_asia,
+  nhentxx_net,
+  hito99mi_la,
 ]
 
 const BASE_EXCLUDE_SELECTOR = '[data-utags_exclude],svg'
@@ -174,7 +174,8 @@ function matchedSite(hostname: string) {
     return siteForExtensions(hostname)
   }
 
-  return defaultSite
+  // return defaultSite
+  return {} as Site
 }
 
 function joinSelectors(selectors: string[] | undefined) {

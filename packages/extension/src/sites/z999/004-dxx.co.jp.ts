@@ -1,5 +1,5 @@
 import { $ } from 'browser-extension-utils'
-import styleText from 'data-text:./004-dmm.co.jp.scss'
+import styleText from 'data-text:./004-dxx.co.jp.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'

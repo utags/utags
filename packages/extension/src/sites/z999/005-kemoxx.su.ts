@@ -5,7 +5,7 @@ import {
   hasClass,
   setAttribute,
 } from 'browser-extension-utils'
-import styleText from 'data-text:./005-kemono.su.scss'
+import styleText from 'data-text:./005-kemoxx.su.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
@@ -27,7 +27,7 @@ export default (() => {
   }
 
   return {
-    matches: /kemono\.su|kemono\.cr|coomer\.su|coomer\.st|nekohouse\.su/,
+    matches: /(kemono|coomer|nekohouse)\.(su|cr|st)/,
     preProcess() {
       // Posts > search
       // Posts > popular

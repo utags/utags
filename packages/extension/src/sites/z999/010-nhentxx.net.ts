@@ -1,5 +1,5 @@
 import { $, $$, doc, setAttribute } from 'browser-extension-utils'
-import styleText from 'data-text:./009-hotgirl.asia.scss'
+import styleText from 'data-text:./010-nhentxx.net.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import {
@@ -7,22 +7,23 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { xaxi } from '../../utils/atob'
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
-  const prefix = 'https://hotgirl.asia/'
+  const prefix = `https://nhent${xaxi}.net/`
 
-  function getVideoUrl(url: string, exact = false): string | undefined {
+  function getGalleryUrl(url: string, exact = false): string | undefined {
     if (url.startsWith(prefix)) {
       const href2 = url.slice(prefix.length)
       if (exact) {
-        if (/^videos\/[\w-]+\/?$/.test(href2)) {
-          return prefix + href2.replace(/^(videos\/[\w-]+)\/?.*/, '$1/')
+        if (/^g\/\d+\/?$/.test(href2)) {
+          return prefix + href2.replace(/^(g\/\d+)\/?.*/, '$1/')
         }
-      } else if (/^videos\/[\w-]+/.test(href2)) {
-        return prefix + href2.replace(/^(videos\/[\w-]+)\/?.*/, '$1/')
+      } else if (/^g\/\d+/.test(href2)) {
+        return prefix + href2.replace(/^(g\/\d+)\/?.*/, '$1/')
       }
     }
 
@@ -30,42 +31,43 @@ export default (() => {
   }
 
   return {
-    matches: /hotgirl\.asia/,
+    matches: /nhent[_a]i\.net/,
     preProcess() {
       setVisitedAvailable(true)
 
       const href = location.href
-      const key = getVideoUrl(href)
+      const key = getGalleryUrl(href)
       if (key) {
-        const element = $('.mvic-desc h3')
+        const element = $('h1.title')
         if (element) {
-          setUtagsAttributes(element, { key, type: 'video' })
+          setUtagsAttributes(element, { key, type: 'gallery' })
           addVisited(key)
           markElementWhetherVisited(key, element)
         }
       }
     },
     listNodesSelectors: [
-      // Vidio thumb
-      '.vl-item',
+      // thumb
+      '.gallery',
     ],
     conditionNodesSelectors: [
-      // Vidio thumb title
-      '.vl-item a',
+      // thumb title
+      '.gallery a.cover',
     ],
     validate(element: HTMLAnchorElement, href: string) {
       if (!href.startsWith(prefix)) {
         return true
       }
 
-      const key = getVideoUrl(href)
+      const key = getGalleryUrl(href, true)
       if (key) {
-        const title = getTrimmedTitle(element)
+        const titleElement = $('.caption', element)
+        const title = getTrimmedTitle(titleElement || element)
         if (!title) {
           return false
         }
 
-        const meta = { type: 'video', title }
+        const meta = { type: 'gallery', title }
         setUtags(element, key, meta)
         markElementWhetherVisited(key, element)
         setAttribute(element, 'data-utags', element.dataset.utags || '')
@@ -82,38 +84,17 @@ export default (() => {
       ...defaultSite.excludeSelectors,
       'header',
       'nav',
-      '#bar-player',
-      '.player_nav',
-      '.breadcrumb',
-      // '.notices',
-      // '.avatar',
-      // '.p-breadcrumbs',
-      // '.tabs',
-      // '.structItem-pageJump',
-      // '.structItem-startDate',
-      // '.filterBar',
-      // // Add to filter label
-      // '.labelLink',
-      // // Home page
-      // 'h2.block-header',
-      // '.button',
-      // '.actionBar-action',
-      // '.reactionsBar-link',
-      // '.shareButtons',
-      // // 帖子标题下的作者名。第一楼有作者，无需在这里再显示标签
-      // '.p-description',
-      // '.uix_mobileNodeTitle',
-      // '[data-template="account_preferences"]',
-      // 'a[href^="/login/"]',
-      // 'a[href^="/logout/"]',
-      // 'a[href^="/lost-password/"]',
-      // 'a[href^="/online/"]',
-      // 'a[href^="/direct-messages/"]',
-      // 'a[href^="/account/"]',
+      '.sort',
+      '.alphabetical-pagination',
+      '.pagination',
+      'a[href^="/login/"]',
+      'a[href^="/logout/"]',
+      'a[href^="/reset/"]',
+      'a[href^="/register/"]',
     ],
     validMediaSelectors: [
       // Vidio thumb
-      '.vl-item',
+      '.gallery a.cover',
     ],
     postProcess() {
       const isDarkMode = true

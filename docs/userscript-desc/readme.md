@@ -37,18 +37,9 @@ For now it works on
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -57,7 +48,6 @@ For now it works on
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -69,15 +59,10 @@ For now it works on
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
-- And more. Click [here](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) to add more sites.
+- And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
 If you want to use UTags on other sites, simply add a `user matches` rule for the target site in the script settings.
 
@@ -151,14 +136,12 @@ This document will no longer be updated with release notes.
 - 0.20
   - Add shadowRoot traversal functionality to support finding and tagging elements within Shadow DOM
   - Optimize bilibili.com website support, improving tag functionality compatibility and performance on the platform
-  - Add special tag filtering and quick star functionality for pornhub.com website
   - Add special tag filtering and quick star functionality for youtube.com website, optimize username matching logic
   - Add new special tags starting with exclamation marks: !, !!, !!!, !important for priority marking
 - 0.19.x
   - Add Quick Tag Menu Commands: Configure custom quick tags in settings and access via right-click menu with ➕/➖ icons for adding/removing tags
   - Add quick star feature for linux.do website - enable quick star addition in settings for faster bookmarking
   - Optimize data sync logic, solve data inconsistency problem
-  - Update dmm.co.jp site support
   - Add language switching functionality
   - Support for more languages including Japanese, Korean, German, French, Spanish, Italian, Portuguese, Russian, Vietnamese, and Traditional Chinese
   - Add menu command to tag current page
@@ -188,7 +171,6 @@ This document will no longer be updated with release notes.
   - Make UTags support the website www.zhipin.com
 - 0.12.5
   - Enhance the mobile experience of Discourse
-  - Make UTags support the website kater.me and bbs.viva-la-vita.org
 - 0.12.4
   - Make UTags support the website www.inoreader.com
 - 0.12.3
@@ -212,7 +194,6 @@ This document will no longer be updated with release notes.
 - 0.10.6
   - Apply utags to community.wanikani.com
 - 0.10.4
-  - Apply utags to rule34video.com, rule34gen.com
 - 0.10.3
   - Enable add tags to communities, posts and users on Reddit. Filtering posts and comments with special tags.
   - Enable add tags to videos and users on TikTok. Filtering videos and replies with special tags.
@@ -223,9 +204,6 @@ This document will no longer be updated with release notes.
   - Enable add tags to posts, categories and tags on linux.do and other discourse sites. Filtering posts and replies with special tags.
 - 0.9.10
   - Apply utags to dlsite.com
-  - Apply utags to dmm.co.jp
-  - Apply utags to kemono.su
-  - Apply utags to coomer.su
   - Apply utags to keylol.com
 - 0.9.9
   - Apply utags to www.pixiv.net
@@ -234,7 +212,7 @@ This document will no longer be updated with release notes.
   - Apply utags to NGA
 - 0.9.8
   - twitter.com -> x.com
-  - fix github.com, threads.net, e-hentai.org issues
+  - fix github.com, threads.net issues
 - 0.9.5
   - Add emoji tags 👍
   - Increase the size of the list of candidate tags
@@ -256,14 +234,13 @@ This document will no longer be updated with release notes.
 - 0.8.10
   - Apply utags to rebang.today
 - 0.8.9
-  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com style and matching rules
+  - Update bilibili.com, greasyfork.org, youtube.com, douyin.com style and matching rules
 - 0.8.8
   - Apply utags to podcasts.google.com
   - Apply utags to douyin.com
   - Apply utags to sspai.com
 - 0.8.7
   - Apply utags to weibo.com, weibo.cn
-  - Apply utags to pornhub.com
 - 0.8.6
   - Apply utags to xiaohongshu.com
 - 0.8.5

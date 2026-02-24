@@ -37,18 +37,9 @@ Siti attualmente supportati:
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -57,7 +48,6 @@ Siti attualmente supportati:
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -69,15 +59,10 @@ Siti attualmente supportati:
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
-- E molti altri. Clicca [qui](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) per suggerire nuovi siti.
+- E molti altri. Clicca [qui](https://github.com/utags/utags/issues) per suggerire nuovi siti.
 
 Se desideri usare UTags anche su altri siti, aggiungi semplicemente una regola `user matches` per il sito di destinazione nelle impostazioni dello script.
 
@@ -151,14 +136,12 @@ This document will no longer be updated with release notes.
 - 0.20
   - Aggiungere la funzionalità di attraversamento shadowRoot per supportare la ricerca e l'etichettatura di elementi all'interno di Shadow DOM
   - Ottimizzare il supporto del sito web bilibili.com, migliorando la compatibilità e le prestazioni della funzionalità di tag sulla piattaforma
-  - Aggiungere funzionalità di filtraggio tag speciali e stelle rapide per il sito web pornhub.com
   - Aggiungere funzionalità di filtraggio tag speciali e stelle rapide per il sito web youtube.com, ottimizzare la logica di corrispondenza dei nomi utente
   - Aggiungere nuovi tag speciali che iniziano con punti esclamativi: !, !!, !!!, !important per la marcatura di priorità
 - 0.19.x
   - Aggiunta dei Comandi Menu Tag Rapidi: Configura tag rapidi personalizzati nelle impostazioni e accedi tramite menu clic destro con icone ➕/➖ per aggiungere/rimuovere tag
   - Aggiungere funzione stella rapida per il sito web linux.do - abilita l'aggiunta rapida di stelle nelle impostazioni per un bookmarking più veloce
   - Ottimizzazione della logica di sincronizzazione dati, risoluzione di problemi di inconsistenza dati
-  - Aggiornamento del supporto del sito dmm.co.jp
   - Aggiunta della funzionalità di cambio lingua
   - Supporto per più lingue, inclusi giapponese, coreano, tedesco, francese, spagnolo, italiano, portoghese, russo, vietnamita e cinese tradizionale
   - Aggiunta del comando menu per aggiungere tag alla pagina corrente
@@ -188,7 +171,6 @@ This document will no longer be updated with release notes.
   - Aggiunta del supporto per il sito www.zhipin.com
 - 0.12.5
   - Miglioramento dell'esperienza mobile di Discourse
-  - Aggiunta del supporto per i siti kater.me e bbs.viva-la-vita.org
 - 0.12.4
   - Aggiunta del supporto per il sito www.inoreader.com
 - 0.12.3
@@ -212,7 +194,6 @@ This document will no longer be updated with release notes.
 - 0.10.6
   - Aggiunta del supporto per community.wanikani.com
 - 0.10.4
-  - Aggiunta del supporto per rule34video.com, rule34gen.com
 - 0.10.3
   - In Reddit, i tag possono essere aggiunti a comunità, post e utenti. Filtraggio di post e commenti con tag speciali
   - In TikTok, i tag possono essere aggiunti a video e utenti. Filtraggio di video e risposte con tag speciali
@@ -223,9 +204,6 @@ This document will no longer be updated with release notes.
   - In linux.do e altri siti Discourse, i tag possono essere aggiunti a post, categorie e tag. Filtraggio di post e risposte con tag speciali
 - 0.9.10
   - Aggiunta del supporto per dlsite.com
-  - Aggiunta del supporto per dmm.co.jp
-  - Aggiunta del supporto per kemono.su
-  - Aggiunta del supporto per coomer.su
   - Aggiunta del supporto per keylol.com
 - 0.9.9
   - Aggiunta del supporto per www.pixiv.net
@@ -234,7 +212,7 @@ This document will no longer be updated with release notes.
   - Aggiunta del supporto per NGA
 - 0.9.8
   - twitter.com -> x.com
-  - Correzione di problemi con github.com, threads.net, e-hentai.org
+  - Correzione di problemi con github.com, threads.net
 - 0.9.5
   - Aggiunta di tag emoji👍
   - Aumento delle dimensioni della lista dei tag candidati
@@ -256,14 +234,13 @@ This document will no longer be updated with release notes.
 - 0.8.10
   - Aggiunta del supporto per rebang.today
 - 0.8.9
-  - Aggiornamento di stili e regole di corrispondenza per bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com
+  - Aggiornamento di stili e regole di corrispondenza per bilibili.com, greasyfork.org, youtube.com, douyin.com
 - 0.8.8
   - Aggiunta del supporto per podcasts.google.com
   - Aggiunta del supporto per douyin.com
   - Aggiunta del supporto per sspai.com
 - 0.8.7
   - Aggiunta del supporto per weibo.com, weibo.cn
-  - Aggiunta del supporto per pornhub.com
 - 0.8.6
   - Aggiunta del supporto per xiaohongshu.com
 - 0.8.5

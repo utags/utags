@@ -37,18 +37,9 @@
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -57,7 +48,6 @@
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -69,15 +59,10 @@
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
-- その他多数。新しいサイトの追加を提案するには[こちら](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback)をクリックしてください。
+- その他多数。新しいサイトの追加を提案するには[こちら](https://github.com/utags/utags/issues)をクリックしてください。
 
 ほかのサイトでも UTags を使いたい場合は、スクリプト設定で対象サイトに対する `user matches` ルールを手動で追加してください。
 
@@ -151,14 +136,12 @@ This document will no longer be updated with release notes.
 - 0.20
   - Shadow DOM 内の要素の検索とタグ付けをサポートする shadowRoot 走査機能を追加
   - bilibili.com ウェブサイトのサポートを最適化し、プラットフォーム上でのタグ機能の互換性とパフォーマンスを向上
-  - pornhub.com ウェブサイト用の特殊タグフィルタリングとクイックスター機能を追加
   - youtube.com ウェブサイト用の特殊タグフィルタリングとクイックスター機能を追加、ユーザー名マッチングロジックを最適化
   - 感嘆符で始まる新しい特殊タグを追加：!、!!、!!!、!important（優先度マーキング用）
 - 0.19.x
   - クイックタグメニューコマンドを追加：設定でカスタムクイックタグを設定し、右クリックメニューから ➕/➖ アイコンでタグの追加/削除にアクセス
   - linux.do ウェブサイト用のクイックスター機能を追加 - 設定でクイックスター追加を有効にして、より高速なブックマーキングを実現
   - データ同期ロジックの最適化、データ不整合問題の解決
-  - dmm.co.jp サイトサポートの更新
   - 言語切り替え機能の追加
   - 日本語、韓国語、ドイツ語、フランス語、スペイン語、イタリア語、ポルトガル語、ロシア語、ベトナム語、繁体字中国語を含む多言語サポート
   - 現在のページにタグを追加するメニューコマンドの追加
@@ -188,7 +171,6 @@ This document will no longer be updated with release notes.
   - www.zhipin.comサイトのサポートを追加
 - 0.12.5
   - Discourse のモバイル体験を向上
-  - kater.me と bbs.viva-la-vita.org サイトのサポートを追加
 - 0.12.4
   - www.inoreader.comサイトのサポートを追加
 - 0.12.3
@@ -212,7 +194,6 @@ This document will no longer be updated with release notes.
 - 0.10.6
   - community.wanikani.com のサポートを追加
 - 0.10.4
-  - rule34video.com、rule34gen.com のサポートを追加
 - 0.10.3
   - Reddit でコミュニティ、投稿、ユーザーにタグを追加可能。特別タグで投稿とコメントをフィルタリング
   - TikTok で動画とユーザーにタグを追加可能。特別タグで動画と返信をフィルタリング
@@ -223,9 +204,6 @@ This document will no longer be updated with release notes.
   - linux.do と他の discourse サイトで投稿、カテゴリ、タグにタグを追加可能。特別タグで投稿と返信をフィルタリング
 - 0.9.10
   - dlsite.com のサポートを追加
-  - dmm.co.jp のサポートを追加
-  - kemono.su のサポートを追加
-  - coomer.su のサポートを追加
   - keylol.com のサポートを追加
 - 0.9.9
   - www.pixiv.netのサポートを追加
@@ -234,7 +212,6 @@ This document will no longer be updated with release notes.
   - NGA のサポートを追加
 - 0.9.8
   - twitter.com -> x.com
-  - github.com、threads.net、e-hentai.org の問題を修正
 - 0.9.5
   - 絵文字タグ 👍 を追加
   - 候補タグリストのサイズを増加
@@ -256,14 +233,13 @@ This document will no longer be updated with release notes.
 - 0.8.10
   - rebang.today のサポートを追加
 - 0.8.9
-  - bilibili.com、greasyfork.org、youtube.com、douyin.com、pornhub.com のスタイルとマッチングルールを更新
+  - bilibili.com、greasyfork.org、youtube.com、douyin.com のスタイルとマッチングルールを更新
 - 0.8.8
   - podcasts.google.com のサポートを追加
   - douyin.com のサポートを追加
   - sspai.com のサポートを追加
 - 0.8.7
   - weibo.com、weibo.cn のサポートを追加
-  - pornhub.com のサポートを追加
 - 0.8.6
   - xiaohongshu.com のサポートを追加
 - 0.8.5

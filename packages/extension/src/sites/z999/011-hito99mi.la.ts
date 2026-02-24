@@ -1,5 +1,5 @@
 import { $, $$, doc, setAttribute } from 'browser-extension-utils'
-import styleText from 'data-text:./011-hitomi.la.scss'
+import styleText from 'data-text:./011-hito99mi.la.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import {
@@ -7,12 +7,13 @@ import {
   markElementWhetherVisited,
   setVisitedAvailable,
 } from '../../modules/visited'
+import { xmxi } from '../../utils/atob'
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
 export default (() => {
-  const prefix = 'https://hitomi.la/'
+  const prefix = `https://hito${xmxi}.la/`
   const galleryExcludePrefixPattern = /^(reader|tag|artist|group|type|series)/
 
   function getCanonicalUrl(url: string) {

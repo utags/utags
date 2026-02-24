@@ -37,18 +37,9 @@ Các trang web hiện được hỗ trợ:
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - tampermonkey.net.cn ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -57,7 +48,6 @@ Các trang web hiện được hỗ trợ:
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- Viva La Vita ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -69,15 +59,10 @@ Các trang web hiện được hỗ trợ:
 - Ruanyifeng ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- xsijishe.net ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([Invite Code](https://2libra.com/auth/signup/1AeoTgXc))
 - TouTiao ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
-- Và nhiều trang khác. Nhấp [vào đây](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback) để đề xuất trang web mới.
+- Và nhiều trang khác. Nhấp [vào đây](https://github.com/utags/utags/issues) để đề xuất trang web mới.
 
 Nếu bạn muốn dùng UTags trên các trang web khác, chỉ cần thêm một quy tắc `user matches` cho trang đích trong phần cài đặt script.
 
@@ -151,14 +136,12 @@ This document will no longer be updated with release notes.
 - 0.20
   - Thêm chức năng duyệt shadowRoot để hỗ trợ tìm kiếm và gắn thẻ các phần tử trong Shadow DOM
   - Tối ưu hóa hỗ trợ trang web bilibili.com, cải thiện khả năng tương thích và hiệu suất của chức năng thẻ trên nền tảng
-  - Thêm chức năng lọc thẻ đặc biệt và gắn sao nhanh cho trang web pornhub.com
   - Thêm chức năng lọc thẻ đặc biệt và gắn sao nhanh cho trang web youtube.com, tối ưu hóa logic khớp tên người dùng
   - Thêm các thẻ đặc biệt mới bắt đầu bằng dấu chấm than: !, !!, !!!, !important để đánh dấu độ ưu tiên
 - 0.19.x
   - Thêm Lệnh Menu Thẻ Nhanh: Cấu hình thẻ nhanh tùy chỉnh trong cài đặt và truy cập qua menu chuột phải với biểu tượng ➕/➖ để thêm/xóa thẻ
   - Thêm tính năng sao nhanh cho trang web linux.do - kích hoạt thêm sao nhanh trong cài đặt để đánh dấu nhanh hơn
   - Tối ưu hóa logic đồng bộ dữ liệu, giải quyết vấn đề không nhất quán dữ liệu
-  - Cập nhật hỗ trợ trang dmm.co.jp
   - Thêm chức năng chuyển đổi ngôn ngữ
   - Hỗ trợ thêm nhiều ngôn ngữ, bao gồm tiếng Nhật, Hàn, Đức, Pháp, Tây Ban Nha, Ý, Bồ Đào Nha, Nga, Việt Nam và Trung Quốc phồn thể
   - Thêm lệnh menu để thêm thẻ vào trang hiện tại
@@ -188,7 +171,6 @@ This document will no longer be updated with release notes.
   - Thêm hỗ trợ cho trang www.zhipin.com
 - 0.12.5
   - Cải thiện trải nghiệm di động Discourse
-  - Thêm hỗ trợ cho các trang kater.me và bbs.viva-la-vita.org
 - 0.12.4
   - Thêm hỗ trợ cho trang www.inoreader.com
 - 0.12.3
@@ -212,7 +194,6 @@ This document will no longer be updated with release notes.
 - 0.10.6
   - Thêm hỗ trợ cho community.wanikani.com
 - 0.10.4
-  - Thêm hỗ trợ cho rule34video.com, rule34gen.com
 - 0.10.3
   - Trong Reddit, thẻ có thể được thêm vào cộng đồng, bài đăng và người dùng. Lọc bài đăng và bình luận với thẻ đặc biệt
   - Trong TikTok, thẻ có thể được thêm vào video và người dùng. Lọc video và phản hồi với thẻ đặc biệt
@@ -223,9 +204,6 @@ This document will no longer be updated with release notes.
   - Trong linux.do và các trang Discourse khác, thẻ có thể được thêm vào bài đăng, danh mục và thẻ. Lọc bài đăng và phản hồi với thẻ đặc biệt
 - 0.9.10
   - Thêm hỗ trợ cho dlsite.com
-  - Thêm hỗ trợ cho dmm.co.jp
-  - Thêm hỗ trợ cho kemono.su
-  - Thêm hỗ trợ cho coomer.su
   - Thêm hỗ trợ cho keylol.com
 - 0.9.9
   - Thêm hỗ trợ cho www.pixiv.net
@@ -234,7 +212,7 @@ This document will no longer be updated with release notes.
   - Thêm hỗ trợ cho NGA
 - 0.9.8
   - twitter.com -> x.com
-  - Sửa lỗi với github.com, threads.net, e-hentai.org
+  - Sửa lỗi với github.com, threads.net
 - 0.9.5
   - Thêm thẻ emoji👍
   - Tăng kích thước danh sách thẻ ứng viên
@@ -256,14 +234,13 @@ This document will no longer be updated with release notes.
 - 0.8.10
   - Thêm hỗ trợ cho rebang.today
 - 0.8.9
-  - Cập nhật kiểu và quy tắc khớp cho bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com
+  - Cập nhật kiểu và quy tắc khớp cho bilibili.com, greasyfork.org, youtube.com, douyin.com
 - 0.8.8
   - Thêm hỗ trợ cho podcasts.google.com
   - Thêm hỗ trợ cho douyin.com
   - Thêm hỗ trợ cho sspai.com
 - 0.8.7
   - Thêm hỗ trợ cho weibo.com, weibo.cn
-  - Thêm hỗ trợ cho pornhub.com
 - 0.8.6
   - Thêm hỗ trợ cho xiaohongshu.com
 - 0.8.5
