@@ -175,7 +175,7 @@ function matchedSite(hostname: string) {
   }
 
   // return defaultSite
-  return {} as Site
+  return siteForExtensions(hostname)
 }
 
 function joinSelectors(selectors: string[] | undefined) {

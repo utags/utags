@@ -231,6 +231,7 @@ function createPromptView(
     'data-utags_exclude': '',
   })
 
+  let enableCloseModalOnBlur = false
   const input = addElement(content, 'input', {
     type: 'text',
     placeholder: 'foo, bar',
@@ -253,7 +254,7 @@ function createPromptView(
             removeAllActive()
             focusToInput()
             stopEventPropagation(event)
-          } else {
+          } else if (enableCloseModalOnBlur) {
             // 取消默认动作，从而避免处理两次。
             stopEventPropagation(event)
             closeModal()
@@ -270,6 +271,14 @@ function createPromptView(
   setTimeout(() => {
     focusToInput(true)
   }, 10) // After focus-trap-lite init
+
+  // Workaround for Vimium conflict:
+  // Vimium may reclaim focus if an input element is focused before any user interaction occurs on the page.
+  // See: https://github.com/philc/vimium/blob/master/content_scripts/vimium_frontend.js#L47
+  // We temporarily disable closing the modal on blur to prevent immediate dismissal when Vimium steals focus.
+  setTimeout(() => {
+    enableCloseModalOnBlur = true
+  }, 1000)
 
   const focusToInput = (select = false) => {
     if (closed) {

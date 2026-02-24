@@ -3,6 +3,7 @@
 ## v0.28
 
 - Change `@match` rule to match all websites (`*://*/*`). Previously, it listed all adapted websites individually.
+- Fix conflict with Vimium where the tag input modal would close immediately due to focus stealing.
 
 ## v0.27
 
