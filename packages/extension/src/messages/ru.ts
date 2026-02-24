@@ -1,5 +1,7 @@
 const messages = {
   'settings.enableCurrentSite': 'Включить UTags на текущем сайте',
+  'settings.enableCurrentSiteCustomRule': 'Включить пользовательские правила соответствия для текущего веб-сайта',
+  'settings.customRuleValue': 'Пользовательские правила соответствия',
   'settings.showHidedItems': 'Показывать скрытые элементы (с тегами «block», «hide»)',
   'settings.noOpacityEffect': 'Убрать эффект полупрозрачности (с тегами «ignore», «clickbait», «promotion»)',
   'settings.useVisitedFunction': 'Включить функцию отметки просмотренного контента на текущем сайте',

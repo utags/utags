@@ -62,6 +62,7 @@ import {
   getConditionNodes,
   getListNodes,
   matchedNodes,
+  updateMatchedNodesSelector,
 } from './sites/index'
 import {
   addTagsValueChangeListener,
@@ -115,6 +116,7 @@ const eventManager = new EventListenerManager()
 
 // Store menu id for hide/unhide all tags command
 let hideAllTagsMenuId: string | number | undefined
+let customRuleTextAreaElem: undefined | HTMLTextAreaElement
 
 // Helper to check whether all tags are currently hidden
 function isAllTagsHidden(): boolean {
@@ -340,6 +342,20 @@ const getSettingsTable = (): SettingsTable => {
       group: groupNumber,
     },
 
+    [`enableCustomRule_${host}`]: {
+      title: i('settings.enableCurrentSiteCustomRule'),
+      defaultValue: false,
+      group: ++groupNumber,
+    },
+    [`customRuleValue_${host}`]: {
+      title: i('settings.customRuleValue'),
+      defaultValue: '',
+      placeholder: `.content a[href]
+#main a[href]`,
+      type: 'textarea',
+      group: groupNumber,
+    },
+
     enableTagStyleInPrompt: {
       title: i('settings.enableTagStyleInPrompt'),
       defaultValue: true,
@@ -454,6 +470,42 @@ function onSettingsChange() {
 
   const locale = getSettingsValue<string>('locale') || getPrefferedLocale()
   resetI18n(locale)
+
+  if (getSettingsValue(`enableCustomRule_${host}`)) {
+    const selectorRaw =
+      getSettingsValue<string>(`customRuleValue_${host}`) || ''
+    const selector = selectorRaw
+      .split(/[\n\r]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0)
+      .join(', ')
+
+    let isValid = true
+    if (selector) {
+      try {
+        document.querySelector(selector)
+      } catch {
+        isValid = false
+      }
+    }
+
+    if (customRuleTextAreaElem) {
+      if (isValid) {
+        customRuleTextAreaElem.style.borderColor = ''
+        customRuleTextAreaElem.style.outline = ''
+      } else {
+        customRuleTextAreaElem.style.borderColor = 'red'
+        customRuleTextAreaElem.style.outline = 'red'
+        console.log('Invalid selector:', selector)
+      }
+    }
+
+    if (isValid) {
+      updateMatchedNodesSelector(selector)
+    }
+  } else {
+    updateMatchedNodesSelector('')
+  }
 
   if (getSettingsValue(`enableCurrentSite_${host}`)) {
     displayTagsThrottled()
@@ -1308,6 +1360,17 @@ async function main() {
           // FIXME: data-key should on the parent element of textarea
           item.parentElement!.style.display = getSettingsValue(
             `customStyle_${host}`
+          )
+            ? 'block'
+            : 'none'
+        }
+
+        item = $(`[data-key="customRuleValue_${host}"]`, settingsMainView)
+        if (item) {
+          customRuleTextAreaElem = item as HTMLTextAreaElement
+          // FIXME: data-key should on the parent element of textarea
+          item.parentElement!.style.display = getSettingsValue(
+            `enableCustomRule_${host}`
           )
             ? 'block'
             : 'none'

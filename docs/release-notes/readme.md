@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.29
+
+- Add "Custom Matching Rules" setting to enable users to define custom CSS selectors for matching elements on the current website.
+
 ## v0.28
 
 - Change `@match` rule to match all websites (`*://*/*`). Previously, it listed all adapted websites individually.

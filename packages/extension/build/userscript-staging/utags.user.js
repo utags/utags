@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.28.5
+// @version              0.29.1
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -1807,6 +1807,9 @@
   }
   var messages14 = {
     "settings.enableCurrentSite": "UTags auf der aktuellen Website aktivieren",
+    "settings.enableCurrentSiteCustomRule":
+      "Benutzerdefinierte \xDCbereinstimmungsregeln f\xFCr die aktuelle Website aktivieren",
+    "settings.customRuleValue": "Benutzerdefinierte \xDCbereinstimmungsregeln",
     "settings.showHidedItems":
       "Versteckte Elemente anzeigen (Inhalte mit 'block', 'hide' Tags markiert)",
     "settings.noOpacityEffect":
@@ -1875,6 +1878,9 @@
   var de_default2 = messages14
   var messages15 = {
     "settings.enableCurrentSite": "Enable UTags on the current website",
+    "settings.enableCurrentSiteCustomRule":
+      "Enable custom matching rules for the current website",
+    "settings.customRuleValue": "Custom matching rules",
     "settings.showHidedItems":
       "Show hidden items (content tagged with 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -1936,6 +1942,9 @@
   var en_default2 = messages15
   var messages16 = {
     "settings.enableCurrentSite": "Habilitar UTags en el sitio web actual",
+    "settings.enableCurrentSiteCustomRule":
+      "Habilitar reglas de coincidencia personalizadas para el sitio web actual",
+    "settings.customRuleValue": "Reglas de coincidencia personalizadas",
     "settings.showHidedItems":
       "Mostrar elementos ocultos (contenido etiquetado con 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -2000,7 +2009,10 @@
   }
   var es_default2 = messages16
   var messages17 = {
-    "settings.enableCurrentSite": "Activer UTags sur le site web actuel",
+    "settings.enableCurrentSite": "Activer UTags sur le site actuel",
+    "settings.enableCurrentSiteCustomRule":
+      "Activer les r\xE8gles de correspondance personnalis\xE9es pour le site web actuel",
+    "settings.customRuleValue": "R\xE8gles de correspondance personnalis\xE9es",
     "settings.showHidedItems":
       "Afficher les \xE9l\xE9ments masqu\xE9s (contenu marqu\xE9 avec les tags 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -2069,7 +2081,10 @@
   }
   var fr_default2 = messages17
   var messages18 = {
-    "settings.enableCurrentSite": "Abilita UTags sul sito web attuale",
+    "settings.enableCurrentSite": "Abilita UTags sul sito web corrente",
+    "settings.enableCurrentSiteCustomRule":
+      "Abilita regole di corrispondenza personalizzate per il sito web corrente",
+    "settings.customRuleValue": "Regole di corrispondenza personalizzate",
     "settings.showHidedItems":
       "Mostra elementi nascosti (contenuto etichettato con tag 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -2135,6 +2150,10 @@
   var messages19 = {
     "settings.enableCurrentSite":
       "\u73FE\u5728\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u3067UTags\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.enableCurrentSiteCustomRule":
+      "\u73FE\u5728\u306E\u30A6\u30A7\u30D6\u30B5\u30A4\u30C8\u306E\u30AB\u30B9\u30BF\u30E0\u30DE\u30C3\u30C1\u30F3\u30B0\u30EB\u30FC\u30EB\u3092\u6709\u52B9\u306B\u3059\u308B",
+    "settings.customRuleValue":
+      "\u30AB\u30B9\u30BF\u30E0\u30DE\u30C3\u30C1\u30F3\u30B0\u30EB\u30FC\u30EB",
     "settings.showHidedItems":
       "\u975E\u8868\u793A\u306E\u30A2\u30A4\u30C6\u30E0\u3092\u8868\u793A\u3059\u308B\uFF08'block'\u3001'hide'\u30BF\u30B0\u304C\u4ED8\u3051\u3089\u308C\u305F\u30B3\u30F3\u30C6\u30F3\u30C4\uFF09",
     "settings.noOpacityEffect":
@@ -2213,6 +2232,10 @@
   var messages20 = {
     "settings.enableCurrentSite":
       "\uD604\uC7AC \uC6F9\uC0AC\uC774\uD2B8\uC5D0\uC11C UTags \uD65C\uC131\uD654",
+    "settings.enableCurrentSiteCustomRule":
+      "\uD604\uC7AC \uC6F9\uC0AC\uC774\uD2B8\uC5D0 \uB300\uD55C \uC0AC\uC6A9\uC790 \uC9C0\uC815 \uC77C\uCE58 \uADDC\uCE59 \uC0AC\uC6A9",
+    "settings.customRuleValue":
+      "\uC0AC\uC6A9\uC790 \uC9C0\uC815 \uC77C\uCE58 \uADDC\uCE59",
     "settings.showHidedItems":
       "\uC228\uACA8\uC9C4 \uD56D\uBAA9 \uD45C\uC2DC ('block', 'hide' \uD0DC\uADF8\uAC00 \uC9C0\uC815\uB41C \uCF58\uD150\uCE20)",
     "settings.noOpacityEffect":
@@ -2286,7 +2309,10 @@
   }
   var ko_default2 = messages20
   var messages21 = {
-    "settings.enableCurrentSite": "Ativar UTags no site atual",
+    "settings.enableCurrentSite": "Habilitar UTags no site atual",
+    "settings.enableCurrentSiteCustomRule":
+      "Ativar regras de correspond\xEAncia personalizadas para o site atual",
+    "settings.customRuleValue": "Regras de correspond\xEAncia personalizadas",
     "settings.showHidedItems":
       "Mostrar itens ocultos (conte\xFAdo marcado com tags 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -2352,6 +2378,10 @@
   var messages22 = {
     "settings.enableCurrentSite":
       "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C UTags \u043D\u0430 \u0442\u0435\u043A\u0443\u0449\u0435\u043C \u0441\u0430\u0439\u0442\u0435",
+    "settings.enableCurrentSiteCustomRule":
+      "\u0412\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u044F \u0434\u043B\u044F \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u0432\u0435\u0431-\u0441\u0430\u0439\u0442\u0430",
+    "settings.customRuleValue":
+      "\u041F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u0435\u043B\u044C\u0441\u043A\u0438\u0435 \u043F\u0440\u0430\u0432\u0438\u043B\u0430 \u0441\u043E\u043E\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0438\u044F",
     "settings.showHidedItems":
       "\u041F\u043E\u043A\u0430\u0437\u044B\u0432\u0430\u0442\u044C \u0441\u043A\u0440\u044B\u0442\u044B\u0435 \u044D\u043B\u0435\u043C\u0435\u043D\u0442\u044B (\u0441 \u0442\u0435\u0433\u0430\u043C\u0438 \xABblock\xBB, \xABhide\xBB)",
     "settings.noOpacityEffect":
@@ -2438,7 +2468,10 @@
   var ru_default2 = messages22
   var messages23 = {
     "settings.enableCurrentSite":
-      "K\xEDch ho\u1EA1t UTags tr\xEAn trang web hi\u1EC7n t\u1EA1i",
+      "B\u1EADt UTags tr\xEAn trang web hi\u1EC7n t\u1EA1i",
+    "settings.enableCurrentSiteCustomRule":
+      "B\u1EADt quy t\u1EAFc kh\u1EDBp t\xF9y ch\u1EC9nh cho trang web hi\u1EC7n t\u1EA1i",
+    "settings.customRuleValue": "Quy t\u1EAFc kh\u1EDBp t\xF9y ch\u1EC9nh",
     "settings.showHidedItems":
       "Hi\u1EC3n th\u1ECB c\xE1c m\u1EE5c b\u1ECB \u1EA9n (n\u1ED9i dung \u0111\u01B0\u1EE3c g\u1EAFn tag 'block', 'hide')",
     "settings.noOpacityEffect":
@@ -2512,6 +2545,9 @@
   var messages24 = {
     "settings.enableCurrentSite":
       "\u5728\u5F53\u524D\u7F51\u7AD9\u542F\u7528\u5C0F\u9C7C\u6807\u7B7E",
+    "settings.enableCurrentSiteCustomRule":
+      "\u542F\u7528\u5F53\u524D\u7F51\u7AD9\u7684\u81EA\u5B9A\u4E49\u5339\u914D\u89C4\u5219",
+    "settings.customRuleValue": "\u81EA\u5B9A\u4E49\u5339\u914D\u89C4\u5219",
     "settings.showHidedItems":
       "\u663E\u793A\u88AB\u9690\u85CF\u7684\u5185\u5BB9 (\u6DFB\u52A0\u4E86 'block', 'hide', '\u9690\u85CF'\u7B49\u6807\u7B7E\u7684\u5185\u5BB9)",
     "settings.noOpacityEffect":
@@ -2587,6 +2623,9 @@
   var messages25 = {
     "settings.enableCurrentSite":
       "\u5728\u7576\u524D\u7DB2\u7AD9\u555F\u7528\u5C0F\u9B5A\u6A19\u7C64",
+    "settings.enableCurrentSiteCustomRule":
+      "\u555F\u7528\u7576\u524D\u7DB2\u7AD9\u7684\u81EA\u8A02\u5339\u914D\u898F\u5247",
+    "settings.customRuleValue": "\u81EA\u8A02\u5339\u914D\u898F\u5247",
     "settings.showHidedItems":
       "\u986F\u793A\u88AB\u96B1\u85CF\u7684\u5167\u5BB9 (\u52A0\u4E0A\u4E86 'block', 'hide', '\u96B1\u85CF'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
     "settings.noOpacityEffect":
@@ -2661,6 +2700,9 @@
   var messages26 = {
     "settings.enableCurrentSite":
       "\u5728\u76EE\u524D\u7DB2\u7AD9\u555F\u7528\u5C0F\u9B5A\u6A19\u7C64",
+    "settings.enableCurrentSiteCustomRule":
+      "\u555F\u7528\u76EE\u524D\u7DB2\u7AD9\u7684\u81EA\u8A02\u5339\u914D\u898F\u5247",
+    "settings.customRuleValue": "\u81EA\u8A02\u5339\u914D\u898F\u5247",
     "settings.showHidedItems":
       "\u986F\u793A\u88AB\u96B1\u85CF\u7684\u5167\u5BB9 (\u6DFB\u52A0\u4E86 'block', 'hide', '\u96B1\u85CF'\u7B49\u6A19\u7C64\u7684\u5167\u5BB9)",
     "settings.noOpacityEffect":
@@ -5371,14 +5413,24 @@
     traverseElement(rootElement, 0)
   }
   var default_default =
-    ":not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}"
+    ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}"
   var default_default2 = /* @__PURE__ */ (() => {
     return {
       matches: /.*/,
-      matchedNodesSelectors: [
-        "a[href]:not(.utags_text_tag)",
-        "[data-utags_link]",
-      ],
+      matchedNodesSelectors: ["[data-utags_link]"],
+      validate(element) {
+        return true
+      },
+      excludeSelectors: [],
+      getCanonicalUrl: (url) =>
+        deleteUrlParameters(url, ["utm_campaign", "utm_source", "utm_medium"]),
+      getStyle: () => default_default,
+    }
+  })()
+  var utags_pipecraft_net_default = /* @__PURE__ */ (() => {
+    return {
+      matches: /utags\.pipecraft\.net/,
+      matchedNodesSelectors: ["[data-utags_primary_link]", "[data-utags_link]"],
       validate(element) {
         return true
       },
@@ -11001,6 +11053,7 @@
     }
   })()
   var sites = [
+    utags_pipecraft_net_default,
     github_com_default2,
     v2ex_default2,
     twitter_com_default2,
@@ -11055,31 +11108,21 @@
   var getCanonicalUrlFunctionList = [default_default2, ...sites]
     .map((site) => site.getCanonicalUrl)
     .filter((v) => typeof v === "function")
-  function siteForExtensions(hostname2) {
-    const allowSites = [
-      //
-      /pipecraft\.net/,
-    ]
-    for (const s of allowSites) {
-      if (s.test(hostname2)) {
-        return default_default2
-      }
-    }
-    return {}
-  }
   function matchedSite(hostname2) {
     for (const s of sites) {
       if (s.matches.test(hostname2)) {
         return s
       }
     }
-    if (false) {
-      return siteForExtensions(hostname2)
-    }
-    return siteForExtensions(hostname2)
+    return default_default2
   }
   function joinSelectors(selectors) {
-    return selectors ? selectors.join(",") : void 0
+    return selectors
+      ? selectors
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0)
+          .join(",")
+      : void 0
   }
   var hostname = location.hostname
   var currentSite = matchedSite(hostname)
@@ -11091,10 +11134,20 @@
     currentSite.matchedNodesSelectors &&
       currentSite.matchedNodesSelectors.length > 0
       ? [...currentSite.matchedNodesSelectors, "[data-utags_link]"]
-      : currentSite.matches
-        ? default_default2.matchedNodesSelectors
-        : void 0
+      : [...default_default2.matchedNodesSelectors, "a[href]"]
   )
+  var updateMatchedNodesSelector = (customSelector) => {
+    matchedNodesSelector = joinSelectors(
+      currentSite.matchedNodesSelectors &&
+        currentSite.matchedNodesSelectors.length > 0
+        ? [
+            ...currentSite.matchedNodesSelectors,
+            "[data-utags_link]",
+            customSelector,
+          ]
+        : [...default_default2.matchedNodesSelectors, "a[href]", customSelector]
+    )
+  }
   var excludeSelector = joinSelectors([
     BASE_EXCLUDE_SELECTOR,
     ...(currentSite.excludeSelectors || []),
@@ -11392,6 +11445,7 @@
   var host2 = location.host
   var eventManager = new EventListenerManager()
   var hideAllTagsMenuId
+  var customRuleTextAreaElem
   function isAllTagsHidden() {
     return hasClass(doc.documentElement, "utags_hide_all_tags")
   }
@@ -11597,6 +11651,18 @@
           type: "textarea",
           group: groupNumber,
         },
+        ["enableCustomRule_".concat(host2)]: {
+          title: i2("settings.enableCurrentSiteCustomRule"),
+          defaultValue: false,
+          group: ++groupNumber,
+        },
+        ["customRuleValue_".concat(host2)]: {
+          title: i2("settings.customRuleValue"),
+          defaultValue: "",
+          placeholder: ".content a[href]\n#main a[href]",
+          type: "textarea",
+          group: groupNumber,
+        },
         enableTagStyleInPrompt: {
           title: i2("settings.enableTagStyleInPrompt"),
           defaultValue: true,
@@ -11701,6 +11767,38 @@
     updateDocumentElementAttributes()
     const locale = getSettingsValue("locale") || getPrefferedLocale()
     resetI18n2(locale)
+    if (getSettingsValue("enableCustomRule_".concat(host2))) {
+      const selectorRaw =
+        getSettingsValue("customRuleValue_".concat(host2)) || ""
+      const selector = selectorRaw
+        .split(/[\n\r]+/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0)
+        .join(", ")
+      let isValid = true
+      if (selector) {
+        try {
+          document.querySelector(selector)
+        } catch (e) {
+          isValid = false
+        }
+      }
+      if (customRuleTextAreaElem) {
+        if (isValid) {
+          customRuleTextAreaElem.style.borderColor = ""
+          customRuleTextAreaElem.style.outline = ""
+        } else {
+          customRuleTextAreaElem.style.borderColor = "red"
+          customRuleTextAreaElem.style.outline = "red"
+          console.log("Invalid selector:", selector)
+        }
+      }
+      if (isValid) {
+        updateMatchedNodesSelector(selector)
+      }
+    } else {
+      updateMatchedNodesSelector("")
+    }
     if (getSettingsValue("enableCurrentSite_".concat(host2))) {
       displayTagsThrottled()
       updateCustomStyle()
@@ -12337,6 +12435,18 @@
           if (item) {
             item.parentElement.style.display = getSettingsValue(
               "customStyle_".concat(host2)
+            )
+              ? "block"
+              : "none"
+          }
+          item = $(
+            '[data-key="customRuleValue_'.concat(host2, '"]'),
+            settingsMainView
+          )
+          if (item) {
+            customRuleTextAreaElem = item
+            item.parentElement.style.display = getSettingsValue(
+              "enableCustomRule_".concat(host2)
             )
               ? "block"
               : "none"

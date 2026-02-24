@@ -1,5 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '在当前网站启用小鱼标签',
+  'settings.enableCurrentSiteCustomRule': '启用当前网站的自定义匹配规则',
+  'settings.customRuleValue': '自定义匹配规则',
   'settings.showHidedItems': "显示被隐藏的内容 (添加了 'block', 'hide', '隐藏'等标签的内容)",
   'settings.noOpacityEffect': "去除半透明效果 (添加了 'sb', '忽略', '标题党'等标签的内容)",
   'settings.useVisitedFunction': '在当前网站启用浏览内容标记功能',

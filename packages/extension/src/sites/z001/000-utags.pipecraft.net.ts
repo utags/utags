@@ -1,11 +1,11 @@
-import styleText from 'data-text:./default.scss'
+import styleText from 'data-text:../default.scss'
 
-import { deleteUrlParameters } from '../utils'
+import { deleteUrlParameters } from '../../utils'
 
 export default (() => {
   return {
-    matches: /.*/,
-    matchedNodesSelectors: ['[data-utags_link]'],
+    matches: /utags\.pipecraft\.net/,
+    matchedNodesSelectors: ['[data-utags_primary_link]', '[data-utags_link]'],
     validate(element: HTMLElement) {
       return true
     },

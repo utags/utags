@@ -1,5 +1,7 @@
 export const messages = {
-  'settings.enableCurrentSite': 'Kích hoạt UTags trên trang web hiện tại',
+  'settings.enableCurrentSite': 'Bật UTags trên trang web hiện tại',
+  'settings.enableCurrentSiteCustomRule': 'Bật quy tắc khớp tùy chỉnh cho trang web hiện tại',
+  'settings.customRuleValue': 'Quy tắc khớp tùy chỉnh',
   'settings.showHidedItems': "Hiển thị các mục bị ẩn (nội dung được gắn tag 'block', 'hide')",
   'settings.noOpacityEffect': "Loại bỏ hiệu ứng trong suốt (nội dung được gắn tag 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Kích hoạt chức năng gắn tag nội dung điều hướng trên trang web hiện tại',

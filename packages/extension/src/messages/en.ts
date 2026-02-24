@@ -1,5 +1,7 @@
 const messages = {
   'settings.enableCurrentSite': 'Enable UTags on the current website',
+  'settings.enableCurrentSiteCustomRule': 'Enable custom matching rules for the current website',
+  'settings.customRuleValue': 'Custom matching rules',
   'settings.showHidedItems': "Show hidden items (content tagged with 'block', 'hide')",
   'settings.noOpacityEffect': "No opacity mask effect (content tagged with 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Enable browsing content tagging on the current website',

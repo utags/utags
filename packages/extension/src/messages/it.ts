@@ -1,5 +1,7 @@
 export const messages = {
-  'settings.enableCurrentSite': 'Abilita UTags sul sito web attuale',
+  'settings.enableCurrentSite': 'Abilita UTags sul sito web corrente',
+  'settings.enableCurrentSiteCustomRule': 'Abilita regole di corrispondenza personalizzate per il sito web corrente',
+  'settings.customRuleValue': 'Regole di corrispondenza personalizzate',
   'settings.showHidedItems': "Mostra elementi nascosti (contenuto etichettato con tag 'block', 'hide')",
   'settings.noOpacityEffect': "Rimuovi effetto trasparenza (contenuto etichettato con tag 'ignore', 'clickbait', 'promotion')",
   'settings.useVisitedFunction': 'Abilita funzione di tagging del contenuto di navigazione sul sito web attuale',

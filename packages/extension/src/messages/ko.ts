@@ -1,5 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '현재 웹사이트에서 UTags 활성화',
+  'settings.enableCurrentSiteCustomRule': '현재 웹사이트에 대한 사용자 지정 일치 규칙 사용',
+  'settings.customRuleValue': '사용자 지정 일치 규칙',
   'settings.showHidedItems': "숨겨진 항목 표시 ('block', 'hide' 태그가 지정된 콘텐츠)",
   'settings.noOpacityEffect': "투명도 효과 제거 ('ignore', 'clickbait', 'promotion' 태그가 지정된 콘텐츠)",
   'settings.useVisitedFunction': '현재 웹사이트에서 브라우징 콘텐츠 태그 기능 활성화',

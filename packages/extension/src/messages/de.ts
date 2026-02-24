@@ -1,5 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': 'UTags auf der aktuellen Website aktivieren',
+  'settings.enableCurrentSiteCustomRule': 'Benutzerdefinierte Übereinstimmungsregeln für die aktuelle Website aktivieren',
+  'settings.customRuleValue': 'Benutzerdefinierte Übereinstimmungsregeln',
   'settings.showHidedItems': "Versteckte Elemente anzeigen (Inhalte mit 'block', 'hide' Tags markiert)",
   'settings.noOpacityEffect': "Transparenz-Effekt entfernen (Inhalte mit 'ignore', 'clickbait', 'promotion' Tags markiert)",
   'settings.useVisitedFunction': 'Browsing-Inhalts-Tagging auf der aktuellen Website aktivieren',

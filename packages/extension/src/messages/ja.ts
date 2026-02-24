@@ -1,5 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '現在のウェブサイトでUTagsを有効にする',
+  'settings.enableCurrentSiteCustomRule': '現在のウェブサイトのカスタムマッチングルールを有効にする',
+  'settings.customRuleValue': 'カスタムマッチングルール',
   'settings.showHidedItems': "非表示のアイテムを表示する（'block'、'hide'タグが付けられたコンテンツ）",
   'settings.noOpacityEffect': "透明度効果を無効にする（'ignore'、'clickbait'、'promotion'タグが付けられたコンテンツ）",
   'settings.useVisitedFunction': '現在のウェブサイトで閲覧コンテンツのタグ機能を有効にする',

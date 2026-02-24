@@ -18,6 +18,7 @@ import {
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
 import { findElementsInShadowRoots } from '../utils/shadow-root-traverser'
 import defaultSite from './default'
+import utags_pipecraft_net from './z001/000-utags.pipecraft.net'
 import v2ex from './z001/001-v2ex'
 import greasyforkOrg from './z001/002-greasyfork.org'
 import hackerNews from './z001/003-news.ycombinator.com'
@@ -88,6 +89,7 @@ type Site = {
 }
 
 const sites: Site[] = [
+  utags_pipecraft_net,
   github,
   v2ex,
   twitter,
@@ -144,20 +146,6 @@ const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
   .filter((v) => typeof v === 'function')
 
-function siteForExtensions(hostname: string): Site {
-  const allowSites = [
-    //
-    /pipecraft\.net/,
-  ]
-  for (const s of allowSites) {
-    if (s.test(hostname)) {
-      return defaultSite
-    }
-  }
-
-  return {} as Site
-}
-
 function matchedSite(hostname: string) {
   for (const s of sites) {
     if (s.matches.test(hostname)) {
@@ -165,21 +153,16 @@ function matchedSite(hostname: string) {
     }
   }
 
-  if (
-    // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === 'chrome-mv3' ||
-    // eslint-disable-next-line n/prefer-global/process
-    process.env.PLASMO_TARGET === 'firefox-mv2'
-  ) {
-    return siteForExtensions(hostname)
-  }
-
-  // return defaultSite
-  return siteForExtensions(hostname)
+  return defaultSite
 }
 
 function joinSelectors(selectors: string[] | undefined) {
-  return selectors ? selectors.join(',') : undefined
+  return selectors
+    ? selectors
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0)
+        .join(',')
+    : undefined
 }
 
 const hostname = location.hostname
@@ -191,14 +174,25 @@ const conditionNodesSelector = joinSelectors(
   currentSite.conditionNodesSelectors
 )
 
-const matchedNodesSelector = joinSelectors(
+let matchedNodesSelector = joinSelectors(
   currentSite.matchedNodesSelectors &&
     currentSite.matchedNodesSelectors.length > 0
     ? [...currentSite.matchedNodesSelectors, '[data-utags_link]']
-    : currentSite.matches
-      ? defaultSite.matchedNodesSelectors
-      : undefined
+    : [...defaultSite.matchedNodesSelectors, 'a[href]']
 )
+
+export const updateMatchedNodesSelector = (customSelector: string) => {
+  matchedNodesSelector = joinSelectors(
+    currentSite.matchedNodesSelectors &&
+      currentSite.matchedNodesSelectors.length > 0
+      ? [
+          ...currentSite.matchedNodesSelectors,
+          '[data-utags_link]',
+          customSelector,
+        ]
+      : [...defaultSite.matchedNodesSelectors, 'a[href]', customSelector]
+  )
+}
 
 const excludeSelector = joinSelectors([
   BASE_EXCLUDE_SELECTOR,

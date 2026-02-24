@@ -1,5 +1,7 @@
 export const messages = {
   'settings.enableCurrentSite': '在當前網站啟用小魚標籤',
+  'settings.enableCurrentSiteCustomRule': '啟用當前網站的自訂匹配規則',
+  'settings.customRuleValue': '自訂匹配規則',
   'settings.showHidedItems': "顯示被隱藏的內容 (加上了 'block', 'hide', '隱藏'等標籤的內容)",
   'settings.noOpacityEffect': "去除半透明效果 (加上了 'sb', '忽略', '標題黨'等標籤的內容)",
   'settings.useVisitedFunction': '在當前網站啟用瀏覽內容標記功能',
