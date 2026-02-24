@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.30
+
+- Generate a "no-adult" version of the userscript that excludes adult site modules, built to `build/userscript-no-adult-{tag}/`.
+
 ## v0.29
 
 - Add "Custom Matching Rules" setting to enable users to define custom CSS selectors for matching elements on the current website.

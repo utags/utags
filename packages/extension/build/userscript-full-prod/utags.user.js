@@ -1,18 +1,18 @@
 // ==UserScript==
-// @name                 🏷️ UTags - Add usertags to links
-// @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签
-// @name:zh-HK           🏷️ 小魚標籤 (UTags) - 為連結添加用戶標籤
-// @name:zh-TW           🏷️ 小魚標籤 (UTags) - 為連結新增使用者標籤
-// @name:ja              🏷️ 小魚タグ (UTags) - リンクにユーザータグを追加
-// @name:ko              🏷️ UTags - 링크에 사용자 태그 추가
-// @name:de              🏷️ UTags - Benutzer-Tags zu Links hinzufügen
-// @name:fr              🏷️ UTags - Ajouter des tags utilisateur aux liens
-// @name:es              🏷️ UTags - Agregar etiquetas de usuario a los enlaces
-// @name:it              🏷️ UTags - Aggiungi tag utente ai collegamenti
-// @name:pt              🏷️ UTags - Adicionar tags de usuário aos links
-// @name:pt-BR           🏷️ UTags - Adicionar tags de usuário aos links
-// @name:vi              🏷️ UTags - Thêm tag người dùng vào liên kết
-// @name:ru              🏷️ UTags - Добавление пользовательских тегов к ссылкам
+// @name                 🏷️ UTags - Add usertags to links (full version)
+// @name:zh-CN           🏷️ 小鱼标签 (UTags) - 为链接添加用户标签 (full version)
+// @name:zh-HK           🏷️ 小魚標籤 (UTags) - 為連結添加用戶標籤 (full version)
+// @name:zh-TW           🏷️ 小魚標籤 (UTags) - 為連結新增使用者標籤 (full version)
+// @name:ja              🏷️ 小魚タグ (UTags) - リンクにユーザータグを追加 (full version)
+// @name:ko              🏷️ UTags - 링크에 사용자 태그 추가 (full version)
+// @name:de              🏷️ UTags - Benutzer-Tags zu Links hinzufügen (full version)
+// @name:fr              🏷️ UTags - Ajouter des tags utilisateur aux liens (full version)
+// @name:es              🏷️ UTags - Agregar etiquetas de usuario a los enlaces (full version)
+// @name:it              🏷️ UTags - Aggiungi tag utente ai collegamenti (full version)
+// @name:pt              🏷️ UTags - Adicionar tags de usuário aos links (full version)
+// @name:pt-BR           🏷️ UTags - Adicionar tags de usuário aos links (full version)
+// @name:vi              🏷️ UTags - Thêm tag người dùng vào liên kết (full version)
+// @name:ru              🏷️ UTags - Добавление пользовательских тегов к ссылкам (full version)
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
