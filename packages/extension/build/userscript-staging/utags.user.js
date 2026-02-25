@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.30.0
+// @version              0.30.1
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -9653,19 +9653,23 @@
   })()
   var discuz_default =
     ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) table{--utags-list-node-display: table-row-group}:not(#a):not(#b):not(#c) .favatar .authi a+.utags_ul_1{position:absolute;top:-9999px;z-index:100;margin-top:0px !important;margin-left:0px !important}:not(#a):not(#b):not(#c)[data-utags="bbs.tampermonkey.net.cn"] .favatar .authi a+.utags_ul_1{margin-left:-64px !important}:not(#a):not(#b):not(#c)[data-utags="bbs.yamibo.com"] .favatar .authi a+.utags_ul_1{margin-left:-18px !important}:not(#a):not(#b):not(#c) #portal_block_52 a[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) #portal_block_52 a+.utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:-8px !important}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_0{object-position:100% 0%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .comiis_irbox a+.utags_ul_1{object-position:0% 0%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}:not(#a):not(#b):not(#c) div[style*=scroll]{position:relative}'
-  var discuz_default2 = (() => {
+  function Discuz(options) {
+    const {
+      matchesPatternValue,
+      normalizeDomainFn,
+      validateDefaultReturnValue,
+    } = options || {}
     const matchesPattern =
-      /bbs\.tampermonkey\.net\.cn|bbs\.yamibo\.com|(www\.)?tsdm39\.com|xsijishe\.\w+|sjs47\.\w+|sjslt\.cc/
+      matchesPatternValue ||
+      /bbs\.tampermonkey\.net\.cn|bbs\.yamibo\.com|(www\.)?tsdm39\.com/
     const currentPrefix = location.origin + "/"
+    const normalizeDomain =
+      typeof normalizeDomainFn === "function"
+        ? normalizeDomainFn
+        : function (url) {
+            return url.replace("https://tsdm39.com", "https://www.tsdm39.com")
+          }
     const normalizedPrefix = normalizeDomain(currentPrefix)
-    function normalizeDomain(url) {
-      return url
-        .replace("https://tsdm39.com", "https://www.tsdm39.com")
-        .replace(
-          /^https:\/\/(xsijishe\.\w+|sjs47\.\w+|sjslt\.cc)/,
-          "https://xsijishe.net"
-        )
-    }
     function getCanonicalUrl2(url, hostname2) {
       if (!matchesPattern.test(hostname2)) {
         return url
@@ -9743,172 +9747,172 @@
       }
       return void 0
     }
-    return {
-      matches: matchesPattern,
-      preProcess() {
-        setVisitedAvailable(true)
-        const href = normalizeDomain(location.href)
-        let key = getUserProfileUrl(normalizedPrefix, href)
-        if (key) {
-          const element =
-            $(".user-profile-names .username") ||
-            $(
-              ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-            )
-          if (element) {
-            setUtagsAttributes(element, { key, type: "user" })
-          }
+    this.matches = matchesPattern
+    this.preProcess = () => {
+      setVisitedAvailable(true)
+      const href = normalizeDomain(location.href)
+      let key = getUserProfileUrl(normalizedPrefix, href)
+      if (key) {
+        const element =
+          $(".user-profile-names .username") ||
+          $(
+            ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+          )
+        if (element) {
+          setUtagsAttributes(element, { key, type: "user" })
         }
-        key = getPostUrl(normalizedPrefix, href)
-        if (key) {
-          const element = $("#thread_subject")
-          if (element) {
-            setUtagsAttributes(element, { key, type: "post" })
-            addVisited(key)
-            markElementWhetherVisited(key, element)
-          }
-        }
-      },
-      listNodesSelectors: [
-        //
-        "#threadlist table tbody",
-        "#postlist .comiis_vrx",
-        "#postlist .otherfloor",
-        ".nex_forum_lists",
-      ],
-      conditionNodesSelectors: [
-        "#threadlist table tbody h2 a",
-        "#threadlist table tbody .km_user a",
-        '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
-        '#threadlist table tbody a[href*="thread-"]',
-        '#threadlist table tbody a[href*="forum.php?mod=viewthread&tid="]',
-        '#threadlist table tbody a[href*="space-uid-"]',
-        '#threadlist table tbody a[href*="home.php?mod=space&uid="]',
-        "#postlist .comiis_vrx .authi a",
-        "#postlist .otherfloor .authi a",
-        ".nex_forum_lists .nex_threads_author a",
-        ".nex_forum_lists .nex_forumtit_top a",
-      ],
-      validate(element, href) {
-        if (!href.startsWith(currentPrefix)) {
-          return true
-        }
-        href = normalizeDomain(href)
-        let key = getUserProfileUrl(normalizedPrefix, href, true)
-        if (key) {
-          let title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title2)) {
-            const titleElement = $("#uhd h2")
-            if (titleElement) {
-              title2 = getTrimmedTitle(titleElement)
-            }
-          }
-          if (
-            /^\d+$/.test(title2) &&
-            ancestorTextIncludes(element, "\u79EF\u5206", 2)
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "user" } : { type: "user", title: title2 }
-          setUtags(element, key, meta)
-          setAttribute(element, "data-utags", element.dataset.utags || "")
-          return true
-        }
-        key = getPostUrl(normalizedPrefix, href)
-        if (key) {
-          const title2 = getTrimmedTitle(element)
-          if (!title2) {
-            return false
-          }
-          if (
-            title2 === "New" ||
-            title2 === "\u7F6E\u9876" ||
-            /^\d+$/.test(title2) ||
-            /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(:\d{2})?$/.test(title2)
-          ) {
-            return false
-          }
-          if ($('span[title^="20"]', element)) {
-            return false
-          }
-          if (
-            ancestorTextIncludes(element, "\u6700\u540E\u56DE\u590D\u4E8E", 1)
-          ) {
-            return false
-          }
-          const meta =
-            href === title2 ? { type: "post" } : { type: "post", title: title2 }
-          setUtags(element, key, meta)
+      }
+      key = getPostUrl(normalizedPrefix, href)
+      if (key) {
+        const element = $("#thread_subject")
+        if (element) {
+          setUtagsAttributes(element, { key, type: "post" })
+          addVisited(key)
           markElementWhetherVisited(key, element)
-          return true
         }
-        const title = getTrimmedTitle(element)
-        if (!title) {
-          return false
-        }
-        if (title === "New" || title === "\u7F6E\u9876") {
-          return false
-        }
-        return !normalizedPrefix.includes("xsijishe.net")
-      },
-      excludeSelectors: [
-        ...default_default2.excludeSelectors,
-        "#hd",
-        ".comiis_pgs",
-        ".oyheader",
-        "#scrolltop",
-        "#fd_page_bottom",
-        "#visitedforums",
-        "#pt",
-        ".tps",
-        ".pgbtn",
-        ".pgs",
-        "#f_pst",
-        'a[href*="member.php?mod=logging"]',
-        'a[href*="member.php?mod=register"]',
-        'a[href*="login/oauth/"]',
-        'a[href*="mod=spacecp&ac=usergroup"]',
-        'a[href*="home.php?mod=spacecp"]',
-        'a[href*="forum.php?mod=viewthread&tid="][href*="&authorid="]',
-        'a[href*="forum.php?mod=viewthread&tid="][href*="&from=album"]',
-        'a[href*="forum.php?mod=viewthread&tid="][href*="&ordertype="]',
-        'a[onclick*="copyThreadUrl"]',
-        'a[onclick*="setCopy"]',
-        "#gadmin_menu",
-        "#guser_menu",
-        "#gupgrade_menu",
-        "#gmy_menu",
-        ".showmenu",
-        "ul.tb.cl",
-        ".comiis_irbox_tit",
-        "#thread_types",
-        "#threadlist .th",
-        "#filter_special_menu",
-        'a[title="RSS"]',
-        ".fa_fav",
-        ".p_pop",
-        ".comiis_topinfo",
-        ".bm .bm_h .kmfz",
-        "td.num a",
-        "td.plc .po.hin",
-        "td.pls .tns",
-        "ul.comiis_o",
-        ".nex_member_more",
-        ".nex_member_hids",
-        'a[onclick*="showMenu"]',
-        'a[onclick*="showWindow"]',
-        ".toplist_7ree",
-        "nav",
-        ".btn",
-      ],
-      getStyle: () => discuz_default,
-      getCanonicalUrl: getCanonicalUrl2,
+      }
     }
-  })()
+    this.listNodesSelectors = [
+      //
+      "#threadlist table tbody",
+      "#postlist .comiis_vrx",
+      "#postlist .otherfloor",
+      ".nex_forum_lists",
+    ]
+    this.conditionNodesSelectors = [
+      "#threadlist table tbody h2 a",
+      "#threadlist table tbody .km_user a",
+      '#threadlist table tbody a[href*="&filter=typeid&typeid="]',
+      '#threadlist table tbody a[href*="thread-"]',
+      '#threadlist table tbody a[href*="forum.php?mod=viewthread&tid="]',
+      '#threadlist table tbody a[href*="space-uid-"]',
+      '#threadlist table tbody a[href*="home.php?mod=space&uid="]',
+      "#postlist .comiis_vrx .authi a",
+      "#postlist .otherfloor .authi a",
+      ".nex_forum_lists .nex_threads_author a",
+      ".nex_forum_lists .nex_forumtit_top a",
+    ]
+    this.validate = (element, href) => {
+      if (!href.startsWith(currentPrefix)) {
+        return true
+      }
+      href = normalizeDomain(href)
+      let key = getUserProfileUrl(normalizedPrefix, href, true)
+      if (key) {
+        let title2 = getTrimmedTitle(element)
+        if (!title2) {
+          return false
+        }
+        if (/^https:\/\/bbs\.tampermonkey\.net\.cn\/\?\d+$/.test(title2)) {
+          const titleElement = $("#uhd h2")
+          if (titleElement) {
+            title2 = getTrimmedTitle(titleElement)
+          }
+        }
+        if (
+          /^\d+$/.test(title2) &&
+          ancestorTextIncludes(element, "\u79EF\u5206", 2)
+        ) {
+          return false
+        }
+        const meta =
+          href === title2 ? { type: "user" } : { type: "user", title: title2 }
+        setUtags(element, key, meta)
+        setAttribute(element, "data-utags", element.dataset.utags || "")
+        return true
+      }
+      key = getPostUrl(normalizedPrefix, href)
+      if (key) {
+        const title2 = getTrimmedTitle(element)
+        if (!title2) {
+          return false
+        }
+        if (
+          title2 === "New" ||
+          title2 === "\u7F6E\u9876" ||
+          /^\d+$/.test(title2) ||
+          /^\d{4}(?:-\d{1,2}){2} \d{2}:\d{2}(:\d{2})?$/.test(title2)
+        ) {
+          return false
+        }
+        if ($('span[title^="20"]', element)) {
+          return false
+        }
+        if (
+          ancestorTextIncludes(element, "\u6700\u540E\u56DE\u590D\u4E8E", 1)
+        ) {
+          return false
+        }
+        const meta =
+          href === title2 ? { type: "post" } : { type: "post", title: title2 }
+        setUtags(element, key, meta)
+        markElementWhetherVisited(key, element)
+        return true
+      }
+      const title = getTrimmedTitle(element)
+      if (!title) {
+        return false
+      }
+      if (title === "New" || title === "\u7F6E\u9876") {
+        return false
+      }
+      return validateDefaultReturnValue !== false
+    }
+    this.excludeSelectors = [
+      ...default_default2.excludeSelectors,
+      "#hd",
+      ".comiis_pgs",
+      ".oyheader",
+      "#scrolltop",
+      "#fd_page_bottom",
+      "#visitedforums",
+      "#pt",
+      ".tps",
+      ".pgbtn",
+      ".pgs",
+      "#f_pst",
+      'a[href*="member.php?mod=logging"]',
+      'a[href*="member.php?mod=register"]',
+      'a[href*="login/oauth/"]',
+      'a[href*="mod=spacecp&ac=usergroup"]',
+      'a[href*="home.php?mod=spacecp"]',
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&authorid="]',
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&from=album"]',
+      'a[href*="forum.php?mod=viewthread&tid="][href*="&ordertype="]',
+      'a[onclick*="copyThreadUrl"]',
+      'a[onclick*="setCopy"]',
+      "#gadmin_menu",
+      "#guser_menu",
+      "#gupgrade_menu",
+      "#gmy_menu",
+      ".showmenu",
+      "ul.tb.cl",
+      ".comiis_irbox_tit",
+      "#thread_types",
+      "#threadlist .th",
+      "#filter_special_menu",
+      'a[title="RSS"]',
+      ".fa_fav",
+      ".p_pop",
+      ".comiis_topinfo",
+      ".bm .bm_h .kmfz",
+      "td.num a",
+      "td.plc .po.hin",
+      "td.pls .tns",
+      "ul.comiis_o",
+      ".nex_member_more",
+      ".nex_member_hids",
+      'a[onclick*="showMenu"]',
+      'a[onclick*="showWindow"]',
+      ".toplist_7ree",
+      "nav",
+      ".btn",
+    ]
+    this.getStyle = () => discuz_default
+    this.getCanonicalUrl = getCanonicalUrl2
+  }
+  var discuz = new Discuz()
+  var discuz_default2 = discuz
   var pxxnhub_com_default =
     ':not(#a):not(#b):not(#c) a+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) a+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg{fill:none}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn:hover svg path,:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred:hover svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg{fill:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .utags_custom_bookmark_btn.starred svg path{stroke:var(--utags-star-tag-color)}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_0__ .utags_captain_tag{left:-20px}:not(#a):not(#b):not(#c) .usernameWrap__ .utags_ul_1::before{content:"";display:block}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) .vidTitleWrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__{position:relative}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0{display:block !important;height:0;position:absolute;top:0}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_0 .utags_captain_tag{background-color:hsla(0,0%,100%,.8666666667) !important}:not(#a):not(#b):not(#c) ul.videos .thumbnail-info-wrapper__ .title .utags_ul_1{display:block !important;height:0;position:absolute;bottom:0}'
   var pxxnhub_com_default2 = (() => {
@@ -10662,6 +10666,21 @@
       getStyle: () => rule99video_com_default,
     }
   })()
+  var xaxi = atob("YWk=")
+  var xgxixrl = atob("Z2lybA==")
+  var xmxi = atob("bWk=")
+  var s1j1 = atob("c2lqaQ==")
+  var discuz2 = new Discuz({
+    matchesPatternValue: /xs[i1]jishe\.\w+|s[j1]s47\.\w+|s[j1]slt\.cc/,
+    normalizeDomainFn(url) {
+      return url.replace(
+        /^https:\/\/(xs[i1]jishe\.\w+|s[j1]s47\.\w+|s[j1]slt\.cc)/,
+        "https://x".concat(s1j1, "she.net")
+      )
+    },
+    validateDefaultReturnValue: false,
+  })
+  var xsi77jishe_net_default = discuz2
   var simpxxcity_cr_default =
     ":not(#a):not(#b):not(#c) .structItem.structItem--thread{--utags-list-node-display: table}"
   var simpxxcity_cr_default2 = (() => {
@@ -10816,9 +10835,6 @@
   })()
   var hotgixx_asia_default =
     ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) .vl-item .utags_ul_1{position:absolute;top:-9999px;margin-top:-4px !important;z-index:6}"
-  var xaxi = atob("YWk=")
-  var xgxixrl = atob("Z2lybA==")
-  var xmxi = atob("bWk=")
   var hotgixx_asia_default2 = (() => {
     const prefix2 = "https://hot".concat(xgxixrl, ".asia/")
     function getVideoUrl(url, exact = false) {
@@ -11099,6 +11115,7 @@
     dxx_co_jp_default2,
     kemoxx_su_default2,
     rule99video_com_default2,
+    xsi77jishe_net_default,
     simpxxcity_cr_default2,
     hotgixx_asia_default2,
     nhentxx_net_default2,

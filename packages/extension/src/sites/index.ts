@@ -64,6 +64,7 @@ import panda_chai99ka_moe from './z999/003-panda.chai99ka.moe'
 import dmm_co_jp from './z999/004-dxx.co.jp'
 import kemoxx_su from './z999/005-kemoxx.su'
 import rule99video_com from './z999/006-rule99video.com'
+import xsi77jishe_net from './z999/007-xsi77jishe.net'
 import simpxxcity from './z999/008-simpxxcity.cr'
 import hotgixx_asia from './z999/009-hotgixx.asia'
 import nhentxx_net from './z999/010-nhentxx.net'
@@ -135,6 +136,7 @@ const sites: Site[] = [
   dmm_co_jp,
   kemoxx_su,
   rule99video_com,
+  xsi77jishe_net,
   simpxxcity,
   hotgixx_asia,
   nhentxx_net,
