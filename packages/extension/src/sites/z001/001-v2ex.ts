@@ -1,4 +1,10 @@
-import { $, $$, createElement, parseInt10 } from 'browser-extension-utils'
+import {
+  $,
+  $$,
+  createElement,
+  parseInt10,
+  setAttribute,
+} from 'browser-extension-utils'
 import styleText from 'data-text:./001-v2ex.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
@@ -108,6 +114,7 @@ export default (() => {
               cloneWithoutCitedReplies(replyContentElement)
             )
 
+            setUtags(newAgoElement, key, { title, type: 'reply' })
             setUtagsAttributes(newAgoElement, { key, title, type: 'reply' })
           }
         }
@@ -235,6 +242,10 @@ export default (() => {
       '.post-item a.post-content',
       // planet 帖子时间
       '.planet-post-time',
+      //  V2REP > 当前页热门回复
+      '#Rightbar .ago',
+      // V2REP > 引用回复
+      '.cited_reply .ago',
     ],
     getStyle: () => styleText,
     getCanonicalUrl,
