@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkutags_docs=self.webpackChunkutags_docs||[]).push([[9647],{9157:(s,e,r)=>{r.r(e),r.d(e,{default:()=>l});r(9430);var u=r(851),a=r(1001),c=r(2926),t=r(362),d=r(4071),n=r(5270);function l(s){return(0,n.jsx)(c.e3,{className:(0,u.A)(a.G.wrapper.docsPages),children:(0,n.jsx)(d.A,{children:(0,t.v)(s.route.routes)})})}}}]);
