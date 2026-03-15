@@ -85,8 +85,6 @@ type Site = {
   validate?: (element: UtagsHTMLElement, href: string) => boolean
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
-  // FIXME: Deprecated
-  addExtraMatchedNodes?: (matchedNodesSet: Set<UtagsHTMLElement>) => void
   getCanonicalUrl?: (
     url: string,
     hostname: string
@@ -454,15 +452,6 @@ export function matchedNodes() {
   //   addMatchedNodes(matchedNodesSet)
   // } catch (error) {
   //   console.error(error)
-  // }
-
-  // // Only bilibili use this function
-  // if (typeof currentSite.addExtraMatchedNodes === 'function') {
-  //   try {
-  //     currentSite.addExtraMatchedNodes(matchedNodesSet)
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
   // }
 
   try {

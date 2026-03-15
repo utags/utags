@@ -221,7 +221,7 @@ const getSettingsTable = (): SettingsTable => {
   return {
     [`enableCurrentSite_${host}`]: {
       title: i('settings.enableCurrentSite'),
-      defaultValue: isEnabledByDefault(),
+      defaultValue: true,
     },
 
     ...(isQuickStarAvailable()
