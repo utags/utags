@@ -1010,7 +1010,7 @@ describe('SyncAdapter', () => {
         setMockMetadata(
           async () =>
             new Promise((resolve) =>
-              // eslint-disable-next-line no-promise-executor-return, max-nested-callbacks
+              // eslint-disable-next-line max-nested-callbacks
               setTimeout(() => {
                 resolve(undefined)
               }, 100)
@@ -1030,7 +1030,6 @@ describe('SyncAdapter', () => {
         setMockMetadata(
           async () =>
             new Promise((resolve) =>
-              // eslint-disable-next-line no-promise-executor-return
               setTimeout(() => {
                 resolve(undefined)
               }, 4000)
@@ -1046,7 +1045,7 @@ describe('SyncAdapter', () => {
         let callCount = 0
         setMockMetadata(async () => {
           const delay = callCount++ * 50 // Increasing delays
-          // eslint-disable-next-line no-promise-executor-return
+
           await new Promise((resolve) => setTimeout(resolve, delay))
           return undefined
         })

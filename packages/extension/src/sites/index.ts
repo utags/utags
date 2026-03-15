@@ -5,6 +5,7 @@ import {
   doc,
   getAttribute,
   isUrl,
+  runWhenBodyExists,
   uniq,
 } from 'browser-extension-utils'
 import { getTrimmedTitle, trimTitle } from 'utags-utils'
@@ -15,7 +16,13 @@ import {
   hasElementUtags,
   setElementUtags,
 } from '../modules/dom-reference-manager'
+import {
+  debugScannerDifference,
+  UTagsScanner,
+  type UTagsScannerOptions,
+} from '../modules/utags-scanner'
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
+import { cleanupUtags } from '../utils/index'
 import { findElementsInShadowRoots } from '../utils/shadow-root-traverser'
 import defaultSite from './default'
 import utags_pipecraft_net from './z001/000-utags.pipecraft.net'
@@ -76,9 +83,9 @@ type Site = {
   conditionNodesSelectors?: string[]
   matchedNodesSelectors?: string[]
   validate?: (element: UtagsHTMLElement, href: string) => boolean
-  map?: (element: UtagsHTMLElement) => UtagsHTMLElement
   excludeSelectors?: string[]
   validMediaSelectors?: string[]
+  // FIXME: Deprecated
   addExtraMatchedNodes?: (matchedNodesSet: Set<UtagsHTMLElement>) => void
   getCanonicalUrl?: (
     url: string,
@@ -204,8 +211,6 @@ const excludeSelector = joinSelectors([
 const validMediaSelector = joinSelectors(currentSite.validMediaSelectors)
 
 const validateFunction = currentSite.validate || defaultSite.validate
-const mappingFunction =
-  typeof currentSite.map === 'function' ? currentSite.map : undefined
 
 // console.log([
 //   currentSite,
@@ -216,20 +221,20 @@ const mappingFunction =
 //   "validMediaSelector: " + validMediaSelector,
 // ])
 
+export function getCurrentSiteStyle(): string | undefined {
+  if (typeof currentSite.getStyle === 'function') {
+    return currentSite.getStyle()
+  }
+
+  return undefined
+}
+
 export function getListNodes() {
   if (typeof currentSite.preProcess === 'function') {
     currentSite.preProcess()
   }
 
-  if (typeof currentSite.getStyle === 'function' && !$('#utags_site_style')) {
-    const styleText = currentSite.getStyle()
-    if (styleText) {
-      addElement(doc.head, 'style', {
-        textContent: styleText,
-        id: 'utags_site_style',
-      })
-    }
-  }
+  // Style injection is centrally managed by style-manager
 
   return listNodesSelector ? $$(listNodesSelector) : []
 }
@@ -340,10 +345,30 @@ const isExcludedUtagsElement = (element: HTMLElement) => {
   return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
 }
 
-const cleanupUtags = (element: UtagsHTMLElement) => {
-  deleteElementUtags(element)
-  delete element.dataset.utags
-  delete element.dataset.utags_id
+export function updateElementUtagsMeta(
+  element: UtagsHTMLElement,
+  key: string,
+  originalKey: string,
+  existingMeta?: UserTagMeta
+) {
+  const meta: UserTagMeta = {}
+
+  const title =
+    trimTitle(element.dataset.utags_title) || getTrimmedTitle(element)
+  if (title && !isUrl(title)) {
+    meta.title = title
+  }
+
+  const type = element.dataset.utags_type
+  if (type) {
+    meta.type = type
+  }
+
+  setElementUtags(element, {
+    key,
+    originalKey,
+    meta: existingMeta ? Object.assign(meta, existingMeta) : meta,
+  })
 }
 
 const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
@@ -387,17 +412,6 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    if (mappingFunction) {
-      // Map to another element, which could be a child, parent, or sibling element.
-      const newElement = mappingFunction(element)
-      if (newElement && newElement !== element) {
-        // It's not a candidate
-        cleanupUtags(element)
-        process(newElement)
-        return
-      }
-    }
-
     if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
       // It's not a candidate
       cleanupUtags(element)
@@ -418,28 +432,7 @@ const addMatchedNodes = (matchedNodesSet: Set<UtagsHTMLElement>) => {
       return
     }
 
-    const title =
-      trimTitle(element.dataset.utags_title) || getTrimmedTitle(element)
-    const meta: UserTagMeta = {}
-    if (title && !isUrl(title)) {
-      meta.title = title
-    }
-
-    const type = element.dataset.utags_type
-    if (type) {
-      meta.type = type
-    }
-
-    if (utags.meta?.title) {
-      utags.meta.title = trimTitle(utags.meta.title)
-    }
-
-    // Store utags data in WeakMap instead of directly on the element
-    setElementUtags(element, {
-      key,
-      originalKey,
-      meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
-    })
+    updateElementUtagsMeta(element, key, originalKey, utags.meta)
 
     matchedNodesSet.add(element)
   }
@@ -457,19 +450,20 @@ export function matchedNodes() {
   // console.time('matchedNodes')
   const matchedNodesSet = new Set<UtagsHTMLElement>()
 
-  try {
-    addMatchedNodes(matchedNodesSet)
-  } catch (error) {
-    console.error(error)
-  }
+  // try {
+  //   addMatchedNodes(matchedNodesSet)
+  // } catch (error) {
+  //   console.error(error)
+  // }
 
-  if (typeof currentSite.addExtraMatchedNodes === 'function') {
-    try {
-      currentSite.addExtraMatchedNodes(matchedNodesSet)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  // // Only bilibili use this function
+  // if (typeof currentSite.addExtraMatchedNodes === 'function') {
+  //   try {
+  //     currentSite.addExtraMatchedNodes(matchedNodesSet)
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
 
   try {
     const currentPageLink = $('#utags_current_page_link') as UtagsHTMLElement
@@ -549,4 +543,136 @@ export function matchedNodes() {
 
   // console.timeEnd('matchedNodes')
   return [...matchedNodesSet]
+}
+
+export type ScanDomOptions = {
+  onNodeMatched?: (node: HTMLElement) => void
+  onScanCompleted?: (nodes: HTMLElement[]) => void
+}
+
+export function scanDom(options?: ScanDomOptions) {
+  console.debug('UTagsScanner start', matchedNodesSelector, excludeSelector)
+  const initialOptions: UTagsScannerOptions = {
+    include: matchedNodesSelector
+      ? matchedNodesSelector.split(',')
+      : // : ['[data-utags_link]', '[data-utags]', 'a[href*="github"]', 'a'],
+        undefined,
+    ignore: ['[data-utags_ignore]'],
+    exclude: excludeSelector
+      ? excludeSelector.split(',')
+      : ['[data-utags_exclude]'],
+    onBeforeMatch(node: Element, action: 'add' | 'delete', debug = false) {
+      const htmlNode = node as HTMLElement
+      if (action === 'add') {
+        if (!(node instanceof HTMLElement)) {
+          return false
+        }
+
+        const element = node
+        if (!preValidate(element)) {
+          // It's not a candidate
+          cleanupUtags(element)
+          return false
+        }
+
+        // dataset.utags_link takes precedence over the href attribute; normalized href can be saved in dataset.utags_link.
+        const href =
+          element.dataset.utags_link || (element as HTMLAnchorElement).href
+        // check url
+        if (
+          !href ||
+          typeof href !== 'string' ||
+          !validateFunction(element, href)
+        ) {
+          // It's not a candidate
+          cleanupUtags(element)
+          return false
+        }
+
+        if (!isValidUtagsElement(element)) {
+          // It's not a candidate
+          cleanupUtags(element)
+          return false
+        }
+
+        const originalKey = href
+        let utags = getElementUtags(element)
+        // vue 等框架会重复利用 element 对象，只修改 href 属性。每次需要验证 href 值是否与缓存的 utags.originalKey 值一致
+        if (
+          !utags ||
+          (utags.originalKey && utags.originalKey !== originalKey)
+        ) {
+          utags = { key: '', meta: {} }
+        }
+
+        const key = utags.key || getCanonicalUrl(originalKey)
+        if (!key) {
+          // It's not a candidate
+          cleanupUtags(element)
+          return false
+        }
+
+        updateElementUtagsMeta(element, key, originalKey, utags.meta)
+
+        if (!debug) {
+          // eslint-disable-next-line n/prefer-global/process
+          if (process.env.PLASMO_TAG !== 'prod') {
+            htmlNode.style.outline = '2px solid gold'
+          }
+
+          // element.dataset.utags_absolute = '1'
+          if (options?.onNodeMatched) {
+            options.onNodeMatched(element)
+          }
+
+          if (
+            conditionNodesSelector &&
+            element.matches(conditionNodesSelector) &&
+            element.dataset.utags_condition_node === undefined
+          ) {
+            element.dataset.utags_condition_node = ''
+          }
+        }
+      } else if (action === 'delete') {
+        cleanupUtags(htmlNode)
+        // eslint-disable-next-line n/prefer-global/process
+        if (process.env.PLASMO_TAG !== 'prod' && !debug)
+          htmlNode.style.outline = ''
+      }
+    },
+  }
+
+  let debugTimeout: ReturnType<typeof setTimeout>
+  let currentResult: Element[] | undefined
+  const scanner = new UTagsScanner((list, stats) => {
+    console.debug(
+      'UTagsScanner callback',
+      `Matches: ${list.length} | ActiveTime: ${stats.pureScanDuration.toFixed(2)}ms`
+    )
+    currentResult = list
+
+    if (options?.onScanCompleted) {
+      options.onScanCompleted(list as HTMLElement[])
+    }
+
+    // eslint-disable-next-line n/prefer-global/process
+    if (process.env.PLASMO_TAG !== 'prod') {
+      clearTimeout(debugTimeout)
+      debugTimeout = setTimeout(() => {
+        if (scanner.isScanning || scanner.isCleaning) {
+          // 又有节点添加或删除，等待下一次扫描完成
+        } else {
+          debugScannerDifference(scanner)
+        }
+      }, 100)
+    }
+  }, initialOptions)
+
+  if (document.body) {
+    scanner.start(document.body)
+  } else {
+    runWhenBodyExists(() => {
+      scanner.start(document.body)
+    })
+  }
 }

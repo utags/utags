@@ -1,6 +1,29 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { shouldUpdateUtagsWhenNodeUpdated } from './content-utils'
+import {
+  buildTagsForDisplay,
+  shouldUpdateUtagsWhenNodeUpdated,
+} from './content-utils'
+import * as domReferenceManager from './modules/dom-reference-manager'
+import { TAG_VISITED } from './modules/visited'
+import * as bookmarksStorage from './storage/bookmarks'
+import type { UserTag } from './types'
+import type { BookmarkTagsAndMetadata } from './types/bookmarks.js'
+
+let getElementUtagsMockValue: UserTag | undefined
+let getTagsMockValue: { tags?: string[] }
+
+beforeEach(() => {
+  getElementUtagsMockValue = undefined
+  getTagsMockValue = { tags: [] }
+
+  vi.spyOn(domReferenceManager, 'getElementUtags').mockImplementation(
+    () => getElementUtagsMockValue
+  )
+  vi.spyOn(bookmarksStorage, 'getTags').mockImplementation(
+    () => getTagsMockValue as BookmarkTagsAndMetadata
+  )
+})
 
 describe('shouldUpdateUtagsWhenNodeUpdated', () => {
   it('should return false if nodeList contains an element with "utags_modal" class', () => {
@@ -94,5 +117,50 @@ describe('shouldUpdateUtagsWhenNodeUpdated', () => {
     Object.defineProperty(nodeList, 'length', { value: 1 })
 
     expect(shouldUpdateUtagsWhenNodeUpdated(nodeList)).toBe(false)
+  })
+
+  it('buildTagsForDisplay should return undefined when utags is missing', () => {
+    const node = document.createElement('a')
+    getElementUtagsMockValue = undefined
+    getTagsMockValue = { tags: ['tag1'] }
+
+    const result = buildTagsForDisplay(node)
+
+    expect(result).toBeUndefined()
+  })
+
+  it('buildTagsForDisplay should build tags and meta correctly', () => {
+    const node = document.createElement('a')
+    const meta = { title: 'Example' }
+    getElementUtagsMockValue = {
+      key: 'https://example.com',
+      meta,
+    }
+    getTagsMockValue = {
+      tags: ['tag1', 'tag2'],
+    }
+
+    const result = buildTagsForDisplay(node)
+
+    expect(result).toBeDefined()
+    expect(result?.key).toBe('https://example.com')
+    expect(result?.tags).toEqual(['tag1', 'tag2'])
+    expect(result?.meta).toBe(meta)
+  })
+
+  it('buildTagsForDisplay should append TAG_VISITED when dataset.utags_visited is "1"', () => {
+    const node = document.createElement('a')
+    node.dataset.utags_visited = '1'
+    getElementUtagsMockValue = {
+      key: 'https://example.com',
+    }
+    getTagsMockValue = {
+      tags: ['tag1'],
+    }
+
+    const result = buildTagsForDisplay(node)
+
+    expect(result).toBeDefined()
+    expect(result?.tags).toEqual(['tag1', TAG_VISITED])
   })
 })

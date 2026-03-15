@@ -61,34 +61,23 @@ export default (() => {
         return true
       }
 
+      // list pages
+      const key = getProductUrl(href)
+      const targetElement = element.closest(
+        '.n_worklist .work_name,.recommend_list dt.work_name,.genre_ranking .work_name'
+      )
+      if (key && targetElement && targetElement instanceof HTMLElement) {
+        // A 标签后面显示 utags 会被隐藏。故把 utags 添加在 A 标签的父节点。
+        setUtagsAttributes(targetElement, { key })
+        return false
+      }
+
       // work name or maker name
       if (href.includes('/=/')) {
         return true
       }
 
       return false
-    },
-    map(element: HTMLAnchorElement) {
-      if (
-        element.tagName === 'A' &&
-        element.closest(
-          '.n_worklist .work_name,.recommend_list dt.work_name,.genre_ranking .work_name'
-        )
-      ) {
-        const key = getProductUrl(element.href)
-        const title = getTrimmedTitle(element)
-
-        if (!key || !title) {
-          return
-        }
-
-        const parentElement = element.parentElement!
-        const meta = { title }
-
-        setUtags(parentElement, key, meta)
-        parentElement.dataset.utags_node_type = 'link'
-        return parentElement
-      }
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,

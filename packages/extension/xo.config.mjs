@@ -56,6 +56,7 @@ const xoConfig = [
       '@stylistic/indent-binary-ops': 0,
       'prefer-object-has-own': 0,
       'unicorn/prefer-top-level-await': 0,
+      'unicorn/prefer-query-selector': 0,
       // 'no-await-in-loop': 0,
       // temp
       '@typescript-eslint/no-unsafe-assignment': 0,
@@ -89,6 +90,7 @@ const xoConfig = [
     files: ['src/**/*.test.ts'],
     rules: {
       '@typescript-eslint/naming-convention': 0,
+      'no-promise-executor-return': 0,
     },
   },
   {
@@ -98,6 +100,14 @@ const xoConfig = [
       'n/file-extension-in-import': 0,
       // FIXME
       'arrow-body-style': 0,
+    },
+  },
+  {
+    files: ['scripts/**/*.mjs'],
+    rules: {
+      '@stylistic/indent': 0,
+      '@stylistic/indent-binary-ops': 0,
+      'unicorn/no-process-exit': 0,
     },
   },
 ]

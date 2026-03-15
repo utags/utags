@@ -4,7 +4,7 @@ import { getTrimmedTitle } from 'utags-utils'
 
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { getFirstHeadElement } from '../../utils'
-import { getUtags, setUtags } from '../../utils/dom-utils'
+import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
 
@@ -58,19 +58,19 @@ export default (() => {
         }
       }
     },
-    validate(element: UtagsHTMLElement) {
+    validate(element: UtagsHTMLElement, href: string) {
       if (element.tagName !== 'A') {
         return true
       }
 
-      const href = element.href
       if (href && (href.startsWith(prefix) || href.startsWith(prefix2))) {
         const key = getPostUrl(href)
         if (key) {
           const titleElement = $('.glink', element)
           let title: string | undefined
           if (titleElement) {
-            title = titleElement.textContent!
+            title = getTrimmedTitle(titleElement)
+            element.dataset.utags_position_selector = '.glink'
           }
 
           const meta: UserTagMeta = { type: 'post' }
@@ -88,22 +88,6 @@ export default (() => {
       }
 
       return true
-    },
-    map(element: UtagsHTMLElement) {
-      // Extened view
-      const titleElement = $('.gl4e.glname .glink', element) as UtagsHTMLElement
-      if (titleElement) {
-        const utags = getUtags(element)
-        if (utags) {
-          setUtags(titleElement, utags)
-        }
-
-        titleElement.dataset.utags = titleElement.dataset.utags || ''
-        titleElement.dataset.utags_node_type = 'link'
-        return titleElement
-      }
-
-      return undefined
     },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,

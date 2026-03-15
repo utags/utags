@@ -8,6 +8,11 @@ import {
 } from 'browser-extension-storage'
 
 export function storageTest() {
+  // @ts-expect-error check if running in main frame
+  if (globalThis !== top) {
+    return
+  }
+
   // 运行测试
   void runStorageTests(
     {

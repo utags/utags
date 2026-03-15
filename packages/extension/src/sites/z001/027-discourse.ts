@@ -11,8 +11,13 @@ import {
 import { getBookmark } from '../../storage/bookmarks'
 import type { UserTagMeta, UtagsHTMLElement } from '../../types'
 import { containsStarRatingTag, removeStarRatingTags } from '../../utils'
-import { removeUtags, setUtags } from '../../utils/dom-utils'
-import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
+import { setUtags } from '../../utils/dom-utils'
+import {
+  cleanupUtags,
+  getUtagsTitle,
+  removeUtagsAttributes,
+  setUtagsAttributes,
+} from '../../utils/index'
 
 export default (() => {
   const prefix = location.origin + '/'
@@ -101,18 +106,6 @@ export default (() => {
 
       let key = getUserProfileUrl(location.href)
       if (key) {
-        // Clear cache
-        let index = 0
-        for (const element of $$(
-          '.user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
-        ) as UtagsHTMLElement[]) {
-          index++
-          if (key !== element.dataset.utags_key || index === 2) {
-            delete element.dataset.utags
-            removeUtags(element)
-          }
-        }
-
         // profile header
         const element: UtagsHTMLElement =
           ($('.user-profile-names .username') as UtagsHTMLElement) ||
@@ -121,6 +114,18 @@ export default (() => {
           ) as UtagsHTMLElement)
         if (element) {
           setUtagsAttributes(element, { key, type: 'user' })
+        }
+
+        const targetElement = element
+
+        // Clear cache
+        for (const element of $$(
+          '.user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary'
+        ) as UtagsHTMLElement[]) {
+          if (element !== targetElement) {
+            cleanupUtags(element)
+            removeUtagsAttributes(element)
+          }
         }
       }
 
@@ -306,6 +311,8 @@ export default (() => {
       '.topic-map',
       '.names .second',
       '.names .user-group',
+      // User profile page
+      '.user-detail .name-wrapper',
       '.post-activity',
       '.topic-last-activity',
       '.topic-item-stats .activity',

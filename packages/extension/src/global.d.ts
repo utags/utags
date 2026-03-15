@@ -58,13 +58,16 @@ declare const GM: {
     headers?: Record<string, string>
     data?: string | FormData | ArrayBuffer
     responseType?: 'text' | 'json' | 'blob'
+    timeout?: number
     onload?: (response: {
       status: number
+      statusText?: string
       responseText?: string
       response?: any
       responseHeaders?: string
     }) => void
     onerror?: (error: any) => void
+    ontimeout?: () => void
   }): Promise<void>
   setClipboard(text: string): Promise<void>
   addStyle(css: string): Promise<HTMLStyleElement>
@@ -148,13 +151,16 @@ declare function GM_xmlhttpRequest(options: {
   headers?: Record<string, string>
   data?: string | FormData | ArrayBuffer
   responseType?: 'text' | 'json' | 'blob'
+  timeout?: number
   onload?: (response: {
     status: number
+    statusText?: string
     responseText?: string
     response?: any
     responseHeaders?: string
   }) => void
   onerror?: (error: any) => void
+  ontimeout?: () => void
 }): void
 
 declare function GM_setClipboard(text: string): void

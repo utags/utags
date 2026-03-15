@@ -121,7 +121,18 @@ function findElementToShowAllUtags(target: HTMLElement) {
   lastShownArea = undefined
 }
 
+export function bindShadowRootEvents(root: Document | ShadowRoot) {
+  bindDocumentEventsInternal(root)
+}
+
 export function bindDocumentEvents(eventManager?: EventListenerManager) {
+  bindDocumentEventsInternal(doc, eventManager)
+}
+
+function bindDocumentEventsInternal(
+  doc: Document | ShadowRoot,
+  eventManager?: EventListenerManager
+) {
   const eventType = isTouchScreen() ? 'touchstart' : 'click'
   const addListener = eventManager
     ? (

@@ -1,3 +1,8 @@
+import { getElementUtags } from './modules/dom-reference-manager'
+import { TAG_VISITED } from './modules/visited'
+import { getTags } from './storage/bookmarks'
+import type { UserTag, UserTagMeta } from './types'
+
 const validNodeNames: Record<string, boolean> = {
   A: true,
   H1: true,
@@ -48,4 +53,23 @@ export function shouldUpdateUtagsWhenNodeUpdated(nodeList: NodeList) {
   }
 
   return false
+}
+
+export function buildTagsForDisplay(
+  node: HTMLElement
+): { key: string; tags: string[]; meta?: UserTagMeta } | undefined {
+  const utags = getElementUtags(node)
+  if (!utags || !utags.key) {
+    return
+  }
+
+  const key = utags.key
+  const object = getTags(key) as { tags?: string[] }
+
+  const tags: string[] = (object.tags || []).slice()
+  if (node.dataset.utags_visited === '1') {
+    tags.push(TAG_VISITED)
+  }
+
+  return { key, tags, meta: utags.meta }
 }

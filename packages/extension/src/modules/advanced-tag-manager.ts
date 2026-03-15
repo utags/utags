@@ -581,8 +581,14 @@ function createPromptView(
   addEventListener(doc, 'mousedown', mousedownHandler, true)
 
   const clickHandler = (event: PointerEvent) => {
-    if (event.defaultPrevented || !$('.utags_modal_content')) {
-      return // 如果事件已经在进行中，则不做任何事。
+    if (
+      event.defaultPrevented ||
+      !event.isTrusted ||
+      !$('.utags_modal_content')
+    ) {
+      // 如果事件是模拟的，或者输入模态窗不存在，则不做任何事。
+      // 如果事件已经在进行中，则不做任何事。
+      return
     }
 
     // event.preventDefault()

@@ -1,10 +1,9 @@
-import { $, $$, addEventListener, runOnce } from 'browser-extension-utils'
+import { $, $$, removeAttribute, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./013-bilibili.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
-import { traverseAllShadowRoots } from '../../utils/shadow-root-traverser'
 
 export default (() => {
   const prefix = 'https://www.bilibili.com/'
@@ -43,154 +42,48 @@ export default (() => {
     return undefined
   }
 
+  function waitForVideoReady() {
+    if (location.href.startsWith(prefix + 'video/')) {
+      // Must wait until video ready
+      if ($('.bpx-state-loading')) {
+        setAttribute($('.right-container'), 'data-utags_exclude', '')
+        setAttribute(
+          $('h1.video-title,h1.title-text'),
+          'data-utags_exclude',
+          ''
+        )
+        return
+      }
+
+      if (!$('bili-comments')) {
+        setAttribute($('.right-container'), 'data-utags_exclude', '')
+        setAttribute(
+          $('h1.video-title,h1.title-text'),
+          'data-utags_exclude',
+          ''
+        )
+        return
+      }
+
+      removeAttribute($('.right-container'), 'data-utags_exclude')
+      removeAttribute($('h1.video-title,h1.title-text'), 'data-utags_exclude')
+    }
+  }
+
   return {
     matches: /bilibili\.com|biligame\.com/,
-    // Exclude all, use addExtraMatchedNodes instead
-    excludeSelectors: ['*'],
-    addExtraMatchedNodes(matchedNodesSet: Set<HTMLElement>) {
-      // runOnce('site:window:error', () => {
-      //   addEventListener(
-      //     window,
-      //     'error',
-      //     (error) => {
-      //       console.error(error)
-      //       // error.preventDefault()
-      //       // error.stopPropagation()
-      //       // error.stopImmediatePropagation()
-      //     },
-      //     true
-      //   )
-      // })
-
-      if (location.href.startsWith(prefix + 'video/')) {
-        // Must wait until video ready
-        if ($('.bpx-state-loading')) {
-          return
-        }
-
-        const img = $('.bpx-player-follow-face') as HTMLImageElement
-        const img2 = $('img.video-capture-img') as HTMLImageElement
-        if (!img?.src || !img2?.src) {
-          return
-        }
-      }
-
-      const elements = $$(
-        '.user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]'
-      )
-      for (const element of elements) {
-        const userId = element.dataset.userId
-        if (!userId) {
-          return false
-        }
-
+    preProcess() {
+      waitForVideoReady()
+      // ?? url?
+      // profile header
+      const element = $('h1[data-e2e="user-title"]')
+      if (element) {
         const title = getTrimmedTitle(element)
-        const key = prefix2 + userId
-        const meta = { title, type: 'user' }
-        setUtags(element, key, meta)
-        element.dataset.utags_node_type = 'link'
-        matchedNodesSet.add(element)
-      }
-
-      // 视频 up 主
-      const elements2 = $$('.upname a,a.bili-video-card__info--owner')
-      for (const element of elements2) {
-        const href = (element as HTMLAnchorElement).href
-        if (href.startsWith(prefix2)) {
-          const key = getUserProfileUrl(href)
-          if (key) {
-            const nameElement = $(
-              '.name,.bili-video-card__info--author',
-              element
-            )
-            if (nameElement) {
-              const title = getTrimmedTitle(nameElement)
-              const meta = { title, type: 'user' }
-              setUtags(nameElement, key, meta)
-              nameElement.dataset.utags_node_type = 'link'
-              matchedNodesSet.add(nameElement)
-            }
-          }
+        const key = getUserProfileUrl(location.href)
+        if (title && key) {
+          setUtagsAttributes(element, { key, type: 'user' })
         }
       }
-
-      const elements3 = $$(
-        [
-          'a.up-name',
-          'a.card-user-name',
-          '.usercard-wrap .user .name',
-          '.comment-list .user .name',
-          '.user-card .user .name',
-          'a[data-usercard-mid]',
-          'a.user-name',
-          '.user-name a',
-          'a[href^="https://space.bilibili.com/"]',
-          'a.staff-name',
-          // 首页特殊卡片
-          '.floor-single-card a.sub-title',
-        ].join(',')
-      )
-      for (const element of elements3) {
-        const nameElement = $('.name,.bili-video-card__info--author', element)
-        if (nameElement) {
-          // 上面已经处理过的
-          continue
-        }
-
-        const href = (element as HTMLAnchorElement).href
-        if (href.startsWith(prefix2)) {
-          const key = getUserProfileUrl(href)
-          if (key) {
-            let title = getTrimmedTitle(element)
-            if (title) {
-              title = title.replace(/^@/, '')
-              const meta = { title, type: 'user' }
-              setUtags(element, key, meta)
-              matchedNodesSet.add(element)
-            }
-          }
-        }
-      }
-
-      traverseAllShadowRoots(
-        (shadowRoot, hostElement) => {
-          // console.log('Found shadow root in:', hostElement.tagName, hostElement)
-          const elements = $$(
-            '[data-user-profile-id] a',
-            shadowRoot as unknown as HTMLElement
-          )
-          for (const element of elements) {
-            const href = (element as HTMLAnchorElement).href
-            if (href.startsWith(prefix2)) {
-              const key = getUserProfileUrl(href)
-              if (key) {
-                let title = getTrimmedTitle(element)
-                if (title) {
-                  title = title.replace(/^@/, '')
-                  const meta = { title, type: 'user' }
-                  setUtags(element, key, meta)
-                  element.dataset.utags_absolute = '1'
-                  matchedNodesSet.add(element)
-                }
-              }
-            }
-          }
-        },
-        document.documentElement,
-        {
-          maxDepth: 50,
-          includeTags: [
-            'bili-comments',
-            'bili-comment-thread-renderer',
-            'bili-comment-renderer',
-            'bili-comment-replies-renderer',
-            'bili-comment-reply-renderer',
-            'bili-comment-user-info',
-            'bili-rich-text',
-            'bili-user-profile',
-          ],
-        }
-      )
 
       if (
         location.href.startsWith(prefix2) ||
@@ -202,55 +95,141 @@ export default (() => {
           const title = getTrimmedTitle(element)
           const key = getUserProfileUrl(location.href)
           if (title && key) {
-            const meta = { title, type: 'user' }
-            setUtags(element, key, meta)
-            element.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(element)
+            setUtagsAttributes(element, { key, type: 'user' })
           }
         }
       }
 
-      // video title
-      const element = $('h1.video-title,h1.title-text')
-      if (element) {
-        const title = getTrimmedTitle(element)
-        const key = getVideoUrl(location.href)
-        if (title && key) {
-          const meta = { title, type: 'video' }
-          setUtags(element, key, meta)
-          matchedNodesSet.add(element)
+      // ?? which page?
+      const elements = $$(
+        '.user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]'
+      )
+      for (const element of elements) {
+        const userId = element.dataset.userId
+        if (!userId) {
+          return false
         }
+
+        const key = prefix2 + userId
+        setUtagsAttributes(element, { key, type: 'user' })
       }
 
-      const elements4 = $$(
-        [
-          '.bili-video-card__info--right a',
-          '.video-page-card-small .info a',
-          '.video-page-operator-card-small .info a',
-          // 个人页面视频列表
-          '.bili-video-card__title a',
-          // 个人页面置顶视频
-          '.top-section__content a.top-video__title',
-        ].join(',')
-      ) as HTMLAnchorElement[]
-      for (const element of elements4) {
-        const key = getVideoUrl(element.href)
-        if (key) {
+      {
+        // video title
+        const element = $('h1.video-title,h1.title-text')
+        if (element) {
           const title = getTrimmedTitle(element)
-          const target =
-            element.parentElement!.tagName === 'H3'
-              ? element.parentElement!
-              : element
-
-          if (title) {
-            const meta = { title, type: 'video' }
-            setUtags(target, key, meta)
-            target.dataset.utags_node_type = 'link'
-            matchedNodesSet.add(target)
+          const key = getVideoUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: 'video' })
           }
         }
       }
     },
+    listNodesSelectors: [
+      // '.css-ulyotp-DivCommentContentContainer',
+      // '.css-1gstnae-DivCommentItemWrapper',
+      // '.css-x6y88p-DivItemContainerV2',
+    ],
+    conditionNodesSelectors: [
+      // '.css-ulyotp-DivCommentContentContainer a[href^="/@"]',
+      // '.css-1gstnae-DivCommentItemWrapper a[href^="/@"]',
+      // '.css-x6y88p-DivItemContainerV2 a[href^="/@"]',
+    ],
+    validate(element: HTMLAnchorElement, href: string) {
+      // element.dataset.utags_absolute = '1'
+      if (
+        !href.includes('bilibili.com') ||
+        !(element instanceof HTMLAnchorElement)
+      ) {
+        return true
+      }
+
+      let key = getUserProfileUrl(href)
+      if (key) {
+        const titleElement = $('.name,.bili-video-card__info--author', element)
+        const title = getTrimmedTitle(titleElement || element).replace(/^@/, '')
+
+        if (!title) {
+          return false
+        }
+
+        const targetElement = element.closest<HTMLElement>(
+          '.video-page-card-small div.upname'
+        )
+        if (targetElement && targetElement !== element) {
+          // A 标签后面显示 utags 会被隐藏。故把 utags 添加在 A 标签的父节点。
+          setUtagsAttributes(targetElement, { key, type: 'user', title })
+          return false
+        }
+
+        const meta = { type: 'user', title }
+
+        setUtags(element, key, meta)
+        // element.dataset.utags = element.dataset.utags || ""
+
+        return true
+      }
+
+      key = getVideoUrl(href)
+      if (key) {
+        const titleElement = $('h3,[data-e2e="browse-username"]', element)
+        const title = getTrimmedTitle(titleElement || element)
+
+        if (!title) {
+          return false
+        }
+
+        // 首页视频卡片
+        // if (element.closest('h3.bili-video-card__info--tit')) {
+        //   element.dataset.utags_position_selector = 'h3.bili-video-card__info--tit'
+        // }
+        const targetElement = element.closest<HTMLElement>(
+          'h3.bili-video-card__info--tit'
+        )
+        if (targetElement && targetElement !== element) {
+          // A 标签后面显示 utags 会被隐藏。故把 utags 添加在 A 标签的父节点。
+          setUtagsAttributes(targetElement, { key, type: 'video', title })
+          return false
+        }
+
+        const meta = { type: 'video', title }
+
+        setUtags(element, key, meta)
+        // element.dataset.utags = element.dataset.utags || ""
+
+        return true
+      }
+
+      return true
+    },
+    excludeSelectors: [
+      '.bili-header',
+      '.large-header',
+      '.header-channel',
+      '.nav-bar',
+      '.primary-btn',
+      'a.send-msg',
+      'a.message',
+      'a.up-avatar',
+      '.player-wrap',
+      '.video-toolbar-container',
+      '.right-container-inner .ad-report',
+      '.danmaku-box',
+      '.slide-ad-exp',
+      '.video-card-ad-small',
+      '.rcmd-tab .video-pod',
+      '.usercard-wrap .social',
+      // 评论区用户卡片
+      '#fans',
+      '#follow',
+    ],
+    validMediaSelectors: [
+      // Validated user icon
+      'svg.icon-up',
+      'svg.bili-video-card__info--owner__up',
+      '.upname svg',
+    ],
     getStyle: () => styleText,
   }
 })()

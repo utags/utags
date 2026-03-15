@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.30.2
+// @version              0.31.0
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -472,6 +472,11 @@
       if (orgValue !== value) {
         element.setAttribute(name, value)
       }
+    }
+  }
+  var removeAttribute = (element, name) => {
+    if (element && element.removeAttribute) {
+      element.removeAttribute(name)
     }
   }
   var addClass = (element, className) => {
@@ -1668,8 +1673,6 @@
   if (globalThis.window !== void 0) {
     polyfillRequestIdleCallback()
   }
-  var content_default =
-    '#TOFIX_uFEFF{display:block}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul:not(.utags_ul)[data-utags_key],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ol:not(.utags_ul)[data-utags_key]{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity).utags_hide_all_tags:not(#utags_should_has_higher_specificity) .utags_ul,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity)[data-utags=off] .utags_ul{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline-flex !important;flex-direction:row !important;flex-wrap:wrap !important;align-content:flex-start;justify-content:flex-start;overflow:visible;white-space:normal;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important;max-width:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:unset !important;border:none !important;padding:0 !important;margin:0 !important;vertical-align:top !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag{box-sizing:border-box !important;display:block !important;border:var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:var(--utags-text-tag-font-size) !important;font-family:var(--utags-text-tag-font-family) !important;letter-spacing:0 !important;line-height:1 !important;height:unset !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-transform:none !important;text-align:center !important;text-shadow:none !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;cursor:pointer;z-index:0;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag:link,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag:link{cursor:pointer}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:var(--utags-text-tag-font-size);line-height:1;height:unset;width:unset;max-width:var(--utags-text-tag-max-width);white-space:var(--utags-text-tag-white-space);overflow:hidden;text-overflow:ellipsis;border-radius:unset;border:unset;background:unset;margin:unset;padding:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::after,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::after{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]{height:var(--utags-visited-tag-size) !important;width:var(--utags-visited-tag-size) !important;border-radius:var(--utags-visited-tag-size) !important;--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);--utags-text-tag-border-width: 0px;margin-left:2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_emoji_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_emoji_tag{--utags-text-tag-background-color: var( --utags-emoji-tag-background-color );--utags-text-tag-font-size: var(--utags-emoji-tag-font-size);--utags-text-tag-font-family: var(--utags-emoji-tag-font-family);--utags-text-tag-border-width: var(--utags-emoji-tag-border-width);--utags-text-tag-border-color: var(--utags-emoji-tag-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606\u2606]{--utags-text-tag-background-color: var(--utags-star-tag-background-color);--utags-text-tag-font-size: var(--utags-star-tag-font-size);--utags-text-tag-font-family: var(--utags-star-tag-font-family);--utags-text-tag-border-width: var(--utags-star-tag-border-width);--utags-text-tag-border-color: var(--utags-star-tag-border-color);--utags-text-tag-color: var(--utags-star-tag-color);padding:0 2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2{width:var(--utags-captain-tag-size) !important;height:var(--utags-captain-tag-size) !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px;margin:0 !important;padding:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset) !important;position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0>li{position:relative !important;height:var(--utags-captain-tag-size) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(.utags_ul):hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_active .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link]):not(.utags_ul)+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;z-index:2147483647}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding-top:5vh;background-color:hsla(0,0%,100%,.1);z-index:2147483647}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:94%;max-height:100%;overflow:hidden;overflow:auto;color:#000;background-color:#fff;border-radius:5px;padding:14px;margin:0 auto;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:var(--utags-text-tag-font-family) !important;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;margin:0;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{outline:0;border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt .utags_link_settings{font-size:12px;text-decoration:underline;cursor:pointer;color:#374151}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper .utags_button_copy{cursor:pointer;font-size:10px;line-height:1;height:18px;padding:0 6px;border-radius:2px;color:var(--utags-action-button-text-color);background-color:var(--utags-action-button-bg-color);border:1px solid var(--utags-action-button-border-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty+button{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag[data-utags_tag=":visited"]:hover{--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);opacity:.3}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between;max-height:200px;overflow-y:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);position:sticky;z-index:1;top:0;display:block;font-size:12px;font-weight:600;text-align:left;padding:0 8px 0 8px;cursor:default;background-color:#f8fafe}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{box-sizing:border-box;cursor:pointer;font-size:12px;height:18px;display:flex;align-items:center;padding:0 8px 0 8px;margin:0;max-width:150px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--utags-text-tag-font-family) !important;font-size:12px;line-height:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list.utags_emoji_list li span{font-family:var(--utags-emoji-tag-font-family) !important;line-height:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list .utags_text_tag::before{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list.utags_disable_tag_style .utags_text_tag{--utags-text-tag-color: #000;--utags-text-tag-border-width: 0;--utags-text-tag-border-color: unset;--utags-text-tag-background-color: #ffffff00 !important;--utags-text-tag-font-size: 12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container{position:absolute;top:-100px;right:100px;z-index:1000;background-color:#bdbdbd;padding:4px 8px;border-radius:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a{display:inline}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_01{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_11{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key=customStyleValue]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key^=customStyleValue_]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]{transition:opacity .1s ease-in}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6A19\u984C\u9EE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5EE3,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u95B1,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8B80,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8BFB,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u96B1\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C01\u9396,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605\u2605\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606\u2606\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",!"]{opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u95DC\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag2{color:#ff0 !important}[data-utags-visited="4"] [data-utags_list_node*=",:visited,"] [data-utags_condition_node][data-utags_visited="1"]{color:var(--utags-visited-title-color) !important}[data-utags-visited="2"] [data-utags_list_node*=",:visited,"]{opacity:var(--utags-visited-opacity)}[data-utags-visited="3"] [data-utags_list_node*=",:visited,"]{opacity:5%;display:none}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}textarea[data-key=emojiTags]{font-family:var(--utags-text-tag-font-family)}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-captain-tag-size: 14px;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-text-tag-font-size: 10px;--utags-text-tag-border-width: 1px;--utags-text-tag-max-width: 90px;--utags-text-tag-white-space: nowrap;--utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-emoji-tag-border-color: #fff0;--utags-emoji-tag-background-color: #fff0;--utags-emoji-tag-font-size: 12px;--utags-emoji-tag-border-width: 0;--utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-star-tag-color: #ffd700;--utags-star-tag-border-color: #fff0;--utags-star-tag-background-color: #fff0;--utags-star-tag-font-size: 14px;--utags-star-tag-border-width: 0;--utags-star-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-visited-tag-background-color: #bdbdbd;--utags-visited-tag-size: 11px;--utags-visited-title-color: #aaa;--utags-visited-opacity: 10%;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply-5: block;--utags-notag-ul-height-5: 0;--utags-notag-ul-width-5: 0;--utags-notag-ul-position-5: absolute;--utags-notag-ul-top-5: -9999px;--utags-notag-captain-tag-top-5: 0;--utags-notag-captain-tag-left-5: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}table{--utags-list-node-display: table-row-group}[data-utags_darkmode="1"]{--utags-visited-title-color: #666}'
   var MIN_VALID_TIMESTAMP = 631152e6
   var MAX_VALID_TIMESTAMP = 9999999999999
   function isValidDate(date) {
@@ -1760,6 +1763,655 @@
     }
     return a
   }
+  var elementToUtagsMap = /* @__PURE__ */ new WeakMap()
+  function setElementUtags(element, utags) {
+    elementToUtagsMap.set(element, utags)
+  }
+  function getElementUtags(element) {
+    return elementToUtagsMap.get(element)
+  }
+  function deleteElementUtags(element) {
+    return elementToUtagsMap.delete(element)
+  }
+  function clearDomReferences() {}
+  var TAG_VISITED_KEY = "utags_visited"
+  var host = location.host
+  var useVisitedFunction = false
+  var displayMark = false
+  var isAvailable = false
+  var cache = {}
+  var dataUpdated = false
+  var visitedValueChangeListener
+  var eventListenerInited = false
+  function clearVisitedCache() {
+    cache = {}
+  }
+  function isAvailableOnCurrentSite() {
+    return isAvailable
+  }
+  function setVisitedAvailable(value) {
+    isAvailable = value
+  }
+  function onSettingsChange() {
+    useVisitedFunction = getSettingsValue("useVisitedFunction_".concat(host))
+    displayMark =
+      getSettingsValue("displayEffectOfTheVisitedContent_".concat(host)) !== "0"
+    if (!useVisitedFunction || eventListenerInited) {
+      return
+    }
+    eventListenerInited = true
+    addEventListener(globalThis, "storage", (event) => {
+      if (event.key === TAG_VISITED_KEY) {
+        dataUpdated = true
+        if (doc.hidden) {
+          return
+        }
+        valueChangeHandler()
+      }
+    })
+    addEventListener(doc, "visibilitychange", async () => {
+      console.log(
+        "[visited] visibilitychange: hidden -",
+        doc.hidden,
+        "dataUpdated -",
+        dataUpdated
+      )
+      if (!doc.hidden && dataUpdated) {
+        valueChangeHandler()
+      }
+    })
+  }
+  function getVisitedLinks() {
+    if (!useVisitedFunction) {
+      return []
+    }
+    return JSON.parse(localStorage.getItem(TAG_VISITED_KEY) || "[]") || []
+  }
+  function saveVisitedLinks(newVisitedLinks) {
+    if (useVisitedFunction) {
+      localStorage.setItem(TAG_VISITED_KEY, JSON.stringify(newVisitedLinks))
+      dataUpdated = true
+      valueChangeHandler()
+    }
+  }
+  function convertKey(url) {
+    if (url.startsWith("http")) {
+      return url.replace(/^https?:\/\/[^/]+\//, "")
+    }
+    return url
+  }
+  var TAG_VISITED = ":visited"
+  function addVisited(key) {
+    if (key && !cache[key]) {
+      cache[key] = 1
+    } else {
+      return
+    }
+    key = convertKey(key)
+    const visitedLinks = getVisitedLinks()
+    if (!visitedLinks.includes(key)) {
+      visitedLinks.push(key)
+      saveVisitedLinks(visitedLinks)
+    }
+  }
+  function removeVisited(key) {
+    key = convertKey(key)
+    const visitedLinks = getVisitedLinks()
+    if (visitedLinks.includes(key)) {
+      const newVisitedLinks = visitedLinks.filter((value) => value !== key)
+      saveVisitedLinks(newVisitedLinks)
+    }
+  }
+  function isVisited(key) {
+    if (!displayMark) {
+      return false
+    }
+    key = convertKey(key)
+    const visitedLinks = getVisitedLinks()
+    return visitedLinks.includes(key)
+  }
+  function markElementWhetherVisited(key, element) {
+    if (isVisited(key)) {
+      element.dataset.utags_visited = "1"
+    } else if (element.dataset.utags_visited === "1") {
+      delete element.dataset.utags_visited
+    }
+  }
+  function addVisitedValueChangeListener(func) {
+    visitedValueChangeListener = func
+  }
+  var valueChangeHandler = () => {
+    dataUpdated = false
+    if (typeof visitedValueChangeListener === "function") {
+      requestAnimationFrame(() => {
+        visitedValueChangeListener()
+      })
+    }
+  }
+  var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
+  var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
+  var STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
+  function getScore(weight = 1) {
+    return (Math.floor(Date.now() / 1e3) / 1e9) * weight
+  }
+  async function addRecentTags(newTags, oldTags) {
+    if (newTags.length === 0) return
+    const uniqueNewTags =
+      (oldTags == null ? void 0 : oldTags.length) > 0
+        ? newTags.filter((tag) => tag && !oldTags.includes(tag))
+        : newTags.filter(Boolean)
+    if (uniqueNewTags.length === 0) return
+    const recentTags = await getRecentTags()
+    const score = getScore()
+    for (const tag of uniqueNewTags) {
+      recentTags.push({ tag, score })
+    }
+    if (recentTags.length > 1e3) {
+      recentTags.splice(0, 100)
+    }
+    await setValue2(STORAGE_KEY_RECENT_TAGS, recentTags)
+    await generateMostUsedAndRecentAddedTags(recentTags)
+  }
+  async function generateMostUsedAndRecentAddedTags(recentTags) {
+    const tagScores = {}
+    for (const recentTag of recentTags) {
+      if (!recentTag.tag) {
+        continue
+      }
+      if (tagScores[recentTag.tag]) {
+        tagScores[recentTag.tag].score += recentTag.score
+      } else {
+        tagScores[recentTag.tag] = {
+          tag: recentTag.tag,
+          score: recentTag.score,
+        }
+      }
+    }
+    const mostUsedTags2 = Object.values(tagScores)
+      .filter((tag) => tag.score > getScore(1.5))
+      .sort((a, b) => b.score - a.score)
+      .map((tag) => tag.tag)
+      .slice(0, 200)
+    const recentAddedTags2 = Array.from(
+      new Set(
+        recentTags
+          .map((tag) => tag.tag)
+          .reverse()
+          .filter(Boolean)
+      )
+    ).slice(0, 200)
+    await Promise.all([
+      setValue2(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags2),
+      setValue2(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags2),
+    ])
+  }
+  async function getRecentTags() {
+    const values = await getValue2(STORAGE_KEY_RECENT_TAGS)
+    return Array.isArray(values) ? values : []
+  }
+  async function getMostUsedTags() {
+    const values = await getValue2(STORAGE_KEY_MOST_USED_TAGS)
+    return Array.isArray(values) ? values : []
+  }
+  async function getRecentAddedTags() {
+    const values = await getValue2(STORAGE_KEY_RECENT_ADDED_TAGS)
+    return Array.isArray(values) ? values : []
+  }
+  async function getPinnedTags() {
+    return splitTags(getSettingsValue("pinnedTags") || "")
+  }
+  async function getEmojiTags() {
+    return splitTags(getSettingsValue("emojiTags") || "")
+  }
+  var currentExtensionVersion = "0.14.2"
+  var currentDatabaseVersion = 3
+  var DELETED_BOOKMARK_TAG = "._DELETED_"
+  var storageKey2 = "extension.utags.urlmap"
+  var cachedUrlMap = {}
+  var addValueChangeListenerInitialized = false
+  var tagsValueChangeListener
+  function clearCachedUrlMap() {
+    cachedUrlMap = {}
+  }
+  function createEmptyBookmarksStore() {
+    const store = {
+      data: {},
+      meta: {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+        created: Date.now(),
+        updated: Date.now(),
+      },
+    }
+    return store
+  }
+  async function getBookmarksStore() {
+    console.log("Start getBookmarksStore")
+    try {
+      const bookmarksStore =
+        (await getValue2(storageKey2)) || createEmptyBookmarksStore()
+      if (!bookmarksStore.data) {
+        bookmarksStore.data = {}
+      }
+      if (!bookmarksStore.meta) {
+        bookmarksStore.meta = createEmptyBookmarksStore().meta
+      }
+      cachedUrlMap = filterDeleted(bookmarksStore.data)
+      return bookmarksStore
+    } catch (error) {
+      console.error("Error getting bookmarks store:", error)
+      cachedUrlMap = {}
+      return createEmptyBookmarksStore()
+    }
+  }
+  async function getBookmarksStoreFromRemote(bookmarksStore) {
+    console.log("Start getBookmarksStoreFromRemote")
+    try {
+      if (!bookmarksStore || !bookmarksStore.data || !bookmarksStore.meta) {
+        return await getBookmarksStore()
+      }
+      cachedUrlMap = filterDeleted(bookmarksStore.data)
+      return bookmarksStore
+    } catch (error) {
+      console.error("Error getting bookmarks store:", error)
+      return getBookmarksStore()
+    }
+  }
+  async function serializeBookmarks() {
+    const bookmarksStore = await getBookmarksStore()
+    return JSON.stringify(bookmarksStore)
+  }
+  async function persistBookmarksStore(bookmarksStore) {
+    console.log("Start persistBookmarksStore")
+    await setValue2(storageKey2, bookmarksStore)
+    cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
+    console.log("Finish persistBookmarksStore")
+  }
+  async function deserializeBookmarks(data) {
+    const bookmarksStore = data ? JSON.parse(data) : void 0
+    await persistBookmarksStore(bookmarksStore)
+  }
+  async function getUrlMap() {
+    const bookmarksStore = await getBookmarksStore()
+    return bookmarksStore.data
+  }
+  function getBookmark(key) {
+    return (
+      cachedUrlMap[key] || {
+        tags: [],
+        meta: { created: 0, updated: 0 },
+      }
+    )
+  }
+  var getTags = getBookmark
+  async function saveBookmark(key, tags, meta) {
+    var _a, _b, _c, _d
+    console.log("saveBookmark", key, tags, meta)
+    const now = Date.now()
+    const bookmarksStore = await getBookmarksStore()
+    const urlMap = bookmarksStore.data
+    let changed = false
+    bookmarksStore.meta = __spreadProps(
+      __spreadValues({}, bookmarksStore.meta),
+      {
+        databaseVersion: currentDatabaseVersion,
+        extensionVersion: currentExtensionVersion,
+      }
+    )
+    const newTags = mergeTags(tags, [])
+    let oldTags = []
+    if (!isValidKey(key)) {
+      if (urlMap[key]) {
+        delete urlMap[key]
+        changed = true
+      }
+    } else if (newTags.length === 0) {
+      const existingData = urlMap[key]
+      if (existingData) {
+        oldTags = existingData.tags || []
+        if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
+          existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
+          existingData.meta = __spreadProps(
+            __spreadValues({}, existingData.meta),
+            {
+              updated2: now,
+            }
+          )
+          existingData.deletedMeta = {
+            deleted: now,
+            actionType: "DELETE",
+          }
+          changed = true
+        }
+      }
+    } else {
+      const existingData = urlMap[key] || {}
+      const existingDataStr = JSON.stringify(existingData)
+      oldTags = existingData.tags || []
+      const title =
+        trimTitle(meta == null ? void 0 : meta.title) ||
+        trimTitle((_a = existingData.meta) == null ? void 0 : _a.title)
+      const newMeta = __spreadValues(
+        __spreadValues({}, existingData.meta),
+        meta
+      )
+      newMeta.created = normalizeCreated(
+        (_b = existingData.meta) == null ? void 0 : _b.created,
+        (_c = existingData.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      if ((_d = existingData.meta) == null ? void 0 : _d.updated) {
+        newMeta.updated = existingData.meta.updated
+      }
+      if (title) {
+        newMeta.title = title
+      }
+      const newData = {
+        tags: newTags,
+        meta: newMeta,
+      }
+      const newDataStr = JSON.stringify(newData)
+      if (existingDataStr !== newDataStr) {
+        changed = true
+        newData.meta.updated = now
+      }
+      urlMap[key] = newData
+    }
+    if (changed) {
+      bookmarksStore.meta.updated = now
+      await persistBookmarksStore(bookmarksStore)
+      await addRecentTags(newTags, oldTags)
+    }
+  }
+  var saveTags = saveBookmark
+  function addTagsValueChangeListener(func) {
+    tagsValueChangeListener = func
+  }
+  async function reload() {
+    console.warn("Current extension is outdated, page reload required")
+    location.reload()
+  }
+  function isValidKey(key) {
+    return isUrl(key)
+  }
+  function isValidTags(tags) {
+    return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
+  }
+  function mergeTags(tags, tags2) {
+    const array1 = tags || []
+    const array2 = tags2 || []
+    return uniq(
+      array1
+        .concat(array2)
+        .map((tag) => (tag ? String(tag).trim() : tag))
+        .filter(Boolean)
+    )
+  }
+  function filterDeleted(data) {
+    const filteredData = {}
+    for (const [key, bookmark] of Object.entries(data)) {
+      if (bookmark.tags && !bookmark.tags.includes(DELETED_BOOKMARK_TAG)) {
+        filteredData[key] = bookmark
+      }
+    }
+    return filteredData
+  }
+  async function migrateV2toV3(bookmarksStore) {
+    var _a, _b, _c
+    console.info("Starting migration from V2 to V3")
+    const now = Date.now()
+    let minCreated = now
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in bookmarksStore) {
+      if (key === "meta") {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkV2 = bookmarksStore[key]
+      if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2))
+        )
+        continue
+      }
+      if (!bookmarkV2.tags || !isValidTags(bookmarkV2.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkV2.tags))
+        )
+        continue
+      }
+      if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
+        if (
+          bookmarkV2.meta.title !== void 0 &&
+          typeof bookmarkV2.meta.title !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid title type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.title)
+          )
+          delete bookmarkV2.meta.title
+        }
+        if (
+          bookmarkV2.meta.description !== void 0 &&
+          typeof bookmarkV2.meta.description !== "string"
+        ) {
+          console.warn(
+            "Migration: Invalid description type for key "
+              .concat(key, ": ")
+              .concat(typeof bookmarkV2.meta.description)
+          )
+          delete bookmarkV2.meta.description
+        }
+        const created = Number(bookmarkV2.meta.created)
+        if (Number.isNaN(created) || created < 0) {
+          console.warn(
+            "Migration: Invalid created timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.created)
+          )
+          delete bookmarkV2.meta.created
+        }
+        const updated = Number(bookmarkV2.meta.updated)
+        if (Number.isNaN(updated) || updated < 0) {
+          console.warn(
+            "Migration: Invalid updated timestamp for key "
+              .concat(key, ": ")
+              .concat(bookmarkV2.meta.updated)
+          )
+          delete bookmarkV2.meta.updated
+        }
+      }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkV2.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkV2.meta) == null ? void 0 : _b.updated,
+        now
+      )
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkV2.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      const meta = __spreadProps(__spreadValues({}, bookmarkV2.meta), {
+        created: normalizedCreated,
+        updated: normalizedUpdated,
+      })
+      const bookmarkV3 = {
+        tags: bookmarkV2.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkV3
+      minCreated = Math.min(minCreated, normalizedCreated)
+    }
+    bookmarksStoreNew.meta.created = minCreated
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.info("Migration to V3 completed successfully")
+  }
+  async function migrateV3_fixV0_13_0TimestampBug(bookmarksStore) {
+    var _a, _b, _c
+    const oldMeta = bookmarksStore.meta
+    const oldData = bookmarksStore.data
+    if (oldMeta.extensionVersion !== "0.13.0") {
+      return
+    }
+    console.info(
+      "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
+    )
+    const now = Date.now()
+    const bookmarksStoreNew = createEmptyBookmarksStore()
+    for (const key in oldData) {
+      if (!Object.hasOwn(oldData, key)) {
+        continue
+      }
+      if (!isValidKey(key)) {
+        console.warn("Migration: Invalid URL key: ".concat(key))
+        continue
+      }
+      const bookmarkOld = oldData[key]
+      if (!bookmarkOld || typeof bookmarkOld !== "object") {
+        console.warn(
+          "Migration: Invalid value for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld))
+        )
+        continue
+      }
+      if (!bookmarkOld.tags || !isValidTags(bookmarkOld.tags)) {
+        console.warn(
+          "Migration: Invalid tags for key "
+            .concat(key, ": ")
+            .concat(String(bookmarkOld.tags))
+        )
+        continue
+      }
+      const normalizedCreated = normalizeCreated(
+        (_a = bookmarkOld.meta) == null ? void 0 : _a.created,
+        (_b = bookmarkOld.meta) == null ? void 0 : _b.updated,
+        now
+      )
+      const normalizedUpdated = normalizeUpdated(
+        normalizedCreated,
+        (_c = bookmarkOld.meta) == null ? void 0 : _c.updated,
+        now
+      )
+      const meta = __spreadProps(__spreadValues({}, bookmarkOld.meta), {
+        created: normalizedCreated,
+        updated: normalizedUpdated,
+      })
+      const bookmarkNew = {
+        tags: bookmarkOld.tags,
+        meta,
+      }
+      bookmarksStoreNew.data[key] = bookmarkNew
+    }
+    bookmarksStoreNew.meta.created = oldMeta.created
+    await persistBookmarksStore(bookmarksStoreNew)
+    console.info("Migration to V3 completed successfully")
+  }
+  async function checkVersion(meta) {
+    if (meta.extensionVersion !== currentExtensionVersion) {
+      console.warn(
+        "Version mismatch - Previous: "
+          .concat(meta.extensionVersion, ", Current: ")
+          .concat(currentExtensionVersion)
+      )
+      if (meta.extensionVersion > currentExtensionVersion) {
+      }
+    }
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      console.warn(
+        "Database version mismatch - Previous: "
+          .concat(meta.databaseVersion, ", Current: ")
+          .concat(currentDatabaseVersion)
+      )
+      if (meta.databaseVersion > currentDatabaseVersion) {
+        await reload()
+        return false
+      }
+    }
+    return true
+  }
+  var dataUpdated2 = false
+  var cachedRemoteData
+  async function initBookmarksStore() {
+    console.log("Start init BookmarksStore")
+    dataUpdated2 = false
+    cachedUrlMap = {}
+    const bookmarksStore = cachedRemoteData
+      ? await getBookmarksStoreFromRemote(cachedRemoteData)
+      : await getBookmarksStore()
+    cachedRemoteData = void 0
+    const meta = bookmarksStore.meta
+    const isVersionCompatible = await checkVersion(meta)
+    if (!isVersionCompatible) {
+      return
+    }
+    if (meta.databaseVersion === 2) {
+      await migrateV2toV3(bookmarksStore)
+      await initBookmarksStore()
+      return
+    }
+    if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
+      await migrateV3_fixV0_13_0TimestampBug(bookmarksStore)
+      await initBookmarksStore()
+      return
+    }
+    if (meta.databaseVersion !== currentDatabaseVersion) {
+      const errorMessage = "Database version mismatch - Previous: "
+        .concat(meta.databaseVersion, ", Current: ")
+        .concat(currentDatabaseVersion)
+      console.error(errorMessage)
+      throw new Error(errorMessage)
+    }
+    console.log("Bookmarks store initialized")
+    if (tagsValueChangeListener) {
+      tagsValueChangeListener()
+    }
+    if (!addValueChangeListenerInitialized) {
+      addValueChangeListenerInitialized = true
+      setPolling(true)
+      await addValueChangeListener2(
+        storageKey2,
+        async (_key, _oldValue, newValue, remote) => {
+          if (remote) {
+            console.log("Data updated in other tab, clearing cache")
+          } else {
+            console.log("Data updated, clearing cache")
+          }
+          dataUpdated2 = true
+          cachedRemoteData = newValue
+          if (doc.hidden) {
+            return
+          }
+          requestAnimationFrame(() => {
+            cachedUrlMap = {}
+            void initBookmarksStore()
+          })
+        }
+      )
+      addEventListener(doc, "visibilitychange", async () => {
+        console.log(
+          "[bookmarks] visibilitychange: hidden -",
+          doc.hidden,
+          "dataUpdated -",
+          dataUpdated2
+        )
+        if (!doc.hidden && dataUpdated2) {
+          requestAnimationFrame(() => {
+            cachedUrlMap = {}
+            void initBookmarksStore()
+          })
+        }
+      })
+    }
+  }
   var validNodeNames = {
     A: true,
     H1: true,
@@ -1804,6 +2456,19 @@
       }
     }
     return false
+  }
+  function buildTagsForDisplay(node) {
+    const utags = getElementUtags(node)
+    if (!utags || !utags.key) {
+      return
+    }
+    const key = utags.key
+    const object = getTags(key)
+    const tags = (object.tags || []).slice()
+    if (node.dataset.utags_visited === "1") {
+      tags.push(TAG_VISITED)
+    }
+    return { key, tags, meta: utags.meta }
   }
   var messages14 = {
     "settings.enableCurrentSite": "UTags auf der aktuellen Website aktivieren",
@@ -2955,80 +3620,37 @@
       },
     }
   }
-  var STORAGE_KEY_RECENT_TAGS = "extension.utags.recenttags"
-  var STORAGE_KEY_MOST_USED_TAGS = "extension.utags.mostusedtags"
-  var STORAGE_KEY_RECENT_ADDED_TAGS = "extension.utags.recentaddedtags"
-  function getScore(weight = 1) {
-    return (Math.floor(Date.now() / 1e3) / 1e9) * weight
+  var utagsElementMap = /* @__PURE__ */ new WeakMap()
+  var utagsUlSet = /* @__PURE__ */ new Set()
+  function registerElementUtagsUl(element, ul) {
+    utagsElementMap.set(element, ul)
+    utagsUlSet.add(ul)
   }
-  async function addRecentTags(newTags, oldTags) {
-    if (newTags.length === 0) return
-    const uniqueNewTags =
-      (oldTags == null ? void 0 : oldTags.length) > 0
-        ? newTags.filter((tag) => tag && !oldTags.includes(tag))
-        : newTags.filter(Boolean)
-    if (uniqueNewTags.length === 0) return
-    const recentTags = await getRecentTags()
-    const score = getScore()
-    for (const tag of uniqueNewTags) {
-      recentTags.push({ tag, score })
+  function getUtagsUl(element) {
+    return utagsElementMap.get(element)
+  }
+  function unregisterElementUtagsUl(element) {
+    const ul = utagsElementMap.get(element)
+    if (ul) {
+      utagsUlSet.delete(ul)
+      utagsElementMap.delete(element)
     }
-    if (recentTags.length > 1e3) {
-      recentTags.splice(0, 100)
-    }
-    await setValue2(STORAGE_KEY_RECENT_TAGS, recentTags)
-    await generateMostUsedAndRecentAddedTags(recentTags)
+    return ul
   }
-  async function generateMostUsedAndRecentAddedTags(recentTags) {
-    const tagScores = {}
-    for (const recentTag of recentTags) {
-      if (!recentTag.tag) {
-        continue
-      }
-      if (tagScores[recentTag.tag]) {
-        tagScores[recentTag.tag].score += recentTag.score
-      } else {
-        tagScores[recentTag.tag] = {
-          tag: recentTag.tag,
-          score: recentTag.score,
-        }
-      }
-    }
-    const mostUsedTags2 = Object.values(tagScores)
-      .filter((tag) => tag.score > getScore(1.5))
-      .sort((a, b) => b.score - a.score)
-      .map((tag) => tag.tag)
-      .slice(0, 200)
-    const recentAddedTags2 = Array.from(
-      new Set(
-        recentTags
-          .map((tag) => tag.tag)
-          .reverse()
-          .filter(Boolean)
-      )
-    ).slice(0, 200)
-    await Promise.all([
-      setValue2(STORAGE_KEY_MOST_USED_TAGS, mostUsedTags2),
-      setValue2(STORAGE_KEY_RECENT_ADDED_TAGS, recentAddedTags2),
-    ])
+  function ensureUtagsUlTracked(ul) {
+    utagsUlSet.add(ul)
   }
-  async function getRecentTags() {
-    const values = await getValue2(STORAGE_KEY_RECENT_TAGS)
-    return Array.isArray(values) ? values : []
+  function isUtagsUlTracked(ul) {
+    return utagsUlSet.has(ul)
   }
-  async function getMostUsedTags() {
-    const values = await getValue2(STORAGE_KEY_MOST_USED_TAGS)
-    return Array.isArray(values) ? values : []
+  function unregisterUtagsUl(ul) {
+    utagsUlSet.delete(ul)
   }
-  async function getRecentAddedTags() {
-    const values = await getValue2(STORAGE_KEY_RECENT_ADDED_TAGS)
-    return Array.isArray(values) ? values : []
+  function getRegisteredUtagsUlCount() {
+    return utagsUlSet.size
   }
-  async function getPinnedTags() {
-    return splitTags(getSettingsValue("pinnedTags") || "")
-  }
-  async function getEmojiTags() {
-    return splitTags(getSettingsValue("emojiTags") || "")
+  function clearUtagsUlRegistry() {
+    utagsUlSet.clear()
   }
   var starTags = [
     "\u2605\u2605\u2605",
@@ -3217,26 +3839,6 @@
   function generateUtagsId() {
     return String(utagsId++)
   }
-  function getUtagsUlById(id) {
-    return id ? $('[data-utags_for_id="'.concat(id, '"]')) : void 0
-  }
-  function getUtagsTargetById(id) {
-    return id ? $('[data-utags_id="'.concat(id, '"]')) : void 0
-  }
-  function getUtagsUlByTarget(element) {
-    return getUtagsUlById(element.dataset.utags_id)
-  }
-  function getUtagsTargetFromEvent(event) {
-    const target = event.target
-    if (!target) {
-      return
-    }
-    if (target.dataset.utags_id) {
-      return target
-    }
-    const ancestor = target.closest("[data-utags_id]")
-    return ancestor || void 0
-  }
   function ancestorTextIncludes(element, text, depth) {
     if (!element || depth <= 0) {
       return false
@@ -3304,6 +3906,43 @@
       !(element instanceof HTMLAnchorElement)
     ) {
       element.dataset.utags_node_type = "link"
+    }
+  }
+  function removeUtagsAttributes(element) {
+    if (!element || !(element instanceof HTMLElement)) {
+      return
+    }
+    if (element.dataset.utags_link !== void 0) {
+      delete element.dataset.utags_link
+    }
+    if (element.dataset.utags_title !== void 0) {
+      delete element.dataset.utags_title
+    }
+    if (element.dataset.utags_type !== void 0) {
+      delete element.dataset.utags_type
+    }
+    if (element.dataset.utags_node_type !== void 0) {
+      delete element.dataset.utags_node_type
+    }
+  }
+  var cleanupUtags = (element) => {
+    if (element.classList.contains("utags_ul") && !isUtagsUlTracked(element)) {
+      element.remove()
+      return
+    }
+    deleteElementUtags(element)
+    const utagsUl = unregisterElementUtagsUl(element)
+    if (utagsUl && utagsUl.isConnected) {
+      utagsUl.remove()
+    }
+    if (element.dataset.utags !== void 0) {
+      delete element.dataset.utags
+    }
+    if (element.dataset.utags_id !== void 0) {
+      delete element.dataset.utags_id
+    }
+    if (element.dataset.utags_condition_node !== void 0) {
+      delete element.dataset.utags_condition_node
     }
   }
   var timeoutIds = /* @__PURE__ */ new Set()
@@ -3787,7 +4426,11 @@
     }
     addEventListener(doc, "mousedown", mousedownHandler, true)
     const clickHandler = (event) => {
-      if (event.defaultPrevented || !$(".utags_modal_content")) {
+      if (
+        event.defaultPrevented ||
+        !event.isTrusted ||
+        !$(".utags_modal_content")
+      ) {
         return
       }
       const target = event.target
@@ -3851,466 +4494,6 @@
     return new Promise((resolve) => {
       createPromptView(message, value, resolve)
     })
-  }
-  var elementToUtagsMap = /* @__PURE__ */ new WeakMap()
-  function setElementUtags(element, utags) {
-    elementToUtagsMap.set(element, utags)
-  }
-  function getElementUtags(element) {
-    return elementToUtagsMap.get(element)
-  }
-  function deleteElementUtags(element) {
-    return elementToUtagsMap.delete(element)
-  }
-  function clearDomReferences() {}
-  var currentExtensionVersion = "0.14.2"
-  var currentDatabaseVersion = 3
-  var DELETED_BOOKMARK_TAG = "._DELETED_"
-  var storageKey2 = "extension.utags.urlmap"
-  var cachedUrlMap = {}
-  var addValueChangeListenerInitialized = false
-  var tagsValueChangeListener
-  function clearCachedUrlMap() {
-    cachedUrlMap = {}
-  }
-  function createEmptyBookmarksStore() {
-    const store = {
-      data: {},
-      meta: {
-        databaseVersion: currentDatabaseVersion,
-        extensionVersion: currentExtensionVersion,
-        created: Date.now(),
-        updated: Date.now(),
-      },
-    }
-    return store
-  }
-  async function getBookmarksStore() {
-    console.log("Start getBookmarksStore")
-    try {
-      const bookmarksStore =
-        (await getValue2(storageKey2)) || createEmptyBookmarksStore()
-      if (!bookmarksStore.data) {
-        bookmarksStore.data = {}
-      }
-      if (!bookmarksStore.meta) {
-        bookmarksStore.meta = createEmptyBookmarksStore().meta
-      }
-      cachedUrlMap = filterDeleted(bookmarksStore.data)
-      return bookmarksStore
-    } catch (error) {
-      console.error("Error getting bookmarks store:", error)
-      cachedUrlMap = {}
-      return createEmptyBookmarksStore()
-    }
-  }
-  async function getBookmarksStoreFromRemote(bookmarksStore) {
-    console.log("Start getBookmarksStoreFromRemote")
-    try {
-      if (!bookmarksStore || !bookmarksStore.data || !bookmarksStore.meta) {
-        return await getBookmarksStore()
-      }
-      cachedUrlMap = filterDeleted(bookmarksStore.data)
-      return bookmarksStore
-    } catch (error) {
-      console.error("Error getting bookmarks store:", error)
-      return getBookmarksStore()
-    }
-  }
-  async function serializeBookmarks() {
-    const bookmarksStore = await getBookmarksStore()
-    return JSON.stringify(bookmarksStore)
-  }
-  async function persistBookmarksStore(bookmarksStore) {
-    console.log("Start persistBookmarksStore")
-    await setValue2(storageKey2, bookmarksStore)
-    cachedUrlMap = bookmarksStore ? filterDeleted(bookmarksStore.data) : {}
-    console.log("Finish persistBookmarksStore")
-  }
-  async function deserializeBookmarks(data) {
-    const bookmarksStore = data ? JSON.parse(data) : void 0
-    await persistBookmarksStore(bookmarksStore)
-  }
-  async function getUrlMap() {
-    const bookmarksStore = await getBookmarksStore()
-    return bookmarksStore.data
-  }
-  function getBookmark(key) {
-    return (
-      cachedUrlMap[key] || {
-        tags: [],
-        meta: { created: 0, updated: 0 },
-      }
-    )
-  }
-  var getTags = getBookmark
-  async function saveBookmark(key, tags, meta) {
-    var _a, _b, _c, _d
-    console.log("saveBookmark", key, tags, meta)
-    const now = Date.now()
-    const bookmarksStore = await getBookmarksStore()
-    const urlMap = bookmarksStore.data
-    let changed = false
-    bookmarksStore.meta = __spreadProps(
-      __spreadValues({}, bookmarksStore.meta),
-      {
-        databaseVersion: currentDatabaseVersion,
-        extensionVersion: currentExtensionVersion,
-      }
-    )
-    const newTags = mergeTags(tags, [])
-    let oldTags = []
-    if (!isValidKey(key)) {
-      if (urlMap[key]) {
-        delete urlMap[key]
-        changed = true
-      }
-    } else if (newTags.length === 0) {
-      const existingData = urlMap[key]
-      if (existingData) {
-        oldTags = existingData.tags || []
-        if (!oldTags.includes(DELETED_BOOKMARK_TAG)) {
-          existingData.tags = [...oldTags, DELETED_BOOKMARK_TAG]
-          existingData.meta = __spreadProps(
-            __spreadValues({}, existingData.meta),
-            {
-              updated2: now,
-            }
-          )
-          existingData.deletedMeta = {
-            deleted: now,
-            actionType: "DELETE",
-          }
-          changed = true
-        }
-      }
-    } else {
-      const existingData = urlMap[key] || {}
-      const existingDataStr = JSON.stringify(existingData)
-      oldTags = existingData.tags || []
-      const title =
-        trimTitle(meta == null ? void 0 : meta.title) ||
-        trimTitle((_a = existingData.meta) == null ? void 0 : _a.title)
-      const newMeta = __spreadValues(
-        __spreadValues({}, existingData.meta),
-        meta
-      )
-      newMeta.created = normalizeCreated(
-        (_b = existingData.meta) == null ? void 0 : _b.created,
-        (_c = existingData.meta) == null ? void 0 : _c.updated,
-        now
-      )
-      if ((_d = existingData.meta) == null ? void 0 : _d.updated) {
-        newMeta.updated = existingData.meta.updated
-      }
-      if (title) {
-        newMeta.title = title
-      }
-      const newData = {
-        tags: newTags,
-        meta: newMeta,
-      }
-      const newDataStr = JSON.stringify(newData)
-      if (existingDataStr !== newDataStr) {
-        changed = true
-        newData.meta.updated = now
-      }
-      urlMap[key] = newData
-    }
-    if (changed) {
-      bookmarksStore.meta.updated = now
-      await persistBookmarksStore(bookmarksStore)
-      await addRecentTags(newTags, oldTags)
-    }
-  }
-  var saveTags = saveBookmark
-  function addTagsValueChangeListener(func) {
-    tagsValueChangeListener = func
-  }
-  async function reload() {
-    console.warn("Current extension is outdated, page reload required")
-    location.reload()
-  }
-  function isValidKey(key) {
-    return isUrl(key)
-  }
-  function isValidTags(tags) {
-    return Array.isArray(tags) && tags.every((tag) => typeof tag === "string")
-  }
-  function mergeTags(tags, tags2) {
-    const array1 = tags || []
-    const array2 = tags2 || []
-    return uniq(
-      array1
-        .concat(array2)
-        .map((tag) => (tag ? String(tag).trim() : tag))
-        .filter(Boolean)
-    )
-  }
-  function filterDeleted(data) {
-    const filteredData = {}
-    for (const [key, bookmark] of Object.entries(data)) {
-      if (bookmark.tags && !bookmark.tags.includes(DELETED_BOOKMARK_TAG)) {
-        filteredData[key] = bookmark
-      }
-    }
-    return filteredData
-  }
-  async function migrateV2toV3(bookmarksStore) {
-    var _a, _b, _c
-    console.info("Starting migration from V2 to V3")
-    const now = Date.now()
-    let minCreated = now
-    const bookmarksStoreNew = createEmptyBookmarksStore()
-    for (const key in bookmarksStore) {
-      if (key === "meta") {
-        continue
-      }
-      if (!isValidKey(key)) {
-        console.warn("Migration: Invalid URL key: ".concat(key))
-        continue
-      }
-      const bookmarkV2 = bookmarksStore[key]
-      if (!bookmarkV2 || typeof bookmarkV2 !== "object") {
-        console.warn(
-          "Migration: Invalid value for key "
-            .concat(key, ": ")
-            .concat(String(bookmarkV2))
-        )
-        continue
-      }
-      if (!bookmarkV2.tags || !isValidTags(bookmarkV2.tags)) {
-        console.warn(
-          "Migration: Invalid tags for key "
-            .concat(key, ": ")
-            .concat(String(bookmarkV2.tags))
-        )
-        continue
-      }
-      if (bookmarkV2.meta && typeof bookmarkV2.meta === "object") {
-        if (
-          bookmarkV2.meta.title !== void 0 &&
-          typeof bookmarkV2.meta.title !== "string"
-        ) {
-          console.warn(
-            "Migration: Invalid title type for key "
-              .concat(key, ": ")
-              .concat(typeof bookmarkV2.meta.title)
-          )
-          delete bookmarkV2.meta.title
-        }
-        if (
-          bookmarkV2.meta.description !== void 0 &&
-          typeof bookmarkV2.meta.description !== "string"
-        ) {
-          console.warn(
-            "Migration: Invalid description type for key "
-              .concat(key, ": ")
-              .concat(typeof bookmarkV2.meta.description)
-          )
-          delete bookmarkV2.meta.description
-        }
-        const created = Number(bookmarkV2.meta.created)
-        if (Number.isNaN(created) || created < 0) {
-          console.warn(
-            "Migration: Invalid created timestamp for key "
-              .concat(key, ": ")
-              .concat(bookmarkV2.meta.created)
-          )
-          delete bookmarkV2.meta.created
-        }
-        const updated = Number(bookmarkV2.meta.updated)
-        if (Number.isNaN(updated) || updated < 0) {
-          console.warn(
-            "Migration: Invalid updated timestamp for key "
-              .concat(key, ": ")
-              .concat(bookmarkV2.meta.updated)
-          )
-          delete bookmarkV2.meta.updated
-        }
-      }
-      const normalizedCreated = normalizeCreated(
-        (_a = bookmarkV2.meta) == null ? void 0 : _a.created,
-        (_b = bookmarkV2.meta) == null ? void 0 : _b.updated,
-        now
-      )
-      const normalizedUpdated = normalizeUpdated(
-        normalizedCreated,
-        (_c = bookmarkV2.meta) == null ? void 0 : _c.updated,
-        now
-      )
-      const meta = __spreadProps(__spreadValues({}, bookmarkV2.meta), {
-        created: normalizedCreated,
-        updated: normalizedUpdated,
-      })
-      const bookmarkV3 = {
-        tags: bookmarkV2.tags,
-        meta,
-      }
-      bookmarksStoreNew.data[key] = bookmarkV3
-      minCreated = Math.min(minCreated, normalizedCreated)
-    }
-    bookmarksStoreNew.meta.created = minCreated
-    await persistBookmarksStore(bookmarksStoreNew)
-    console.info("Migration to V3 completed successfully")
-  }
-  async function migrateV3_fixV0_13_0TimestampBug(bookmarksStore) {
-    var _a, _b, _c
-    const oldMeta = bookmarksStore.meta
-    const oldData = bookmarksStore.data
-    if (oldMeta.extensionVersion !== "0.13.0") {
-      return
-    }
-    console.info(
-      "Starting migration from extension v0.13.0 to v" + currentExtensionVersion
-    )
-    const now = Date.now()
-    const bookmarksStoreNew = createEmptyBookmarksStore()
-    for (const key in oldData) {
-      if (!Object.hasOwn(oldData, key)) {
-        continue
-      }
-      if (!isValidKey(key)) {
-        console.warn("Migration: Invalid URL key: ".concat(key))
-        continue
-      }
-      const bookmarkOld = oldData[key]
-      if (!bookmarkOld || typeof bookmarkOld !== "object") {
-        console.warn(
-          "Migration: Invalid value for key "
-            .concat(key, ": ")
-            .concat(String(bookmarkOld))
-        )
-        continue
-      }
-      if (!bookmarkOld.tags || !isValidTags(bookmarkOld.tags)) {
-        console.warn(
-          "Migration: Invalid tags for key "
-            .concat(key, ": ")
-            .concat(String(bookmarkOld.tags))
-        )
-        continue
-      }
-      const normalizedCreated = normalizeCreated(
-        (_a = bookmarkOld.meta) == null ? void 0 : _a.created,
-        (_b = bookmarkOld.meta) == null ? void 0 : _b.updated,
-        now
-      )
-      const normalizedUpdated = normalizeUpdated(
-        normalizedCreated,
-        (_c = bookmarkOld.meta) == null ? void 0 : _c.updated,
-        now
-      )
-      const meta = __spreadProps(__spreadValues({}, bookmarkOld.meta), {
-        created: normalizedCreated,
-        updated: normalizedUpdated,
-      })
-      const bookmarkNew = {
-        tags: bookmarkOld.tags,
-        meta,
-      }
-      bookmarksStoreNew.data[key] = bookmarkNew
-    }
-    bookmarksStoreNew.meta.created = oldMeta.created
-    await persistBookmarksStore(bookmarksStoreNew)
-    console.info("Migration to V3 completed successfully")
-  }
-  async function checkVersion(meta) {
-    if (meta.extensionVersion !== currentExtensionVersion) {
-      console.warn(
-        "Version mismatch - Previous: "
-          .concat(meta.extensionVersion, ", Current: ")
-          .concat(currentExtensionVersion)
-      )
-      if (meta.extensionVersion > currentExtensionVersion) {
-      }
-    }
-    if (meta.databaseVersion !== currentDatabaseVersion) {
-      console.warn(
-        "Database version mismatch - Previous: "
-          .concat(meta.databaseVersion, ", Current: ")
-          .concat(currentDatabaseVersion)
-      )
-      if (meta.databaseVersion > currentDatabaseVersion) {
-        await reload()
-        return false
-      }
-    }
-    return true
-  }
-  var dataUpdated = false
-  var cachedRemoteData
-  async function initBookmarksStore() {
-    console.log("Start init BookmarksStore")
-    dataUpdated = false
-    cachedUrlMap = {}
-    const bookmarksStore = cachedRemoteData
-      ? await getBookmarksStoreFromRemote(cachedRemoteData)
-      : await getBookmarksStore()
-    cachedRemoteData = void 0
-    const meta = bookmarksStore.meta
-    const isVersionCompatible = await checkVersion(meta)
-    if (!isVersionCompatible) {
-      return
-    }
-    if (meta.databaseVersion === 2) {
-      await migrateV2toV3(bookmarksStore)
-      await initBookmarksStore()
-      return
-    }
-    if (meta.databaseVersion === 3 && meta.extensionVersion === "0.13.0") {
-      await migrateV3_fixV0_13_0TimestampBug(bookmarksStore)
-      await initBookmarksStore()
-      return
-    }
-    if (meta.databaseVersion !== currentDatabaseVersion) {
-      const errorMessage = "Database version mismatch - Previous: "
-        .concat(meta.databaseVersion, ", Current: ")
-        .concat(currentDatabaseVersion)
-      console.error(errorMessage)
-      throw new Error(errorMessage)
-    }
-    console.log("Bookmarks store initialized")
-    if (tagsValueChangeListener) {
-      tagsValueChangeListener()
-    }
-    if (!addValueChangeListenerInitialized) {
-      addValueChangeListenerInitialized = true
-      setPolling(true)
-      await addValueChangeListener2(
-        storageKey2,
-        async (_key, _oldValue, newValue, remote) => {
-          if (remote) {
-            console.log("Data updated in other tab, clearing cache")
-          } else {
-            console.log("Data updated, clearing cache")
-          }
-          dataUpdated = true
-          cachedRemoteData = newValue
-          if (doc.hidden) {
-            return
-          }
-          requestAnimationFrame(() => {
-            cachedUrlMap = {}
-            void initBookmarksStore()
-          })
-        }
-      )
-      addEventListener(doc, "visibilitychange", async () => {
-        console.log(
-          "[bookmarks] visibilitychange: hidden -",
-          doc.hidden,
-          "dataUpdated -",
-          dataUpdated
-        )
-        if (!doc.hidden && dataUpdated) {
-          requestAnimationFrame(() => {
-            cachedUrlMap = {}
-            void initBookmarksStore()
-          })
-        }
-      })
-    }
   }
   var mergeData = async () => ({ numberOfLinks: 0, numberOfTags: 0 })
   async function outputData() {
@@ -4413,120 +4596,6 @@
   async function simplePrompt(message, value) {
     return prompt(message, value)
   }
-  var TAG_VISITED_KEY = "utags_visited"
-  var host = location.host
-  var useVisitedFunction = false
-  var displayMark = false
-  var isAvailable = false
-  var cache = {}
-  var dataUpdated2 = false
-  var visitedValueChangeListener
-  var eventListenerInited = false
-  function clearVisitedCache() {
-    cache = {}
-  }
-  function isAvailableOnCurrentSite() {
-    return isAvailable
-  }
-  function setVisitedAvailable(value) {
-    isAvailable = value
-  }
-  function onSettingsChange() {
-    useVisitedFunction = getSettingsValue("useVisitedFunction_".concat(host))
-    displayMark =
-      getSettingsValue("displayEffectOfTheVisitedContent_".concat(host)) !== "0"
-    if (!useVisitedFunction || eventListenerInited) {
-      return
-    }
-    eventListenerInited = true
-    addEventListener(globalThis, "storage", (event) => {
-      if (event.key === TAG_VISITED_KEY) {
-        dataUpdated2 = true
-        if (doc.hidden) {
-          return
-        }
-        valueChangeHandler()
-      }
-    })
-    addEventListener(doc, "visibilitychange", async () => {
-      console.log(
-        "[visited] visibilitychange: hidden -",
-        doc.hidden,
-        "dataUpdated -",
-        dataUpdated2
-      )
-      if (!doc.hidden && dataUpdated2) {
-        valueChangeHandler()
-      }
-    })
-  }
-  function getVisitedLinks() {
-    if (!useVisitedFunction) {
-      return []
-    }
-    return JSON.parse(localStorage.getItem(TAG_VISITED_KEY) || "[]") || []
-  }
-  function saveVisitedLinks(newVisitedLinks) {
-    if (useVisitedFunction) {
-      localStorage.setItem(TAG_VISITED_KEY, JSON.stringify(newVisitedLinks))
-      dataUpdated2 = true
-      valueChangeHandler()
-    }
-  }
-  function convertKey(url) {
-    if (url.startsWith("http")) {
-      return url.replace(/^https?:\/\/[^/]+\//, "")
-    }
-    return url
-  }
-  var TAG_VISITED = ":visited"
-  function addVisited(key) {
-    if (key && !cache[key]) {
-      cache[key] = 1
-    } else {
-      return
-    }
-    key = convertKey(key)
-    const visitedLinks = getVisitedLinks()
-    if (!visitedLinks.includes(key)) {
-      visitedLinks.push(key)
-      saveVisitedLinks(visitedLinks)
-    }
-  }
-  function removeVisited(key) {
-    key = convertKey(key)
-    const visitedLinks = getVisitedLinks()
-    if (visitedLinks.includes(key)) {
-      const newVisitedLinks = visitedLinks.filter((value) => value !== key)
-      saveVisitedLinks(newVisitedLinks)
-    }
-  }
-  function isVisited(key) {
-    if (!displayMark) {
-      return false
-    }
-    key = convertKey(key)
-    const visitedLinks = getVisitedLinks()
-    return visitedLinks.includes(key)
-  }
-  function markElementWhetherVisited(key, element) {
-    if (isVisited(key)) {
-      element.dataset.utags_visited = "1"
-    } else if (element.dataset.utags_visited === "1") {
-      delete element.dataset.utags_visited
-    }
-  }
-  function addVisitedValueChangeListener(func) {
-    visitedValueChangeListener = func
-  }
-  var valueChangeHandler = () => {
-    dataUpdated2 = false
-    if (typeof visitedValueChangeListener === "function") {
-      requestAnimationFrame(() => {
-        visitedValueChangeListener()
-      })
-    }
-  }
   var lastShownArea
   var isPromptShown = false
   function hideAllUtagsInArea(target) {
@@ -4548,7 +4617,13 @@
       })
     }
   }
+  function bindShadowRootEvents(root) {
+    bindDocumentEventsInternal(root)
+  }
   function bindDocumentEvents(eventManager2) {
+    bindDocumentEventsInternal(doc, eventManager2)
+  }
+  function bindDocumentEventsInternal(doc5, eventManager2) {
     const eventType = isTouchScreen() ? "touchstart" : "click"
     const addListener = eventManager2
       ? (target, type, listener, options) => {
@@ -4556,7 +4631,7 @@
         }
       : addEventListener
     addListener(
-      doc,
+      doc5,
       eventType,
       (event) => {
         const target = event.target
@@ -4620,7 +4695,7 @@
       true
     )
     addListener(
-      doc,
+      doc5,
       "keydown",
       (event) => {
         if (event.defaultPrevented) {
@@ -4634,7 +4709,7 @@
       true
     )
     addListener(
-      doc,
+      doc5,
       "mousedown",
       (event) => {
         const target = event.target
@@ -4647,7 +4722,7 @@
       true
     )
     addListener(
-      doc,
+      doc5,
       "mouseup",
       (event) => {
         const target = event.target
@@ -4866,465 +4941,122 @@
   function createMenuCommandManager(onClickHandler, onQuickTagClickHandler) {
     return new MenuCommandManager(onClickHandler, onQuickTagClickHandler)
   }
-  var SCRIPT_NAME = "[UTags Extension Sync Adapter]"
-  var MY_EXTENSION_ID
-  var MY_EXTENSION_NAME
-  var STORAGE_KEY_EXTENSION_ID = "extension.utags.extension_id"
-  var SYNC_STORAGE_KEY_METADATA = "extension.utags.sync_metadata"
-  var SOURCE_WEBAPP = "utags-webapp"
-  var SOURCE_EXTENSION = "utags-extension"
-  var PING_MESSAGE_TYPE = "PING"
-  var PONG_MESSAGE_TYPE = "PONG"
-  var DISCOVER_MESSAGE_TYPE = "DISCOVER_UTAGS_TARGETS"
-  var DISCOVERY_RESPONSE_TYPE = "DISCOVERY_RESPONSE"
-  var GET_REMOTE_METADATA_MESSAGE_TYPE = "GET_REMOTE_METADATA"
-  var DOWNLOAD_MESSAGE_TYPE = "DOWNLOAD_DATA"
-  var UPLOAD_MESSAGE_TYPE = "UPLOAD_DATA"
-  var GET_AUTH_STATUS_MESSAGE_TYPE = "GET_AUTH_STATUS"
-  async function saveData(data) {
-    await deserializeBookmarks(data)
+  var scannedNodeQueue = []
+  var scannedNodeSet = /* @__PURE__ */ new Set()
+  var isProcessingScannedNodeQueue = false
+  var isProcessingEnabled = false
+  var processNodeFn
+  var onQueueEmptyFn
+  function configureScannedNodeProcessor(fn) {
+    processNodeFn = fn
   }
-  async function loadData() {
-    const data = await serializeBookmarks()
-    return data || ""
+  function configureQueueEmptyCallback(fn) {
+    onQueueEmptyFn = fn
   }
-  async function saveMetadata(metadata) {
-    await setValue2(SYNC_STORAGE_KEY_METADATA, metadata)
-  }
-  async function loadMetadata() {
-    return getValue2(SYNC_STORAGE_KEY_METADATA)
-  }
-  async function checkUserscriptAvailable() {
-    try {
-      if (typeof GM === "undefined" || !GM.xmlHttpRequest) {
-        return false
-      }
-      await new Promise((resolve, reject) => {
-        GM.xmlHttpRequest({
-          method: "GET",
-          url: "http://localhost/",
-          onload(response) {
-            resolve()
-          },
-          onerror(error) {
-            resolve()
-          },
-          ontimeout() {
-            resolve()
-          },
-          timeout: 3e3,
-        })
-      })
-      return true
-    } catch (error) {
-      console.warn("[UTags] Userscript may be disabled:", error)
-      return false
+  function setScannedNodeProcessingEnabled(enabled) {
+    isProcessingEnabled = enabled
+    if (enabled && hasScannedNodesInQueue()) {
+      scheduleProcessScannedNodes()
     }
   }
-  function getVersionNumber(metadata) {
-    const version =
-      metadata && metadata.version
-        ? parseInt10(metadata.version.replace("v", ""), 0)
-        : 0
-    return Math.max(version, 0)
-  }
-  function isValidMessage(event) {
-    if (event.origin !== location.origin) {
-      return false
-    }
-    if (
-      !/^((.*\.)?utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
-        location.hostname
-      )
-    ) {
-      return false
-    }
-    if (!event.source || typeof event.source.postMessage !== "function") {
-      return false
-    }
-    const message = event.data
-    if (
-      !message ||
-      typeof message !== "object" ||
-      message.source !== SOURCE_WEBAPP || // Check source
-      !message.id || // Check for id
-      (message.targetExtensionId !== MY_EXTENSION_ID &&
-        message.targetExtensionId !== "*") || // Allow broadcast messages
-      !message.type || // Check for type (which is the action)
-      typeof message.type !== "string" ||
-      ![
-        PING_MESSAGE_TYPE,
-        DISCOVER_MESSAGE_TYPE,
-        GET_AUTH_STATUS_MESSAGE_TYPE,
-        GET_REMOTE_METADATA_MESSAGE_TYPE,
-        DOWNLOAD_MESSAGE_TYPE,
-        UPLOAD_MESSAGE_TYPE,
-      ].includes(message.type)
-    ) {
-      return false
-    }
-    return true
-  }
-  var isProcessingMessage = false
-  var messageHandler = async (event) => {
-    if (!MY_EXTENSION_ID) {
-      console.error("MY_EXTENSION_ID not initialized")
+  function enqueueScannedNode(node) {
+    if (scannedNodeSet.has(node)) {
       return
     }
-    if (!isValidMessage(event)) {
+    scannedNodeQueue.push(node)
+    scannedNodeSet.add(node)
+    if (isProcessingEnabled) {
+      scheduleProcessScannedNodes()
+    }
+  }
+  function enqueueScannedNodes(nodes) {
+    if (nodes.length === 0) {
       return
     }
-    const message = event.data
-    console.log("".concat(SCRIPT_NAME, " Received message:"), message)
-    if (isProcessingMessage) {
-      console.warn(
-        "".concat(
-          SCRIPT_NAME,
-          " Already processing a message, rejecting new request:"
-        ),
-        message.id
-      )
-      const rejectionResponse = {
-        type: message.type,
-        source: SOURCE_EXTENSION,
-        id: message.id,
-        extensionId: MY_EXTENSION_ID,
-        error:
-          "Another message is currently being processed, please try again later",
+    let added = false
+    for (const node of nodes) {
+      if (scannedNodeSet.has(node)) {
+        continue
       }
-      event.source.postMessage(rejectionResponse, event.origin)
+      scannedNodeQueue.push(node)
+      scannedNodeSet.add(node)
+      added = true
+    }
+    if (added && isProcessingEnabled) {
+      scheduleProcessScannedNodes()
+    }
+  }
+  function takeScannedNodeFromQueue() {
+    const node = scannedNodeQueue.shift()
+    if (node) {
+      scannedNodeSet.delete(node)
+    }
+    return node
+  }
+  function hasScannedNodesInQueue() {
+    return scannedNodeQueue.length > 0
+  }
+  function processScannedNodesIdle(deadline) {
+    if (!processNodeFn) {
+      isProcessingScannedNodeQueue = false
       return
     }
-    isProcessingMessage = true
-    try {
-      const actionType = message.type
-      const shouldCheckUserscript =
-        isUserscript &&
-        actionType !== DISCOVER_MESSAGE_TYPE &&
-        actionType !== PING_MESSAGE_TYPE
-      if (shouldCheckUserscript) {
-        const isUserscriptAvailable = await checkUserscriptAvailable()
-        if (!isUserscriptAvailable) {
-          console.warn(
-            "".concat(
-              SCRIPT_NAME,
-              " Userscript not available, sending error response"
-            )
-          )
-          const errorResponse = {
-            type: message.type,
-            source: SOURCE_EXTENSION,
-            id: message.id,
-            extensionId: MY_EXTENSION_ID,
-            error: "Userscript not available or disabled",
-          }
-          event.source.postMessage(errorResponse, event.origin)
-          return
-        }
+    while (deadline.timeRemaining() > 1 && hasScannedNodesInQueue()) {
+      const node = takeScannedNodeFromQueue()
+      if (!node) {
+        break
       }
-      let responsePayload
-      let error
-      const payload = message.payload
-      const id = message.id
-      try {
-        const remoteMetadata = await loadMetadata()
-        switch (actionType) {
-          case DISCOVER_MESSAGE_TYPE: {
-            responsePayload = {
-              extensionId: MY_EXTENSION_ID,
-              extensionName: MY_EXTENSION_NAME,
-            }
-            event.source.postMessage(
-              {
-                source: SOURCE_EXTENSION,
-                type: DISCOVERY_RESPONSE_TYPE,
-                id,
-                extensionId: MY_EXTENSION_ID,
-                payload: responsePayload,
-              },
-              event.origin
-            )
-            console.log(
-              "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
-            )
-            return
-          }
-          case PING_MESSAGE_TYPE: {
-            responsePayload = { status: PONG_MESSAGE_TYPE }
-            console.log(
-              "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
-            )
-            break
-          }
-          case GET_AUTH_STATUS_MESSAGE_TYPE: {
-            responsePayload = { status: "authenticated" }
-            console.log(
-              "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
-              responsePayload
-            )
-            break
-          }
-          case GET_REMOTE_METADATA_MESSAGE_TYPE: {
-            responsePayload = { metadata: remoteMetadata }
-            console.log(
-              "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
-              responsePayload
-            )
-            break
-          }
-          case DOWNLOAD_MESSAGE_TYPE: {
-            const data = await loadData()
-            responsePayload = { data, remoteMeta: remoteMetadata }
-            console.log(
-              "".concat(SCRIPT_NAME, " Data requested. Responding:"),
-              responsePayload
-            )
-            break
-          }
-          case UPLOAD_MESSAGE_TYPE: {
-            if (!payload || typeof payload.data !== "string") {
-              throw new Error("UPLOAD_DATA: Invalid payload")
-            }
-            const expectedMeta = payload.metadata
-            if (expectedMeta && remoteMetadata) {
-              if (
-                expectedMeta.version !== remoteMetadata.version ||
-                expectedMeta.timestamp !== remoteMetadata.timestamp
-              ) {
-                throw new Error(
-                  "Conflict: Expected remote metadata does not match current remote metadata."
-                )
-              }
-            } else if (expectedMeta && !remoteMetadata) {
-              throw new Error(
-                "Conflict: Expected remote metadata, but no remote data found."
-              )
-            } else if (!expectedMeta && remoteMetadata) {
-              throw new Error(
-                "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
-              )
-            }
-            const newTimestamp = Date.now()
-            const oldVersionNumber = getVersionNumber(remoteMetadata)
-            const newVersion = "v".concat(oldVersionNumber + 1)
-            const newMeta = { timestamp: newTimestamp, version: newVersion }
-            await saveData(payload.data)
-            await saveMetadata(newMeta)
-            responsePayload = { metadata: newMeta }
-            console.log(
-              "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
-              newMeta
-            )
-            break
-          }
-        }
-      } catch (error_) {
-        error = error_ instanceof Error ? error_.message : String(error_)
-        console.log(
-          "".concat(SCRIPT_NAME, " Error processing message:"),
-          error_
-        )
-      }
-      const response = {
-        type: actionType,
-        source: SOURCE_EXTENSION,
-        id,
-        extensionId: MY_EXTENSION_ID,
-        payload: responsePayload,
-        error,
-      }
-      event.source.postMessage(response, event.origin)
-    } finally {
-      isProcessingMessage = false
-      console.log(
-        "".concat(
-          SCRIPT_NAME,
-          " Message processing complete, ready for next message"
-        )
-      )
+      processNodeFn(node)
     }
-  }
-  async function initExtensionId() {
-    const type = isUserscript ? "Userscript" : "Extension"
-    const tag = isProduction ? "" : " - ".concat("staging".toUpperCase())
-    let storedId = await getValue2(STORAGE_KEY_EXTENSION_ID)
-    if (!storedId) {
-      storedId = "utags-"
-        .concat(type.toLowerCase(), "-")
-        .concat(crypto.randomUUID())
-      await setValue2(STORAGE_KEY_EXTENSION_ID, storedId)
-    }
-    MY_EXTENSION_ID = storedId
-    MY_EXTENSION_NAME = "UTags ".concat(type).concat(tag)
-    console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
-  }
-  function destroySyncAdapter() {
-    MY_EXTENSION_ID = void 0
-    window.removeEventListener("message", messageHandler)
-  }
-  async function initSyncAdapter() {
-    destroySyncAdapter()
-    await initExtensionId()
-    window.addEventListener("message", messageHandler)
-    console.log("".concat(SCRIPT_NAME, " initialized."))
-  }
-  function handleHttpRequest(message, event) {
-    if (false) {
-      handleHttpRequestExtension(message, event)
+    if (hasScannedNodesInQueue()) {
+      requestIdleCallback(processScannedNodesIdle)
     } else {
-      handleHttpRequestUserscript(message, event)
+      isProcessingScannedNodeQueue = false
+      if (onQueueEmptyFn) {
+        onQueueEmptyFn()
+      }
     }
   }
-  function handleHttpRequestUserscript(message, event) {
-    const { id, payload } = message
-    const { method, url, headers, body, timeout } = payload
-    console.log(
-      "[UTags Extension] Processing HTTP request: "
-        .concat(method, " ")
-        .concat(url)
-    )
-    const gmRequest =
-      (GM == null ? void 0 : GM.xmlHttpRequest) || GM_xmlhttpRequest
-    if (!gmRequest) {
-      sendHttpError(id, "GM.xmlHttpRequest not available", event)
+  function scheduleProcessScannedNodes() {
+    if (
+      !isProcessingEnabled ||
+      isProcessingScannedNodeQueue ||
+      !hasScannedNodesInQueue() ||
+      !processNodeFn
+    ) {
       return
     }
-    void gmRequest({
-      method,
-      url,
-      headers: headers || {},
-      data: body,
-      timeout: timeout || 3e4,
-      onload(response) {
-        console.log(
-          "[UTags Extension] HTTP request successful: ".concat(response.status)
-        )
-        const responseHeaders = {}
-        if (response.responseHeaders) {
-          const headerLines = response.responseHeaders.split("\r\n")
-          for (const line of headerLines) {
-            const [key, value] = line.split(": ")
-            if (key && value) {
-              responseHeaders[key.toLowerCase()] = value
-            }
-          }
-        }
-        sendHttpResponse(
-          id,
-          {
-            ok: response.status >= 200 && response.status < 300,
-            status: response.status,
-            statusText: response.statusText,
-            headers: responseHeaders,
-            body: response.responseText,
-          },
-          event
-        )
-      },
-      onerror(error) {
-        console.error("[UTags Extension] HTTP request failed:", error)
-        sendHttpError(
-          id,
-          error && typeof error.statusText === "string"
-            ? error.statusText
-            : "Network error",
-          event,
+    isProcessingScannedNodeQueue = true
+    requestIdleCallback(processScannedNodesIdle)
+  }
+  var content_default =
+    '#TOFIX_uFEFF{display:block}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul:not(.utags_ul)[data-utags_key],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ol:not(.utags_ul)[data-utags_key]{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity).utags_hide_all_tags:not(#utags_should_has_higher_specificity) .utags_ul,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity)[data-utags=off] .utags_ul{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_absolute_ul_container{position:absolute;top:-999px;height:0px;width:100%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_absolute_ul_container .utags_ul{z-index:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_absolute_ul_container .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_absolute_ul_container .utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important;flex-wrap:nowrap !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul{box-sizing:border-box !important;display:inline-flex !important;flex-direction:row !important;flex-wrap:wrap !important;align-content:flex-start;justify-content:flex-start;overflow:visible;white-space:normal;list-style-type:none !important;margin:0 !important;padding:0 !important;vertical-align:text-bottom !important;line-height:normal !important;background-color:rgba(0,0,0,0);border:none !important;box-shadow:none !important;max-width:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li{box-sizing:border-box !important;display:inline-flex !important;align-items:center !important;float:none !important;overflow:visible;width:unset !important;height:unset !important;border:none !important;padding:0 !important;margin:0 !important;vertical-align:top !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:first-child .utags_text_tag{margin-left:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li:last-child .utags_text_tag{margin-right:3px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul>li::after{content:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag{box-sizing:border-box !important;display:block !important;border:var(--utags-text-tag-border-width) solid var(--utags-text-tag-border-color);color:var(--utags-text-tag-color) !important;border-radius:3px !important;padding:1px 3px !important;margin:0 1px !important;font-size:var(--utags-text-tag-font-size) !important;font-family:var(--utags-text-tag-font-family) !important;letter-spacing:0 !important;line-height:1 !important;height:unset !important;width:unset !important;font-weight:normal !important;text-decoration:none !important;text-transform:none !important;text-align:center !important;text-shadow:none !important;text-indent:0 !important;min-width:unset !important;min-height:unset !important;max-width:unset !important;max-height:unset !important;background:unset !important;background-color:var(--utags-text-tag-background-color) !important;cursor:pointer;z-index:0;pointer-events:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag:link,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag:link{cursor:pointer}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::before{content:attr(data-utags_tag);display:block;font-size:var(--utags-text-tag-font-size);line-height:1;height:unset;width:unset;max-width:var(--utags-text-tag-max-width);white-space:var(--utags-text-tag-white-space);overflow:hidden;text-overflow:ellipsis;border-radius:unset;border:unset;background:unset;margin:unset;padding:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag]::after,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag]::after{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag][data-utags_tag_selectable]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]{height:var(--utags-visited-tag-size) !important;width:var(--utags-visited-tag-size) !important;border-radius:var(--utags-visited-tag-size) !important;--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);--utags-text-tag-border-width: 0px;margin-left:2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=":visited"]::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=":visited"]::before{display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_emoji_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_emoji_tag{--utags-text-tag-background-color: var( --utags-emoji-tag-background-color );--utags-text-tag-font-size: var(--utags-emoji-tag-font-size);--utags-text-tag-font-family: var(--utags-emoji-tag-font-family);--utags-text-tag-border-width: var(--utags-emoji-tag-border-width);--utags-text-tag-border-color: var(--utags-emoji-tag-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_text_tag[data-utags_tag=\u2606\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2605\u2605\u2605],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_text_tag[data-utags_tag=\u2606\u2606\u2606]{--utags-text-tag-background-color: var(--utags-star-tag-background-color);--utags-text-tag-font-size: var(--utags-star-tag-font-size);--utags-text-tag-font-family: var(--utags-star-tag-font-family);--utags-text-tag-border-width: var(--utags-star-tag-border-width);--utags-text-tag-border-color: var(--utags-star-tag-border-color);--utags-text-tag-color: var(--utags-star-tag-color);padding:0 2px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2{width:var(--utags-captain-tag-size) !important;height:var(--utags-captain-tag-size) !important;padding:1px 0 0 1px !important;background:none !important;color:var(--utags-captain-tag-color) !important;border:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag::before,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2::before{content:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag svg,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 svg{fill:currentColor !important;vertical-align:-3px;margin:0 !important;padding:0 !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2 *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag *,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2 *{color:inherit !important;fill:currentColor !important;width:unset;height:unset}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag{opacity:1%;position:absolute;top:var(--utags-notag-captain-tag-top, 0);left:var(--utags-notag-captain-tag-left, 0);padding:0 !important;margin:0 !important;width:4px !important;height:4px !important;font-size:1px !important;background-color:var(--utags-captain-tag-background-color) !important;transition:all 0s .3s !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul .utags_captain_tag2:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:hover,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list .utags_captain_tag2:focus{color:var(--utags-captain-tag-hover-color) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0{margin:0 !important;display:var(--utags-notag-ul-disply, inline) !important;float:var(--utags-notag-ul-float, none);height:var(--utags-notag-ul-height, unset);width:var(--utags-notag-ul-width, unset) !important;position:var(--utags-notag-ul-position, unset);top:var(--utags-notag-ul-top, unset)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_0>li,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_select_list.utags_ul_0>li{position:relative !important;height:var(--utags-captain-tag-size) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_captain_tag:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(.utags_ul):hover+.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul:hover .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_ul.utags_ul_active .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(a):not([data-utags_node_type=link]):not(.utags_ul)+.utags_ul .utags_captain_tag{opacity:100%;width:calc(var(--utags-captain-tag-size) + 8px) !important;height:calc(var(--utags-captain-tag-size) + 8px) !important;padding:5px 4px 4px 5px !important;transition:all 0s .1s !important;z-index:90}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_hide_all .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_show_all .utags_captain_tag{transition:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal{position:fixed;top:0;left:0;height:0;width:0;z-index:2147483647}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_wrapper{position:fixed;display:flex;align-items:flex-start;justify-content:center;width:100%;inset:0px;padding-top:5vh;background-color:hsla(0,0%,100%,.1);z-index:2147483647}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_modal_content{box-sizing:border-box;display:flex;flex-direction:column;max-width:94%;max-height:100%;overflow:hidden;overflow:auto;color:#000;background-color:#fff !important;border-radius:5px;padding:14px;margin:0 auto;-webkit-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);-moz-box-shadow:0px 10px 39px 10px rgba(62,66,66,.22);box-shadow:0px 10px 39px 10px rgba(62,66,66,.22)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_title{display:block;color:#000;margin-bottom:10px;font-size:14px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper{display:flex;flex-direction:row;justify-content:end;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button{font-size:14px;height:32px;min-width:80px;font-weight:600;padding:0 8px;border-radius:2px;color:var(--utags-button-text-color);border:1px solid var(--utags-button-border-color);background-color:var(--utags-button-bg-color) !important;text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:hover{background-color:var(--utags-button-hover-bg-color);border-color:var(--utags-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button:not(:first-child){margin-left:10px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_buttons_wrapper button.utags_primary{--utags-button-text-color: var(--utags-action-button-text-color);--utags-button-bg-color: var(--utags-action-button-bg-color);--utags-button-border-color: var(--utags-action-button-border-color);--utags-button-hover-bg-color: var( --utags-action-button-hover-bg-color );--utags-button-hover-border-color: var( --utags-action-button-hover-border-color )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input{-webkit-appearance:none;background-color:var(--utags-button-hover-bg-color);border:none;border-bottom:2px solid var(--utags-button-hover-bg-color);border-radius:4px;box-sizing:border-box;caret-color:var(--cr-input-focus-color);color:var(--cr-input-color);font-family:var(--utags-text-tag-font-family) !important;font-weight:inherit;line-height:inherit;min-height:var(--cr-input-min-height, auto);outline:0;padding-bottom:var(--cr-input-padding-bottom, 6px);padding-inline-end:var(--cr-input-padding-end, 8px);padding-inline-start:var(--cr-input-padding-start, 8px);padding-top:var(--cr-input-padding-top, 6px);text-align:left;text-overflow:ellipsis;width:100%;margin:0;font-size:12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt input:focus-visible{outline:0;border-bottom:2px solid var(--utags-action-button-hover-border-color)}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_modal .utags_prompt .utags_link_settings{font-size:12px;text-decoration:underline;cursor:pointer;color:#374151}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper{display:flex;justify-content:space-between}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_current_tags_wrapper .utags_button_copy{cursor:pointer;font-size:10px;line-height:1;height:18px;padding:0 6px;border-radius:2px;color:var(--utags-action-button-text-color);background-color:var(--utags-action-button-bg-color);border:1px solid var(--utags-action-button-border-color);text-shadow:none;text-align:center;font-family:revert}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags{list-style-type:none;margin:0;padding:0 0 10px 0 !important;display:flex !important;flex-direction:row;flex-wrap:wrap}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags:empty+button{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag:hover{--utags-text-tag-color: #000;--utags-text-tag-border-color: #000;--utags-text-tag-background-color: unset;opacity:.5;text-decoration:line-through !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) :not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_current_tags li .utags_text_tag[data-utags_tag=":visited"]:hover{--utags-text-tag-background-color: var( --utags-visited-tag-background-color );--utags-text-tag-border-color: var(--utags-visited-tag-background-color);opacity:.3}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) .utags_list_wrapper{display:flex;justify-content:space-between;max-height:200px;overflow-y:auto}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list{flex-grow:1;list-style-type:none;margin:0;padding:10px 0 10px 0}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:empty{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list:not(:first-child){margin-left:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list::before{content:attr(data-utags_list_name);position:sticky;z-index:1;top:0;display:block;font-size:12px;font-weight:600;text-align:left;padding:0 8px 0 8px;cursor:default;background-color:#f8fafe}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li{box-sizing:border-box;cursor:pointer;font-size:12px;height:18px;display:flex;align-items:center;padding:0 8px 0 8px;margin:0;max-width:150px;overflow:hidden;text-overflow:ellipsis}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li.utags_active2{background-color:#fef2f2}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--utags-text-tag-font-family) !important;font-size:12px;line-height:1}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list.utags_emoji_list li span{font-family:var(--utags-emoji-tag-font-family) !important;line-height:unset !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list .utags_text_tag::before{display:none !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) ul.utags_select_list.utags_disable_tag_style .utags_text_tag{--utags-text-tag-color: #000;--utags-text-tag-border-width: 0;--utags-text-tag-border-color: unset;--utags-text-tag-background-color: #ffffff00 !important;--utags-text-tag-font-size: 12px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container{position:absolute;top:-100px;right:100px;z-index:1000;background-color:#bdbdbd;padding:4px 8px;border-radius:4px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a{display:inline}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_01{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) #utags_current_page_link_container a+.utags_ul_11{object-position:0% 200%;position:absolute;top:-9999px;z-index:100;margin-top:18px !important;margin-left:0px !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key=customStyleValue]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) textarea[data-key^=customStyleValue_]{height:250px}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]{transition:opacity .1s ease-in}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6807\u9898\u515A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6A19\u984C\u9EE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5E7F,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u63A8\u5EE3,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65E0\u804A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5FFD\u7565,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",ignore,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",clickbait,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",promotion,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",sb,"]{opacity:10%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u9605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u95B1,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8B80,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5DF2\u8BFB,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u65B0\u7528\u6237,"]{opacity:50%}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",hide,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u9690\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u96B1\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C4F\u853D,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5C01\u9396,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u4E0D\u518D\u663E\u793A,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",block,"]{opacity:5%;display:none}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2605\u2605\u2605,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u2606\u2606\u2606,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",!"]{opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u95DC\u6CE8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u7A0D\u540E\u9605\u8BFB,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fefce8) !important;opacity:100% !important;display:var(--utags-list-node-display) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u70ED\u95E8,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u6536\u85CF,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u91CD\u8981,"],:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node*=",\u5173\u6CE8,"]{background-image:linear-gradient(to right, rgba(255, 255, 255, 0), #fef2f2) !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_list_node]:hover{opacity:100% !important}:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag,:not(#utags_should_has_higher_specificity):not(#utags_should_has_higher_specificity) [data-utags_other="1"]+ul.utags_ul .utags_captain_tag2{color:#ff0 !important}[data-utags-visited="4"] [data-utags_list_node*=",:visited,"] [data-utags_condition_node][data-utags_visited="1"]{color:var(--utags-visited-title-color) !important}[data-utags-visited="2"] [data-utags_list_node*=",:visited,"]{opacity:var(--utags-visited-opacity)}[data-utags-visited="3"] [data-utags_list_node*=",:visited,"]{opacity:5%;display:none}.utags_no_hide [data-utags_list_node*=","]{display:var(--utags-list-node-display) !important}.utags_no_opacity_effect [data-utags_list_node*=","]{opacity:100% !important}textarea[data-key=emojiTags]{font-family:var(--utags-text-tag-font-family)}:root{--utags-list-node-display: block;--utags-captain-tag-background-color: #ffffffb3;--utags-captain-tag-background-color-overlap: #ffffffdd;--utags-captain-tag-color: #ff6361;--utags-captain-tag-hover-color: #256cf1;--utags-captain-tag-size: 14px;--utags-text-tag-color: red;--utags-text-tag-border-color: red;--utags-text-tag-background-color: unset;--utags-text-tag-font-size: 10px;--utags-text-tag-border-width: 1px;--utags-text-tag-max-width: 90px;--utags-text-tag-white-space: nowrap;--utags-text-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-emoji-tag-border-color: #fff0;--utags-emoji-tag-background-color: #fff0;--utags-emoji-tag-font-size: 12px;--utags-emoji-tag-border-width: 0;--utags-emoji-tag-font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-star-tag-color: #ffd700;--utags-star-tag-border-color: #fff0;--utags-star-tag-background-color: #fff0;--utags-star-tag-font-size: 14px;--utags-star-tag-border-width: 0;--utags-star-tag-font-family: "helvetica neue", "Helvetica", "microsoft yahei", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "noto color emoji", "android emoji", "emojisymbols", "emojione mozilla", "twemoji mozilla", "Segoe UI", "Noto Sans";--utags-visited-tag-background-color: #bdbdbd;--utags-visited-tag-size: 11px;--utags-visited-title-color: #aaa;--utags-visited-opacity: 10%;--utags-button-text-color: #1a73e8;--utags-button-bg-color: #ffffff;--utags-button-border-color: #dadce0;--utags-button-hover-bg-color: #4285f40a;--utags-button-hover-border-color: #d2e3fc;--utags-action-button-text-color: #ffffff;--utags-action-button-bg-color: #1a73e8;--utags-action-button-border-color: #1a73e8;--utags-action-button-hover-bg-color: #1a73e8e6;--utags-action-button-hover-border-color: #1a73e8e6;--utags-notag-ul-disply-1: inline;--utags-notag-ul-float-1: none;--utags-notag-ul-height-1: unset;--utags-notag-ul-width-1: unset;--utags-notag-ul-position-1: unset;--utags-notag-ul-top-1: unset;--utags-notag-captain-tag-top-1: 0;--utags-notag-captain-tag-left-1: 0;--utags-notag-ul-disply-2: block;--utags-notag-ul-height-2: 0;--utags-notag-ul-width-2: 0;--utags-notag-ul-position-2: unset;--utags-notag-ul-top-2: unset;--utags-notag-captain-tag-top-2: -22px;--utags-notag-captain-tag-left-2: -4px;--utags-notag-ul-disply-3: block;--utags-notag-ul-height-3: 0;--utags-notag-ul-width-3: 0;--utags-notag-ul-position-3: absolute;--utags-notag-ul-top-3: 0;--utags-notag-captain-tag-top-3: 0;--utags-notag-captain-tag-left-3: -4px;--utags-notag-ul-disply-4: block;--utags-notag-ul-height-4: 0;--utags-notag-ul-width-4: 0;--utags-notag-ul-position-4: absolute;--utags-notag-ul-top-4: unset;--utags-notag-captain-tag-top-4: 0;--utags-notag-captain-tag-left-4: -4px;--utags-notag-ul-disply-5: block;--utags-notag-ul-height-5: 0;--utags-notag-ul-width-5: 0;--utags-notag-ul-position-5: absolute;--utags-notag-ul-top-5: -9999px;--utags-notag-captain-tag-top-5: 0;--utags-notag-captain-tag-left-5: -4px;--utags-notag-ul-disply: var(--utags-notag-ul-disply-1);--utags-notag-ul-float: var(--utags-notag-ul-float-1);--utags-notag-ul-height: var(--utags-notag-ul-height-1);--utags-notag-ul-width: var(--utags-notag-ul-width-1);--utags-notag-ul-position: var(--utags-notag-ul-position-1);--utags-notag-ul-top: var(--utags-notag-ul-top-1);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-1);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-1)}table{--utags-list-node-display: table-row-group}[data-utags_darkmode="1"]{--utags-visited-title-color: #666}'
+  var SHADOW_SIGNAL_EVENT = "UTAGS_SHADOW_ROOT_CREATED"
+  function interceptShadowDOM() {
+    const originalAttachShadow = Element.prototype.attachShadow
+    if (typeof originalAttachShadow !== "function") {
+      return
+    }
+    Element.prototype.attachShadow = function (init) {
+      if (init && init.mode === "closed") {
+        init.mode = "open"
+      }
+      const shadow = originalAttachShadow.call(this, init)
+      try {
+        const event = new CustomEvent(SHADOW_SIGNAL_EVENT, {
+          bubbles: true,
+          composed: true,
+          detail: { isShadowSignal: true },
+        })
+        this.dispatchEvent(event)
+      } catch (error) {
+        console.error(
+          "[utags-bridge] \u4FE1\u53F7\u53D1\u9001\u5931\u8D25:",
           error
         )
-      },
-      ontimeout() {
-        console.error("[UTags Extension] HTTP request timeout")
-        sendHttpError(id, "Request timeout", event)
-      },
-    })
-  }
-  function sendHttpResponse(requestId, responseData, event) {
-    const responseMessage = {
-      type: "HTTP_RESPONSE",
-      source: "utags-extension",
-      id: requestId,
-      payload: responseData,
-    }
-    if (event.source) {
-      event.source.postMessage(responseMessage, { targetOrigin: event.origin })
-    }
-  }
-  function sendHttpError(requestId, error, event, details) {
-    const errorMessage = {
-      type: "HTTP_ERROR",
-      source: "utags-extension",
-      id: requestId,
-      payload: {
-        error,
-        details,
-      },
-    }
-    if (event.source) {
-      event.source.postMessage(errorMessage, { targetOrigin: event.origin })
-    }
-  }
-  function handlePing(message, event) {
-    console.log("[UTags Extension] Received ping, sending pong")
-    const pongMessage = {
-      type: "PONG",
-      source: "utags-extension",
-      id: message.id,
-    }
-    if (event.source) {
-      event.source.postMessage(pongMessage, { targetOrigin: event.origin })
-    }
-  }
-  function messageListener(event) {
-    if (event.origin !== globalThis.location.origin) {
-      return
-    }
-    const message = event.data
-    try {
-      if (
-        !message ||
-        typeof message !== "object" ||
-        !message.type ||
-        !message.id
-      ) {
-        return
       }
-      if (message.source !== "utags-webapp") {
-        return
-      }
-      console.log("[UTags Extension] Received message:", message.type)
-      switch (message.type) {
-        case "PING": {
-          handlePing(message, event)
-          break
-        }
-        case "HTTP_REQUEST": {
-          handleHttpRequest(message, event)
-          break
-        }
-        default: {
-          console.log(
-            "[UTags Extension] Unknown message type: ".concat(message.type)
-          )
-        }
-      }
-    } catch (error) {
-      console.error("[UTags Extension] Error handling message:", error)
-      if (message && message.id) {
-        sendHttpError(
-          message.id,
-          error instanceof Error ? error.message : String(error),
-          event,
-          {
-            context: "messageListener",
-            messageType: message.type,
-          }
-        )
-      }
+      return shadow
     }
-  }
-  function setupWebappBridge() {
-    window.addEventListener("message", messageListener)
-    console.log("[UTags Extension] ready for HTTP proxy requests")
   }
   var DEFAULT_EXCLUDE_TAGS = [
     "script",
@@ -5358,57 +5090,486 @@
     "audio",
     "object",
   ]
-  function traverseAllShadowRoots(
-    callback,
-    rootElement = document.documentElement,
-    options = {}
-  ) {
-    const {
-      includeTags,
-      excludeTags = [],
-      maxDepth = 10,
-      useDefaultExcludeTags = true,
-    } = options
-    const includeTagsSet = includeTags
-      ? new Set(includeTags.map((tag) => tag.toLowerCase()))
-      : null
-    const excludeTagsSet = /* @__PURE__ */ new Set([
-      ...(useDefaultExcludeTags ? DEFAULT_EXCLUDE_TAGS : []),
-      ...excludeTags.map((tag) => tag.toLowerCase()),
-    ])
-    function traverseElement(element, currentDepth) {
-      if (currentDepth > maxDepth) {
-        console.warn("Maximum traversal depth reached, stopping traversal")
-        return
+  var EXCLUDE_TAGS_SET = new Set(DEFAULT_EXCLUDE_TAGS)
+  function isScanTarget(node) {
+    return (
+      node instanceof HTMLElement &&
+      !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase())
+    )
+  }
+  function setUtags(element, keyOrUserTag, meta) {
+    if (typeof keyOrUserTag === "string") {
+      setElementUtags(element, { key: keyOrUserTag, meta: meta || {} })
+    } else {
+      setElementUtags(element, keyOrUserTag)
+    }
+  }
+  interceptShadowDOM()
+  var BUSINESS_ATTRIBUTES = [
+    "href",
+    "data-utags",
+    "data-utags_link",
+    "data-utags_ignore",
+    "data-utags_exclude",
+  ]
+  var MATCH_ATTR = "data-utags-matched"
+  var UTagsScanner = class {
+    constructor(callback, options = {}) {
+      this.callback = callback
+      __publicField(this, "results")
+      __publicField(this, "initialStack")
+      __publicField(this, "incrementalStack")
+      __publicField(this, "isScanning")
+      __publicField(this, "isCleaning")
+      __publicField(this, "scannedShadowRoots")
+      __publicField(this, "observer")
+      __publicField(this, "stats")
+      __publicField(this, "root")
+      __publicField(this, "include", "[data-utags_link]")
+      __publicField(this, "ignore", "[data-utags_ignore]")
+      __publicField(this, "exclude", "[data-utags_exclude]")
+      __publicField(this, "onBeforeMatch")
+      __publicField(this, "startTime", 0)
+      __publicField(this, "currentScanActiveTime", 0)
+      __publicField(this, "loopCount", 0)
+      __publicField(this, "currentScanNodesProcessed", 0)
+      this.setOptions(options)
+      this.results = /* @__PURE__ */ new Set()
+      this.initialStack = []
+      this.incrementalStack = []
+      this.isScanning = false
+      this.isCleaning = false
+      this.scannedShadowRoots = /* @__PURE__ */ new WeakSet()
+      this.observer = new MutationObserver(this.handleMutations.bind(this))
+      this.stats = {
+        lastScanDuration: 0,
+        totalNodesProcessed: 0,
+        pureScanDuration: 0,
       }
-      const tagName = element.tagName.toLowerCase()
-      if (excludeTagsSet.has(tagName)) {
-        return
-      }
-      if (includeTagsSet && !includeTagsSet.has(tagName)) {
-        traverseChildren(element, currentDepth)
-        return
-      }
-      if (element.shadowRoot) {
-        callback(element.shadowRoot, element)
-        const shadowChildren = element.shadowRoot.children
-        for (const shadowChild of shadowChildren) {
-          traverseElement(shadowChild, currentDepth + 1)
+      this.root = void 0
+      const self = this
+      globalThis.addEventListener(
+        SHADOW_SIGNAL_EVENT,
+        (e) => {
+          const host3 = e.target
+          if (
+            host3 &&
+            host3.shadowRoot &&
+            self.isDescendantOfRoot(host3) &&
+            !self.scannedShadowRoots.has(host3.shadowRoot)
+          ) {
+            self.enqueueScan(host3.shadowRoot, true, false)
+          }
+        },
+        true
+      )
+    }
+    /**
+     * 检查节点是否是 root 的后代（穿透 Shadow DOM）
+     */
+    isDescendantOfRoot(node) {
+      if (!this.root) return false
+      let current = node
+      while (current) {
+        if (this.root.contains(current)) return true
+        const rootNode = current.getRootNode()
+        if (rootNode instanceof ShadowRoot) {
+          current = rootNode.host
+        } else {
+          return false
         }
-        return
       }
-      traverseChildren(element, currentDepth)
+      return false
     }
-    function traverseChildren(element, currentDepth) {
-      const children = element.children
-      for (const child of children) {
-        traverseElement(child, currentDepth + 1)
+    setOptions(options) {
+      var _a, _b, _c
+      this.include =
+        ((_a = options.include) == null ? void 0 : _a.join(",")) ||
+        "[data-utags_link]"
+      this.ignore =
+        ((_b = options.ignore) == null ? void 0 : _b.join(",")) ||
+        "[data-utags_ignore]"
+      this.exclude =
+        ((_c = options.exclude) == null ? void 0 : _c.join(",")) ||
+        "[data-utags_exclude]"
+      this.onBeforeMatch =
+        typeof options.onBeforeMatch === "function"
+          ? options.onBeforeMatch
+          : void 0
+    }
+    /**
+     * 【核心改进】统一管理节点的匹配状态变更
+     * 所有的 add/delete 逻辑全部收拢至此
+     */
+    _updateNodeStatus(node, shouldMatch) {
+      const isCurrentlyMatched = this.results.has(node)
+      let finalDecision = false
+      if (shouldMatch) {
+        finalDecision = this.onBeforeMatch
+          ? this.onBeforeMatch(node, "add") !== false
+          : true
+      }
+      if (finalDecision) {
+        if (!isCurrentlyMatched) {
+          this.results.add(node)
+          node.setAttribute(MATCH_ATTR, "")
+        }
+      } else {
+        if (
+          isCurrentlyMatched || // Cloned utags_ul node
+          node.classList.contains("utags_ul") || // Cloned utags target element
+          node.hasAttribute("data-utags_id")
+        ) {
+          if (this.onBeforeMatch) this.onBeforeMatch(node, "delete")
+          node.removeAttribute(MATCH_ATTR)
+        }
+        if (isCurrentlyMatched) {
+          this.results.delete(node)
+        }
       }
     }
-    traverseElement(rootElement, 0)
+    /**
+     * 热更新配置接口
+     */
+    updateConfig(newOptions) {
+      console.log(
+        "\u{1F680} \u89C4\u5219\u70ED\u66F4\u65B0\u4E2D...",
+        newOptions
+      )
+      for (const node of this.results) this._updateNodeStatus(node, false)
+      this.results.clear()
+      this.setOptions(newOptions)
+      this.initialStack = []
+      this.incrementalStack = []
+      if (this.root) {
+        this.enqueueScan(this.root, true, true)
+      }
+    }
+    get observerConfig() {
+      return {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: BUSINESS_ATTRIBUTES,
+      }
+    }
+    start(root) {
+      if (!root) return
+      this.root = root
+      this.observer.observe(root, this.observerConfig)
+      this.enqueueScan(root, true, true)
+    }
+    /**
+     * 核心逻辑：检查节点或其祖先是否被排除
+     */
+    checkExcluded(node) {
+      if (!(node instanceof Element)) return false
+      return Boolean(node.closest(this.exclude))
+    }
+    /**
+     * 尝试触发回调（需满足所有队列为空且无正在进行的任务）
+     */
+    tryTriggerCallback() {
+      if (
+        this.initialStack.length === 0 &&
+        this.incrementalStack.length === 0 &&
+        !this.isCleaning &&
+        !this.isScanning
+      ) {
+        this.callback(Array.from(this.results), this.stats)
+      }
+    }
+    handleMutations(mutations) {
+      let needsUpdate = false
+      let hasRemoval = false
+      for (const m of mutations) {
+        if (m.removedNodes.length > 0) {
+          for (let i3 = 0; i3 < m.removedNodes.length; i3++) {
+            const n = m.removedNodes[i3]
+            if (isScanTarget(n) || n.nodeType === 11) {
+              hasRemoval = true
+              break
+            }
+          }
+        }
+        if (m.type === "childList" && m.addedNodes.length > 0) {
+          for (let i3 = 0; i3 < m.addedNodes.length; i3++) {
+            const n = m.addedNodes[i3]
+            if (n instanceof HTMLElement) {
+              if (n.classList.contains("utags_ul")) {
+                if (this.onBeforeMatch) this.onBeforeMatch(n, "delete")
+              } else if (isScanTarget(n)) {
+                this.enqueueScan(n, true, false)
+                needsUpdate = true
+              }
+            }
+          }
+        } else if (m.type === "attributes" && m.target instanceof Element) {
+          if (m.target.matches(this.exclude)) {
+            this.removeFromResultsRecursive(m.target)
+          }
+          this.enqueueScan(m.target, true, false)
+          needsUpdate = true
+        }
+      }
+      if (needsUpdate || hasRemoval) {
+        console.log("[sanner] handleMutations", mutations)
+      }
+      if (hasRemoval && !this.isCleaning) {
+        console.log(
+          "\u53D1\u73B0\u5220\u9664\u52A8\u4F5C\uFF0C\u89E6\u53D1\u515C\u5E95\u6E05\u7406"
+        )
+        this.isCleaning = true
+        requestIdleCallback((d) => {
+          this.cleanupDisconnectedNodes(d)
+        })
+      }
+      if (needsUpdate) {
+        this.tryTriggerCallback()
+      }
+    }
+    /**
+     * 物理递归清理结果集
+     */
+    removeFromResultsRecursive(node) {
+      if (!(node instanceof Element)) return
+      const cleanupStack = [node]
+      while (cleanupStack.length > 0) {
+        const current = cleanupStack.pop()
+        if (!current) continue
+        if (current instanceof Element) {
+          this._updateNodeStatus(current, false)
+          if (current.shadowRoot) cleanupStack.push(current.shadowRoot)
+          for (let i3 = 0; i3 < current.children.length; i3++) {
+            cleanupStack.push(current.children[i3])
+          }
+        } else if (current instanceof ShadowRoot) {
+          for (let i3 = 0; i3 < current.children.length; i3++) {
+            cleanupStack.push(current.children[i3])
+          }
+        }
+      }
+    }
+    /**
+     * 兜底清理：检查连通性及祖先排除状态
+     */
+    cleanupDisconnectedNodes(deadline) {
+      const iterator = this.results.values()
+      let current = iterator.next()
+      while (
+        !current.done &&
+        (deadline ? deadline.timeRemaining() > 1 : true)
+      ) {
+        const node = current.value
+        if (!node.isConnected || this.checkExcluded(node)) {
+          if (node.isConnected) {
+          } else {
+          }
+          this._updateNodeStatus(node, false)
+        }
+        current = iterator.next()
+      }
+      if (current.done) {
+        this.isCleaning = false
+        this.tryTriggerCallback()
+      } else {
+        requestIdleCallback((d) => {
+          this.cleanupDisconnectedNodes(d)
+        })
+      }
+    }
+    /**
+     * 任务入队：根据模式分发到不同栈
+     * @param isInitial - 是否为全量/初始扫描模式
+     */
+    enqueueScan(node, scanChildren = true, isInitial = false) {
+      const task = { node, scanChildren, isInitial }
+      if (isInitial) {
+        this.initialStack.push(task)
+      } else {
+        this.incrementalStack.push(task)
+      }
+      if (!this.isScanning) {
+        this.isScanning = true
+        this.startTime = performance.now()
+        this.currentScanActiveTime = 0
+        this.loopCount = 0
+        this.currentScanNodesProcessed = 0
+        requestIdleCallback(this.processStack.bind(this))
+      }
+    }
+    processStack(deadline) {
+      const cycleStart = performance.now()
+      let currentLoopNodesProcessed = 0
+      let currentLoopNodesExcluded = 0
+      this.loopCount++
+      console.log(
+        "processStack [start]",
+        this.loopCount,
+        deadline.timeRemaining(),
+        this.initialStack.length,
+        this.incrementalStack.length
+      )
+      while (deadline.timeRemaining() > 0) {
+        let item
+        let currentStackIsInitial = false
+        if (this.initialStack.length > 0) {
+          item = this.initialStack.pop()
+          currentStackIsInitial = true
+        } else if (this.incrementalStack.length > 0) {
+          item = this.incrementalStack.pop()
+          currentStackIsInitial = false
+        } else {
+          break
+        }
+        if (!item) break
+        const { node, scanChildren, isInitial } = item
+        this.stats.totalNodesProcessed++
+        this.currentScanNodesProcessed++
+        currentLoopNodesProcessed++
+        if (!(node instanceof Element)) {
+          if (node instanceof ShadowRoot) {
+            if (!this.scannedShadowRoots.has(node)) {
+              this.scannedShadowRoots.add(node)
+              this.observer.observe(node, this.observerConfig)
+              ensureCombinedStyleForShadow(node)
+              bindShadowRootEvents(node)
+            }
+            const targetStack2 = currentStackIsInitial
+              ? this.initialStack
+              : this.incrementalStack
+            if (scanChildren && node.children) {
+              for (let i3 = node.children.length - 1; i3 >= 0; i3--) {
+                targetStack2.push({
+                  node: node.children[i3],
+                  scanChildren: true,
+                  isInitial,
+                })
+              }
+            }
+          }
+          continue
+        }
+        const matchesLocalExclude = node.matches(this.exclude)
+        const isExcluded =
+          matchesLocalExclude || (!isInitial && this.checkExcluded(node))
+        if (isExcluded) {
+          currentLoopNodesExcluded++
+          this._updateNodeStatus(node, false)
+          if (isInitial) continue
+        }
+        if (!isExcluded) {
+          if (node.matches(this.include)) {
+            const isIgnored =
+              node.matches(this.ignore) ||
+              node.querySelector(this.ignore) !== null
+            this._updateNodeStatus(node, !isIgnored && node.isConnected)
+          } else {
+            this._updateNodeStatus(node, false)
+          }
+        }
+        const targetStack = currentStackIsInitial
+          ? this.initialStack
+          : this.incrementalStack
+        if (node.shadowRoot) {
+          targetStack.push({
+            node: node.shadowRoot,
+            scanChildren: true,
+            isInitial,
+          })
+        }
+        if (scanChildren && node.childElementCount > 0) {
+          if (node.shadowRoot) {
+          } else {
+          }
+          for (let i3 = node.children.length - 1; i3 >= 0; i3--) {
+            targetStack.push({
+              node: node.children[i3],
+              scanChildren: true,
+              isInitial,
+            })
+          }
+        }
+      }
+      this.currentScanActiveTime += performance.now() - cycleStart
+      if (this.initialStack.length > 0 || this.incrementalStack.length > 0) {
+        requestIdleCallback(this.processStack.bind(this))
+      } else {
+        this.isScanning = false
+        this.stats.lastScanDuration = performance.now() - this.startTime
+        this.stats.pureScanDuration = this.currentScanActiveTime
+        console.log(
+          "\u626B\u63CF\u5B8C\u6210\u3002\u603B\u8017\u65F6: ".concat(
+            this.stats.lastScanDuration.toFixed(2),
+            "ms, "
+          ) +
+            "\u7EAF\u6267\u884C\u65F6\u95F4: ".concat(
+              this.stats.pureScanDuration.toFixed(2),
+              "ms"
+            )
+        )
+        this.tryTriggerCallback()
+      }
+    }
+  }
+  function debugScannerDifference(scannerInstance) {
+    const memorySet = scannerInstance.results
+    const domFound = /* @__PURE__ */ new Set()
+    const utagsMatched = /* @__PURE__ */ new Set()
+    function findInDOM(root) {
+      if (!root) return
+      if (root instanceof Element && root.matches(scannerInstance.include)) {
+        const isIgnored =
+          root.closest(scannerInstance.exclude) ||
+          root.matches(scannerInstance.ignore) ||
+          root.querySelector(scannerInstance.ignore) ||
+          (scannerInstance.onBeforeMatch && // @ts-expect-error debug
+            scannerInstance.onBeforeMatch(root, "add", true) === false)
+        if (!isIgnored) domFound.add(root)
+      }
+      if (
+        root instanceof Element &&
+        root.getAttribute("data-utags_id") !== null &&
+        !root.classList.contains("utags_ul")
+      ) {
+        utagsMatched.add(root)
+      }
+      if (root instanceof Element && root.shadowRoot) findInDOM(root.shadowRoot)
+      let child = root.firstChild
+      while (child) {
+        findInDOM(child)
+        child = child.nextSibling
+      }
+    }
+    findInDOM(document.body)
+    const ghostNodes = [...memorySet].filter((x) => !domFound.has(x))
+    const missingNodes = [...domFound].filter((x) => !memorySet.has(x))
+    const utagsGhostNodes = [...memorySet].filter((x) => !utagsMatched.has(x))
+    const utagsMissingNodes = [...utagsMatched].filter((x) => !memorySet.has(x))
+    console.log("--- \u626B\u63CF\u5668\u4E00\u81F4\u6027\u68C0\u67E5 ---")
+    console.log("\u5185\u5B58 Set \u603B\u6570: ".concat(memorySet.size))
+    console.log("\u5B9E\u9645 DOM \u603B\u6570: ".concat(domFound.size))
+    console.log(
+      "UTags \u5339\u914D\u8282\u70B9\u603B\u6570: ".concat(utagsMatched.size)
+    )
+    if (ghostNodes.length > 0)
+      console.warn("\u274C \u5E7D\u7075\u8282\u70B9:", ghostNodes)
+    if (missingNodes.length > 0)
+      console.error("\u274C \u7F3A\u5931\u8282\u70B9:", missingNodes)
+    if (utagsGhostNodes.length > 0)
+      console.info("\u274C UTags \u5E7D\u7075\u8282\u70B9:", utagsGhostNodes)
+    if (utagsMissingNodes.length > 0)
+      console.error("\u274C UTags \u7F3A\u5931\u8282\u70B9:", utagsMissingNodes)
+    if (
+      ghostNodes.length === 0 &&
+      missingNodes.length === 0 &&
+      utagsGhostNodes.length === 0 &&
+      utagsMissingNodes.length === 0
+    )
+      console.info("\u2705 \u5B8C\u5168\u4E00\u81F4\uFF01")
   }
   var default_default =
-    ":not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:100% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}"
+    ":not(#a):not(#b):not(#c) .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .utags_ul_1{object-position:0% 200%}"
   var default_default2 = /* @__PURE__ */ (() => {
     return {
       matches: /.*/,
@@ -5437,19 +5598,6 @@
   })()
   var v2ex_default =
     ':not(#a):not(#b):not(#c) .header h1+.utags_ul_0{object-position:0% 200%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: 10px;--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5)}:not(#a):not(#b):not(#c) .title .node-breadcrumb[data-utags_fit_content="1"]{display:inline-block !important;max-width:fit-content !important}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .title .node-breadcrumb+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: 2px;--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .box .header>span[data-utags_flag=tag_page]+.utags_ul_1{object-position:200% 50%;position:absolute;top:-9999px}:not(#a):not(#b):not(#c) .xna-entry,:not(#a):not(#b):not(#c) .planet-post{--utags-list-node-display: flex}'
-  function setUtags(element, keyOrUserTag, meta) {
-    if (typeof keyOrUserTag === "string") {
-      setElementUtags(element, { key: keyOrUserTag, meta: meta || {} })
-    } else {
-      setElementUtags(element, keyOrUserTag)
-    }
-  }
-  function getUtags(element) {
-    return getElementUtags(element)
-  }
-  function removeUtags(element) {
-    return deleteElementUtags(element)
-  }
   var v2ex_default2 = (() => {
     function getCanonicalUrl2(url) {
       if (url.startsWith("https://links.pipecraft")) {
@@ -6630,7 +6778,7 @@
     }
   })()
   var bilibili_com_default =
-    ':not(#a):not(#b):not(#c) #utags_absolute_ul_container{position:absolute;top:0;z-index:2}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) #utags_absolute_ul_container .utags_ul_1{object-position:0% 200%;position:absolute;top:-9999px;margin-top:-2px !important;margin-left:0px !important;flex-wrap:nowrap !important}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0 .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0 .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}'
+    ':not(#a):not(#b):not(#c) .utags_ul_0_{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .utags_ul_1_{object-position:200% 50%;position:absolute;top:-9999px;margin-top:0px !important;margin-left:0px !important;flex-wrap:nowrap !important}:not(#a):not(#b):not(#c) .video-page-card-small div.upname+.utags_ul_1__{display:block !important}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0__,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0__,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0__,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0__,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0__,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0__{display:block !important;height:0}:not(#a):not(#b):not(#c) .bili-video-card__info--right a[href*="/video/"]+.utags_ul_0__ .utags_captain_tag,:not(#a):not(#b):not(#c) .bili-video-card__info--right h3.bili-video-card__info--tit+.utags_ul_0__ .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small a[href*="/video/"]+.utags_ul_0__ .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-card-small h3.bili-video-card__info--tit+.utags_ul_0__ .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small a[href*="/video/"]+.utags_ul_0__ .utags_captain_tag,:not(#a):not(#b):not(#c) .video-page-operator-card-small h3.bili-video-card__info--tit+.utags_ul_0__ .utags_captain_tag{top:-22px;background-color:hsla(0,0%,100%,.8666666667) !important}'
   var bilibili_com_default2 = /* @__PURE__ */ (() => {
     const prefix2 = "https://www.bilibili.com/"
     const prefix22 = "https://space.bilibili.com/"
@@ -6662,130 +6810,42 @@
       }
       return void 0
     }
+    function waitForVideoReady() {
+      if (location.href.startsWith(prefix2 + "video/")) {
+        if ($(".bpx-state-loading")) {
+          setAttribute($(".right-container"), "data-utags_exclude", "")
+          setAttribute(
+            $("h1.video-title,h1.title-text"),
+            "data-utags_exclude",
+            ""
+          )
+          return
+        }
+        if (!$("bili-comments")) {
+          setAttribute($(".right-container"), "data-utags_exclude", "")
+          setAttribute(
+            $("h1.video-title,h1.title-text"),
+            "data-utags_exclude",
+            ""
+          )
+          return
+        }
+        removeAttribute($(".right-container"), "data-utags_exclude")
+        removeAttribute($("h1.video-title,h1.title-text"), "data-utags_exclude")
+      }
+    }
     return {
       matches: /bilibili\.com|biligame\.com/,
-      excludeSelectors: ["*"],
-      addExtraMatchedNodes(matchedNodesSet) {
-        if (location.href.startsWith(prefix2 + "video/")) {
-          if ($(".bpx-state-loading")) {
-            return
-          }
-          const img = $(".bpx-player-follow-face")
-          const img2 = $("img.video-capture-img")
-          if (
-            !(img == null ? void 0 : img.src) ||
-            !(img2 == null ? void 0 : img2.src)
-          ) {
-            return
+      preProcess() {
+        waitForVideoReady()
+        const element = $('h1[data-e2e="user-title"]')
+        if (element) {
+          const title = getTrimmedTitle(element)
+          const key = getUserProfileUrl(location.href)
+          if (title && key) {
+            setUtagsAttributes(element, { key, type: "user" })
           }
         }
-        const elements = $$(
-          ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
-        )
-        for (const element2 of elements) {
-          const userId = element2.dataset.userId
-          if (!userId) {
-            return false
-          }
-          const title = getTrimmedTitle(element2)
-          const key = prefix22 + userId
-          const meta = { title, type: "user" }
-          setUtags(element2, key, meta)
-          element2.dataset.utags_node_type = "link"
-          matchedNodesSet.add(element2)
-        }
-        const elements2 = $$(".upname a,a.bili-video-card__info--owner")
-        for (const element2 of elements2) {
-          const href = element2.href
-          if (href.startsWith(prefix22)) {
-            const key = getUserProfileUrl(href)
-            if (key) {
-              const nameElement = $(
-                ".name,.bili-video-card__info--author",
-                element2
-              )
-              if (nameElement) {
-                const title = getTrimmedTitle(nameElement)
-                const meta = { title, type: "user" }
-                setUtags(nameElement, key, meta)
-                nameElement.dataset.utags_node_type = "link"
-                matchedNodesSet.add(nameElement)
-              }
-            }
-          }
-        }
-        const elements3 = $$(
-          [
-            "a.up-name",
-            "a.card-user-name",
-            ".usercard-wrap .user .name",
-            ".comment-list .user .name",
-            ".user-card .user .name",
-            "a[data-usercard-mid]",
-            "a.user-name",
-            ".user-name a",
-            'a[href^="https://space.bilibili.com/"]',
-            "a.staff-name",
-            ".floor-single-card a.sub-title",
-          ].join(",")
-        )
-        for (const element2 of elements3) {
-          const nameElement = $(
-            ".name,.bili-video-card__info--author",
-            element2
-          )
-          if (nameElement) {
-            continue
-          }
-          const href = element2.href
-          if (href.startsWith(prefix22)) {
-            const key = getUserProfileUrl(href)
-            if (key) {
-              let title = getTrimmedTitle(element2)
-              if (title) {
-                title = title.replace(/^@/, "")
-                const meta = { title, type: "user" }
-                setUtags(element2, key, meta)
-                matchedNodesSet.add(element2)
-              }
-            }
-          }
-        }
-        traverseAllShadowRoots(
-          (shadowRoot, hostElement) => {
-            const elements5 = $$("[data-user-profile-id] a", shadowRoot)
-            for (const element2 of elements5) {
-              const href = element2.href
-              if (href.startsWith(prefix22)) {
-                const key = getUserProfileUrl(href)
-                if (key) {
-                  let title = getTrimmedTitle(element2)
-                  if (title) {
-                    title = title.replace(/^@/, "")
-                    const meta = { title, type: "user" }
-                    setUtags(element2, key, meta)
-                    element2.dataset.utags_absolute = "1"
-                    matchedNodesSet.add(element2)
-                  }
-                }
-              }
-            }
-          },
-          document.documentElement,
-          {
-            maxDepth: 50,
-            includeTags: [
-              "bili-comments",
-              "bili-comment-thread-renderer",
-              "bili-comment-renderer",
-              "bili-comment-replies-renderer",
-              "bili-comment-reply-renderer",
-              "bili-comment-user-info",
-              "bili-rich-text",
-              "bili-user-profile",
-            ],
-          }
-        )
         if (
           location.href.startsWith(prefix22) ||
           location.href.startsWith(prefix3 + "space/")
@@ -6797,49 +6857,108 @@
             const title = getTrimmedTitle(element2)
             const key = getUserProfileUrl(location.href)
             if (title && key) {
-              const meta = { title, type: "user" }
-              setUtags(element2, key, meta)
-              element2.dataset.utags_node_type = "link"
-              matchedNodesSet.add(element2)
+              setUtagsAttributes(element2, { key, type: "user" })
             }
           }
         }
-        const element = $("h1.video-title,h1.title-text")
-        if (element) {
-          const title = getTrimmedTitle(element)
-          const key = getVideoUrl(location.href)
-          if (title && key) {
-            const meta = { title, type: "video" }
-            setUtags(element, key, meta)
-            matchedNodesSet.add(element)
-          }
-        }
-        const elements4 = $$(
-          [
-            ".bili-video-card__info--right a",
-            ".video-page-card-small .info a",
-            ".video-page-operator-card-small .info a",
-            ".bili-video-card__title a",
-            ".top-section__content a.top-video__title",
-          ].join(",")
+        const elements = $$(
+          ".user-name[data-user-id],.sub-user-name[data-user-id],.jump-link.user[data-user-id]"
         )
-        for (const element2 of elements4) {
-          const key = getVideoUrl(element2.href)
-          if (key) {
+        for (const element2 of elements) {
+          const userId = element2.dataset.userId
+          if (!userId) {
+            return false
+          }
+          const key = prefix22 + userId
+          setUtagsAttributes(element2, { key, type: "user" })
+        }
+        {
+          const element2 = $("h1.video-title,h1.title-text")
+          if (element2) {
             const title = getTrimmedTitle(element2)
-            const target =
-              element2.parentElement.tagName === "H3"
-                ? element2.parentElement
-                : element2
-            if (title) {
-              const meta = { title, type: "video" }
-              setUtags(target, key, meta)
-              target.dataset.utags_node_type = "link"
-              matchedNodesSet.add(target)
+            const key = getVideoUrl(location.href)
+            if (title && key) {
+              setUtagsAttributes(element2, { key, type: "video" })
             }
           }
         }
       },
+      listNodesSelectors: [],
+      conditionNodesSelectors: [],
+      validate(element, href) {
+        if (
+          !href.includes("bilibili.com") ||
+          !(element instanceof HTMLAnchorElement)
+        ) {
+          return true
+        }
+        let key = getUserProfileUrl(href)
+        if (key) {
+          const titleElement = $(
+            ".name,.bili-video-card__info--author",
+            element
+          )
+          const title = getTrimmedTitle(titleElement || element).replace(
+            /^@/,
+            ""
+          )
+          if (!title) {
+            return false
+          }
+          const targetElement = element.closest(
+            ".video-page-card-small div.upname"
+          )
+          if (targetElement && targetElement !== element) {
+            setUtagsAttributes(targetElement, { key, type: "user", title })
+            return false
+          }
+          const meta = { type: "user", title }
+          setUtags(element, key, meta)
+          return true
+        }
+        key = getVideoUrl(href)
+        if (key) {
+          const titleElement = $('h3,[data-e2e="browse-username"]', element)
+          const title = getTrimmedTitle(titleElement || element)
+          if (!title) {
+            return false
+          }
+          const targetElement = element.closest("h3.bili-video-card__info--tit")
+          if (targetElement && targetElement !== element) {
+            setUtagsAttributes(targetElement, { key, type: "video", title })
+            return false
+          }
+          const meta = { type: "video", title }
+          setUtags(element, key, meta)
+          return true
+        }
+        return true
+      },
+      excludeSelectors: [
+        ".bili-header",
+        ".large-header",
+        ".header-channel",
+        ".nav-bar",
+        ".primary-btn",
+        "a.send-msg",
+        "a.message",
+        "a.up-avatar",
+        ".player-wrap",
+        ".video-toolbar-container",
+        ".right-container-inner .ad-report",
+        ".danmaku-box",
+        ".slide-ad-exp",
+        ".video-card-ad-small",
+        ".rcmd-tab .video-pod",
+        ".usercard-wrap .social",
+        "#fans",
+        "#follow",
+      ],
+      validMediaSelectors: [
+        "svg.icon-up",
+        "svg.bili-video-card__info--owner__up",
+        ".upname svg",
+      ],
       getStyle: () => bilibili_com_default,
     }
   })()
@@ -7613,8 +7732,9 @@
         "aside .w-full .select-none",
       ],
       conditionNodesSelectors: [
-        '[data-utags_list_node] [data-utags]:not([href^="https://www.v2ex.com/member/"])',
-        '[data-utags_list_node] a[href^="https://www.v2ex.com/member/"][data-utags].hidden',
+        '.w-screen ul:not(.utags_ul) > li [data-utags]:not([href^="https://www.v2ex.com/member/"])',
+        '.w-screen ul:not(.utags_ul) > li a[href^="https://www.v2ex.com/member/"][data-utags].hidden',
+        "aside .w-full .select-none [data-utags]",
       ],
       excludeSelectors: [
         ...default_default2.excludeSelectors,
@@ -7843,16 +7963,6 @@
         doc.documentElement.dataset.utags_darkmode = isDarkMode ? "1" : "0"
         let key = getUserProfileUrl(location.href)
         if (key) {
-          let index = 0
-          for (const element2 of $$(
-            ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-          )) {
-            index++
-            if (key !== element2.dataset.utags_key || index === 2) {
-              delete element2.dataset.utags
-              removeUtags(element2)
-            }
-          }
           const element =
             $(".user-profile-names .username") ||
             $(
@@ -7860,6 +7970,15 @@
             )
           if (element) {
             setUtagsAttributes(element, { key, type: "user" })
+          }
+          const targetElement = element
+          for (const element2 of $$(
+            ".user-profile-names .username,.user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
+          )) {
+            if (element2 !== targetElement) {
+              cleanupUtags(element2)
+              removeUtagsAttributes(element2)
+            }
           }
         }
         key = getPostUrl(location.href)
@@ -7998,6 +8117,7 @@
         ".topic-map",
         ".names .second",
         ".names .user-group",
+        ".user-detail .name-wrapper",
         ".post-activity",
         ".topic-last-activity",
         ".topic-item-stats .activity",
@@ -8216,29 +8336,18 @@
         if (!href.startsWith(prefix2)) {
           return true
         }
+        const key = getProductUrl(href)
+        const targetElement = element.closest(
+          ".n_worklist .work_name,.recommend_list dt.work_name,.genre_ranking .work_name"
+        )
+        if (key && targetElement && targetElement instanceof HTMLElement) {
+          setUtagsAttributes(targetElement, { key })
+          return false
+        }
         if (href.includes("/=/")) {
           return true
         }
         return false
-      },
-      map(element) {
-        if (
-          element.tagName === "A" &&
-          element.closest(
-            ".n_worklist .work_name,.recommend_list dt.work_name,.genre_ranking .work_name"
-          )
-        ) {
-          const key = getProductUrl(element.href)
-          const title = getTrimmedTitle(element)
-          if (!key || !title) {
-            return
-          }
-          const parentElement = element.parentElement
-          const meta = { title }
-          setUtags(parentElement, key, meta)
-          parentElement.dataset.utags_node_type = "link"
-          return parentElement
-        }
       },
       excludeSelectors: [
         ...default_default2.excludeSelectors,
@@ -10019,25 +10128,17 @@
   ])
   var validMediaSelector = joinSelectors(currentSite.validMediaSelectors)
   var validateFunction = currentSite.validate || default_default2.validate
-  var mappingFunction =
-    typeof currentSite.map === "function" ? currentSite.map : void 0
+  function getCurrentSiteStyle() {
+    if (typeof currentSite.getStyle === "function") {
+      return currentSite.getStyle()
+    }
+    return void 0
+  }
   function getListNodes() {
     if (typeof currentSite.preProcess === "function") {
       currentSite.preProcess()
     }
-    if (typeof currentSite.getStyle === "function" && !$("#utags_site_style")) {
-      const styleText = currentSite.getStyle()
-      if (styleText) {
-        addElement2(doc.head, "style", {
-          textContent: styleText,
-          id: "utags_site_style",
-        })
-      }
-    }
     return listNodesSelector ? $$(listNodesSelector) : []
-  }
-  function getConditionNodes() {
-    return conditionNodesSelector ? $$(conditionNodesSelector) : []
   }
   function getCanonicalUrl(url) {
     if (!url) {
@@ -10108,104 +10209,25 @@
     }
     return true
   }
-  var isExcludedUtagsElement = (element) => {
-    if (!doc.body.contains(element)) {
-      return false
+  function updateElementUtagsMeta(element, key, originalKey, existingMeta) {
+    const meta = {}
+    const title =
+      trimTitle(element.dataset.utags_title) || getTrimmedTitle(element)
+    if (title && !isUrl(title)) {
+      meta.title = title
     }
-    return excludeSelector ? Boolean(element.closest(excludeSelector)) : false
-  }
-  var cleanupUtags = (element) => {
-    deleteElementUtags(element)
-    delete element.dataset.utags
-    delete element.dataset.utags_id
-  }
-  var addMatchedNodes = (matchedNodesSet) => {
-    if (!matchedNodesSelector) {
-      return
+    const type = element.dataset.utags_type
+    if (type) {
+      meta.type = type
     }
-    const elements = $$(matchedNodesSelector)
-    if (elements.length === 0) {
-      return
-    }
-    const process2 = (element) => {
-      var _a
-      if (!preValidate(element)) {
-        cleanupUtags(element)
-        return
-      }
-      const href = element.dataset.utags_link || element.href
-      if (
-        !href ||
-        typeof href !== "string" ||
-        !validateFunction(element, href)
-      ) {
-        cleanupUtags(element)
-        return
-      }
-      if (mappingFunction) {
-        const newElement = mappingFunction(element)
-        if (newElement && newElement !== element) {
-          cleanupUtags(element)
-          process2(newElement)
-          return
-        }
-      }
-      if (isExcludedUtagsElement(element) || !isValidUtagsElement(element)) {
-        cleanupUtags(element)
-        return
-      }
-      const originalKey = href
-      let utags = getElementUtags(element)
-      if (!utags || (utags.originalKey && utags.originalKey !== originalKey)) {
-        utags = { key: "", meta: {} }
-      }
-      const key = utags.key || getCanonicalUrl(originalKey)
-      if (!key) {
-        cleanupUtags(element)
-        return
-      }
-      const title =
-        trimTitle(element.dataset.utags_title) || getTrimmedTitle(element)
-      const meta = {}
-      if (title && !isUrl(title)) {
-        meta.title = title
-      }
-      const type = element.dataset.utags_type
-      if (type) {
-        meta.type = type
-      }
-      if ((_a = utags.meta) == null ? void 0 : _a.title) {
-        utags.meta.title = trimTitle(utags.meta.title)
-      }
-      setElementUtags(element, {
-        key,
-        originalKey,
-        meta: utags.meta ? Object.assign(meta, utags.meta) : meta,
-      })
-      matchedNodesSet.add(element)
-    }
-    for (const element of elements) {
-      try {
-        process2(element)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+    setElementUtags(element, {
+      key,
+      originalKey,
+      meta: existingMeta ? Object.assign(meta, existingMeta) : meta,
+    })
   }
   function matchedNodes() {
     const matchedNodesSet = /* @__PURE__ */ new Set()
-    try {
-      addMatchedNodes(matchedNodesSet)
-    } catch (error) {
-      console.error(error)
-    }
-    if (typeof currentSite.addExtraMatchedNodes === "function") {
-      try {
-        currentSite.addExtraMatchedNodes(matchedNodesSet)
-      } catch (error) {
-        console.error(error)
-      }
-    }
     try {
       const currentPageLink = $("#utags_current_page_link")
       if (currentPageLink) {
@@ -10234,6 +10256,679 @@
       }
     }
     return [...matchedNodesSet]
+  }
+  function scanDom(options) {
+    console.debug("UTagsScanner start", matchedNodesSelector, excludeSelector)
+    const initialOptions = {
+      include: matchedNodesSelector ? matchedNodesSelector.split(",") : void 0,
+      ignore: ["[data-utags_ignore]"],
+      exclude: excludeSelector
+        ? excludeSelector.split(",")
+        : ["[data-utags_exclude]"],
+      onBeforeMatch(node, action, debug = false) {
+        const htmlNode = node
+        if (action === "add") {
+          if (!(node instanceof HTMLElement)) {
+            return false
+          }
+          const element = node
+          if (!preValidate(element)) {
+            cleanupUtags(element)
+            return false
+          }
+          const href = element.dataset.utags_link || element.href
+          if (
+            !href ||
+            typeof href !== "string" ||
+            !validateFunction(element, href)
+          ) {
+            cleanupUtags(element)
+            return false
+          }
+          if (!isValidUtagsElement(element)) {
+            cleanupUtags(element)
+            return false
+          }
+          const originalKey = href
+          let utags = getElementUtags(element)
+          if (
+            !utags ||
+            (utags.originalKey && utags.originalKey !== originalKey)
+          ) {
+            utags = { key: "", meta: {} }
+          }
+          const key = utags.key || getCanonicalUrl(originalKey)
+          if (!key) {
+            cleanupUtags(element)
+            return false
+          }
+          updateElementUtagsMeta(element, key, originalKey, utags.meta)
+          if (!debug) {
+            if (true) {
+              htmlNode.style.outline = "2px solid gold"
+            }
+            if (options == null ? void 0 : options.onNodeMatched) {
+              options.onNodeMatched(element)
+            }
+            if (
+              conditionNodesSelector &&
+              element.matches(conditionNodesSelector) &&
+              element.dataset.utags_condition_node === void 0
+            ) {
+              element.dataset.utags_condition_node = ""
+            }
+          }
+        } else if (action === "delete") {
+          cleanupUtags(htmlNode)
+          if (!debug) htmlNode.style.outline = ""
+        }
+      },
+    }
+    let debugTimeout
+    let currentResult
+    const scanner = new UTagsScanner((list, stats) => {
+      console.debug(
+        "UTagsScanner callback",
+        "Matches: "
+          .concat(list.length, " | ActiveTime: ")
+          .concat(stats.pureScanDuration.toFixed(2), "ms")
+      )
+      currentResult = list
+      if (options == null ? void 0 : options.onScanCompleted) {
+        options.onScanCompleted(list)
+      }
+      if (true) {
+        clearTimeout(debugTimeout)
+        debugTimeout = setTimeout(() => {
+          if (scanner.isScanning || scanner.isCleaning) {
+          } else {
+            debugScannerDifference(scanner)
+          }
+        }, 100)
+      }
+    }, initialOptions)
+    if (document.body) {
+      scanner.start(document.body)
+    } else {
+      runWhenBodyExists(() => {
+        scanner.start(document.body)
+      })
+    }
+  }
+  var STYLE_ID = "utags_combined_style"
+  var combinedStyleCache = ""
+  var registeredShadowRoots = /* @__PURE__ */ new Set()
+  var sharedCSSStyleSheet
+  var sharedCSSStyleSheetText = ""
+  function getCustomStyles() {
+    const host3 = location.host
+    let styles = ""
+    const customEnabled = getSettingsValue("customStyle")
+    const customValue = getSettingsValue("customStyleValue") || ""
+    if (customEnabled && customValue) {
+      styles += "\n" + customValue
+    }
+    const siteCustomEnabled = getSettingsValue("customStyle_".concat(host3))
+    const siteCustomValue =
+      getSettingsValue("customStyleValue_".concat(host3)) || ""
+    if (siteCustomEnabled && siteCustomValue) {
+      styles += "\n" + siteCustomValue
+    }
+    return styles
+  }
+  function buildCombinedStyle() {
+    const host3 = location.host
+    const siteEnabled = getSettingsValue("enableCurrentSite_".concat(host3))
+    const siteStyle = siteEnabled ? getCurrentSiteStyle() || "" : ""
+    const customStyles = siteEnabled ? getCustomStyles() : ""
+    return [content_default, siteStyle, customStyles].filter(Boolean).join("\n")
+  }
+  function ensureStyleInRoot(root, cssText) {
+    var _a, _b
+    const rootWithAdopted = root
+    if (rootWithAdopted.adoptedStyleSheets) {
+      if (!sharedCSSStyleSheet) {
+        sharedCSSStyleSheet = new CSSStyleSheet()
+      }
+      if (sharedCSSStyleSheetText !== cssText) {
+        sharedCSSStyleSheet.replaceSync(cssText)
+        sharedCSSStyleSheetText = cssText
+      }
+      if (!rootWithAdopted.adoptedStyleSheets.includes(sharedCSSStyleSheet)) {
+        rootWithAdopted.adoptedStyleSheets = [
+          ...rootWithAdopted.adoptedStyleSheets,
+          sharedCSSStyleSheet,
+        ]
+      }
+      const existing2 =
+        root instanceof Document
+          ? root.getElementById(STYLE_ID)
+          : (_a = root.getElementById) == null
+            ? void 0
+            : _a.call(root, STYLE_ID)
+      if (existing2) {
+        existing2.remove()
+      }
+      return
+    }
+    const parent =
+      root instanceof Document ? root.head || root.documentElement : root
+    const existing =
+      root instanceof Document
+        ? root.getElementById(STYLE_ID)
+        : (_b = root.getElementById) == null
+          ? void 0
+          : _b.call(root, STYLE_ID)
+    if (existing) {
+      if (existing.textContent !== cssText) {
+        existing.textContent = cssText
+      }
+      return
+    }
+    addElement2(parent, "style", {
+      id: STYLE_ID,
+      textContent: cssText,
+    })
+  }
+  function ensureCombinedStyleForDocument() {
+    ensureStyleInRoot(doc, getCombinedStyleText())
+  }
+  function ensureCombinedStyleForShadow(root) {
+    registeredShadowRoots.add(root)
+    ensureStyleInRoot(root, getCombinedStyleText())
+  }
+  function rebuildAndApplyCombinedStyle() {
+    combinedStyleCache = buildCombinedStyle()
+    ensureStyleInRoot(doc, combinedStyleCache)
+    for (const root of registeredShadowRoots) {
+      if (root) {
+        ensureStyleInRoot(root, combinedStyleCache)
+      }
+    }
+  }
+  function getCombinedStyleText() {
+    if (!combinedStyleCache) {
+      combinedStyleCache = buildCombinedStyle()
+    }
+    return combinedStyleCache
+  }
+  var SCRIPT_NAME = "[UTags Extension Sync Adapter]"
+  var MY_EXTENSION_ID
+  var MY_EXTENSION_NAME
+  var STORAGE_KEY_EXTENSION_ID = "extension.utags.extension_id"
+  var SYNC_STORAGE_KEY_METADATA = "extension.utags.sync_metadata"
+  var SOURCE_WEBAPP = "utags-webapp"
+  var SOURCE_EXTENSION = "utags-extension"
+  var PING_MESSAGE_TYPE = "PING"
+  var PONG_MESSAGE_TYPE = "PONG"
+  var DISCOVER_MESSAGE_TYPE = "DISCOVER_UTAGS_TARGETS"
+  var DISCOVERY_RESPONSE_TYPE = "DISCOVERY_RESPONSE"
+  var GET_REMOTE_METADATA_MESSAGE_TYPE = "GET_REMOTE_METADATA"
+  var DOWNLOAD_MESSAGE_TYPE = "DOWNLOAD_DATA"
+  var UPLOAD_MESSAGE_TYPE = "UPLOAD_DATA"
+  var GET_AUTH_STATUS_MESSAGE_TYPE = "GET_AUTH_STATUS"
+  async function saveData(data) {
+    await deserializeBookmarks(data)
+  }
+  async function loadData() {
+    const data = await serializeBookmarks()
+    return data || ""
+  }
+  async function saveMetadata(metadata) {
+    await setValue2(SYNC_STORAGE_KEY_METADATA, metadata)
+  }
+  async function loadMetadata() {
+    return getValue2(SYNC_STORAGE_KEY_METADATA)
+  }
+  async function checkUserscriptAvailable() {
+    try {
+      if (typeof GM === "undefined" || !GM.xmlHttpRequest) {
+        return false
+      }
+      await new Promise((resolve, reject) => {
+        GM.xmlHttpRequest({
+          method: "GET",
+          url: "http://localhost/",
+          onload(response) {
+            resolve()
+          },
+          onerror(error) {
+            resolve()
+          },
+          ontimeout() {
+            resolve()
+          },
+          timeout: 3e3,
+        })
+      })
+      return true
+    } catch (error) {
+      console.warn("[UTags] Userscript may be disabled:", error)
+      return false
+    }
+  }
+  function getVersionNumber(metadata) {
+    const version =
+      metadata && metadata.version
+        ? parseInt10(metadata.version.replace("v", ""), 0)
+        : 0
+    return Math.max(version, 0)
+  }
+  function isValidMessage(event) {
+    if (event.origin !== location.origin) {
+      return false
+    }
+    if (
+      !/^((.*\.)?utags\.(link|top)|utags\.pipecraft\.net|localhost|127\.0\.0\.1)$/.test(
+        location.hostname
+      )
+    ) {
+      return false
+    }
+    if (!event.source || typeof event.source.postMessage !== "function") {
+      return false
+    }
+    const message = event.data
+    if (
+      !message ||
+      typeof message !== "object" ||
+      message.source !== SOURCE_WEBAPP || // Check source
+      !message.id || // Check for id
+      (message.targetExtensionId !== MY_EXTENSION_ID &&
+        message.targetExtensionId !== "*") || // Allow broadcast messages
+      !message.type || // Check for type (which is the action)
+      typeof message.type !== "string" ||
+      ![
+        PING_MESSAGE_TYPE,
+        DISCOVER_MESSAGE_TYPE,
+        GET_AUTH_STATUS_MESSAGE_TYPE,
+        GET_REMOTE_METADATA_MESSAGE_TYPE,
+        DOWNLOAD_MESSAGE_TYPE,
+        UPLOAD_MESSAGE_TYPE,
+      ].includes(message.type)
+    ) {
+      return false
+    }
+    return true
+  }
+  var isProcessingMessage = false
+  var messageHandler = async (event) => {
+    if (!MY_EXTENSION_ID) {
+      console.error("MY_EXTENSION_ID not initialized")
+      return
+    }
+    if (!isValidMessage(event)) {
+      return
+    }
+    const message = event.data
+    console.log("".concat(SCRIPT_NAME, " Received message:"), message)
+    if (isProcessingMessage) {
+      console.warn(
+        "".concat(
+          SCRIPT_NAME,
+          " Already processing a message, rejecting new request:"
+        ),
+        message.id
+      )
+      const rejectionResponse = {
+        type: message.type,
+        source: SOURCE_EXTENSION,
+        id: message.id,
+        extensionId: MY_EXTENSION_ID,
+        error:
+          "Another message is currently being processed, please try again later",
+      }
+      event.source.postMessage(rejectionResponse, event.origin)
+      return
+    }
+    isProcessingMessage = true
+    try {
+      const actionType = message.type
+      const shouldCheckUserscript =
+        isUserscript &&
+        actionType !== DISCOVER_MESSAGE_TYPE &&
+        actionType !== PING_MESSAGE_TYPE
+      if (shouldCheckUserscript) {
+        const isUserscriptAvailable = await checkUserscriptAvailable()
+        if (!isUserscriptAvailable) {
+          console.warn(
+            "".concat(
+              SCRIPT_NAME,
+              " Userscript not available, sending error response"
+            )
+          )
+          const errorResponse = {
+            type: message.type,
+            source: SOURCE_EXTENSION,
+            id: message.id,
+            extensionId: MY_EXTENSION_ID,
+            error: "Userscript not available or disabled",
+          }
+          event.source.postMessage(errorResponse, event.origin)
+          return
+        }
+      }
+      let responsePayload
+      let error
+      const payload = message.payload
+      const id = message.id
+      try {
+        const remoteMetadata = await loadMetadata()
+        switch (actionType) {
+          case DISCOVER_MESSAGE_TYPE: {
+            responsePayload = {
+              extensionId: MY_EXTENSION_ID,
+              extensionName: MY_EXTENSION_NAME,
+            }
+            event.source.postMessage(
+              {
+                source: SOURCE_EXTENSION,
+                type: DISCOVERY_RESPONSE_TYPE,
+                id,
+                extensionId: MY_EXTENSION_ID,
+                payload: responsePayload,
+              },
+              event.origin
+            )
+            console.log(
+              "".concat(SCRIPT_NAME, " Responded to discovery broadcast.")
+            )
+            return
+          }
+          case PING_MESSAGE_TYPE: {
+            responsePayload = { status: PONG_MESSAGE_TYPE }
+            console.log(
+              "".concat(SCRIPT_NAME, " PING received. Responding PONG.")
+            )
+            break
+          }
+          case GET_AUTH_STATUS_MESSAGE_TYPE: {
+            responsePayload = { status: "authenticated" }
+            console.log(
+              "".concat(SCRIPT_NAME, " Auth status requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case GET_REMOTE_METADATA_MESSAGE_TYPE: {
+            responsePayload = { metadata: remoteMetadata }
+            console.log(
+              "".concat(SCRIPT_NAME, " Metadata requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case DOWNLOAD_MESSAGE_TYPE: {
+            const data = await loadData()
+            responsePayload = { data, remoteMeta: remoteMetadata }
+            console.log(
+              "".concat(SCRIPT_NAME, " Data requested. Responding:"),
+              responsePayload
+            )
+            break
+          }
+          case UPLOAD_MESSAGE_TYPE: {
+            if (!payload || typeof payload.data !== "string") {
+              throw new Error("UPLOAD_DATA: Invalid payload")
+            }
+            const expectedMeta = payload.metadata
+            if (expectedMeta && remoteMetadata) {
+              if (
+                expectedMeta.version !== remoteMetadata.version ||
+                expectedMeta.timestamp !== remoteMetadata.timestamp
+              ) {
+                throw new Error(
+                  "Conflict: Expected remote metadata does not match current remote metadata."
+                )
+              }
+            } else if (expectedMeta && !remoteMetadata) {
+              throw new Error(
+                "Conflict: Expected remote metadata, but no remote data found."
+              )
+            } else if (!expectedMeta && remoteMetadata) {
+              throw new Error(
+                "Conflict: Remote data exists, but no expected metadata (If-Match) was provided. Possible concurrent modification."
+              )
+            }
+            const newTimestamp = Date.now()
+            const oldVersionNumber = getVersionNumber(remoteMetadata)
+            const newVersion = "v".concat(oldVersionNumber + 1)
+            const newMeta = { timestamp: newTimestamp, version: newVersion }
+            await saveData(payload.data)
+            await saveMetadata(newMeta)
+            responsePayload = { metadata: newMeta }
+            console.log(
+              "".concat(SCRIPT_NAME, " Data uploaded. New metadata:"),
+              newMeta
+            )
+            break
+          }
+        }
+      } catch (error_) {
+        error = error_ instanceof Error ? error_.message : String(error_)
+        console.log(
+          "".concat(SCRIPT_NAME, " Error processing message:"),
+          error_
+        )
+      }
+      const response = {
+        type: actionType,
+        source: SOURCE_EXTENSION,
+        id,
+        extensionId: MY_EXTENSION_ID,
+        payload: responsePayload,
+        error,
+      }
+      event.source.postMessage(response, event.origin)
+    } finally {
+      isProcessingMessage = false
+      console.log(
+        "".concat(
+          SCRIPT_NAME,
+          " Message processing complete, ready for next message"
+        )
+      )
+    }
+  }
+  async function initExtensionId() {
+    const type = isUserscript ? "Userscript" : "Extension"
+    const tag = isProduction ? "" : " - ".concat("staging".toUpperCase())
+    let storedId = await getValue2(STORAGE_KEY_EXTENSION_ID)
+    if (!storedId) {
+      storedId = "utags-"
+        .concat(type.toLowerCase(), "-")
+        .concat(crypto.randomUUID())
+      await setValue2(STORAGE_KEY_EXTENSION_ID, storedId)
+    }
+    MY_EXTENSION_ID = storedId
+    MY_EXTENSION_NAME = "UTags ".concat(type).concat(tag)
+    console.log("initExtensionId", MY_EXTENSION_ID, MY_EXTENSION_NAME)
+  }
+  function destroySyncAdapter() {
+    MY_EXTENSION_ID = void 0
+    window.removeEventListener("message", messageHandler)
+  }
+  async function initSyncAdapter() {
+    destroySyncAdapter()
+    await initExtensionId()
+    window.addEventListener("message", messageHandler)
+    console.log("".concat(SCRIPT_NAME, " initialized."))
+  }
+  function normalizeHttpMethod(method) {
+    const upper = method.toUpperCase()
+    if (
+      upper === "GET" ||
+      upper === "POST" ||
+      upper === "PUT" ||
+      upper === "DELETE"
+    ) {
+      return upper
+    }
+    return void 0
+  }
+  function handleHttpRequest(message, event) {
+    if (false) {
+      handleHttpRequestExtension(message, event)
+    } else {
+      handleHttpRequestUserscript(message, event)
+    }
+  }
+  function handleHttpRequestUserscript(message, event) {
+    const { id, payload } = message
+    const { method, url, headers, body, timeout } = payload
+    console.log(
+      "[UTags Extension] Processing HTTP request: "
+        .concat(method, " ")
+        .concat(url)
+    )
+    const normalizedMethod = normalizeHttpMethod(method)
+    if (!normalizedMethod) {
+      sendHttpError(id, "Unsupported HTTP method: ".concat(method), event)
+      return
+    }
+    const gmRequest =
+      (GM == null ? void 0 : GM.xmlHttpRequest) || GM_xmlhttpRequest
+    if (!gmRequest) {
+      sendHttpError(id, "GM.xmlHttpRequest not available", event)
+      return
+    }
+    void gmRequest({
+      method: normalizedMethod,
+      url,
+      headers: headers || {},
+      data: body,
+      timeout: timeout || 3e4,
+      onload(response) {
+        var _a, _b
+        console.log(
+          "[UTags Extension] HTTP request successful: ".concat(response.status)
+        )
+        const responseHeaders = {}
+        if (response.responseHeaders) {
+          const headerLines = response.responseHeaders.split("\r\n")
+          for (const line of headerLines) {
+            const [key, value] = line.split(": ")
+            if (key && value) {
+              responseHeaders[key.toLowerCase()] = value
+            }
+          }
+        }
+        sendHttpResponse(
+          id,
+          {
+            ok: response.status >= 200 && response.status < 300,
+            status: response.status,
+            statusText: (_a = response.statusText) != null ? _a : "",
+            headers: responseHeaders,
+            body: (_b = response.responseText) != null ? _b : "",
+          },
+          event
+        )
+      },
+      onerror(error) {
+        console.error("[UTags Extension] HTTP request failed:", error)
+        sendHttpError(
+          id,
+          error && typeof error.statusText === "string"
+            ? error.statusText
+            : "Network error",
+          event,
+          error
+        )
+      },
+      ontimeout() {
+        console.error("[UTags Extension] HTTP request timeout")
+        sendHttpError(id, "Request timeout", event)
+      },
+    })
+  }
+  function sendHttpResponse(requestId, responseData, event) {
+    const responseMessage = {
+      type: "HTTP_RESPONSE",
+      source: "utags-extension",
+      id: requestId,
+      payload: responseData,
+    }
+    if (event.source) {
+      event.source.postMessage(responseMessage, { targetOrigin: event.origin })
+    }
+  }
+  function sendHttpError(requestId, error, event, details) {
+    const errorMessage = {
+      type: "HTTP_ERROR",
+      source: "utags-extension",
+      id: requestId,
+      payload: {
+        error,
+        details,
+      },
+    }
+    if (event.source) {
+      event.source.postMessage(errorMessage, { targetOrigin: event.origin })
+    }
+  }
+  function handlePing(message, event) {
+    console.log("[UTags Extension] Received ping, sending pong")
+    const pongMessage = {
+      type: "PONG",
+      source: "utags-extension",
+      id: message.id,
+    }
+    if (event.source) {
+      event.source.postMessage(pongMessage, { targetOrigin: event.origin })
+    }
+  }
+  function messageListener(event) {
+    if (event.origin !== globalThis.location.origin) {
+      return
+    }
+    const message = event.data
+    try {
+      if (
+        !message ||
+        typeof message !== "object" ||
+        !message.type ||
+        !message.id
+      ) {
+        return
+      }
+      if (message.source !== "utags-webapp") {
+        return
+      }
+      console.log("[UTags Extension] Received message:", message.type)
+      switch (message.type) {
+        case "PING": {
+          handlePing(message, event)
+          break
+        }
+        case "HTTP_REQUEST": {
+          handleHttpRequest(message, event)
+          break
+        }
+        default: {
+          console.log(
+            "[UTags Extension] Unknown message type: ".concat(message.type)
+          )
+        }
+      }
+    } catch (error) {
+      console.error("[UTags Extension] Error handling message:", error)
+      if (message && message.id) {
+        sendHttpError(
+          message.id,
+          error instanceof Error ? error.message : String(error),
+          event,
+          {
+            context: "messageListener",
+            messageType: message.type,
+          }
+        )
+      }
+    }
+  }
+  function setupWebappBridge() {
+    window.addEventListener("message", messageListener)
+    console.log("[UTags Extension] ready for HTTP proxy requests")
   }
   var originConsole = globalThis.console
   var lastLogTime = Date.now()
@@ -10283,7 +10978,6 @@
       globalThis.console = consoleWrapper
     }
   }
-  request_idle_callback_polyfill_default()
   var config = {
     run_at: "document_start",
     matches: ["https://*/*", "http://*/*"],
@@ -10306,6 +11000,10 @@
           }
         })
   }
+  var EXCLUDED_SUBFRAME_HOSTS = /* @__PURE__ */ new Set([
+    "challenges.cloudflare.com",
+    "accounts.google.com",
+  ])
   var emojiTags2
   var host2 = location.host
   var eventManager = new EventListenerManager()
@@ -10553,47 +11251,6 @@
       }
     )
   }
-  var addUtagsStyle = () => {
-    if ($("#utags_style")) {
-      return
-    }
-    addElement2(doc.documentElement, "style", {
-      id: "utags_style",
-      textContent: content_default,
-    })
-  }
-  function updateCustomStyle() {
-    const customStyleValue = getSettingsValue("customStyleValue") || ""
-    if (getSettingsValue("customStyle") && customStyleValue) {
-      if ($("#utags_custom_style")) {
-        $("#utags_custom_style").textContent = customStyleValue
-      } else {
-        addElement2(doc.head, "style", {
-          id: "utags_custom_style",
-          textContent: customStyleValue,
-        })
-        if ($("#utags_custom_style_2")) {
-          $("#utags_custom_style_2").remove()
-        }
-      }
-    } else if ($("#utags_custom_style")) {
-      $("#utags_custom_style").remove()
-    }
-    const customStyleValue2 =
-      getSettingsValue("customStyleValue_".concat(host2)) || ""
-    if (getSettingsValue("customStyle_".concat(host2)) && customStyleValue2) {
-      if ($("#utags_custom_style_2")) {
-        $("#utags_custom_style_2").textContent = customStyleValue2
-      } else {
-        addElement2(doc.head, "style", {
-          id: "utags_custom_style_2",
-          textContent: customStyleValue2,
-        })
-      }
-    } else if ($("#utags_custom_style_2")) {
-      $("#utags_custom_style_2").remove()
-    }
-  }
   function updateDocumentElementAttributes() {
     if (getSettingsValue("showHidedItems")) {
       if (!hasClass(doc.documentElement, "utags_no_hide")) {
@@ -10664,22 +11321,12 @@
     } else {
       updateMatchedNodesSelector("")
     }
+    rebuildAndApplyCombinedStyle()
     if (getSettingsValue("enableCurrentSite_".concat(host2))) {
       displayTagsThrottled()
-      updateCustomStyle()
-    } else {
-      if ($("#utags_custom_style")) {
-        $("#utags_custom_style").remove()
-      }
-      if ($("#utags_custom_style_2")) {
-        $("#utags_custom_style_2").remove()
-      }
-      if ($("#utags_site_style")) {
-        $("#utags_site_style").remove()
-      }
     }
   }
-  var DEBUG = false
+  var DEBUG = true
   function appendCurrentPageLink(options) {
     options = options || {}
     const containerId = "utags_current_page_link_container"
@@ -10749,57 +11396,104 @@
     await menuCommandManager.updateMenuCommand(tags)
     await menuCommandManager.updateQuickTagMenuCommands(tags)
   }
-  var utagsIdSet = /* @__PURE__ */ new Set()
+  var scrollBoundElements = /* @__PURE__ */ new WeakSet()
+  var isScrolling = false
+  function handleScroll() {
+    if (!isScrolling) {
+      requestAnimationFrame(() => {
+        updateTagPositionForAllTargets()
+        isScrolling = false
+      })
+      isScrolling = true
+    }
+  }
+  function bindScrollEvent(element) {
+    let parent = element.parentElement
+    while (parent) {
+      const style = getComputedStyle(parent)
+      const overflowY = style.overflowY
+      const overflowX = style.overflowX
+      if (
+        (overflowY === "auto" ||
+          overflowY === "scroll" ||
+          overflowX === "auto" ||
+          overflowX === "scroll") &&
+        !scrollBoundElements.has(parent)
+      ) {
+        parent.addEventListener("scroll", handleScroll, { passive: true })
+        scrollBoundElements.add(parent)
+      }
+      parent = parent.parentElement
+    }
+    if (!scrollBoundElements.has(globalThis.document.documentElement)) {
+      window.addEventListener("scroll", handleScroll, { passive: true })
+      scrollBoundElements.add(globalThis.document.documentElement)
+    }
+  }
+  var lastScannerResult = []
+  var utagsMouseoverBoundElements = /* @__PURE__ */ new WeakSet()
+  function ensureUtagsMouseoverHandler(element) {
+    if (utagsMouseoverBoundElements.has(element)) {
+      return
+    }
+    utagsMouseoverBoundElements.add(element)
+    if (element.dataset.utags_absolute) {
+      addEventListener(element, "mouseover", (event) => {
+        const target = event.currentTarget
+        if (!target) {
+          return
+        }
+        const utagsUl = getUtagsUl(target)
+        if (utagsUl) {
+          updateTagPosition(target)
+          addClass(utagsUl, "utags_ul_active")
+        }
+      })
+      addEventListener(element, "mouseout", (event) => {
+        const target = event.currentTarget
+        if (!target) {
+          return
+        }
+        const utagsUl = getUtagsUl(target)
+        if (utagsUl) {
+          removeClass(utagsUl, "utags_ul_active")
+        }
+      })
+      return
+    }
+    addEventListener(element, "mouseover", (event) => {
+      const target = event.currentTarget
+      if (!target) {
+        return
+      }
+      updateTagPosition(target)
+    })
+  }
   function appendTagsToPage(element, key, tags, meta) {
     let utagsId2 = element.dataset.utags_id
     if (!utagsId2) {
       utagsId2 = generateUtagsId()
       element.dataset.utags_id = utagsId2
-      if (element.dataset.utags_absolute) {
-        addEventListener(element, "mouseover", (event) => {
-          const target = getUtagsTargetFromEvent(event)
-          if (!target) {
-            return
-          }
-          const utags = getUtagsUlByTarget(target)
-          if (utags) {
-            updateTagPosition(target)
-            addClass(utags, "utags_ul_active")
-          }
-        })
-        addEventListener(element, "mouseout", (event) => {
-          const target = getUtagsTargetFromEvent(event)
-          if (!target) {
-            return
-          }
-          const utags = getUtagsUlByTarget(target)
-          if (utags) {
-            removeClass(utags, "utags_ul_active")
-          }
-        })
-      } else {
-        addEventListener(element, "mouseover", (event) => {
-          const target = getUtagsTargetFromEvent(event)
-          if (!target) {
-            return
-          }
-          updateTagPosition(target)
-        })
-      }
     }
-    utagsIdSet.add(utagsId2)
-    const utagsUl = getUtagsUlById(utagsId2) || element.nextSibling
-    if (hasClass(utagsUl, "utags_ul")) {
+    ensureUtagsMouseoverHandler(element)
+    const existingUtagsUl = getUtagsUl(element)
+    if (existingUtagsUl) {
       if (
+        hasClass(existingUtagsUl, "utags_ul") &&
         element.dataset.utags === tags.join(",") &&
-        key === getAttribute(utagsUl, "data-utags_key")
+        key === getAttribute(existingUtagsUl, "data-utags_key")
       ) {
+        if (!existingUtagsUl.isConnected) {
+          element.after(existingUtagsUl)
+          ensureUtagsUlTracked(existingUtagsUl)
+        }
         return
       }
-      utagsUl.remove()
+      unregisterUtagsUl(existingUtagsUl)
+      existingUtagsUl.remove()
     }
     const tagName = element.dataset.utags_ul_type === "ol" ? "ol" : "ul"
-    const ul = createElement(tagName, {
+    const utagsUl = createElement(tagName, {
       class: tags.length === 0 ? "utags_ul utags_ul_0" : "utags_ul utags_ul_1",
       "data-utags_key": key,
       "data-utags_exclude": "",
@@ -10825,7 +11519,7 @@
       '<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-tags-fill" viewBox="0 0 16 16">\n<path d="M2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2zm3.5 4a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>\n<path d="M1.293 7.793A1 1 0 0 1 1 7.086V2a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l.043-.043-7.457-7.457z"/>\n</svg>\n'
     a.innerHTML = createHTML(svg)
     li.append(a)
-    ul.append(li)
+    utagsUl.append(li)
     for (const tag of tags) {
       li = createElement("li", { class: "utags_li", "data-utags_exclude": "" })
       const a2 = createTag(tag, {
@@ -10834,64 +11528,55 @@
         enableSelect: isTagManager,
       })
       li.append(a2)
-      ul.append(li)
+      utagsUl.append(li)
     }
+    registerElementUtagsUl(element, utagsUl)
+    utagsUl.dataset.utags_id = utagsId2
     if (element.dataset.utags_absolute) {
-      ul.dataset.utags_for_id = utagsId2
       const container =
         $("#utags_absolute_ul_container") ||
-        addElement2(document.body, "div", {
+        addElement2(document.documentElement, "div", {
           id: "utags_absolute_ul_container",
         })
       if (container) {
-        container.append(ul)
+        container.append(utagsUl)
+        utagsUl.dataset.utags_absolute_target_id = element.id || utagsId2
+        bindScrollEvent(element)
       }
     } else {
-      element.after(ul)
+      element.after(utagsUl)
     }
     setAttribute(element, "data-utags", tags.join(","))
     createTimeout(() => {
       const style = getComputedStyle(element)
       const zIndex = style.zIndex
       if (zIndex && zIndex !== "auto") {
-        setStyle(ul, { zIndex })
+        setStyle(utagsUl, { zIndex })
       }
     }, 200)
   }
-  function cleanUnusedUtags() {
-    const utagsUlList = $$(
-      ".utags_ul,ul[data-utags_key],ol[data-utags_key]",
-      doc.body
-    )
-    for (const utagsUl of utagsUlList) {
-      const utagsId2 = utagsUl.dataset.utags_for_id
-      if (utagsId2) {
-        if (utagsIdSet.has(utagsId2)) {
-          continue
-        }
-      } else {
-        const element = utagsUl.previousSibling
-        if (
-          element &&
-          element.hasAttribute("data-utags") &&
-          element.dataset.utags_id &&
-          utagsIdSet.has(element.dataset.utags_id)
-        ) {
-          continue
-        }
-      }
-      utagsUl.remove()
+  function processNodeForDisplay(node) {
+    const result = buildTagsForDisplay(node)
+    if (!result) {
+      return
+    }
+    const { key, tags, meta } = result
+    appendTagsToPage(node, key, tags, meta)
+    if (tags.length > 0) {
+      setTimeout(() => {
+        updateTagPosition(node)
+      })
     }
   }
+  configureScannedNodeProcessor(processNodeForDisplay)
+  configureQueueEmptyCallback(displayTags)
   async function displayTags() {
-    addUtagsStyle()
     if (isAllTagsHidden()) {
       return
     }
     if (DEBUG) {
       console.debug("start of displayTags")
     }
-    utagsIdSet.clear()
     emojiTags2 = await getEmojiTags()
     const listNodes = getListNodes()
     for (const node of listNodes) {
@@ -10905,39 +11590,15 @@
       console.debug("after matchedNodes", nodes.length)
     }
     for (const node of nodes) {
-      const utags = getUtags(node)
-      if (!utags) {
-        continue
-      }
-      const key2 = utags.key
-      if (!key2) {
-        continue
-      }
-      const object = getTags(key2)
-      const tags = (object.tags || []).slice()
-      if (node.dataset.utags_visited === "1") {
-        tags.push(TAG_VISITED)
-      }
-      appendTagsToPage(node, key2, tags, utags.meta)
-      if (tags.length > 0) {
-        setTimeout(() => {
-          updateTagPosition(node)
-        })
-      }
+      processNodeForDisplay(node)
     }
     if (DEBUG) {
-      console.debug("after appendTagsToPage", utagsIdSet.size)
-    }
-    const conditionNodes = getConditionNodes()
-    for (const node of conditionNodes) {
-      if (getAttribute(node, "data-utags")) {
-        node.dataset.utags_condition_node = ""
-      }
+      console.debug("after appendTagsToPage", getRegisteredUtagsUlCount())
     }
     for (const node of listNodes) {
-      const conditionNodes2 = $$("[data-utags_condition_node]", node)
+      const conditionNodes = $$("[data-utags_condition_node]", node)
       const tagsArray = []
-      for (const node2 of conditionNodes2) {
+      for (const node2 of conditionNodes) {
         if (!node2.dataset.utags) {
           continue
         }
@@ -10961,7 +11622,6 @@
       const object = getTags(key)
       await updateAddTagsToCurrentPageMenuCommand(object.tags)
     }
-    cleanUnusedUtags()
     if (DEBUG) {
       console.debug("end of displayTags")
     }
@@ -10970,11 +11630,16 @@
   async function initStorage() {
     await initBookmarksStore()
     await initSyncAdapter()
+    ensureCombinedStyleForDocument()
+    setScannedNodeProcessingEnabled(!doc.hidden)
+    eventManager.addEventListener(doc, "visibilitychange", () => {
+      setScannedNodeProcessingEnabled(!doc.hidden)
+    })
     const onStorageChange = () => {
       console.log("Storage updated, hidden -", doc.hidden)
-      if (!doc.hidden) {
+      if (!doc.hidden && lastScannerResult.length > 0) {
         console.log("Start re-display tags")
-        void displayTags()
+        enqueueScannedNodes(lastScannerResult)
       }
     }
     addTagsValueChangeListener(onStorageChange)
@@ -11000,33 +11665,62 @@
     }
     return offsetParent1 || offsetParent2
   }
-  function getMaxOffsetLeft(offsetParent, utags, utagsSizeFix) {
+  function getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix) {
     let maxOffsetRight
     if (offsetParent && offsetParent.offsetWidth > 0) {
-      if (offsetParent === utags.offsetParent) {
+      if (offsetParent === utagsUl.offsetParent) {
         maxOffsetRight = offsetParent.offsetWidth
       } else {
         maxOffsetRight =
           offsetParent.offsetWidth -
-          getOffsetPosition(utags.offsetParent, offsetParent).left
+          getOffsetPosition(utagsUl.offsetParent, offsetParent).left
       }
     } else {
       maxOffsetRight =
         document.body.offsetWidth -
-        getOffsetPosition(utags.offsetParent).left -
+        getOffsetPosition(utagsUl.offsetParent).left -
         2
     }
-    return maxOffsetRight - utags.clientWidth - utagsSizeFix
+    return maxOffsetRight - utagsUl.clientWidth - utagsSizeFix
   }
   function updateTagPosition(element) {
-    const utags = getUtagsUlByTarget(element) || element.nextElementSibling
-    if (!utags || !hasClass(utags, "utags_ul")) {
+    const utagsUl = getUtagsUl(element)
+    if (!utagsUl || !hasClass(utagsUl, "utags_ul")) {
       return
     }
-    if (!utags.offsetParent && !utags.offsetHeight && !utags.offsetWidth) {
+    if (element.dataset.utags_absolute) {
+      const width = utagsUl.offsetWidth
+      if (width > 0) {
+        if (!element.dataset.utags_original_margin_right) {
+          const style2 = getComputedStyle(element)
+          const marginRight = Number.parseFloat(style2.marginRight) || 0
+          element.dataset.utags_original_margin_right = String(marginRight)
+        }
+        const originalMargin = Number.parseFloat(
+          element.dataset.utags_original_margin_right
+        )
+        let currentMargin = originalMargin
+        if (element.style.marginRight) {
+          currentMargin = Number.parseFloat(element.style.marginRight)
+        }
+        const newMargin = originalMargin + width + 5
+        if (Math.abs(currentMargin - newMargin) > 1) {
+          element.style.marginRight = newMargin + "px"
+        }
+      }
+    }
+    if (!utagsUl.isConnected) {
+      element.after(utagsUl)
+      ensureUtagsUlTracked(utagsUl)
+    }
+    if (
+      !utagsUl.offsetParent &&
+      !utagsUl.offsetHeight &&
+      !utagsUl.offsetWidth
+    ) {
       return
     }
-    const style = getComputedStyle(utags)
+    const style = getComputedStyle(utagsUl)
     if (style.position !== "absolute") {
       return
     }
@@ -11037,107 +11731,109 @@
         element
     }
     element.dataset.utags_fit_content = "1"
-    const utagsSizeFix = hasClass(utags, "utags_ul_0") ? 22 : 0
+    const utagsSizeFix = hasClass(utagsUl, "utags_ul_0") ? 22 : 0
     const offsetParent =
-      element.offsetParent === utags.offsetParent
+      element.offsetParent === utagsUl.offsetParent
         ? element.offsetParent
-        : getOutermostOffsetParent(element, utags)
+        : getOutermostOffsetParent(element, utagsUl)
     const offset = getOffsetPosition(element, offsetParent || doc.body)
-    if (offsetParent !== utags.offsetParent) {
+    if (offsetParent !== utagsUl.offsetParent) {
       const offset2 = getOffsetPosition(
-        utags.offsetParent,
+        utagsUl.offsetParent,
         offsetParent || doc.body
       )
       offset.top -= offset2.top
       offset.left -= offset2.left
     }
     if (!element.offsetWidth && !element.clientWidth) {
-      utags.style.top = "-9999px"
+      utagsUl.style.top = "-9999px"
       return
     }
     const objectPosition = style.objectPosition
     switch (objectPosition) {
       case "-100% 50%": {
-        utags.style.left =
-          Math.max(offset.left - utags.clientWidth - utagsSizeFix, 0) + "px"
-        utags.style.top =
+        utagsUl.style.left =
+          Math.max(offset.left - utagsUl.clientWidth - utagsSizeFix, 0) + "px"
+        utagsUl.style.top =
           offset.top +
           ((element.clientHeight || element.offsetHeight) -
-            utags.clientHeight -
+            utagsUl.clientHeight -
             utagsSizeFix) /
             2 +
           "px"
         break
       }
       case "0% -100%": {
-        utags.style.left = offset.left + "px"
-        utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
+        utagsUl.style.left = offset.left + "px"
+        utagsUl.style.top =
+          offset.top - utagsUl.clientHeight - utagsSizeFix + "px"
         break
       }
       case "0% 0%": {
-        utags.style.left = offset.left + "px"
-        utags.style.top = offset.top + "px"
+        utagsUl.style.left = offset.left + "px"
+        utagsUl.style.top = offset.top + "px"
         break
       }
       case "0% 100%": {
-        utags.style.left = offset.left + "px"
-        utags.style.top =
+        utagsUl.style.left = offset.left + "px"
+        utagsUl.style.top =
           offset.top +
           (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix +
           "px"
         break
       }
       case "0% 200%": {
-        utags.style.left = offset.left + "px"
-        utags.style.top =
+        utagsUl.style.left = offset.left + "px"
+        utagsUl.style.top =
           offset.top + (element.clientHeight || element.offsetHeight) + "px"
         break
       }
       case "100% -100%": {
-        utags.style.left =
+        utagsUl.style.left =
           offset.left +
           (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
+          utagsUl.clientWidth -
           utagsSizeFix +
           "px"
-        utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + "px"
+        utagsUl.style.top =
+          offset.top - utagsUl.clientHeight - utagsSizeFix + "px"
         break
       }
       case "100% 0%": {
         let offsetLeft =
           (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
+          utagsUl.clientWidth -
           utagsSizeFix
         if (offsetLeft < 100) {
           offsetLeft = element.clientWidth || element.offsetWidth
         }
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top = offset.top + "px"
+        utagsUl.style.top = offset.top + "px"
         break
       }
       case "100% 50%": {
         let offsetLeft =
           (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
+          utagsUl.clientWidth -
           utagsSizeFix
         if (offsetLeft < 100) {
           offsetLeft = element.clientWidth || element.offsetWidth
         }
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top =
+        utagsUl.style.top =
           offset.top +
           ((element.clientHeight || element.offsetHeight) -
-            utags.clientHeight -
+            utagsUl.clientHeight -
             utagsSizeFix) /
             2 +
           "px"
@@ -11146,69 +11842,69 @@
       case "100% 100%": {
         let offsetLeft =
           (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
+          utagsUl.clientWidth -
           utagsSizeFix
         if (offsetLeft < 100) {
           offsetLeft = element.clientWidth || element.offsetWidth
         }
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + offsetLeft,
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top =
+        utagsUl.style.top =
           offset.top +
           (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix +
           "px"
         break
       }
       case "100% 200%": {
-        utags.style.left =
+        utagsUl.style.left =
           offset.left +
           (element.clientWidth || element.offsetWidth) -
-          utags.clientWidth -
+          utagsUl.clientWidth -
           utagsSizeFix +
           "px"
-        utags.style.top =
+        utagsUl.style.top =
           offset.top + (element.clientHeight || element.offsetHeight) + "px"
         break
       }
       case "200% 0%": {
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top = offset.top + "px"
+        utagsUl.style.top = offset.top + "px"
         break
       }
       case "200% 50%": {
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top =
+        utagsUl.style.top =
           offset.top +
           ((element.clientHeight || element.offsetHeight) -
-            utags.clientHeight -
+            utagsUl.clientHeight -
             utagsSizeFix) /
             2 +
           "px"
         break
       }
       case "200% 100%": {
-        utags.style.left =
+        utagsUl.style.left =
           Math.min(
             offset.left + (element.clientWidth || element.offsetWidth),
-            getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+            getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
           ) + "px"
-        utags.style.top =
+        utagsUl.style.top =
           offset.top +
           (element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix +
           "px"
         break
@@ -11220,11 +11916,11 @@
     element.dataset.utags_fit_content = "0"
   }
   function updateTagPositionForAllTargets() {
-    for (const id of utagsIdSet) {
-      const target = getUtagsTargetById(id)
-      if (target) {
-        updateTagPosition(target)
-      }
+    if (lastScannerResult.length === 0) {
+      return
+    }
+    for (const target of lastScannerResult) {
+      updateTagPosition(target)
     }
   }
   function checkVimiumHint() {
@@ -11240,7 +11936,6 @@
     }
   }
   async function main() {
-    addUtagsStyle()
     await initSettings(() => {
       const settingsTable2 = getSettingsTable()
       return {
@@ -11341,7 +12036,7 @@
     const cleanup = () => {
       eventManager.removeAllEventListeners()
       observer.disconnect()
-      utagsIdSet.clear()
+      clearUtagsUlRegistry()
       clearCachedUrlMap()
       clearVisitedCache()
       clearTagManagerCache()
@@ -11359,6 +12054,7 @@
       return attributeName && monitoredAttributes.has(attributeName)
     }
     const observer = new MutationObserver(async (mutationsList) => {
+      console.debug("mutation", Date.now(), mutationsList)
       let shouldUpdate = false
       for (const mutationRecord of mutationsList) {
         if (
@@ -11377,25 +12073,10 @@
           break
         }
       }
+      console.debug("shouldUpdate", shouldUpdate)
       if (shouldUpdate) {
-        cleanUnusedUtags()
-        displayTagsThrottled()
       }
       checkVimiumHint()
-    })
-    runWhenBodyExists(() => {
-      displayTagsThrottled()
-      observer.observe(doc.body, {
-        childList: true,
-        subtree: true,
-        attributeFilter: [
-          "href",
-          "data-utags_link",
-          "data-utags_title",
-          "data-utags_type",
-          "data-utags_exclude",
-        ],
-      })
     })
     const documentElementObserver = new MutationObserver((mutationsList) => {
       for (const mutationRecord of mutationsList) {
@@ -11404,7 +12085,7 @@
           break
         }
       }
-      addUtagsStyle()
+      ensureCombinedStyleForDocument()
       checkVimiumHint()
     })
     documentElementObserver.observe(doc.documentElement, {
@@ -11412,12 +12093,26 @@
       childList: true,
     })
     if (false) {
+      registerDebuggingHotkey()
     }
   }
-  setupConsole()
-  if (doc.documentElement.dataset.utags === void 0) {
-    console.log("Start init ContentScript")
+  if (
+    document.contentType === "text/html" &&
+    doc.documentElement.dataset.utags === void 0 &&
+    (globalThis === top || !EXCLUDED_SUBFRAME_HOSTS.has(host2))
+  ) {
     doc.documentElement.dataset.utags = host2
+    request_idle_callback_polyfill_default()
+    setupConsole()
+    scanDom({
+      onNodeMatched(node) {
+        enqueueScannedNode(node)
+      },
+      onScanCompleted(nodes) {
+        lastScannerResult = nodes
+      },
+    })
+    console.log("Start init ContentScript", host2, location.href)
     void main()
   }
 })()

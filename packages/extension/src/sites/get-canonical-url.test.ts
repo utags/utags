@@ -1,3 +1,6 @@
+// eslint-disable-next-line import-x/no-unassigned-import
+import './test-setup'
+
 import { describe, expect, it } from 'vitest'
 
 import { getCanonicalUrl } from './index'

@@ -11,6 +11,20 @@ import {
   setElementUtags,
 } from '../modules/dom-reference-manager'
 import type { UserTag } from '../types'
+import { DEFAULT_EXCLUDE_TAGS } from './shadow-root-traverser'
+
+const EXCLUDE_TAGS_SET = new Set(DEFAULT_EXCLUDE_TAGS)
+
+/**
+ * Check if the node is a valid target for scanning.
+ * It must be an HTMLElement and not in the exclusion list.
+ */
+export function isScanTarget(node: Node): node is HTMLElement {
+  return (
+    node instanceof HTMLElement &&
+    !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase())
+  )
+}
 
 /**
  * Set utags data for a DOM element

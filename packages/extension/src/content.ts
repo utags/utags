@@ -29,12 +29,14 @@ import {
   type RegisterMenuCommandOptions,
 } from 'browser-extension-utils'
 import polyfillRequestIdleCallback from 'browser-extension-utils/request-idle-callback-polyfill'
-import styleText from 'data-text:./content.scss'
 import type { PlasmoCSConfig } from 'plasmo'
 import { splitTags } from 'utags-utils'
 
 import createTag from './components/tag'
-import { shouldUpdateUtagsWhenNodeUpdated } from './content-utils'
+import {
+  buildTagsForDisplay,
+  shouldUpdateUtagsWhenNodeUpdated,
+} from './content-utils'
 import { getAvailableLocales, i, resetI18n } from './messages'
 import { clearTagManagerCache } from './modules/advanced-tag-manager'
 import { registerDebuggingHotkey } from './modules/debugging'
@@ -46,14 +48,35 @@ import {
   hideAllUtagsInArea,
 } from './modules/global-events'
 import { createMenuCommandManager } from './modules/menu-command-manager'
+import {
+  configureQueueEmptyCallback,
+  configureScannedNodeProcessor,
+  enqueueScannedNode,
+  enqueueScannedNodes,
+  setScannedNodeProcessingEnabled,
+  type ScannedNode,
+} from './modules/scanned-node-queue'
 import { initStarHandler, toggleStarHandler } from './modules/star-handler'
+import {
+  ensureCombinedStyleForDocument,
+  rebuildAndApplyCombinedStyle,
+} from './modules/style-manager'
 import { destroySyncAdapter, initSyncAdapter } from './modules/sync-adapter'
 import { clearAllTimers, createTimeout } from './modules/timer-manager'
+import {
+  clearUtagsUlRegistry,
+  ensureUtagsUlTracked,
+  getAllRegisteredUtagsUls,
+  getRegisteredUtagsUlCount,
+  getUtagsUl,
+  registerElementUtagsUl,
+  unregisterElementUtagsUl,
+  unregisterUtagsUl,
+} from './modules/utags-registry'
 import {
   addVisitedValueChangeListener,
   clearVisitedCache,
   isAvailableOnCurrentSite,
-  TAG_VISITED,
   onSettingsChange as visitedOnSettingsChange,
 } from './modules/visited'
 import { setupWebappBridge } from './modules/webapp-bridge'
@@ -62,7 +85,9 @@ import {
   getConditionNodes,
   getListNodes,
   matchedNodes,
+  scanDom,
   updateMatchedNodesSelector,
+  type ScanDomOptions,
 } from './sites/index'
 import {
   addTagsValueChangeListener,
@@ -72,19 +97,9 @@ import {
 } from './storage/bookmarks'
 import { getEmojiTags } from './storage/tags'
 import type { UserTag, UserTagMeta } from './types'
-import {
-  generateUtagsId,
-  getUtagsTargetById,
-  getUtagsTargetFromEvent,
-  getUtagsUlById,
-  getUtagsUlByTarget,
-  sortTags,
-} from './utils'
+import { generateUtagsId, sortTags } from './utils'
 import { setupConsole } from './utils/console.js'
-import { getUtags } from './utils/dom-utils'
 import { EventListenerManager } from './utils/event-listener-manager'
-
-polyfillRequestIdleCallback()
 
 export const config: PlasmoCSConfig = {
   run_at: 'document_start',
@@ -108,6 +123,11 @@ if (
     }
   })
 }
+
+const EXCLUDED_SUBFRAME_HOSTS = new Set([
+  'challenges.cloudflare.com',
+  'accounts.google.com',
+])
 
 let emojiTags: string[]
 const host = location.host
@@ -383,50 +403,7 @@ const getSettingsTable = (): SettingsTable => {
   }
 }
 
-const addUtagsStyle = () => {
-  if ($('#utags_style')) {
-    return
-  }
-
-  addElement(doc.documentElement, 'style', {
-    id: 'utags_style',
-    textContent: styleText,
-  })
-}
-
-function updateCustomStyle() {
-  const customStyleValue = getSettingsValue<string>('customStyleValue') || ''
-  if (getSettingsValue('customStyle') && customStyleValue) {
-    if ($('#utags_custom_style')) {
-      $('#utags_custom_style')!.textContent = customStyleValue
-    } else {
-      addElement(doc.head, 'style', {
-        id: 'utags_custom_style',
-        textContent: customStyleValue,
-      })
-      if ($('#utags_custom_style_2')) {
-        $('#utags_custom_style_2')!.remove()
-      }
-    }
-  } else if ($('#utags_custom_style')) {
-    $('#utags_custom_style')!.remove()
-  }
-
-  const customStyleValue2 =
-    getSettingsValue<string>(`customStyleValue_${host}`) || ''
-  if (getSettingsValue(`customStyle_${host}`) && customStyleValue2) {
-    if ($('#utags_custom_style_2')) {
-      $('#utags_custom_style_2')!.textContent = customStyleValue2
-    } else {
-      addElement(doc.head, 'style', {
-        id: 'utags_custom_style_2',
-        textContent: customStyleValue2,
-      })
-    }
-  } else if ($('#utags_custom_style_2')) {
-    $('#utags_custom_style_2')!.remove()
-  }
-}
+// Styles are centrally managed by style-manager now
 
 function updateDocumentElementAttributes() {
   if (getSettingsValue('showHidedItems')) {
@@ -507,26 +484,14 @@ function onSettingsChange() {
     updateMatchedNodesSelector('')
   }
 
+  rebuildAndApplyCombinedStyle()
   if (getSettingsValue(`enableCurrentSite_${host}`)) {
     displayTagsThrottled()
-    updateCustomStyle()
-  } else {
-    if ($('#utags_custom_style')) {
-      $('#utags_custom_style')!.remove()
-    }
-
-    if ($('#utags_custom_style_2')) {
-      $('#utags_custom_style_2')!.remove()
-    }
-
-    if ($('#utags_site_style')) {
-      $('#utags_site_style')!.remove()
-    }
   }
 }
 
 // For debug
-const DEBUG = false
+const DEBUG = true
 
 /**
  * Append a link to the current page at the end of the document body
@@ -639,7 +604,92 @@ async function updateAddTagsToCurrentPageMenuCommand(tags?: string[]) {
   await menuCommandManager.updateQuickTagMenuCommands(tags)
 }
 
-const utagsIdSet = new Set<string>()
+const scrollBoundElements = new WeakSet<HTMLElement>()
+let isScrolling = false
+
+function handleScroll() {
+  if (!isScrolling) {
+    requestAnimationFrame(() => {
+      updateTagPositionForAllTargets()
+      isScrolling = false
+    })
+    isScrolling = true
+  }
+}
+
+function bindScrollEvent(element: HTMLElement) {
+  let parent = element.parentElement
+  while (parent) {
+    const style = getComputedStyle(parent)
+    const overflowY = style.overflowY
+    const overflowX = style.overflowX
+    if (
+      (overflowY === 'auto' ||
+        overflowY === 'scroll' ||
+        overflowX === 'auto' ||
+        overflowX === 'scroll') &&
+      !scrollBoundElements.has(parent)
+    ) {
+      parent.addEventListener('scroll', handleScroll, { passive: true })
+      scrollBoundElements.add(parent)
+    }
+
+    parent = parent.parentElement
+  }
+
+  if (!scrollBoundElements.has(globalThis.document.documentElement)) {
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    scrollBoundElements.add(globalThis.document.documentElement)
+  }
+}
+
+let lastScannerResult: ScannedNode[] = []
+const utagsMouseoverBoundElements = new WeakSet<HTMLElement>()
+
+function ensureUtagsMouseoverHandler(element: HTMLElement) {
+  if (utagsMouseoverBoundElements.has(element)) {
+    return
+  }
+
+  utagsMouseoverBoundElements.add(element)
+
+  if (element.dataset.utags_absolute) {
+    addEventListener(element, 'mouseover', (event) => {
+      const target = event.currentTarget as HTMLElement | undefined
+      if (!target) {
+        return
+      }
+
+      const utagsUl = getUtagsUl(target)
+      if (utagsUl) {
+        updateTagPosition(target)
+        addClass(utagsUl, 'utags_ul_active')
+      }
+    })
+    addEventListener(element, 'mouseout', (event) => {
+      const target = event.currentTarget as HTMLElement | undefined
+      if (!target) {
+        return
+      }
+
+      const utagsUl = getUtagsUl(target)
+      if (utagsUl) {
+        removeClass(utagsUl, 'utags_ul_active')
+      }
+    })
+    return
+  }
+
+  addEventListener(element, 'mouseover', (event) => {
+    const target = event.currentTarget as HTMLElement | undefined
+    if (!target) {
+      return
+    }
+
+    updateTagPosition(target)
+  })
+}
+
 function appendTagsToPage(
   element: HTMLElement,
   key: string,
@@ -650,54 +700,28 @@ function appendTagsToPage(
   if (!utagsId) {
     utagsId = generateUtagsId()
     element.dataset.utags_id = utagsId
-    if (element.dataset.utags_absolute) {
-      addEventListener(element, 'mouseover', (event) => {
-        const target = getUtagsTargetFromEvent(event)
-        if (!target) {
-          return
-        }
-
-        const utags = getUtagsUlByTarget(target)
-        if (utags) {
-          updateTagPosition(target)
-          addClass(utags, 'utags_ul_active')
-        }
-      })
-      addEventListener(element, 'mouseout', (event) => {
-        const target = getUtagsTargetFromEvent(event)
-        if (!target) {
-          return
-        }
-
-        const utags = getUtagsUlByTarget(target)
-        if (utags) {
-          removeClass(utags, 'utags_ul_active')
-        }
-      })
-    } else {
-      addEventListener(element, 'mouseover', (event) => {
-        const target = getUtagsTargetFromEvent(event)
-        if (!target) {
-          return
-        }
-
-        updateTagPosition(target)
-      })
-    }
   }
 
-  utagsIdSet.add(utagsId)
-  const utagsUl =
-    getUtagsUlById(utagsId) || (element.nextSibling as HTMLElement)
-  if (hasClass(utagsUl, 'utags_ul')) {
+  ensureUtagsMouseoverHandler(element)
+
+  const existingUtagsUl = getUtagsUl(element)
+
+  if (existingUtagsUl) {
     if (
+      hasClass(existingUtagsUl, 'utags_ul') &&
       element.dataset.utags === tags.join(',') &&
-      key === getAttribute(utagsUl, 'data-utags_key')
+      key === getAttribute(existingUtagsUl, 'data-utags_key')
     ) {
+      if (!existingUtagsUl.isConnected) {
+        element.after(existingUtagsUl)
+        ensureUtagsUlTracked(existingUtagsUl)
+      }
+
       return
     }
 
-    utagsUl.remove()
+    unregisterUtagsUl(existingUtagsUl)
+    existingUtagsUl.remove()
   }
 
   // console.debug('appendTagsToPage', utagsId, element)
@@ -705,7 +729,7 @@ function appendTagsToPage(
   // On some websites, using the `UL` tag will affect the selectors of the original website.
   // For example: https://www.zhipin.com/
   const tagName = element.dataset.utags_ul_type === 'ol' ? 'ol' : 'ul'
-  const ul = createElement(tagName, {
+  const utagsUl = createElement(tagName, {
     class: tags.length === 0 ? 'utags_ul utags_ul_0' : 'utags_ul utags_ul_1',
     'data-utags_key': key,
     'data-utags_exclude': '',
@@ -735,7 +759,7 @@ function appendTagsToPage(
   a.innerHTML = createHTML(svg)
 
   li.append(a)
-  ul.append(li)
+  utagsUl.append(li)
 
   for (const tag of tags) {
     li = createElement('li', { class: 'utags_li', 'data-utags_exclude': '' })
@@ -745,21 +769,25 @@ function appendTagsToPage(
       enableSelect: isTagManager,
     })
     li.append(a)
-    ul.append(li)
+    utagsUl.append(li)
   }
 
+  registerElementUtagsUl(element, utagsUl)
+  utagsUl.dataset.utags_id = utagsId
   if (element.dataset.utags_absolute) {
-    ul.dataset.utags_for_id = utagsId
     const container =
       $('#utags_absolute_ul_container') ||
-      addElement(document.body, 'div', {
+      addElement(document.documentElement, 'div', {
         id: 'utags_absolute_ul_container',
       })
     if (container) {
-      container.append(ul)
+      container.append(utagsUl)
+      utagsUl.dataset.utags_absolute_target_id = element.id || utagsId
+
+      bindScrollEvent(element)
     }
   } else {
-    element.after(ul)
+    element.after(utagsUl)
   }
 
   setAttribute(element, 'data-utags', tags.join(','))
@@ -769,7 +797,7 @@ function appendTagsToPage(
     const style = getComputedStyle(element)
     const zIndex = style.zIndex
     if (zIndex && zIndex !== 'auto') {
-      setStyle(ul, { zIndex })
+      setStyle(utagsUl, { zIndex })
     }
   }, 200)
   /* Fix v2ex polish end */
@@ -783,36 +811,86 @@ function appendTagsToPage(
  * Fix mp.weixin.qq.com issue, 有推荐阅读, 往期推荐内容时，utags_ul 和子元素的 class 都会被清空。https://github.com/utags/utags/issues/29
  */
 function cleanUnusedUtags() {
-  // exclude .utags_prompt
-  const utagsUlList = $$(
-    '.utags_ul,ul[data-utags_key],ol[data-utags_key]',
-    doc.body
-  )
-  for (const utagsUl of utagsUlList) {
-    const utagsId = utagsUl.dataset.utags_for_id
-    if (utagsId) {
-      if (utagsIdSet.has(utagsId)) {
-        continue
+  for (const utagsUl of getAllRegisteredUtagsUls()) {
+    if (!utagsUl.isConnected) {
+      // SPA page navigated, utags_ul is removed from DOM
+      console.warn(
+        'cleanUnusedUtags 1',
+        utagsUl.dataset.utags_id,
+        utagsUl.dataset.utags_key
+      )
+
+      if (utagsUl.dataset.utags_absolute_target_id) {
+        const target = document.getElementById(
+          utagsUl.dataset.utags_absolute_target_id
+        )
+        if (target && target.dataset.utags_original_margin_right) {
+          target.style.marginRight =
+            target.dataset.utags_original_margin_right + 'px'
+          delete target.dataset.utags_original_margin_right
+        }
       }
-    } else {
-      const element = utagsUl.previousSibling as HTMLElement
-      if (
-        element &&
-        element.hasAttribute('data-utags') &&
-        element.dataset.utags_id &&
-        utagsIdSet.has(element.dataset.utags_id)
-      ) {
-        continue
+
+      unregisterUtagsUl(utagsUl)
+      continue
+    }
+
+    const element = utagsUl.previousSibling as HTMLElement
+    if (element) {
+      if (element.hasAttribute('data-utags')) {
+        const currentUtagsUl = getUtagsUl(element)
+        if (currentUtagsUl === utagsUl) {
+          continue
+        }
+        // else keep currentUtagsUl as it's a new utagsUl for this element
+      } else {
+        unregisterElementUtagsUl(element)
       }
     }
 
+    console.warn(
+      'cleanUnusedUtags 2',
+      utagsUl.dataset.utags_id,
+      utagsUl.dataset.utags_key
+    )
+
+    if (utagsUl.dataset.utags_absolute_target_id) {
+      const target = document.getElementById(
+        utagsUl.dataset.utags_absolute_target_id
+      )
+      if (target && target.dataset.utags_original_margin_right) {
+        target.style.marginRight =
+          target.dataset.utags_original_margin_right + 'px'
+        delete target.dataset.utags_original_margin_right
+      }
+    }
+
+    unregisterUtagsUl(utagsUl)
     utagsUl.remove()
   }
 }
 
-async function displayTags() {
-  addUtagsStyle()
+function processNodeForDisplay(node: HTMLElement) {
+  const result = buildTagsForDisplay(node)
+  if (!result) {
+    return
+  }
 
+  const { key, tags, meta } = result
+
+  appendTagsToPage(node, key, tags, meta)
+
+  if (tags.length > 0) {
+    setTimeout(() => {
+      updateTagPosition(node)
+    })
+  }
+}
+
+configureScannedNodeProcessor(processNodeForDisplay)
+configureQueueEmptyCallback(displayTags)
+
+async function displayTags() {
   if (isAllTagsHidden()) {
     return
   }
@@ -820,8 +898,6 @@ async function displayTags() {
   if (DEBUG) {
     console.debug('start of displayTags')
   }
-
-  utagsIdSet.clear()
 
   emojiTags = await getEmojiTags()
 
@@ -843,43 +919,20 @@ async function displayTags() {
   }
 
   for (const node of nodes) {
-    const utags: UserTag | undefined = getUtags(node)
-    if (!utags) {
-      continue
-    }
-
-    const key = utags.key
-    if (!key) {
-      continue
-    }
-
-    const object = getTags(key)
-
-    const tags: string[] = (object.tags || []).slice()
-    if (node.dataset.utags_visited === '1') {
-      tags.push(TAG_VISITED)
-    }
-
-    appendTagsToPage(node, key, tags, utags.meta)
-
-    if (tags.length > 0) {
-      setTimeout(() => {
-        updateTagPosition(node)
-      })
-    }
+    processNodeForDisplay(node as HTMLElement)
   }
 
   if (DEBUG) {
-    console.debug('after appendTagsToPage', utagsIdSet.size)
+    console.debug('after appendTagsToPage', getRegisteredUtagsUlCount())
   }
 
-  const conditionNodes = getConditionNodes()
-  for (const node of conditionNodes) {
-    if (getAttribute(node, 'data-utags')) {
-      // Flag condition nodes
-      node.dataset.utags_condition_node = ''
-    }
-  }
+  // const conditionNodes = getConditionNodes()
+  // for (const node of conditionNodes) {
+  //   if (getAttribute(node, 'data-utags')) {
+  //     // Flag condition nodes
+  //     node.dataset.utags_condition_node = ''
+  //   }
+  // }
 
   for (const node of listNodes) {
     const conditionNodes = $$('[data-utags_condition_node]', node)
@@ -917,7 +970,7 @@ async function displayTags() {
     await updateAddTagsToCurrentPageMenuCommand(object.tags)
   }
 
-  cleanUnusedUtags()
+  // cleanUnusedUtags()
 
   if (DEBUG) {
     console.debug('end of displayTags')
@@ -930,11 +983,22 @@ async function initStorage() {
   await initBookmarksStore()
   await initSyncAdapter()
 
+  ensureCombinedStyleForDocument()
+
+  // Enable queue-based processing only after storage is fully initialized.
+  // This ensures that tag data is available when processing scanned nodes.
+  setScannedNodeProcessingEnabled(!doc.hidden)
+
+  eventManager.addEventListener(doc, 'visibilitychange', () => {
+    setScannedNodeProcessingEnabled(!doc.hidden)
+  })
+
   const onStorageChange = () => {
     console.log('Storage updated, hidden -', doc.hidden)
-    if (!doc.hidden) {
+    if (!doc.hidden && lastScannerResult.length > 0) {
       console.log('Start re-display tags')
-      void displayTags()
+      // Re-queue all scanned nodes so they can be re-rendered with latest data.
+      enqueueScannedNodes(lastScannerResult)
     }
   }
 
@@ -973,29 +1037,30 @@ function getOutermostOffsetParent(
 
 function getMaxOffsetLeft(
   offsetParent: HTMLElement | undefined,
-  utags: HTMLElement,
+  utagsUl: HTMLElement,
   utagsSizeFix: number
 ) {
   let maxOffsetRight: number
 
   if (offsetParent && offsetParent.offsetWidth > 0) {
     // X轴 scroll 时计算正确
-    if (offsetParent === utags.offsetParent) {
+    if (offsetParent === utagsUl.offsetParent) {
       maxOffsetRight = offsetParent.offsetWidth
     } else {
       maxOffsetRight =
         offsetParent.offsetWidth -
-        getOffsetPosition(utags.offsetParent as HTMLElement, offsetParent).left
+        getOffsetPosition(utagsUl.offsetParent as HTMLElement, offsetParent)
+          .left
     }
   } else {
     // X轴 scroll 时会计算错误
     maxOffsetRight =
       document.body.offsetWidth -
-      getOffsetPosition(utags.offsetParent as HTMLElement).left -
+      getOffsetPosition(utagsUl.offsetParent as HTMLElement).left -
       2
   }
 
-  return maxOffsetRight - utags.clientWidth - utagsSizeFix
+  return maxOffsetRight - utagsUl.clientWidth - utagsSizeFix
 }
 
 // position: fixed -> offsetParent = null
@@ -1004,17 +1069,50 @@ function getMaxOffsetLeft(
 // display: contents -> offsetParent = null, offsetWith = 0, offsetLeft = 0, offsetTop = 0
 
 function updateTagPosition(element: HTMLElement) {
-  const utags =
-    getUtagsUlByTarget(element) || (element.nextElementSibling as HTMLElement)
-  if (!utags || !hasClass(utags, 'utags_ul')) {
+  const utagsUl = getUtagsUl(element)
+
+  if (!utagsUl || !hasClass(utagsUl, 'utags_ul')) {
     return
   }
 
-  if (!utags.offsetParent && !utags.offsetHeight && !utags.offsetWidth) {
+  // Update margin to occupy space
+  if (element.dataset.utags_absolute) {
+    const width = utagsUl.offsetWidth
+    if (width > 0) {
+      // If we haven't stored the original margin yet, store it
+      if (!element.dataset.utags_original_margin_right) {
+        const style = getComputedStyle(element)
+        const marginRight = Number.parseFloat(style.marginRight) || 0
+        element.dataset.utags_original_margin_right = String(marginRight)
+      }
+
+      const originalMargin = Number.parseFloat(
+        element.dataset.utags_original_margin_right
+      )
+      let currentMargin = originalMargin
+      if (element.style.marginRight) {
+        currentMargin = Number.parseFloat(element.style.marginRight)
+      }
+
+      const newMargin = originalMargin + width + 5 // Add 5px spacing
+
+      // Only update if changed significantly (avoid layout thrashing loop)
+      if (Math.abs(currentMargin - newMargin) > 1) {
+        element.style.marginRight = newMargin + 'px'
+      }
+    }
+  }
+
+  if (!utagsUl.isConnected) {
+    element.after(utagsUl)
+    ensureUtagsUlTracked(utagsUl)
+  }
+
+  if (!utagsUl.offsetParent && !utagsUl.offsetHeight && !utagsUl.offsetWidth) {
     return
   }
 
-  const style = getComputedStyle(utags)
+  const style = getComputedStyle(utagsUl)
   if (style.position !== 'absolute') {
     return
   }
@@ -1029,18 +1127,18 @@ function updateTagPosition(element: HTMLElement) {
   element.dataset.utags_fit_content = '1'
 
   // 22 is the size of captain tag
-  const utagsSizeFix = hasClass(utags, 'utags_ul_0') ? 22 : 0
+  const utagsSizeFix = hasClass(utagsUl, 'utags_ul_0') ? 22 : 0
 
   const offsetParent =
-    element.offsetParent === utags.offsetParent
+    element.offsetParent === utagsUl.offsetParent
       ? (element.offsetParent as HTMLElement)
-      : getOutermostOffsetParent(element, utags)
+      : getOutermostOffsetParent(element, utagsUl)
 
   const offset = getOffsetPosition(element, offsetParent! || doc.body)
 
-  if (offsetParent !== utags.offsetParent) {
+  if (offsetParent !== utagsUl.offsetParent) {
     const offset2 = getOffsetPosition(
-      utags.offsetParent as HTMLElement,
+      utagsUl.offsetParent as HTMLElement,
       offsetParent! || doc.body
     )
 
@@ -1072,7 +1170,7 @@ function updateTagPosition(element: HTMLElement) {
 
   // element is hidden
   if (!element.offsetWidth && !element.clientWidth) {
-    utags.style.top = '-9999px'
+    utagsUl.style.top = '-9999px'
     return
   }
 
@@ -1082,12 +1180,12 @@ function updateTagPosition(element: HTMLElement) {
   switch (objectPosition) {
     // left-center
     case '-100% 50%': {
-      utags.style.left =
-        Math.max(offset.left - utags.clientWidth - utagsSizeFix, 0) + 'px'
-      utags.style.top =
+      utagsUl.style.left =
+        Math.max(offset.left - utagsUl.clientWidth - utagsSizeFix, 0) + 'px'
+      utagsUl.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix) /
           2 +
         'px'
@@ -1096,25 +1194,26 @@ function updateTagPosition(element: HTMLElement) {
 
     // left-top
     case '0% -100%': {
-      utags.style.left = offset.left + 'px'
-      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + 'px'
+      utagsUl.style.left = offset.left + 'px'
+      utagsUl.style.top =
+        offset.top - utagsUl.clientHeight - utagsSizeFix + 'px'
       break
     }
 
     // left-top
     case '0% 0%': {
-      utags.style.left = offset.left + 'px'
-      utags.style.top = offset.top + 'px'
+      utagsUl.style.left = offset.left + 'px'
+      utagsUl.style.top = offset.top + 'px'
       break
     }
 
     // left-bottom
     case '0% 100%': {
-      utags.style.left = offset.left + 'px'
-      utags.style.top =
+      utagsUl.style.left = offset.left + 'px'
+      utagsUl.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
-        utags.clientHeight -
+        utagsUl.clientHeight -
         utagsSizeFix +
         'px'
       break
@@ -1122,21 +1221,22 @@ function updateTagPosition(element: HTMLElement) {
 
     // left-bottom, out of element box
     case '0% 200%': {
-      utags.style.left = offset.left + 'px'
-      utags.style.top =
+      utagsUl.style.left = offset.left + 'px'
+      utagsUl.style.top =
         offset.top + (element.clientHeight || element.offsetHeight) + 'px'
       break
     }
 
     // right-top
     case '100% -100%': {
-      utags.style.left =
+      utagsUl.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
-        utags.clientWidth -
+        utagsUl.clientWidth -
         utagsSizeFix +
         'px'
-      utags.style.top = offset.top - utags.clientHeight - utagsSizeFix + 'px'
+      utagsUl.style.top =
+        offset.top - utagsUl.clientHeight - utagsSizeFix + 'px'
       break
     }
 
@@ -1144,18 +1244,18 @@ function updateTagPosition(element: HTMLElement) {
     case '100% 0%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
-        utags.clientWidth -
+        utagsUl.clientWidth -
         utagsSizeFix
       if (offsetLeft < 100) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top = offset.top + 'px'
+      utagsUl.style.top = offset.top + 'px'
       break
     }
 
@@ -1163,21 +1263,21 @@ function updateTagPosition(element: HTMLElement) {
     case '100% 50%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
-        utags.clientWidth -
+        utagsUl.clientWidth -
         utagsSizeFix
       if (offsetLeft < 100) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top =
+      utagsUl.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix) /
           2 +
         'px'
@@ -1188,21 +1288,21 @@ function updateTagPosition(element: HTMLElement) {
     case '100% 100%': {
       let offsetLeft =
         (element.clientWidth || element.offsetWidth) -
-        utags.clientWidth -
+        utagsUl.clientWidth -
         utagsSizeFix
       if (offsetLeft < 100) {
         offsetLeft = element.clientWidth || element.offsetWidth
       }
 
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + offsetLeft,
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top =
+      utagsUl.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
-        utags.clientHeight -
+        utagsUl.clientHeight -
         utagsSizeFix +
         'px'
       break
@@ -1210,39 +1310,39 @@ function updateTagPosition(element: HTMLElement) {
 
     // right-bottom, out of element box
     case '100% 200%': {
-      utags.style.left =
+      utagsUl.style.left =
         offset.left +
         (element.clientWidth || element.offsetWidth) -
-        utags.clientWidth -
+        utagsUl.clientWidth -
         utagsSizeFix +
         'px'
-      utags.style.top =
+      utagsUl.style.top =
         offset.top + (element.clientHeight || element.offsetHeight) + 'px'
       break
     }
 
     // right-top, out of element box
     case '200% 0%': {
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top = offset.top + 'px'
+      utagsUl.style.top = offset.top + 'px'
       break
     }
 
     // right-center, out of element box
     case '200% 50%': {
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top =
+      utagsUl.style.top =
         offset.top +
         ((element.clientHeight || element.offsetHeight) -
-          utags.clientHeight -
+          utagsUl.clientHeight -
           utagsSizeFix) /
           2 +
         'px'
@@ -1251,15 +1351,15 @@ function updateTagPosition(element: HTMLElement) {
 
     // right-bottom, out of element box
     case '200% 100%': {
-      utags.style.left =
+      utagsUl.style.left =
         Math.min(
           offset.left + (element.clientWidth || element.offsetWidth),
-          getMaxOffsetLeft(offsetParent, utags, utagsSizeFix)
+          getMaxOffsetLeft(offsetParent, utagsUl, utagsSizeFix)
         ) + 'px'
-      utags.style.top =
+      utagsUl.style.top =
         offset.top +
         (element.clientHeight || element.offsetHeight) -
-        utags.clientHeight -
+        utagsUl.clientHeight -
         utagsSizeFix +
         'px'
       break
@@ -1274,11 +1374,12 @@ function updateTagPosition(element: HTMLElement) {
 }
 
 function updateTagPositionForAllTargets() {
-  for (const id of utagsIdSet) {
-    const target = getUtagsTargetById(id)
-    if (target) {
-      updateTagPosition(target)
-    }
+  if (lastScannerResult.length === 0) {
+    return
+  }
+
+  for (const target of lastScannerResult) {
+    updateTagPosition(target)
   }
 }
 
@@ -1296,8 +1397,6 @@ function checkVimiumHint() {
 }
 
 async function main() {
-  addUtagsStyle()
-
   await initSettings(() => {
     const settingsTable = getSettingsTable()
     return {
@@ -1417,7 +1516,7 @@ async function main() {
     eventManager.removeAllEventListeners()
     observer.disconnect()
     // Clear global variables
-    utagsIdSet.clear()
+    clearUtagsUlRegistry()
     // Clear cached data to free memory
     clearCachedUrlMap()
     clearVisitedCache()
@@ -1448,7 +1547,7 @@ async function main() {
   }
 
   const observer = new MutationObserver(async (mutationsList) => {
-    // console.debug('mutation', Date.now(), mutationsList)
+    console.debug('mutation', Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
       if (
@@ -1470,29 +1569,31 @@ async function main() {
       }
     }
 
+    console.debug('shouldUpdate', shouldUpdate)
+
     if (shouldUpdate) {
       // Clean up immediately. Some app like tictok re-render while mouse over something
-      cleanUnusedUtags()
-      displayTagsThrottled()
+      // cleanUnusedUtags()
+      // displayTagsThrottled()
     }
 
     checkVimiumHint()
   })
 
-  runWhenBodyExists(() => {
-    displayTagsThrottled()
-    observer.observe(doc.body, {
-      childList: true,
-      subtree: true,
-      attributeFilter: [
-        'href',
-        'data-utags_link',
-        'data-utags_title',
-        'data-utags_type',
-        'data-utags_exclude',
-      ],
-    })
-  })
+  // runWhenBodyExists(() => {
+  //   displayTagsThrottled()
+  //   observer.observe(doc.body, {
+  //     childList: true,
+  //     subtree: true,
+  //     attributeFilter: [
+  //       'href',
+  //       'data-utags_link',
+  //       'data-utags_title',
+  //       'data-utags_type',
+  //       'data-utags_exclude',
+  //     ],
+  //   })
+  // })
 
   const documentElementObserver = new MutationObserver((mutationsList) => {
     for (const mutationRecord of mutationsList) {
@@ -1502,7 +1603,8 @@ async function main() {
       }
     }
 
-    addUtagsStyle()
+    // Re-apply combined style when style element have been removed
+    ensureCombinedStyleForDocument()
     checkVimiumHint()
   })
 
@@ -1525,14 +1627,32 @@ async function main() {
   // For debug
   // eslint-disable-next-line n/prefer-global/process
   if (process.env.PLASMO_TAG === 'dev') {
-    // registerDebuggingHotkey()
+    registerDebuggingHotkey()
   }
 }
 
-setupConsole()
-
-if (doc.documentElement.dataset.utags === undefined) {
-  console.log('Start init ContentScript')
+if (
+  document.contentType === 'text/html' &&
+  doc.documentElement.dataset.utags === undefined &&
+  (globalThis === (top as unknown as typeof globalThis) ||
+    !EXCLUDED_SUBFRAME_HOSTS.has(host))
+) {
+  // Set host for CSS selector. See 042-discuz.scss.
   doc.documentElement.dataset.utags = host
+
+  polyfillRequestIdleCallback()
+  setupConsole()
+
+  scanDom({
+    onNodeMatched(node) {
+      enqueueScannedNode(node)
+    },
+    onScanCompleted(nodes) {
+      lastScannerResult = nodes
+    },
+  })
+
+  console.log('Start init ContentScript', host, location.href)
+
   void main()
 }

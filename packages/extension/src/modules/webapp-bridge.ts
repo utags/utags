@@ -84,13 +84,20 @@ type GMXMLHttpRequestOptions = {
   ontimeout: () => void
 }
 
-// Global declarations for userscript environment
-declare global {
-  const GM: {
-    xmlHttpRequest?: (options: GMXMLHttpRequestOptions) => void
+type AllowedHttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+function normalizeHttpMethod(method: string): AllowedHttpMethod | undefined {
+  const upper = method.toUpperCase()
+  if (
+    upper === 'GET' ||
+    upper === 'POST' ||
+    upper === 'PUT' ||
+    upper === 'DELETE'
+  ) {
+    return upper
   }
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  const GM_xmlhttpRequest: (options: GMXMLHttpRequestOptions) => void
+
+  return undefined
 }
 
 /**
@@ -167,6 +174,12 @@ function handleHttpRequestUserscript(
 
   console.log(`[UTags Extension] Processing HTTP request: ${method} ${url}`)
 
+  const normalizedMethod = normalizeHttpMethod(method)
+  if (!normalizedMethod) {
+    sendHttpError(id, `Unsupported HTTP method: ${method}`, event)
+    return
+  }
+
   // Use GM.xmlHttpRequest or fallback to GM_xmlhttpRequest
   const gmRequest = GM?.xmlHttpRequest || GM_xmlhttpRequest
 
@@ -176,7 +189,7 @@ function handleHttpRequestUserscript(
   }
 
   void gmRequest({
-    method,
+    method: normalizedMethod,
     url,
     headers: headers || {},
     data: body,
@@ -203,9 +216,9 @@ function handleHttpRequestUserscript(
         {
           ok: response.status >= 200 && response.status < 300,
           status: response.status,
-          statusText: response.statusText,
+          statusText: response.statusText ?? '',
           headers: responseHeaders,
-          body: response.responseText,
+          body: response.responseText ?? '',
         },
         event
       )

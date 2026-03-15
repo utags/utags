@@ -1,6 +1,11 @@
 import { $, $$, createElement } from 'browser-extension-utils'
 import { getTrimmedTitle, trimTitle } from 'utags-utils'
 
+import { deleteElementUtags } from '../modules/dom-reference-manager'
+import {
+  isUtagsUlTracked,
+  unregisterElementUtagsUl,
+} from '../modules/utags-registry'
 import type { BookmarkTagsAndMetadata } from '../types/bookmarks.js'
 
 export const starTags = ['★★★', '★★', '★', '☆☆☆', '☆☆', '☆']
@@ -376,34 +381,9 @@ export function removeStarRatingTags(tags: string[]): string[] {
 }
 
 let utagsId = 1
+
 export function generateUtagsId() {
   return String(utagsId++)
-}
-
-export function getUtagsUlById(id: string | undefined) {
-  return id ? $(`[data-utags_for_id="${id}"]`) : undefined
-}
-
-export function getUtagsTargetById(id: string | undefined) {
-  return id ? $(`[data-utags_id="${id}"]`) : undefined
-}
-
-export function getUtagsUlByTarget(element: HTMLElement) {
-  return getUtagsUlById(element.dataset.utags_id)
-}
-
-export function getUtagsTargetFromEvent(event: Event): HTMLElement | undefined {
-  const target: HTMLElement | undefined = event.target as HTMLElement
-  if (!target) {
-    return
-  }
-
-  if (target.dataset.utags_id) {
-    return target
-  }
-
-  const ancestor = target.closest<HTMLElement>('[data-utags_id]')!
-  return ancestor || undefined
 }
 
 export function ancestorTextIncludes(
@@ -522,5 +502,68 @@ export function setUtagsAttributes(
     !(element instanceof HTMLAnchorElement)
   ) {
     element.dataset.utags_node_type = 'link'
+  }
+}
+
+export function removeUtagsAttributes(element: HTMLElement) {
+  if (!element || !(element instanceof HTMLElement)) {
+    return
+  }
+
+  if (element.dataset.utags_link !== undefined) {
+    delete element.dataset.utags_link
+  }
+
+  if (element.dataset.utags_title !== undefined) {
+    delete element.dataset.utags_title
+  }
+
+  if (element.dataset.utags_type !== undefined) {
+    delete element.dataset.utags_type
+  }
+
+  if (element.dataset.utags_node_type !== undefined) {
+    delete element.dataset.utags_node_type
+  }
+}
+
+export const cleanupUtags = (element: HTMLElement) => {
+  if (element.classList.contains('utags_ul') && !isUtagsUlTracked(element)) {
+    element.remove()
+    return
+  }
+
+  deleteElementUtags(element)
+  const utagsUl = unregisterElementUtagsUl(element)
+  // if (
+  //   utagsUl ||
+  //   element.dataset.utags !== undefined ||
+  //   element.dataset.utags_id !== undefined
+  // ) {
+  //   console.warn(
+  //     'cleanupUtags',
+  //     Boolean(utagsUl),
+  //     utagsUl?.isConnected,
+  //     element.dataset.utags_id,
+  //     element.dataset.utags,
+  //     (element as HTMLAnchorElement).href,
+  //     element.textContent?.trim()
+  //   )
+  // }
+
+  if (utagsUl && utagsUl.isConnected) {
+    utagsUl.remove()
+  }
+
+  if (element.dataset.utags !== undefined) {
+    delete element.dataset.utags
+  }
+
+  if (element.dataset.utags_id !== undefined) {
+    delete element.dataset.utags_id
+  }
+
+  if (element.dataset.utags_condition_node !== undefined) {
+    delete element.dataset.utags_condition_node
   }
 }

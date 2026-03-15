@@ -1,5 +1,11 @@
 # RELEASE NOTES
 
+## v0.31
+
+- Introduce `UTagsScanner` to traverse the whole page (including Shadow DOM), discover elements with `utags` data, and inject UTags UI.
+- Add incremental scanning via `MutationObserver` to keep tags in sync on dynamic pages while avoiding self-trigger loops by restricting observed attributes.
+- Improve cleanup and registry handling to prevent leaked/cloned UTags UI nodes when targets are removed or excluded.
+
 ## v0.30
 
 - Generate a "no-adult" version of the userscript that excludes adult site modules, built to `build/userscript-no-adult-{tag}/`.

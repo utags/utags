@@ -6,6 +6,7 @@
   #utags_should_has_higher_specificity
 ) {
   /* fix mp.weixin.qq.com issue. https://github.com/utags/utags/issues/29 */
+  /* TODO: check again. 不需要的话删掉它 */
   ul,
   ol {
     &:not(.utags_ul)[data-utags_key] {
@@ -14,9 +15,44 @@
   }
 
   &.utags_hide_all_tags:not(#utags_should_has_higher_specificity),
-  &[data-utags="off"] {
+  &:not(#utags_should_has_higher_specificity)[data-utags="off"] {
     .utags_ul {
       display: none !important;
+    }
+  }
+
+  #utags_absolute_ul_container {
+    position: absolute;
+    top: -999px;
+    height: 0px;
+    width: 100%;
+
+    .utags_ul {
+      z-index: 1;
+    }
+
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .utags_ul_1 {
+      /* right-center */
+      object-position: 200% 50%;
+      position: absolute;
+      top: -9999px;
+      margin-top: 0px !important;
+      margin-left: 0px !important;
+      flex-wrap: nowrap !important;
     }
   }
 
@@ -93,6 +129,7 @@
       text-transform: none !important;
       text-align: center !important;
       text-shadow: none !important;
+      text-indent: 0 !important;
       min-width: unset !important;
       min-height: unset !important;
       max-width: unset !important;
@@ -297,7 +334,7 @@
       overflow: hidden;
       overflow: auto;
       color: #000000;
-      background-color: #ffffff;
+      background-color: #ffffff !important;
       border-radius: 5px;
       padding: 14px;
       margin: 0 auto;
@@ -328,7 +365,7 @@
         border-radius: 2px;
         color: var(--utags-button-text-color);
         border: 1px solid var(--utags-button-border-color);
-        background-color: var(--utags-button-bg-color);
+        background-color: var(--utags-button-bg-color) !important;
         text-shadow: none;
         text-align: center;
         font-family: revert;

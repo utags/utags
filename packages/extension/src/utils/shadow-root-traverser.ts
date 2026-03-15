@@ -2,7 +2,7 @@
  * Default tags that typically don't contain shadow roots and should be excluded from traversal
  */
 
-const DEFAULT_EXCLUDE_TAGS = [
+export const DEFAULT_EXCLUDE_TAGS = [
   'script',
   'style',
   'link',

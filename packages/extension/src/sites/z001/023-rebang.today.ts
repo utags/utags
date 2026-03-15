@@ -73,8 +73,9 @@ export default (() => {
       'aside .w-full .select-none',
     ],
     conditionNodesSelectors: [
-      '[data-utags_list_node] [data-utags]:not([href^="https://www.v2ex.com/member/"])',
-      '[data-utags_list_node] a[href^="https://www.v2ex.com/member/"][data-utags].hidden',
+      '.w-screen ul:not(.utags_ul) > li [data-utags]:not([href^="https://www.v2ex.com/member/"])',
+      '.w-screen ul:not(.utags_ul) > li a[href^="https://www.v2ex.com/member/"][data-utags].hidden',
+      'aside .w-full .select-none [data-utags]',
     ],
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
