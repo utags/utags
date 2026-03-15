@@ -1,5 +1,5 @@
 import { getElementUtags } from './modules/dom-reference-manager'
-import { TAG_VISITED } from './modules/visited'
+import { isVisited, TAG_VISITED } from './modules/visited'
 import { getTags } from './storage/bookmarks'
 import type { UserTag, UserTagMeta } from './types'
 
@@ -67,7 +67,7 @@ export function buildTagsForDisplay(
   const object = getTags(key) as { tags?: string[] }
 
   const tags: string[] = (object.tags || []).slice()
-  if (node.dataset.utags_visited === '1') {
+  if (node.dataset.utags_visited === '1' || isVisited(key)) {
     tags.push(TAG_VISITED)
   }
 

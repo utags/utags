@@ -1,0 +1,11 @@
+:not(#a):not(#b):not(#c) {
+  /* Aside > Don’t miss out > Post thumbnail */
+  aside .widget-container > .post-thumbnail .utags_ul {
+    display: none !important;
+  }
+
+  /* Post page > View more */
+  a.yarpp-thumbnail {
+    --utags-list-node-display: inline-block;
+  }
+}

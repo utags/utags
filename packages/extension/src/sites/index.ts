@@ -76,6 +76,7 @@ import simpxxcity from './z999/008-simpxxcity.cr'
 import hotgixx_asia from './z999/009-hotgixx.asia'
 import nhentxx_net from './z999/010-nhentxx.net'
 import hito99mi_la from './z999/011-hito99mi.la'
+import misskon_com from './z999/012-misskon.com'
 
 type Site = {
   matches: RegExp
@@ -146,6 +147,7 @@ const sites: Site[] = [
   hotgixx_asia,
   nhentxx_net,
   hito99mi_la,
+  misskon_com,
 ]
 
 const BASE_EXCLUDE_SELECTOR = '[data-utags_exclude],svg'
@@ -307,12 +309,18 @@ const isValidUtagsElement = (element: HTMLElement) => {
     return true
   }
 
-  if (!element.textContent) {
-    return false
-  }
+  if (element.hasAttribute('data-utags_title')) {
+    if (!trimTitle(element.dataset.utags_title)) {
+      return false
+    }
+  } else {
+    if (!element.textContent) {
+      return false
+    }
 
-  if (!getTrimmedTitle(element)) {
-    return false
+    if (!getTrimmedTitle(element)) {
+      return false
+    }
   }
 
   // TODO: there may be more than one media object

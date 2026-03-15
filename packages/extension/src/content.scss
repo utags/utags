@@ -151,6 +151,7 @@
       &::before {
         content: attr(data-utags_tag);
         display: block;
+        position: static;
         font-size: var(--utags-text-tag-font-size);
         line-height: 1;
         height: unset;
