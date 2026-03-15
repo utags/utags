@@ -12,6 +12,14 @@ const config = JSON.parse(fs.readFileSync("package.json", "utf8"))
 
 let banner = fs.readFileSync("scripts/userscript/banner.txt", "utf8")
 
+banner = banner.replace(
+  // // @namespace            https://utags.pipecraft.net/
+  // =>
+  // // @namespace            https://github.com/utags
+  "{namespace}",
+  "https://github.com/utags"
+)
+
 if (tag !== "prod") {
   banner = banner.replaceAll(/({displayName(:.+)?})/gm, `$1 - ${tag}`)
 }

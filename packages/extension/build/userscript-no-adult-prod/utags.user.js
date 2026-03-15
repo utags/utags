@@ -13,7 +13,7 @@
 // @name:pt-BR           🏷️ UTags - Adicionar tags de usuário aos links
 // @name:vi              🏷️ UTags - Thêm tag người dùng vào liên kết
 // @name:ru              🏷️ UTags - Добавление пользовательских тегов к ссылкам
-// @namespace            https://utags.pipecraft.net/
+// @namespace            https://github.com/utags
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
 // @version              0.31.0
