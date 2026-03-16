@@ -64,10 +64,6 @@
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - その他多数。新しいサイトの追加を提案するには[こちら](https://github.com/utags/utags/issues)をクリックしてください。
 
-ほかのサイトでも UTags を使いたい場合は、スクリプト設定で対象サイトに対する `user matches` ルールを手動で追加してください。
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## 使用方法
 
 - 投稿のタイトルやユーザー名にマウスを移動すると、隣にタグ 🏷️ アイコンが表示されます。アイコンをクリックしてタグを追加してください

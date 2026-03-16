@@ -140,7 +140,7 @@ const config: Config = {
             },
             {
               label: 'Greasy Fork',
-              href: 'https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback',
+              href: 'https://greasyfork.org/scripts/569761-utags-add-usertags-to-links/feedback',
             },
             {
               label: 'LINUX.DO',
@@ -149,6 +149,10 @@ const config: Config = {
             {
               label: 'V2EX',
               href: 'https://www.v2ex.com/t/924103',
+            },
+            {
+              label: '2Libra',
+              href: 'https://2libra.com/post/browser-extensions/9wTBnrO',
             },
           ],
         },

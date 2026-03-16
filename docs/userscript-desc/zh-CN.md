@@ -62,11 +62,7 @@
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
 - 今日头条 ([toutiao.com](https://www.toutiao.com/))
 - 天使动漫论坛 ([tsdm39.com](https://www.tsdm39.com/))
-- 等网站。如果希望添加更多网站，请点击[这里](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links/feedback)。
-
-如果你也想在其他网站上使用小鱼标签，只需在脚本设置中为目标站点手动添加 `user matches` 规则即可。
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
+- 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
 ## 使用方法
 

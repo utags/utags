@@ -22,7 +22,7 @@ export const initialBookmarks = {
       'Bookmarks',
     ],
   },
-  'https://greasyfork.org/scripts/460718': {
+  'https://greasyfork.org/scripts/569761': {
     meta: {
       title: 'Userscript - 🏷️ 小鱼标签 (UTags) - 为链接添加用户标签',
       note: `这是个超实用的工具，能给用户、帖子、视频等链接添加自定义标签和备注信息。比如，可以给论坛的用户或帖子添加标签，易于识别他们或屏蔽他们的帖子和回复。支持 V2EX, X, Reddit, Greasy Fork, GitHub, B 站, 抖音, 小红书, 知乎, 掘金, 豆瓣, 吾爱破解, pixiv, LINUX DO, 小众软件, NGA, BOSS 直聘等网站。并可以使用特殊标签过滤帖子和回复。`,

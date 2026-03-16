@@ -54,7 +54,7 @@ User script is a lightweight browser extension method, suitable for those who wa
 
 1. Visit one of the following UTags user script release pages:
 
-   - [Greasy Fork - UTags](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links) (International user script platform)
+   - [Greasy Fork - UTags](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links) (International user script platform)
    - [ScriptCat - UTags](https://scriptcat.org/script-show-page/2784) (Chinese user script platform)
 
 2. Click the "Install this script" button on the page

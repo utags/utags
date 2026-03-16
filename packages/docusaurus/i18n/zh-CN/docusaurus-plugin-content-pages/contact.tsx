@@ -74,7 +74,7 @@ export default function Contact(): React.ReactElement {
                 <div className="button-group button-group--block">
                   <Link
                     className="button button--primary"
-                    to="https://greasyfork.org/scripts/460718-utags-add-usertags-to-links/feedback">
+                    to="https://greasyfork.org/scripts/569761-utags-add-usertags-to-links/feedback">
                     Greasy Fork 反馈
                   </Link>
                 </div>

@@ -64,10 +64,6 @@ Các trang web hiện được hỗ trợ:
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - Và nhiều trang khác. Nhấp [vào đây](https://github.com/utags/utags/issues) để đề xuất trang web mới.
 
-Nếu bạn muốn dùng UTags trên các trang web khác, chỉ cần thêm một quy tắc `user matches` cho trang đích trong phần cài đặt script.
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## Cách sử dụng
 
 - Di chuột qua tiêu đề bài đăng hoặc tên người dùng, và biểu tượng thẻ🏷️ sẽ xuất hiện bên cạnh. Nhấp vào biểu tượng để thêm thẻ

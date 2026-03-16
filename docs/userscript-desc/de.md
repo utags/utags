@@ -64,10 +64,6 @@ Derzeit unterstützte Websites:
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - Und viele mehr. Klicken Sie [hier](https://github.com/utags/utags/issues), um neue Websites vorzuschlagen.
 
-Wenn Sie UTags auch auf anderen Websites verwenden möchten, fügen Sie in den Skripteinstellungen einfach eine `user matches`-Regel für die Zielseite hinzu.
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## Verwendung
 
 - Bewegen Sie die Maus über Beitragstitel oder Benutzernamen, und ein Tag🏷️-Symbol erscheint daneben. Klicken Sie auf das Symbol, um Tags hinzuzufügen

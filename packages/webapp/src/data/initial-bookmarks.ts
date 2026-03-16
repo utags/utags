@@ -22,7 +22,7 @@ export const initialBookmarks = {
       'Bookmarks',
     ],
   },
-  'https://greasyfork.org/scripts/460718': {
+  'https://greasyfork.org/scripts/569761': {
     meta: {
       title: 'Userscript - 🏷️ UTags - Add user tags to links',
       note: `Add custom tags or notes to links such as users, posts and videos. For example, tags can be added to users or posts on a forum, making it easy to identify them or block their posts and replies. It works on X (Twitter), Reddit, Facebook, Threads, Instagram, Youtube, TikTok, GitHub, Greasy Fork, Hacker News, pixiv and numerous other websites.`,

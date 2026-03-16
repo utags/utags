@@ -39,18 +39,9 @@
 - NGA ([bbs.nga.cn](https://bbs.nga.cn/), [nga.178.com](https://nga.178.com/), [ngabbs.com](https://ngabbs.com/))
 - Keylol 其乐 ([keylol.com](https://keylol.com/))
 - DLsite ([www.dlsite.com](http://www.dlsite.com/))
-- Kemono ([kemono.cr](https://kemono.cr/))
-- Coomer ([coomer.st](https://coomer.st/))
-- Nekohouse ([nekohouse.su](https://nekohouse.su/))
 - Discourse ([meta.discourse.org](https://meta.discourse.org/))
 - Open AI ([community.openai.com](https://community.openai.com/))
 - Cloudflare ([community.cloudflare.com](https://community.cloudflare.com/))
-- Rule34Video(Rule34) ([rule34video.com](https://rule34video.com/))
-- Rule34Generate(Rule34Gen) ([rule34gen.com](https://rule34gen.com/))
-- panda.chaika.moe ([panda.chaika.moe](https://panda.chaika.moe/))
-- PornHub ([pornhub.com](https://www.pornhub.com/))
-- e-hentai ([e-hentai.org](https://e-hentai.org/)), exhentai ([exhentai.org](https://exhentai.org/))
-- dmm.co.jp ([www.dmm.co.jp](https://www.dmm.co.jp/))
 - WaniKani ([community.wanikani.com](https://community.wanikani.com/))
 - 油猴中文网 ([bbs.tampermonkey.net.cn](https://bbs.tampermonkey.net.cn/))
 - Flarum Community ([discuss.flarum.org](https://discuss.flarum.org/))
@@ -59,7 +50,6 @@
 - NodeLoc ([www.nodeloc.com](https://www.nodeloc.com/))
 - Veryfb ([veryfb.com](https://veryfb.com/))
 - Kater ([kater.me](https://kater.me/))
-- 生如夏花论坛 ([bbs.viva-la-vita.org](https://bbs.viva-la-vita.org/))
 - NodeSeek ([www.nodeseek.com](https://www.nodeseek.com/))
 - DeepFlood ([www.deepflood.com](https://www.deepflood.com/))
 - Inoreader ([www.inoreader.com](https://www.inoreader.com/))
@@ -71,13 +61,8 @@
 - 阮一峰的网络日志 ([www.ruanyifeng.com](https://www.ruanyifeng.com/blog/))
 - IDC Flare ([idcflare.com](https://idcflare.com/))
 - Obsidian Forum ([forum.obsidian.md](https://forum.obsidian.md/), [forum-zh.obsidian.md](https://forum-zh.obsidian.md/))
-- 司机社 ([xsijishe.net](https://xsijishe.net/))
-- SimpCity ([simpcity.cr](https://simpcity.cr/))
 - 2libra ([2libra.com](https://2libra.com/)) ([邀请码](https://2libra.com/auth/signup/1AeoTgXc))
 - 今日头条 ([toutiao.com](https://www.toutiao.com/))
-- Hot Asia Girl ([hotgirl.asia](https://hotgirl.asia/))
-- nhentai ([nhentai.net](https://nhentai.net/))
-- hitomi.la ([hitomi.la](https://hitomi.la/))
 - 天使动漫论坛 ([tsdm39.com](https://www.tsdm39.com/))
 - 等网站。如果希望添加更多网站，请点击[这里](https://github.com/utags/utags/issues)。
 
@@ -86,7 +71,7 @@
 - 类 Chrome 浏览器: [Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - Edge 浏览器: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
 - Firefox 浏览器: [Firefox Addon 商店](https://addons.mozilla.org/firefox/addon/utags/)
-- 用户脚本 / 油猴脚本: [Greasy Fork](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links) · [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784) · [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
+- 用户脚本 / 油猴脚本: [Greasy Fork](https://greasyfork.org/zh-CN/scripts/569761-utags-add-usertags-to-links) · [Greasy Fork](https://greasyfork.org/zh-CN/scripts/460718-utags-add-usertags-to-links) · [ScriptCat](https://scriptcat.org/zh-CN/script-show-page/2784) · [GitHub](https://github.com/utags/utags/raw/main/packages/extension/build/userscript-prod/utags.user.js)
 - [手动安装浏览器扩展](../../docs/manual-installation.zh-CN.md)
 
 ## 使用方法
@@ -161,7 +146,6 @@
 - 0.20
   - 新增 shadowRoot 遍历功能，支持在 Shadow DOM 内查找和标记元素
   - 优化 bilibili.com 网站支持，提升平台上标签功能的兼容性和性能
-  - 为 pornhub.com 网站添加特殊标签过滤功能，添加快速星标功能
   - 为 youtube.com 网站添加特殊标签过滤功能，添加快速星标功能，优化用户名匹配逻辑
   - 新增以感叹号开头的特殊标签：!、!!、!!!、!important 用于优先级标记
 - 0.19.x
@@ -221,8 +205,6 @@
   - 优化在【 X (Twitter)】添加标签的体验，并可以使用特殊标签屏蔽过滤不喜欢的用户的推文和评论
 - 0.10.6
   - Apply utags to community.wanikani.com
-- 0.10.4
-  - Apply utags to rule34video.com, rule34gen.com
 - 0.10.3
   - 可以在【Reddit】给社区、主题和用户加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的社区和用户的主题和评论
   - 可以在【TikTok】给视频加标签和备注，并可以使用特殊标签屏蔽过滤不喜欢的用户的视频和评论
@@ -233,9 +215,6 @@
   - 可以在 LINUX DO 和其他 Discourse 网站给帖子，分类，标签加标签，并可以使用特殊标签过滤主题和回复
 - 0.9.10
   - Apply utags to dlsite.com
-  - Apply utags to dmm.co.jp
-  - Apply utags to kemono.su
-  - Apply utags to coomer.su
   - Apply utags to keylol.com
 - 0.9.9
   - Apply utags to www.pixiv.net
@@ -244,7 +223,7 @@
   - Apply utags to NGA
 - 0.9.8
   - twitter.com -> x.com
-  - fix github.com, threads.net, e-hentai.org issues
+  - fix github.com, threads.net issues
 - 0.9.5
   - Add emoji tags 👍
   - Increase the size of the list of candidate tags
@@ -266,14 +245,13 @@
 - 0.8.10
   - 适配 rebang.today
 - 0.8.9
-  - 更新 bilibili.com, greasyfork.org, youtube.com, douyin.com, pornhub.com 等网站的样式与匹配规则
+  - 更新 bilibili.com, greasyfork.org, youtube.com, douyin.com 等网站的样式与匹配规则
 - 0.8.8
   - 适配 podcasts.google.com
   - 适配 douyin.com
   - 适配 sspai.com
 - 0.8.7
   - UTags 开始支持 weibo.com, weibo.cn
-  - UTags 开始支持 pornhub.com
 - 0.8.6
   - UTags 开始支持 xiaohongshu.com
 - 0.8.5

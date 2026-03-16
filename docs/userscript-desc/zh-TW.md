@@ -64,10 +64,6 @@
 - 天使动漫论坛 ([tsdm39.com](https://www.tsdm39.com/))
 - 還有更多。點擊[這裡](https://github.com/utags/utags/issues)建議新網站。
 
-若您也想在其他網站使用小魚標籤，只需在腳本設定中為目標網站手動加入 `user matches` 規則即可。
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## 使用方法
 
 - 將滑鼠懸停在貼文標題或用戶名稱上，旁邊會出現標籤圖示 🏷️。點擊圖示即可添加標籤

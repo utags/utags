@@ -48,7 +48,7 @@ A modern web application offering advanced bookmark management features:
    - [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
    - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
    - [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-   - [Userscript](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+   - [Userscript](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 
 2. **Access Web App**: Visit [https://utags.link](https://utags.link) for advanced bookmark management
 

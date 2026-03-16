@@ -46,8 +46,8 @@
 ////                  The Official Installation URLs                                                                                        ////
 ////                            官方安装网址                                                                                                  ////
 ////                                                                                                                                        ////
-//// * https://greasyfork.org/scripts/460718-utags-add-usertags-to-links                                                                    ////
-//// ** downloadURL https://update.greasyfork.org/scripts/460718/%F0%9F%8F%B7%EF%B8%8F%20UTags%20-%20Add%20usertags%20to%20links.user.js    ////
+//// * https://greasyfork.org/scripts/569761-utags-add-usertags-to-links                                                                    ////
+//// ** downloadURL https://update.greasyfork.org/scripts/569761/%F0%9F%8F%B7%EF%B8%8F%20UTags%20-%20Add%20usertags%20to%20links.user.js    ////
 //// * https://scriptcat.org/script-show-page/2784                                                                                          ////
 //// ** downloadURL https://scriptcat.org/scripts/code/2784/%F0%9F%8F%B7%EF%B8%8F+UTags+-+Add+usertags+to+links.user.js                     ////
 //// * https://github.com/utags/utags                                                                                                       ////

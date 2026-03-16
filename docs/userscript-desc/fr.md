@@ -64,10 +64,6 @@ Sites actuellement pris en charge :
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - Et bien d'autres. Cliquez [ici](https://github.com/utags/utags/issues) pour suggérer de nouveaux sites.
 
-Si vous souhaitez utiliser UTags sur d'autres sites, ajoutez simplement une règle `user matches` pour le site cible dans les paramètres du script.
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## Utilisation
 
 - Survolez les titres de publications ou les noms d'utilisateur avec la souris, et une icône de tag🏷️ apparaîtra à côté. Cliquez sur l'icône pour ajouter des tags

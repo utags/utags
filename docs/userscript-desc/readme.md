@@ -64,10 +64,6 @@ For now it works on
 - www.tsdm39.com ([tsdm39.com](https://www.tsdm39.com/))
 - And more. Click [here](https://github.com/utags/utags/issues) to add more sites.
 
-If you want to use UTags on other sites, simply add a `user matches` rule for the target site in the script settings.
-
-![user matches](https://wsrv.nl/?url=https://greasyfork.s3.us-east-2.amazonaws.com/8mm3oa308eaymr8zdpsk72mjzgtx)
-
 ## Usage
 
 - Move the mouse over the title of the post or the username, and a tag 🏷️ icon will appear next to it, click the icon to add tags

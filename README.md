@@ -62,7 +62,7 @@ utags/
    - [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
    - [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
    - [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-   - [Userscript](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+   - [Userscript](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 
 2. **Access the Web App**: Visit [https://utags.link](https://utags.link) for advanced bookmark management
 
@@ -106,7 +106,7 @@ A browser extension and userscript that enables tagging of web content across 50
 - **Chrome**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - **Firefox**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
 - **Edge**: [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-- **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 
 #### Usage
 
@@ -280,7 +280,7 @@ Copyright (c) 2023-2026 [Pipecraft](https://www.pipecraft.net). Licensed under t
 - 🌐 **Official Website**: [https://utags.link](https://utags.link)
 - 📦 **Chrome Extension**: [Chrome Web Store](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - 🦊 **Firefox Add-on**: [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/utags/)
-- 📜 **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- 📜 **Userscript**: [Greasy Fork](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/utags/utags/discussions)
 - 📺 **Video Demos**: [YouTube](https://www.youtube.com/watch?v=WzUzBA5V91A)
 

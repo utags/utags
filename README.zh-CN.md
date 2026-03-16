@@ -62,7 +62,7 @@ utags/
    - [Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
    - [Firefox 附加组件](https://addons.mozilla.org/firefox/addon/utags/)
    - [Edge 附加组件](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-   - [用户脚本](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+   - [用户脚本](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 
 2. **访问网络应用**：访问 [https://utags.link](https://utags.link) 进行高级书签管理
 
@@ -106,7 +106,7 @@ utags/
 - **Chrome**：[Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - **Firefox**：[Firefox 附加组件](https://addons.mozilla.org/firefox/addon/utags/)
 - **Edge**：[Edge 附加组件](https://microsoftedge.microsoft.com/addons/detail/utags-add-usertags-to-l/bhlbflbehfoccjjenpekilgabbjjnphe)
-- **用户脚本**：[Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- **用户脚本**：[Greasy Fork](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 
 #### 使用方法
 
@@ -280,7 +280,7 @@ _具有筛选效果的特殊标签_
 - 🌐 **官方网站**：[https://utags.link](https://utags.link)
 - 📦 **Chrome 扩展**：[Chrome 应用商店](https://chromewebstore.google.com/detail/utags-add-usertags-to-lin/kofjcnaphffjoookgahgjidofbdplgig)
 - 🦊 **Firefox 附加组件**：[Firefox 附加组件](https://addons.mozilla.org/firefox/addon/utags/)
-- 📜 **用户脚本**：[Greasy Fork](https://greasyfork.org/scripts/460718-utags-add-usertags-to-links)
+- 📜 **用户脚本**：[Greasy Fork](https://greasyfork.org/scripts/569761-utags-add-usertags-to-links)
 - 💬 **讨论**：[GitHub 讨论](https://github.com/utags/utags/discussions)
 - 📺 **视频演示**：[YouTube](https://www.youtube.com/watch?v=WzUzBA5V91A)
 
