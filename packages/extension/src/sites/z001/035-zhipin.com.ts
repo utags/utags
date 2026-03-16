@@ -2,11 +2,7 @@ import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./035-zhipin.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
@@ -95,14 +91,12 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'job-detail' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
 
         element = $('.smallbanner .company-info .name')
         if (element) {
           setUtagsAttributes(element, { key, type: 'job-detail' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
     },
@@ -249,8 +243,6 @@ export default (() => {
         setAttribute(element, 'data-utags', element.dataset.utags || '')
         element.dataset.utags_position_selector =
           '.job-title .job-name,.info-primary .name b,.info-job,.similar-job-info,.sub-li-top,a.about-info u.h'
-
-        markElementWhetherVisited(key, element)
 
         return true
       }

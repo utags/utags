@@ -2,12 +2,7 @@ import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./036-twitch.tv.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
-import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 
@@ -92,7 +87,6 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'video' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
 
@@ -170,7 +164,6 @@ export default (() => {
 
         const meta = { type: 'video', title }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
 
         setAttribute(element, 'data-utags', element.dataset.utags || '')
 
@@ -211,6 +204,8 @@ export default (() => {
     },
     excludeSelectors: [
       '.top-nav__overflow-menu',
+      // 观众数量
+      '.tw-card-body > p',
       //
     ],
     validMediaSelectors: [

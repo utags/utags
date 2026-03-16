@@ -2,11 +2,7 @@ import { $, $$, doc, hasClass, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./041-toutiao.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { deleteUrlParameters, setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
@@ -110,7 +106,6 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'news' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
 
@@ -120,7 +115,6 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'video' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
 
@@ -172,7 +166,6 @@ export default (() => {
 
         const meta = { type: 'news', title }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
         setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true
@@ -189,7 +182,6 @@ export default (() => {
 
         const meta = { type: 'video', title }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
         setAttribute(element, 'data-utags', element.dataset.utags || '')
 
         return true

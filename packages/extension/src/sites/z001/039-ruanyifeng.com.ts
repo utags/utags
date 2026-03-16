@@ -2,12 +2,7 @@ import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./039-ruanyifeng.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
-import type { UserTagMeta, UtagsHTMLElement } from '../../types'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
 
@@ -78,7 +73,6 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'post' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
     },
@@ -112,7 +106,6 @@ export default (() => {
 
         const meta = { title, type: 'post' }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
 
         setAttribute(element, 'data-utags', element.dataset.utags || '')
 

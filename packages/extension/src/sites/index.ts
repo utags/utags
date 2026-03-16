@@ -23,7 +23,6 @@ import {
 } from '../modules/utags-scanner'
 import type { UserTag, UserTagMeta, UtagsHTMLElement } from '../types'
 import { cleanupUtags } from '../utils/index'
-import { findElementsInShadowRoots } from '../utils/shadow-root-traverser'
 import defaultSite from './default'
 import utags_pipecraft_net from './z001/000-utags.pipecraft.net'
 import v2ex from './z001/001-v2ex'

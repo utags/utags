@@ -1,5 +1,5 @@
 import { getElementUtags } from './modules/dom-reference-manager'
-import { isVisited, TAG_VISITED } from './modules/visited'
+import { markElementWhetherVisited, TAG_VISITED } from './modules/visited'
 import { getTags } from './storage/bookmarks'
 import type { UserTag, UserTagMeta } from './types'
 
@@ -67,7 +67,9 @@ export function buildTagsForDisplay(
   const object = getTags(key) as { tags?: string[] }
 
   const tags: string[] = (object.tags || []).slice()
-  if (node.dataset.utags_visited === '1' || isVisited(key)) {
+  // The visited state can be updated by other tabs, so re-check before adding the visited tag.
+  markElementWhetherVisited(key, node)
+  if (node.dataset.utags_visited === '1') {
     tags.push(TAG_VISITED)
   }
 

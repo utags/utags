@@ -8,11 +8,7 @@ import {
 import styleText from 'data-text:./001-v2ex.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
 import defaultSite from '../default'
@@ -78,7 +74,6 @@ export default (() => {
           )
           setUtagsAttributes(header, { key, type: 'topic' })
           addVisited(key)
-          markElementWhetherVisited(key, header)
         }
 
         const main = $('#Main') || $('.content')
@@ -249,12 +244,5 @@ export default (() => {
     ],
     getStyle: () => styleText,
     getCanonicalUrl,
-    postProcess() {
-      for (const element of $$('a[href*="/t/"]') as HTMLAnchorElement[]) {
-        const key = getCanonicalUrl(element.href)
-
-        markElementWhetherVisited(key, element)
-      }
-    },
   }
 })()

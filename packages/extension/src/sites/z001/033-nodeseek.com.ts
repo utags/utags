@@ -2,11 +2,7 @@ import { $, $$, doc, hasClass } from 'browser-extension-utils'
 import styleText from 'data-text:./033-nodeseek.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import {
   getDirectChildText,
@@ -129,7 +125,6 @@ export default (() => {
 
         const meta = { type: 'post', title }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
 
         return true
       }

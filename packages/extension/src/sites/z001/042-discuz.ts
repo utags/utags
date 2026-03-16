@@ -2,11 +2,7 @@ import { $, $$, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./042-discuz.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { deleteUrlParameters } from '../../utils'
 import { setUtags } from '../../utils/dom-utils'
 import { ancestorTextIncludes, setUtagsAttributes } from '../../utils/index'
@@ -159,7 +155,6 @@ export function Discuz(options?: {
       if (element) {
         setUtagsAttributes(element, { key, type: 'post' })
         addVisited(key)
-        markElementWhetherVisited(key, element)
       }
     }
   }
@@ -257,7 +252,6 @@ export function Discuz(options?: {
       const meta = href === title ? { type: 'post' } : { type: 'post', title }
 
       setUtags(element, key, meta)
-      markElementWhetherVisited(key, element)
 
       return true
     }

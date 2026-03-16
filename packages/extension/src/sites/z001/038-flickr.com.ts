@@ -2,11 +2,6 @@ import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./038-flickr.com.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
 import { setUtags } from '../../utils/dom-utils'
 import { getUtagsTitle, setUtagsAttributes } from '../../utils/index'
 

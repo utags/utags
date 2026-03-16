@@ -2,11 +2,7 @@ import { $, $$, doc, setAttribute } from 'browser-extension-utils'
 import styleText from 'data-text:./010-nhentxx.net.scss'
 import { getTrimmedTitle } from 'utags-utils'
 
-import {
-  addVisited,
-  markElementWhetherVisited,
-  setVisitedAvailable,
-} from '../../modules/visited'
+import { addVisited, setVisitedAvailable } from '../../modules/visited'
 import { xaxi } from '../../utils/atob'
 import { setUtags } from '../../utils/dom-utils'
 import { setUtagsAttributes } from '../../utils/index'
@@ -42,7 +38,6 @@ export default (() => {
         if (element) {
           setUtagsAttributes(element, { key, type: 'gallery' })
           addVisited(key)
-          markElementWhetherVisited(key, element)
         }
       }
     },
@@ -69,7 +64,6 @@ export default (() => {
 
         const meta = { type: 'gallery', title }
         setUtags(element, key, meta)
-        markElementWhetherVisited(key, element)
         setAttribute(element, 'data-utags', element.dataset.utags || '')
         if ($('.vli-info h2', element)) {
           element.dataset.utags_position_selector = '.vli-info h2'

@@ -5,10 +5,25 @@ import {
   shouldUpdateUtagsWhenNodeUpdated,
 } from './content-utils'
 import * as domReferenceManager from './modules/dom-reference-manager'
-import { TAG_VISITED } from './modules/visited'
+import { isVisited, TAG_VISITED } from './modules/visited'
 import * as bookmarksStorage from './storage/bookmarks'
 import type { UserTag } from './types'
 import type { BookmarkTagsAndMetadata } from './types/bookmarks.js'
+
+vi.mock('./modules/visited', () => {
+  const isVisitedMock = vi.fn((_key: string) => false)
+  return {
+    TAG_VISITED: ':visited',
+    isVisited: isVisitedMock,
+    markElementWhetherVisited(key: string, element: HTMLElement) {
+      if (isVisitedMock(key)) {
+        element.dataset.utags_visited = '1'
+      } else if (element.dataset.utags_visited === '1') {
+        delete element.dataset.utags_visited
+      }
+    },
+  }
+})
 
 let getElementUtagsMockValue: UserTag | undefined
 let getTagsMockValue: { tags?: string[] }
@@ -16,6 +31,9 @@ let getTagsMockValue: { tags?: string[] }
 beforeEach(() => {
   getElementUtagsMockValue = undefined
   getTagsMockValue = { tags: [] }
+
+  vi.mocked(isVisited).mockReset()
+  vi.mocked(isVisited).mockReturnValue(false)
 
   vi.spyOn(domReferenceManager, 'getElementUtags').mockImplementation(
     () => getElementUtagsMockValue
@@ -148,9 +166,9 @@ describe('shouldUpdateUtagsWhenNodeUpdated', () => {
     expect(result?.meta).toBe(meta)
   })
 
-  it('buildTagsForDisplay should append TAG_VISITED when dataset.utags_visited is "1"', () => {
+  it('buildTagsForDisplay should append TAG_VISITED when isVisited returns true', () => {
     const node = document.createElement('a')
-    node.dataset.utags_visited = '1'
+    vi.mocked(isVisited).mockReturnValue(true)
     getElementUtagsMockValue = {
       key: 'https://example.com',
     }
