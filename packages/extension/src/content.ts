@@ -525,6 +525,7 @@ function appendCurrentPageLink(options?: {
   // Use options.title if provided, otherwise use document.title
   linkElement.textContent = options.title || document.title
   linkElement.id = 'utags_current_page_link'
+  linkElement.dataset.utags_link = ''
 
   // Add description to dataset if provided
   if (options.description) {
@@ -597,9 +598,16 @@ const menuCommandManager = createMenuCommandManager(
 
 /**
  * Update menu command for adding tags to current page
- * @param tags - Optional array of tags to display in menu
  */
-async function updateAddTagsToCurrentPageMenuCommand(tags?: string[]) {
+async function updateAddTagsToCurrentPageMenuCommand() {
+  const key = getCanonicalUrl(location.href)
+  if (!key) {
+    return
+  }
+
+  const object = getTags(key)
+  const tags = object.tags
+
   await menuCommandManager.updateMenuCommand(tags)
   await menuCommandManager.updateQuickTagMenuCommands(tags)
 }
@@ -963,13 +971,6 @@ async function displayTags() {
     }
   }
 
-  // Update menu command
-  const key = getCanonicalUrl(location.href)
-  if (key) {
-    const object = getTags(key)
-    await updateAddTagsToCurrentPageMenuCommand(object.tags)
-  }
-
   // cleanUnusedUtags()
 
   if (DEBUG) {
@@ -1000,6 +1001,9 @@ async function initStorage() {
       // Re-queue all scanned nodes so they can be re-rendered with latest data.
       enqueueScannedNodes(lastScannerResult)
     }
+
+    // Update memu commands
+    void updateAddTagsToCurrentPageMenuCommand()
   }
 
   addTagsValueChangeListener(onStorageChange)
@@ -1547,7 +1551,7 @@ async function main() {
   }
 
   const observer = new MutationObserver(async (mutationsList) => {
-    console.debug('mutation', Date.now(), mutationsList)
+    // console.debug('mutation', Date.now(), mutationsList)
     let shouldUpdate = false
     for (const mutationRecord of mutationsList) {
       if (
@@ -1569,7 +1573,7 @@ async function main() {
       }
     }
 
-    console.debug('shouldUpdate', shouldUpdate)
+    // console.debug('shouldUpdate', shouldUpdate)
 
     if (shouldUpdate) {
       // Clean up immediately. Some app like tictok re-render while mouse over something
