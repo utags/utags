@@ -528,7 +528,11 @@ export function removeUtagsAttributes(element: HTMLElement) {
 }
 
 export const cleanupUtags = (element: HTMLElement) => {
-  if (element.classList.contains('utags_ul') && !isUtagsUlTracked(element)) {
+  if (
+    element.classList.contains('utags_ul') &&
+    !isUtagsUlTracked(element) &&
+    !element.classList.contains('utags_current_tags')
+  ) {
     element.remove()
     return
   }
