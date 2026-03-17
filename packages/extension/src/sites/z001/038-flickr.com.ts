@@ -82,22 +82,16 @@ export default (() => {
     matches: /flickr\.com/,
     preProcess() {
       let key = getUserProfileUrl(location.href)
-      // if (key) {
-      //   // profile header
-      //   const element =
-      //     $(".user-profile-names .username") ||
-      //     $(
-      //       ".user-profile-names .user-profile-names__primary,.user-profile-names .user-profile-names__secondary"
-      //     )
-      //   if (element) {
-      //     const title = element.textContent!.trim()
-      //     if (title) {
-      //       const meta = { title, type: "user" }
-      //       setUtags(element, key, meta)
-      //       matchedNodesSet.add(element)
-      //     }
-      //   }
-      // }
+      if (key) {
+        const element = $('.avatar-container + .info-container h1')
+
+        if (element) {
+          const title = getTrimmedTitle(element)
+          if (title) {
+            setUtagsAttributes(element, { key, title, type: 'user' })
+          }
+        }
+      }
 
       key = getGroupUrl(location.href)
       if (key) {
@@ -192,10 +186,23 @@ export default (() => {
       if (
         titleLowerCase.startsWith('more') ||
         titleLowerCase.startsWith('edit') ||
-        /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
+        /^[\d,.]+(y|m|h|d|s|mo|k)?$/.test(titleLowerCase) ||
         /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(titleLowerCase)
       ) {
         return false
+      }
+
+      {
+        const title = element.title
+        if (
+          element.closest('.align-right') &&
+          (title.includes('UTC') || title.includes('GMT'))
+        ) {
+          return false
+        }
+        if (element.closest('.align-right') && titleLowerCase === '-') {
+          return false
+        }
       }
 
       return true
@@ -243,6 +250,7 @@ export default (() => {
       // Albums
       '.photo-list-album-view',
       // Profiles
+      '.general-stats',
       '.contact-list-num',
       '.contact-list-table th',
       '.bio-infos-container .archives-link',
@@ -275,12 +283,17 @@ export default (() => {
       'a[data-track="groupDiscussionTopicReplyCountClick"]',
       '.pro-badge-new',
       '.pro-badge-legacy',
+      '.see-all-block',
       // https://www.flickr.com/help/forum/en-us/
       'a[href*="?change_lang="]',
       '.forumSearch form',
       '.TopicListing small a',
       '#DiscussTopic .Said small a',
       '.TopicReply .Said small a',
+      // Table number columns
+      'td.align-right',
+      // Add to group
+      '.add-button',
       // groups (deprecated view)
       '.group-blast-zeus',
       '.hide-link',
@@ -288,6 +301,9 @@ export default (() => {
       '.set-desc.group-desc .short a',
       '#feeds-xml a',
       '.slideshow-bottom a',
+      // Settings
+      '.account-settings-page-view',
+      '.account-settings-view',
     ],
     getStyle: () => styleText,
     getCanonicalUrl,

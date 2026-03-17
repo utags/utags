@@ -16,7 +16,7 @@
 // @namespace            https://github.com/utags
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.31.7
+// @version              0.31.8
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -9216,6 +9216,15 @@
       preProcess() {
         var _a
         let key = getUserProfileUrl(location.href)
+        if (key) {
+          const element = $(".avatar-container + .info-container h1")
+          if (element) {
+            const title = getTrimmedTitle(element)
+            if (title) {
+              setUtagsAttributes(element, { key, title, type: "user" })
+            }
+          }
+        }
         key = getGroupUrl(location.href)
         if (key) {
           const element = $("h1.group-title")
@@ -9268,12 +9277,24 @@
         if (
           titleLowerCase.startsWith("more") ||
           titleLowerCase.startsWith("edit") ||
-          /^[\d,.]+(m|h|d|mo|k)?$/.test(titleLowerCase) ||
+          /^[\d,.]+(y|m|h|d|s|mo|k)?$/.test(titleLowerCase) ||
           /^\d+( (mins?|hours?|days?|months?|years?) ago)?$/.test(
             titleLowerCase
           )
         ) {
           return false
+        }
+        {
+          const title2 = element.title
+          if (
+            element.closest(".align-right") &&
+            (title2.includes("UTC") || title2.includes("GMT"))
+          ) {
+            return false
+          }
+          if (element.closest(".align-right") && titleLowerCase === "-") {
+            return false
+          }
         }
         return true
       },
@@ -9317,6 +9338,7 @@
         ".tag-section-header",
         ".nav-links",
         ".photo-list-album-view",
+        ".general-stats",
         ".contact-list-num",
         ".contact-list-table th",
         ".bio-infos-container .archives-link",
@@ -9347,17 +9369,22 @@
         'a[data-track="groupDiscussionTopicReplyCountClick"]',
         ".pro-badge-new",
         ".pro-badge-legacy",
+        ".see-all-block",
         'a[href*="?change_lang="]',
         ".forumSearch form",
         ".TopicListing small a",
         "#DiscussTopic .Said small a",
         ".TopicReply .Said small a",
+        "td.align-right",
+        ".add-button",
         ".group-blast-zeus",
         ".hide-link",
         '[data-track="join-group"]',
         ".set-desc.group-desc .short a",
         "#feeds-xml a",
         ".slideshow-bottom a",
+        ".account-settings-page-view",
+        ".account-settings-view",
       ],
       getStyle: () => flickr_com_default,
       getCanonicalUrl: getCanonicalUrl2,
