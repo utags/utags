@@ -189,8 +189,11 @@ let matchedNodesSelector = joinSelectors(
     : [...defaultSite.matchedNodesSelectors, 'a[href]']
 )
 
+let scannerInstance: UTagsScanner | undefined
+let lastScanDomOptions: ScanDomOptions | undefined
+
 export const updateMatchedNodesSelector = (customSelector: string) => {
-  matchedNodesSelector = joinSelectors(
+  const nextMatchedNodesSelector = joinSelectors(
     currentSite.matchedNodesSelectors &&
       currentSite.matchedNodesSelectors.length > 0
       ? [
@@ -200,6 +203,15 @@ export const updateMatchedNodesSelector = (customSelector: string) => {
         ]
       : [...defaultSite.matchedNodesSelectors, 'a[href]', customSelector]
   )
+
+  if (nextMatchedNodesSelector === matchedNodesSelector) {
+    return
+  }
+
+  matchedNodesSelector = nextMatchedNodesSelector
+  if (scannerInstance) {
+    scannerInstance.updateConfig(createUTagsScannerOptions(lastScanDomOptions))
+  }
 }
 
 const excludeSelector = joinSelectors([
@@ -546,9 +558,10 @@ export type ScanDomOptions = {
   onScanCompleted?: (nodes: HTMLElement[]) => void
 }
 
-export function scanDom(options?: ScanDomOptions) {
-  console.debug('UTagsScanner start', matchedNodesSelector, excludeSelector)
-  const initialOptions: UTagsScannerOptions = {
+function createUTagsScannerOptions(
+  options?: ScanDomOptions
+): UTagsScannerOptions {
+  return {
     include: matchedNodesSelector
       ? matchedNodesSelector.split(',')
       : // : ['[data-utags_link]', '[data-utags]', 'a[href*="github"]', 'a'],
@@ -637,6 +650,12 @@ export function scanDom(options?: ScanDomOptions) {
       }
     },
   }
+}
+
+export function scanDom(options?: ScanDomOptions) {
+  lastScanDomOptions = options
+  console.debug('UTagsScanner start', matchedNodesSelector, excludeSelector)
+  const initialOptions = createUTagsScannerOptions(options)
 
   let debugTimeout: ReturnType<typeof setTimeout>
   let currentResult: Element[] | undefined
@@ -663,6 +682,7 @@ export function scanDom(options?: ScanDomOptions) {
       }, 100)
     }
   }, initialOptions)
+  scannerInstance = scanner
 
   if (document.body) {
     scanner.start(document.body)

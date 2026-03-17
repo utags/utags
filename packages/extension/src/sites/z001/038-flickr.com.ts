@@ -200,6 +200,7 @@ export default (() => {
         ) {
           return false
         }
+
         if (element.closest('.align-right') && titleLowerCase === '-') {
           return false
         }

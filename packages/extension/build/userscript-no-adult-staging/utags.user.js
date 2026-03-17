@@ -16,7 +16,7 @@
 // @namespace            https://github.com/utags
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.31.8
+// @version              0.31.9
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -5527,19 +5527,19 @@
       }
     }
   }
-  function debugScannerDifference(scannerInstance) {
-    const memorySet = scannerInstance.results
+  function debugScannerDifference(scannerInstance2) {
+    const memorySet = scannerInstance2.results
     const domFound = /* @__PURE__ */ new Set()
     const utagsMatched = /* @__PURE__ */ new Set()
     function findInDOM(root) {
       if (!root) return
-      if (root instanceof Element && root.matches(scannerInstance.include)) {
+      if (root instanceof Element && root.matches(scannerInstance2.include)) {
         const isIgnored =
-          root.closest(scannerInstance.exclude) ||
-          root.matches(scannerInstance.ignore) ||
-          root.querySelector(scannerInstance.ignore) ||
-          (scannerInstance.onBeforeMatch && // @ts-expect-error debug
-            scannerInstance.onBeforeMatch(root, "add", true) === false)
+          root.closest(scannerInstance2.exclude) ||
+          root.matches(scannerInstance2.ignore) ||
+          root.querySelector(scannerInstance2.ignore) ||
+          (scannerInstance2.onBeforeMatch && // @ts-expect-error debug
+            scannerInstance2.onBeforeMatch(root, "add", true) === false)
         if (!isIgnored) domFound.add(root)
       }
       if (
@@ -10126,8 +10126,10 @@
       ? [...currentSite.matchedNodesSelectors, "[data-utags_link]"]
       : [...default_default2.matchedNodesSelectors, "a[href]"]
   )
+  var scannerInstance
+  var lastScanDomOptions
   var updateMatchedNodesSelector = (customSelector) => {
-    matchedNodesSelector = joinSelectors(
+    const nextMatchedNodesSelector = joinSelectors(
       currentSite.matchedNodesSelectors &&
         currentSite.matchedNodesSelectors.length > 0
         ? [
@@ -10137,6 +10139,15 @@
           ]
         : [...default_default2.matchedNodesSelectors, "a[href]", customSelector]
     )
+    if (nextMatchedNodesSelector === matchedNodesSelector) {
+      return
+    }
+    matchedNodesSelector = nextMatchedNodesSelector
+    if (scannerInstance) {
+      scannerInstance.updateConfig(
+        createUTagsScannerOptions(lastScanDomOptions)
+      )
+    }
   }
   var excludeSelector = joinSelectors([
     BASE_EXCLUDE_SELECTOR,
@@ -10279,9 +10290,8 @@
     }
     return [...matchedNodesSet]
   }
-  function scanDom(options) {
-    console.debug("UTagsScanner start", matchedNodesSelector, excludeSelector)
-    const initialOptions = {
+  function createUTagsScannerOptions(options) {
+    return {
       include: matchedNodesSelector ? matchedNodesSelector.split(",") : void 0,
       ignore: ["[data-utags_ignore]"],
       exclude: excludeSelector
@@ -10346,6 +10356,11 @@
         }
       },
     }
+  }
+  function scanDom(options) {
+    lastScanDomOptions = options
+    console.debug("UTagsScanner start", matchedNodesSelector, excludeSelector)
+    const initialOptions = createUTagsScannerOptions(options)
     let debugTimeout
     let currentResult
     const scanner = new UTagsScanner((list, stats) => {
@@ -10369,6 +10384,7 @@
         }, 100)
       }
     }, initialOptions)
+    scannerInstance = scanner
     if (document.body) {
       scanner.start(document.body)
     } else {
