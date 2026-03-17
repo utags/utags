@@ -3,6 +3,7 @@
 ## v0.31
 
 - Introduce `UTagsScanner` to traverse the whole page (including Shadow DOM), discover elements with `utags` data, and inject UTags UI.
+- Avoid forcing `attachShadow({ mode: 'closed' })` to `open` on Cloudflare Challenges pages to prevent breaking the challenge flow.
 - Add incremental scanning via `MutationObserver` to keep tags in sync on dynamic pages while avoiding self-trigger loops by restricting observed attributes.
 - Improve cleanup and registry handling to prevent leaked/cloned UTags UI nodes when targets are removed or excluded.
 - Apply utags to misskon.com

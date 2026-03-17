@@ -36,6 +36,7 @@
 // @license              {license}
 // @match                https://*/*
 // @match                http://*/*
+// @exclude              *://challenges.cloudflare.com/*
 // @connect              dav.jianguoyun.com
 // @connect              localhost
 // @connect              *

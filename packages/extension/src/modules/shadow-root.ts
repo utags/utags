@@ -2,6 +2,20 @@
 // 在 ISOLATED 脚本中也需使用同样的名称监听
 export const SHADOW_SIGNAL_EVENT = 'UTAGS_SHADOW_ROOT_CREATED'
 
+function isCloudflareChallenges() {
+  return (
+    (document.querySelector(
+      'script[src^="https://challenges.cloudflare.com/turnstile/"]'
+    ) !== null &&
+      (document.querySelector('#challenge-success-text') !== null ||
+        document.querySelector('input[name="cf-turnstile-response"]') !==
+          null ||
+        document.querySelector('script[src*="/cdn-cgi/challenge-platform"]') !==
+          null)) ||
+    location.hostname === 'challenges.cloudflare.com'
+  )
+}
+
 export function interceptShadowDOM() {
   // 1. 立即捕获原始方法，防止被网页后续脚本劫持或循环调用
   const originalAttachShadow = Element.prototype.attachShadow
@@ -16,8 +30,8 @@ export function interceptShadowDOM() {
   Element.prototype.attachShadow = function (init) {
     // 核心功能：将 closed 强制转为 open
     // 这样 Scanner 才能通过 node.shadowRoot 访问到内容
-    if (init && init.mode === 'closed') {
-      init.mode = 'open'
+    if (init && init.mode === 'closed' && !isCloudflareChallenges()) {
+      // init.mode = 'open'
     }
 
     // 调用原始方法创建 Shadow Root
