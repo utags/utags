@@ -148,7 +148,11 @@ export default (() => {
 
       return false
     },
-    excludeSelectors: [...defaultSite.excludeSelectors],
+    excludeSelectors: [
+      ...defaultSite.excludeSelectors,
+      // Navigation
+      'tp-yt-app-drawer',
+    ],
     validMediaSelectors: [
       // Validated user icon
       'a span.ytSpecIconShapeHost svg',
@@ -156,11 +160,11 @@ export default (() => {
     postProcess() {
       const host = location.host
       const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)
-      if (!enableQuickStar) {
+      if (!enableQuickStar || 1) {
         return
       }
 
-      const bookmarkButton = `<yt-button-view-model class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">
+      const bookmarkButton = `<yt-button-view-model data-utags_exclude="" class="utags_custom_btn utags_custom_bookmark_btn ytd-menu-renderer">
       <button-view-model class="ytSpecButtonViewModelHost style-scope ytd-menu-renderer">
       <button class="yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading yt-spec-button-shape-next--enable-backdrop-filter-experiment" title="Add star" aria-label="Add star" aria-disabled="false" style="">
       <div aria-hidden="true" class="yt-spec-button-shape-next__icon">
@@ -185,6 +189,8 @@ export default (() => {
         const isBookmarkButton = nextElement?.classList.contains(
           'utags_custom_bookmark_btn'
         )
+
+        console.log('isBookmarkButton', isBookmarkButton, nextElement)
 
         if (isBookmarkButton) {
           bookmarkElement = nextElement as HTMLElement
