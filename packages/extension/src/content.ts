@@ -1515,6 +1515,17 @@ async function main() {
   bindDocumentEvents(eventManager)
   bindWindowEvents(eventManager)
 
+  // For SPA navigation
+  let lastLocation = location.href
+  eventManager.addEventListener(globalThis, 'locationchange', () => {
+    if (lastLocation === location.href) {
+      return
+    }
+
+    lastLocation = location.href
+    void updateAddTagsToCurrentPageMenuCommand()
+  })
+
   // Add cleanup mechanism for page unload
   const cleanup = () => {
     eventManager.removeAllEventListeners()
