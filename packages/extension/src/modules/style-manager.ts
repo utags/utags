@@ -44,7 +44,10 @@ export function buildCombinedStyle(): string {
 
 function ensureStyleInRoot(root: Document | ShadowRoot, cssText: string) {
   const rootWithAdopted = root as any
-  if (rootWithAdopted.adoptedStyleSheets) {
+  if (
+    rootWithAdopted.adoptedStyleSheets &&
+    typeof rootWithAdopted.adoptedStyleSheets.includes === 'function'
+  ) {
     if (!sharedCSSStyleSheet) {
       sharedCSSStyleSheet = new CSSStyleSheet()
     }
