@@ -12,11 +12,17 @@ function isCloudflareChallenges() {
           null ||
         document.querySelector('script[src*="/cdn-cgi/challenge-platform"]') !==
           null)) ||
-    location.hostname === 'challenges.cloudflare.com'
+    location.hostname === 'challenges.cloudflare.com' ||
+    location.href.startsWith('https://linux.do/challenge')
   )
 }
 
 export function interceptShadowDOM() {
+  // console.log('isCloudflareChallenges', isCloudflareChallenges(), location.href)
+  if (isCloudflareChallenges()) {
+    return
+  }
+
   // 1. 立即捕获原始方法，防止被网页后续脚本劫持或循环调用
   const originalAttachShadow = Element.prototype.attachShadow
 
@@ -28,10 +34,11 @@ export function interceptShadowDOM() {
    * 重写 attachShadow
    */
   Element.prototype.attachShadow = function (init) {
+    // console.log('isCloudflareChallenges attachShadow', init, isCloudflareChallenges(), location.href)
     // 核心功能：将 closed 强制转为 open
     // 这样 Scanner 才能通过 node.shadowRoot 访问到内容
     if (init && init.mode === 'closed' && !isCloudflareChallenges()) {
-      // init.mode = 'open'
+      init.mode = 'open'
     }
 
     // 调用原始方法创建 Shadow Root
