@@ -591,7 +591,8 @@ function createUTagsScannerOptions(
         if (
           !href ||
           typeof href !== 'string' ||
-          !validateFunction(element, href)
+          (!validateFunction(element, href) &&
+            !element.closest('#utags_current_page_link'))
         ) {
           // It's not a candidate
           cleanupUtags(element)
