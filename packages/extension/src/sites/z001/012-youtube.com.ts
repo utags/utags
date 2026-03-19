@@ -152,6 +152,8 @@ export default (() => {
       ...defaultSite.excludeSelectors,
       // Navigation
       'tp-yt-app-drawer',
+      'button-view-model',
+      'button',
     ],
     validMediaSelectors: [
       // Validated user icon
@@ -160,7 +162,7 @@ export default (() => {
     postProcess() {
       const host = location.host
       const enableQuickStar = getSettingsValue(`enableQuickStar_${host}`)
-      if (!enableQuickStar || 1) {
+      if (!enableQuickStar) {
         return
       }
 

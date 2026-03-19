@@ -9,6 +9,7 @@ let isProcessingScannedNodeQueue = false
 let isProcessingEnabled = false
 let processNodeFn: ProcessNodeFn | undefined
 let onQueueEmptyFn: (() => void) | undefined
+let shouldDeferProcessingFn: (() => boolean) | undefined
 
 /**
  * Sets the callback used to process each scanned node before rendering tags.
@@ -22,6 +23,10 @@ export function configureScannedNodeProcessor(fn: ProcessNodeFn) {
  */
 export function configureQueueEmptyCallback(fn: () => void) {
   onQueueEmptyFn = fn
+}
+
+export function configureScannedNodeProcessingBlocker(fn: () => boolean) {
+  shouldDeferProcessingFn = fn
 }
 
 /**
@@ -93,6 +98,11 @@ function hasScannedNodesInQueue() {
 function processScannedNodesIdle(deadline: IdleDeadline) {
   if (!processNodeFn) {
     isProcessingScannedNodeQueue = false
+    return
+  }
+
+  if (shouldDeferProcessingFn?.()) {
+    requestIdleCallback(processScannedNodesIdle)
     return
   }
 

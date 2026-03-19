@@ -14,6 +14,7 @@ import type { UserTag } from '../types'
 import { DEFAULT_EXCLUDE_TAGS } from './shadow-root-traverser'
 
 const EXCLUDE_TAGS_SET = new Set(DEFAULT_EXCLUDE_TAGS)
+const EXCLUDE_ANCESTOR_SELECTOR = DEFAULT_EXCLUDE_TAGS.join(',')
 
 /**
  * Check if the node is a valid target for scanning.
@@ -22,7 +23,8 @@ const EXCLUDE_TAGS_SET = new Set(DEFAULT_EXCLUDE_TAGS)
 export function isScanTarget(node: Node): node is HTMLElement {
   return (
     node instanceof HTMLElement &&
-    !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase())
+    !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase()) &&
+    !node.closest(EXCLUDE_ANCESTOR_SELECTOR)
   )
 }
 

@@ -16,7 +16,7 @@
 // @namespace            https://github.com/utags
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.31.16
+// @version              0.32.0
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -4953,11 +4953,15 @@
   var isProcessingEnabled = false
   var processNodeFn
   var onQueueEmptyFn
+  var shouldDeferProcessingFn
   function configureScannedNodeProcessor(fn) {
     processNodeFn = fn
   }
   function configureQueueEmptyCallback(fn) {
     onQueueEmptyFn = fn
+  }
+  function configureScannedNodeProcessingBlocker(fn) {
+    shouldDeferProcessingFn = fn
   }
   function setScannedNodeProcessingEnabled(enabled) {
     isProcessingEnabled = enabled
@@ -5007,6 +5011,10 @@
       isProcessingScannedNodeQueue = false
       return
     }
+    if (shouldDeferProcessingFn == null ? void 0 : shouldDeferProcessingFn()) {
+      requestIdleCallback(processScannedNodesIdle)
+      return
+    }
     while (deadline.timeRemaining() > 1 && hasScannedNodesInQueue()) {
       const node = takeScannedNodeFromQueue()
       if (!node) {
@@ -5054,6 +5062,11 @@
     )
   }
   function interceptShadowDOM() {
+    console.log(
+      "isCloudflareChallenges",
+      isCloudflareChallenges(),
+      location.href
+    )
     if (isCloudflareChallenges()) {
       return
     }
@@ -5062,6 +5075,12 @@
       return
     }
     Element.prototype.attachShadow = function (init) {
+      console.log(
+        "isCloudflareChallenges attachShadow",
+        init,
+        isCloudflareChallenges(),
+        location.href
+      )
       if (init && init.mode === "closed" && !isCloudflareChallenges()) {
         init.mode = "open"
       }
@@ -5115,10 +5134,12 @@
     "object",
   ]
   var EXCLUDE_TAGS_SET = new Set(DEFAULT_EXCLUDE_TAGS)
+  var EXCLUDE_ANCESTOR_SELECTOR = DEFAULT_EXCLUDE_TAGS.join(",")
   function isScanTarget(node) {
     return (
       node instanceof HTMLElement &&
-      !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase())
+      !EXCLUDE_TAGS_SET.has(node.tagName.toLowerCase()) &&
+      !node.closest(EXCLUDE_ANCESTOR_SELECTOR)
     )
   }
   function setUtags(element, keyOrUserTag, meta) {
@@ -5137,6 +5158,7 @@
     "data-utags_exclude",
   ]
   var MATCH_ATTR = "data-utags-matched"
+  var MAX_SCAN_DURATION = 8e3
   var UTagsScanner = class {
     constructor(callback, options = {}) {
       this.callback = callback
@@ -5145,6 +5167,7 @@
       __publicField(this, "incrementalStack")
       __publicField(this, "isScanning")
       __publicField(this, "isCleaning")
+      __publicField(this, "isStoppedDueToLoop", false)
       __publicField(this, "scannedShadowRoots")
       __publicField(this, "observer")
       __publicField(this, "stats")
@@ -5157,6 +5180,7 @@
       __publicField(this, "currentScanActiveTime", 0)
       __publicField(this, "loopCount", 0)
       __publicField(this, "currentScanNodesProcessed", 0)
+      __publicField(this, "mutationSuppressionDepth", 0)
       this.setOptions(options)
       this.results = /* @__PURE__ */ new Set()
       this.initialStack = []
@@ -5187,6 +5211,43 @@
         },
         true
       )
+    }
+    stopDueToLoop(reason) {
+      if (this.isStoppedDueToLoop) return
+      this.isStoppedDueToLoop = true
+      this.isScanning = false
+      this.isCleaning = false
+      this.initialStack = []
+      this.incrementalStack = []
+      try {
+        this.observer.disconnect()
+      } catch (error) {
+        console.error(error)
+      }
+      const elapsed = this.startTime ? performance.now() - this.startTime : 0
+      console.error("[UTagsScanner] stopped due to a suspected scan loop", {
+        reason,
+        elapsedMs: elapsed,
+        loopCount: this.loopCount,
+        totalNodesProcessed: this.stats.totalNodesProcessed,
+      })
+    }
+    callOnBeforeMatch(node, action) {
+      if (!this.onBeforeMatch) return action === "add" ? true : void 0
+      this.mutationSuppressionDepth++
+      try {
+        return this.onBeforeMatch(node, action)
+      } catch (error) {
+        console.error(error)
+        return action === "add" ? false : void 0
+      } finally {
+        queueMicrotask(() => {
+          this.mutationSuppressionDepth = Math.max(
+            0,
+            this.mutationSuppressionDepth - 1
+          )
+        })
+      }
     }
     /**
      * 检查节点是否是 root 的后代（穿透 Shadow DOM）
@@ -5229,9 +5290,7 @@
       const isCurrentlyMatched = this.results.has(node)
       let finalDecision = false
       if (shouldMatch) {
-        finalDecision = this.onBeforeMatch
-          ? this.onBeforeMatch(node, "add") !== false
-          : true
+        finalDecision = this.callOnBeforeMatch(node, "add") !== false
       }
       if (finalDecision) {
         if (!isCurrentlyMatched) {
@@ -5244,7 +5303,7 @@
           node.classList.contains("utags_ul") || // Cloned utags target element
           node.hasAttribute("data-utags_id")
         ) {
-          if (this.onBeforeMatch) this.onBeforeMatch(node, "delete")
+          this.callOnBeforeMatch(node, "delete")
           node.removeAttribute(MATCH_ATTR)
         }
         if (isCurrentlyMatched) {
@@ -5304,8 +5363,33 @@
       }
     }
     handleMutations(mutations) {
+      if (this.isStoppedDueToLoop) return
       let needsUpdate = false
       let hasRemoval = false
+      if (this.mutationSuppressionDepth > 0) {
+        console.warn(
+          "Mutation suppression depth > 0, skipping mutations",
+          this.mutationSuppressionDepth
+        )
+        for (const m of mutations) {
+          if (m.removedNodes.length > 0) {
+            for (let i3 = 0; i3 < m.removedNodes.length; i3++) {
+              const n = m.removedNodes[i3]
+              if (isScanTarget(n) || n.nodeType === 11) {
+                hasRemoval = true
+                break
+              }
+            }
+          }
+        }
+        if (hasRemoval && !this.isCleaning) {
+          this.isCleaning = true
+          requestIdleCallback((d) => {
+            this.cleanupDisconnectedNodes(d)
+          })
+        }
+        return
+      }
       for (const m of mutations) {
         if (m.removedNodes.length > 0) {
           for (let i3 = 0; i3 < m.removedNodes.length; i3++) {
@@ -5321,7 +5405,7 @@
             const n = m.addedNodes[i3]
             if (n instanceof HTMLElement) {
               if (n.classList.contains("utags_ul")) {
-                if (this.onBeforeMatch) this.onBeforeMatch(n, "delete")
+                this.callOnBeforeMatch(n, "delete")
               } else if (isScanTarget(n)) {
                 this.enqueueScan(n, true, false)
                 needsUpdate = true
@@ -5407,6 +5491,7 @@
      * @param isInitial - 是否为全量/初始扫描模式
      */
     enqueueScan(node, scanChildren = true, isInitial = false) {
+      if (this.isStoppedDueToLoop) return
       const task = { node, scanChildren, isInitial }
       if (isInitial) {
         this.initialStack.push(task)
@@ -5423,17 +5508,25 @@
       }
     }
     processStack(deadline) {
+      if (this.isStoppedDueToLoop) return
       const cycleStart = performance.now()
       let currentLoopNodesProcessed = 0
       let currentLoopNodesExcluded = 0
       this.loopCount++
+      const activeDurationMs = () =>
+        this.currentScanActiveTime + (performance.now() - cycleStart)
       console.log(
         "processStack [start]",
         this.loopCount,
         deadline.timeRemaining(),
+        activeDurationMs().toFixed(2),
         this.initialStack.length,
         this.incrementalStack.length
       )
+      if (activeDurationMs() > MAX_SCAN_DURATION) {
+        this.stopDueToLoop("processStack ran continuously for too long")
+        return
+      }
       while (deadline.timeRemaining() > 0) {
         let item
         let currentStackIsInitial = false
@@ -5451,8 +5544,15 @@
         this.stats.totalNodesProcessed++
         this.currentScanNodesProcessed++
         currentLoopNodesProcessed++
+        if (
+          currentLoopNodesProcessed % 10 === 0 &&
+          activeDurationMs() > MAX_SCAN_DURATION
+        ) {
+          this.stopDueToLoop("processStack ran continuously for too long")
+          return
+        }
         if (!(node instanceof Element)) {
-          if (node instanceof ShadowRoot) {
+          if (node instanceof ShadowRoot && node.isConnected) {
             if (!this.scannedShadowRoots.has(node)) {
               this.scannedShadowRoots.add(node)
               this.observer.observe(node, this.observerConfig)
@@ -5472,6 +5572,10 @@
               }
             }
           }
+          continue
+        }
+        if (!node.isConnected) {
+          this._updateNodeStatus(node, false)
           continue
         }
         const matchesLocalExclude = node.matches(this.exclude)
@@ -6732,6 +6836,8 @@
       excludeSelectors: [
         ...default_default2.excludeSelectors,
         "tp-yt-app-drawer",
+        "button-view-model",
+        "button",
       ],
       validMediaSelectors: ["a span.ytSpecIconShapeHost svg"],
       postProcess() {
@@ -6739,7 +6845,7 @@
         const enableQuickStar = getSettingsValue(
           "enableQuickStar_".concat(host3)
         )
-        if (!enableQuickStar || 1) {
+        if (!enableQuickStar) {
           return
         }
         const bookmarkButton =
@@ -10141,6 +10247,12 @@
   )
   var scannerInstance
   var lastScanDomOptions
+  function isScannerBusy() {
+    return Boolean(
+      (scannerInstance == null ? void 0 : scannerInstance.isScanning) ||
+      (scannerInstance == null ? void 0 : scannerInstance.isCleaning)
+    )
+  }
   var updateMatchedNodesSelector = (customSelector) => {
     const nextMatchedNodesSelector = joinSelectors(
       currentSite.matchedNodesSelectors &&
@@ -11089,8 +11201,7 @@
   var isQuickStarAvailable = () => {
     if (
       host2 === "linux.do" ||
-      host2 === "idcflare.com" ||
-      host2.includes("youtube.com") || // eslint-disable-next-line no-restricted-globals
+      host2 === "idcflare.com" || // FIXME: 临时关闭 youtube.com 的快速收藏功能
       host2.includes("p".concat(atob("b3I="), "nhub.com"))
     ) {
       return true
@@ -11605,6 +11716,7 @@
   }
   configureScannedNodeProcessor(processNodeForDisplay)
   configureQueueEmptyCallback(displayTags)
+  configureScannedNodeProcessingBlocker(isScannerBusy)
   async function displayTags() {
     if (isAllTagsHidden()) {
       return

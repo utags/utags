@@ -192,6 +192,10 @@ let matchedNodesSelector = joinSelectors(
 let scannerInstance: UTagsScanner | undefined
 let lastScanDomOptions: ScanDomOptions | undefined
 
+export function isScannerBusy() {
+  return Boolean(scannerInstance?.isScanning || scannerInstance?.isCleaning)
+}
+
 export const updateMatchedNodesSelector = (customSelector: string) => {
   const nextMatchedNodesSelector = joinSelectors(
     currentSite.matchedNodesSelectors &&

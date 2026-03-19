@@ -168,4 +168,45 @@ describe('scanned-node-queue', () => {
     expect(processNodeMock).toHaveBeenCalledWith(node)
     expect(onQueueEmptyMock).toHaveBeenCalledTimes(1)
   })
+
+  it('defers processing while blocker returns true, then resumes', async () => {
+    vi.resetModules()
+
+    const callbacks: Array<(deadline: IdleDeadline) => void> = []
+
+    const requestIdleCallbackMock = vi.fn(
+      (callback: (deadline: IdleDeadline) => void) => {
+        callbacks.push(callback)
+        return callbacks.length
+      }
+    )
+
+    ;(globalThis as any).requestIdleCallback = requestIdleCallbackMock
+
+    queueModule = await import('./scanned-node-queue')
+
+    let isBlocked = true
+    const processNodeMock = vi.fn()
+
+    queueModule.configureScannedNodeProcessor(processNodeMock)
+    queueModule.configureScannedNodeProcessingBlocker(() => isBlocked)
+    queueModule.setScannedNodeProcessingEnabled(true)
+
+    const node1 = document.createElement('div') as HTMLElement
+    const node2 = document.createElement('div') as HTMLElement
+    queueModule.enqueueScannedNodes([node1, node2])
+
+    expect(requestIdleCallbackMock).toHaveBeenCalledTimes(1)
+    expect(processNodeMock).not.toHaveBeenCalled()
+
+    callbacks[0]?.(createIdleDeadline(() => 50))
+    expect(processNodeMock).not.toHaveBeenCalled()
+    expect(requestIdleCallbackMock).toHaveBeenCalledTimes(2)
+
+    isBlocked = false
+    callbacks[1]?.(createIdleDeadline(() => 50))
+    expect(processNodeMock).toHaveBeenCalledTimes(2)
+    expect(processNodeMock).toHaveBeenNthCalledWith(1, node1)
+    expect(processNodeMock).toHaveBeenNthCalledWith(2, node2)
+  })
 })

@@ -336,6 +336,88 @@ describe('UTagsScanner', () => {
     expect(results.length).toBe(1)
   })
 
+  it('should avoid self-trigger loop when onBeforeMatch mutates observed attributes', async () => {
+    container.innerHTML = `<a href="#">Link</a>`
+
+    const onBeforeMatch = vi.fn((node: Element, action: 'add' | 'delete') => {
+      if (action === 'add') {
+        ;(node as HTMLElement).setAttribute(
+          'href',
+          `#${onBeforeMatch.mock.calls.length}`
+        )
+      }
+    })
+
+    scanner = new UTagsScanner(mockCallback, {
+      include: ['a'],
+      onBeforeMatch,
+    })
+    scanner.start(container)
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    expect(onBeforeMatch).toHaveBeenCalledTimes(1)
+    expect(results.length).toBe(1)
+  })
+
+  it('should stop scanning and log error when scan loop is detected', async () => {
+    const nowSpy = vi.spyOn(performance, 'now')
+    let fakeNow = 0
+    nowSpy.mockImplementation(() => {
+      fakeNow += 1000
+      return fakeNow
+    })
+
+    const errorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation((..._args: unknown[]) => undefined)
+    try {
+      container.innerHTML = `<div data-utags_link></div>`
+
+      scanner = new UTagsScanner(mockCallback, {
+        include: ['[data-utags_link]'],
+        onBeforeMatch(node: Element, action: 'add' | 'delete') {
+          if (action !== 'add') return
+          const child = document.createElement('div')
+          child.setAttribute('data-utags_link', '')
+          node.append(child)
+        },
+      })
+      scanner.start(container)
+
+      await new Promise((resolve) => setTimeout(resolve, 50))
+
+      expect(scanner.isStoppedDueToLoop).toBe(true)
+      expect(errorSpy).toHaveBeenCalledWith(
+        '[UTagsScanner] stopped due to a suspected scan loop',
+        expect.any(Object)
+      )
+    } finally {
+      errorSpy.mockRestore()
+      nowSpy.mockRestore()
+    }
+  })
+
+  it('should skip scanning a node removed before processing', async () => {
+    scanner = new UTagsScanner(mockCallback, { include: ['a'] })
+    scanner.start(container)
+
+    await new Promise((resolve) => setTimeout(resolve, 10))
+
+    const link = document.createElement('a')
+    link.href = '#'
+    link.textContent = 'Temp Link'
+    container.append(link)
+
+    scanner.enqueueScan(link, true, false)
+    link.remove()
+
+    await new Promise((resolve) => setTimeout(resolve, 50))
+
+    expect(results.length).toBe(0)
+    expect(link.hasAttribute('data-utags-matched')).toBe(false)
+  })
+
   it('should respect onBeforeMatch return false', async () => {
     container.innerHTML = `<a href="#">Link</a>`
 
@@ -544,6 +626,24 @@ describe('UTagsScanner', () => {
 
       await new Promise((resolve) => setTimeout(resolve, 50))
       expect(results.length).toBe(1)
+    })
+
+    it('should skip scanning disconnected shadow root', async () => {
+      const host = document.createElement('div')
+      const shadow = host.attachShadow({ mode: 'open' })
+      const link = document.createElement('a')
+      link.href = '#'
+      link.textContent = 'Detached Shadow Link'
+      shadow.append(link)
+
+      scanner = new UTagsScanner(mockCallback, { include: ['a'] })
+      scanner.start(container)
+      scanner.enqueueScan(shadow, true, false)
+
+      await new Promise((resolve) => setTimeout(resolve, 50))
+
+      expect(results.length).toBe(0)
+      expect(link.hasAttribute('data-utags-matched')).toBe(false)
     })
   })
 

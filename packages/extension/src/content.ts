@@ -50,6 +50,7 @@ import {
 import { createMenuCommandManager } from './modules/menu-command-manager'
 import {
   configureQueueEmptyCallback,
+  configureScannedNodeProcessingBlocker,
   configureScannedNodeProcessor,
   enqueueScannedNode,
   enqueueScannedNodes,
@@ -84,6 +85,7 @@ import {
   getCanonicalUrl,
   getConditionNodes,
   getListNodes,
+  isScannerBusy,
   matchedNodes,
   scanDom,
   updateMatchedNodesSelector,
@@ -203,7 +205,8 @@ const isQuickStarAvailable = () => {
   if (
     host === 'linux.do' ||
     host === 'idcflare.com' ||
-    host.includes('youtube.com') ||
+    // FIXME: 临时关闭 youtube.com 的快速收藏功能
+    // host.includes('youtube.com') ||
     // eslint-disable-next-line no-restricted-globals
     host.includes(`p${atob('b3I=')}nhub.com`)
   ) {
@@ -897,6 +900,7 @@ function processNodeForDisplay(node: HTMLElement) {
 
 configureScannedNodeProcessor(processNodeForDisplay)
 configureQueueEmptyCallback(displayTags)
+configureScannedNodeProcessingBlocker(isScannerBusy)
 
 async function displayTags() {
   if (isAllTagsHidden()) {
