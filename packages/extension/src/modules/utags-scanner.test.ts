@@ -336,30 +336,6 @@ describe('UTagsScanner', () => {
     expect(results.length).toBe(1)
   })
 
-  it('should avoid self-trigger loop when onBeforeMatch mutates observed attributes', async () => {
-    container.innerHTML = `<a href="#">Link</a>`
-
-    const onBeforeMatch = vi.fn((node: Element, action: 'add' | 'delete') => {
-      if (action === 'add') {
-        ;(node as HTMLElement).setAttribute(
-          'href',
-          `#${onBeforeMatch.mock.calls.length}`
-        )
-      }
-    })
-
-    scanner = new UTagsScanner(mockCallback, {
-      include: ['a'],
-      onBeforeMatch,
-    })
-    scanner.start(container)
-
-    await new Promise((resolve) => setTimeout(resolve, 50))
-
-    expect(onBeforeMatch).toHaveBeenCalledTimes(1)
-    expect(results.length).toBe(1)
-  })
-
   it('should stop scanning and log error when scan loop is detected', async () => {
     const nowSpy = vi.spyOn(performance, 'now')
     let fakeNow = 0

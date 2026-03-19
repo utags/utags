@@ -91,7 +91,6 @@ export class UTagsScanner {
   currentScanActiveTime = 0
   loopCount = 0
   currentScanNodesProcessed = 0
-  mutationSuppressionDepth = 0
 
   constructor(
     public callback: UTagsScannerCallback,
@@ -166,19 +165,11 @@ export class UTagsScanner {
   callOnBeforeMatch(node: Element, action: 'add' | 'delete') {
     if (!this.onBeforeMatch) return action === 'add' ? true : undefined
 
-    this.mutationSuppressionDepth++
     try {
       return this.onBeforeMatch(node, action)
     } catch (error) {
       console.error(error)
       return action === 'add' ? false : undefined
-    } finally {
-      queueMicrotask(() => {
-        this.mutationSuppressionDepth = Math.max(
-          0,
-          this.mutationSuppressionDepth - 1
-        )
-      })
     }
   }
 
@@ -348,34 +339,6 @@ export class UTagsScanner {
     if (this.isStoppedDueToLoop) return
     let needsUpdate = false
     let hasRemoval = false
-
-    if (this.mutationSuppressionDepth > 0) {
-      console.warn(
-        'Mutation suppression depth > 0, skipping mutations',
-        this.mutationSuppressionDepth
-      )
-      for (const m of mutations) {
-        if (m.removedNodes.length > 0) {
-          // eslint-disable-next-line @typescript-eslint/prefer-for-of
-          for (let i = 0; i < m.removedNodes.length; i++) {
-            const n = m.removedNodes[i]
-            if (isScanTarget(n) || n.nodeType === 11) {
-              hasRemoval = true
-              break
-            }
-          }
-        }
-      }
-
-      if (hasRemoval && !this.isCleaning) {
-        this.isCleaning = true
-        requestIdleCallback((d) => {
-          this.cleanupDisconnectedNodes(d)
-        })
-      }
-
-      return
-    }
 
     for (const m of mutations) {
       // A. 处理删除

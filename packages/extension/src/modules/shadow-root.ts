@@ -18,7 +18,7 @@ function isCloudflareChallenges() {
 }
 
 export function interceptShadowDOM() {
-  console.log('isCloudflareChallenges', isCloudflareChallenges(), location.href)
+  // console.log('isCloudflareChallenges', isCloudflareChallenges(), location.href)
   if (isCloudflareChallenges()) {
     return
   }
@@ -34,12 +34,12 @@ export function interceptShadowDOM() {
    * 重写 attachShadow
    */
   Element.prototype.attachShadow = function (init) {
-    console.log(
-      'isCloudflareChallenges attachShadow',
-      init,
-      isCloudflareChallenges(),
-      location.href
-    )
+    // console.log(
+    //   'isCloudflareChallenges attachShadow',
+    //   init,
+    //   isCloudflareChallenges(),
+    //   location.href
+    // )
     // 核心功能：将 closed 强制转为 open
     // 这样 Scanner 才能通过 node.shadowRoot 访问到内容
     if (init && init.mode === 'closed' && !isCloudflareChallenges()) {
