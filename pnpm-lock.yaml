@@ -110,8 +110,8 @@ importers:
         specifier: ^0.1.3
         version: 0.1.3
       browser-extension-settings:
-        specifier: ^0.8.10
-        version: 0.8.10(react@19.2.4)
+        specifier: ^0.9.0
+        version: 0.9.0(react@19.2.4)
       browser-extension-storage:
         specifier: ^0.2.10
         version: 0.2.10(react@19.2.4)
@@ -153,14 +153,14 @@ importers:
         specifier: ^0.27.4
         version: 0.27.4
       jsdom:
-        specifier: ^28.1.0
-        version: 28.1.0
+        specifier: ^29.0.0
+        version: 29.0.0
       sass:
         specifier: ^1.98.0
         version: 1.98.0
       vitest:
         specifier: ^4.1.0
-        version: 4.1.0(@types/node@25.0.3)(@vitest/ui@4.0.18(vitest@3.2.4))(jsdom@28.1.0)(msw@2.11.6(@types/node@25.0.3)(typescript@5.2.2))(vite@7.1.12(@types/node@25.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(sass@1.98.0)(terser@5.46.0)(tsx@4.20.6)(yaml@2.8.1))
+        version: 4.1.0(@types/node@25.0.3)(@vitest/ui@4.0.18(vitest@3.2.4))(jsdom@29.0.0)(msw@2.11.6(@types/node@25.0.3)(typescript@5.2.2))(vite@7.1.12(@types/node@25.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(sass@1.98.0)(terser@5.46.0)(tsx@4.20.6)(yaml@2.8.1))
 
   packages/webapp:
     devDependencies:
@@ -262,9 +262,6 @@ packages:
 
   '@acemir/cssom@0.9.30':
     resolution: {integrity: sha512-9CnlMCI0LmCIq0olalQqdWrJHPzm0/tw3gzOA9zJSgvFX7Xau3D24mAGa4BtwxwY69nsuJW6kQqqCzf/mEcQgg==}
-
-  '@acemir/cssom@0.9.31':
-    resolution: {integrity: sha512-ZnR3GSaH+/vJ0YlHau21FjfLYjMpYVIzTD8M8vIEQvIGxeOXyXdzCI140rrCY862p/C/BbzWsjc1dgnM9mkoTA==}
 
   '@algolia/abtesting@1.3.0':
     resolution: {integrity: sha512-KqPVLdVNfoJzX5BKNGM9bsW8saHeyax8kmPFXul5gejrSPN3qss7PgsFH5mMem7oR8tvjvNkia97ljEYPYCN8Q==}
@@ -369,8 +366,9 @@ packages:
   '@asamuzakjp/dom-selector@6.7.6':
     resolution: {integrity: sha512-hBaJER6A9MpdG3WgdlOolHmbOYvSk46y7IQN/1+iqiCuUu6iWdQrs9DGKF8ocqsEqWujWf/V7b7vaDgiUmIvUg==}
 
-  '@asamuzakjp/dom-selector@6.8.1':
-    resolution: {integrity: sha512-MvRz1nCqW0fsy8Qz4dnLIvhOlMzqDVBabZx6lH+YywFDdjXhMY37SmpV1XFX3JzG5GWHn63j6HX6QPr3lZXHvQ==}
+  '@asamuzakjp/dom-selector@7.0.3':
+    resolution: {integrity: sha512-Q6mU0Z6bfj6YvnX2k9n0JxiIwrCFN59x/nWmYQnAqP000ruX/yV+5bp/GRcF5T8ncvfwJQ7fgfP74DlpKExILA==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
@@ -1352,8 +1350,13 @@ packages:
     resolution: {integrity: sha512-qBcx6zYlhleiFfdtzkRgwNC7VVoAwfK76Vmsw5t+PbvtdknO9StgRk7ROvq9so1iqbdW4uLIDAsXRsTfUrIoOw==}
     engines: {node: '>=18'}
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.0':
-    resolution: {integrity: sha512-H4tuz2nhWgNKLt1inYpoVCfbJbMwX/lQKp3g69rrrIMIYlFD9+zTykOKhNR8uGrAmbS/kT9n6hTFkmDkxLgeTA==}
+  '@csstools/css-syntax-patches-for-csstree@1.1.1':
+    resolution: {integrity: sha512-BvqN0AMWNAnLk9G8jnUT77D+mUbY/H2b3uDTvg2isJkHaOufUE2R3AOwxWo7VBQKT1lOdwdvorddo2B/lk64+w==}
+    peerDependencies:
+      css-tree: ^3.2.1
+    peerDependenciesMeta:
+      css-tree:
+        optional: true
 
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
@@ -5160,8 +5163,8 @@ packages:
     resolution: {integrity: sha512-lL7FldiL+Ln4cy/DSPSPRYfkZ2MqfW9cK/qc6QYE+TpHW4dio9H3BWi/1Uz9ju+3huv1F5uyErIq8FJItnc8sg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
-  browser-extension-settings@0.8.10:
-    resolution: {integrity: sha512-bolfnSsMM0qFi3iZKGWVOg0mcyZpuExw/27yeUln4AbFUqIVRqqOJrVJXKgw3vckoThNAFR6VZXgDBHROSabhw==}
+  browser-extension-settings@0.9.0:
+    resolution: {integrity: sha512-PLZ/WsPYaUjEko0W/02Sj9O0Qyzm7MbqfIQx6XMeaxed3MToUqON1hXSz+x1OcsA4EIhFKuom83UC300kgqJIQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
   browser-extension-storage@0.2.10:
@@ -5171,10 +5174,6 @@ packages:
   browser-extension-utils@0.2.2:
     resolution: {integrity: sha512-PS28QAOmap5s/uyYMIzCN3K+24/zeBoxvJ3A4ibsX9MzbS1/av0gwqdZG4clb3YY035pyglxD/iP89knOqGY6w==}
     engines: {node: '>=16.9.0'}
-
-  browser-extension-utils@0.3.6:
-    resolution: {integrity: sha512-93Tt47YJ/LoOy+0XM+/2W8fJDNTBxAZ+fRbOC9K/mBTtU95yvTPC9lJz3V0sfMrlof4wjlHLSP+V/OcwK60Q/A==}
-    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
 
   browser-extension-utils@0.5.1:
     resolution: {integrity: sha512-hyAxckI2dJXzbqDLRY+YmW55XlC4ueRuWdNhZYChZ6YTVJFZLQ/9MH8T+ehC2hNfvDrFQI1gjZFoJr+hcYaCMQ==}
@@ -5729,6 +5728,10 @@ packages:
     resolution: {integrity: sha512-0eW44TGN5SQXU1mWSkKwFstI/22X2bG1nYzZTYMAWjylYURhse752YgbE4Cx46AC+bAvI+/dYTPRk1LqSUnu6w==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
+  css-tree@3.2.1:
+    resolution: {integrity: sha512-X7sjQzceUhu1u7Y/ylrRZFU2FS6LRiFVp6rKLPg23y3x3c3DOKAwuXGDp+PAGjh6CSnCjYeAul8pcT8bAl+lSA==}
+    engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
+
   css-what@6.2.2:
     resolution: {integrity: sha512-u/O3vwbptzhMs3L1fQE82ZSLHQQfto5gyZzwteVIEyeaY5Fc7R4dapF/BvRoSYFeqfBk4m0V1Vafq5Pjv25wvA==}
     engines: {node: '>= 6'}
@@ -5775,10 +5778,6 @@ packages:
 
   cssstyle@5.3.6:
     resolution: {integrity: sha512-legscpSpgSAeGEe0TNcai97DKt9Vd9AsAdOL7Uoetb52Ar/8eJm3LIa39qpv8wWzLFlNG4vVvppQM+teaMPj3A==}
-    engines: {node: '>=20'}
-
-  cssstyle@6.2.0:
-    resolution: {integrity: sha512-Fm5NvhYathRnXNVndkUsCCuR63DCLVVwGOOwQw782coXFi5HhkXdu289l59HlXZBawsyNccXfWRYvLzcDCdDig==}
     engines: {node: '>=20'}
 
   csstype@3.2.3:
@@ -7619,9 +7618,9 @@ packages:
       canvas:
         optional: true
 
-  jsdom@28.1.0:
-    resolution: {integrity: sha512-0+MoQNYyr2rBHqO1xilltfDjV9G7ymYGlAUazgcDLQaUf8JDHbuGwsxN6U9qWaElZ4w1B2r7yEGIL3GdeW3Rug==}
-    engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
+  jsdom@29.0.0:
+    resolution: {integrity: sha512-9FshNB6OepopZ08unmmGpsF7/qCjxGPbo3NbgfJAnPeHXnsODE9WWffXZtRFRFe0ntzaAOcSKNJFz8wiyvF1jQ==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       canvas: ^3.0.0
     peerDependenciesMeta:
@@ -8163,6 +8162,9 @@ packages:
 
   mdn-data@2.12.2:
     resolution: {integrity: sha512-IEn+pegP1aManZuckezWCO+XZQDplx1366JoVhTpMpBB1sPey/SbveZQUosKiKiGYjg1wH4pMlNgXbCiYgihQA==}
+
+  mdn-data@2.27.1:
+    resolution: {integrity: sha512-9Yubnt3e8A0OKwxYSXyhLymGW4sCufcLG6VdiDdUGVkPhpqLxlvP5vl1983gQjJl3tqbrM731mjaZaP68AgosQ==}
 
   media-typer@0.3.0:
     resolution: {integrity: sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==}
@@ -10520,6 +10522,10 @@ packages:
     resolution: {integrity: sha512-kXuRi1mtaKMrsLUxz3sQYvVl37B0Ns6MzfrtV5DvJceE9bPyspOqk9xxv7XbZWcfLWbFmm997vl83qUWVJA64w==}
     engines: {node: '>=16'}
 
+  tough-cookie@6.0.1:
+    resolution: {integrity: sha512-LktZQb3IeoUWB9lqR5EWTHgW/VTITCXg4D21M+lvybRVdylLrRMnqaIONLVb5mav8vM19m44HIcGq4qASeu2Qw==}
+    engines: {node: '>=16'}
+
   tr46@1.0.1:
     resolution: {integrity: sha512-dTpowEjclQ7Kgx5SdBkqRzVhERQXov8/l9Ft9dVM9fmg0W0KQSVaXX9T4i6twCPNtYiZM53lpSSUAwJbFPOHxA==}
 
@@ -10688,6 +10694,10 @@ packages:
 
   undici@7.24.2:
     resolution: {integrity: sha512-P9J1HWYV/ajFr8uCqk5QixwiRKmB1wOamgS0e+o2Z4A44Ej2+thFVRLG/eA7qprx88XXhnV5Bl8LHXTURpzB3Q==}
+    engines: {node: '>=20.18.1'}
+
+  undici@7.24.4:
+    resolution: {integrity: sha512-BM/JzwwaRXxrLdElV2Uo6cTLEjhSb3WXboncJamZ15NgUURmvlXvxa6xkwIOILIjPNo9i8ku136ZvWV0Uly8+w==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -11360,8 +11370,6 @@ snapshots:
 
   '@acemir/cssom@0.9.30': {}
 
-  '@acemir/cssom@0.9.31': {}
-
   '@algolia/abtesting@1.3.0':
     dependencies:
       '@algolia/client-common': 5.37.0
@@ -11514,11 +11522,11 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.2.4
 
-  '@asamuzakjp/dom-selector@6.8.1':
+  '@asamuzakjp/dom-selector@7.0.3':
     dependencies:
       '@asamuzakjp/nwsapi': 2.3.9
       bidi-js: 1.0.3
-      css-tree: 3.1.0
+      css-tree: 3.2.1
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.2.7
 
@@ -13007,7 +13015,7 @@ snapshots:
 
   '@bramus/specificity@2.4.2':
     dependencies:
-      css-tree: 3.1.0
+      css-tree: 3.2.1
 
   '@colors/colors@1.5.0':
     optional: true
@@ -13059,7 +13067,9 @@ snapshots:
 
   '@csstools/css-syntax-patches-for-csstree@1.0.22': {}
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.0': {}
+  '@csstools/css-syntax-patches-for-csstree@1.1.1(css-tree@3.2.1)':
+    optionalDependencies:
+      css-tree: 3.2.1
 
   '@csstools/css-tokenizer@3.0.4': {}
 
@@ -17824,11 +17834,11 @@ snapshots:
 
   browser-extension-i18n@0.1.3: {}
 
-  browser-extension-settings@0.8.10(react@19.2.4):
+  browser-extension-settings@0.9.0(react@19.2.4):
     dependencies:
       browser-extension-i18n: 0.1.3
       browser-extension-storage: 0.2.10(react@19.2.4)
-      browser-extension-utils: 0.3.6
+      browser-extension-utils: 0.5.1
     transitivePeerDependencies:
       - react
 
@@ -17839,8 +17849,6 @@ snapshots:
       - react
 
   browser-extension-utils@0.2.2: {}
-
-  browser-extension-utils@0.3.6: {}
 
   browser-extension-utils@0.5.1: {}
 
@@ -18405,6 +18413,11 @@ snapshots:
       mdn-data: 2.12.2
       source-map-js: 1.2.1
 
+  css-tree@3.2.1:
+    dependencies:
+      mdn-data: 2.27.1
+      source-map-js: 1.2.1
+
   css-what@6.2.2: {}
 
   cssdb@8.4.0: {}
@@ -18480,13 +18493,6 @@ snapshots:
       '@csstools/css-syntax-patches-for-csstree': 1.0.22
       css-tree: 3.1.0
       lru-cache: 11.2.4
-
-  cssstyle@6.2.0:
-    dependencies:
-      '@asamuzakjp/css-color': 5.0.1
-      '@csstools/css-syntax-patches-for-csstree': 1.1.0
-      css-tree: 3.1.0
-      lru-cache: 11.2.7
 
   csstype@3.2.3: {}
 
@@ -20734,24 +20740,24 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  jsdom@28.1.0:
+  jsdom@29.0.0:
     dependencies:
-      '@acemir/cssom': 0.9.31
-      '@asamuzakjp/dom-selector': 6.8.1
+      '@asamuzakjp/css-color': 5.0.1
+      '@asamuzakjp/dom-selector': 7.0.3
       '@bramus/specificity': 2.4.2
+      '@csstools/css-syntax-patches-for-csstree': 1.1.1(css-tree@3.2.1)
       '@exodus/bytes': 1.15.0
-      cssstyle: 6.2.0
+      css-tree: 3.2.1
       data-urls: 7.0.0
       decimal.js: 10.6.0
       html-encoding-sniffer: 6.0.0
-      http-proxy-agent: 7.0.2
-      https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
+      lru-cache: 11.2.7
       parse5: 8.0.0
       saxes: 6.0.0
       symbol-tree: 3.2.4
-      tough-cookie: 6.0.0
-      undici: 7.24.2
+      tough-cookie: 6.0.1
+      undici: 7.24.4
       w3c-xmlserializer: 5.0.0
       webidl-conversions: 8.0.1
       whatwg-mimetype: 5.0.0
@@ -20760,7 +20766,6 @@ snapshots:
     transitivePeerDependencies:
       - '@exodus/crypto'
       - '@noble/hashes'
-      - supports-color
 
   jsesc@3.0.2: {}
 
@@ -21378,6 +21383,8 @@ snapshots:
   mdn-data@2.0.30: {}
 
   mdn-data@2.12.2: {}
+
+  mdn-data@2.27.1: {}
 
   media-typer@0.3.0: {}
 
@@ -24190,6 +24197,10 @@ snapshots:
     dependencies:
       tldts: 7.0.14
 
+  tough-cookie@6.0.1:
+    dependencies:
+      tldts: 7.0.14
+
   tr46@1.0.1:
     dependencies:
       punycode: 2.3.1
@@ -24390,6 +24401,8 @@ snapshots:
   undici-types@7.16.0: {}
 
   undici@7.24.2: {}
+
+  undici@7.24.4: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 
@@ -24704,7 +24717,7 @@ snapshots:
       - tsx
       - yaml
 
-  vitest@4.1.0(@types/node@25.0.3)(@vitest/ui@4.0.18(vitest@3.2.4))(jsdom@28.1.0)(msw@2.11.6(@types/node@25.0.3)(typescript@5.2.2))(vite@7.1.12(@types/node@25.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(sass@1.98.0)(terser@5.46.0)(tsx@4.20.6)(yaml@2.8.1)):
+  vitest@4.1.0(@types/node@25.0.3)(@vitest/ui@4.0.18(vitest@3.2.4))(jsdom@29.0.0)(msw@2.11.6(@types/node@25.0.3)(typescript@5.2.2))(vite@7.1.12(@types/node@25.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(sass@1.98.0)(terser@5.46.0)(tsx@4.20.6)(yaml@2.8.1)):
     dependencies:
       '@vitest/expect': 4.1.0
       '@vitest/mocker': 4.1.0(msw@2.11.6(@types/node@25.0.3)(typescript@5.2.2))(vite@7.1.12(@types/node@25.0.3)(jiti@2.6.1)(less@4.4.1)(lightningcss@1.30.2)(sass@1.98.0)(terser@5.46.0)(tsx@4.20.6)(yaml@2.8.1))
@@ -24729,7 +24742,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.0.3
       '@vitest/ui': 4.0.18(vitest@3.2.4)
-      jsdom: 28.1.0
+      jsdom: 29.0.0
     transitivePeerDependencies:
       - msw
 
