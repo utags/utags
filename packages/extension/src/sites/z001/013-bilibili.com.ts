@@ -184,8 +184,10 @@ export default (() => {
         // if (element.closest('h3.bili-video-card__info--tit')) {
         //   element.dataset.utags_position_selector = 'h3.bili-video-card__info--tit'
         // }
+        // h3.bili-video-card__info--tit - 首页 视频卡片
+        // .bili-video-card__details .bili-video-card__title - 个人主页 > 视频卡片
         const targetElement = element.closest<HTMLElement>(
-          'h3.bili-video-card__info--tit'
+          'h3.bili-video-card__info--tit,.bili-video-card__details .bili-video-card__title'
         )
         if (targetElement && targetElement !== element) {
           // A 标签后面显示 utags 会被隐藏。故把 utags 添加在 A 标签的父节点。
@@ -211,6 +213,7 @@ export default (() => {
       '.primary-btn',
       'a.send-msg',
       'a.message',
+      'a.message-btn',
       'a.up-avatar',
       '.player-wrap',
       '.video-toolbar-container',
@@ -223,11 +226,23 @@ export default (() => {
       // 评论区用户卡片
       '#fans',
       '#follow',
+      // old version
+      '#navigator',
+      '#navigator-fixed',
+      '.h-action',
+      '.h-f-btn',
+      '.section-title',
+      '.page-head',
+      '.contribution-list',
+      '.section.fav',
+      '.fav-list-container',
+      '.fav-play',
     ],
     validMediaSelectors: [
       // Validated user icon
       'svg.icon-up',
       'svg.bili-video-card__info--owner__up',
+      'svg.bili-video-card__info--author-ico',
       '.upname svg',
     ],
     getStyle: () => styleText,

@@ -1,6 +1,6 @@
 :not(#a):not(#b):not(#c) {
   /* default */
-  .utags_ul_0_ {
+  .utags_ul_0 {
     /* right-center */
     object-position: 200% 50%;
     --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
@@ -24,9 +24,19 @@
     flex-wrap: nowrap !important;
   }
 
-  /* 视频播放页面右侧边栏 */
-  .video-page-card-small div.upname + .utags_ul_1__ {
+  /* 视频播放页面右侧边栏 UP 主 */
+  .video-page-card-small div.upname + .utags_ul_1 {
     display: block !important;
+  }
+
+  /* 视频播放页面标题，标题很长时，让 utags 换行显示 */
+  .video-info-title-inner {
+    flex-wrap: wrap;
+  }
+
+  /* 首页，搜索结果页面 > 作者 */
+  .bili-video-card__info .bili-video-card__info--bottom {
+    flex-wrap: wrap;
   }
 
   .bili-video-card__info--right,
