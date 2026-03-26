@@ -2,18 +2,34 @@
 // 在 ISOLATED 脚本中也需使用同样的名称监听
 export const SHADOW_SIGNAL_EVENT = 'UTAGS_SHADOW_ROOT_CREATED'
 
+/**
+ * Test cases:
+ * https://linux.do/
+ * https://hotgirl.asia/videos/
+ * https://steamdb.info/
+ * https://ai.dooo.ng/login
+ * https://tagss.pro/
+ */
 function isCloudflareChallenges() {
   return (
     (document.querySelector(
       'script[src^="https://challenges.cloudflare.com/turnstile/"]'
     ) !== null &&
       (document.querySelector('#challenge-success-text') !== null ||
-        document.querySelector('input[name="cf-turnstile-response"]') !==
-          null ||
         document.querySelector('script[src*="/cdn-cgi/challenge-platform"]') !==
           null)) ||
     location.hostname === 'challenges.cloudflare.com' ||
     location.href.startsWith('https://linux.do/challenge')
+  )
+}
+
+function isContainCloudflareChallengesScript() {
+  return (
+    document.querySelector(
+      'script[src^="https://challenges.cloudflare.com/turnstile/"]'
+    ) !== null ||
+    document.querySelector('script[src*="/cdn-cgi/challenge-platform"]') !==
+      null
   )
 }
 
@@ -38,11 +54,17 @@ export function interceptShadowDOM() {
     //   'isCloudflareChallenges attachShadow',
     //   init,
     //   isCloudflareChallenges(),
+    //   isContainCloudflareChallengesScript(),
     //   location.href
     // )
+
     // 核心功能：将 closed 强制转为 open
     // 这样 Scanner 才能通过 node.shadowRoot 访问到内容
-    if (init && init.mode === 'closed' && !isCloudflareChallenges()) {
+    if (init && init.mode === 'closed') {
+      if (isCloudflareChallenges() || isContainCloudflareChallengesScript()) {
+        return originalAttachShadow.call(this, init) as ShadowRoot
+      }
+
       init.mode = 'open'
     }
 
