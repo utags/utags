@@ -37,9 +37,9 @@ export type UTagsScannerOptions = {
   include?: string[]
   /**
    * 忽略元素选择器，当前节点或子节点匹配该选择器时，忽略当前匹配的元素
-   * <a href="/ok" data-utags-link><span>正常的 UTags 链接</span></a>
-   * <a href="/ignore1" data-utags-link><span data-utags_ignore>不会添加 UTags 的链接 1</span></a>
-   * <a href="/ignore2" data-utags-link data-utags_ignore><span>不会添加 UTags 的链接 2</span></a>
+   * <a href="/ok" data-utags_link><span>正常的 UTags 链接</span></a>
+   * <a href="/ignore1" data-utags_link><span data-utags_ignore>不会添加 UTags 的链接 1</span></a>
+   * <a href="/ignore2" data-utags_link data-utags_ignore><span>不会添加 UTags 的链接 2</span></a>
    */
   ignore?: string[]
   // 排除元素选择器，当前节点或父节点匹配该选择器时，不递归扫描其子节点

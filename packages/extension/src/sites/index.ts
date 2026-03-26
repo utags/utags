@@ -149,7 +149,9 @@ const sites: Site[] = [
   misskon_com,
 ]
 
-const BASE_EXCLUDE_SELECTOR = '[data-utags_exclude],svg'
+// Exclude `svg a` from scanning to avoid unexpected matches. https://github.com/utags/utags/issues/148
+// Exclude nested links (`a a`) from scanning to avoid unexpected matches on pages modified by extensions (e.g. V2EX Polish). https://github.com/utags/utags/issues/157
+const BASE_EXCLUDE_SELECTOR = '[data-utags_exclude],a a,svg'
 const getCanonicalUrlFunctionList = [defaultSite, ...sites]
   .map((site) => site.getCanonicalUrl)
   .filter((v) => typeof v === 'function')

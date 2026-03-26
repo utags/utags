@@ -7,6 +7,7 @@
 - Trigger a fallback cleanup pass when target removals are detected to keep results accurate.
 - Defer scanned-node queue processing while the scanner is busy to prioritize scanning in idle time.
 - Improve scan target filtering by excluding nodes under non-scannable ancestor tags.
+- Exclude nested links (`a a`) from scanning to avoid unexpected matches on pages modified by extensions (e.g. V2EX Polish).
 
 ## v0.31
 

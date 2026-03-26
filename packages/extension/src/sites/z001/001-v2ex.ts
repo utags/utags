@@ -241,6 +241,8 @@ export default (() => {
       '#Rightbar .ago',
       // V2REP > 引用回复
       '.cited_reply .ago',
+      // V2EX Polish > 热门回复
+      '.v2p-modal-main .ago',
     ],
     getStyle: () => styleText,
     getCanonicalUrl,
