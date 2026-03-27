@@ -105,6 +105,11 @@ export default (() => {
           return false
         }
 
+        // 动态 > 回复数量图标
+        if ($('svg', element) && /\d+/.test(title)) {
+          return false
+        }
+
         const meta = { type: 'post', title }
         setUtags(element, key, meta)
         setAttribute(element, 'data-utags', element.dataset.utags || '')
@@ -141,6 +146,10 @@ export default (() => {
       'a[href^="/post/hot/"]',
       'a[href$="/history"]',
       'a[href^="/auth"]',
+      // 通知页面
+      'input[type="checkbox"] + div',
+      // 用户卡片
+      '[role="dialog"]',
     ],
     postProcess() {
       const theme = doc.documentElement.dataset.theme || ''

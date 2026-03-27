@@ -176,6 +176,8 @@ export default (() => {
       '.box .cell',
       // v2ex 超级增强
       '.my-box .comment',
+      // v2ex polish 热门回复
+      '.v2p-modal-comments .cell',
     ],
     conditionNodesSelectors: [
       // 帖子标题
@@ -204,6 +206,8 @@ export default (() => {
       '.comment .username',
       // 回复内容标签 (v2ex 超级增强)
       '.comment .ago',
+      // v2ex polish 热门回复
+      '.v2p-modal-comments .cell strong > a[href*="/member/"]',
     ],
     matchedNodesSelectors: [
       // 所有页面帖子链接
@@ -258,6 +262,7 @@ export default (() => {
       '.cited_reply .ago',
       // V2EX Polish > 热门回复
       '.v2p-modal-main .ago',
+      '.button',
     ],
     getStyle: () => styleText,
     getCanonicalUrl,
