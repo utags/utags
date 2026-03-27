@@ -221,6 +221,19 @@ export default (() => {
       '.box .cell .fr .tag',
       '.box .inner .tag',
     ],
+    validate(element: HTMLAnchorElement, href: string) {
+      // 帖子作者
+      if (
+        element.matches(
+          '.box .cell .topic_info strong:first-of-type a[href*="/member/"]'
+        )
+      ) {
+        element.dataset.utags_target_selector =
+          '.box .cell .topic_info strong:first-of-type'
+      }
+
+      return true
+    },
     excludeSelectors: [
       ...defaultSite.excludeSelectors,
       // 导航栏

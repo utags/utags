@@ -701,6 +701,29 @@ function ensureUtagsMouseoverHandler(element: HTMLElement) {
   })
 }
 
+function appendUtagsToElement(
+  element: HTMLElement,
+  utagsUl: HTMLElement | undefined
+) {
+  if (!utagsUl) {
+    return
+  }
+
+  let target = element
+  if (element.dataset.utags_target_selector) {
+    target =
+      $(element.dataset.utags_target_selector, element) ||
+      element.closest(element.dataset.utags_target_selector) ||
+      element
+
+    if (!(target instanceof HTMLAnchorElement)) {
+      setAttribute(target, 'data-utags_node_type', 'link')
+    }
+  }
+
+  target.after(utagsUl)
+}
+
 function appendTagsToPage(
   element: HTMLElement,
   key: string,
@@ -724,7 +747,7 @@ function appendTagsToPage(
       key === getAttribute(existingUtagsUl, 'data-utags_key')
     ) {
       if (!existingUtagsUl.isConnected) {
-        element.after(existingUtagsUl)
+        appendUtagsToElement(element, existingUtagsUl)
         ensureUtagsUlTracked(existingUtagsUl)
       }
 
@@ -798,7 +821,7 @@ function appendTagsToPage(
       bindScrollEvent(element)
     }
   } else {
-    element.after(utagsUl)
+    appendUtagsToElement(element, utagsUl)
   }
 
   setAttribute(element, 'data-utags', tags.join(','))
@@ -1121,7 +1144,7 @@ function updateTagPosition(element: HTMLElement) {
   }
 
   if (!utagsUl.isConnected) {
-    element.after(utagsUl)
+    appendUtagsToElement(element, utagsUl)
     ensureUtagsUlTracked(utagsUl)
   }
 
@@ -1134,7 +1157,12 @@ function updateTagPosition(element: HTMLElement) {
     return
   }
 
-  if (element.dataset.utags_position_selector) {
+  if (element.dataset.utags_target_selector) {
+    element =
+      $(element.dataset.utags_target_selector, element) ||
+      element.closest(element.dataset.utags_target_selector) ||
+      element
+  } else if (element.dataset.utags_position_selector) {
     element =
       $(element.dataset.utags_position_selector, element) ||
       element.closest(element.dataset.utags_position_selector) ||

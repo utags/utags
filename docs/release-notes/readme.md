@@ -3,6 +3,7 @@
 ## v0.33
 
 - Optimize list node tag aggregation by avoiding redundant `data-utags_list_node` updates.
+- Introduce `data-utags_target_selector` to customize where UTags UI is inserted for complex layouts (e.g. V2EX).
 
 ## v0.32
 
