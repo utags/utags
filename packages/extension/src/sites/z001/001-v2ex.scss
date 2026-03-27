@@ -13,6 +13,27 @@
     }
   }
 
+  /* V2EX Polish */
+  [class*="v2p-theme"] {
+    .utags_ul_0 {
+      /* right-center */
+      object-position: 200% 50%;
+      --utags-notag-ul-disply: var(--utags-notag-ul-disply-5);
+      --utags-notag-ul-height: var(--utags-notag-ul-height-5);
+      --utags-notag-ul-position: var(--utags-notag-ul-position-5);
+      --utags-notag-ul-top: var(--utags-notag-ul-top-5);
+      --utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);
+      --utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);
+      --utags-captain-tag-background-color: var(
+        --utags-captain-tag-background-color-overlap
+      );
+    }
+
+    .topic_info .utags_ul_1 {
+      z-index: 2;
+    }
+  }
+
   /* 节点页面 */
   .title .node-breadcrumb {
     &[data-utags_fit_content="1"] {

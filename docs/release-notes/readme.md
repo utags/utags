@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.33
+
+- Optimize list node tag aggregation by avoiding redundant `data-utags_list_node` updates.
+
 ## v0.32
 
 - Add a scan watchdog to detect suspected infinite scan loops and stop scanning safely.

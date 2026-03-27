@@ -194,6 +194,8 @@ export default (() => {
       '.planet-site-address a',
       // 回复者
       '.box .cell strong a.dark[href*="/member/"]',
+      // 回复者 (v2ex polish)
+      '.box .cell strong > a[href*="/member/"]',
       // 回复内容标签
       '.box .cell .ago a',
       // 回复内容标签(手机网页版)

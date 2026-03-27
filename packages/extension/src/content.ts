@@ -804,13 +804,14 @@ function appendTagsToPage(
   setAttribute(element, 'data-utags', tags.join(','))
   /* Fix v2ex polish start */
   // 为了防止阻塞渲染页面，延迟执行
-  createTimeout(() => {
-    const style = getComputedStyle(element)
-    const zIndex = style.zIndex
-    if (zIndex && zIndex !== 'auto') {
-      setStyle(utagsUl, { zIndex })
-    }
-  }, 200)
+  // 20260327: 删掉此逻辑
+  // createTimeout(() => {
+  //   const style = getComputedStyle(element)
+  //   const zIndex = style.zIndex
+  //   if (zIndex && zIndex !== 'auto') {
+  //     setStyle(utagsUl, { zIndex })
+  //   }
+  // }, 200)
   /* Fix v2ex polish end */
 }
 
@@ -916,8 +917,10 @@ async function displayTags() {
   // console.debug("displayTags")
   const listNodes = getListNodes()
   for (const node of listNodes) {
-    // Flag list nodes first
-    node.dataset.utags_list_node = ''
+    if (node.dataset.utags_list_node === undefined) {
+      // Flag list nodes first
+      node.dataset.utags_list_node = ''
+    }
   }
 
   if (DEBUG) {
@@ -967,11 +970,17 @@ async function displayTags() {
       tagsArray.push(node.dataset.utags)
     }
 
+    let listNodeValue: string
     if (tagsArray.length === 1) {
-      node.dataset.utags_list_node = ',' + tagsArray[0] + ','
+      listNodeValue = ',' + tagsArray[0] + ','
     } else if (tagsArray.length > 1) {
-      node.dataset.utags_list_node =
-        ',' + uniq(tagsArray.join(',').split(',')).join(',') + ','
+      listNodeValue = ',' + uniq(tagsArray.join(',').split(',')).join(',') + ','
+    } else {
+      listNodeValue = ''
+    }
+
+    if (node.dataset.utags_list_node !== listNodeValue) {
+      node.dataset.utags_list_node = listNodeValue
     }
   }
 
