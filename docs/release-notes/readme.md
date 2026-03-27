@@ -4,6 +4,7 @@
 
 - Optimize list node tag aggregation by avoiding redundant `data-utags_list_node` updates.
 - Introduce `data-utags_target_selector` to customize where UTags UI is inserted for complex layouts (e.g. V2EX).
+- Reduce jank on large pages by batching and deduplicating tag position updates, then processing them in `requestIdleCallback`.
 
 ## v0.32
 

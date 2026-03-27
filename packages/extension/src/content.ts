@@ -412,11 +412,11 @@ function updateDocumentElementAttributes() {
   if (getSettingsValue('showHidedItems')) {
     if (!hasClass(doc.documentElement, 'utags_no_hide')) {
       addClass(doc.documentElement, 'utags_no_hide')
-      updateTagPositionForAllTargets()
+      updateTagPositionForAllTaggedTargets()
     }
   } else if (hasClass(doc.documentElement, 'utags_no_hide')) {
     removeClass(doc.documentElement, 'utags_no_hide')
-    updateTagPositionForAllTargets()
+    updateTagPositionForAllTaggedTargets()
   }
 
   if (getSettingsValue('noOpacityEffect')) {
@@ -914,12 +914,6 @@ function processNodeForDisplay(node: HTMLElement) {
   const { key, tags, meta } = result
 
   appendTagsToPage(node, key, tags, meta)
-
-  if (tags.length > 0) {
-    setTimeout(() => {
-      updateTagPosition(node)
-    })
-  }
 }
 
 configureScannedNodeProcessor(processNodeForDisplay)
@@ -1008,6 +1002,8 @@ async function displayTags() {
   }
 
   // cleanUnusedUtags()
+
+  updateTagPositionForAllTaggedTargets()
 
   if (DEBUG) {
     console.debug('end of displayTags')
@@ -1418,13 +1414,89 @@ function updateTagPosition(element: HTMLElement) {
   element.dataset.utags_fit_content = '0'
 }
 
+const tagPositionUpdateQueue: HTMLElement[] = []
+const tagPositionUpdateSet = new Set<HTMLElement>()
+let isProcessingTagPositionQueue = false
+
+function takeTagPositionTargetFromQueue() {
+  const target = tagPositionUpdateQueue.shift()
+  if (target) {
+    tagPositionUpdateSet.delete(target)
+  }
+
+  return target
+}
+
+function hasTagPositionTargetsInQueue() {
+  return tagPositionUpdateQueue.length > 0
+}
+
+function processTagPositionUpdatesIdle(deadline: IdleDeadline) {
+  while (
+    deadline.timeRemaining() > 1 &&
+    !doc.hidden &&
+    hasTagPositionTargetsInQueue()
+  ) {
+    const target = takeTagPositionTargetFromQueue()
+    if (!target) {
+      break
+    }
+
+    if (!target.isConnected) {
+      continue
+    }
+
+    updateTagPosition(target)
+  }
+
+  if (hasTagPositionTargetsInQueue()) {
+    requestIdleCallback(processTagPositionUpdatesIdle)
+    return
+  }
+
+  isProcessingTagPositionQueue = false
+}
+
+function scheduleTagPositionUpdates() {
+  if (isProcessingTagPositionQueue || !hasTagPositionTargetsInQueue()) {
+    return
+  }
+
+  isProcessingTagPositionQueue = true
+  requestIdleCallback(processTagPositionUpdatesIdle)
+}
+
+function enqueueTagPositionUpdate(target: HTMLElement) {
+  if (tagPositionUpdateSet.has(target)) {
+    return
+  }
+
+  tagPositionUpdateSet.add(target)
+  tagPositionUpdateQueue.push(target)
+  scheduleTagPositionUpdates()
+}
+
 function updateTagPositionForAllTargets() {
   if (lastScannerResult.length === 0) {
     return
   }
 
   for (const target of lastScannerResult) {
-    updateTagPosition(target)
+    enqueueTagPositionUpdate(target)
+  }
+}
+
+function updateTagPositionForAllTaggedTargets() {
+  if (lastScannerResult.length === 0) {
+    return
+  }
+
+  for (const target of lastScannerResult) {
+    if (!target.dataset.utags) {
+      continue
+    }
+
+    enqueueTagPositionUpdate(target)
   }
 }
 
