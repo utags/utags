@@ -25,6 +25,9 @@ function isCloudflareChallenges() {
 
 function isContainCloudflareChallengesScript() {
   return (
+    // Check in main world
+    'turnstile' in globalThis ||
+    (typeof unsafeWindow !== 'undefined' && 'turnstile' in unsafeWindow) ||
     document.querySelector(
       'script[src^="https://challenges.cloudflare.com/turnstile/"]'
     ) !== null ||

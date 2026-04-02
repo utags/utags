@@ -5,6 +5,8 @@ declare module 'css:*' {
 
 declare const browser: typeof chrome
 
+declare const unsafeWindow: (Window & typeof globalThis) | undefined
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 declare const GM_info: {
   scriptHandler: string
