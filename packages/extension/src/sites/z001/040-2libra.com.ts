@@ -83,9 +83,9 @@ export default (() => {
       // Post list
       '[data-main-left] ul.card li a:not(time + div a):not(.utags_text_tag)',
       // Comments
-      '[data-main-left].utags_no_hide > div > div.card article address > div > a[rel="author"]',
+      '[data-main-left].utags_no_hide > div > div.card article address > div > a[href^="/user/"]',
       // Comments Flat view
-      '[data-main-left]:not(.utags_no_hide) > div > div.card article address > div > a[rel="author"]',
+      '[data-main-left]:not(.utags_no_hide) > div > div.card article address > div > a[href^="/user/"]',
       // Right sidebar
       '[data-right-sidebar] .card-body > h4 + div > div a',
     ],
@@ -122,6 +122,12 @@ export default (() => {
         const title = getTrimmedTitle(element)
         if (!title) {
           return false
+        }
+
+        // 帖子列表 > 作者
+        if (element.matches('[data-main-left] ul.card li div.truncate > a')) {
+          element.dataset.utags_target_selector =
+            '[data-main-left] ul.card li div.truncate'
         }
 
         const meta = { type: 'user', title }

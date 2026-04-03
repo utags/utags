@@ -20,4 +20,16 @@
       object-position: 0% 200%;
     }
   }
+
+  /* 帖子列表 > 标题 */
+  [data-main-left] ul.card li a.link {
+    &[data-utags_fit_content="1"] {
+      max-width: fit-content !important;
+    }
+  }
+
+  /* 帖子列表 > 作者 */
+  [data-main-left] ul.card li div.truncate + .utags_ul_1 {
+    margin-left: -8px !important;
+  }
 }

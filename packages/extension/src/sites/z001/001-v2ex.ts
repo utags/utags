@@ -23,17 +23,16 @@ export default (() => {
 
     // TODO: /member/XXX 转为小写。但会影响已添加到的数据。需要做一个 migration
 
-    if (url.includes('v2ex.com')) {
-      return url
-        .replace(/[?#].*/, '')
-        .replace(/(\w+\.)?v2ex.com/, 'www.v2ex.com')
-    }
+    if (url.includes('v2ex.com') || url.includes('v2ex.co')) {
+      url = url.replace(/(\w+\.)?v2ex.com?/, 'www.v2ex.com')
 
-    // https://global.v2ex.co/
-    if (url.includes('v2ex.co')) {
+      if (/\/t\/\d+\?p=\d+#r_\d+/.test(url)) {
+        // keep '?p=1#r_123'
+      } else {
+        url = url.replace(/[?#].*/, '')
+      }
+
       return url
-        .replace(/[?#].*/, '')
-        .replace(/(\w+\.)?v2ex.co/, 'www.v2ex.com')
     }
 
     return url
@@ -197,7 +196,7 @@ export default (() => {
       // 回复者
       '.box .cell strong a.dark[href*="/member/"]',
       // 回复者 (v2ex polish)
-      '.box .cell strong > a[href*="/member/"]',
+      '.box .cell[id^="r_"] strong > a[href*="/member/"]',
       // 回复内容标签
       '.box .cell .ago a',
       // 回复内容标签(手机网页版)

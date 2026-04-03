@@ -66,8 +66,20 @@ describe('getCanonicalUrl', () => {
     })
 
     it('should remove query parameters and hash', () => {
+      expect(getCanonicalUrl('https://www.v2ex.com/t/123?p=1')).toBe(
+        'https://www.v2ex.com/t/123'
+      )
+      expect(getCanonicalUrl('https://www.v2ex.com/t/123#reply1')).toBe(
+        'https://www.v2ex.com/t/123'
+      )
       expect(getCanonicalUrl('https://www.v2ex.com/t/123?p=1#reply1')).toBe(
         'https://www.v2ex.com/t/123'
+      )
+    })
+
+    it('should keep query parameters and hash for normalized reply links', () => {
+      expect(getCanonicalUrl('https://www.v2ex.com/t/123?p=1#r_123')).toBe(
+        'https://www.v2ex.com/t/123?p=1#r_123'
       )
     })
 

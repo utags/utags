@@ -632,7 +632,7 @@ function createUTagsScannerOptions(
 
         if (!debug) {
           // eslint-disable-next-line n/prefer-global/process
-          if (process.env.PLASMO_TAG !== 'prod') {
+          if (process.env.PLASMO_TAG === 'dev') {
             htmlNode.style.outline = '2px solid gold'
           }
 
@@ -652,7 +652,7 @@ function createUTagsScannerOptions(
       } else if (action === 'delete') {
         cleanupUtags(htmlNode)
         // eslint-disable-next-line n/prefer-global/process
-        if (process.env.PLASMO_TAG !== 'prod' && !debug)
+        if (process.env.PLASMO_TAG === 'dev' && !debug)
           htmlNode.style.outline = ''
       }
     },
