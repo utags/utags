@@ -60,12 +60,25 @@ export default (() => {
         $('[data-main-left]')?.classList.add('utags_no_hide')
       }
 
-      const key = getPostUrl(location.href)
-      if (key) {
-        const element = $('[data-main-left] h1')
-        if (element) {
-          setUtagsAttributes(element, { key, type: 'post' })
-          addVisited(key)
+      {
+        const key = getPostUrl(location.href)
+        if (key) {
+          const element = $('[data-main-left] h1')
+          if (element) {
+            setUtagsAttributes(element, { key, type: 'post' })
+            addVisited(key)
+          }
+        }
+      }
+
+      {
+        const key = getUserProfileUrl(location.href)
+        if (key) {
+          // User profile header
+          const element = $('[data-main-left] span.font-bold.text-xl')
+          if (element) {
+            setUtagsAttributes(element, { key, type: 'user' })
+          }
         }
       }
     },
