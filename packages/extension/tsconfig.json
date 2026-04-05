@@ -8,10 +8,10 @@
   ],
   "exclude": ["node_modules/**", "build/**"],
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "paths": {
       "~*": ["./src/*"],
     },
-    "strictNullChecks": true,
-    "baseUrl": ".",
+    "strictNullChecks": true
   },
 }
