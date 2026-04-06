@@ -1,5 +1,9 @@
 # RELEASE NOTES
 
+## v0.34
+
+- Optimize execute `preProcess` and `postProcess` logic to ensure they are called when DOM changes.
+
 ## v0.33
 
 - Optimize list node tag aggregation by avoiding redundant `data-utags_list_node` updates.

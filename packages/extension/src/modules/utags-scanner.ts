@@ -1,4 +1,8 @@
-import { createHTML, runWhenBodyExists } from 'browser-extension-utils'
+import {
+  createHTML,
+  runWhenBodyExists,
+  setAttribute,
+} from 'browser-extension-utils'
 
 import { interceptShadowDOM, SHADOW_SIGNAL_EVENT } from '../modules/shadow-root'
 import { isScanTarget } from '../utils/dom-utils'
@@ -227,7 +231,7 @@ export class UTagsScanner {
       if (!isCurrentlyMatched) {
         // DEBUG && setDebugMark(node, 'scanned_match_add')
         this.results.add(node)
-        node.setAttribute(MATCH_ATTR, '')
+        setAttribute(node as HTMLElement, MATCH_ATTR, '')
       }
     } else {
       // 准备移除逻辑

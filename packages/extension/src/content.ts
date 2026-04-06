@@ -83,10 +83,9 @@ import {
 import { setupWebappBridge } from './modules/webapp-bridge'
 import {
   getCanonicalUrl,
-  getConditionNodes,
   getListNodes,
   isScannerBusy,
-  matchedNodes,
+  postProcess,
   scanDom,
   updateMatchedNodesSelector,
   type ScanDomOptions,
@@ -940,32 +939,6 @@ async function displayTags() {
     }
   }
 
-  if (DEBUG) {
-    console.debug('before matchedNodes')
-  }
-
-  // Display tags for matched components on matched pages
-  const nodes = matchedNodes()
-  if (DEBUG) {
-    console.debug('after matchedNodes', nodes.length)
-  }
-
-  for (const node of nodes) {
-    processNodeForDisplay(node as HTMLElement)
-  }
-
-  if (DEBUG) {
-    console.debug('after appendTagsToPage', getRegisteredUtagsUlCount())
-  }
-
-  // const conditionNodes = getConditionNodes()
-  // for (const node of conditionNodes) {
-  //   if (getAttribute(node, 'data-utags')) {
-  //     // Flag condition nodes
-  //     node.dataset.utags_condition_node = ''
-  //   }
-  // }
-
   for (const node of listNodes) {
     const conditionNodes = $$('[data-utags_condition_node]', node)
     const tagsArray: string[] = []
@@ -1004,6 +977,8 @@ async function displayTags() {
   // cleanUnusedUtags()
 
   updateTagPositionForAllTaggedTargets()
+
+  postProcess()
 
   if (DEBUG) {
     console.debug('end of displayTags')
@@ -1776,6 +1751,7 @@ if (
       enqueueScannedNode(node)
     },
     onScanCompleted(nodes) {
+      console.debug('Scan completed', nodes.length)
       lastScannerResult = nodes
     },
   })

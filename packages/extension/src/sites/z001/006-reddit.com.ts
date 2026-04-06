@@ -218,7 +218,7 @@ export default (() => {
     [data-utags_list_node*=",屏蔽,"],
     [data-utags_list_node*=",不再显示,"],
     [data-utags_list_node*=",block,"]`)) {
-          element.setAttribute('collapsed', '')
+          setAttribute(element, 'collapsed', '')
         }
       }, 1000)
     },
