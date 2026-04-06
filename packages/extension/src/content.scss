@@ -284,13 +284,16 @@
   }
 
   .utags_captain_tag:focus,
-  :not(.utags_ul):hover + .utags_ul .utags_captain_tag,
-  /* utags_position_selector matches the ancestor elements */
+  /* For utags_absolute_ul_container  */
+  /* :not(.utags_ul):hover + .utags_ul .utags_captain_tag, */
+  [data-utags]:hover + .utags_ul .utags_captain_tag,
+  [data-utags_node_type="link"]:hover + .utags_ul .utags_captain_tag,
+  /* data-utags_position_selector and data-utags_target_selector matches the ancestor elements */
   [data-utags_fit_content]:hover .utags_ul .utags_captain_tag,
   .utags_ul:hover .utags_captain_tag,
   .utags_ul.utags_ul_active .utags_captain_tag,
-  .utags_show_all .utags_captain_tag,
-  :not(a):not([data-utags_node_type="link"]):not(.utags_ul) + .utags_ul .utags_captain_tag {
+  /* :not(a):not([data-utags_node_type="link"]):not(.utags_ul) + .utags_ul .utags_captain_tag, */
+  .utags_show_all .utags_captain_tag {
     opacity: 100%;
     width: calc(var(--utags-captain-tag-size) + 8px) !important;
     height: calc(var(--utags-captain-tag-size) + 8px) !important;

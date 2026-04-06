@@ -3,6 +3,7 @@
 ## v0.34
 
 - Optimize execute `preProcess` and `postProcess` logic to ensure they are called when DOM changes.
+- Clarify the `utagsUl` repositioning behavior to keep it immediately after the target element when the DOM changes.
 
 ## v0.33
 

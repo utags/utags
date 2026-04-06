@@ -66,7 +66,8 @@ export default (() => {
 
       if (location.pathname.includes('/t/')) {
         // 帖子详细页
-        const header = $('.header h1')
+        // .post-detail .header h1 - v2ex-next extension
+        const header = $('.post-detail .header h1') || $('.header h1')
         if (header) {
           const key = getCanonicalUrl(
             'https://www.v2ex.com' + location.pathname

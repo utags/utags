@@ -700,6 +700,18 @@ function ensureUtagsMouseoverHandler(element: HTMLElement) {
   })
 }
 
+function getUtagsTargetElementByElement(element: HTMLElement): HTMLElement {
+  if (element.dataset.utags_target_selector) {
+    return (
+      $(element.dataset.utags_target_selector, element) ||
+      element.closest(element.dataset.utags_target_selector) ||
+      element
+    )
+  }
+
+  return element
+}
+
 function appendUtagsToElement(
   element: HTMLElement,
   utagsUl: HTMLElement | undefined
@@ -708,16 +720,9 @@ function appendUtagsToElement(
     return
   }
 
-  let target = element
-  if (element.dataset.utags_target_selector) {
-    target =
-      $(element.dataset.utags_target_selector, element) ||
-      element.closest(element.dataset.utags_target_selector) ||
-      element
-
-    if (!(target instanceof HTMLAnchorElement)) {
-      setAttribute(target, 'data-utags_node_type', 'link')
-    }
+  const target = getUtagsTargetElementByElement(element)
+  if (!(target instanceof HTMLAnchorElement)) {
+    setAttribute(target, 'data-utags_node_type', 'link')
   }
 
   target.after(utagsUl)
@@ -1111,6 +1116,14 @@ function updateTagPosition(element: HTMLElement) {
       if (Math.abs(currentMargin - newMargin) > 1) {
         element.style.marginRight = newMargin + 'px'
       }
+    }
+  } else {
+    // Ensure `utagsUl` stays immediately after the target element, even if new nodes were inserted between them.
+    const previousElementSibling = utagsUl.previousElementSibling
+    const targetElement = getUtagsTargetElementByElement(element)
+    if (previousElementSibling !== targetElement) {
+      appendUtagsToElement(element, utagsUl)
+      ensureUtagsUlTracked(utagsUl)
     }
   }
 
