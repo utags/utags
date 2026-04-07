@@ -386,6 +386,11 @@ export function updateElementUtagsMeta(
     meta.type = type
   }
 
+  const description = element.dataset.utags_description
+  if (description) {
+    meta.description = description
+  }
+
   setElementUtags(element, {
     key,
     originalKey,

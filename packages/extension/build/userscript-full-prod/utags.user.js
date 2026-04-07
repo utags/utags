@@ -16,7 +16,7 @@
 // @namespace            https://utags.pipecraft.net/
 // @homepageURL          https://github.com/utags/utags#readme
 // @supportURL           https://github.com/utags/utags/issues
-// @version              0.34.1
+// @version              0.34.2
 // @description          Enhance your browsing experience by adding custom tags and notes to users, posts, and videos across the web. Perfect for organizing content, identifying users, and filtering out unwanted posts. Also functions as a modern bookmark management tool. Supports 100+ popular websites including X (Twitter), Reddit, Facebook, Threads, Instagram, YouTube, TikTok, GitHub, Hacker News, Greasy Fork, pixiv, Twitch, and many more.
 // @description:zh-CN    为网页上的用户、帖子、视频添加自定义标签和备注，让你的浏览体验更加个性化和高效。轻松识别用户、整理内容、过滤无关信息。同时也是一个现代化的书签管理工具。支持 100+ 热门网站，包括 V2EX、X (Twitter)、YouTube、TikTok、Reddit、GitHub、B站、抖音、小红书、知乎、掘金、豆瓣、吾爱破解、pixiv、LINUX DO、小众软件、NGA、BOSS直聘等。
 // @description:zh-HK    為網頁上的用戶、帖子、視頻添加自定義標籤和備註，讓你的瀏覽體驗更加個性化和高效。輕鬆識別用戶、整理內容、過濾無關信息。同時也是一個現代化的書籤管理工具。支持 100+ 熱門網站，包括 X (Twitter)、Reddit、Facebook、Instagram、YouTube、TikTok、GitHub、Hacker News、Greasy Fork、pixiv、Twitch 等。
@@ -3895,7 +3895,7 @@
     if (!element || !(element instanceof HTMLElement)) {
       return
     }
-    const { key, title, type } = attributes
+    const { key, title, type, description } = attributes
     if (key && element.dataset.utags_link !== key) {
       element.dataset.utags_link = key
     }
@@ -3904,6 +3904,9 @@
     }
     if (type && element.dataset.utags_type !== type) {
       element.dataset.utags_type = type
+    }
+    if (description && element.dataset.utags_description !== description) {
+      element.dataset.utags_description = description
     }
     if (
       element.dataset.utags_node_type !== "link" &&
@@ -3921,6 +3924,9 @@
     }
     if (element.dataset.utags_title !== void 0) {
       delete element.dataset.utags_title
+    }
+    if (element.dataset.utags_description !== void 0) {
+      delete element.dataset.utags_description
     }
     if (element.dataset.utags_type !== void 0) {
       delete element.dataset.utags_type
@@ -9538,7 +9544,7 @@
     }
   })()
   var libra_com_default =
-    ':not(#a):not(#b):not(#c) *+.utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) *+.utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-main-left] ul.card li a.link[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) [data-main-left] ul.card li div.truncate+.utags_ul_1{margin-left:-8px !important}'
+    ':not(#a):not(#b):not(#c) .utags_ul_0{object-position:200% 50%;--utags-notag-ul-disply: var(--utags-notag-ul-disply-5);--utags-notag-ul-height: var(--utags-notag-ul-height-5);--utags-notag-ul-position: var(--utags-notag-ul-position-5);--utags-notag-ul-top: var(--utags-notag-ul-top-5);--utags-notag-captain-tag-top: var(--utags-notag-captain-tag-top-5);--utags-notag-captain-tag-left: var(--utags-notag-captain-tag-left-5);--utags-captain-tag-background-color: var( --utags-captain-tag-background-color-overlap )}:not(#a):not(#b):not(#c) .utags_ul_1{object-position:0% 200%}:not(#a):not(#b):not(#c) [data-main-left] ul.card li a.link[data-utags_fit_content="1"]{max-width:fit-content !important}:not(#a):not(#b):not(#c) [data-main-left] ul.card li div.truncate+.utags_ul_1{margin-left:-8px !important}:not(#a):not(#b):not(#c) [data-main-left] h1[data-utags_fit_content="1"]{max-width:fit-content !important}'
   var libra_com_default2 = (() => {
     const prefix2 = location.origin + "/"
     function getPostUrl(url, exact = false) {
@@ -9592,8 +9598,34 @@
           if (key) {
             const element = $("[data-main-left] h1")
             if (element) {
-              setUtagsAttributes(element, { key, type: "post" })
-              addVisited(key)
+              const title = getTrimmedTitle(element)
+              if (title) {
+                setUtagsAttributes(element, { key, type: "post" })
+                addVisited(key)
+                const commentElements = $$("article[id]")
+                for (const element2 of commentElements) {
+                  const id = element2.id.replace("comment-", "")
+                  const target = $("time", element2)
+                  if (!id || !target) {
+                    continue
+                  }
+                  const commentkey = "".concat(key, "?commentId=").concat(id)
+                  const formattedTitle = "\u56DE\u590D >> ".concat(title)
+                  const description = getTrimmedTitle(
+                    $("section div", element2) || element2
+                  )
+                  const formattedDescription =
+                    description.length > 1e3
+                      ? description.slice(0, 1e3)
+                      : description
+                  setUtagsAttributes(target, {
+                    key: commentkey,
+                    title: formattedTitle,
+                    description: formattedDescription,
+                    type: "comment",
+                  })
+                }
+              }
             }
           }
         }
@@ -9623,7 +9655,7 @@
         if (!href.startsWith(prefix2)) {
           return true
         }
-        let key = getPostUrl(href)
+        let key = getPostUrl(href, true)
         if (key) {
           const title = getTrimmedTitle(element)
           if (!title) {
@@ -11569,6 +11601,10 @@
     if (type) {
       meta.type = type
     }
+    const description = element.dataset.utags_description
+    if (description) {
+      meta.description = description
+    }
     setElementUtags(element, {
       key,
       originalKey,
@@ -12494,7 +12530,7 @@
         emojiTags: {
           title: i2("settings.emojiTags"),
           defaultValue:
-            "\u2605, \u2605\u2605, \u2605\u2605\u2605, \u2606, \u2606\u2606, \u2606\u2606\u2606, \u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
+            "\u2605, \u2605\u2605, \u2605\u2605\u2605, \u2606, \u2606\u2606, \u2606\u2606\u2606, \u{1F44D}, \u{1F44E}, \u2764\uFE0F, \u2B50, \u{1F31F}, \u{1F525}, \u{1F4A9}, \u26A0\uFE0F, \u{1F4AF}, \u{1F44F}, \u{1F440}, \u{1F437}, \u{1F4CC}, \u{1F4CD}, \u{1F3C6}, \u{1F48E}, \u{1F4A1}, \u{1F916}, \u{1F4D4}, \u{1F4D6}, \u{1F4DA}, \u{1F4DC}, \u{1F4D5}, \u{1F4D7}, \u{1F9F0}, \u26D4, \u{1F6AB}, \u{1F534}, \u{1F7E0}, \u{1F7E1}, \u{1F7E2}, \u{1F535}, \u{1F7E3}, \u2757, \u2753, \u2705, \u274C",
           placeholder: "\u{1F44D}, \u{1F44E}",
           type: "textarea",
           group: groupNumber,

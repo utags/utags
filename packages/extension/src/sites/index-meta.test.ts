@@ -26,6 +26,24 @@ describe('updateElementUtagsMeta', () => {
     expect(utags?.meta?.type).toBe('post')
   })
 
+  it('should set description from dataset', () => {
+    const element = document.createElement('a') as UtagsHTMLElement
+    element.dataset.utags_title = 'Example Title'
+    element.dataset.utags_description = 'Example Description'
+    element.dataset.utags_type = 'post'
+
+    const key = 'https://example.com/post'
+    const originalKey = 'https://example.com/post?ref=1'
+
+    updateElementUtagsMeta(element, key, originalKey)
+
+    const utags = getElementUtags(element)
+    expect(utags).toBeTruthy()
+    expect(utags?.meta?.description).toBe('Example Description')
+    expect(utags?.meta?.title).toBe('Example Title')
+    expect(utags?.meta?.type).toBe('post')
+  })
+
   it('should not set title when dataset title is a URL', () => {
     const element = document.createElement('a') as UtagsHTMLElement
     element.dataset.utags_title = 'https://example.com'
@@ -92,6 +110,7 @@ describe('updateElementUtagsMeta', () => {
     const element = document.createElement('a') as UtagsHTMLElement
     element.dataset.utags_title = 'Generated Title'
     element.dataset.utags_type = 'post'
+    element.dataset.utags_description = 'Generated Description'
 
     const key = 'https://example.com/post'
     const originalKey = 'https://example.com/post?ref=1'

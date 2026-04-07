@@ -478,13 +478,18 @@ export function getHrefAttribute(element: HTMLElement) {
 
 export function setUtagsAttributes(
   element: HTMLElement,
-  attributes: { key?: string; title?: string; type?: string }
+  attributes: {
+    key?: string
+    title?: string
+    type?: string
+    description?: string
+  }
 ) {
   if (!element || !(element instanceof HTMLElement)) {
     return
   }
 
-  const { key, title, type } = attributes
+  const { key, title, type, description } = attributes
   if (key && element.dataset.utags_link !== key) {
     element.dataset.utags_link = key
   }
@@ -495,6 +500,10 @@ export function setUtagsAttributes(
 
   if (type && element.dataset.utags_type !== type) {
     element.dataset.utags_type = type
+  }
+
+  if (description && element.dataset.utags_description !== description) {
+    element.dataset.utags_description = description
   }
 
   if (
@@ -516,6 +525,10 @@ export function removeUtagsAttributes(element: HTMLElement) {
 
   if (element.dataset.utags_title !== undefined) {
     delete element.dataset.utags_title
+  }
+
+  if (element.dataset.utags_description !== undefined) {
+    delete element.dataset.utags_description
   }
 
   if (element.dataset.utags_type !== undefined) {

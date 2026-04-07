@@ -305,7 +305,7 @@ const getSettingsTable = (): SettingsTable => {
     emojiTags: {
       title: i('settings.emojiTags'),
       defaultValue:
-        '★, ★★, ★★★, ☆, ☆☆, ☆☆☆, 👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
+        '★, ★★, ★★★, ☆, ☆☆, ☆☆☆, 👍, 👎, ❤️, ⭐, 🌟, 🔥, 💩, ⚠️, 💯, 👏, 👀, 🐷, 📌, 📍, 🏆, 💎, 💡, 🤖, 📔, 📖, 📚, 📜, 📕, 📗, 🧰, ⛔, 🚫, 🔴, 🟠, 🟡, 🟢, 🔵, 🟣, ❗, ❓, ✅, ❌',
       placeholder: '👍, 👎',
       type: 'textarea',
       group: groupNumber,

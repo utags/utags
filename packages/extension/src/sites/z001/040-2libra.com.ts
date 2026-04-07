@@ -65,8 +65,36 @@ export default (() => {
         if (key) {
           const element = $('[data-main-left] h1')
           if (element) {
-            setUtagsAttributes(element, { key, type: 'post' })
-            addVisited(key)
+            const title = getTrimmedTitle(element)
+            if (title) {
+              setUtagsAttributes(element, { key, type: 'post' })
+              addVisited(key)
+
+              const commentElements = $$('article[id]')
+              for (const element of commentElements) {
+                const id = element.id.replace('comment-', '')
+                const target = $('time', element)
+                if (!id || !target) {
+                  continue
+                }
+
+                const commentkey = `${key}?commentId=${id}`
+                const formattedTitle = `回复 >> ${title}`
+                const description = getTrimmedTitle(
+                  $('section div', element) || element
+                )
+                const formattedDescription =
+                  description.length > 1000
+                    ? description.slice(0, 1000)
+                    : description
+                setUtagsAttributes(target, {
+                  key: commentkey,
+                  title: formattedTitle,
+                  description: formattedDescription,
+                  type: 'comment',
+                })
+              }
+            }
           }
         }
       }
@@ -107,7 +135,7 @@ export default (() => {
         return true
       }
 
-      let key = getPostUrl(href)
+      let key = getPostUrl(href, true)
       if (key) {
         const title = getTrimmedTitle(element)
         if (!title) {
