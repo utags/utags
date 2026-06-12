@@ -52,7 +52,7 @@
     "node-fetch": "^3.3.2",
     "postcss": "^8.5.6",
     "postcss-load-config": "^6.0.1",
-    "svelte": "5.35.7",
+    "svelte": "5.55.7",
     "svelte-check": "^4.3.3",
     "svelte-persisted-store": "^0.12.0",
     "svelte-virtual-list": "^3.0.1",
@@ -60,8 +60,8 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
     "utags-utils": "^0.3.3",
-    "vite": "^7.1.12",
+    "vite": "^7.3.2",
     "vite-plugin-pwa": "^1.1.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.6"
   }
 }
