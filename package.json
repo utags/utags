@@ -45,7 +45,7 @@
     "prettier-plugin-svelte": "^3.4.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4",
+    "vitest": "^3.2.6",
     "xo": "^1.2.3"
   },
   "pnpm": {
