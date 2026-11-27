@@ -55,7 +55,19 @@ declare const GM: {
   ): Promise<number>
   removeValueChangeListener(id: number): Promise<void>
   xmlHttpRequest(options: {
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+    method:
+      | 'GET'
+      | 'POST'
+      | 'PUT'
+      | 'DELETE'
+      | 'HEAD'
+      | 'OPTIONS'
+      | 'PATCH'
+      | 'PROPFIND'
+      | 'MKCOL'
+      | 'MOVE'
+      | 'COPY'
+      | 'PROPPATCH'
     url: string
     headers?: Record<string, string>
     data?: string | FormData | ArrayBuffer
@@ -148,7 +160,19 @@ declare function GM_notification(options: {
 }): void
 
 declare function GM_xmlhttpRequest(options: {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  method:
+    | 'GET'
+    | 'POST'
+    | 'PUT'
+    | 'DELETE'
+    | 'HEAD'
+    | 'OPTIONS'
+    | 'PATCH'
+    | 'PROPFIND'
+    | 'MKCOL'
+    | 'MOVE'
+    | 'COPY'
+    | 'PROPPATCH'
   url: string
   headers?: Record<string, string>
   data?: string | FormData | ArrayBuffer

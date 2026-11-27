@@ -84,16 +84,39 @@ type GMXMLHttpRequestOptions = {
   ontimeout: () => void
 }
 
-type AllowedHttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+type AllowedHttpMethod =
+  | 'GET'
+  | 'POST'
+  | 'PUT'
+  | 'DELETE'
+  | 'HEAD'
+  | 'OPTIONS'
+  | 'PATCH'
+  | 'PROPFIND'
+  | 'MKCOL'
+  | 'MOVE'
+  | 'COPY'
+  | 'PROPPATCH'
+
+// 放行 WebDAV 必需方法（PROPFIND / MKCOL 等），避免油猴脚本模式下坚果云同步失败
+const ALLOWED_HTTP_METHODS = new Set<AllowedHttpMethod>([
+  'GET',
+  'POST',
+  'PUT',
+  'DELETE',
+  'HEAD',
+  'OPTIONS',
+  'PATCH',
+  'PROPFIND',
+  'MKCOL',
+  'MOVE',
+  'COPY',
+  'PROPPATCH',
+])
 
 function normalizeHttpMethod(method: string): AllowedHttpMethod | undefined {
-  const upper = method.toUpperCase()
-  if (
-    upper === 'GET' ||
-    upper === 'POST' ||
-    upper === 'PUT' ||
-    upper === 'DELETE'
-  ) {
+  const upper = method.toUpperCase() as AllowedHttpMethod
+  if (ALLOWED_HTTP_METHODS.has(upper)) {
     return upper
   }
 

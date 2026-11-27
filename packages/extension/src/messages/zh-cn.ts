@@ -104,6 +104,7 @@ body {
   'settings.quickTags': '快捷标签',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
   'settings.enableQuickStar': '启用快速添加星标',
+  'settings.enableVimiumHint': '使用 Vimium / Vimium C 快捷键提示时自动显示标签图标',
 }
 
 export default messages

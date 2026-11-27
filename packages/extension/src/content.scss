@@ -247,7 +247,9 @@
     }
 
     .utags_captain_tag {
-      opacity: 1%;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none !important;
       position: absolute;
       top: var(--utags-notag-captain-tag-top, 0);
       left: var(--utags-notag-captain-tag-left, 0);
@@ -295,6 +297,8 @@
   /* :not(a):not([data-utags_node_type="link"]):not(.utags_ul) + .utags_ul .utags_captain_tag, */
   .utags_show_all .utags_captain_tag {
     opacity: 100%;
+    visibility: visible;
+    pointer-events: auto !important;
     width: calc(var(--utags-captain-tag-size) + 8px) !important;
     height: calc(var(--utags-captain-tag-size) + 8px) !important;
     padding: 5px 4px 4px 5px !important;

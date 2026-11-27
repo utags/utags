@@ -390,6 +390,12 @@ const getSettingsTable = (): SettingsTable => {
       group: groupNumber,
     },
 
+    enableVimiumHint: {
+      title: i('settings.enableVimiumHint'),
+      defaultValue: false,
+      group: groupNumber,
+    },
+
     openTagsPage: {
       title: i('settings.openTagsPage'),
       type: 'externalLink',
@@ -1489,6 +1495,16 @@ function updateTagPositionForAllTaggedTargets() {
 }
 
 function checkVimiumHint() {
+  // 默认不与 Vimium / Vimium C 联动展开全页标签图标，避免遮挡按键提示与误扫
+  if (!getSettingsValue('enableVimiumHint')) {
+    if (hasClass(doc.documentElement, 'utags_vimium_hint')) {
+      removeClass(doc.documentElement, 'utags_vimium_hint')
+      hideAllUtagsInArea()
+    }
+
+    return
+  }
+
   if ($('#vimium-hint-marker-container,#vimiumHintMarkerContainer')) {
     addClass(doc.body, 'utags_show_all')
     if (!hasClass(doc.documentElement, 'utags_vimium_hint')) {
