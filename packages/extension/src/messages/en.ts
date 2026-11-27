@@ -105,6 +105,7 @@ body {
   'settings.quickTags': 'Quick Tags',
   'settings.quickTagsPlaceholder': '★, ⭐, 💎',
   'settings.enableQuickStar': 'Enable quick star adding',
+  'settings.enableVimiumHint': 'Show tag icons automatically when Vimium / Vimium C hints are active',
 }
 
 export default messages

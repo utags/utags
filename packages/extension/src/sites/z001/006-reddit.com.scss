@@ -47,6 +47,8 @@
   [slot="post-media-container"]:hover a + {
     .utags_ul .utags_captain_tag {
       opacity: 100%;
+      visibility: visible;
+      pointer-events: auto !important;
       width: calc(var(--utags-captain-tag-size) + 8px) !important;
       height: calc(var(--utags-captain-tag-size) + 8px) !important;
       padding: 5px 4px 4px 5px !important;
